@@ -28,6 +28,9 @@ import {
   Minus,
   Mail,
   Phone,
+  ChevronDown,
+  ChevronUp,
+  Pencil,
 } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
 import {
@@ -81,6 +84,8 @@ export function StakeholdersSection({
   className,
 }: StakeholdersSectionProps) {
   const [isEditing, setIsEditing] = React.useState(mode === 'edit')
+  // Track which stakeholder is currently expanded for editing (null = none, 'new' = new form)
+  const [expandedId, setExpandedId] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     setIsEditing(mode === 'edit')
@@ -105,8 +110,9 @@ export function StakeholdersSection({
   const isCreateMode = mode === 'create'
 
   const handleAddStakeholder = () => {
+    const newId = crypto.randomUUID()
     const newStakeholder: DealStakeholder = {
-      id: crypto.randomUUID(),
+      id: newId,
       contactId: null,
       name: '',
       title: '',
@@ -120,6 +126,12 @@ export function StakeholdersSection({
       isActive: true,
     }
     onChange?.('stakeholders', [...data.stakeholders, newStakeholder])
+    setExpandedId(newId) // Auto-expand new stakeholder
+  }
+
+  // Check if a stakeholder has meaningful data filled in
+  const isStakeholderComplete = (s: DealStakeholder) => {
+    return s.name.trim() !== ''
   }
 
   const handleRemoveStakeholder = (id: string) => {
@@ -168,31 +180,78 @@ export function StakeholdersSection({
         />
       )}
 
-      {/* Edit Mode - Editable List */}
+      {/* Edit Mode - Compact List with Expandable Forms */}
       {isEditable ? (
-        <div className="space-y-4">
-          {data.stakeholders.map((stakeholder, index) => (
-            <Card key={stakeholder.id} className="shadow-elevation-sm">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-charcoal-500">
-                      Stakeholder {index + 1}
-                    </span>
-                    {stakeholder.isPrimary && (
-                      <Badge className="bg-gold-50 text-gold-700 border-gold-200">
-                        <Star className="h-3 w-3 mr-1 fill-gold-500" />
-                        Primary
-                      </Badge>
+        <div className="space-y-3">
+          {data.stakeholders.map((stakeholder, index) => {
+            const isExpanded = expandedId === stakeholder.id
+            const isComplete = isStakeholderComplete(stakeholder)
+            const RoleIcon = ROLE_ICONS[stakeholder.role] || User
+            const roleConfig = STAKEHOLDER_ROLES.find((r) => r.value === stakeholder.role)
+
+            return (
+              <Card key={stakeholder.id} className={cn(
+                "shadow-elevation-sm transition-all duration-200",
+                isExpanded && "ring-2 ring-gold-500/20"
+              )}>
+                {/* Collapsed Header - Always Visible */}
+                <div
+                  className={cn(
+                    "flex items-center gap-3 p-4 cursor-pointer hover:bg-charcoal-50/50 transition-colors",
+                    isExpanded && "border-b border-charcoal-100"
+                  )}
+                  onClick={() => setExpandedId(isExpanded ? null : stakeholder.id)}
+                >
+                  {/* Avatar/Icon */}
+                  <div className={cn(
+                    "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0",
+                    isComplete ? "bg-charcoal-200" : "bg-charcoal-100"
+                  )}>
+                    {isComplete ? (
+                      <span className="text-sm font-semibold text-charcoal-700">
+                        {stakeholder.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()}
+                      </span>
+                    ) : (
+                      <User className="h-5 w-5 text-charcoal-400" />
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    {!stakeholder.isPrimary && (
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className={cn(
+                        "text-sm font-medium truncate",
+                        isComplete ? "text-charcoal-900" : "text-charcoal-400 italic"
+                      )}>
+                        {isComplete ? stakeholder.name : 'New Stakeholder'}
+                      </p>
+                      {stakeholder.isPrimary && (
+                        <Badge className="bg-gold-50 text-gold-700 border-gold-200 text-xs flex-shrink-0">
+                          <Star className="h-3 w-3 mr-1 fill-gold-500" />
+                          Primary
+                        </Badge>
+                      )}
+                    </div>
+                    {isComplete && (
+                      <div className="flex items-center gap-3 mt-0.5">
+                        <span className="text-xs text-charcoal-500">
+                          {roleConfig?.icon} {roleConfig?.label}
+                        </span>
+                        {stakeholder.title && (
+                          <span className="text-xs text-charcoal-400">• {stakeholder.title}</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-1 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+                    {!stakeholder.isPrimary && isComplete && (
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleSetPrimary(stakeholder.id)}
-                        className="text-xs"
+                        className="text-xs h-8 px-2"
                       >
                         Set Primary
                       </Button>
@@ -201,143 +260,164 @@ export function StakeholdersSection({
                       variant="ghost"
                       size="sm"
                       onClick={() => handleRemoveStakeholder(stakeholder.id)}
-                      className="text-error-600 hover:text-error-700"
+                      className="text-error-600 hover:text-error-700 h-8 w-8 p-0"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Name <span className="text-gold-500">*</span>
-                    </label>
-                    <Input
-                      value={stakeholder.name}
-                      onChange={(e) => handleStakeholderChange(stakeholder.id, 'name', e.target.value)}
-                      placeholder="Full name"
-                      className="h-11 rounded-lg"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Title
-                    </label>
-                    <Input
-                      value={stakeholder.title}
-                      onChange={(e) => handleStakeholderChange(stakeholder.id, 'title', e.target.value)}
-                      placeholder="Job title"
-                      className="h-11 rounded-lg"
-                    />
+                    {isExpanded ? (
+                      <ChevronUp className="h-4 w-4 text-charcoal-400" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-charcoal-400" />
+                    )}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Email
-                    </label>
-                    <Input
-                      type="email"
-                      value={stakeholder.email}
-                      onChange={(e) => handleStakeholderChange(stakeholder.id, 'email', e.target.value)}
-                      placeholder="email@company.com"
-                      className="h-11 rounded-lg"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Phone
-                    </label>
-                    <Input
-                      value={stakeholder.phone}
-                      onChange={(e) => handleStakeholderChange(stakeholder.id, 'phone', e.target.value)}
-                      placeholder="+1 (555) 123-4567"
-                      className="h-11 rounded-lg"
-                    />
-                  </div>
-                </div>
+                {/* Expanded Form */}
+                {isExpanded && (
+                  <CardContent className="p-4 space-y-4 bg-charcoal-50/30">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Name <span className="text-gold-500">*</span>
+                        </label>
+                        <Input
+                          value={stakeholder.name}
+                          onChange={(e) => handleStakeholderChange(stakeholder.id, 'name', e.target.value)}
+                          placeholder="Full name"
+                          className="h-10 rounded-lg bg-white"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Title
+                        </label>
+                        <Input
+                          value={stakeholder.title}
+                          onChange={(e) => handleStakeholderChange(stakeholder.id, 'title', e.target.value)}
+                          placeholder="Job title"
+                          className="h-10 rounded-lg bg-white"
+                        />
+                      </div>
+                    </div>
 
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Role
-                    </label>
-                    <Select
-                      value={stakeholder.role}
-                      onValueChange={(v) => handleStakeholderChange(stakeholder.id, 'role', v)}
-                    >
-                      <SelectTrigger className="h-11 rounded-lg">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {STAKEHOLDER_ROLES.map((r) => (
-                          <SelectItem key={r.value} value={r.value}>
-                            {r.icon} {r.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Influence
-                    </label>
-                    <Select
-                      value={stakeholder.influenceLevel}
-                      onValueChange={(v) => handleStakeholderChange(stakeholder.id, 'influenceLevel', v)}
-                    >
-                      <SelectTrigger className="h-11 rounded-lg">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {INFLUENCE_LEVELS.map((l) => (
-                          <SelectItem key={l.value} value={l.value}>
-                            {l.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                      Sentiment
-                    </label>
-                    <Select
-                      value={stakeholder.sentiment}
-                      onValueChange={(v) => handleStakeholderChange(stakeholder.id, 'sentiment', v)}
-                    >
-                      <SelectTrigger className="h-11 rounded-lg">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {SENTIMENT_OPTIONS.map((s) => (
-                          <SelectItem key={s.value} value={s.value}>
-                            {s.icon} {s.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Email
+                        </label>
+                        <Input
+                          type="email"
+                          value={stakeholder.email}
+                          onChange={(e) => handleStakeholderChange(stakeholder.id, 'email', e.target.value)}
+                          placeholder="email@company.com"
+                          className="h-10 rounded-lg bg-white"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Phone
+                        </label>
+                        <Input
+                          value={stakeholder.phone}
+                          onChange={(e) => handleStakeholderChange(stakeholder.id, 'phone', e.target.value)}
+                          placeholder="+1 (555) 123-4567"
+                          className="h-10 rounded-lg bg-white"
+                        />
+                      </div>
+                    </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
-                    Engagement Notes
-                  </label>
-                  <Textarea
-                    value={stakeholder.engagementNotes}
-                    onChange={(e) => handleStakeholderChange(stakeholder.id, 'engagementNotes', e.target.value)}
-                    placeholder="Notes about interactions, preferences, concerns..."
-                    className="rounded-lg resize-none"
-                    rows={2}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Role
+                        </label>
+                        <Select
+                          value={stakeholder.role}
+                          onValueChange={(v) => handleStakeholderChange(stakeholder.id, 'role', v)}
+                        >
+                          <SelectTrigger className="h-10 rounded-lg bg-white">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {STAKEHOLDER_ROLES.map((r) => (
+                              <SelectItem key={r.value} value={r.value}>
+                                {r.icon} {r.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Influence
+                        </label>
+                        <Select
+                          value={stakeholder.influenceLevel}
+                          onValueChange={(v) => handleStakeholderChange(stakeholder.id, 'influenceLevel', v)}
+                        >
+                          <SelectTrigger className="h-10 rounded-lg bg-white">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {INFLUENCE_LEVELS.map((l) => (
+                              <SelectItem key={l.value} value={l.value}>
+                                {l.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                          Sentiment
+                        </label>
+                        <Select
+                          value={stakeholder.sentiment}
+                          onValueChange={(v) => handleStakeholderChange(stakeholder.id, 'sentiment', v)}
+                        >
+                          <SelectTrigger className="h-10 rounded-lg bg-white">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SENTIMENT_OPTIONS.map((s) => (
+                              <SelectItem key={s.value} value={s.value}>
+                                {s.icon} {s.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                        Engagement Notes
+                      </label>
+                      <Textarea
+                        value={stakeholder.engagementNotes}
+                        onChange={(e) => handleStakeholderChange(stakeholder.id, 'engagementNotes', e.target.value)}
+                        placeholder="Notes about interactions, preferences, concerns..."
+                        className="rounded-lg resize-none bg-white"
+                        rows={2}
+                      />
+                    </div>
+
+                    {/* Collapse button */}
+                    <div className="flex justify-end pt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setExpandedId(null)}
+                        className="text-xs"
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  </CardContent>
+                )}
+              </Card>
+            )
+          })}
 
           <Button
             variant="outline"

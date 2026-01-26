@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import { DealDraftsTabContent } from '@/components/pcf/list-view/DealDraftsTabContent'
 import {
   DealOverviewSectionPCF,
   DealActivitySectionPCF,
@@ -181,9 +182,7 @@ export const dealsListConfig: ListViewConfig<Deal> = {
   primaryAction: {
     label: 'New Deal',
     icon: Plus,
-    onClick: () => {
-      window.dispatchEvent(new CustomEvent('openDealDialog', { detail: { dialogId: 'create' } }))
-    },
+    href: '/employee/crm/deals/new',
   },
 
   statsCards: [
@@ -416,9 +415,7 @@ export const dealsListConfig: ListViewConfig<Deal> = {
         : 'Create your first deal to start tracking your pipeline',
     action: {
       label: 'Create Deal',
-      onClick: () => {
-        window.dispatchEvent(new CustomEvent('openDealDialog', { detail: { dialogId: 'create' } }))
-      },
+      href: '/employee/crm/deals/new',
     },
   },
 
@@ -480,6 +477,106 @@ export const dealsListConfig: ListViewConfig<Deal> = {
 
   // Stats query for metrics cards
   useStatsQuery: () => trpc.crm.deals.stats.useQuery(),
+
+  // Tabs configuration - "Deals" and "Drafts" tabs
+  tabs: [
+    {
+      id: 'deals',
+      label: 'Deals',
+      showFilters: true,
+      useQuery: (filters: Record<string, unknown>) => {
+        const stageValue = filters.stage as string | undefined
+        const healthValue = filters.healthStatus as string | undefined
+        const ownerIdValue = filters.ownerId as string | undefined
+        const accountIdValue = filters.accountId as string | undefined
+        const sortByValue = filters.sortBy as string | undefined
+        const sortOrderValue = filters.sortOrder as string | undefined
+
+        const validHealth = ['on_track', 'slow', 'stale', 'urgent', 'at_risk', 'all'] as const
+        const _validSortFields = ['created_at', 'expected_close_date', 'value', 'last_activity_at', 'name', 'stage', 'probability'] as const
+
+        type HealthStatus = (typeof validHealth)[number]
+        type SortField = (typeof _validSortFields)[number]
+
+        const sortFieldMap: Record<string, SortField> = {
+          name: 'name',
+          account: 'created_at',
+          stage: 'stage',
+          value: 'value',
+          probability: 'probability',
+          expected_close_date: 'expected_close_date',
+          owner: 'created_at',
+          last_activity_at: 'last_activity_at',
+          created_at: 'created_at',
+        }
+
+        const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+          ? sortFieldMap[sortByValue]
+          : 'expected_close_date'
+
+        let ownerIdFilter: string | undefined
+        if (ownerIdValue === 'me') {
+          ownerIdFilter = undefined
+        } else if (ownerIdValue && ownerIdValue !== 'all') {
+          ownerIdFilter = ownerIdValue
+        }
+
+        return trpc.crm.deals.list.useQuery({
+          search: filters.search as string | undefined,
+          stage: stageValue !== 'all' ? stageValue : undefined,
+          healthStatus: (healthValue && validHealth.includes(healthValue as HealthStatus)
+            ? healthValue
+            : 'all') as HealthStatus,
+          ownerId: ownerIdFilter,
+          accountId: accountIdValue !== 'all' ? accountIdValue : undefined,
+          excludeClosed: false,
+          limit: (filters.limit as number) || 50,
+          offset: (filters.offset as number) || 0,
+          sortBy: mappedSortBy,
+          sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'asc'),
+        })
+      },
+      emptyState: {
+        icon: Handshake,
+        title: 'No deals found',
+        description: (filters: Record<string, unknown>) =>
+          filters.search
+            ? 'Try adjusting your search or filters'
+            : 'Create your first deal to start tracking your pipeline',
+        action: {
+          label: 'Create Deal',
+          href: '/employee/crm/deals/new',
+        },
+      },
+    },
+    {
+      id: 'drafts',
+      label: 'Drafts',
+      showFilters: false,
+      useQuery: () => {
+        const draftsQuery = trpc.crm.deals.listMyDrafts.useQuery()
+        return {
+          data: draftsQuery.data ? {
+            items: draftsQuery.data as unknown as Deal[],
+            total: draftsQuery.data.length,
+          } : undefined,
+          isLoading: draftsQuery.isLoading,
+          error: draftsQuery.error,
+        }
+      },
+      customComponent: DealDraftsTabContent,
+      emptyState: {
+        icon: FileText,
+        title: 'No drafts',
+        description: "You don't have any deals in progress. Start creating a new one!",
+        action: {
+          label: 'Start New Deal',
+          href: '/employee/crm/deals/new',
+        },
+      },
+    },
+  ],
+  defaultTab: 'deals',
 }
 
 // Deals Detail View Configuration

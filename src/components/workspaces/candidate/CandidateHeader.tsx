@@ -258,6 +258,10 @@ export function CandidateHeader({ candidate, stats, onAction }: CandidateHeaderP
                 <FileText className="h-4 w-4 mr-2" />
                 Create Profile
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleAction('generateResume')}>
+                <FileText className="h-4 w-4 mr-2" />
+                Generate Resume
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleToggleHotlist}>
                 <Star className={cn(

@@ -84,8 +84,8 @@ export function EntityJourneySidebar({
   const journeyConfig = entityJourneys[entityType]
   const searchParams = useSearchParams()
   const router = useRouter()
-  // Default section varies by entity type (account uses 'summary', others use 'overview')
-  const defaultSection = entityType === 'account' ? 'summary' : 'overview'
+  // Default section varies by entity type - use 'summary' for entities that have it, 'overview' for others
+  const defaultSection = ['account', 'lead', 'contact'].includes(entityType) ? 'summary' : 'overview'
   const currentSection = searchParams.get('section') || defaultSection
   const [isRelatedOpen, setIsRelatedOpen] = useState(true)
   const [isToolsOpen, setIsToolsOpen] = useState(true)
@@ -100,11 +100,11 @@ export function EntityJourneySidebar({
   }, [entityType, entityStatus])
 
   // Get sections for section-based navigation
-  const { mainSections, toolSections } = useMemo(() => {
+  const { overviewSection, mainSections, relatedSections, toolSections } = useMemo(() => {
     if (navigationStyle === 'sections') {
       return getSectionsByGroup(entityType)
     }
-    return { mainSections: [], toolSections: commonToolSections }
+    return { overviewSection: undefined, mainSections: [], relatedSections: [], toolSections: commonToolSections }
   }, [entityType, navigationStyle])
 
   // Get account-specific sections (overview, main, related, tools)
@@ -227,7 +227,7 @@ export function EntityJourneySidebar({
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className={cn('flex flex-col flex-1 overflow-hidden bg-white', className)}>
+      <div className={cn('flex flex-col flex-1 min-h-0 overflow-hidden bg-white', className)}>
         {/* ===== BACK + ACTIONS ROW ===== */}
         <div className="px-3 py-2.5 border-b border-charcoal-100 flex items-center justify-between gap-2">
           {isCollapsed ? (
@@ -315,7 +315,7 @@ export function EntityJourneySidebar({
         </div>
 
         {/* ===== NAVIGATION ===== */}
-        <nav className="flex-1">
+        <nav className="flex-1 overflow-y-auto">
           {/* ACCOUNT SECTIONS MODE - Hublot-inspired clean design */}
           {navigationStyle === 'sections' && entityType === 'account' && accountSections && (
             <>
@@ -690,10 +690,10 @@ export function EntityJourneySidebar({
             </>
           )}
 
-          {/* OTHER SECTIONS MODE - Generic non-job, non-account entities */}
-          {navigationStyle === 'sections' && entityType !== 'job' && entityType !== 'account' && (
+          {/* OTHER SECTIONS MODE - Generic non-job, non-account, non-contact entities (Lead, Campaign, Deal, etc.) */}
+          {navigationStyle === 'sections' && entityType !== 'job' && entityType !== 'account' && entityType !== 'contact' && (
             <>
-              {/* Main Sections */}
+              {/* Main Sections - Clean list with overview first */}
               <div className="py-3">
                 {!isCollapsed && (
                   <div className="px-4 pb-2">
@@ -703,6 +703,17 @@ export function EntityJourneySidebar({
                   </div>
                 )}
                 <ul className="space-y-0.5 px-2">
+                  {/* Overview/Summary Section */}
+                  {overviewSection && (
+                    <SectionNavItem
+                      section={overviewSection}
+                      isActive={currentSection === overviewSection.id}
+                      href={buildToolHref(overviewSection.id)}
+                      count={getSectionCount(overviewSection.id)}
+                      isCollapsed={isCollapsed}
+                    />
+                  )}
+                  {/* Main Sections */}
                   {mainSections.map((section) => (
                     <SectionNavItem
                       key={section.id}
@@ -716,20 +727,101 @@ export function EntityJourneySidebar({
                 </ul>
               </div>
 
+              {/* Related Data - Collapsible (only if there are related sections) */}
+              {relatedSections.length > 0 && (
+                <Collapsible
+                  open={isRelatedOpen}
+                  onOpenChange={setIsRelatedOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
+                    )}
+                  >
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isRelatedOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Related
+                        </span>
+                      </>
+                    )}
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isRelatedOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Related Data</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {relatedSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+
               {/* Tool Sections (Collapsible) */}
               <Collapsible
                 open={isToolsOpen}
                 onOpenChange={setIsToolsOpen}
                 className="border-t border-charcoal-100/80"
               >
-                <CollapsibleTrigger className="flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50">
-                  <ChevronRight className={cn(
-                    'w-3 h-3 text-charcoal-400 transition-transform duration-200',
-                    isToolsOpen && 'rotate-90'
-                  )} />
-                  <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
-                    Tools
-                  </span>
+                <CollapsibleTrigger
+                  className={cn(
+                    'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                    isCollapsed && 'justify-center px-2'
+                  )}
+                >
+                  {!isCollapsed && (
+                    <>
+                      <ChevronRight className={cn(
+                        'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                        isToolsOpen && 'rotate-90'
+                      )} />
+                      <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                        Tools
+                      </span>
+                    </>
+                  )}
+                  {isCollapsed && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="w-9 h-9 flex items-center justify-center">
+                          <ChevronRight className={cn(
+                            'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                            isToolsOpen && 'rotate-90'
+                          )} />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                        <p>Tools</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <ul className="space-y-0.5 px-2 pb-3">

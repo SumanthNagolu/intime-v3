@@ -13,6 +13,7 @@
  * 4. Renders section with mode='create'
  */
 
+export { SourceSelectionStepWrapper } from './SourceSelectionStepWrapper'
 export { IdentityStepWrapper } from './IdentityStepWrapper'
 export { ExperienceStepWrapper } from './ExperienceStepWrapper'
 export { SkillsStepWrapper } from './SkillsStepWrapper'

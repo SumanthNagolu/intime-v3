@@ -307,6 +307,15 @@ export function TeamOverviewSection({
                   View All
                   <ArrowRight className="ml-1 h-3.5 w-3.5" />
                 </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100"
+                  onClick={() => onNavigate('board')}
+                >
+                  Board View
+                  <BarChart3 className="ml-1 h-3.5 w-3.5" />
+                </Button>
               </div>
             </div>
             <div className="divide-y divide-charcoal-100">

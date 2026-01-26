@@ -67,6 +67,13 @@ export interface Lead extends Record<string, unknown> {
 
 // Lead status configuration
 export const LEAD_STATUS_CONFIG: Record<string, StatusConfig> = {
+  draft: {
+    label: 'Draft',
+    color: 'bg-charcoal-50 text-charcoal-500',
+    bgColor: 'bg-charcoal-50',
+    textColor: 'text-charcoal-500',
+    icon: FileText,
+  },
   new: {
     label: 'New',
     color: 'bg-charcoal-100 text-charcoal-700',

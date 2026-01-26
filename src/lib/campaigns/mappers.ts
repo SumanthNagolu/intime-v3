@@ -44,6 +44,12 @@ import {
 export function mapToSetupData(
   campaign: Record<string, unknown>
 ): CampaignSetupSectionData {
+  // Priority and tags may be stored in target_criteria until dedicated columns added
+  const targetCriteria =
+    (campaign.targetCriteria as Record<string, unknown>) ||
+    (campaign.target_criteria as Record<string, unknown>) ||
+    {}
+
   return {
     name: (campaign.name as string) || DEFAULT_SETUP_DATA.name,
     campaignType:
@@ -53,12 +59,16 @@ export function mapToSetupData(
     goal:
       (campaign.goal as CampaignGoal) || DEFAULT_SETUP_DATA.goal,
     priority:
-      (campaign.priority as CampaignPriority) || DEFAULT_SETUP_DATA.priority,
+      (campaign.priority as CampaignPriority) ||
+      (targetCriteria.priority as CampaignPriority) ||
+      DEFAULT_SETUP_DATA.priority,
     description:
       (campaign.description as string) || DEFAULT_SETUP_DATA.description,
     tags: Array.isArray(campaign.tags)
       ? (campaign.tags as string[])
-      : DEFAULT_SETUP_DATA.tags,
+      : Array.isArray(targetCriteria.tags)
+        ? (targetCriteria.tags as string[])
+        : DEFAULT_SETUP_DATA.tags,
   }
 }
 
@@ -226,6 +236,66 @@ export function mapToChannelsData(
       ? phoneConfig.daysBetween
       : DEFAULT_CHANNELS_DATA.phoneDaysBetween
 
+  // Extract SMS config
+  const smsConfig = (sequences.sms as Record<string, unknown>) || {}
+  const smsSteps = Array.isArray(smsConfig.steps)
+    ? smsConfig.steps.length
+    : typeof smsConfig.stepCount === 'number'
+      ? smsConfig.stepCount
+      : DEFAULT_CHANNELS_DATA.smsSteps
+  const smsDaysBetween =
+    typeof smsConfig.daysBetween === 'number'
+      ? smsConfig.daysBetween
+      : DEFAULT_CHANNELS_DATA.smsDaysBetween
+
+  // Extract Direct Mail config
+  const directMailConfig = (sequences.direct_mail as Record<string, unknown>) || {}
+  const directMailSteps = Array.isArray(directMailConfig.steps)
+    ? directMailConfig.steps.length
+    : typeof directMailConfig.stepCount === 'number'
+      ? directMailConfig.stepCount
+      : DEFAULT_CHANNELS_DATA.directMailSteps
+  const directMailDaysBetween =
+    typeof directMailConfig.daysBetween === 'number'
+      ? directMailConfig.daysBetween
+      : DEFAULT_CHANNELS_DATA.directMailDaysBetween
+
+  // Extract Event config
+  const eventConfig = (sequences.event as Record<string, unknown>) || {}
+  const eventSteps = Array.isArray(eventConfig.steps)
+    ? eventConfig.steps.length
+    : typeof eventConfig.stepCount === 'number'
+      ? eventConfig.stepCount
+      : DEFAULT_CHANNELS_DATA.eventSteps
+  const eventDaysBetween =
+    typeof eventConfig.daysBetween === 'number'
+      ? eventConfig.daysBetween
+      : DEFAULT_CHANNELS_DATA.eventDaysBetween
+
+  // Extract Job Board config
+  const jobBoardConfig = (sequences.job_board as Record<string, unknown>) || {}
+  const jobBoardSteps = Array.isArray(jobBoardConfig.steps)
+    ? jobBoardConfig.steps.length
+    : typeof jobBoardConfig.stepCount === 'number'
+      ? jobBoardConfig.stepCount
+      : DEFAULT_CHANNELS_DATA.jobBoardSteps
+  const jobBoardDaysBetween =
+    typeof jobBoardConfig.daysBetween === 'number'
+      ? jobBoardConfig.daysBetween
+      : DEFAULT_CHANNELS_DATA.jobBoardDaysBetween
+
+  // Extract Referral config
+  const referralConfig = (sequences.referral as Record<string, unknown>) || {}
+  const referralSteps = Array.isArray(referralConfig.steps)
+    ? referralConfig.steps.length
+    : typeof referralConfig.stepCount === 'number'
+      ? referralConfig.stepCount
+      : DEFAULT_CHANNELS_DATA.referralSteps
+  const referralDaysBetween =
+    typeof referralConfig.daysBetween === 'number'
+      ? referralConfig.daysBetween
+      : DEFAULT_CHANNELS_DATA.referralDaysBetween
+
   // Extract automation settings
   const stopConditions =
     (sequences.stopConditions as Record<string, unknown>) || {}
@@ -249,6 +319,16 @@ export function mapToChannelsData(
     linkedinDaysBetween,
     phoneSteps,
     phoneDaysBetween,
+    smsSteps,
+    smsDaysBetween,
+    directMailSteps,
+    directMailDaysBetween,
+    eventSteps,
+    eventDaysBetween,
+    jobBoardSteps,
+    jobBoardDaysBetween,
+    referralSteps,
+    referralDaysBetween,
     stopOnReply:
       (stopConditions.onReply as boolean) ??
       DEFAULT_CHANNELS_DATA.stopOnReply,
@@ -298,11 +378,15 @@ export function mapToScheduleData(
     return ''
   }
 
-  // Extract send window config
+  // Extract send window from individual columns or jsonb
   const sendWindow =
     (campaign.sendWindow as Record<string, unknown>) ||
     (campaign.send_window as Record<string, unknown>) ||
     {}
+
+  // Schedule metadata may be stored in sequences until dedicated columns added
+  const sequences =
+    (campaign.sequences as Record<string, unknown>) || {}
 
   return {
     startDate:
@@ -316,29 +400,41 @@ export function mapToScheduleData(
     launchImmediately:
       (campaign.launchImmediately as boolean) ??
       (campaign.launch_immediately as boolean) ??
+      (sequences.launchImmediately as boolean) ??
       DEFAULT_SCHEDULE_DATA.launchImmediately,
+    // Read from individual columns first, then sendWindow jsonb
     sendWindowStart:
+      (campaign.send_window_start as string) ||
+      (campaign.sendWindowStart as string) ||
       (sendWindow.start as string) ||
       (sendWindow.startTime as string) ||
       DEFAULT_SCHEDULE_DATA.sendWindowStart,
     sendWindowEnd:
+      (campaign.send_window_end as string) ||
+      (campaign.sendWindowEnd as string) ||
       (sendWindow.end as string) ||
       (sendWindow.endTime as string) ||
       DEFAULT_SCHEDULE_DATA.sendWindowEnd,
-    sendDays: Array.isArray(sendWindow.days)
-      ? (sendWindow.days as SendDay[])
-      : DEFAULT_SCHEDULE_DATA.sendDays,
+    sendDays: Array.isArray(campaign.send_days)
+      ? (campaign.send_days as SendDay[])
+      : Array.isArray(campaign.sendDays)
+        ? (campaign.sendDays as SendDay[])
+        : Array.isArray(sendWindow.days)
+          ? (sendWindow.days as SendDay[])
+          : DEFAULT_SCHEDULE_DATA.sendDays,
     timezone:
-      (sendWindow.timezone as string) ||
       (campaign.timezone as string) ||
+      (sendWindow.timezone as string) ||
       DEFAULT_SCHEDULE_DATA.timezone,
     isRecurring:
       (campaign.isRecurring as boolean) ??
       (campaign.is_recurring as boolean) ??
+      (sequences.isRecurring as boolean) ??
       DEFAULT_SCHEDULE_DATA.isRecurring,
     recurringInterval:
       (campaign.recurringInterval as CampaignScheduleSectionData['recurringInterval']) ||
       (campaign.recurring_interval as CampaignScheduleSectionData['recurringInterval']) ||
+      (sequences.recurringInterval as CampaignScheduleSectionData['recurringInterval']) ||
       DEFAULT_SCHEDULE_DATA.recurringInterval,
   }
 }
@@ -357,10 +453,15 @@ export function mapToBudgetData(
   const budget =
     (campaign.budget as Record<string, unknown>) || {}
 
+  // Targets may be stored in sequences until dedicated column added
+  const sequences =
+    (campaign.sequences as Record<string, unknown>) || {}
+
   const targets =
     (campaign.targets as Record<string, unknown>) ||
     (campaign.targetMetrics as Record<string, unknown>) ||
     (campaign.target_metrics as Record<string, unknown>) ||
+    (sequences.targets as Record<string, unknown>) ||
     {}
 
   return {
@@ -458,10 +559,15 @@ export function mapToBudgetData(
 export function mapToTeamData(
   campaign: Record<string, unknown>
 ): CampaignTeamSectionData {
-  // Extract team assignments
+  // Team metadata may be stored in sequences until dedicated columns added
+  const sequences =
+    (campaign.sequences as Record<string, unknown>) || {}
+
+  // Extract team assignments from campaign or sequences
   const teamAssignment =
     (campaign.teamAssignment as Record<string, unknown>) ||
     (campaign.team_assignment as Record<string, unknown>) ||
+    (sequences.teamAssignment as Record<string, unknown>) ||
     {}
 
   // Extract approval settings
@@ -470,12 +576,22 @@ export function mapToTeamData(
     (teamAssignment.approval as Record<string, unknown>) ||
     {}
 
-  // Extract notification settings
+  // Extract notification settings from campaign or sequences
   const notifications =
     (campaign.notifications as Record<string, unknown>) ||
     (campaign.notificationSettings as Record<string, unknown>) ||
     (campaign.notification_settings as Record<string, unknown>) ||
+    (sequences.notifications as Record<string, unknown>) ||
     {}
+
+  // Check approval_status column for requires approval
+  const approvalStatus = campaign.approval_status as string
+  const requiresApproval =
+    (approval.required as boolean) ??
+    (campaign.requiresApproval as boolean) ??
+    (campaign.requires_approval as boolean) ??
+    (approvalStatus === 'pending' || approvalStatus === 'approved' || approvalStatus === 'rejected') ??
+    DEFAULT_TEAM_DATA.requiresApproval
 
   return {
     ownerId:
@@ -487,6 +603,7 @@ export function mapToTeamData(
       (campaign.teamId as string) ||
       (campaign.team_id as string) ||
       (teamAssignment.teamId as string) ||
+      (sequences.teamId as string) ||
       DEFAULT_TEAM_DATA.teamId,
     collaboratorIds: Array.isArray(teamAssignment.collaboratorIds)
       ? (teamAssignment.collaboratorIds as string[])
@@ -495,11 +612,7 @@ export function mapToTeamData(
         : Array.isArray(campaign.collaboratorIds)
           ? (campaign.collaboratorIds as string[])
           : DEFAULT_TEAM_DATA.collaboratorIds,
-    requiresApproval:
-      (approval.required as boolean) ??
-      (campaign.requiresApproval as boolean) ??
-      (campaign.requires_approval as boolean) ??
-      DEFAULT_TEAM_DATA.requiresApproval,
+    requiresApproval,
     approverIds: Array.isArray(approval.approverIds)
       ? (approval.approverIds as string[])
       : Array.isArray(approval.approver_ids)

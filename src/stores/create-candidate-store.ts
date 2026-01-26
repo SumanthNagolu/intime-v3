@@ -7,16 +7,21 @@ import type { PhoneInputValue } from '@/components/ui/phone-input'
 export interface WorkHistoryEntry {
   id: string // Unique ID for React keys and editing
   companyName: string
+  companyIndustry?: string // Inferred industry (e.g., "Insurance", "Banking")
   jobTitle: string
-  employmentType?: 'full_time' | 'contract' | 'part_time' | 'internship'
+  employmentType?: 'full_time' | 'contract' | 'part_time' | 'internship' | 'freelance'
   startDate: string // YYYY-MM format
   endDate?: string // YYYY-MM format, undefined if current
   isCurrent: boolean
   locationCity?: string
   locationState?: string
+  locationCountry?: string
   isRemote?: boolean
   description?: string
+  responsibilities?: string[] // Key responsibilities
   achievements: string[]
+  skillsUsed?: string[] // Skills used in this role
+  toolsUsed?: string[] // Tools/technologies used
   isFromResume?: boolean // Flag for AI-parsed entries
 }
 
@@ -51,7 +56,7 @@ export interface ComplianceDocumentEntry {
 // Comprehensive candidate form data type - based on Bullhorn/Ceipal best practices
 export interface CreateCandidateFormData {
   // Step 1: Source
-  sourceType: 'manual' | 'resume' | 'linkedin'
+  sourceType: 'manual' | 'resume' | 'csv'
   resumeStoragePath?: string
   resumeParsed?: boolean
   resumeFileName?: string // For display in review
@@ -64,16 +69,20 @@ export interface CreateCandidateFormData {
   email: string
   phone: PhoneInputValue
   linkedinProfile?: string
-  // Location
+  // Location (standard address pattern)
   location: string
+  locationStreet?: string
   locationCity?: string
-  locationState?: string
-  locationCountry?: string
+  locationState?: string // State/province code (e.g., 'TX', 'CA', 'ON')
+  locationCountry?: string // Country code (e.g., 'US', 'CA', 'IN')
 
   // Step 3: Professional Profile
   professionalHeadline?: string
   professionalSummary?: string
   experienceYears: number
+  // Current position (for quick editing in Identity step, separate from detailed workHistory)
+  currentTitle?: string
+  currentCompany?: string
   // Employment preferences
   employmentTypes: ('full_time' | 'contract' | 'contract_to_hire' | 'part_time')[]
   workModes: ('on_site' | 'remote' | 'hybrid')[]
@@ -95,8 +104,10 @@ export interface CreateCandidateFormData {
   requiresSponsorship: boolean
   currentSponsor?: string
   isTransferable?: boolean
+  clearanceLevel?: 'none' | 'public_trust' | 'secret' | 'top_secret' | 'ts_sci' // Security clearance
   availability: 'immediate' | '2_weeks' | '30_days' | '60_days' | 'not_available'
   availableFrom?: string // ISO date string for specific date
+  noticePeriod?: string // Text description e.g., "2 weeks"
   noticePeriodDays?: number
   willingToRelocate: boolean
   relocationPreferences?: string // Notes on relocation
@@ -236,7 +247,10 @@ const defaultFormData: CreateCandidateFormData = {
   // Step 7: Work Authorization & Availability
   visaStatus: 'us_citizen',
   requiresSponsorship: false,
+  clearanceLevel: 'none',
   availability: '2_weeks',
+  noticePeriod: '2_weeks', // Default: 2 weeks notice
+  noticePeriodDays: 14,
   willingToRelocate: false,
   isRemoteOk: false,
 
@@ -594,33 +608,147 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
   populateFromResume: (data) => {
     const { setFormData, addWorkHistory, addEducation, addCertification, addSkill } = get()
 
-    // Basic info
+    // Determine country code based on parsed location
+    const inferCountryCode = (): 'US' | 'CA' | 'IN' | 'GB' => {
+      const country = data.locationCountry?.toUpperCase()
+      if (country === 'CA' || country === 'CANADA') return 'CA'
+      if (country === 'IN' || country === 'INDIA') return 'IN'
+      if (country === 'GB' || country === 'UK') return 'GB'
+      return 'US'
+    }
+
+    // Map availability string to enum
+    const mapAvailability = (): 'immediate' | '2_weeks' | '30_days' | '60_days' | 'not_available' => {
+      const notice = data.noticePeriod?.toLowerCase() || ''
+      if (notice.includes('immediate') || data.noticePeriodDays === 0) return 'immediate'
+      if (notice.includes('2 week') || (data.noticePeriodDays && data.noticePeriodDays <= 14)) return '2_weeks'
+      if (notice.includes('30') || notice.includes('month') || (data.noticePeriodDays && data.noticePeriodDays <= 30)) return '30_days'
+      if (notice.includes('60') || notice.includes('2 month') || (data.noticePeriodDays && data.noticePeriodDays <= 60)) return '60_days'
+      return '2_weeks' // Default
+    }
+
+    // Map work modes from parsed data
+    const mapWorkModes = (): ('on_site' | 'remote' | 'hybrid')[] => {
+      const modes: ('on_site' | 'remote' | 'hybrid')[] = []
+      if (data.preferredWorkModes) {
+        data.preferredWorkModes.forEach(m => {
+          if (m === 'remote') modes.push('remote')
+          if (m === 'hybrid') modes.push('hybrid')
+          if (m === 'on_site') modes.push('on_site')
+        })
+      }
+      if (data.isRemoteOk) modes.push('remote')
+      return modes.length > 0 ? modes : ['on_site', 'remote'] // Default
+    }
+
+    // Generate professional headline from available data if not provided
+    const generateHeadline = (): string => {
+      // First try explicit headline
+      if (data.professionalHeadline) return data.professionalHeadline
+      // Then try current title
+      if (data.currentTitle) {
+        const years = data.experienceYears || 0
+        if (years > 0) {
+          return `${data.currentTitle} with ${years}+ years experience`
+        }
+        return data.currentTitle
+      }
+      // Fall back to most recent job title from work history
+      if (data.workHistory && data.workHistory.length > 0) {
+        const currentJob = data.workHistory.find(j => j.isCurrent) || data.workHistory[0]
+        const years = data.experienceYears || 0
+        if (years > 0) {
+          return `${currentJob.jobTitle} with ${years}+ years experience`
+        }
+        return currentJob.jobTitle
+      }
+      return ''
+    }
+
+    // Generate professional summary from available data if not provided
+    const generateSummary = (): string => {
+      // First try explicit summary
+      if (data.professionalSummary) return data.professionalSummary
+      // Generate basic summary from work history and skills
+      const parts: string[] = []
+      const years = data.experienceYears || 0
+      if (years > 0 && data.workHistory && data.workHistory.length > 0) {
+        const currentJob = data.workHistory.find(j => j.isCurrent) || data.workHistory[0]
+        parts.push(`Experienced ${currentJob.jobTitle} with ${years} years of professional experience.`)
+      }
+      if (data.skills && data.skills.length > 0) {
+        const topSkills = data.skills.slice(0, 5).join(', ')
+        parts.push(`Key skills include ${topSkills}.`)
+      }
+      if (data.education && data.education.length > 0) {
+        const edu = data.education[0]
+        if (edu.degreeName && edu.fieldOfStudy) {
+          parts.push(`${edu.degreeName} in ${edu.fieldOfStudy} from ${edu.institutionName}.`)
+        }
+      }
+      return parts.join(' ')
+    }
+
+    // Basic info with all enhanced fields
     setFormData({
       resumeParsed: true,
+      // Contact info
       firstName: data.firstName || '',
       lastName: data.lastName || '',
       email: data.email || '',
-      phone: data.phone ? { countryCode: 'US', number: data.phone } : { countryCode: 'US', number: '' },
+      phone: data.phone ? { countryCode: inferCountryCode(), number: data.phone } : { countryCode: 'US', number: '' },
       linkedinProfile: data.linkedinProfile || '',
-      professionalHeadline: data.professionalHeadline || '',
-      professionalSummary: data.professionalSummary || '',
-      experienceYears: data.experienceYears || 0,
-      location: data.location || '',
+      // Location
+      location: data.location || (data.locationCity && data.locationState ? `${data.locationCity}, ${data.locationState}` : ''),
       locationCity: data.locationCity || '',
       locationState: data.locationState || '',
       locationCountry: data.locationCountry || 'US',
+      // Professional identity - use generated values as fallback
+      professionalHeadline: generateHeadline(),
+      professionalSummary: generateSummary(),
+      experienceYears: data.experienceYears || 0,
+      // Work authorization (critical for staffing)
       visaStatus: data.visaStatus || 'us_citizen',
+      requiresSponsorship: data.requiresSponsorship ?? false,
+      clearanceLevel: data.clearanceLevel || 'none',
+      // Availability
+      availability: mapAvailability(),
+      // Map notice period - derive dropdown value from days if not explicit
+      noticePeriod: data.noticePeriod || (
+        data.noticePeriodDays === 0 ? 'immediate' :
+        data.noticePeriodDays === 7 ? '1_week' :
+        data.noticePeriodDays === 14 ? '2_weeks' :
+        data.noticePeriodDays === 30 ? '30_days' :
+        data.noticePeriodDays === 60 ? '60_days' :
+        data.noticePeriodDays === 90 ? '90_days' :
+        data.noticePeriodDays ? 'other' : '2_weeks'
+      ),
+      noticePeriodDays: data.noticePeriodDays ?? 14,
+      willingToRelocate: data.willingToRelocate ?? false,
+      relocationPreferences: data.relocationPreferences?.join(', '),
+      isRemoteOk: data.isRemoteOk ?? false,
+      // Work modes/employment preferences
+      workModes: mapWorkModes(),
+      // Compensation (if mentioned in resume)
+      ...(data.desiredRate && { desiredRate: data.desiredRate }),
+      ...(data.desiredSalary && { desiredRate: data.desiredSalary }), // Map salary to rate
+      ...(data.rateType && { rateType: data.rateType }),
+      ...(data.salaryCurrency && { currency: data.salaryCurrency as 'USD' | 'CAD' | 'EUR' | 'GBP' | 'INR' }),
     })
 
-    // Work History from resume
+    // Work History from resume (with enhanced fields)
     if (data.workHistory && Array.isArray(data.workHistory)) {
       data.workHistory.forEach((job) => {
         addWorkHistory({
           companyName: job.companyName,
           jobTitle: job.jobTitle,
+          employmentType: job.employmentType,
           startDate: job.startDate,
           endDate: job.endDate,
           isCurrent: job.isCurrent,
+          locationCity: job.locationCity || (job.location?.split(',')[0]?.trim()),
+          locationState: job.locationState || (job.location?.split(',')[1]?.trim()),
+          isRemote: job.isRemote,
           description: job.description,
           achievements: job.achievements || [],
           isFromResume: true,
@@ -659,13 +787,14 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
       })
     }
 
-    // Skills from resume
+    // Skills from resume - use primary skills if available
     if (data.skills && Array.isArray(data.skills)) {
-      data.skills.forEach((skillName, index) => {
+      const primarySkillNames = data.primarySkills || []
+      data.skills.forEach((skillName) => {
         addSkill({
           name: skillName,
           proficiency: 'intermediate',
-          isPrimary: index < 5, // First 5 are primary
+          isPrimary: primarySkillNames.includes(skillName) || data.skills.indexOf(skillName) < 5,
           isCertified: false,
         })
       })
@@ -711,7 +840,7 @@ export const LEAD_SOURCES = [
 export const SOURCE_TYPES = [
   { value: 'manual', label: 'Manual Entry', description: 'Enter candidate details manually', icon: '✏️' },
   { value: 'resume', label: 'Upload Resume', description: 'Parse from resume with AI extraction', icon: '📄' },
-  { value: 'linkedin', label: 'LinkedIn Import', description: 'Import from LinkedIn profile (coming soon)', icon: '💼', disabled: true },
+  { value: 'csv', label: 'Import CSV', description: 'Bulk import candidates from CSV file', icon: '📊' },
 ] as const
 
 export const EMPLOYMENT_TYPES = [

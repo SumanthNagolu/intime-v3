@@ -3830,6 +3830,7 @@ export const crmRouter = router({
           `, { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
+          .neq('stage', 'draft')
 
         if (input.search) {
           query = query.or(`name.ilike.%${input.search}%,title.ilike.%${input.search}%`)
@@ -5163,12 +5164,13 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        // Get all deals for this org (not deleted)
+        // Get all deals for this org (not deleted, excluding drafts)
         const { data: deals } = await adminClient
           .from('deals')
           .select('id, stage, value, probability, closed_at, created_at')
           .eq('org_id', orgId)
           .is('deleted_at', null)
+          .neq('stage', 'draft')
 
         // Calculate total deals count
         const total = deals?.length ?? 0
@@ -5248,8 +5250,8 @@ export const crmRouter = router({
             org_id: orgId,
             name: input.title,
             title: input.title,
-            stage: 'discovery',
-            probability: 20,
+            stage: 'draft',
+            probability: 0,
             value: 0,
             value_basis: 'one_time',
             account_id: input.accountId || null,
@@ -5275,7 +5277,7 @@ export const crmRouter = router({
           .from('deal_stages_history')
           .insert({
             deal_id: data.id,
-            stage: 'discovery',
+            stage: 'draft',
             entered_at: new Date().toISOString(),
             changed_by: userProfileId,
           })
@@ -5286,6 +5288,72 @@ export const crmRouter = router({
         }
 
         return data
+      }),
+
+    /**
+     * List all draft deals for the org
+     */
+    listMyDrafts: orgProtectedProcedure.query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('deals')
+        .select(`
+          id, name, title, stage, value, created_at, updated_at,
+          owner:user_profiles!owner_id(id, full_name, avatar_url)
+        `)
+        .eq('org_id', orgId)
+        .eq('stage', 'draft')
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+
+      if (error) {
+        console.error('[deals.listMyDrafts] Error:', error.message)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data ?? []
+    }),
+
+    /**
+     * Delete a draft deal (soft delete)
+     */
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Verify it's a draft
+        const { data: existing } = await adminClient
+          .from('deals')
+          .select('id, stage')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (!existing) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
+        }
+
+        if (existing.stage !== 'draft') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft deals' })
+        }
+
+        // Soft delete
+        const { error } = await adminClient
+          .from('deals')
+          .update({ deleted_at: new Date().toISOString() })
+          .eq('id', input.id)
+
+        if (error) {
+          console.error('[deals.deleteDraft] Error:', error.message)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
       }),
 
     /**
@@ -5328,81 +5396,16 @@ export const crmRouter = router({
         }
 
         // Update deal data if provided
+        // Note: mappers already send data in snake_case format
         if (input.data && Object.keys(input.data).length > 0) {
-          // Note: deals table doesn't have updated_by column, only updated_at (auto-handled)
           const updateData: Record<string, unknown> = {
             ...input.data,
             last_activity_at: new Date().toISOString(),
           }
 
-          // Map common camelCase fields to snake_case
-          if ('expectedCloseDate' in updateData) {
-            updateData.expected_close_date = updateData.expectedCloseDate
-            delete updateData.expectedCloseDate
-          }
-          if ('valueBasis' in updateData) {
-            updateData.value_basis = updateData.valueBasis
-            delete updateData.valueBasis
-          }
-          if ('healthStatus' in updateData) {
-            updateData.health_status = updateData.healthStatus
-            delete updateData.healthStatus
-          }
-          if ('estimatedPlacements' in updateData) {
-            updateData.estimated_placements = updateData.estimatedPlacements
-            delete updateData.estimatedPlacements
-          }
-          if ('avgBillRate' in updateData) {
-            updateData.avg_bill_rate = updateData.avgBillRate
-            delete updateData.avgBillRate
-          }
-          if ('contractLengthMonths' in updateData) {
-            updateData.contract_length_months = updateData.contractLengthMonths
-            delete updateData.contractLengthMonths
-          }
-          if ('hiringNeeds' in updateData) {
-            updateData.hiring_needs = updateData.hiringNeeds
-            delete updateData.hiringNeeds
-          }
-          if ('servicesRequired' in updateData) {
-            updateData.services_required = updateData.servicesRequired
-            delete updateData.servicesRequired
-          }
-          if ('nextStep' in updateData) {
-            updateData.next_step = updateData.nextStep
-            delete updateData.nextStep
-          }
-          if ('nextStepDate' in updateData) {
-            updateData.next_step_date = updateData.nextStepDate
-            delete updateData.nextStepDate
-          }
-          if ('competitiveAdvantage' in updateData) {
-            updateData.competitive_advantage = updateData.competitiveAdvantage
-            delete updateData.competitiveAdvantage
-          }
-          if ('contractType' in updateData) {
-            updateData.contract_type = updateData.contractType
-            delete updateData.contractType
-          }
-          if ('contractDurationMonths' in updateData) {
-            updateData.contract_duration_months = updateData.contractDurationMonths
-            delete updateData.contractDurationMonths
-          }
-          if ('paymentTerms' in updateData) {
-            updateData.payment_terms = updateData.paymentTerms
-            delete updateData.paymentTerms
-          }
-          if ('billingFrequency' in updateData) {
-            updateData.billing_frequency = updateData.billingFrequency
-            delete updateData.billingFrequency
-          }
-          if ('billingContact' in updateData) {
-            updateData.billing_contact = updateData.billingContact
-            delete updateData.billingContact
-          }
-          if ('rolesBreakdown' in updateData) {
-            updateData.roles_breakdown = updateData.rolesBreakdown
-            delete updateData.rolesBreakdown
+          // Also update `name` when `title` is updated (both columns exist in deals table)
+          if ('title' in updateData && updateData.title) {
+            updateData.name = updateData.title
           }
 
           const { error } = await adminClient
@@ -5412,6 +5415,7 @@ export const crmRouter = router({
             .eq('org_id', orgId)
 
           if (error) {
+            console.error('[updateDraft] Database error:', error.message, 'Data:', JSON.stringify(updateData, null, 2))
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
           }
         }
@@ -5432,19 +5436,23 @@ export const crmRouter = router({
               name: s.name,
               title: s.title || null,
               email: s.email || null,
-              phone: s.phone || null,
               role: s.role,
               influence_level: s.influence_level || 'medium',
               sentiment: s.sentiment || 'neutral',
               engagement_notes: s.engagement_notes || null,
               is_primary: s.is_primary || false,
               is_active: s.is_active ?? true,
-              created_by: user?.id,
+              // Note: deal_stakeholders table doesn't have created_by or phone columns
             }))
 
-            await adminClient
+            const { error: stakeholderError } = await adminClient
               .from('deal_stakeholders')
               .insert(stakeholderInserts)
+
+            if (stakeholderError) {
+              console.error('[updateDraft] Stakeholder insert error:', stakeholderError)
+              // Don't fail the whole operation, but log the error
+            }
           }
         }
 
@@ -5486,14 +5494,21 @@ export const crmRouter = router({
         // Look up user_profiles.id from auth_id (FK references user_profiles, not auth.users)
         const userProfileId = await getUserProfileId(user?.id)
 
-        // Mark as no longer a draft
-        // Mark the deal as finalized (update activity timestamp)
+        // Mark as no longer a draft - change stage to 'discovery' if still in draft
         // Note: deals table doesn't have updated_by column
+        const updateData: Record<string, unknown> = {
+          last_activity_at: new Date().toISOString(),
+        }
+
+        // If the deal is in draft stage, move it to discovery
+        if (deal.stage === 'draft') {
+          updateData.stage = 'discovery'
+          updateData.probability = 20
+        }
+
         const { data, error } = await adminClient
           .from('deals')
-          .update({
-            last_activity_at: new Date().toISOString(),
-          })
+          .update(updateData)
           .eq('id', input.id)
           .eq('org_id', orgId)
           .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!deals_company_id_fkey(id, name)')
@@ -5501,6 +5516,19 @@ export const crmRouter = router({
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // If deal was created from a lead, link the deal back to the lead
+        if (deal.lead_id) {
+          await adminClient
+            .from('leads')
+            .update({
+              converted_to_deal_id: input.id,
+              status: 'converted',
+              converted_at: new Date().toISOString(),
+            })
+            .eq('id', deal.lead_id)
+            .eq('org_id', orgId)
         }
 
         // Log activity (only if we have a user profile ID for FK constraint)
@@ -8276,11 +8304,14 @@ export const crmRouter = router({
         campaignType: z.string().optional(),
         goal: z.string().optional(),
         description: z.string().optional(),
+        priority: z.enum(['low', 'normal', 'high', 'urgent']).optional(),
+        tags: z.array(z.string()).optional(),
         targetCriteria: z.record(z.unknown()).optional(),
         channels: z.array(z.string()).optional(),
         sequences: z.record(z.unknown()).optional(),
         startDate: z.string().optional(),
         endDate: z.string().optional(),
+        launchImmediately: z.boolean().optional(),
         budgetTotal: z.union([z.number(), z.string()]).optional(),
         budgetCurrency: z.string().optional(),
         targetLeads: z.number().min(0).optional(),
@@ -8298,24 +8329,122 @@ export const crmRouter = router({
         teamId: z.string().uuid().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId, profileId } = ctx
         const adminClient = getAdminClient()
 
-        const updateData: Record<string, unknown> = { updated_by: user?.id }
+        // Fetch existing campaign to merge JSONB fields properly
+        const { data: existing, error: fetchError } = await adminClient
+          .from('campaigns')
+          .select('target_criteria, sequences, compliance_settings')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError) {
+          console.error('[campaigns.update] Failed to fetch existing campaign:', fetchError)
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+        }
+
+        // Build update data - only include fields that exist in the database
+        // Note: updated_by references user_profiles, so use profileId not user.id
+        const updateData: Record<string, unknown> = { updated_by: profileId }
+
+        // Setup section fields (all exist in DB)
         if (input.name !== undefined) updateData.name = input.name
         if (input.campaignType !== undefined) updateData.campaign_type = input.campaignType
         if (input.goal !== undefined) updateData.goal = input.goal
         if (input.description !== undefined) updateData.description = input.description
-        if (input.targetCriteria !== undefined) updateData.target_criteria = input.targetCriteria
+
+        // Targeting section - merge with existing target_criteria
+        const needsTargetCriteriaUpdate = input.targetCriteria !== undefined || input.priority !== undefined || input.tags !== undefined
+        if (needsTargetCriteriaUpdate) {
+          const existingTc = (existing.target_criteria || {}) as Record<string, unknown>
+          const newTc = input.targetCriteria ? { ...existingTc, ...(input.targetCriteria as Record<string, unknown>) } : existingTc
+          // Store priority and tags in target_criteria until dedicated columns exist
+          if (input.priority !== undefined) newTc._priority = input.priority
+          if (input.tags !== undefined) newTc._tags = input.tags
+          updateData.target_criteria = newTc
+        }
+
+        // Channels section fields
         if (input.channels !== undefined) updateData.channels = input.channels
-        if (input.sequences !== undefined) updateData.sequences = input.sequences
+
+        // Merge sequences with existing data
+        const existingSeq = (existing.sequences || {}) as Record<string, unknown>
+        let sequencesData: Record<string, unknown> | null = null
+
+        if (input.sequences !== undefined) {
+          sequencesData = { ...existingSeq, ...(input.sequences as Record<string, unknown>) }
+        }
+
+        // Schedule section fields
         if (input.startDate !== undefined) updateData.start_date = input.startDate
         if (input.endDate !== undefined) updateData.end_date = input.endDate
+
+        // Handle sendWindow by mapping to individual columns
+        if (input.sendWindow !== undefined) {
+          const sw = input.sendWindow as Record<string, unknown>
+          if (sw.start !== undefined) updateData.send_window_start = sw.start
+          if (sw.end !== undefined) updateData.send_window_end = sw.end
+          if (sw.days !== undefined) updateData.send_days = sw.days
+          if (sw.timezone !== undefined) updateData.timezone = sw.timezone
+        }
+
+        // Store schedule metadata in sequences
+        if (input.isRecurring !== undefined || input.recurringInterval !== undefined || input.launchImmediately !== undefined) {
+          sequencesData = sequencesData || { ...existingSeq }
+          if (input.isRecurring !== undefined) sequencesData.isRecurring = input.isRecurring
+          if (input.recurringInterval !== undefined) sequencesData.recurringInterval = input.recurringInterval
+          if (input.launchImmediately !== undefined) sequencesData.launchImmediately = input.launchImmediately
+        }
+
+        // Budget section fields
         if (input.budgetTotal !== undefined) updateData.budget_total = input.budgetTotal
+        if (input.budgetCurrency !== undefined) updateData.budget_currency = input.budgetCurrency
         if (input.targetLeads !== undefined) updateData.target_leads = input.targetLeads
         if (input.targetMeetings !== undefined) updateData.target_meetings = input.targetMeetings
         if (input.targetRevenue !== undefined) updateData.target_revenue = input.targetRevenue
-        if (input.complianceSettings !== undefined) updateData.compliance_settings = input.complianceSettings
+
+        // Store additional targets in sequences
+        if (input.targets !== undefined) {
+          sequencesData = sequencesData || { ...existingSeq }
+          sequencesData.targets = input.targets
+        }
+
+        // Team section fields
+        if (input.ownerId !== undefined) updateData.owner_id = input.ownerId
+
+        // Store team metadata in sequences
+        if (input.teamId !== undefined || input.teamAssignment !== undefined || input.notifications !== undefined) {
+          sequencesData = sequencesData || { ...existingSeq }
+          if (input.teamId !== undefined) sequencesData.teamId = input.teamId
+          if (input.teamAssignment !== undefined) sequencesData.teamAssignment = input.teamAssignment
+          if (input.notifications !== undefined) sequencesData.notifications = input.notifications
+        }
+
+        // Handle approval
+        if (input.approval !== undefined) {
+          const approval = input.approval as Record<string, unknown>
+          if (approval.required !== undefined) {
+            updateData.approval_status = approval.required ? 'pending' : 'not_required'
+          }
+          sequencesData = sequencesData || { ...existingSeq }
+          sequencesData.approval = input.approval
+        }
+
+        // Add sequences to update if we have any changes
+        if (sequencesData !== null) {
+          updateData.sequences = sequencesData
+        }
+
+        // Compliance section - merge with existing
+        if (input.complianceSettings !== undefined) {
+          const existingCompliance = (existing.compliance_settings || {}) as Record<string, unknown>
+          updateData.compliance_settings = { ...existingCompliance, ...(input.complianceSettings as Record<string, unknown>) }
+        }
+
+        console.log('[campaigns.update] Updating campaign:', input.id, 'with fields:', Object.keys(updateData).join(', '))
+        console.log('[campaigns.update] Update data:', JSON.stringify(updateData, null, 2))
 
         const { data, error } = await adminClient
           .from('campaigns')
@@ -8326,23 +8455,29 @@ export const crmRouter = router({
           .single()
 
         if (error) {
+          console.error('[campaigns.update] Supabase error:', error.message, error.details, error.hint, error.code)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
         // Log activity for campaign update
         const changedFields = Object.keys(updateData).filter(k => k !== 'updated_by')
         if (changedFields.length > 0) {
-          await adminClient
-            .from('activities')
-            .insert({
-              org_id: orgId,
-              entity_type: 'campaign',
-              entity_id: input.id,
-              activity_type: 'note',
-              subject: 'Campaign Updated',
-              description: `Campaign updated. Changed fields: ${changedFields.join(', ')}`,
-              created_by: user?.id,
-            })
+          try {
+            await adminClient
+              .from('activities')
+              .insert({
+                org_id: orgId,
+                entity_type: 'campaign',
+                entity_id: input.id,
+                activity_type: 'note',
+                subject: 'Campaign Updated',
+                description: `Campaign updated. Changed fields: ${changedFields.join(', ')}`,
+                created_by: profileId,
+              })
+          } catch (activityError) {
+            // Don't fail the update if activity logging fails
+            console.error('[campaigns.update] Activity logging failed:', activityError)
+          }
         }
 
         return data
@@ -8355,7 +8490,7 @@ export const crmRouter = router({
         status: z.enum(['active', 'paused', 'completed']),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId, profileId } = ctx
         const adminClient = getAdminClient()
 
         // GUIDEWIRE PATTERN: Check for blocking activities before status change to closing statuses
@@ -8401,7 +8536,7 @@ export const crmRouter = router({
           .from('campaigns')
           .update({
             status: input.status,
-            updated_by: user?.id,
+            updated_by: profileId,
           })
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -8422,7 +8557,7 @@ export const crmRouter = router({
             activity_type: 'note',
             subject: `Campaign ${input.status === 'active' ? 'Resumed' : input.status === 'paused' ? 'Paused' : 'Completed'}`,
             description: `Campaign status changed to ${input.status}`,
-            created_by: user?.id,
+            created_by: profileId,
           })
 
         return data
@@ -9265,10 +9400,11 @@ export const crmRouter = router({
         }
 
         // Get user profile ID (owner_id must reference user_profiles, not auth.users)
+        // user_profiles uses auth_id column to reference auth.users
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const ownerId = userProfile?.id || null
@@ -9325,16 +9461,17 @@ export const crmRouter = router({
         }
 
         // Update enrollment as converted
+        // Store contact.id as converted_lead_id since lead workspace uses unified contacts
         await adminClient
           .from('campaign_enrollments')
           .update({
             converted_to_lead_at: new Date().toISOString(),
-            converted_lead_id: lead.id,
+            converted_lead_id: contact?.id || lead.id,
             status: 'converted',
           })
           .eq('id', input.prospectId)
 
-        // Add 'lead' to contact types
+        // Update contact to be a lead with unified contact approach
         if (contact?.id) {
           // Fetch current types and append 'lead' if not already present
           const { data: currentContact } = await adminClient
@@ -9344,12 +9481,56 @@ export const crmRouter = router({
             .single()
 
           const currentTypes = (currentContact?.types as string[]) || []
-          if (!currentTypes.includes('lead')) {
-            await adminClient
-              .from('contacts')
-              .update({ types: [...currentTypes, 'lead'] })
-              .eq('id', contact.id)
+          const updatedTypes = currentTypes.includes('lead') ? currentTypes : [...currentTypes, 'lead']
+
+          // Map BANT status values to numeric scores for the unified contact model
+          const bantScoreMap: Record<string, number> = {
+            // Budget status -> score
+            confirmed: 25, likely: 18, unclear: 10, no_budget: 0,
+            // Authority status -> score
+            decision_maker: 25, champion: 18, influencer: 10, unknown: 0,
+            // Need status -> score
+            urgent: 25, defined: 18, identified: 10,
+            // Timeline status -> score
+            short: 25, medium: 18, long: 10,
           }
+
+          const bantBudget = input.budgetStatus ? (bantScoreMap[input.budgetStatus] ?? 0) : null
+          const bantAuthority = input.authorityStatus ? (bantScoreMap[input.authorityStatus] ?? 0) : null
+          const bantNeed = input.needStatus ? (bantScoreMap[input.needStatus] ?? 0) : null
+          const bantTimeline = input.timelineStatus ? (bantScoreMap[input.timelineStatus] ?? 0) : null
+          const bantTotal = [bantBudget, bantAuthority, bantNeed, bantTimeline]
+            .filter((v): v is number => v !== null)
+            .reduce((sum, v) => sum + v, 0)
+
+          // Update contact with lead-specific fields for unified workspace
+          await adminClient
+            .from('contacts')
+            .update({
+              types: updatedTypes,
+              subtype: 'person_lead',
+              owner_id: ownerId,
+              // Lead-specific fields (contacts table uses lead_ prefix)
+              lead_status: 'qualified',
+              lead_source: 'campaign',
+              lead_score: input.leadScore ?? null,
+              lead_interest_level: input.interestLevel,
+              source_campaign_id: enrollment.campaign_id,
+              // BANT scores (contacts table uses lead_bant_ prefix)
+              lead_bant_budget: bantBudget,
+              lead_bant_authority: bantAuthority,
+              lead_bant_need: bantNeed,
+              lead_bant_timeline: bantTimeline,
+              lead_bant_total_score: bantTotal || null,
+              lead_bant_budget_notes: input.budgetNotes || null,
+              lead_bant_authority_notes: input.authorityNotes || null,
+              lead_bant_need_notes: input.needNotes || null,
+              lead_bant_timeline_notes: input.timelineNotes || null,
+              // Timestamps
+              updated_at: new Date().toISOString(),
+              updated_by: ownerId,
+            })
+            .eq('id', contact.id)
         }
 
         // Create follow-up task if next action specified
@@ -9442,9 +9623,11 @@ export const crmRouter = router({
       .input(z.object({
         id: z.string().uuid(),
         newName: z.string().min(3).max(100),
+        includeSchedule: z.boolean().default(true),
+        includeSequenceTemplates: z.boolean().default(true),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId, profileId } = ctx
         const adminClient = getAdminClient()
 
         // Get source campaign
@@ -9459,28 +9642,43 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
         }
 
-        // Create duplicate
+        // Create duplicate with configurable options
+        const duplicateData: Record<string, unknown> = {
+          org_id: orgId,
+          name: input.newName,
+          campaign_type: source.campaign_type,
+          goal: source.goal,
+          description: source.description,
+          target_criteria: source.target_criteria,
+          channels: source.channels,
+          sequences: source.sequences,
+          budget_total: source.budget_total,
+          budget_currency: source.budget_currency,
+          target_leads: source.target_leads,
+          target_meetings: source.target_meetings,
+          target_revenue: source.target_revenue,
+          compliance_settings: source.compliance_settings,
+          status: 'draft',
+          owner_id: profileId,
+          created_by: profileId,
+        }
+
+        // Optionally include schedule settings
+        if (input.includeSchedule) {
+          duplicateData.send_window_start = source.send_window_start
+          duplicateData.send_window_end = source.send_window_end
+          duplicateData.send_days = source.send_days
+          duplicateData.timezone = source.timezone
+        }
+
+        // Optionally include sequence templates
+        if (input.includeSequenceTemplates) {
+          duplicateData.sequence_template_ids = source.sequence_template_ids
+        }
+
         const { data, error } = await adminClient
           .from('campaigns')
-          .insert({
-            org_id: orgId,
-            name: input.newName,
-            campaign_type: source.campaign_type,
-            goal: source.goal,
-            description: source.description,
-            target_criteria: source.target_criteria,
-            channels: source.channels,
-            sequences: source.sequences,
-            budget_total: source.budget_total,
-            budget_currency: source.budget_currency,
-            target_leads: source.target_leads,
-            target_meetings: source.target_meetings,
-            target_revenue: source.target_revenue,
-            compliance_settings: source.compliance_settings,
-            status: 'draft',
-            owner_id: user?.id,
-            created_by: user?.id,
-          })
+          .insert(duplicateData)
           .select()
           .single()
 
@@ -9498,7 +9696,7 @@ export const crmRouter = router({
             activity_type: 'note',
             subject: 'Campaign Duplicated',
             description: `Campaign duplicated from "${source.name}" as "${input.newName}"`,
-            created_by: user?.id,
+            created_by: profileId,
           })
 
         return data

@@ -70,10 +70,18 @@ function CreateDealWizard() {
   const { toast } = useToast()
   const utils = trpc.useUtils()
 
-  // Get draft ID and step from URL
+  // Get draft ID, step, and lead context from URL
   const draftId = searchParams.get('id')
   const stepParam = searchParams.get('step')
   const currentStep = stepParam ? parseInt(stepParam, 10) : 1
+  const leadId = searchParams.get('leadId')
+  const campaignId = searchParams.get('campaignId')
+
+  // Fetch lead data if creating from a lead
+  const { data: leadData } = trpc.crm.leads.getById.useQuery(
+    { id: leadId! },
+    { enabled: !!leadId && !draftId }
+  )
 
   // Track last saved time
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
@@ -95,6 +103,7 @@ function CreateDealWizard() {
   const createDraftMutation = trpc.crm.deals.createDraft.useMutation()
   const updateDraftMutation = trpc.crm.deals.updateDraft.useMutation()
   const submitMutation = trpc.crm.deals.submit.useMutation()
+  const deleteDraftMutation = trpc.crm.deals.deleteDraft.useMutation()
 
   // Fetch draft data when we have an ID
   const {
@@ -106,9 +115,10 @@ function CreateDealWizard() {
     { enabled: !!draftId }
   )
 
-  // Load draft data into section state when fetched
+  // Load draft data into section state when fetched (only on initial load)
   useEffect(() => {
-    if (draft?.deal) {
+    if (draft?.deal && !hasLoadedInitialData.current) {
+      hasLoadedInitialData.current = true
       setDetailsData(mapToDetailsData(draft.deal as Record<string, unknown>))
       setStakeholdersData(mapToStakeholdersData(draft.stakeholders || []))
       setTimelineData(mapToTimelineData(draft.deal as Record<string, unknown>))
@@ -119,14 +129,33 @@ function CreateDealWizard() {
 
   // Track if we've already attempted to create a draft (prevent infinite retries)
   const hasAttemptedCreate = useRef(false)
+  // Track if initial data has been loaded (prevent overwriting user edits on refetch)
+  const hasLoadedInitialData = useRef(false)
 
   // Create draft on first load if no ID in URL
   useEffect(() => {
+    // If we have a leadId but no leadData yet, wait for it to load
+    if (leadId && !leadData && !draftId) {
+      return
+    }
+
     if (!draftId && !isCreatingDraft && !createDraftMutation.isPending && !hasAttemptedCreate.current) {
       hasAttemptedCreate.current = true
       setIsCreatingDraft(true)
-      createDraftMutation.mutateAsync({ title: 'New Deal' }).then((newDraft) => {
-        router.replace(`/employee/crm/deals/new?id=${newDraft.id}&step=1`)
+
+      // Generate title from lead data if available
+      const title = leadData
+        ? `${leadData.company_name || leadData.first_name || 'Lead'} - Deal`
+        : 'New Deal'
+
+      createDraftMutation.mutateAsync({ title, leadId: leadId || undefined }).then((newDraft) => {
+        // Preserve leadId and campaignId in URL for reference
+        const params = new URLSearchParams()
+        params.set('id', newDraft.id)
+        params.set('step', '1')
+        if (leadId) params.set('leadId', leadId)
+        if (campaignId) params.set('campaignId', campaignId)
+        router.replace(`/employee/crm/deals/new?${params.toString()}`)
       }).catch((error) => {
         console.error('Failed to create draft:', error)
         setIsCreatingDraft(false)
@@ -137,21 +166,38 @@ function CreateDealWizard() {
         })
       })
     }
-  }, [draftId, isCreatingDraft, createDraftMutation, router, toast])
+  }, [draftId, isCreatingDraft, createDraftMutation, router, toast, leadId, leadData, campaignId])
 
   // Navigation helpers
   const goToStep = useCallback((step: number) => {
     if (draftId) {
-      router.push(`/employee/crm/deals/new?id=${draftId}&step=${step}`)
+      const params = new URLSearchParams()
+      params.set('id', draftId)
+      params.set('step', String(step))
+      if (leadId) params.set('leadId', leadId)
+      if (campaignId) params.set('campaignId', campaignId)
+      router.push(`/employee/crm/deals/new?${params.toString()}`)
     }
-  }, [draftId, router])
+  }, [draftId, router, leadId, campaignId])
 
   const handleStepClick = useCallback((stepNumber: number) => {
     goToStep(stepNumber)
   }, [goToStep])
 
-  const handleBack = useCallback(() => {
+  const handleBack = useCallback(async () => {
     if (currentStep > 1) {
+      // Save current step before navigating back
+      if (saveStepRef.current) {
+        setIsSavingStep(true)
+        try {
+          await saveStepRef.current()
+        } catch (error) {
+          console.error('Failed to save step:', error)
+          // Continue navigation even if save fails - data is still in state
+        } finally {
+          setIsSavingStep(false)
+        }
+      }
       goToStep(currentStep - 1)
     }
   }, [currentStep, goToStep])
@@ -175,9 +221,23 @@ function CreateDealWizard() {
     }
   }, [currentStep, goToStep])
 
-  const handleCancel = useCallback(() => {
-    router.push('/employee/crm/deals')
-  }, [router])
+  const handleCancel = useCallback(async () => {
+    // Delete the draft when cancelling
+    if (draftId) {
+      try {
+        await deleteDraftMutation.mutateAsync({ id: draftId })
+      } catch (error) {
+        // Ignore errors - draft may not exist or already deleted
+        console.error('Failed to delete draft:', error)
+      }
+    }
+    // Navigate back to the campaign if we came from there, otherwise go to deals list
+    if (campaignId) {
+      router.push(`/employee/crm/campaigns/${campaignId}?section=leads`)
+    } else {
+      router.push('/employee/crm/deals')
+    }
+  }, [router, campaignId, draftId, deleteDraftMutation])
 
   // Handle save completion for any step
   const handleSaveComplete = useCallback(() => {
@@ -255,8 +315,9 @@ function CreateDealWizard() {
     }
   }, [draftId, submitMutation, toast, utils, router])
 
-  // Loading state while creating draft or loading draft data
-  if (!draftId || isDraftLoading) {
+  // Loading state while creating draft, loading draft data, or waiting for lead data
+  const isWaitingForLeadData = !!leadId && !leadData && !draftId
+  if (!draftId || isDraftLoading || isWaitingForLeadData) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-center">

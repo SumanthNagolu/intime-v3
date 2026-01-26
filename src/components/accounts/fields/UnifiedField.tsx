@@ -296,6 +296,26 @@ export function UnifiedField({
           />
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-500">%</span>
         </div>
+      ) : type === 'number' ? (
+        <Input
+          type="number"
+          value={value === null || value === undefined ? '' : String(value)}
+          onChange={e => {
+            const val = e.target.value
+            // Convert to number, or undefined if empty (Zod schemas use .optional() not .nullable())
+            if (val === '') {
+              onChange(undefined)
+            } else {
+              const num = Number(val)
+              // Guard against NaN
+              onChange(Number.isNaN(num) ? undefined : num)
+            }
+          }}
+          placeholder={placeholder}
+          min={min}
+          max={max}
+          className="h-11 rounded-lg border-charcoal-200"
+        />
       ) : (
         <Input
           type={type === 'url' ? 'text' : type}

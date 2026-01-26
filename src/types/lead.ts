@@ -21,6 +21,8 @@ export interface FullLeadData {
   history: HistoryEntry[]
   // Computed
   warnings: WorkspaceWarning[]
+  // Raw database record for mappers (contains all snake_case columns)
+  raw: Record<string, unknown>
 }
 
 // Core lead data (from contacts table with lead fields)

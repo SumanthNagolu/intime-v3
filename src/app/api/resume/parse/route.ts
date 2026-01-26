@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { parseResumeWithClaude, ParsedResumeData } from '@/lib/services/resume-parser'
+import { parseResumeWithClaude, ParsedResumeData, ResumeFileType } from '@/lib/services/resume-parser'
 import { createClient } from '@/lib/supabase/server'
 
 // ============================================
 // RESUME PARSE API ROUTE
 // POST /api/resume/parse
+// Supports PDF and DOCX files
 // ============================================
 
 export const maxDuration = 60 // Allow up to 60 seconds for parsing
@@ -52,18 +53,30 @@ export async function POST(request: NextRequest): Promise<NextResponse<ParseResp
 
     if (!file) {
       return NextResponse.json(
-        { success: false, error: 'No file provided. Please upload a PDF resume.' },
+        { success: false, error: 'No file provided. Please upload a PDF or Word document.' },
         { status: 400 }
       )
     }
 
+    // Determine file type
+    const fileName = file.name.toLowerCase()
+    const mimeType = file.type.toLowerCase()
+
+    const isPdf = mimeType.includes('pdf') || fileName.endsWith('.pdf')
+    const isDocx = mimeType.includes('wordprocessingml') ||
+                   mimeType.includes('msword') ||
+                   fileName.endsWith('.docx') ||
+                   fileName.endsWith('.doc')
+
     // Validate file type
-    if (!file.type.includes('pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
+    if (!isPdf && !isDocx) {
       return NextResponse.json(
-        { success: false, error: 'Invalid file type. Please upload a PDF file.' },
+        { success: false, error: 'Invalid file type. Please upload a PDF or Word document (.pdf, .docx, .doc).' },
         { status: 400 }
       )
     }
+
+    const fileType: ResumeFileType = isPdf ? 'pdf' : 'docx'
 
     // Validate file size (10MB max)
     const maxSizeBytes = 10 * 1024 * 1024
@@ -85,6 +98,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ParseResp
     const result = await parseResumeWithClaude(buffer, {
       maxRetries: 1,
       timeoutMs: 45000, // 45 second timeout for Claude
+      fileType,
     })
 
     if (!result.success) {
@@ -148,7 +162,11 @@ export async function GET(): Promise<NextResponse> {
     service: 'resume-parser',
     status: hasApiKey ? 'ready' : 'not_configured',
     maxFileSizeMB: 10,
-    supportedFormats: ['application/pdf'],
+    supportedFormats: [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/msword',
+    ],
   })
 }
 

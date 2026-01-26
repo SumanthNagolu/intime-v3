@@ -52,7 +52,10 @@ export interface IdentitySectionData {
   companyWebsite: string
   industry: string
   companySize: string
-  companyLocation: string
+  // Location fields
+  companyCity: string
+  companyState: string
+  companyCountry: string
   companyLinkedinUrl: string
   // Lead Status
   status: string
@@ -287,9 +290,11 @@ export const DEFAULT_IDENTITY_DATA: IdentitySectionData = {
   companyWebsite: '',
   industry: '',
   companySize: '',
-  companyLocation: '',
+  companyCity: '',
+  companyState: '',
+  companyCountry: 'US',
   companyLinkedinUrl: '',
-  status: 'new',
+  status: '',
 }
 
 export const DEFAULT_CLASSIFICATION_DATA: ClassificationSectionData = {

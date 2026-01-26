@@ -84,7 +84,13 @@ export interface DealBillingContact {
   name: string
   email: string
   phone: string
-  address: string
+  // Structured address fields
+  addressLine1: string
+  addressLine2: string
+  city: string
+  stateProvince: string
+  postalCode: string
+  countryCode: string
 }
 
 export interface DealMilestone {
@@ -227,9 +233,9 @@ export const DEFAULT_DETAILS_DATA: DetailsSectionData = {
   title: '',
   description: '',
   value: 0,
-  probability: 20,
-  valueBasis: 'one_time',
-  currency: 'USD',
+  probability: 0,
+  valueBasis: '',
+  currency: '',
   stage: 'discovery',
   expectedCloseDate: null,
   estimatedPlacements: null,
@@ -237,7 +243,7 @@ export const DEFAULT_DETAILS_DATA: DetailsSectionData = {
   contractLengthMonths: null,
   hiringNeeds: '',
   servicesRequired: [],
-  healthStatus: 'on_track',
+  healthStatus: '',
 }
 
 export const DEFAULT_STAKEHOLDER: Omit<DealStakeholder, 'id'> = {
@@ -246,9 +252,9 @@ export const DEFAULT_STAKEHOLDER: Omit<DealStakeholder, 'id'> = {
   title: '',
   email: '',
   phone: '',
-  role: 'influencer',
-  influenceLevel: 'medium',
-  sentiment: 'neutral',
+  role: '',
+  influenceLevel: '',
+  sentiment: '',
   engagementNotes: '',
   isPrimary: false,
   isActive: true,
@@ -288,15 +294,20 @@ export const DEFAULT_BILLING_CONTACT: DealBillingContact = {
   name: '',
   email: '',
   phone: '',
-  address: '',
+  addressLine1: '',
+  addressLine2: '',
+  city: '',
+  stateProvince: '',
+  postalCode: '',
+  countryCode: 'US',
 }
 
 export const DEFAULT_PROPOSAL_DATA: ProposalSectionData = {
   rolesBreakdown: [],
   contractType: '',
   contractDurationMonths: null,
-  paymentTerms: 'net_30',
-  billingFrequency: 'monthly',
+  paymentTerms: '',
+  billingFrequency: '',
   billingContact: { ...DEFAULT_BILLING_CONTACT },
   confirmedRoles: [],
 }

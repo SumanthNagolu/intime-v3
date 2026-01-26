@@ -3,7 +3,13 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { LeadWorkspace } from '@/components/workspaces/lead/LeadWorkspace'
-import { QualifyLeadDialog, ConvertLeadDialog } from '@/components/crm/leads'
+import {
+  QualifyLeadDialog,
+  ConvertLeadDialog,
+  ConvertLeadToAccountDialog,
+  ConvertLeadToContactDialog,
+  ConvertLeadToCandidateDialog,
+} from '@/components/crm/leads'
 import { trpc } from '@/lib/trpc/client'
 import { useLeadWorkspace } from '@/components/workspaces/lead/LeadWorkspaceProvider'
 import { toast } from 'sonner'
@@ -44,6 +50,53 @@ interface ConvertLeadDialogData {
   bant_total_score?: number
 }
 
+// Type for ConvertLeadToAccountDialog
+interface ConvertToAccountDialogData {
+  id: string
+  company_name?: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  phone?: string
+  title?: string
+  industry?: string
+  company_size?: string
+  company_city?: string
+  company_state?: string
+  company_country?: string
+  company_website?: string
+}
+
+// Type for ConvertLeadToContactDialog
+interface ConvertToContactDialogData {
+  id: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  phone?: string
+  mobile?: string
+  title?: string
+  department?: string
+  company_name?: string
+  linkedin_url?: string
+}
+
+// Type for ConvertLeadToCandidateDialog
+interface ConvertToCandidateDialogData {
+  id: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  phone?: string
+  title?: string
+  company_name?: string
+  linkedin_url?: string
+  company_city?: string
+  company_state?: string
+  company_country?: string
+  primary_skills?: string[]
+}
+
 // Helper to transform LeadData to dialog format
 function toQualifyDialogData(lead: LeadData): QualifyLeadDialogData {
   return {
@@ -74,6 +127,56 @@ function toConvertDialogData(lead: LeadData): ConvertLeadDialogData {
   }
 }
 
+function toAccountDialogData(lead: LeadData, contact: { companySize?: number | null; companyWebsite?: string | null; companyLocation?: string | null } | null, raw: Record<string, unknown>): ConvertToAccountDialogData {
+  return {
+    id: lead.id,
+    company_name: lead.companyName ?? undefined,
+    first_name: lead.firstName,
+    last_name: lead.lastName,
+    email: lead.email ?? undefined,
+    phone: lead.phone ?? undefined,
+    title: lead.title ?? undefined,
+    industry: lead.industry ?? undefined,
+    company_size: contact?.companySize?.toString() ?? (raw?.company_size as string) ?? undefined,
+    company_city: (raw?.company_city as string) ?? undefined,
+    company_state: (raw?.company_state as string) ?? undefined,
+    company_country: (raw?.company_country as string) ?? undefined,
+    company_website: contact?.companyWebsite ?? (raw?.company_website as string) ?? undefined,
+  }
+}
+
+function toContactDialogData(lead: LeadData, contact: { mobile?: string | null; department?: string | null; linkedinUrl?: string | null } | null): ConvertToContactDialogData {
+  return {
+    id: lead.id,
+    first_name: lead.firstName,
+    last_name: lead.lastName,
+    email: lead.email ?? undefined,
+    phone: lead.phone ?? undefined,
+    mobile: contact?.mobile ?? undefined,
+    title: lead.title ?? undefined,
+    department: contact?.department ?? undefined,
+    company_name: lead.companyName ?? undefined,
+    linkedin_url: contact?.linkedinUrl ?? undefined,
+  }
+}
+
+function toCandidateDialogData(lead: LeadData, contact: { linkedinUrl?: string | null } | null, raw: Record<string, unknown>): ConvertToCandidateDialogData {
+  return {
+    id: lead.id,
+    first_name: lead.firstName,
+    last_name: lead.lastName,
+    email: lead.email ?? undefined,
+    phone: lead.phone ?? undefined,
+    title: lead.title ?? undefined,
+    company_name: lead.companyName ?? undefined,
+    linkedin_url: contact?.linkedinUrl ?? undefined,
+    company_city: (raw?.company_city as string) ?? undefined,
+    company_state: (raw?.company_state as string) ?? undefined,
+    company_country: (raw?.company_country as string) ?? undefined,
+    primary_skills: (raw?.primary_skills as string[]) ?? undefined,
+  }
+}
+
 export default function LeadDetailPage() {
   const params = useParams()
   const router = useRouter()
@@ -83,6 +186,9 @@ export default function LeadDetailPage() {
   // Dialog states
   const [showQualifyDialog, setShowQualifyDialog] = useState(false)
   const [showConvertDialog, setShowConvertDialog] = useState(false)
+  const [showConvertToAccountDialog, setShowConvertToAccountDialog] = useState(false)
+  const [showConvertToContactDialog, setShowConvertToContactDialog] = useState(false)
+  const [showConvertToCandidateDialog, setShowConvertToCandidateDialog] = useState(false)
 
   const utils = trpc.useUtils()
 
@@ -109,6 +215,15 @@ export default function LeadDetailPage() {
         case 'convertLead':
           setShowConvertDialog(true)
           break
+        case 'convertToAccount':
+          setShowConvertToAccountDialog(true)
+          break
+        case 'convertToContact':
+          setShowConvertToContactDialog(true)
+          break
+        case 'convertToCandidate':
+          setShowConvertToCandidateDialog(true)
+          break
         case 'delete':
           if (confirm('Are you sure you want to delete this lead?')) {
             deleteLead.mutate({ id: leadId })
@@ -130,6 +245,15 @@ export default function LeadDetailPage() {
           case 'convert':
           case 'convertLead':
             setShowConvertDialog(true)
+            break
+          case 'convertToAccount':
+            setShowConvertToAccountDialog(true)
+            break
+          case 'convertToContact':
+            setShowConvertToContactDialog(true)
+            break
+          case 'convertToCandidate':
+            setShowConvertToCandidateDialog(true)
             break
         }
       }
@@ -194,6 +318,45 @@ export default function LeadDetailPage() {
           lead={toConvertDialogData(data.lead)}
           open={showConvertDialog}
           onOpenChange={(open) => handleDialogChange(open, setShowConvertDialog)}
+        />
+      )}
+
+      {/* Convert Lead to Account Dialog */}
+      {data.lead && (
+        <ConvertLeadToAccountDialog
+          lead={toAccountDialogData(data.lead, data.contact, data.raw)}
+          open={showConvertToAccountDialog}
+          onOpenChange={(open) => handleDialogChange(open, setShowConvertToAccountDialog)}
+          onSuccess={() => {
+            refreshData()
+            utils.unifiedContacts.leads.list.invalidate()
+          }}
+        />
+      )}
+
+      {/* Convert Lead to Contact Dialog */}
+      {data.lead && (
+        <ConvertLeadToContactDialog
+          lead={toContactDialogData(data.lead, data.contact)}
+          open={showConvertToContactDialog}
+          onOpenChange={(open) => handleDialogChange(open, setShowConvertToContactDialog)}
+          onSuccess={() => {
+            refreshData()
+            utils.unifiedContacts.leads.list.invalidate()
+          }}
+        />
+      )}
+
+      {/* Convert Lead to Candidate Dialog */}
+      {data.lead && (
+        <ConvertLeadToCandidateDialog
+          lead={toCandidateDialogData(data.lead, data.contact, data.raw)}
+          open={showConvertToCandidateDialog}
+          onOpenChange={(open) => handleDialogChange(open, setShowConvertToCandidateDialog)}
+          onSuccess={() => {
+            refreshData()
+            utils.unifiedContacts.leads.list.invalidate()
+          }}
         />
       )}
     </>

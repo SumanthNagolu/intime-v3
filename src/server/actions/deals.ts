@@ -179,6 +179,8 @@ export async function getFullDeal(id: string): Promise<FullDealData | null> {
 
 function transformDeal(data: Record<string, unknown>): DealData {
   const owner = data.owner as { id?: string; full_name?: string; avatar_url?: string } | null
+  const podManager = data.pod_manager as { id?: string; full_name?: string; avatar_url?: string } | null
+  const secondaryOwner = data.secondary_owner as { id?: string; full_name?: string; avatar_url?: string } | null
   const stage = (data.stage as string) || 'discovery'
   const value = (data.value as number) || 0
   const probability = (data.probability as number) ?? STAGE_PROBABILITIES[stage] ?? 50
@@ -188,6 +190,48 @@ function transformDeal(data: Record<string, unknown>): DealData {
   const daysInStage = stageEnteredAt
     ? Math.floor((Date.now() - new Date(stageEnteredAt).getTime()) / (1000 * 60 * 60 * 24))
     : 0
+
+  // Transform roles breakdown from snake_case
+  const rolesBreakdownRaw = data.roles_breakdown as Array<{
+    title?: string
+    count?: number
+    bill_rate?: number
+    start_date?: string
+  }> | null
+  const rolesBreakdown = rolesBreakdownRaw?.map(r => ({
+    title: r.title || '',
+    count: r.count || 1,
+    billRate: r.bill_rate || null,
+    startDate: r.start_date || null,
+  })) || null
+
+  // Transform confirmed roles
+  const confirmedRolesRaw = data.confirmed_roles as Array<{
+    title?: string
+    count?: number
+    bill_rate?: number
+    start_date?: string
+  }> | null
+  const confirmedRoles = confirmedRolesRaw?.map(r => ({
+    title: r.title || '',
+    count: r.count || 1,
+    billRate: r.bill_rate || 0,
+    startDate: r.start_date || null,
+  })) || null
+
+  // Transform billing contact
+  const billingContactRaw = data.billing_contact as {
+    name?: string
+    email?: string
+    phone?: string
+    address?: string
+  } | null
+  const billingContact = billingContactRaw ? {
+    name: billingContactRaw.name || '',
+    email: billingContactRaw.email || '',
+    phone: billingContactRaw.phone || null,
+    address: billingContactRaw.address || null,
+  } : null
 
   return {
     id: data.id as string,
@@ -203,13 +247,19 @@ function transformDeal(data: Record<string, unknown>): DealData {
     stage: stage as DealStage,
     expectedCloseDate: data.expected_close_date as string | null,
     actualCloseDate: data.actual_close_date as string | null,
-    // Additional value fields
+    // Staffing-specific value fields
     estimatedPlacements: data.estimated_placements as number | null,
     avgBillRate: data.avg_bill_rate as number | null,
     contractLengthMonths: data.contract_length_months as number | null,
-    // Next steps
-    nextStep: data.next_step as string | null,
-    nextStepDate: data.next_step_date as string | null,
+    hiringNeeds: data.hiring_needs as string | null,
+    rolesBreakdown,
+    servicesRequired: data.services_required as string[] | null,
+    // Competitive intelligence
+    competitors: data.competitors as string[] | null,
+    competitiveAdvantage: data.competitive_advantage as string | null,
+    // Next steps (database columns are next_action/next_action_date)
+    nextStep: (data.next_action as string) || (data.next_step as string) || null,
+    nextStepDate: (data.next_action_date as string) || (data.next_step_date as string) || null,
     // Health
     healthStatus: data.health_status as string | null,
     daysInStage,
@@ -217,12 +267,44 @@ function transformDeal(data: Record<string, unknown>): DealData {
     companyId: data.company_id as string | null,
     leadId: data.lead_id as string | null,
     leadContactId: data.lead_contact_id as string | null,
-    // Owner
+    // Owner & Team
     owner: owner ? {
       id: owner.id || '',
       fullName: owner.full_name || 'Unknown',
       avatarUrl: owner.avatar_url || null
     } : null,
+    podManager: podManager ? {
+      id: podManager.id || '',
+      fullName: podManager.full_name || '',
+      avatarUrl: podManager.avatar_url || null
+    } : null,
+    secondaryOwner: secondaryOwner ? {
+      id: secondaryOwner.id || '',
+      fullName: secondaryOwner.full_name || '',
+      avatarUrl: secondaryOwner.avatar_url || null
+    } : null,
+    // Contract details
+    contractSignedDate: data.contract_signed_date as string | null,
+    contractStartDate: data.contract_start_date as string | null,
+    contractDurationMonths: data.contract_duration_months as number | null,
+    contractType: data.contract_type as string | null,
+    paymentTerms: data.payment_terms as string | null,
+    billingFrequency: data.billing_frequency as string | null,
+    billingContact,
+    confirmedRoles,
+    // Win/Loss details
+    winReason: data.win_reason as string | null,
+    winDetails: data.win_details as string | null,
+    competitorsBeat: data.competitors_beat as string[] | null,
+    lossReason: data.loss_reason as string | null,
+    lossReasonCategory: data.loss_reason_category as string | null,
+    lossDetails: data.loss_details as string | null,
+    competitorWon: data.competitor_won as string | null,
+    competitorPrice: data.competitor_price as number | null,
+    // Future potential
+    futurePotential: data.future_potential as string | null,
+    reengagementDate: data.reengagement_date as string | null,
+    lessonsLearned: data.lessons_learned as string | null,
     // Timestamps
     createdAt: data.created_at as string,
     updatedAt: data.updated_at as string | null,

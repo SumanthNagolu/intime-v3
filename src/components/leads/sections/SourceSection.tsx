@@ -226,6 +226,22 @@ export function SourceSection({
                 placeholder="e.g., spring_2024"
               />
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <UnifiedField
+                label="UTM Content"
+                value={data.utmContent}
+                onChange={(v) => handleChange('utmContent', v)}
+                editable={isEditable}
+                placeholder="e.g., banner_ad"
+              />
+              <UnifiedField
+                label="UTM Term"
+                value={data.utmTerm}
+                onChange={(v) => handleChange('utmTerm', v)}
+                editable={isEditable}
+                placeholder="e.g., staffing+services"
+              />
+            </div>
             <UnifiedField
               label="Landing Page"
               value={data.landingPage}
@@ -233,6 +249,23 @@ export function SourceSection({
               editable={isEditable}
               type="url"
               placeholder="https://example.com/landing-page"
+            />
+            <UnifiedField
+              label="First Contact Method"
+              value={data.firstContactMethod}
+              onChange={(v) => handleChange('firstContactMethod', v)}
+              editable={isEditable}
+              type="select"
+              options={[
+                { value: 'phone', label: 'Phone Call' },
+                { value: 'email', label: 'Email' },
+                { value: 'linkedin', label: 'LinkedIn' },
+                { value: 'website_form', label: 'Website Form' },
+                { value: 'referral', label: 'Referral' },
+                { value: 'event', label: 'Event/Trade Show' },
+                { value: 'cold_outreach', label: 'Cold Outreach' },
+              ]}
+              placeholder="How was first contact made?"
             />
           </CardContent>
         </Card>

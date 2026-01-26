@@ -40,6 +40,7 @@ import { CandidateDocumentsSection } from './sections/CandidateDocumentsSection'
 import { CandidateHistorySection } from './sections/CandidateHistorySection'
 import { DEFAULT_PHONE } from '@/lib/candidates/types'
 import type { CandidateData, CandidateResume } from '@/types/candidate-workspace'
+import { GenerateResumeDialog, type InTimeResumeData } from '@/components/recruiting/resume-template'
 
 // ============ DATA MAPPING FUNCTIONS ============
 
@@ -54,9 +55,10 @@ function mapCandidateToIdentity(candidate: CandidateData): IdentitySectionData {
     phone: candidate.phone ? { countryCode: 'US', number: candidate.phone } : DEFAULT_PHONE,
     mobile: candidate.mobile ? { countryCode: 'US', number: candidate.mobile } : null,
     linkedinUrl: candidate.linkedinUrl || '',
+    streetAddress: candidate.streetAddress || '',
     city: candidate.city || '',
     state: candidate.state || '',
-    country: candidate.country || 'United States',
+    country: candidate.country || 'US', // Country code for dropdown
     title: candidate.title || '',
     headline: candidate.headline || '',
     professionalSummary: candidate.professionalSummary || '',
@@ -101,6 +103,62 @@ function mapCandidateToCompensation(candidate: CandidateData): CompensationSecti
     compensationNotes: candidate.compensationNotes,
     employmentTypes: candidate.employmentTypes || ['full_time'],
     workModes: candidate.workModes || ['on_site'],
+  }
+}
+
+/**
+ * Map CandidateData to InTimeResumeData for PDF generation
+ */
+function mapCandidateToResumeTemplate(
+  candidate: CandidateData,
+  skills: { name: string; isPrimary?: boolean; proficiency?: string }[],
+  workHistory: { title: string; company: string; startDate?: string; endDate?: string; description?: string; location?: string }[],
+  education: { degree: string; institution: string; year?: string; field?: string }[],
+  certifications: { name: string; issuer?: string; date?: string }[]
+): InTimeResumeData {
+  return {
+    id: candidate.id,
+    firstName: candidate.firstName || '',
+    lastName: candidate.lastName || '',
+    email: candidate.email || '',
+    phone: candidate.phone,
+    mobile: candidate.mobile,
+    linkedinUrl: candidate.linkedinUrl,
+    city: candidate.city,
+    state: candidate.state,
+    country: candidate.country,
+    headline: candidate.headline || candidate.title,
+    summary: candidate.professionalSummary,
+    yearsExperience: candidate.yearsExperience,
+    currentCompany: candidate.currentCompany,
+    visaStatus: candidate.visaStatus,
+    desiredRate: candidate.desiredRate,
+    rateType: candidate.rateType,
+    currency: candidate.rateCurrency || 'USD',
+    skills: skills.map(s => ({
+      name: s.name,
+      isPrimary: s.isPrimary || false,
+      proficiency: s.proficiency,
+    })),
+    workHistory: workHistory.map(w => ({
+      title: w.title,
+      company: w.company,
+      startDate: w.startDate,
+      endDate: w.endDate,
+      description: w.description,
+      location: w.location,
+    })),
+    education: education.map(e => ({
+      degree: e.degree,
+      institution: e.institution,
+      year: e.year,
+      field: e.field,
+    })),
+    certifications: certifications.map(c => ({
+      name: c.name,
+      issuer: c.issuer,
+      date: c.date,
+    })),
   }
 }
 
@@ -186,6 +244,9 @@ export function CandidateWorkspace({ onAction }: CandidateWorkspaceProps = {}) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  // Dialog state
+  const [generateResumeOpen, setGenerateResumeOpen] = React.useState(false)
+
   // Get section from URL, default to 'summary'
   const currentSection = (searchParams.get('section') || 'summary') as CandidateSection
 
@@ -203,6 +264,35 @@ export function CandidateWorkspace({ onAction }: CandidateWorkspaceProps = {}) {
     }
     // TODO: Focus on specific field if warning.field is set
   }, [handleSectionChange])
+
+  // Listen for dialog open events from header
+  React.useEffect(() => {
+    const handleOpenDialog = (event: CustomEvent<{ dialogId: string; candidateId: string }>) => {
+      const { dialogId, candidateId } = event.detail
+      if (candidateId !== data.candidate.id) return
+
+      if (dialogId === 'generateResume') {
+        setGenerateResumeOpen(true)
+      }
+    }
+
+    window.addEventListener('openCandidateDialog', handleOpenDialog as EventListener)
+    return () => {
+      window.removeEventListener('openCandidateDialog', handleOpenDialog as EventListener)
+    }
+  }, [data.candidate.id])
+
+  // Map candidate data for resume template
+  const resumeTemplateData = React.useMemo(() =>
+    mapCandidateToResumeTemplate(
+      data.candidate,
+      data.skills,
+      data.workHistory,
+      data.education,
+      data.certifications
+    ),
+    [data.candidate, data.skills, data.workHistory, data.education, data.certifications]
+  )
 
   return (
     <div className="w-full max-w-none px-8 py-6 space-y-6">
@@ -338,6 +428,14 @@ export function CandidateWorkspace({ onAction }: CandidateWorkspaceProps = {}) {
           history={data.history}
         />
       )}
+
+      {/* Dialogs */}
+      <GenerateResumeDialog
+        open={generateResumeOpen}
+        onOpenChange={setGenerateResumeOpen}
+        candidateData={resumeTemplateData}
+        candidateName={data.candidate.fullName}
+      />
     </div>
   )
 }

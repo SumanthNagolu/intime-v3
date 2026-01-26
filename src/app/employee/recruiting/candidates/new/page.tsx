@@ -25,8 +25,8 @@ function fileToBase64(file: File): Promise<string> {
 
 // Transform form data to entity data for API calls
 function formToEntityData(formData: CreateCandidateFormData) {
-  // Transform skills to full skill entry format for API
-  const skillEntries = (formData.skills || []).map(s => {
+  // Transform skills to full skill entry format for API (max 50 per schema)
+  const skillEntries = (formData.skills || []).slice(0, 50).map(s => {
     if (typeof s === 'string') {
       return { name: s, proficiency: 'intermediate' as const, isPrimary: false, isCertified: false }
     }
@@ -107,7 +107,8 @@ function formToEntityData(formData: CreateCandidateFormData) {
     // Professional info
     professionalHeadline: formData.professionalHeadline || undefined,
     professionalSummary: formData.professionalSummary || undefined,
-    experienceYears: formData.experienceYears,
+    // experienceYears: Zod schema accepts number|undefined, not null
+    experienceYears: formData.experienceYears ?? undefined,
 
     // Employment preferences
     employmentTypes: formData.employmentTypes,
@@ -132,11 +133,14 @@ function formToEntityData(formData: CreateCandidateFormData) {
     requiresSponsorship: formData.requiresSponsorship,
     currentSponsor: formData.currentSponsor || undefined,
     isTransferable: formData.isTransferable,
+    clearanceLevel: formData.clearanceLevel || undefined,
 
     // Availability
     availability: formData.availability,
     availableFrom: formData.availableFrom || undefined,
-    noticePeriodDays: formData.noticePeriodDays,
+    noticePeriod: formData.noticePeriod || undefined,
+    // noticePeriodDays accepts number|undefined|null
+    noticePeriodDays: formData.noticePeriodDays ?? undefined,
 
     // Location
     location: formData.location || undefined,
@@ -147,9 +151,9 @@ function formToEntityData(formData: CreateCandidateFormData) {
     relocationPreferences: formData.relocationPreferences || undefined,
     isRemoteOk: formData.isRemoteOk,
 
-    // Compensation
-    minimumRate: formData.minimumRate,
-    desiredRate: formData.desiredRate,
+    // Compensation - rate fields accept number|undefined|null
+    minimumRate: formData.minimumRate ?? undefined,
+    desiredRate: formData.desiredRate ?? undefined,
     rateType: formData.rateType,
     currency: formData.currency,
     isNegotiable: formData.isNegotiable,
@@ -254,8 +258,10 @@ function entityToFormData(entity: any): CreateCandidateFormData {
     visaStatus: entity.visa_status || 'us_citizen',
     visaExpiryDate: entity.visa_expiry_date || undefined,
     requiresSponsorship: entity.requires_sponsorship || false,
+    clearanceLevel: entity.clearance_level || 'none',
     availability: entity.availability || '2_weeks',
     availableFrom: entity.available_from || undefined,
+    noticePeriod: '', // Text field not stored in DB, only notice_period_days
     noticePeriodDays: entity.notice_period_days || undefined,
     willingToRelocate: entity.willing_to_relocate || false,
     relocationPreferences: entity.relocation_preferences || '',
@@ -368,7 +374,7 @@ function NewCandidatePageContent() {
       // Skip step 1 (Source) when resuming since source is already determined
       // Only skip if sourceType is already set and we'd otherwise start at step 1
       if (resumeStep === 1 && wizardState.formData.sourceType) {
-        resumeStep = 2 // Start at Contact Info instead
+        resumeStep = 2 // Start at Identity step instead
       }
 
       if (store.setCurrentStep) {
@@ -400,7 +406,7 @@ function NewCandidatePageContent() {
       store.setFormData(formData)
     }
 
-    // In edit mode, always start at step 2 (Contact Info) - step 1 (Source) is irrelevant
+    // In edit mode, always start at step 2 (Identity) - step 1 (Source) is irrelevant
     // The candidate already exists, so source selection doesn't apply
     if (store.setCurrentStep) {
       store.setCurrentStep(2)
@@ -417,7 +423,7 @@ function NewCandidatePageContent() {
       const wizardState = {
         formData,
         currentStep,
-        totalSteps: 8,
+        totalSteps: 7,
         lastSavedAt: new Date().toISOString(),
       }
 
@@ -572,8 +578,8 @@ function NewCandidatePageContent() {
           }
         }
 
-        // Transform skill entries for API (keep full metadata, not just names)
-        const skillEntries = (data.skills || []).map(s => {
+        // Transform skill entries for API (keep full metadata, not just names; max 50 per schema)
+        const skillEntries = (data.skills || []).slice(0, 50).map(s => {
           if (typeof s === 'string') {
             return { name: s, proficiency: 'intermediate' as const, isPrimary: false, isCertified: false }
           }
@@ -655,7 +661,7 @@ function NewCandidatePageContent() {
           // Professional info
           professionalHeadline: data.professionalHeadline || undefined,
           professionalSummary: data.professionalSummary || undefined,
-          experienceYears: data.experienceYears,
+          experienceYears: data.experienceYears ?? undefined,
 
           // Employment preferences
           employmentTypes: data.employmentTypes,
@@ -679,11 +685,13 @@ function NewCandidatePageContent() {
           requiresSponsorship: data.requiresSponsorship,
           currentSponsor: data.currentSponsor || undefined,
           isTransferable: data.isTransferable,
+          clearanceLevel: data.clearanceLevel || undefined,
 
           // Availability
           availability: data.availability as 'immediate' | '2_weeks' | '30_days' | '60_days' | 'not_available',
           availableFrom: data.availableFrom || undefined,
-          noticePeriodDays: data.noticePeriodDays,
+          noticePeriod: data.noticePeriod || undefined,
+          noticePeriodDays: data.noticePeriodDays ?? undefined,
 
           // Location
           location: data.location,
@@ -696,8 +704,8 @@ function NewCandidatePageContent() {
 
           // Compensation
           rateType: data.rateType,
-          minimumRate: data.minimumRate,
-          desiredRate: data.desiredRate,
+          minimumRate: data.minimumRate ?? undefined,
+          desiredRate: data.desiredRate ?? undefined,
           currency: data.currency,
           isNegotiable: data.isNegotiable,
           compensationNotes: data.compensationNotes || undefined,
@@ -830,7 +838,7 @@ function NewCandidatePageContent() {
       const wizardState = {
         formData: store.formData,
         currentStep: store.currentStep,
-        totalSteps: 8,
+        totalSteps: 7,
         lastSavedAt: new Date().toISOString(),
       }
       await updateMutation.mutateAsync({

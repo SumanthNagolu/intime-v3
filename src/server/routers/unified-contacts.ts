@@ -7,6 +7,42 @@ import { historyService } from '@/lib/services'
 
 
 // ============================================
+// LENIENT URL SCHEMA
+// Accepts URLs with or without protocol, auto-prepends https:// if needed
+// ============================================
+const lenientUrlSchema = z.preprocess(
+  (val) => {
+    // Handle undefined, null, or empty string
+    if (val === undefined || val === null || val === '') return ''
+    if (typeof val !== 'string') return val
+
+    const trimmed = val.trim()
+    if (trimmed === '') return ''
+
+    // If it starts with http:// or https://, use as-is
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      return trimmed
+    }
+    // If it starts with www. or looks like a domain, prepend https://
+    if (trimmed.startsWith('www.') || /^[a-zA-Z0-9][-a-zA-Z0-9]*\.[a-zA-Z]{2,}/.test(trimmed)) {
+      return `https://${trimmed}`
+    }
+    return trimmed
+  },
+  z.string()
+    .refine((val) => {
+      if (!val || val === '') return true
+      try {
+        new URL(val)
+        return true
+      } catch {
+        return false
+      }
+    }, { message: 'Invalid URL format' })
+    .optional()
+)
+
+// ============================================
 // CONTACT CATEGORIES
 // ============================================
 export const ContactCategory = z.enum(['person', 'company'])
@@ -247,6 +283,7 @@ export const CandidateStatus = z.enum([
 // LEAD STATUS
 // ============================================
 export const LeadStatus = z.enum([
+  'draft',
   'new',
   'contacted',
   'warm',
@@ -1321,7 +1358,7 @@ export const unifiedContactsRouter = router({
 
         // Note: company_name is stored directly on contacts, no join needed
         // The company_id FK references accounts table, not companies
-        // Exclude drafts (leads without first_name AND company_name)
+        // Exclude drafts (leads with status='draft' are shown in Drafts tab only)
         let query = adminClient
           .from('contacts')
           .select(`
@@ -1331,7 +1368,7 @@ export const unifiedContactsRouter = router({
           .eq('org_id', orgId)
           .eq('subtype', 'person_lead')
           .is('deleted_at', null)
-          .or('first_name.not.is.null,company_name.not.is.null')
+          .neq('lead_status', 'draft')
 
         if (input.search) {
           query = query.or(`first_name.ilike.%${input.search}%,last_name.ilike.%${input.search}%,email.ilike.%${input.search}%,company_name.ilike.%${input.search}%`)
@@ -1417,7 +1454,7 @@ export const unifiedContactsRouter = router({
         return data
       }),
 
-    // Stats for leads (excludes drafts - leads without first_name AND company_name)
+    // Stats for leads (excludes drafts)
     stats: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx
@@ -1429,7 +1466,7 @@ export const unifiedContactsRouter = router({
           .eq('org_id', orgId)
           .eq('subtype', 'person_lead')
           .is('deleted_at', null)
-          .or('first_name.not.is.null,company_name.not.is.null')
+          .neq('lead_status', 'draft')
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
@@ -1720,6 +1757,426 @@ export const unifiedContactsRouter = router({
           })
 
         return deal
+      }),
+
+    // Convert lead to account
+    convertToAccount: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        accountName: z.string().min(1).max(200),
+        accountType: z.enum(['client', 'prospect', 'partner', 'vendor']).default('prospect'),
+        industry: z.string().optional(),
+        website: z.string().optional(),
+        employeeCount: z.string().optional(),
+        annualRevenue: z.string().optional(),
+        city: z.string().optional(),
+        state: z.string().optional(),
+        country: z.string().optional(),
+        relationshipType: z.enum(['direct_client', 'prime_vendor', 'subcontractor', 'msp_supplier', 'implementation_partner']).default('direct_client'),
+        accountTier: z.enum(['standard', 'preferred', 'strategic', 'enterprise']).default('standard'),
+        paymentTerms: z.enum(['net_15', 'net_30', 'net_45', 'net_60', 'net_90']).default('net_30'),
+        createContact: z.boolean().default(true),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
+        // Fetch and validate lead
+        const { data: lead, error: leadError } = await adminClient
+          .from('contacts')
+          .select('*')
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .eq('subtype', 'person_lead')
+          .single()
+
+        if (leadError || !lead) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
+        }
+
+        if (lead.lead_converted_to_account_id) {
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: 'This lead has already been converted to an account',
+          })
+        }
+
+        // Create account
+        const paymentTermsDays = parseInt(input.paymentTerms.replace('net_', ''))
+        const { data: account, error: accountError } = await adminClient
+          .from('companies')
+          .insert({
+            org_id: orgId,
+            name: input.accountName,
+            category: input.accountType,
+            status: 'active',
+            industry: input.industry,
+            website: input.website,
+            employee_count: input.employeeCount,
+            annual_revenue: input.annualRevenue,
+            city: input.city,
+            state: input.state,
+            country: input.country,
+            relationship_type: input.relationshipType,
+            account_tier: input.accountTier,
+            default_payment_terms: `Net ${paymentTermsDays}`,
+            notes: input.notes,
+            owner_id: lead.owner_id || userProfileId,
+            account_manager_id: lead.owner_id || userProfileId,
+            created_by: userProfileId,
+          })
+          .select()
+          .single()
+
+        if (accountError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: accountError.message })
+        }
+
+        // Create contact if requested
+        let contact = null
+        if (input.createContact && lead.first_name) {
+          const { data: newContact } = await adminClient
+            .from('contacts')
+            .insert({
+              org_id: orgId,
+              category: 'person',
+              subtype: 'person_client_contact',
+              first_name: lead.first_name,
+              last_name: lead.last_name || '',
+              email: lead.email,
+              phone: lead.phone,
+              mobile: lead.mobile,
+              title: lead.title,
+              department: lead.department,
+              company_name: input.accountName,
+              linkedin_url: lead.linkedin_url,
+              owner_id: lead.owner_id,
+              created_by: userProfileId,
+            })
+            .select()
+            .single()
+          contact = newContact
+        }
+
+        // Update lead with conversion tracking
+        await adminClient
+          .from('contacts')
+          .update({
+            lead_status: 'converted',
+            lead_converted_to_account_id: account.id,
+            lead_converted_at: new Date().toISOString(),
+            updated_by: userProfileId,
+          })
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+
+        // Log activity on lead
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: input.leadId,
+            activity_type: 'status_change',
+            subject: 'Lead Converted to Account',
+            description: `Lead converted to account: ${input.accountName}`,
+            created_by: userProfileId,
+          })
+
+        // Log activity on account
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'company',
+            entity_id: account.id,
+            activity_type: 'note',
+            subject: 'Account Created',
+            description: `Account created from lead: ${lead.first_name} ${lead.last_name}`,
+            created_by: userProfileId,
+          })
+
+        return { ...account, contact }
+      }),
+
+    // Convert lead to contact
+    convertToContact: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        firstName: z.string().min(1).max(100),
+        lastName: z.string().max(100).optional(),
+        email: z.string().email().optional().or(z.literal('')),
+        phone: z.string().optional(),
+        mobile: z.string().optional(),
+        title: z.string().optional(),
+        department: z.string().optional(),
+        companyName: z.string().optional(),
+        linkedinUrl: z.string().optional(),
+        contactType: z.enum([
+          'person_client_contact',
+          'person_hiring_manager',
+          'person_hr_contact',
+          'person_vendor_contact',
+          'person_referral_source',
+        ]).default('person_client_contact'),
+        accountId: z.string().uuid().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
+        // Fetch and validate lead
+        const { data: lead, error: leadError } = await adminClient
+          .from('contacts')
+          .select('*')
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .eq('subtype', 'person_lead')
+          .single()
+
+        if (leadError || !lead) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
+        }
+
+        if (lead.lead_converted_to_contact_id) {
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: 'This lead has already been converted to a contact',
+          })
+        }
+
+        // Create contact
+        const { data: contact, error: contactError } = await adminClient
+          .from('contacts')
+          .insert({
+            org_id: orgId,
+            category: 'person',
+            subtype: input.contactType,
+            first_name: input.firstName,
+            last_name: input.lastName || '',
+            email: input.email || null,
+            phone: input.phone,
+            mobile: input.mobile,
+            title: input.title,
+            department: input.department,
+            company_name: input.companyName,
+            linkedin_url: input.linkedinUrl,
+            notes: input.notes,
+            owner_id: lead.owner_id,
+            created_by: userProfileId,
+          })
+          .select()
+          .single()
+
+        if (contactError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: contactError.message })
+        }
+
+        // Update lead with conversion tracking
+        await adminClient
+          .from('contacts')
+          .update({
+            lead_status: 'converted',
+            lead_converted_to_contact_id: contact.id,
+            lead_converted_at: new Date().toISOString(),
+            updated_by: userProfileId,
+          })
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+
+        // Log activity on lead
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: input.leadId,
+            activity_type: 'status_change',
+            subject: 'Lead Converted to Contact',
+            description: `Lead converted to contact: ${input.firstName} ${input.lastName || ''}`,
+            created_by: userProfileId,
+          })
+
+        // Log activity on contact
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: contact.id,
+            activity_type: 'note',
+            subject: 'Contact Created',
+            description: `Contact created from lead`,
+            created_by: userProfileId,
+          })
+
+        return contact
+      }),
+
+    // Convert lead to candidate
+    convertToCandidate: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        firstName: z.string().min(1).max(100),
+        lastName: z.string().max(100).optional(),
+        email: z.string().email().optional().or(z.literal('')),
+        phone: z.string().optional(),
+        title: z.string().optional(),
+        currentEmployer: z.string().optional(),
+        linkedinUrl: z.string().optional(),
+        candidateStatus: z.enum(['new', 'active', 'passive', 'screening', 'bench']).default('new'),
+        availability: z.enum(['immediate', 'two_weeks', 'one_month', 'flexible', 'not_looking']).default('flexible'),
+        desiredHourlyRate: z.number().min(0).optional(),
+        desiredSalary: z.number().min(0).optional(),
+        currentCompensation: z.string().optional(),
+        primarySkills: z.array(z.string()).optional(),
+        yearsOfExperience: z.number().min(0).max(50).optional(),
+        city: z.string().optional(),
+        state: z.string().optional(),
+        country: z.string().optional(),
+        willingToRelocate: z.boolean().default(false),
+        remotePreference: z.enum(['onsite', 'hybrid', 'remote', 'flexible']).default('flexible'),
+        workAuthorization: z.enum(['us_citizen', 'green_card', 'h1b', 'opt', 'ead', 'other']).optional(),
+        requiresSponsorship: z.boolean().default(false),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
+        // Fetch and validate lead
+        const { data: lead, error: leadError } = await adminClient
+          .from('contacts')
+          .select('*')
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .eq('subtype', 'person_lead')
+          .single()
+
+        if (leadError || !lead) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
+        }
+
+        if (lead.lead_converted_to_candidate_id) {
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: 'This lead has already been converted to a candidate',
+          })
+        }
+
+        // Create candidate
+        const { data: candidate, error: candidateError } = await adminClient
+          .from('contacts')
+          .insert({
+            org_id: orgId,
+            category: 'person',
+            subtype: 'person_candidate',
+            first_name: input.firstName,
+            last_name: input.lastName || '',
+            email: input.email || null,
+            phone: input.phone,
+            title: input.title,
+            company_name: input.currentEmployer,
+            linkedin_url: input.linkedinUrl,
+            candidate_status: input.candidateStatus,
+            candidate_availability: input.availability,
+            candidate_hourly_rate: input.desiredHourlyRate,
+            candidate_salary: input.desiredSalary,
+            candidate_current_compensation: input.currentCompensation,
+            candidate_skills: input.primarySkills,
+            candidate_experience_years: input.yearsOfExperience,
+            city: input.city,
+            state: input.state,
+            country: input.country,
+            candidate_willing_to_relocate: input.willingToRelocate,
+            candidate_remote_preference: input.remotePreference,
+            candidate_work_authorization: input.workAuthorization,
+            candidate_requires_sponsorship: input.requiresSponsorship,
+            notes: input.notes,
+            owner_id: lead.owner_id,
+            created_by: userProfileId,
+          })
+          .select()
+          .single()
+
+        if (candidateError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: candidateError.message })
+        }
+
+        // Update lead with conversion tracking
+        await adminClient
+          .from('contacts')
+          .update({
+            lead_status: 'converted',
+            lead_converted_to_candidate_id: candidate.id,
+            lead_converted_at: new Date().toISOString(),
+            updated_by: userProfileId,
+          })
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+
+        // Log activity on lead
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: input.leadId,
+            activity_type: 'status_change',
+            subject: 'Lead Converted to Candidate',
+            description: `Lead converted to candidate: ${input.firstName} ${input.lastName || ''}`,
+            created_by: userProfileId,
+          })
+
+        // Log activity on candidate
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: candidate.id,
+            activity_type: 'note',
+            subject: 'Candidate Created',
+            description: `Candidate created from lead`,
+            created_by: userProfileId,
+          })
+
+        return candidate
       }),
 
     // Disqualify lead
@@ -2035,7 +2492,7 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
@@ -2046,7 +2503,7 @@ export const unifiedContactsRouter = router({
             org_id: orgId,
             category: 'person',
             subtype: 'person_lead',
-            lead_status: 'new',  // DB constraint doesn't allow 'draft'
+            lead_status: 'draft',
             owner_id: userProfileId,
             created_by: userProfileId,
           })
@@ -2097,11 +2554,21 @@ export const unifiedContactsRouter = router({
             countryCode: z.string().optional(),
             number: z.string().optional(),
           }).optional(),
+          mobile: z.object({
+            countryCode: z.string().optional(),
+            number: z.string().optional(),
+          }).optional(),
           title: z.string().optional(),
+          department: z.string().optional(),
           companyName: z.string().optional(),
           industry: z.string().optional(),
-          website: z.string().url().optional().or(z.literal('')),
-          linkedinUrl: z.string().url().optional().or(z.literal('')),
+          companySize: z.string().optional(),
+          companyCity: z.string().optional(),
+          companyState: z.string().optional(),
+          companyCountry: z.string().optional(),
+          companyWebsite: lenientUrlSchema,
+          linkedinUrl: lenientUrlSchema,
+          companyLinkedinUrl: lenientUrlSchema,
           status: z.string().optional(),
         }),
       }))
@@ -2113,26 +2580,39 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
-        // Combine phone parts
-        const phoneNumber = input.data.phone?.number
-          ? `${input.data.phone.countryCode || '+1'} ${input.data.phone.number}`
-          : null
+        // Helper to format phone with proper country code prefix
+        const formatPhoneNumber = (phone: { countryCode?: string; number?: string } | undefined): string | null => {
+          if (!phone?.number) return null
+          // Convert country code to dial prefix (US -> +1)
+          const dialPrefix = phone.countryCode === 'US' ? '+1' : `+${phone.countryCode || '1'}`
+          return `${dialPrefix} ${phone.number}`
+        }
+
+        const phoneNumber = formatPhoneNumber(input.data.phone)
+        const mobileNumber = formatPhoneNumber(input.data.mobile)
 
         const updateData: Record<string, unknown> = {
           first_name: input.data.firstName,
           last_name: input.data.lastName,
           email: input.data.email || null,
           phone: phoneNumber,
+          mobile: mobileNumber,
           title: input.data.title,
+          department: input.data.department,
           company_name: input.data.companyName,
-          industry: input.data.industry,
-          website: input.data.website || null,
+          industry: input.data.industry || null,
+          company_size: input.data.companySize || null,
+          city: input.data.companyCity || null,
+          state: input.data.companyState || null,
+          country: input.data.companyCountry || null,
+          website_url: input.data.companyWebsite || null,
           linkedin_url: input.data.linkedinUrl || null,
+          company_linkedin_url: input.data.companyLinkedinUrl || null,
           updated_by: userProfileId,
         }
 
@@ -2162,18 +2642,32 @@ export const unifiedContactsRouter = router({
       .input(z.object({
         leadId: z.string().uuid(),
         data: z.object({
-          bantBudget: z.number().min(0).max(25).nullable().optional(),
-          bantAuthority: z.number().min(0).max(25).nullable().optional(),
-          bantNeed: z.number().min(0).max(25).nullable().optional(),
-          bantTimeline: z.number().min(0).max(25).nullable().optional(),
+          // BANT scores use 0-100 scale in UI
+          bantBudget: z.coerce.number().min(0).max(100).nullable().optional(),
+          bantAuthority: z.coerce.number().min(0).max(100).nullable().optional(),
+          bantNeed: z.coerce.number().min(0).max(100).nullable().optional(),
+          bantTimeline: z.coerce.number().min(0).max(100).nullable().optional(),
           bantBudgetNotes: z.string().optional(),
           bantAuthorityNotes: z.string().optional(),
           bantNeedNotes: z.string().optional(),
           bantTimelineNotes: z.string().optional(),
+          budgetConfirmed: z.boolean().optional(),
+          budgetRange: z.string().optional(),
+          decisionMakerIdentified: z.boolean().optional(),
+          decisionMakerTitle: z.string().optional(),
+          decisionMakerName: z.string().optional(),
+          competitorInvolved: z.boolean().optional(),
+          competitorNames: z.string().optional(),
+          estimatedAnnualValue: z.string().optional(),
+          estimatedPlacements: z.string().optional(),
+          volumePotential: z.string().optional(),
           qualificationResult: z.string().optional(),
           qualificationNotes: z.string().optional(),
-          estimatedValue: z.number().nullable().optional(),
-          estimatedPlacements: z.number().nullable().optional(),
+          disqualificationReason: z.string().optional(),
+          probability: z.string().optional(),
+          expectedCloseDate: z.string().nullable().optional(),
+          nextSteps: z.string().optional(),
+          nextStepDate: z.string().nullable().optional(),
         }),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -2184,35 +2678,69 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
-        // Calculate total BANT score
-        const budget = input.data.bantBudget ?? 0
-        const authority = input.data.bantAuthority ?? 0
-        const need = input.data.bantNeed ?? 0
-        const timeline = input.data.bantTimeline ?? 0
-        const totalScore = budget + authority + need + timeline
+        // Note: lead_bant_total_score is a GENERATED column - computed automatically
+        // DB has CHECK constraint: BANT scores must be 0-25, but UI uses 0-100
+        // Scale down: divide by 4 to convert 0-100 to 0-25
+        const scaleToDb = (val: number | null | undefined) => {
+          if (val == null || isNaN(val)) return null
+          return Math.round(val / 4)
+        }
 
         const updateData: Record<string, unknown> = {
-          lead_bant_budget: input.data.bantBudget,
-          lead_bant_authority: input.data.bantAuthority,
-          lead_bant_need: input.data.bantNeed,
-          lead_bant_timeline: input.data.bantTimeline,
-          lead_bant_total_score: totalScore,
-          lead_bant_budget_notes: input.data.bantBudgetNotes,
-          lead_bant_authority_notes: input.data.bantAuthorityNotes,
-          lead_bant_need_notes: input.data.bantNeedNotes,
-          lead_bant_timeline_notes: input.data.bantTimelineNotes,
-          lead_qualification_result: input.data.qualificationResult,
-          lead_qualification_notes: input.data.qualificationNotes,
-          lead_estimated_value: input.data.estimatedValue,
-          lead_estimated_placements: input.data.estimatedPlacements,
-          // Calculate score (out of 100) from BANT total (out of 100)
-          lead_score: totalScore,
+          lead_bant_budget: scaleToDb(input.data.bantBudget),
+          lead_bant_authority: scaleToDb(input.data.bantAuthority),
+          lead_bant_need: scaleToDb(input.data.bantNeed),
+          lead_bant_timeline: scaleToDb(input.data.bantTimeline),
+          lead_bant_budget_notes: input.data.bantBudgetNotes || null,
+          lead_bant_authority_notes: input.data.bantAuthorityNotes || null,
+          lead_bant_need_notes: input.data.bantNeedNotes || null,
+          lead_bant_timeline_notes: input.data.bantTimelineNotes || null,
+          lead_budget_confirmed: input.data.budgetConfirmed ?? false,
+          lead_budget_range: input.data.budgetRange || null,
+          lead_decision_maker_identified: input.data.decisionMakerIdentified ?? false,
+          lead_decision_maker_title: input.data.decisionMakerTitle || null,
+          lead_decision_maker_name: input.data.decisionMakerName || null,
+          lead_competitor_involved: input.data.competitorInvolved ?? false,
+          lead_competitor_names: input.data.competitorNames || null,
+          lead_estimated_value: (() => {
+            if (!input.data.estimatedAnnualValue || input.data.estimatedAnnualValue === '') return null
+            const val = parseFloat(input.data.estimatedAnnualValue)
+            return isNaN(val) ? null : val
+          })(),
+          lead_estimated_placements: (() => {
+            if (!input.data.estimatedPlacements || input.data.estimatedPlacements === '') return null
+            const val = parseInt(input.data.estimatedPlacements, 10)
+            return isNaN(val) ? null : val
+          })(),
+          lead_volume_potential: input.data.volumePotential || null,
+          // DB CHECK constraint only allows: qualified_convert, qualified_nurture, not_qualified
+          // Map UI values to DB values
+          lead_qualification_result: (() => {
+            const val = input.data.qualificationResult
+            if (!val) return null
+            if (val === 'qualified') return 'qualified_convert'
+            if (val === 'nurture') return 'qualified_nurture'
+            if (val === 'disqualified') return 'not_qualified'
+            if (['qualified_convert', 'qualified_nurture', 'not_qualified'].includes(val)) return val
+            return null // 'pending' or invalid values become null
+          })(),
+          lead_qualification_notes: input.data.qualificationNotes || null,
+          lead_disqualification_reason: input.data.disqualificationReason || null,
+          lead_probability: (() => {
+            if (!input.data.probability || input.data.probability === '') return null
+            const val = parseInt(input.data.probability, 10)
+            return isNaN(val) ? null : val
+          })(),
+          lead_estimated_close_date: input.data.expectedCloseDate && input.data.expectedCloseDate !== '' ? input.data.expectedCloseDate : null,
+          lead_next_steps: input.data.nextSteps || null,
+          lead_next_step_date: input.data.nextStepDate && input.data.nextStepDate !== '' ? input.data.nextStepDate : null,
           updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
         }
 
         const { data, error } = await adminClient
@@ -2237,13 +2765,25 @@ export const unifiedContactsRouter = router({
         leadId: z.string().uuid(),
         data: z.object({
           source: z.string().optional(),
-          campaignId: z.string().uuid().nullable().optional(),
+          sourceDetails: z.string().optional(),
+          campaignId: z.preprocess(
+            (val) => (val === '' ? null : val),
+            z.string().uuid().nullable().optional()
+          ),
+          campaignName: z.string().optional(),
+          referralType: z.string().optional(),
           referredBy: z.string().optional(),
+          referralContactId: z.preprocess(
+            (val) => (val === '' ? null : val),
+            z.string().uuid().nullable().optional()
+          ),
           utmSource: z.string().optional(),
           utmMedium: z.string().optional(),
           utmCampaign: z.string().optional(),
           utmContent: z.string().optional(),
           utmTerm: z.string().optional(),
+          landingPage: z.string().optional(),
+          firstContactMethod: z.string().optional(),
         }),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -2254,21 +2794,28 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
         const updateData: Record<string, unknown> = {
-          lead_source: input.data.source,
-          source_campaign_id: input.data.campaignId,
-          lead_referred_by: input.data.referredBy,
-          utm_source: input.data.utmSource,
-          utm_medium: input.data.utmMedium,
-          utm_campaign: input.data.utmCampaign,
-          utm_content: input.data.utmContent,
-          utm_term: input.data.utmTerm,
+          lead_source: input.data.source || null,
+          lead_source_details: input.data.sourceDetails || null,
+          source_campaign_id: input.data.campaignId || null,
+          lead_campaign_name: input.data.campaignName || null,
+          lead_referral_type: input.data.referralType || null,
+          lead_referred_by: input.data.referredBy || null,
+          lead_referral_contact_id: input.data.referralContactId || null,
+          lead_utm_source: input.data.utmSource || null,
+          lead_utm_medium: input.data.utmMedium || null,
+          lead_utm_campaign: input.data.utmCampaign || null,
+          lead_utm_content: input.data.utmContent || null,
+          lead_utm_term: input.data.utmTerm || null,
+          lead_landing_page: input.data.landingPage || null,
+          lead_first_contact_method: input.data.firstContactMethod || null,
           updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
         }
 
         const { data, error } = await adminClient
@@ -2292,11 +2839,32 @@ export const unifiedContactsRouter = router({
       .input(z.object({
         leadId: z.string().uuid(),
         data: z.object({
-          ownerId: z.string().uuid().nullable().optional(),
+          ownerId: z.preprocess(
+            (val) => (val === '' ? null : val),
+            z.string().uuid().nullable().optional()
+          ),
+          salesRepId: z.preprocess(
+            (val) => (val === '' ? null : val),
+            z.string().uuid().nullable().optional()
+          ),
+          accountManagerId: z.preprocess(
+            (val) => (val === '' ? null : val),
+            z.string().uuid().nullable().optional()
+          ),
+          recruiterId: z.preprocess(
+            (val) => (val === '' ? null : val),
+            z.string().uuid().nullable().optional()
+          ),
+          territory: z.string().optional(),
+          region: z.string().optional(),
+          businessUnit: z.string().optional(),
           preferredContactMethod: z.string().optional(),
-          preferredContactTime: z.string().optional(),
+          bestTimeToContact: z.string().optional(),
+          timezone: z.string().optional(),
           doNotContact: z.boolean().optional(),
-          notes: z.string().optional(),
+          doNotContactReason: z.string().optional(),
+          internalNotes: z.string().optional(),
+          strategyNotes: z.string().optional(),
         }),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -2307,18 +2875,28 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
         const updateData: Record<string, unknown> = {
-          owner_id: input.data.ownerId,
-          preferred_contact_method: input.data.preferredContactMethod,
-          preferred_contact_time: input.data.preferredContactTime,
-          do_not_contact: input.data.doNotContact,
-          notes: input.data.notes,
+          owner_id: input.data.ownerId || null,
+          lead_sales_rep_id: input.data.salesRepId || null,
+          lead_account_manager_id: input.data.accountManagerId || null,
+          lead_recruiter_id: input.data.recruiterId || null,
+          lead_territory: input.data.territory || null,
+          lead_region: input.data.region || null,
+          lead_business_unit: input.data.businessUnit || null,
+          preferred_contact_method: input.data.preferredContactMethod || null,
+          best_time_to_contact: input.data.bestTimeToContact || null,
+          timezone: input.data.timezone || null,
+          do_not_call: input.data.doNotContact ?? false,
+          lead_do_not_contact_reason: input.data.doNotContactReason || null,
+          internal_notes: input.data.internalNotes || null,
+          lead_strategy_notes: input.data.strategyNotes || null,
           updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
         }
 
         const { data, error } = await adminClient
@@ -2362,23 +2940,24 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
         const updateData: Record<string, unknown> = {
-          lead_type: input.data.leadType,
-          lead_category: input.data.leadCategory,
-          lead_opportunity_type: input.data.opportunityType,
-          lead_business_model: input.data.businessModel,
-          lead_engagement_type: input.data.engagementType,
-          relationship_type: input.data.relationshipType,
-          lead_existing_relationship: input.data.existingRelationship,
-          lead_previous_engagement_notes: input.data.previousEngagementNotes,
-          lead_priority: input.data.priority,
-          lead_temperature: input.data.temperature,
+          lead_type: input.data.leadType || null,
+          lead_category: input.data.leadCategory || null,
+          lead_opportunity_type: input.data.opportunityType || null,
+          lead_business_model: input.data.businessModel || null,
+          lead_engagement_type: input.data.engagementType || null,
+          lead_relationship_type: input.data.relationshipType || null,
+          lead_existing_relationship: input.data.existingRelationship ?? false,
+          lead_previous_engagement_notes: input.data.previousEngagementNotes || null,
+          lead_priority: input.data.priority || null,
+          lead_temperature: input.data.temperature || null,
           updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
         }
 
         const { data, error } = await adminClient
@@ -2404,20 +2983,25 @@ export const unifiedContactsRouter = router({
         data: z.object({
           contractTypes: z.array(z.string()).optional(),
           primaryContractType: z.string().optional(),
-          billRateMin: z.number().nullable().optional(),
-          billRateMax: z.number().nullable().optional(),
+          billRateMin: z.coerce.number().nullable().optional(),
+          billRateMax: z.coerce.number().nullable().optional(),
           billRateCurrency: z.string().optional(),
-          targetMarkupPercentage: z.number().nullable().optional(),
-          positionsCount: z.number().optional(),
+          targetMarkupPercentage: z.coerce.number().nullable().optional(),
+          positionsCount: z.coerce.number().optional(),
           positionsUrgency: z.string().optional(),
           estimatedDuration: z.string().optional(),
           remotePolicy: z.string().optional(),
-          primarySkills: z.array(z.string()).optional(),
-          secondarySkills: z.array(z.string()).optional(),
+          // Skills can be string (single) or array - normalize to array
+          primarySkills: z.union([z.string(), z.array(z.string())]).transform(v =>
+            typeof v === 'string' ? (v ? [v] : []) : v
+          ).optional(),
+          secondarySkills: z.union([z.string(), z.array(z.string())]).transform(v =>
+            typeof v === 'string' ? (v ? [v] : []) : v
+          ).optional(),
           requiredCertifications: z.array(z.string()).optional(),
           experienceLevel: z.string().optional(),
-          yearsExperienceMin: z.number().nullable().optional(),
-          yearsExperienceMax: z.number().nullable().optional(),
+          yearsExperienceMin: z.coerce.number().nullable().optional(),
+          yearsExperienceMax: z.coerce.number().nullable().optional(),
           securityClearanceRequired: z.boolean().optional(),
           securityClearanceLevel: z.string().optional(),
           backgroundCheckRequired: z.boolean().optional(),
@@ -2434,35 +3018,36 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
         const updateData: Record<string, unknown> = {
-          lead_contract_types: input.data.contractTypes,
-          lead_primary_contract_type: input.data.primaryContractType,
-          lead_bill_rate_min: input.data.billRateMin,
-          lead_bill_rate_max: input.data.billRateMax,
-          lead_bill_rate_currency: input.data.billRateCurrency,
-          lead_target_markup: input.data.targetMarkupPercentage,
-          lead_positions_count: input.data.positionsCount,
-          lead_positions_urgency: input.data.positionsUrgency,
-          lead_estimated_duration: input.data.estimatedDuration,
-          lead_remote_policy: input.data.remotePolicy,
-          lead_primary_skills: input.data.primarySkills,
-          lead_secondary_skills: input.data.secondarySkills,
-          lead_required_certifications: input.data.requiredCertifications,
-          lead_experience_level: input.data.experienceLevel,
-          lead_years_experience_min: input.data.yearsExperienceMin,
-          lead_years_experience_max: input.data.yearsExperienceMax,
-          lead_security_clearance_required: input.data.securityClearanceRequired,
-          lead_security_clearance_level: input.data.securityClearanceLevel,
-          lead_background_check_required: input.data.backgroundCheckRequired,
-          lead_drug_test_required: input.data.drugTestRequired,
-          lead_technical_notes: input.data.technicalNotes,
-          lead_hiring_manager_preferences: input.data.hiringManagerPreferences,
+          lead_contract_types: input.data.contractTypes || null,
+          lead_primary_contract_type: input.data.primaryContractType || null,
+          lead_bill_rate_min: input.data.billRateMin ?? null,
+          lead_bill_rate_max: input.data.billRateMax ?? null,
+          lead_bill_rate_currency: input.data.billRateCurrency || null,
+          lead_target_markup: input.data.targetMarkupPercentage ?? null,
+          lead_positions_count: input.data.positionsCount ?? null,
+          lead_positions_urgency: input.data.positionsUrgency || null,
+          lead_estimated_duration: input.data.estimatedDuration || null,
+          lead_remote_policy: input.data.remotePolicy || null,
+          lead_skills_needed: input.data.primarySkills?.length ? input.data.primarySkills : null,
+          lead_secondary_skills: input.data.secondarySkills?.length ? input.data.secondarySkills : null,
+          lead_required_certifications: input.data.requiredCertifications?.length ? input.data.requiredCertifications : null,
+          lead_experience_level: input.data.experienceLevel || null,
+          lead_years_experience_min: input.data.yearsExperienceMin ?? null,
+          lead_years_experience_max: input.data.yearsExperienceMax ?? null,
+          lead_security_clearance_required: input.data.securityClearanceRequired ?? false,
+          lead_security_clearance_level: input.data.securityClearanceLevel || null,
+          lead_background_check_required: input.data.backgroundCheckRequired ?? false,
+          lead_drug_test_required: input.data.drugTestRequired ?? false,
+          lead_technical_notes: input.data.technicalNotes || null,
+          lead_hiring_manager_preferences: input.data.hiringManagerPreferences || null,
           updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
         }
 
         const { data, error } = await adminClient
@@ -2518,35 +3103,36 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
 
         const updateData: Record<string, unknown> = {
-          lead_uses_vms: input.data.usesVms,
-          lead_vms_platform: input.data.vmsPlatform,
-          lead_vms_other: input.data.vmsOther,
-          lead_vms_access_status: input.data.vmsAccessStatus,
-          lead_has_msp: input.data.hasMsp,
-          lead_msp_name: input.data.mspName,
-          lead_program_type: input.data.programType,
-          lead_msa_status: input.data.msaStatus,
-          lead_msa_expiration_date: input.data.msaExpirationDate,
-          lead_nda_required: input.data.ndaRequired,
-          lead_nda_status: input.data.ndaStatus,
-          lead_payment_terms: input.data.paymentTerms,
-          lead_po_required: input.data.poRequired,
-          lead_invoice_format: input.data.invoiceFormat,
-          lead_billing_cycle: input.data.billingCycle,
-          lead_insurance_required: input.data.insuranceRequired,
-          lead_insurance_types: input.data.insuranceTypes,
-          lead_minimum_insurance_coverage: input.data.minimumInsuranceCoverage,
-          lead_account_tier: input.data.accountTier,
-          lead_industry_vertical: input.data.industryVertical,
-          lead_company_revenue: input.data.companyRevenue,
-          lead_employee_count: input.data.employeeCount,
+          lead_uses_vms: input.data.usesVms ?? false,
+          lead_vms_platform: input.data.vmsPlatform || null,
+          lead_vms_other: input.data.vmsOther || null,
+          lead_vms_access_status: input.data.vmsAccessStatus || null,
+          lead_has_msp: input.data.hasMsp ?? false,
+          lead_msp_name: input.data.mspName || null,
+          lead_program_type: input.data.programType || null,
+          lead_msa_status: input.data.msaStatus || null,
+          lead_msa_expiration_date: input.data.msaExpirationDate || null,
+          lead_nda_required: input.data.ndaRequired ?? false,
+          lead_nda_status: input.data.ndaStatus || null,
+          lead_payment_terms: input.data.paymentTerms || null,
+          lead_po_required: input.data.poRequired ?? false,
+          lead_invoice_format: input.data.invoiceFormat || null,
+          lead_billing_cycle: input.data.billingCycle || null,
+          lead_insurance_required: input.data.insuranceRequired ?? false,
+          lead_insurance_types: input.data.insuranceTypes?.length ? input.data.insuranceTypes : null,
+          lead_minimum_insurance_coverage: input.data.minimumInsuranceCoverage || null,
+          lead_account_tier: input.data.accountTier || null,
+          lead_industry_vertical: input.data.industryVertical || null,
+          lead_company_revenue: input.data.companyRevenue || null,
+          employee_count: input.data.employeeCount ? parseInt(input.data.employeeCount) : null,
           updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
         }
 
         const { data, error } = await adminClient
@@ -2569,7 +3155,7 @@ export const unifiedContactsRouter = router({
     submit: orgProtectedProcedure
       .input(z.object({
         leadId: z.string().uuid(),
-        targetStatus: z.enum(['contacted', 'warm', 'hot']).default('contacted'),
+        targetStatus: z.enum(['new', 'contacted', 'warm', 'hot']).default('new'),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -2579,7 +3165,7 @@ export const unifiedContactsRouter = router({
         const { data: userProfile } = await adminClient
           .from('user_profiles')
           .select('id')
-          .eq('auth_user_id', user?.id)
+          .eq('auth_id', user?.id)
           .single()
 
         const userProfileId = userProfile?.id || null
@@ -2637,25 +3223,10 @@ export const unifiedContactsRouter = router({
         return data
       }),
 
-    // List user's draft leads (status='new' created by current user)
+    // List all draft leads for the org
     listMyDrafts: orgProtectedProcedure.query(async ({ ctx }) => {
-      const { orgId, user } = ctx
+      const { orgId } = ctx
       const adminClient = getAdminClient()
-
-      if (!user?.id) {
-        return []
-      }
-
-      // Get user_profile.id from auth_id
-      const { data: profile } = await adminClient
-        .from('user_profiles')
-        .select('id')
-        .eq('auth_id', user.id)
-        .single()
-
-      if (!profile?.id) {
-        return []
-      }
 
       const { data, error } = await adminClient
         .from('contacts')
@@ -2664,9 +3235,8 @@ export const unifiedContactsRouter = router({
           created_at, updated_at
         `)
         .eq('org_id', orgId)
-        .eq('subtype', 'person_lead')
-        .eq('created_by', profile.id)
-        .eq('lead_status', 'new')
+        .in('subtype', ['person_lead', 'company_lead'])
+        .eq('lead_status', 'draft')
         .is('deleted_at', null)
         .order('updated_at', { ascending: false })
 
@@ -2678,35 +3248,20 @@ export const unifiedContactsRouter = router({
       return data ?? []
     }),
 
-    // Delete a draft lead (soft delete, verify ownership and draft status)
+    // Delete a draft lead (soft delete, verify draft status)
     deleteDraft: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        if (!user?.id) {
-          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
-        }
-
-        // Get user_profile.id from auth_id
-        const { data: profile } = await adminClient
-          .from('user_profiles')
-          .select('id')
-          .eq('auth_id', user.id)
-          .single()
-
-        if (!profile?.id) {
-          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
-        }
-
-        // Verify ownership and draft status
+        // Verify draft status
         const { data: existing } = await adminClient
           .from('contacts')
-          .select('id, lead_status, created_by')
+          .select('id, lead_status')
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .eq('subtype', 'person_lead')
+          .in('subtype', ['person_lead', 'company_lead'])
           .is('deleted_at', null)
           .single()
 
@@ -2714,12 +3269,8 @@ export const unifiedContactsRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
         }
 
-        if (existing.created_by !== profile.id) {
-          throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
-        }
-
-        if (existing.lead_status !== 'new') {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft leads (status: new)' })
+        if (existing.lead_status !== 'draft') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft leads' })
         }
 
         // Soft delete
@@ -3024,7 +3575,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3138,7 +3689,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3199,7 +3750,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3257,7 +3808,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3316,7 +3867,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3381,7 +3932,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3465,7 +4016,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3540,7 +4091,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null
@@ -3602,7 +4153,7 @@ export const unifiedContactsRouter = router({
       const { data: userProfile } = await adminClient
         .from('user_profiles')
         .select('id')
-        .eq('auth_user_id', user?.id)
+        .eq('auth_id', user?.id)
         .single()
 
       const userProfileId = userProfile?.id || null

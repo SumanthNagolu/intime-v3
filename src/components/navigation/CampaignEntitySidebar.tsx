@@ -18,7 +18,6 @@ import {
   Play,
   Pause,
   Copy,
-  Pencil,
   CheckCircle,
   BarChart3,
   UserPlus,
@@ -152,7 +151,6 @@ export function CampaignEntitySidebar({
     }
 
     // Common actions
-    actions.push({ id: 'edit', label: 'Edit Campaign', icon: Pencil, description: 'Edit campaign settings' })
     actions.push({ id: 'duplicate', label: 'Duplicate', icon: Copy, description: 'Create a copy of this campaign' })
     actions.push({ id: 'viewAnalytics', label: 'View Analytics', icon: BarChart3, description: 'View campaign analytics', separator: true })
     actions.push({ id: 'addProspect', label: 'Add Prospect', icon: UserPlus, description: 'Add a prospect to campaign' })
@@ -178,7 +176,7 @@ export function CampaignEntitySidebar({
 
   return (
     <TooltipProvider>
-      <div className={cn('flex flex-col flex-1 overflow-hidden h-full', className)}>
+      <div className={cn('flex flex-col flex-1 min-h-0 overflow-hidden h-full', className)}>
         {/* ===== BACK + ACTIONS ROW ===== */}
         <div className="px-3 py-2.5 border-b border-charcoal-100 flex items-center justify-between gap-2">
           {isCollapsed ? (
@@ -258,7 +256,7 @@ export function CampaignEntitySidebar({
         </div>
 
         {/* ===== SECTIONS NAVIGATION ===== */}
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-auto">
           {/* Core Sections (Collapsible) */}
           <nav className="p-4 border-b border-charcoal-100">
             {!isCollapsed ? (

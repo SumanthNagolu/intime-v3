@@ -3,9 +3,15 @@
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Label } from '@/components/ui/label'
+import {
   UserCircle,
-  Mail,
-  Phone,
   MapPin,
   Briefcase,
   Linkedin,
@@ -13,6 +19,7 @@ import {
 } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
 import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
+import { OPERATING_COUNTRIES, getStatesByCountry } from '@/components/addresses'
 import type { SectionMode, IdentitySectionData } from '@/lib/candidates/types'
 import { cn } from '@/lib/utils'
 
@@ -49,7 +56,7 @@ interface IdentitySectionProps {
  *
  * Fields:
  * - Contact info: firstName, lastName, email, phone, mobile
- * - Location: city, state, country
+ * - Location: streetAddress, city, state (dropdown), country (dropdown)
  * - Professional: title, headline, summary, currentCompany, yearsExperience
  * - Social: linkedinUrl
  */
@@ -184,6 +191,16 @@ export function IdentitySection({
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Street Address */}
+            <UnifiedField
+              label="Street Address"
+              value={data.streetAddress}
+              onChange={(v) => handleChange('streetAddress', v)}
+              editable={isEditable}
+              error={errors?.streetAddress}
+              placeholder="123 Main Street"
+            />
+            {/* City */}
             <UnifiedField
               label="City"
               value={data.city}
@@ -192,22 +209,70 @@ export function IdentitySection({
               error={errors?.city}
               placeholder="San Francisco"
             />
-            <UnifiedField
-              label="State"
-              value={data.state}
-              onChange={(v) => handleChange('state', v)}
-              editable={isEditable}
-              error={errors?.state}
-              placeholder="CA"
-            />
-            <UnifiedField
-              label="Country"
-              value={data.country}
-              onChange={(v) => handleChange('country', v)}
-              editable={isEditable}
-              error={errors?.country}
-              placeholder="United States"
-            />
+            {/* State Dropdown */}
+            <div className="space-y-1.5">
+              <Label className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                State/Province
+              </Label>
+              {isEditable ? (
+                <Select
+                  value={data.state || ''}
+                  onValueChange={(v) => handleChange('state', v)}
+                >
+                  <SelectTrigger className={cn('h-11', errors?.state && 'border-error-400')}>
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getStatesByCountry(data.country || 'US').map((state) => (
+                      <SelectItem key={state.value} value={state.value}>
+                        {state.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <div className="text-sm text-charcoal-700">
+                  {getStatesByCountry(data.country || 'US').find(s => s.value === data.state)?.label || data.state || '—'}
+                </div>
+              )}
+              {errors?.state && (
+                <p className="text-xs text-error-500">{errors.state}</p>
+              )}
+            </div>
+            {/* Country Dropdown */}
+            <div className="space-y-1.5">
+              <Label className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                Country
+              </Label>
+              {isEditable ? (
+                <Select
+                  value={data.country || 'US'}
+                  onValueChange={(v) => {
+                    handleChange('country', v)
+                    // Reset state when country changes
+                    handleChange('state', '')
+                  }}
+                >
+                  <SelectTrigger className={cn('h-11', errors?.country && 'border-error-400')}>
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {OPERATING_COUNTRIES.map((country) => (
+                      <SelectItem key={country.value} value={country.value}>
+                        {country.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <div className="text-sm text-charcoal-700">
+                  {OPERATING_COUNTRIES.find(c => c.value === data.country)?.label || data.country || '—'}
+                </div>
+              )}
+              {errors?.country && (
+                <p className="text-xs text-error-500">{errors.country}</p>
+              )}
+            </div>
           </CardContent>
         </Card>
 

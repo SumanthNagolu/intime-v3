@@ -784,16 +784,20 @@ export function getSectionsForEntity(entityType: string): SectionDefinition[] {
 }
 
 /**
- * Helper to split sections into main sections and tool sections
- * Used by sidebar components to render the collapsible Tools group
+ * Helper to split sections into main sections, related sections, and tool sections
+ * Used by sidebar components to render the Sections, Related, and Tools groups
  */
 export function getSectionsByGroup(entityType: string): {
+  overviewSection: SectionDefinition | undefined
   mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
   toolSections: SectionDefinition[]
 } {
   const sections = getSectionsForEntity(entityType)
   return {
-    mainSections: sections.filter(s => !s.isToolSection),
+    overviewSection: sections.find(s => s.isOverview),
+    mainSections: sections.filter(s => !s.isToolSection && !s.isRelatedData && !s.isOverview),
+    relatedSections: sections.filter(s => s.isRelatedData),
     toolSections: sections.filter(s => s.isToolSection),
   }
 }

@@ -52,9 +52,14 @@ export function ResumeUploadParser({
 
   const handleFile = React.useCallback(
     async (selectedFile: File) => {
-      // Validate file type
-      if (!selectedFile.type.includes('pdf') && !selectedFile.name.toLowerCase().endsWith('.pdf')) {
-        const errorMsg = 'Please upload a PDF file'
+      // Validate file type (PDF or DOCX)
+      const fileName = selectedFile.name.toLowerCase()
+      const fileType = selectedFile.type
+      const isPdf = fileType.includes('pdf') || fileName.endsWith('.pdf')
+      const isDocx = fileType.includes('wordprocessingml') || fileName.endsWith('.docx') || fileName.endsWith('.doc')
+
+      if (!isPdf && !isDocx) {
+        const errorMsg = 'Please upload a PDF or Word document (.pdf, .docx, .doc)'
         setError(errorMsg)
         onError?.(errorMsg)
         return
@@ -187,7 +192,7 @@ export function ResumeUploadParser({
           <input
             ref={inputRef}
             type="file"
-            accept=".pdf,application/pdf"
+            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={handleInputChange}
             disabled={disabled}
             className="hidden"
@@ -212,14 +217,17 @@ export function ResumeUploadParser({
                 {isDragging ? 'Drop your resume here' : 'Upload your resume'}
               </p>
               <p className="mt-1 text-sm text-charcoal-500">
-                Drag and drop a PDF file, or{' '}
+                Drag and drop a file, or{' '}
                 <span className="font-medium text-gold-600">browse</span>
               </p>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-charcoal-400">
               <Badge variant="outline" className="text-xs">
-                PDF only
+                PDF
+              </Badge>
+              <Badge variant="outline" className="text-xs">
+                DOCX
               </Badge>
               <span>•</span>
               <span>Max 10MB</span>
@@ -496,6 +504,118 @@ export function ResumeUploadParser({
                       )}
                     </div>
                   </div>
+
+                  {/* Section: Work History */}
+                  {parsedData.workHistory && parsedData.workHistory.length > 0 && (
+                    <div className="space-y-3">
+                      <h5 className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 border-b border-charcoal-100 pb-2">
+                        Work History ({parsedData.workHistory.length} positions)
+                      </h5>
+                      <div className="space-y-4">
+                        {parsedData.workHistory.map((job, index) => (
+                          <div key={index} className="bg-charcoal-50 rounded-lg p-4 space-y-2">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <p className="font-medium text-hublot-900">{job.jobTitle}</p>
+                                <p className="text-sm text-charcoal-600">{job.companyName}</p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-xs text-charcoal-500">
+                                  {job.startDate} — {job.isCurrent ? 'Present' : job.endDate || 'N/A'}
+                                </p>
+                                {job.location && (
+                                  <p className="text-xs text-charcoal-400">{job.location}</p>
+                                )}
+                              </div>
+                            </div>
+                            {job.description && (
+                              <p className="text-sm text-charcoal-600 line-clamp-2">{job.description}</p>
+                            )}
+                            {job.achievements && job.achievements.length > 0 && (
+                              <div className="pt-1">
+                                <p className="text-xs text-charcoal-500 font-medium mb-1">Key Achievements:</p>
+                                <ul className="text-xs text-charcoal-600 space-y-0.5">
+                                  {job.achievements.slice(0, 3).map((achievement, i) => (
+                                    <li key={i} className="line-clamp-1">• {achievement}</li>
+                                  ))}
+                                  {job.achievements.length > 3 && (
+                                    <li className="text-charcoal-400">+{job.achievements.length - 3} more</li>
+                                  )}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Section: Education */}
+                  {parsedData.education && parsedData.education.length > 0 && (
+                    <div className="space-y-3">
+                      <h5 className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 border-b border-charcoal-100 pb-2">
+                        Education ({parsedData.education.length} entries)
+                      </h5>
+                      <div className="space-y-3">
+                        {parsedData.education.map((edu, index) => (
+                          <div key={index} className="bg-charcoal-50 rounded-lg p-4">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <p className="font-medium text-hublot-900">
+                                  {edu.degreeName || edu.degreeType?.replace('_', ' ').toUpperCase() || 'Degree'}
+                                  {edu.fieldOfStudy && ` in ${edu.fieldOfStudy}`}
+                                </p>
+                                <p className="text-sm text-charcoal-600">{edu.institutionName}</p>
+                              </div>
+                              <div className="text-right">
+                                {(edu.startDate || edu.endDate) && (
+                                  <p className="text-xs text-charcoal-500">
+                                    {edu.startDate && `${edu.startDate} — `}{edu.endDate || 'Present'}
+                                  </p>
+                                )}
+                                {edu.gpa && (
+                                  <p className="text-xs text-charcoal-500">GPA: {edu.gpa}</p>
+                                )}
+                              </div>
+                            </div>
+                            {edu.honors && (
+                              <p className="text-xs text-gold-600 mt-1">{edu.honors}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Section: Certifications */}
+                  {parsedData.certifications && parsedData.certifications.length > 0 && (
+                    <div className="space-y-3">
+                      <h5 className="text-xs font-semibold uppercase tracking-wider text-charcoal-500 border-b border-charcoal-100 pb-2">
+                        Certifications ({parsedData.certifications.length} found)
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {parsedData.certifications.map((cert, index) => (
+                          <div key={index} className="bg-charcoal-50 rounded-lg p-3">
+                            <p className="font-medium text-hublot-900 text-sm">{cert.name}</p>
+                            {cert.issuingOrganization && (
+                              <p className="text-xs text-charcoal-600">{cert.issuingOrganization}</p>
+                            )}
+                            <div className="flex items-center gap-2 mt-1">
+                              {cert.issueDate && (
+                                <span className="text-xs text-charcoal-500">Issued: {cert.issueDate}</span>
+                              )}
+                              {cert.expiryDate && (
+                                <span className="text-xs text-charcoal-400">• Expires: {cert.expiryDate}</span>
+                              )}
+                            </div>
+                            {cert.credentialId && (
+                              <p className="text-xs text-charcoal-400 mt-1">ID: {cert.credentialId}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Section: Confidence Scores */}
                   <div className="space-y-3">
