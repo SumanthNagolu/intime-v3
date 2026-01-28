@@ -45,7 +45,7 @@ interface SidebarLayoutProps {
 function SidebarLayoutLoading({ className }: { className?: string }) {
   return (
     <div className={cn("h-screen flex flex-col overflow-hidden", className)}>
-      <div className="h-16 bg-white border-b border-charcoal-100" />
+      <div className="h-20 bg-white border-b border-charcoal-100" />
       <div className="flex flex-1 overflow-hidden">
         <div className="w-64 bg-white border-r border-charcoal-100 animate-pulse hidden lg:flex flex-shrink-0" />
         <main className="flex-1 min-w-0 overflow-y-auto bg-cream p-6">

@@ -46,6 +46,7 @@ import {
 } from '@/components/ui/tooltip'
 import { useSidebarUIContextSafe } from '@/lib/contexts/SidebarUIContext'
 import { Button } from '@/components/ui/button'
+import { WorkspaceToggle } from './WorkspaceToggle'
 
 // Enhanced section configuration with views and quick actions
 interface ViewConfig {
@@ -282,6 +283,11 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
   return (
     <TooltipProvider delayDuration={100}>
       <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
+
+        {/* Workspace Toggle - Show at top for workspace-related sections */}
+        {!isCollapsed && (detectedSectionId === 'workspace' || detectedSectionId === 'jobs' || detectedSectionId === 'candidates' || detectedSectionId === 'accounts' || detectedSectionId === 'placements' || detectedSectionId === 'leads' || detectedSectionId === 'deals' || detectedSectionId === 'campaigns' || detectedSectionId === 'contacts') && (
+          <WorkspaceToggle />
+        )}
 
         {/* Quick Create Button - Most prominent action */}
         {section.createPath && (
