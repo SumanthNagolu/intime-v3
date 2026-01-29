@@ -72,7 +72,7 @@ export function CreateIncidentDialog({ open, onOpenChange, onSuccess }: CreateIn
       severity,
       impact: impact.trim() || undefined,
       startedAt: new Date(startedAt).toISOString(),
-      incidentCommander: incidentCommander || undefined,
+      incidentCommander: incidentCommander && incidentCommander !== '__none__' ? incidentCommander : undefined,
     })
   }
 
@@ -153,7 +153,7 @@ export function CreateIncidentDialog({ open, onOpenChange, onSuccess }: CreateIn
                 <SelectValue placeholder="Assign a commander" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">None</SelectItem>
+                <SelectItem value="__none__">None</SelectItem>
                 {usersQuery.data?.map((user) => (
                   <SelectItem key={user.id} value={user.id}>
                     {user.full_name} ({user.email})

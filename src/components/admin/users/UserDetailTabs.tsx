@@ -11,6 +11,7 @@ import { UserRolesTab } from './tabs/UserRolesTab'
 import { UserProfileTab } from './tabs/UserProfileTab'
 import { UserRegionTab } from './tabs/UserRegionTab'
 import { UserAuthorityTab } from './tabs/UserAuthorityTab'
+import { UserSecurityTab } from './tabs/UserSecurityTab'
 
 const TABS = [
   { id: 'basics', label: 'Basics' },
@@ -20,6 +21,7 @@ const TABS = [
   { id: 'profile', label: 'Profile' },
   { id: 'region', label: 'Region' },
   { id: 'authority', label: 'Authority' },
+  { id: 'security', label: 'Security' },
 ] as const
 
 type TabId = typeof TABS[number]['id']
@@ -31,7 +33,7 @@ interface UserDetailTabsProps {
 /**
  * User Detail Tabs (Guidewire-style)
  *
- * 7 horizontal tabs:
+ * 8 horizontal tabs:
  * 1. Basics - Name, Account, Status, Contact sections
  * 2. Attributes - Custom attributes table
  * 3. Access - Security zones, access levels
@@ -39,6 +41,7 @@ interface UserDetailTabsProps {
  * 5. Profile - Avatar, bio, preferences
  * 6. Region - Geographic assignments
  * 7. Authority - Authority limits, approvals
+ * 8. Security - 2FA, password, sessions, login history
  */
 export function UserDetailTabs({ user }: UserDetailTabsProps) {
   const router = useRouter()
@@ -73,6 +76,8 @@ export function UserDetailTabs({ user }: UserDetailTabsProps) {
         return <UserRegionTab user={user} />
       case 'authority':
         return <UserAuthorityTab user={user} />
+      case 'security':
+        return <UserSecurityTab user={user} />
       default:
         return <UserBasicsTab user={user} />
     }

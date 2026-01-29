@@ -9,15 +9,14 @@ import {
   Globe,
   Phone,
   Mail,
-  MapPin,
   CheckCircle2,
   AlertCircle,
   Loader2,
-  RotateCcw,
+  Pencil,
+  X,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -30,7 +29,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
-import { SmartAddressInput, type AddressValue } from './SmartAddressInput'
 import { OrganizationAddressesSection } from './OrganizationAddressesSection'
 
 // Validation schema
@@ -47,14 +45,6 @@ const organizationSchema = z.object({
     .or(z.literal('')),
   email: z.string().email('Enter a valid email').optional().nullable().or(z.literal('')),
   phone: z.string().max(50).optional().nullable(),
-  address: z.object({
-    line1: z.string().optional(),
-    line2: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    postalCode: z.string().optional(),
-    country: z.string().optional(),
-  }),
 })
 
 type OrganizationFormData = z.infer<typeof organizationSchema>
@@ -82,6 +72,13 @@ const companySizes = [
   { value: '1000+', label: '1000+ employees' },
 ]
 
+// Get company size label from value
+function getCompanySizeLabel(value: string | null | undefined): string {
+  if (!value) return '—'
+  const size = companySizes.find((s) => s.value === value)
+  return size?.label || value
+}
+
 // Section component with validation status
 interface SettingsSectionProps {
   title: string
@@ -91,6 +88,8 @@ interface SettingsSectionProps {
   isValid?: boolean
   hasErrors?: boolean
   className?: string
+  onEdit?: () => void
+  isEditing?: boolean
 }
 
 function SettingsSection({
@@ -101,6 +100,8 @@ function SettingsSection({
   isValid,
   hasErrors,
   className,
+  onEdit,
+  isEditing,
 }: SettingsSectionProps) {
   return (
     <div
@@ -138,29 +139,71 @@ function SettingsSection({
             </div>
           </div>
 
-          {/* Status indicator */}
-          {isValid !== undefined && (
-            <div className="flex items-center gap-1.5">
-              {isValid ? (
-                <>
-                  <CheckCircle2 className="h-4 w-4 text-success-500" />
-                  <span className="text-xs text-success-600 font-medium">Complete</span>
-                </>
-              ) : hasErrors ? (
-                <>
-                  <AlertCircle className="h-4 w-4 text-error-500" />
-                  <span className="text-xs text-error-600 font-medium">Has errors</span>
-                </>
-              ) : (
-                <Badge variant="outline" className="text-xs bg-amber-50 text-amber-700 border-amber-200">
-                  Incomplete
-                </Badge>
-              )}
-            </div>
-          )}
+          <div className="flex items-center gap-3">
+            {/* Status indicator - only show in edit mode */}
+            {isEditing && isValid !== undefined && (
+              <div className="flex items-center gap-1.5">
+                {isValid ? (
+                  <>
+                    <CheckCircle2 className="h-4 w-4 text-success-500" />
+                    <span className="text-xs text-success-600 font-medium">Complete</span>
+                  </>
+                ) : hasErrors ? (
+                  <>
+                    <AlertCircle className="h-4 w-4 text-error-500" />
+                    <span className="text-xs text-error-600 font-medium">Has errors</span>
+                  </>
+                ) : (
+                  <Badge variant="outline" className="text-xs bg-amber-50 text-amber-700 border-amber-200">
+                    Incomplete
+                  </Badge>
+                )}
+              </div>
+            )}
+
+            {/* Edit button - only show in view mode */}
+            {onEdit && !isEditing && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onEdit}
+                className="text-charcoal-500 hover:text-charcoal-700"
+              >
+                <Pencil className="h-4 w-4 mr-1.5" />
+                Edit
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       <div className="p-6">{children}</div>
+    </div>
+  )
+}
+
+// Read-only field display
+interface ReadOnlyFieldProps {
+  label: string
+  value: string | null | undefined
+  icon?: React.ReactNode
+  className?: string
+}
+
+function ReadOnlyField({ label, value, icon, className }: ReadOnlyFieldProps) {
+  return (
+    <div className={cn('space-y-1.5', className)}>
+      <Label className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">
+        {label}
+      </Label>
+      <div className="flex items-center gap-2 min-h-[44px] py-2">
+        {icon && <span className="text-charcoal-400">{icon}</span>}
+        <span className={cn(
+          'text-sm',
+          value ? 'text-charcoal-900' : 'text-charcoal-400 italic'
+        )}>
+          {value || '—'}
+        </span>
+      </div>
     </div>
   )
 }
@@ -192,8 +235,63 @@ function FormField({ label, required, error, children, className }: FormFieldPro
   )
 }
 
+// Edit toolbar component
+interface EditToolbarProps {
+  onSave: () => void
+  onCancel: () => void
+  isSaving: boolean
+  isDirty: boolean
+}
+
+function EditToolbar({ onSave, onCancel, isSaving, isDirty }: EditToolbarProps) {
+  return (
+    <div className="sticky top-0 z-10 -mx-6 -mt-6 mb-6 px-6 py-3 bg-charcoal-900 text-white rounded-t-xl flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <Pencil className="h-4 w-4 text-gold-400" />
+        <span className="text-sm font-medium">Editing</span>
+        {isDirty && (
+          <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 text-xs">
+            Unsaved changes
+          </Badge>
+        )}
+      </div>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onCancel}
+          disabled={isSaving}
+          className="text-charcoal-300 hover:text-white hover:bg-charcoal-800"
+        >
+          <X className="h-4 w-4 mr-1.5" />
+          Cancel
+        </Button>
+        <Button
+          size="sm"
+          onClick={onSave}
+          disabled={isSaving}
+          className="bg-gold-500 hover:bg-gold-600 text-charcoal-900"
+        >
+          {isSaving ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            <>
+              <CheckCircle2 className="h-4 w-4 mr-1.5" />
+              Save Changes
+            </>
+          )}
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export function OrganizationSettingsPageV2() {
   const utils = trpc.useUtils()
+  const [isEditing, setIsEditing] = React.useState(false)
 
   // Fetch organization data
   const { data: organization, isLoading } = trpc.settings.getOrganization.useQuery()
@@ -204,48 +302,36 @@ export function OrganizationSettingsPageV2() {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, dirtyFields, isSubmitting },
+    formState: { errors, isDirty },
     watch,
   } = useForm<OrganizationFormData>({
     resolver: zodResolver(organizationSchema),
     defaultValues: {
       name: '',
       legalName: '',
-      industry: '',
-      companySize: '',
+      industry: null,
+      companySize: null,
       website: '',
       email: '',
       phone: '',
-      address: {
-        line1: '',
-        line2: '',
-        city: '',
-        state: '',
-        postalCode: '',
-        country: 'US',
-      },
     },
   })
 
   // Update form when data loads
   React.useEffect(() => {
     if (organization) {
+      console.log('[OrganizationSettings] Loading data:', {
+        industry: organization.industry,
+        company_size: organization.company_size,
+      })
       reset({
         name: organization.name || '',
         legalName: organization.legal_name || '',
-        industry: organization.industry || '',
-        companySize: organization.company_size || '',
+        industry: organization.industry || null,
+        companySize: organization.company_size || null,
         website: organization.website || '',
         email: organization.email || '',
         phone: organization.phone || '',
-        address: {
-          line1: organization.address_line1 || '',
-          line2: organization.address_line2 || '',
-          city: organization.city || '',
-          state: organization.state || '',
-          postalCode: organization.postal_code || '',
-          country: organization.country || 'US',
-        },
       })
     }
   }, [organization, reset])
@@ -255,6 +341,7 @@ export function OrganizationSettingsPageV2() {
     onSuccess: () => {
       toast.success('Organization settings saved successfully')
       utils.settings.getOrganization.invalidate()
+      setIsEditing(false)
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to save settings')
@@ -263,7 +350,7 @@ export function OrganizationSettingsPageV2() {
 
   // Submit handler
   const onSubmit = (data: OrganizationFormData) => {
-    updateOrganization.mutate({
+    const payload = {
       name: data.name.trim(),
       legal_name: data.legalName?.trim() || null,
       industry: data.industry || null,
@@ -271,13 +358,30 @@ export function OrganizationSettingsPageV2() {
       website: data.website?.trim() || null,
       email: data.email?.trim() || null,
       phone: data.phone?.trim() || null,
-      address_line1: data.address.line1?.trim() || null,
-      address_line2: data.address.line2?.trim() || null,
-      city: data.address.city?.trim() || null,
-      state: data.address.state?.trim() || null,
-      postal_code: data.address.postalCode?.trim() || null,
-      country: data.address.country?.trim() || null,
-    })
+    }
+    console.log('[OrganizationSettings] Saving:', payload)
+    updateOrganization.mutate(payload)
+  }
+
+  // Handle cancel - reset form and exit edit mode
+  const handleCancel = () => {
+    if (organization) {
+      reset({
+        name: organization.name || '',
+        legalName: organization.legal_name || '',
+        industry: organization.industry || null,
+        companySize: organization.company_size || null,
+        website: organization.website || '',
+        email: organization.email || '',
+        phone: organization.phone || '',
+      })
+    }
+    setIsEditing(false)
+  }
+
+  // Enter edit mode
+  const handleEdit = () => {
+    setIsEditing(true)
   }
 
   // Watch form values for section validation
@@ -291,78 +395,41 @@ export function OrganizationSettingsPageV2() {
   const contactValid = !!watchedValues.email || !!watchedValues.phone
   const contactHasErrors = !!errors.email || !!errors.phone
 
-  const addressValid =
-    !!watchedValues.address?.line1 &&
-    !!watchedValues.address?.city &&
-    !!watchedValues.address?.state
-  const addressHasErrors = !!errors.address
-
-  const breadcrumbs = [
-    { label: 'Admin', href: '/employee/admin' },
-    { label: 'Settings', href: '/employee/admin/settings' },
-    { label: 'Profile' },
-  ]
-
   if (isLoading) {
     return (
-      <AdminPageContent insideTabLayout>
-        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
+      <div className="space-y-6">
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-xl" />
           <div className="h-32 bg-charcoal-100 rounded-xl" />
           <div className="h-48 bg-charcoal-100 rounded-xl" />
         </div>
-      </AdminPageContent>
+      </div>
     )
   }
 
   return (
-    <AdminPageContent insideTabLayout>
-      <AdminPageHeader
-        insideTabLayout
-        breadcrumbs={breadcrumbs}
-        actions={
-          <div className="flex items-center gap-3">
-            {isDirty && (
-              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
-                Unsaved changes
-              </Badge>
-            )}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => reset()}
-              disabled={!isDirty || updateOrganization.isPending}
-            >
-              <RotateCcw className="h-4 w-4 mr-2" />
-              Reset
-            </Button>
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              disabled={updateOrganization.isPending}
-            >
-              {updateOrganization.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                'Save Changes'
-              )}
-            </Button>
-          </div>
-        }
-      />
+    <div className="space-y-6">
+      {/* General Information Section */}
+      <SettingsSection
+        title="General Information"
+        description="Basic information about your organization"
+        icon={Building2}
+        isValid={isEditing ? generalInfoValid : undefined}
+        hasErrors={isEditing ? generalInfoHasErrors : undefined}
+        onEdit={handleEdit}
+        isEditing={isEditing}
+      >
+        {isEditing && (
+          <EditToolbar
+            onSave={handleSubmit(onSubmit)}
+            onCancel={handleCancel}
+            isSaving={updateOrganization.isPending}
+            isDirty={isDirty}
+          />
+        )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        {/* General Information */}
-        <SettingsSection
-          title="General Information"
-          description="Basic information about your organization"
-          icon={Building2}
-          isValid={generalInfoValid}
-          hasErrors={generalInfoHasErrors}
-        >
+        {isEditing ? (
+          // Edit mode - form fields
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField
               label="Organization Name"
@@ -392,7 +459,10 @@ export function OrganizationSettingsPageV2() {
                 name="industry"
                 control={control}
                 render={({ field }) => (
-                  <Select value={field.value || ''} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value ?? undefined}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
                     <SelectTrigger className="h-11">
                       <SelectValue placeholder="Select industry" />
                     </SelectTrigger>
@@ -413,7 +483,10 @@ export function OrganizationSettingsPageV2() {
                 name="companySize"
                 control={control}
                 render={({ field }) => (
-                  <Select value={field.value || ''} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value ?? undefined}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
                     <SelectTrigger className="h-11">
                       <SelectValue placeholder="Select company size" />
                     </SelectTrigger>
@@ -443,16 +516,47 @@ export function OrganizationSettingsPageV2() {
               />
             </FormField>
           </div>
-        </SettingsSection>
+        ) : (
+          // View mode - read-only display
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ReadOnlyField
+              label="Organization Name"
+              value={organization?.name}
+            />
+            <ReadOnlyField
+              label="Legal Name"
+              value={organization?.legal_name}
+            />
+            <ReadOnlyField
+              label="Industry"
+              value={organization?.industry}
+            />
+            <ReadOnlyField
+              label="Company Size"
+              value={getCompanySizeLabel(organization?.company_size)}
+            />
+            <ReadOnlyField
+              label="Website"
+              value={organization?.website}
+              icon={<Globe className="h-4 w-4" />}
+              className="md:col-span-2"
+            />
+          </div>
+        )}
+      </SettingsSection>
 
-        {/* Contact Information */}
-        <SettingsSection
-          title="Contact Information"
-          description="How people can reach your organization"
-          icon={Phone}
-          isValid={contactValid}
-          hasErrors={contactHasErrors}
-        >
+      {/* Contact Information Section */}
+      <SettingsSection
+        title="Contact Information"
+        description="How people can reach your organization"
+        icon={Phone}
+        isValid={isEditing ? contactValid : undefined}
+        hasErrors={isEditing ? contactHasErrors : undefined}
+        onEdit={handleEdit}
+        isEditing={isEditing}
+      >
+        {isEditing ? (
+          // Edit mode - form fields
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField label="Contact Email" error={errors.email?.message}>
               <Input
@@ -474,58 +578,28 @@ export function OrganizationSettingsPageV2() {
               />
             </FormField>
           </div>
-        </SettingsSection>
-
-        {/* Address */}
-        <SettingsSection
-          title="Headquarters Address"
-          description="Primary business address"
-          icon={MapPin}
-          isValid={addressValid}
-          hasErrors={addressHasErrors}
-        >
-          <Controller
-            name="address"
-            control={control}
-            render={({ field }) => (
-              <SmartAddressInput
-                value={field.value as AddressValue}
-                onChange={field.onChange}
-                errors={{
-                  line1: errors.address?.line1?.message,
-                  city: errors.address?.city?.message,
-                  state: errors.address?.state?.message,
-                  postalCode: errors.address?.postalCode?.message,
-                }}
-              />
-            )}
-          />
-        </SettingsSection>
-
-        {/* Additional Addresses */}
-        {organization?.id && (
-          <OrganizationAddressesSection organizationId={organization.id} />
+        ) : (
+          // View mode - read-only display
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ReadOnlyField
+              label="Contact Email"
+              value={organization?.email}
+              icon={<Mail className="h-4 w-4" />}
+            />
+            <ReadOnlyField
+              label="Phone Number"
+              value={organization?.phone}
+              icon={<Phone className="h-4 w-4" />}
+            />
+          </div>
         )}
+      </SettingsSection>
 
-        {/* Mobile submit button */}
-        <div className="md:hidden sticky bottom-4">
-          <Button
-            type="submit"
-            className="w-full shadow-elevation-md"
-            disabled={updateOrganization.isPending}
-          >
-            {updateOrganization.isPending ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              'Save Changes'
-            )}
-          </Button>
-        </div>
-      </form>
-    </AdminPageContent>
+      {/* Addresses - managed separately */}
+      {organization?.id && (
+        <OrganizationAddressesSection organizationId={organization.id} />
+      )}
+    </div>
   )
 }
 

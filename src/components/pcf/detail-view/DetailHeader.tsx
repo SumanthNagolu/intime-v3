@@ -66,8 +66,8 @@ export function DetailHeader<T extends Record<string, unknown>>({
     <div className="px-6 py-5 bg-white">
       <div className="flex items-start justify-between gap-6">
         <div className="flex-1 min-w-0">
-          {/* Breadcrumbs */}
-          {breadcrumbs.length > 0 && (
+          {/* Breadcrumbs removed - sidebar provides navigation context */}
+          {false && breadcrumbs.length > 0 && (
             <nav className="flex items-center gap-1.5 mb-3">
               {breadcrumbs.map((crumb, index) => (
                 <div key={crumb.href} className="flex items-center gap-1.5">

@@ -27,42 +27,43 @@ interface TeamSpaceSidebarProps {
     status: string
   }
   onCreateSprint?: () => void
+  basePath?: string
 }
 
 interface SidebarItem {
   id: string
   label: string
   icon: React.ElementType
-  href: string
+  path: string // relative path from basePath
   badge?: number | string
 }
 
 const SIDEBAR_SECTIONS: { title?: string; items: SidebarItem[] }[] = [
   {
     items: [
-      { id: 'board', label: 'Sprint Board', icon: LayoutGrid, href: '/employee/team' },
-      { id: 'backlog', label: 'Backlog', icon: ListTodo, href: '/employee/team/backlog' },
-      { id: 'sprints', label: 'Sprints', icon: Rocket, href: '/employee/team/sprints' },
+      { id: 'board', label: 'Sprint Board', icon: LayoutGrid, path: '' },
+      { id: 'backlog', label: 'Backlog', icon: ListTodo, path: '/backlog' },
+      { id: 'sprints', label: 'Sprints', icon: Rocket, path: '/sprints' },
     ],
   },
   {
     title: 'Ceremonies',
     items: [
-      { id: 'planning', label: 'Sprint Planning', icon: Target, href: '/employee/team/planning' },
-      { id: 'retro', label: 'Retrospectives', icon: History, href: '/employee/team/retro' },
+      { id: 'planning', label: 'Sprint Planning', icon: Target, path: '/planning' },
+      { id: 'retro', label: 'Retrospectives', icon: History, path: '/retro' },
     ],
   },
   {
     title: 'Analytics',
     items: [
-      { id: 'velocity', label: 'Velocity', icon: TrendingUp, href: '/employee/team/velocity' },
-      { id: 'reports', label: 'Reports', icon: BarChart3, href: '/employee/team/reports' },
+      { id: 'velocity', label: 'Velocity', icon: TrendingUp, path: '/velocity' },
+      { id: 'reports', label: 'Reports', icon: BarChart3, path: '/reports' },
     ],
   },
   {
     title: 'Settings',
     items: [
-      { id: 'settings', label: 'Team Settings', icon: Settings, href: '/employee/team/settings' },
+      { id: 'settings', label: 'Team Settings', icon: Settings, path: '/settings' },
     ],
   },
 ]
@@ -72,12 +73,14 @@ export function TeamSpaceSidebar({
   teamMemberCount,
   activeSprint,
   onCreateSprint,
+  basePath = '/employee/scrum',
 }: TeamSpaceSidebarProps) {
   const pathname = usePathname()
 
   // Determine active section from pathname
   const getActiveSection = () => {
-    if (pathname === '/employee/team') return 'board'
+    // Handle both /employee/scrum and /employee/team paths
+    if (pathname === basePath || pathname === '/employee/team' || pathname === '/employee/scrum') return 'board'
     const segment = pathname.split('/').pop()
     return segment || 'board'
   }
@@ -143,11 +146,12 @@ export function TeamSpaceSidebar({
               {section.items.map((item) => {
                 const Icon = item.icon
                 const isActive = activeSection === item.id
+                const href = `${basePath}${item.path}`
 
                 return (
                   <Link
                     key={item.id}
-                    href={item.href}
+                    href={href}
                     className={cn(
                       'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group',
                       isActive

@@ -112,7 +112,7 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
     if (!incident) return
     updateIncidentMutation.mutate({
       id: incidentId,
-      incidentCommander: commanderId || null,
+      incidentCommander: commanderId && commanderId !== '__none__' ? commanderId : null,
     })
   }
 
@@ -235,7 +235,7 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
                 <div className="space-y-2">
                   <Label>Incident Commander</Label>
                   <Select
-                    value={incident.incident_commander || ''}
+                    value={incident.incident_commander || '__none__'}
                     onValueChange={handleCommanderChange}
                     disabled={updateIncidentMutation.isPending}
                   >
@@ -243,7 +243,7 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
                       <SelectValue placeholder="Assign commander" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Unassigned</SelectItem>
+                      <SelectItem value="__none__">Unassigned</SelectItem>
                       {usersQuery.data?.map((user) => (
                         <SelectItem key={user.id} value={user.id}>
                           {user.full_name}

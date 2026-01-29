@@ -9,7 +9,7 @@ import {
   Activity, ChevronDown, ChevronRight, Lock,
   ClipboardList, AlertTriangle, LayoutDashboard,
   Palette, Globe, ShieldCheck, HardDrive, Plug,
-  Phone, Calendar, Clock, Briefcase, Cog
+  Phone, Calendar, Clock, Briefcase, Cog, Plus
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CollapsibleSectionGroup } from '@/components/navigation/CollapsibleSectionGroup'
@@ -192,6 +192,13 @@ export function AdminSidebar({ organization, groups }: AdminSidebarProps) {
               >
                 <Building2 className="h-4 w-4" />
                 <span>Groups</span>
+              </Link>
+              <Link
+                href="/employee/admin/groups/new"
+                className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-6 h-6 text-charcoal-400 hover:text-gold-600 hover:bg-gold-50 rounded transition-all"
+                title="New Group"
+              >
+                <Plus className="h-3.5 w-3.5" />
               </Link>
             </div>
 
