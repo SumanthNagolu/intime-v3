@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Edit,
   Key,
@@ -15,9 +17,9 @@ import {
   Mail,
   AlertTriangle,
 } from 'lucide-react'
-import Link from 'next/link'
 import { toast } from 'sonner'
 import type { FullUserData } from '@/types/admin'
+import { useUserWorkspace } from '../UserWorkspaceProvider'
 
 const STATUS_COLORS: Record<string, string> = {
   active: 'bg-green-100 text-green-800',
@@ -35,18 +37,87 @@ const STATUS_LABELS: Record<string, string> = {
 
 interface UserBasicsTabProps {
   user: FullUserData
+  mode?: 'view' | 'edit'
 }
 
 /**
  * User Basics Tab - Name, Account, Status, Contact sections
  */
-export function UserBasicsTab({ user }: UserBasicsTabProps) {
+export function UserBasicsTab({ user, mode = 'view' }: UserBasicsTabProps) {
   const router = useRouter()
   const utils = trpc.useUtils()
+  const { isEditing, setIsEditing, refreshData, registerSaveHandler, unregisterSaveHandler } = useUserWorkspace()
+
+  // Form state for edit mode
+  const [formData, setFormData] = useState({
+    first_name: user.first_name || '',
+    last_name: user.last_name || '',
+    phone: user.phone || '',
+  })
+
+  // Reset form data when user changes or mode changes
+  useEffect(() => {
+    setFormData({
+      first_name: user.first_name || '',
+      last_name: user.last_name || '',
+      phone: user.phone || '',
+    })
+  }, [user, isEditing])
 
   const [showStatusDialog, setShowStatusDialog] = useState<'activate' | 'suspend' | 'deactivate' | null>(null)
   const [showResetPasswordDialog, setShowResetPasswordDialog] = useState(false)
   const [showLogoutDialog, setShowLogoutDialog] = useState(false)
+
+  // Update user mutation
+  const updateUserMutation = trpc.users.update.useMutation({
+    onSuccess: () => {
+      toast.success('User updated successfully')
+      utils.users.getFullUser.invalidate({ id: user.id })
+      refreshData()
+      router.refresh()
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to update user')
+      throw error // Re-throw to signal failure to parent
+    },
+  })
+
+  // Use refs to avoid stale closure in save handler
+  const formDataRef = useRef(formData)
+  const userRef = useRef(user)
+  formDataRef.current = formData
+  userRef.current = user
+
+  // Handle save - returns a promise for the parent to await
+  const handleSave = useCallback(async () => {
+    const currentFormData = formDataRef.current
+    const currentUser = userRef.current
+
+    // Only save if there are changes
+    const hasChanges =
+      currentFormData.first_name !== (currentUser.first_name || '') ||
+      currentFormData.last_name !== (currentUser.last_name || '') ||
+      currentFormData.phone !== (currentUser.phone || '')
+
+    if (!hasChanges) return
+
+    await updateUserMutation.mutateAsync({
+      id: currentUser.id,
+      firstName: currentFormData.first_name,
+      lastName: currentFormData.last_name,
+      phone: currentFormData.phone || null,
+    })
+  }, [updateUserMutation])
+
+  // Register save handler when in edit mode
+  useEffect(() => {
+    if (isEditing) {
+      registerSaveHandler(handleSave)
+      return () => {
+        unregisterSaveHandler(handleSave)
+      }
+    }
+  }, [isEditing, handleSave, registerSaveHandler, unregisterSaveHandler])
 
   const updateStatusMutation = trpc.users.updateStatus.useMutation({
     onSuccess: () => {
@@ -124,32 +195,54 @@ export function UserBasicsTab({ user }: UserBasicsTabProps) {
               <CardTitle className="text-sm font-semibold uppercase tracking-wider text-charcoal-600">
                 Name
               </CardTitle>
-              <Link href={`/employee/admin/users/${user.id}/edit`}>
-                <Button variant="ghost" size="sm">
+              {!isEditing && (
+                <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>
                   <Edit className="w-4 h-4" />
                 </Button>
-              </Link>
+              )}
             </div>
           </CardHeader>
           <CardContent>
             <div className="flex items-start gap-4">
               <div className="w-16 h-16 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-semibold text-xl">
-                {getInitials(user.full_name)}
+                {getInitials(isEditing ? `${formData.first_name} ${formData.last_name}` : user.full_name)}
               </div>
               <div className="flex-1 space-y-3">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">First Name</p>
-                    <p className="font-medium text-charcoal-900">{user.first_name || '—'}</p>
+                    <Label className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">First Name</Label>
+                    {isEditing ? (
+                      <Input
+                        value={formData.first_name}
+                        onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                        placeholder="Enter first name"
+                        className="mt-1"
+                      />
+                    ) : (
+                      <p className="font-medium text-charcoal-900">{user.first_name || '—'}</p>
+                    )}
                   </div>
                   <div>
-                    <p className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Last Name</p>
-                    <p className="font-medium text-charcoal-900">{user.last_name || '—'}</p>
+                    <Label className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Last Name</Label>
+                    {isEditing ? (
+                      <Input
+                        value={formData.last_name}
+                        onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                        placeholder="Enter last name"
+                        className="mt-1"
+                      />
+                    ) : (
+                      <p className="font-medium text-charcoal-900">{user.last_name || '—'}</p>
+                    )}
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Display Name</p>
-                  <p className="font-medium text-charcoal-900">{user.full_name}</p>
+                  <Label className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Display Name</Label>
+                  <p className="font-medium text-charcoal-900">
+                    {isEditing
+                      ? `${formData.first_name} ${formData.last_name}`.trim() || '—'
+                      : user.full_name}
+                  </p>
                 </div>
               </div>
             </div>
@@ -244,14 +337,23 @@ export function UserBasicsTab({ user }: UserBasicsTabProps) {
           <CardContent>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Email</p>
+                <Label className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Email</Label>
                 <p className="font-medium text-charcoal-900">{user.email}</p>
               </div>
               <div>
-                <p className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Phone</p>
-                <p className="font-medium text-charcoal-900">
-                  {user.phone || <span className="text-charcoal-400">Not provided</span>}
-                </p>
+                <Label className="text-xs text-charcoal-500 uppercase tracking-wider mb-1">Phone</Label>
+                {isEditing ? (
+                  <Input
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="Enter phone number"
+                    className="mt-1"
+                  />
+                ) : (
+                  <p className="font-medium text-charcoal-900">
+                    {user.phone || <span className="text-charcoal-400">Not provided</span>}
+                  </p>
+                )}
               </div>
             </div>
           </CardContent>

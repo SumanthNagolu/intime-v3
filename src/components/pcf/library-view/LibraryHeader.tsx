@@ -61,24 +61,7 @@ export function LibraryHeader({
 }: LibraryHeaderProps) {
   return (
     <div className={cn('space-y-4', className)}>
-      {/* Breadcrumbs */}
-      {breadcrumbs && breadcrumbs.length > 0 && (
-        <div className="flex items-center gap-2 text-sm">
-          {breadcrumbs.map((crumb, index) => (
-            <div key={crumb.href} className="flex items-center gap-2">
-              <Link
-                href={crumb.href}
-                className="text-charcoal-500 hover:text-charcoal-700 transition-colors"
-              >
-                {crumb.label}
-              </Link>
-              {index < breadcrumbs.length - 1 && (
-                <span className="text-charcoal-300">/</span>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Breadcrumbs removed - sidebar provides navigation context */}
 
       {/* Title Row */}
       <div className="flex items-start justify-between">

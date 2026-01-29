@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { EntityNavigationProvider } from '@/lib/navigation/EntityNavigationContext'
 import { UserRoleProvider } from '@/lib/contexts/UserRoleContext'
+import { BrandingProvider } from '@/components/providers/BrandingProvider'
 import { getServerCaller } from '@/server/trpc/server-caller'
 import { type UserRole } from '@/lib/auth/client'
 import { ReactNode } from 'react'
@@ -42,9 +43,11 @@ export default async function EmployeeLayout({ children }: { children: ReactNode
 
   return (
     <UserRoleProvider role={userRole}>
-      <EntityNavigationProvider>
-        {children}
-      </EntityNavigationProvider>
+      <BrandingProvider>
+        <EntityNavigationProvider>
+          {children}
+        </EntityNavigationProvider>
+      </BrandingProvider>
     </UserRoleProvider>
   )
 }

@@ -301,7 +301,7 @@ export const emergencyRouter = router({
   createIncident: orgProtectedProcedure
     .input(createIncidentInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
 
       const { data, error } = await serviceClient
@@ -315,8 +315,8 @@ export const emergencyRouter = router({
           started_at: input.startedAt,
           detected_at: input.detectedAt,
           incident_commander: input.incidentCommander,
-          created_by: user?.id,
-          updated_by: user?.id,
+          created_by: profileId,
+          updated_by: profileId,
         })
         .select(`
           *,
@@ -338,7 +338,7 @@ export const emergencyRouter = router({
         incident_id: data.id,
         event_type: 'detection',
         description: `Incident created: ${input.title}`,
-        performed_by: user?.id,
+        performed_by: profileId,
         metadata: { severity: input.severity },
       })
 
@@ -362,7 +362,7 @@ export const emergencyRouter = router({
   updateIncident: orgProtectedProcedure
     .input(updateIncidentInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
       const { id, ...updates } = input
 
@@ -381,7 +381,7 @@ export const emergencyRouter = router({
         })
       }
 
-      const updateData: Record<string, unknown> = { updated_by: user?.id }
+      const updateData: Record<string, unknown> = { updated_by: profileId }
       if (updates.title !== undefined) updateData.title = updates.title
       if (updates.description !== undefined) updateData.description = updates.description
       if (updates.severity !== undefined) updateData.severity = updates.severity
@@ -422,7 +422,7 @@ export const emergencyRouter = router({
           incident_id: id,
           event_type: updates.status === 'resolved' ? 'resolution' : 'update',
           description: `Status changed from ${currentIncident.status} to ${updates.status}`,
-          performed_by: user?.id,
+          performed_by: profileId,
           metadata: { oldStatus: currentIncident.status, newStatus: updates.status },
         })
       }
@@ -448,7 +448,7 @@ export const emergencyRouter = router({
   addTimelineEvent: orgProtectedProcedure
     .input(addTimelineEventInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, profileId } = ctx
       const serviceClient = getServiceClient()
 
       // Verify incident exists and belongs to org
@@ -473,7 +473,7 @@ export const emergencyRouter = router({
           incident_id: input.incidentId,
           event_type: input.eventType,
           description: input.description,
-          performed_by: user?.id,
+          performed_by: profileId,
           metadata: input.metadata ?? {},
         })
         .select(`
@@ -497,7 +497,7 @@ export const emergencyRouter = router({
   sendNotification: orgProtectedProcedure
     .input(sendNotificationInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
 
       // Verify incident exists
@@ -586,7 +586,7 @@ export const emergencyRouter = router({
           body: input.body,
           status,
           sent_at: status === 'sent' ? new Date().toISOString() : null,
-          sent_by: user?.id,
+          sent_by: profileId,
           error_message: errorMessage,
         })
 
@@ -600,7 +600,7 @@ export const emergencyRouter = router({
         incident_id: input.incidentId,
         event_type: 'notification',
         description: `${input.notificationType} notification sent to ${successCount}/${input.recipients.length} recipients`,
-        performed_by: user?.id,
+        performed_by: profileId,
         metadata: { notificationType: input.notificationType, recipientCount: input.recipients.length, successCount },
       })
 
@@ -617,14 +617,14 @@ export const emergencyRouter = router({
   logBreakGlassAccess: orgProtectedProcedure
     .input(logBreakGlassInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
 
       const { data, error } = await serviceClient
         .from('break_glass_access')
         .insert({
           org_id: orgId,
-          user_id: user?.id,
+          user_id: profileId,
           accessed_by: user?.email || 'unknown',
           reason: input.reason,
           authorized_by: input.authorizedBy,
@@ -665,7 +665,7 @@ export const emergencyRouter = router({
           incident_id: input.incidentId,
           event_type: 'action',
           description: `Break-glass access initiated by ${user?.email}. Authorized by: ${input.authorizedBy}`,
-          performed_by: user?.id,
+          performed_by: profileId,
           metadata: { reason: input.reason },
         })
       }
@@ -676,7 +676,7 @@ export const emergencyRouter = router({
   updateBreakGlassAccess: orgProtectedProcedure
     .input(updateBreakGlassInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
       const { id, ...updates } = input
 
@@ -850,7 +850,7 @@ export const emergencyRouter = router({
   createDrill: orgProtectedProcedure
     .input(createDrillInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
 
       const { data, error } = await serviceClient
@@ -862,8 +862,8 @@ export const emergencyRouter = router({
           scenario: input.scenario,
           scheduled_at: input.scheduledAt,
           participants: input.participants,
-          created_by: user?.id,
-          updated_by: user?.id,
+          created_by: profileId,
+          updated_by: profileId,
         })
         .select()
         .single()
@@ -895,7 +895,7 @@ export const emergencyRouter = router({
   updateDrill: orgProtectedProcedure
     .input(updateDrillInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
       const { id, ...updates } = input
 
@@ -914,7 +914,7 @@ export const emergencyRouter = router({
         })
       }
 
-      const updateData: Record<string, unknown> = { updated_by: user?.id }
+      const updateData: Record<string, unknown> = { updated_by: profileId }
       if (updates.title !== undefined) updateData.title = updates.title
       if (updates.scenario !== undefined) updateData.scenario = updates.scenario
       if (updates.scheduledAt !== undefined) updateData.scheduled_at = updates.scheduledAt
@@ -960,7 +960,7 @@ export const emergencyRouter = router({
   deleteDrill: orgProtectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
       const serviceClient = getServiceClient()
 
       // Get current drill for audit

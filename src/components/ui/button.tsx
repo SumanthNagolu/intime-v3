@@ -5,28 +5,28 @@ import { Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 focus-visible:ring-offset-cream disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-hublot-900 text-white hover:bg-hublot-800 hover:-translate-y-0.5 hover:shadow-elevation-md focus-visible:ring-hublot-500",
+          "bg-charcoal-900 text-white hover:bg-charcoal-800 hover:shadow-sharp focus-visible:ring-charcoal-500",
         destructive:
-          "bg-error-600 text-white hover:bg-error-700 hover:-translate-y-0.5 focus-visible:ring-error-500",
+          "bg-error-600 text-white hover:bg-error-700 hover:shadow-sharp focus-visible:ring-error-500",
         outline:
-          "border-2 border-hublot-900 bg-transparent text-hublot-900 hover:bg-hublot-900 hover:text-white focus-visible:ring-hublot-500",
+          "border border-charcoal-900 bg-transparent text-charcoal-900 hover:bg-charcoal-900 hover:text-white focus-visible:ring-charcoal-500",
         secondary:
           "bg-charcoal-100 text-charcoal-900 hover:bg-charcoal-200 focus-visible:ring-charcoal-500",
         ghost:
           "text-charcoal-700 hover:bg-charcoal-100 hover:text-charcoal-900 focus-visible:ring-charcoal-500",
         link:
-          "text-hublot-900 underline-offset-4 hover:underline focus-visible:ring-hublot-500",
+          "text-charcoal-900 underline-offset-4 hover:underline focus-visible:ring-charcoal-500",
         premium:
-          "bg-gradient-to-r from-gold-500 to-gold-400 text-white hover:from-gold-400 hover:to-gold-500 shadow-gold-glow hover:shadow-gold-glow-lg hover:-translate-y-0.5 focus-visible:ring-gold-500",
+          "bg-charcoal-950 border border-gold-500 text-white hover:bg-black hover:shadow-sharp hover:shadow-gold-500/20 focus-visible:ring-gold-500",
         gold:
-          "bg-gold-500 text-white hover:bg-gold-400 shadow-gold-glow hover:shadow-gold-glow-lg hover:-translate-y-0.5 focus-visible:ring-gold-500",
+          "bg-gold-500 text-white hover:bg-gold-400 hover:shadow-sharp focus-visible:ring-gold-500",
         glass:
-          "bg-white/90 backdrop-blur-md border border-black/10 text-charcoal-900 hover:bg-white hover:-translate-y-0.5 shadow-glass focus-visible:ring-charcoal-500",
+          "bg-white/90 backdrop-blur-md border border-charcoal-200 text-charcoal-900 hover:bg-white hover:shadow-sharp focus-visible:ring-charcoal-500",
       },
       size: {
         default: "h-11 px-6 py-2",

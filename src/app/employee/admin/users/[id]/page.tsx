@@ -1,22 +1,18 @@
-export const dynamic = 'force-dynamic'
+'use client'
 
-import { getServerCaller } from '@/server/trpc/server-caller'
-import { UserDetailClient } from '@/components/admin/users/UserDetailClient'
-import { notFound } from 'next/navigation'
+import { UserWorkspacePage } from '@/components/admin/users'
 
-interface UserDetailPageProps {
-  params: Promise<{ id: string }>
-}
-
-export default async function UserDetailRoute({ params }: UserDetailPageProps) {
-  const { id } = await params
-
-  try {
-    // ONE database call - includes user + all tab data (activity, login history)
-    const caller = await getServerCaller()
-    const data = await caller.users.getFullUser({ id })
-    return <UserDetailClient data={data} />
-  } catch {
-    notFound()
-  }
+/**
+ * User Detail Page
+ *
+ * Uses UserWorkspacePage with mode="view"
+ * Data is provided by layout via UserWorkspaceProvider
+ *
+ * URL patterns:
+ * - /employee/admin/users/[id]           → View mode (default tab: basics)
+ * - /employee/admin/users/[id]?tab=roles → View mode (specific tab)
+ * - /employee/admin/users/[id]?edit=true → Edit mode
+ */
+export default function UserDetailPage() {
+  return <UserWorkspacePage />
 }

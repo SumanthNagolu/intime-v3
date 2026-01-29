@@ -1,12 +1,14 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { User, LogOut, ChevronDown } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { cn } from '@/lib/utils'
+import { useBranding } from '@/components/providers/BrandingProvider'
 
 export function PortalHeader() {
   const [user, setUser] = useState<SupabaseUser | null>(null)
@@ -14,6 +16,7 @@ export function PortalHeader() {
   const [isLoading, setIsLoading] = useState(true)
   const userMenuRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
+  const branding = useBranding()
 
   // Check auth state on mount
   useEffect(() => {
@@ -54,15 +57,30 @@ export function PortalHeader() {
     <header className="bg-white border-b border-charcoal-100 z-50 shadow-sm flex-shrink-0">
       <div className="px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo - Use light mode logo for light navbar, fallback to dark logo or default */}
           <Link href="/employee/admin/dashboard" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-forest-500 to-forest-700 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="font-heading font-bold italic text-lg text-gold-400">I</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-xl font-heading font-bold text-forest-600">InTime</span>
-              <span className="text-xl font-heading font-medium text-gold-500 ml-1">Portal</span>
-            </div>
+            {branding.assets.logoLight || branding.assets.logoDark ? (
+              <Image
+                src={branding.assets.logoLight || branding.assets.logoDark || ''}
+                alt={branding.orgName || 'Logo'}
+                width={140}
+                height={40}
+                className="h-10 w-auto object-contain"
+                unoptimized
+              />
+            ) : (
+              <>
+                <div className="w-10 h-10 bg-gradient-to-br from-forest-500 to-forest-700 rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="font-heading font-bold italic text-lg text-gold-400">I</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-xl font-heading font-bold text-forest-600">
+                    {branding.orgName || 'InTime'}
+                  </span>
+                  <span className="text-xl font-heading font-medium text-gold-500 ml-1">Portal</span>
+                </div>
+              </>
+            )}
           </Link>
 
           {/* User Menu */}

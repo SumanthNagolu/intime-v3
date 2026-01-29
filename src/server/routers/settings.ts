@@ -55,6 +55,13 @@ export const settingsRouter = router({
         org = newOrg
       }
 
+      console.log('[getOrganization] Returning org data:', {
+        id: org.id,
+        name: org.name,
+        industry: org.industry,
+        company_size: org.company_size,
+      })
+
       return org
     }),
 
@@ -69,14 +76,8 @@ export const settingsRouter = router({
       industry: z.string().max(100).optional().nullable(),
       company_size: z.string().max(50).optional().nullable(),
       website: z.string().url().optional().nullable().or(z.literal('')),
-      email: z.string().email().optional().nullable(),
+      email: z.string().email().optional().nullable().or(z.literal('')),
       phone: z.string().max(50).optional().nullable(),
-      address_line1: z.string().max(255).optional().nullable(),
-      address_line2: z.string().max(255).optional().nullable(),
-      city: z.string().max(100).optional().nullable(),
-      state: z.string().max(100).optional().nullable(),
-      postal_code: z.string().max(20).optional().nullable(),
-      country: z.string().max(100).optional().nullable(),
       timezone: z.string().max(100).optional(),
       locale: z.string().max(20).optional(),
 
@@ -145,24 +146,26 @@ export const settingsRouter = router({
       }).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { supabase, orgId, user } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
 
-      // Get current org
-      const { data: currentOrg, error: fetchError } = await supabase
+      // Get current org using admin client (bypass RLS)
+      const { data: currentOrg, error: fetchError } = await adminClient
         .from('organizations')
         .select('*')
         .eq('id', orgId)
         .single()
 
       if (fetchError || !currentOrg) {
+        console.error('updateOrganization fetch error:', fetchError)
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Organization not found',
+          message: `Organization not found: ${fetchError?.message || 'No data'}`,
         })
       }
 
       // Build update object (only include defined values)
-      const urlFields = ['website', 'logo_url', 'favicon_url', 'linkedin_url']
+      const urlFields = ['website', 'logo_url', 'favicon_url', 'linkedin_url', 'email']
       const updates: Record<string, unknown> = {}
       Object.entries(input).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -176,7 +179,7 @@ export const settingsRouter = router({
             if (contactInfo.general_email === '') contactInfo.general_email = null
             if (contactInfo.support_email === '') contactInfo.support_email = null
             if (contactInfo.hr_email === '') contactInfo.hr_email = null
-            if (contactInfo.billing_email === '') contactInfo.billing_email = null
+            if (contactInfo.billing_email === '') contactInfo.billing_url = null
             updates[key] = contactInfo
           } else {
             updates[key] = value
@@ -184,12 +187,15 @@ export const settingsRouter = router({
         }
       })
 
+      console.log('[updateOrganization] Input received:', { industry: input.industry, company_size: input.company_size })
+      console.log('[updateOrganization] Updates to apply:', { industry: updates.industry, company_size: updates.company_size })
+
       if (Object.keys(updates).length === 0) {
         return currentOrg
       }
 
-      // Update organization
-      const { data: org, error: updateError } = await supabase
+      // Update organization using admin client (bypass RLS)
+      const { data: org, error: updateError } = await adminClient
         .from('organizations')
         .update(updates)
         .eq('id', orgId)
@@ -197,23 +203,32 @@ export const settingsRouter = router({
         .single()
 
       if (updateError || !org) {
+        console.error('updateOrganization update error:', updateError)
+        console.error('updateOrganization updates payload:', updates)
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to update organization',
+          message: `Failed to update organization: ${updateError?.message || 'No data returned'}`,
         })
       }
 
-      // Create audit log
-      await supabase.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: user?.id,
-        user_email: user?.email,
-        action: 'update',
-        table_name: 'organizations',
-        record_id: orgId,
-        old_values: currentOrg,
-        new_values: org,
-      })
+      console.log('[updateOrganization] Saved values:', { industry: org.industry, company_size: org.company_size })
+
+      // Create audit log (non-blocking)
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: user?.id,
+          user_email: user?.email,
+          action: 'update',
+          table_name: 'organizations',
+          record_id: orgId,
+          old_values: currentOrg,
+          new_values: org,
+        })
+      } catch (auditError) {
+        console.error('Failed to create audit log:', auditError)
+        // Don't fail the operation if audit logging fails
+      }
 
       return org
     }),
@@ -536,14 +551,16 @@ export const settingsRouter = router({
   // ============================================
   getBranding: orgProtectedProcedure
     .query(async ({ ctx }) => {
-      const { supabase, orgId } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
 
-      const { data: assets, error } = await supabase
+      const { data: assets, error } = await adminClient
         .from('organization_branding')
         .select('*')
         .eq('org_id', orgId)
 
       if (error) {
+        console.error('[getBranding] Error fetching assets:', error)
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to fetch branding assets',
@@ -553,7 +570,7 @@ export const settingsRouter = router({
       // Generate signed URLs for each asset
       const assetsWithUrls = await Promise.all(
         (assets ?? []).map(async (asset) => {
-          const { data: signedUrl } = await supabase
+          const { data: signedUrl } = await adminClient
             .storage
             .from('org-assets')
             .createSignedUrl(asset.storage_path, 3600) // 1 hour expiry
@@ -579,7 +596,8 @@ export const settingsRouter = router({
       mimeType: z.string(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { supabase, orgId, user } = ctx
+      const { orgId, user, profileId } = ctx
+      const adminClient = getAdminClient()
 
       // Validate mime type
       const allowedMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/svg+xml', 'image/webp', 'image/x-icon']
@@ -607,8 +625,10 @@ export const settingsRouter = router({
       const ext = input.fileName.split('.').pop() || 'png'
       const storagePath = `${orgId}/${input.assetType}.${ext}`
 
+      console.log('[uploadBrandingAsset] Uploading:', { assetType: input.assetType, storagePath, mimeType: input.mimeType, size: fileBuffer.length, profileId })
+
       // Delete existing asset if exists
-      const { data: existing } = await supabase
+      const { data: existing } = await adminClient
         .from('organization_branding')
         .select('storage_path')
         .eq('org_id', orgId)
@@ -616,11 +636,12 @@ export const settingsRouter = router({
         .single()
 
       if (existing) {
-        await supabase.storage.from('org-assets').remove([existing.storage_path])
+        console.log('[uploadBrandingAsset] Removing existing file:', existing.storage_path)
+        await adminClient.storage.from('org-assets').remove([existing.storage_path])
       }
 
       // Upload to Supabase Storage
-      const { error: uploadError } = await supabase
+      const { error: uploadError } = await adminClient
         .storage
         .from('org-assets')
         .upload(storagePath, fileBuffer, {
@@ -629,14 +650,17 @@ export const settingsRouter = router({
         })
 
       if (uploadError) {
+        console.error('[uploadBrandingAsset] Storage upload error:', uploadError)
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: `Failed to upload file: ${uploadError.message}`,
         })
       }
 
-      // Upsert branding record
-      const { data: asset, error: dbError } = await supabase
+      console.log('[uploadBrandingAsset] File uploaded successfully')
+
+      // Upsert branding record - use profileId (user_profiles.id) for uploaded_by foreign key
+      const { data: asset, error: dbError } = await adminClient
         .from('organization_branding')
         .upsert({
           org_id: orgId,
@@ -645,7 +669,7 @@ export const settingsRouter = router({
           file_name: input.fileName,
           file_size: fileBuffer.length,
           mime_type: input.mimeType,
-          uploaded_by: user?.id,
+          uploaded_by: profileId, // Use profileId, not user.id - FK references user_profiles
         }, {
           onConflict: 'org_id,asset_type',
         })
@@ -653,28 +677,36 @@ export const settingsRouter = router({
         .single()
 
       if (dbError || !asset) {
+        console.error('[uploadBrandingAsset] Database error:', dbError)
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to save branding asset record',
+          message: `Failed to save branding asset record: ${dbError?.message || 'No data returned'}`,
         })
       }
 
+      console.log('[uploadBrandingAsset] Database record created:', asset.id)
+
       // Get signed URL
-      const { data: signedUrl } = await supabase
+      const { data: signedUrl } = await adminClient
         .storage
         .from('org-assets')
         .createSignedUrl(storagePath, 3600)
 
-      // Create audit log
-      await supabase.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: user?.id,
-        user_email: user?.email,
-        action: 'upload',
-        table_name: 'organization_branding',
-        record_id: asset.id,
-        new_values: { asset_type: input.assetType, file_name: input.fileName },
-      })
+      // Create audit log (non-blocking)
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: profileId, // Use profileId for consistency
+          user_email: user?.email,
+          action: 'upload',
+          table_name: 'organization_branding',
+          record_id: asset.id,
+          new_values: { asset_type: input.assetType, file_name: input.fileName },
+        })
+      } catch (auditError) {
+        console.error('[uploadBrandingAsset] Audit log error:', auditError)
+        // Don't fail the operation if audit logging fails
+      }
 
       return {
         ...asset,
@@ -690,10 +722,11 @@ export const settingsRouter = router({
       assetType: brandingAssetTypeSchema,
     }))
     .mutation(async ({ ctx, input }) => {
-      const { supabase, orgId, user } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
 
       // Get existing asset
-      const { data: existing, error: fetchError } = await supabase
+      const { data: existing, error: fetchError } = await adminClient
         .from('organization_branding')
         .select('*')
         .eq('org_id', orgId)
@@ -708,32 +741,39 @@ export const settingsRouter = router({
       }
 
       // Delete from storage
-      await supabase.storage.from('org-assets').remove([existing.storage_path])
+      console.log('[deleteBrandingAsset] Removing file:', existing.storage_path)
+      await adminClient.storage.from('org-assets').remove([existing.storage_path])
 
       // Delete record
-      const { error: deleteError } = await supabase
+      const { error: deleteError } = await adminClient
         .from('organization_branding')
         .delete()
         .eq('org_id', orgId)
         .eq('asset_type', input.assetType)
 
       if (deleteError) {
+        console.error('[deleteBrandingAsset] Delete error:', deleteError)
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to delete branding asset',
         })
       }
 
-      // Create audit log
-      await supabase.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: user?.id,
-        user_email: user?.email,
-        action: 'delete',
-        table_name: 'organization_branding',
-        record_id: existing.id,
-        old_values: { asset_type: input.assetType, file_name: existing.file_name },
-      })
+      // Create audit log (non-blocking)
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: user?.id,
+          user_email: user?.email,
+          action: 'delete',
+          table_name: 'organization_branding',
+          record_id: existing.id,
+          old_values: { asset_type: input.assetType, file_name: existing.file_name },
+        })
+      } catch (auditError) {
+        console.error('[deleteBrandingAsset] Audit log error:', auditError)
+        // Don't fail the operation if audit logging fails
+      }
 
       return { success: true }
     }),

@@ -32,9 +32,7 @@ export function AdminPageHeader({
 
   return (
     <div className={cn('space-y-4', className)}>
-      {breadcrumbs && breadcrumbs.length > 0 && (
-        <Breadcrumb items={breadcrumbs} />
-      )}
+      {/* Breadcrumbs removed - sidebar already provides navigation context */}
 
       {(showTitle || actions) && (
         <div className="flex items-start justify-between">

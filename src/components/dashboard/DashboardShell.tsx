@@ -23,9 +23,7 @@ export function DashboardShell({
     <div className={cn("space-y-8", className)} data-testid="page-content">
       {/* Header */}
       <div>
-        {breadcrumbs && breadcrumbs.length > 0 && (
-          <Breadcrumb items={breadcrumbs} className="mb-4" />
-        )}
+        {/* Breadcrumbs removed - sidebar provides navigation context */}
 
         <div className="flex items-start justify-between">
           <div>

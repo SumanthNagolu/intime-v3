@@ -88,7 +88,7 @@ const NavSubmenu: React.FC<{
     return (
       <Link
         href={item.href}
-        className="block px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+        className="block px-5 py-2.5 text-xs uppercase tracking-widest text-charcoal-600 hover:bg-charcoal-50 hover:text-forest-700 transition-colors font-medium border-l-2 border-transparent hover:border-gold-500"
       >
         {item.label}
       </Link>
@@ -103,14 +103,14 @@ const NavSubmenu: React.FC<{
     >
       <Link
         href={item.href}
-        className="flex items-center justify-between px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+        className="flex items-center justify-between px-5 py-2.5 text-xs uppercase tracking-widest text-charcoal-600 hover:bg-charcoal-50 hover:text-forest-700 transition-colors font-medium border-l-2 border-transparent hover:border-gold-500"
       >
-        <span className="font-medium">{item.label}</span>
-        <ChevronDown size={14} className="-rotate-90" />
+        <span>{item.label}</span>
+        <ChevronDown size={14} className="-rotate-90 text-charcoal-400" />
       </Link>
       <div
         className={cn(
-          'absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl py-3 border border-charcoal-100/50 z-50 transition-all duration-200',
+          'absolute left-full top-0 ml-0 w-64 bg-white border border-charcoal-200 shadow-sharp z-50 transition-all duration-200',
           isOpen 
             ? 'opacity-100 visible translate-x-0' 
             : 'opacity-0 invisible -translate-x-2 pointer-events-none'
@@ -120,7 +120,7 @@ const NavSubmenu: React.FC<{
           <Link
             key={sub.href}
             href={sub.href}
-            className="block px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+            className="block px-5 py-3 text-xs uppercase tracking-widest text-charcoal-600 hover:bg-charcoal-50 hover:text-forest-700 transition-colors border-l-2 border-transparent hover:border-gold-500"
           >
             {sub.label}
           </Link>
@@ -130,7 +130,7 @@ const NavSubmenu: React.FC<{
   );
 };
 
-// Main dropdown with hover intent (delays for better UX)
+// Main dropdown with hover intent
 const NavDropdown: React.FC<{
   label: string;
   href: string;
@@ -142,41 +142,39 @@ const NavDropdown: React.FC<{
 
   const handleMouseEnter = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    // Small delay before opening (50ms) - prevents accidental triggers
     timeoutRef.current = setTimeout(() => setIsOpen(true), 50);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    // Grace period before closing (200ms) - gives user time to move to dropdown
     timeoutRef.current = setTimeout(() => setIsOpen(false), 200);
   }, []);
 
   return (
     <div 
-      className="relative"
+      className="relative h-full flex items-center"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <Link
         href={href}
         className={cn(
-          'flex items-center gap-1 font-bold transition-colors text-sm uppercase tracking-wider',
-          isOpen ? 'text-forest-600' : 'text-charcoal-800 hover:text-forest-600'
+          'flex items-center gap-1 font-bold transition-colors text-xs uppercase tracking-[0.15em] h-full border-b-2',
+          isOpen ? 'text-forest-600 border-gold-500' : 'text-charcoal-800 border-transparent hover:text-forest-600'
         )}
       >
         <span>{label}</span>
         <ChevronDown 
-          size={16} 
+          size={14} 
           className={cn(
-            'transition-transform duration-200',
+            'transition-transform duration-200 opacity-50',
             isOpen && 'rotate-180'
           )} 
         />
       </Link>
       <div
         className={cn(
-          'absolute top-full left-0 pt-3 w-72 z-50 transition-all duration-200',
+          'absolute top-full left-0 w-72 z-50 transition-all duration-200',
           isOpen 
             ? 'opacity-100 visible translate-y-0' 
             : 'opacity-0 invisible -translate-y-2 pointer-events-none'
@@ -184,8 +182,8 @@ const NavDropdown: React.FC<{
       >
         <div
           className={cn(
-            'bg-white rounded-xl shadow-xl py-3 border border-charcoal-100/50',
-            scrollable && 'max-h-[70vh] overflow-y-auto'
+            'bg-white border border-charcoal-200 shadow-sharp',
+            scrollable && 'max-h-[70vh] overflow-y-auto scrollbar-premium'
           )}
         >
           {items.map((item) => (
@@ -206,17 +204,13 @@ export const MarketingNavbar: React.FC = () => {
   const router = useRouter();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Check auth state on mount and listen for changes
   useEffect(() => {
     const supabase = createClient();
-
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -224,7 +218,6 @@ export const MarketingNavbar: React.FC = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Close user menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
@@ -256,24 +249,31 @@ export const MarketingNavbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-charcoal-100 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white/95 backdrop-blur-sm border-b border-charcoal-100 sticky top-0 z-50 shadow-sm bg-noise">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-forest-500 to-forest-700 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="font-heading font-bold italic text-xl text-gold-400">I</span>
+          {/* Logo - Geometric & Sharp */}
+          <Link href="/" className="flex items-center gap-4 group">
+            <div className="w-10 h-10 bg-charcoal-900 flex items-center justify-center relative overflow-hidden transition-transform group-hover:scale-105 duration-300">
+              <div className="absolute inset-0 border border-gold-500/30"></div>
+              <span className="font-heading font-black italic text-2xl text-white">I</span>
+              <div className="absolute bottom-0 right-0 w-2 h-2 bg-gold-500"></div>
             </div>
-            <div className="flex items-center">
-              <span className="text-2xl font-heading font-bold text-forest-600">InTime</span>
-              <span className="text-2xl font-heading font-medium text-gold-500 ml-1">{getSecondWord()}</span>
+            <div className="flex flex-col justify-center h-10">
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl font-heading font-bold text-charcoal-900 tracking-tight leading-none">INTIME</span>
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-none"></span>
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-charcoal-500 leading-none mt-1 group-hover:text-gold-600 transition-colors">
+                {getSecondWord()}
+              </span>
             </div>
           </Link>
 
           <div className="flex-1" />
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-10 h-full">
             <NavDropdown
               label={NAVIGATION.solutions.label}
               href={NAVIGATION.solutions.href}
@@ -292,63 +292,67 @@ export const MarketingNavbar: React.FC = () => {
             />
             <Link
               href={NAVIGATION.resources.href}
-              className="text-charcoal-800 hover:text-forest-600 font-bold transition-colors text-sm uppercase tracking-wider"
+              className="text-charcoal-800 hover:text-forest-600 font-bold transition-colors text-xs uppercase tracking-[0.15em] h-full flex items-center border-b-2 border-transparent hover:border-gold-500"
             >
               {NAVIGATION.resources.label}
             </Link>
             <Link
               href={NAVIGATION.academy.href}
-              className="text-charcoal-800 hover:text-forest-600 font-bold transition-colors text-sm uppercase tracking-wider"
+              className="text-charcoal-800 hover:text-forest-600 font-bold transition-colors text-xs uppercase tracking-[0.15em] h-full flex items-center border-b-2 border-transparent hover:border-gold-500"
             >
               {NAVIGATION.academy.label}
             </Link>
 
-            {/* Auth Button - Sign In or User Menu */}
+            {/* Separator */}
+            <div className="w-px h-8 bg-charcoal-200 mx-2" />
+
+            {/* Auth Button */}
             {isLoading ? (
-              <div className="w-24 h-10 bg-charcoal-100 rounded-full animate-pulse" />
+              <div className="w-24 h-9 bg-charcoal-100 animate-pulse" />
             ) : user ? (
               <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 px-4 py-2 bg-forest-50 hover:bg-forest-100 rounded-full transition-colors"
+                  className="flex items-center gap-3 px-4 py-2 bg-charcoal-50 hover:bg-charcoal-100 border border-charcoal-200 transition-colors group"
                 >
-                  <div className="w-8 h-8 bg-gradient-to-br from-forest-500 to-forest-700 rounded-full flex items-center justify-center">
-                    <User size={16} className="text-white" />
+                  <div className="w-6 h-6 bg-charcoal-900 flex items-center justify-center">
+                    <User size={14} className="text-white" />
                   </div>
                   <ChevronDown
                     size={14}
                     className={cn(
-                      'text-charcoal-600 transition-transform',
+                      'text-charcoal-600 transition-transform group-hover:text-gold-600',
                       userMenuOpen && 'rotate-180'
                     )}
                   />
                 </button>
 
-                {/* User Dropdown Menu */}
+                {/* User Dropdown */}
                 <div
                   className={cn(
-                    'absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl py-2 border border-charcoal-100/50 z-50 transition-all duration-200',
+                    'absolute right-0 top-full mt-2 w-64 bg-white border border-charcoal-200 shadow-sharp z-50 transition-all duration-200',
                     userMenuOpen
                       ? 'opacity-100 visible translate-y-0'
                       : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                   )}
                 >
-                  <div className="px-4 py-3 border-b border-charcoal-100">
-                    <p className="text-sm font-semibold text-charcoal-900 truncate">
+                  <div className="px-5 py-4 border-b border-charcoal-100 bg-charcoal-50">
+                    <p className="text-xs font-mono text-charcoal-500 uppercase tracking-wider mb-1">Signed in as</p>
+                    <p className="text-sm font-bold text-charcoal-900 truncate">
                       {user.email}
                     </p>
                   </div>
                   <Link
                     href="/login"
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+                    className="flex items-center gap-3 px-5 py-3 text-xs uppercase tracking-widest text-charcoal-600 hover:bg-charcoal-50 hover:text-forest-700 transition-colors border-l-2 border-transparent hover:border-gold-500"
                     onClick={() => setUserMenuOpen(false)}
                   >
                     <LayoutDashboard size={16} />
-                    Go to Portal
+                    Portal Access
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    className="w-full flex items-center gap-3 px-5 py-3 text-xs uppercase tracking-widest text-red-600 hover:bg-red-50 transition-colors border-l-2 border-transparent hover:border-red-500"
                   >
                     <LogOut size={16} />
                     Sign Out
@@ -358,7 +362,7 @@ export const MarketingNavbar: React.FC = () => {
             ) : (
               <Link
                 href="/login"
-                className="px-6 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold text-xs uppercase tracking-widest shadow-sm hover:shadow-lg transition-all"
+                className="px-6 py-2.5 bg-charcoal-900 text-white hover:bg-black font-bold text-xs uppercase tracking-[0.2em] shadow-elevation-sm hover:shadow-sharp transition-all border border-transparent hover:border-gold-500"
               >
                 Sign In
               </Link>
@@ -368,7 +372,7 @@ export const MarketingNavbar: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-charcoal-600 hover:bg-charcoal-50"
+            className="lg:hidden p-2 rounded-none text-charcoal-600 hover:bg-charcoal-50 border border-transparent hover:border-charcoal-200 transition-colors"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -377,46 +381,46 @@ export const MarketingNavbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-charcoal-100 animate-in slide-in-from-top">
-          <div className="container mx-auto px-6 py-6 space-y-4">
+        <div className="lg:hidden bg-white border-t border-charcoal-100 animate-in slide-in-from-top absolute w-full left-0 shadow-xl h-[calc(100vh-80px)] overflow-y-auto">
+          <div className="container mx-auto px-6 py-8 space-y-6">
             <Link
               href="/solutions/staffing"
-              className="block text-charcoal-800 hover:text-forest-600 font-bold py-2"
+              className="block text-charcoal-900 hover:text-forest-600 font-heading font-bold text-2xl"
               onClick={() => setMobileMenuOpen(false)}
             >
               IT Staffing
             </Link>
             <Link
               href="/consulting"
-              className="block text-charcoal-800 hover:text-forest-600 font-bold py-2"
+              className="block text-charcoal-900 hover:text-forest-600 font-heading font-bold text-2xl"
               onClick={() => setMobileMenuOpen(false)}
             >
               Consulting
             </Link>
             <Link
               href="/solutions/cross-border"
-              className="block text-charcoal-800 hover:text-forest-600 font-bold py-2"
+              className="block text-charcoal-900 hover:text-forest-600 font-heading font-bold text-2xl"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Cross-Border Solutions
+              Cross-Border
             </Link>
             <Link
               href="/academy"
-              className="block text-charcoal-800 hover:text-forest-600 font-bold py-2"
+              className="block text-charcoal-900 hover:text-forest-600 font-heading font-bold text-2xl"
               onClick={() => setMobileMenuOpen(false)}
             >
               Academy
             </Link>
 
-            <div className="pt-4 border-t border-charcoal-100">
+            <div className="pt-8 border-t border-charcoal-100">
               {user ? (
-                <div className="space-y-3">
-                  <div className="text-sm text-charcoal-500 px-1">
-                    Signed in as <span className="font-semibold text-charcoal-700">{user.email}</span>
+                <div className="space-y-4">
+                  <div className="text-xs font-mono text-charcoal-500 uppercase tracking-wider">
+                    Account: <span className="font-bold text-charcoal-900">{user.email}</span>
                   </div>
                   <Link
                     href="/login"
-                    className="block w-full text-center px-6 py-3 bg-forest-600 hover:bg-forest-700 text-white rounded-full font-bold text-sm uppercase tracking-widest transition-colors"
+                    className="block w-full text-center px-6 py-4 bg-forest-600 hover:bg-forest-700 text-white font-bold text-sm uppercase tracking-widest transition-colors shadow-sharp hover:translate-y-[-2px]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Go to Portal
@@ -426,7 +430,7 @@ export const MarketingNavbar: React.FC = () => {
                       handleSignOut();
                       setMobileMenuOpen(false);
                     }}
-                    className="block w-full text-center px-6 py-3 border border-red-200 text-red-600 hover:bg-red-50 rounded-full font-bold text-sm uppercase tracking-widest transition-colors"
+                    className="block w-full text-center px-6 py-4 border border-charcoal-200 text-charcoal-600 hover:bg-charcoal-50 font-bold text-sm uppercase tracking-widest transition-colors"
                   >
                     Sign Out
                   </button>
@@ -434,7 +438,7 @@ export const MarketingNavbar: React.FC = () => {
               ) : (
                 <Link
                   href="/login"
-                  className="block w-full text-center px-6 py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold text-sm uppercase tracking-widest"
+                  className="block w-full text-center px-6 py-4 bg-charcoal-900 text-white hover:bg-black font-bold text-sm uppercase tracking-[0.2em] shadow-sharp hover:translate-y-[-2px] transition-all"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Sign In

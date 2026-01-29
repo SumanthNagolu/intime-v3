@@ -45,14 +45,14 @@ const STATUS_CONFIG = {
 export function DrillsListPage() {
   const [showCreateDrill, setShowCreateDrill] = useState(false)
   const [statusFilter, setStatusFilter] = useState<string>('all')
-  const [typeFilter, setTypeFilter] = useState<string>('')
+  const [typeFilter, setTypeFilter] = useState<string>('__all__')
   const [page, setPage] = useState(1)
 
   const utils = trpc.useUtils()
 
   const drillsQuery = trpc.emergency.listDrills.useQuery({
     status: statusFilter === 'all' ? 'all' : statusFilter as 'scheduled' | 'in_progress' | 'completed' | 'cancelled',
-    drillType: typeFilter ? typeFilter as 'tabletop' | 'simulated_outage' | 'security_breach' | 'backup_restore' : undefined,
+    drillType: typeFilter && typeFilter !== '__all__' ? typeFilter as 'tabletop' | 'simulated_outage' | 'security_breach' | 'backup_restore' : undefined,
     page,
     pageSize: 20,
   })
@@ -164,7 +164,7 @@ export function DrillsListPage() {
                   <SelectValue placeholder="Filter by type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Types</SelectItem>
+                  <SelectItem value="__all__">All Types</SelectItem>
                   <SelectItem value="tabletop">Tabletop Exercise</SelectItem>
                   <SelectItem value="simulated_outage">Simulated Outage</SelectItem>
                   <SelectItem value="security_breach">Security Breach</SelectItem>

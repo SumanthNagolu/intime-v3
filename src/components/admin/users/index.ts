@@ -1,3 +1,5 @@
 export { UsersListPage } from './UsersListPage'
 export { UserFormPage } from './UserFormPage'
 export { UserDetailPage } from './UserDetailPage'
+export { UserWorkspacePage } from './UserWorkspacePage'
+export { UserWorkspaceProvider, useUserWorkspace } from './UserWorkspaceProvider'

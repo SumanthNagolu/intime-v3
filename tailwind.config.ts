@@ -271,18 +271,20 @@ const config: Config = {
 			boxShadow: {
 				// Premium elevation system
 				'elevation-xs': '0 1px 2px rgba(0, 0, 0, 0.05)',
-				'elevation-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
-				'elevation-md': '0 4px 16px rgba(0, 0, 0, 0.10)',
-				'elevation-lg': '0 8px 24px rgba(0, 0, 0, 0.12)',
-				'elevation-xl': '0 16px 32px rgba(0, 0, 0, 0.16)',
+				'elevation-sm': '0 2px 4px rgba(0, 0, 0, 0.08)',
+				'elevation-md': '0 4px 8px rgba(0, 0, 0, 0.10)',
+				'elevation-lg': '0 8px 16px rgba(0, 0, 0, 0.12)',
+				'elevation-xl': '0 12px 24px rgba(0, 0, 0, 0.16)',
 				'elevation-2xl': '0 24px 48px rgba(0, 0, 0, 0.20)',
 				// Specialty shadows
+				'sharp': '2px 2px 0px 0px rgba(0, 0, 0, 1)',
+				'sharp-hover': '4px 4px 0px 0px rgba(0, 0, 0, 1)',
 				'glass': '0 8px 32px 0 rgba(13, 76, 59, 0.12)',
 				'inner-glow': 'inset 0 2px 4px rgba(201, 169, 97, 0.1)',
 				'premium': '0 20px 40px -12px rgba(13, 76, 59, 0.25)',
 				'premium-lg': '0 32px 64px -12px rgba(13, 76, 59, 0.3)',
-				'gold-glow': '0 4px 12px rgba(201, 169, 97, 0.3)',
-				'gold-glow-lg': '0 6px 16px rgba(201, 169, 97, 0.4)',
+				'gold-glow': '0 0 10px rgba(201, 169, 97, 0.5)',
+				'gold-glow-lg': '0 0 20px rgba(201, 169, 97, 0.6)',
 			},
 			spacing: {
 				// Formalized 8px grid spacing scale
@@ -300,18 +302,18 @@ const config: Config = {
 				'22': '5.5rem'
 			},
 			borderRadius: {
-				// Hublot-style sharp/subtle radius scale
+				// Hublot-style sharp/subtle radius scale - Precision Luxury Update
 				'none': '0',
-				'xs': '2px',
-				'sm': '4px',        // Primary radius for inputs, small cards
-				'md': '6px',        // Buttons
-				'lg': '8px',        // Cards, modals
-				'xl': '12px',       // Large cards
-				'2xl': '16px',      // Feature sections
-				'3xl': '24px',      // Hero elements
+				'xs': '1px',
+				'sm': '2px',        // Primary radius for inputs, small cards (SHARP)
+				'md': '4px',        // Buttons (SHARP)
+				'lg': '6px',        // Cards, modals
+				'xl': '8px',        // Large cards
+				'2xl': '12px',      // Feature sections
+				'3xl': '16px',      // Hero elements
 				'full': '9999px',   // Pills, avatars
 				// shadcn compatibility - default to sharp
-				DEFAULT: '4px'
+				DEFAULT: '2px'
 			},
 			maxWidth: {
 				// Container widths

@@ -78,6 +78,11 @@ import { payrollRouter } from '../routers/payroll'
 import { referenceRouter } from '../routers/reference'
 // Candidate resume versioning system (RESUMES-01)
 import { resumesRouter } from '../routers/resumes'
+// Scrum/PM System (Team Space)
+import { sprintsRouter } from '../routers/sprints'
+import { sprintItemsRouter } from '../routers/sprint-items'
+import { boardRouter } from '../routers/board'
+import { retrospectivesRouter } from '../routers/retrospectives'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -160,6 +165,11 @@ export const appRouter = router({
   reference: referenceRouter,
   // Candidate resume versioning system (RESUMES-01)
   resumes: resumesRouter,
+  // Scrum/PM System (Team Space)
+  sprints: sprintsRouter,
+  sprintItems: sprintItemsRouter,
+  board: boardRouter,
+  retrospectives: retrospectivesRouter,
 })
 
 export type AppRouter = typeof appRouter

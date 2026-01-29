@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className="h-screen overflow-hidden bg-cream antialiased font-body">
+      <body className="min-h-screen bg-cream antialiased font-body">
         <TRPCProvider>
           <a href="#main-content" className="skip-link">
             Skip to main content

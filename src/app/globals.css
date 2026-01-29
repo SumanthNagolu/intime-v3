@@ -11,8 +11,22 @@
   }
 
   body {
-    @apply font-body text-charcoal-900 bg-cream antialiased;
+    @apply font-body text-charcoal-900 bg-cream antialiased relative;
     font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /* Global Noise Overlay - Anti-AI Texture */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -65,7 +79,7 @@
     --chart-4: 142 71% 45%;              /* success green */
     --chart-5: 25 95% 53%;               /* warning orange */
 
-    --radius: 4px;
+    --radius: 2px;
   }
 
   .dark {
@@ -94,9 +108,42 @@
     --chart-4: 142 60% 50%;
     --chart-5: 25 85% 60%;
   }
+
+  /* Organization Branding Variables (set dynamically by BrandingProvider) */
+  :root {
+    --brand-primary: #000000;
+    --brand-secondary: #B76E79;
+    --brand-background: #FDFBF7;
+    --brand-text: #171717;
+  }
 }
 
 @layer components {
+  /* Brand Color Utilities - Apply organization branding */
+  .bg-brand-primary {
+    background-color: var(--brand-primary);
+  }
+  .bg-brand-secondary {
+    background-color: var(--brand-secondary);
+  }
+  .bg-brand-background {
+    background-color: var(--brand-background);
+  }
+  .text-brand-primary {
+    color: var(--brand-primary);
+  }
+  .text-brand-secondary {
+    color: var(--brand-secondary);
+  }
+  .text-brand-text {
+    color: var(--brand-text);
+  }
+  .border-brand-primary {
+    border-color: var(--brand-primary);
+  }
+  .border-brand-secondary {
+    border-color: var(--brand-secondary);
+  }
   /* Premium Typography Utilities */
   .text-display {
     @apply font-heading font-black text-charcoal-900 tracking-wide;
@@ -157,15 +204,15 @@
 
   /* Premium Card Styles */
   .card-premium {
-    @apply bg-white rounded-xl shadow-elevation-md hover:shadow-elevation-lg transition-all duration-300 ease-out;
+    @apply bg-white rounded-lg border border-charcoal-100 shadow-elevation-xs hover:shadow-sharp hover:-translate-y-0.5 transition-all duration-300 ease-out;
   }
 
   .card-feature {
-    @apply bg-white rounded-2xl shadow-elevation-lg p-2xl border border-charcoal-100 hover:shadow-premium hover:-translate-y-1 transition-all duration-300;
+    @apply bg-white rounded-xl shadow-elevation-sm p-2xl border border-charcoal-100 hover:shadow-sharp hover:-translate-y-1 transition-all duration-300;
   }
 
   .card-glass {
-    @apply bg-white/80 backdrop-blur-md rounded-xl border border-white/20 shadow-glass;
+    @apply bg-white/80 backdrop-blur-md rounded-lg border border-white/20 shadow-glass;
   }
 
   /* Premium Container */
@@ -175,16 +222,16 @@
 
   /* Focus States - Premium */
   .focus-ring-premium {
-    @apply focus:outline-none focus:ring-4 focus:ring-gold-500/20 focus:border-gold-500 transition-all;
+    @apply focus:outline-none focus:ring-1 focus:ring-gold-500 focus:border-gold-500 transition-all;
   }
 
   /* Enhanced focus utilities */
   .focus-ring-gold {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+    @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-500/80 focus-visible:ring-offset-1 focus-visible:ring-offset-cream;
   }
 
   .focus-ring-forest {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+    @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest-500/80 focus-visible:ring-offset-1 focus-visible:ring-offset-cream;
   }
 
   /* Responsive containers */
@@ -209,6 +256,22 @@
 }
 
 @layer utilities {
+  /* Precision Luxury - Anti-AI Aesthetics */
+  
+  .bg-noise {
+    position: relative;
+  }
+  
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
   /* Premium Glassmorphism */
   .glass {
     background: rgba(255, 255, 255, 0.7);
@@ -232,14 +295,14 @@
   }
 
   .glass-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-hover:hover {
     background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(201, 169, 97, 0.3);
+    border-color: rgba(201, 169, 97, 0.6);
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(10, 58, 42, 0.15);
+    box-shadow: 2px 2px 0px 0px rgba(10, 58, 42, 0.8);
   }
 
   /* Premium Gradient Text - Brand Colors */
@@ -284,10 +347,10 @@
   /* Mesh Gradient Background - Premium */
   .bg-mesh-premium {
     background:
-      radial-gradient(at 0% 0%, rgba(13, 76, 59, 0.1) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(201, 169, 97, 0.1) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(13, 76, 59, 0.05) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(201, 169, 97, 0.05) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(13, 76, 59, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(201, 169, 97, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(13, 76, 59, 0.02) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(201, 169, 97, 0.02) 0px, transparent 50%);
   }
 
   /* Premium Dividers */
@@ -297,7 +360,7 @@
   }
 
   .divider-gold {
-    height: 2px;
+    height: 1px;
     background: linear-gradient(90deg, transparent 0%, rgba(201, 169, 97, 0.5) 50%, transparent 100%);
   }
 
@@ -313,18 +376,18 @@
   }
 
   .scrollbar-premium::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   .scrollbar-premium::-webkit-scrollbar-track {
     background: #F8F9FA;
-    border-radius: 4px;
+    border-radius: 0px;
   }
 
   .scrollbar-premium::-webkit-scrollbar-thumb {
     background: #C9A961;
-    border-radius: 4px;
+    border-radius: 0px;
     transition: background 0.3s;
   }
 
@@ -346,12 +409,12 @@
 
   /* Custom clip path for CTA buttons */
   .clip-slant {
-    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); /* Flattened for precision look */
   }
 
   /* Subtle text shadow for depth */
   .text-shadow-subtle {
-    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   /* Gold shimmer effect */
@@ -371,274 +434,11 @@
     100% { background-position: -200% 0; }
   }
 
-  /* Organic blob animation */
-  .animate-blob {
-    animation: blob 7s infinite;
-  }
-
-  @keyframes blob {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-  }
-
   /* Staggered animation delays */
   .animation-delay-200 { animation-delay: 200ms; }
   .animation-delay-400 { animation-delay: 400ms; }
   .animation-delay-600 { animation-delay: 600ms; }
   .animation-delay-800 { animation-delay: 800ms; }
-
-  /* ============================================
-     BIOMETRIC ENVIRONMENT ANIMATIONS
-     ============================================ */
-  
-  /* Pulse variations for different biometric states */
-  .animate-pulse-urgent {
-    animation: pulseUrgent 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  .animate-pulse-slow {
-    animation: pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  .animate-pulse-calm {
-    animation: pulseSlow 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  .animate-pulse-serene {
-    animation: pulseSerene 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  @keyframes pulseUrgent {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.02); }
-  }
-  
-  @keyframes pulseSlow {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
-  
-  @keyframes pulseSerene {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.01); }
-  }
-
-  /* Recovery pulse for ember state */
-  .animate-recovery-pulse {
-    animation: recoveryPulse 3s ease-in-out infinite;
-  }
-  
-  @keyframes recoveryPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; }
-    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.25; }
-  }
-
-  /* Rising effect for ascent state */
-  .animate-rise {
-    animation: rise 4s ease-in-out infinite;
-  }
-  
-  @keyframes rise {
-    0%, 100% { transform: translateY(20%); opacity: 0.5; }
-    50% { transform: translateY(0%); opacity: 1; }
-  }
-
-  /* Floating particles for apex state */
-  .animate-float {
-    animation: float 8s ease-in-out infinite;
-  }
-  
-  @keyframes float {
-    0%, 100% { 
-      transform: translateY(0) translateX(0); 
-      opacity: 0.3; 
-    }
-    25% { 
-      transform: translateY(-20px) translateX(10px); 
-      opacity: 0.6; 
-    }
-    50% { 
-      transform: translateY(-40px) translateX(-5px); 
-      opacity: 0.4; 
-    }
-    75% { 
-      transform: translateY(-20px) translateX(-15px); 
-      opacity: 0.7; 
-    }
-  }
-
-  /* Flame animation for streak indicator */
-  .animate-flame {
-    animation: flame 0.8s ease-in-out infinite alternate;
-  }
-  
-  @keyframes flame {
-    0% { 
-      transform: scaleY(1) scaleX(1); 
-      filter: brightness(1);
-    }
-    100% { 
-      transform: scaleY(1.05) scaleX(0.95); 
-      filter: brightness(1.1);
-    }
-  }
-
-  /* XP gain float animation */
-  .animate-xp-float {
-    animation: xpFloat 1.5s ease-out forwards;
-  }
-  
-  @keyframes xpFloat {
-    0% { 
-      transform: translateY(0) scale(1); 
-      opacity: 1; 
-    }
-    100% { 
-      transform: translateY(-60px) scale(1.2); 
-      opacity: 0; 
-    }
-  }
-
-  /* Level up celebration */
-  .animate-level-up {
-    animation: levelUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  
-  @keyframes levelUp {
-    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  }
-
-  /* Achievement unlock shine */
-  .animate-achievement-shine {
-    animation: achievementShine 2s ease-in-out;
-  }
-  
-  @keyframes achievementShine {
-    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-    50% { box-shadow: 0 0 30px 10px rgba(212, 175, 55, 0.4); }
-    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-  }
-
-  /* Glow animation for legendary items */
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite;
-  }
-  
-  @keyframes glow {
-    0%, 100% { 
-      box-shadow: 0 0 20px rgba(201, 169, 97, 0.5); 
-    }
-    50% { 
-      box-shadow: 0 0 40px rgba(201, 169, 97, 0.8), 0 0 60px rgba(201, 169, 97, 0.4); 
-    }
-  }
-
-  /* Path draw animation for module map */
-  .animate-path-draw {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: pathDraw 3s ease-out forwards;
-  }
-  
-  @keyframes pathDraw {
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* Clip path for flame shape */
-  .clip-path-flame {
-    clip-path: polygon(50% 0%, 80% 30%, 100% 60%, 85% 100%, 50% 85%, 15% 100%, 0% 60%, 20% 30%);
-  }
-
-  /* ============================================
-     GAMIFICATION UI UTILITIES
-     ============================================ */
-  
-  /* Rank badge glow by tier */
-  .rank-glow-common { box-shadow: none; }
-  .rank-glow-uncommon { box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
-  .rank-glow-rare { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-  .rank-glow-epic { box-shadow: 0 0 25px rgba(168, 85, 247, 0.5); }
-  .rank-glow-legendary { 
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6), 0 0 60px rgba(212, 175, 55, 0.3);
-    animation: legendaryPulse 3s ease-in-out infinite;
-  }
-  
-  @keyframes legendaryPulse {
-    0%, 100% { 
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.6), 0 0 60px rgba(212, 175, 55, 0.3);
-    }
-    50% { 
-      box-shadow: 0 0 40px rgba(212, 175, 55, 0.8), 0 0 80px rgba(212, 175, 55, 0.4);
-    }
-  }
-
-  /* Progress bar shimmer */
-  .progress-shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .progress-shimmer::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    );
-    animation: progressShimmer 2s infinite;
-  }
-  
-  @keyframes progressShimmer {
-    100% { left: 100%; }
-  }
-
-  /* Mission card hover effect */
-  .mission-card-hover {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .mission-card-hover:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 20px 40px -12px rgba(10, 58, 42, 0.25);
-  }
-
-  /* Cohort activity pulse */
-  .cohort-pulse {
-    position: relative;
-  }
-  
-  .cohort-pulse::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: currentColor;
-    opacity: 0;
-    animation: cohortPulse 2s ease-out infinite;
-  }
-  
-  @keyframes cohortPulse {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-  }
 
   /* ============================================
      ACCESSIBILITY UTILITIES
@@ -658,7 +458,7 @@
 
   /* Skip link for keyboard navigation */
   .skip-link {
-    @apply absolute -top-10 left-4 z-[100] bg-forest-600 text-white px-4 py-2 rounded-md;
+    @apply absolute -top-10 left-4 z-[100] bg-forest-600 text-white px-4 py-2 rounded-none;
     @apply focus:top-4 transition-all duration-200;
   }
 
@@ -668,7 +468,7 @@
   }
 
   .focus-visible-enhanced:focus-visible {
-    @apply ring-2 ring-gold-500/40 ring-offset-2 ring-offset-cream;
+    @apply ring-1 ring-gold-500 ring-offset-1 ring-offset-cream;
   }
 
   .dark .focus-visible-enhanced:focus-visible {
@@ -690,6 +490,6 @@
 
   /* Focus within for form groups */
   .focus-within-ring:focus-within {
-    @apply ring-2 ring-forest-500/20 ring-offset-2 rounded-lg;
+    @apply ring-1 ring-forest-500/20 ring-offset-1 rounded-sm;
   }
 }

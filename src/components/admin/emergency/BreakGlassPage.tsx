@@ -99,7 +99,7 @@ export function BreakGlassPage() {
     logBreakGlassMutation.mutate({
       reason,
       authorizedBy: authorizedBy.trim(),
-      incidentId: incidentId || undefined,
+      incidentId: incidentId && incidentId !== '__none__' ? incidentId : undefined,
     })
   }
 
@@ -181,7 +181,7 @@ export function BreakGlassPage() {
                   <SelectValue placeholder="Select related incident (optional)" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No related incident</SelectItem>
+                  <SelectItem value="__none__">No related incident</SelectItem>
                   {activeIncidentsQuery.data?.items.map((incident) => (
                     <SelectItem key={incident.id} value={incident.id}>
                       {incident.incident_number} - {incident.title}
