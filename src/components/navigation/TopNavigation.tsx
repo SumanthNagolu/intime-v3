@@ -396,14 +396,8 @@ export function TopNavigation() {
                         menuItemRefs.current[tab.id] = []
                       }
 
-                      // For workspaces tab, use dynamic items based on current workspace
-                      const dropdownItems = tab.id === 'workspaces'
-                        ? [
-                            { id: 'workspace-switcher', label: '', type: 'workspace-switcher' as const },
-                            { id: 'divider-ws', label: '', type: 'divider' as const },
-                            ...(currentWorkspace === 'team-space' ? teamSpaceDropdownItems : mySpaceDropdownItems),
-                          ]
-                        : tab.dropdown
+                      // Use tab's dropdown items directly
+                      const dropdownItems = tab.dropdown
 
                       return dropdownItems.map((item) => {
                         // Render workspace switcher
@@ -425,6 +419,14 @@ export function TopNavigation() {
 
                         if (item.type === 'divider') {
                           return <div key={item.id} className="my-2 border-t border-charcoal-100" role="separator" />
+                        }
+
+                        if (item.type === 'header') {
+                          return (
+                            <div key={item.id} className="px-5 py-2 text-[10px] font-semibold text-charcoal-400 uppercase tracking-[0.15em]">
+                              {item.label}
+                            </div>
+                          )
                         }
 
                         if (item.type === 'search') {

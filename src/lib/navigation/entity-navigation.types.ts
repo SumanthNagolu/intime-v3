@@ -103,7 +103,7 @@ export interface EntityNavDropdownItem {
   label: string
   icon?: LucideIcon
   href?: string
-  type: 'link' | 'recent' | 'divider' | 'search'
+  type: 'link' | 'recent' | 'divider' | 'search' | 'workspace-switcher' | 'header'
   badge?: string | number | boolean
   placeholder?: string  // For search type
 }

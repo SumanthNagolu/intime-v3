@@ -123,7 +123,7 @@ export function WorkspaceSwitcher({
               {teamName || 'Team Space'}
             </div>
             <div className="text-xs text-charcoal-500">
-              {hasTeam ? 'Scrum board & sprints' : 'No team assigned'}
+              {hasTeam ? 'Team dashboard & pipeline' : 'No team assigned'}
             </div>
           </div>
           {currentWorkspace === 'team-space' && hasTeam && (

@@ -1,18 +1,10 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
-import { Users, Clock, Send, Briefcase, CheckCircle2, Inbox } from 'lucide-react'
+import { Users, Clock, Send, Briefcase, CheckCircle2, Building2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import {
-  TeamSummaryMatrix,
-  TeamActivitiesTable,
-  TeamSubmissionsTable,
-  TeamJobsTable,
-  TeamPlacementsTable,
-  TeamQueueTable,
-  TeamPerformanceDashboard,
-} from '@/components/team'
+import { TeamSummaryMatrix } from '@/components/team'
 import type { TeamWorkspaceData, TeamSection } from '@/types/workspace'
 
 interface TeamWorkspaceClientProps {
@@ -87,302 +79,61 @@ function TeamStatsOverview({ stats }: { stats: TeamWorkspaceData['stats'] }) {
         value={stats.totalPlacements}
       />
       <StatCard
-        icon={<Inbox className="w-4 h-4" />}
-        label="In Queue"
-        value={stats.inQueue}
-        subValue={stats.inQueue > 0 ? { count: stats.inQueue, label: 'unassigned', variant: 'warning' } : undefined}
+        icon={<Building2 className="w-4 h-4" />}
+        label="Accounts"
+        value={stats.totalAccounts || 0}
       />
     </div>
   )
 }
 
-// Summary Section - Uses TeamSummaryMatrix component
-function SummarySection({
-  data,
-  onSectionChange,
-}: {
-  data: TeamWorkspaceData
-  onSectionChange: (section: TeamSection, memberId?: string, filter?: string) => void
-}) {
-  const handleCellClick = (section: TeamSection, memberId?: string, filter?: string) => {
-    onSectionChange(section, memberId, filter)
-  }
-
-  return (
-    <div className="space-y-6">
-      <TeamStatsOverview stats={data.stats} />
-      <TeamSummaryMatrix data={data} onCellClick={handleCellClick} />
-    </div>
-  )
-}
-
-// Activities Section
-function ActivitiesSection({
-  data,
-  memberId,
-  filter,
-}: {
-  data: TeamWorkspaceData
-  memberId?: string
-  filter?: string
-}) {
-  return (
-    <TeamActivitiesTable
-      activities={data.activities}
-      members={data.members}
-      filterCounts={data.filterCounts.activities}
-      initialMemberId={memberId}
-      initialFilter={filter}
-    />
-  )
-}
-
-// Submissions Section
-function SubmissionsSection({
-  data,
-  memberId,
-  filter,
-}: {
-  data: TeamWorkspaceData
-  memberId?: string
-  filter?: string
-}) {
-  return (
-    <TeamSubmissionsTable
-      submissions={data.submissions}
-      members={data.members}
-      filterCounts={data.filterCounts.submissions}
-      initialMemberId={memberId}
-      initialFilter={filter}
-    />
-  )
-}
-
-// Jobs Section
-function JobsSection({
-  data,
-  memberId,
-  filter,
-}: {
-  data: TeamWorkspaceData
-  memberId?: string
-  filter?: string
-}) {
-  return (
-    <TeamJobsTable
-      jobs={data.jobs}
-      members={data.members}
-      initialMemberId={memberId}
-      initialFilter={filter}
-    />
-  )
-}
-
-// Placements Section
-function PlacementsSection({
-  data,
-  memberId,
-  filter,
-}: {
-  data: TeamWorkspaceData
-  memberId?: string
-  filter?: string
-}) {
-  return (
-    <TeamPlacementsTable
-      placements={data.placements}
-      members={data.members}
-      initialMemberId={memberId}
-      initialFilter={filter}
-    />
-  )
-}
-
-// Queue Section
-function QueueSection({ data }: { data: TeamWorkspaceData }) {
-  return (
-    <TeamQueueTable
-      queue={data.queue}
-      members={data.members}
-    />
-  )
-}
-
-// Performance Section
-function PerformanceSection({ data }: { data: TeamWorkspaceData }) {
-  return (
-    <TeamPerformanceDashboard
-      performance={data.performance}
-      members={data.members}
-      stats={data.stats}
-    />
-  )
-}
-
-// Section sidebar for team workspace
-function TeamSidebarNav({ currentSection, onSectionChange, data }: {
-  currentSection: TeamSection
-  onSectionChange: (section: TeamSection, memberId?: string, filter?: string) => void
-  data: TeamWorkspaceData
-}) {
-  const sections: { id: TeamSection; label: string; count?: number }[] = [
-    { id: 'summary', label: 'Summary' },
-    { id: 'activities', label: 'Activities', count: data.stats.totalActivities },
-    { id: 'submissions', label: 'Submissions', count: data.stats.totalSubmissions },
-    { id: 'jobs', label: 'Jobs', count: data.stats.totalJobs },
-    { id: 'placements', label: 'Placements', count: data.stats.totalPlacements },
-    { id: 'queue', label: 'In Queue', count: data.stats.inQueue },
-    { id: 'performance', label: 'Performance' },
-  ]
-
-  return (
-    <nav className="w-56 flex-shrink-0 space-y-1">
-      <div className="mb-4">
-        <h3 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider px-3">
-          Queue Status
-        </h3>
-        <button
-          onClick={() => onSectionChange('queue')}
-          className={cn(
-            'w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors mt-1',
-            currentSection === 'queue'
-              ? 'bg-gold-50 text-gold-700 border-l-2 border-gold-500'
-              : 'text-charcoal-600 hover:bg-charcoal-50'
-          )}
-        >
-          <span>In Queue</span>
-          {data.stats.inQueue > 0 && (
-            <span className={cn(
-              'px-2 py-0.5 rounded-full text-xs font-medium',
-              data.stats.inQueue > 0 ? 'bg-warning-100 text-warning-700' : 'bg-charcoal-100 text-charcoal-600'
-            )}>
-              {data.stats.inQueue}
-            </span>
-          )}
-        </button>
-      </div>
-
-      <div className="mb-4">
-        <h3 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider px-3">
-          Views
-        </h3>
-        {sections.filter(s => s.id !== 'queue' && s.id !== 'performance').map((section) => (
-          <button
-            key={section.id}
-            onClick={() => onSectionChange(section.id)}
-            className={cn(
-              'w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors',
-              currentSection === section.id
-                ? 'bg-gold-50 text-gold-700 border-l-2 border-gold-500'
-                : 'text-charcoal-600 hover:bg-charcoal-50'
-            )}
-          >
-            <span>{section.label}</span>
-            {section.count !== undefined && section.count > 0 && (
-              <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-charcoal-100 text-charcoal-600">
-                {section.count}
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      <div>
-        <h3 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider px-3">
-          Tools
-        </h3>
-        <button
-          onClick={() => onSectionChange('performance')}
-          className={cn(
-            'w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors mt-1',
-            currentSection === 'performance'
-              ? 'bg-gold-50 text-gold-700 border-l-2 border-gold-500'
-              : 'text-charcoal-600 hover:bg-charcoal-50'
-          )}
-        >
-          <span>Performance</span>
-        </button>
-      </div>
-    </nav>
-  )
-}
-
+/**
+ * Team Workspace Dashboard
+ * Shows team summary stats and matrix overview
+ * Individual sections (Jobs, Submissions, Accounts) are handled by their own pages
+ */
 export function TeamWorkspaceClient({ data }: TeamWorkspaceClientProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const currentSection = (searchParams.get('section') as TeamSection) || 'summary'
 
-  const handleSectionChange = (section: TeamSection, memberId?: string, filter?: string) => {
-    const params = new URLSearchParams(searchParams.toString())
-    if (section === 'summary') {
-      params.delete('section')
-    } else {
-      params.set('section', section)
+  // Navigate to specific section pages when clicking matrix cells
+  const handleCellClick = (section: TeamSection, memberId?: string, filter?: string) => {
+    const sectionRoutes: Record<TeamSection, string> = {
+      summary: '/employee/team',
+      activities: '/employee/team/activities',
+      submissions: '/employee/team/submissions',
+      jobs: '/employee/team/jobs',
+      placements: '/employee/team/placements',
+      queue: '/employee/team/queue',
+      performance: '/employee/team/performance',
     }
-    // Add optional filters
-    if (memberId) {
-      params.set('member', memberId)
-    } else {
-      params.delete('member')
-    }
-    if (filter) {
-      params.set('filter', filter)
-    } else {
-      params.delete('filter')
-    }
-    const newUrl = params.toString() ? `?${params.toString()}` : ''
-    router.push(`/employee/team${newUrl}`, { scroll: false })
-  }
 
-  // Get filter params from URL
-  const memberId = searchParams.get('member') || undefined
-  const filter = searchParams.get('filter') || undefined
+    const basePath = sectionRoutes[section] || '/employee/team'
+    const params = new URLSearchParams()
+    if (memberId) params.set('member', memberId)
+    if (filter) params.set('filter', filter)
 
-  const renderSection = () => {
-    switch (currentSection) {
-      case 'summary':
-        return <SummarySection data={data} onSectionChange={handleSectionChange} />
-      case 'activities':
-        return <ActivitiesSection data={data} memberId={memberId} filter={filter} />
-      case 'submissions':
-        return <SubmissionsSection data={data} memberId={memberId} filter={filter} />
-      case 'jobs':
-        return <JobsSection data={data} memberId={memberId} filter={filter} />
-      case 'placements':
-        return <PlacementsSection data={data} memberId={memberId} filter={filter} />
-      case 'queue':
-        return <QueueSection data={data} />
-      case 'performance':
-        return <PerformanceSection data={data} />
-      default:
-        return <SummarySection data={data} onSectionChange={handleSectionChange} />
-    }
+    const queryString = params.toString()
+    router.push(queryString ? `${basePath}?${queryString}` : basePath)
   }
 
   return (
-    <div className="flex h-full">
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-charcoal-100 p-4">
-        <div className="mb-6">
-          <h2 className="text-lg font-heading font-semibold text-charcoal-900">
-            {data.team.name}
-          </h2>
-          <p className="text-sm text-charcoal-500 mt-1">
-            {data.team.memberCount} Members • Manager: {data.team.manager.name}
-          </p>
-        </div>
-        <TeamSidebarNav
-          currentSection={currentSection}
-          onSectionChange={handleSectionChange}
-          data={data}
-        />
+    <div className="p-6 space-y-6">
+      {/* Team Header */}
+      <div>
+        <h1 className="text-2xl font-heading font-semibold text-charcoal-900">
+          Team Dashboard
+        </h1>
+        <p className="text-sm text-charcoal-500 mt-1">
+          {data.team.name} • {data.team.memberCount} Members • Manager: {data.team.manager.name}
+        </p>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto bg-cream">
-        <div className="max-w-7xl mx-auto">
-          {renderSection()}
-        </div>
+      {/* Stats Overview */}
+      <TeamStatsOverview stats={data.stats} />
+
+      {/* Team Summary Matrix */}
+      <div className="max-w-7xl">
+        <TeamSummaryMatrix data={data} onCellClick={handleCellClick} />
       </div>
     </div>
   )

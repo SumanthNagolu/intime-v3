@@ -81,31 +81,82 @@ export async function getTeamWorkspace(): Promise<TeamWorkspaceData | null> {
       .eq('user_id', userId)
       .eq('is_active', true)
 
-    if (!membershipResult.data || membershipResult.data.length === 0) {
-      return null // User is not in any pod
+    if (membershipResult.data && membershipResult.data.length > 0) {
+      const podIds = membershipResult.data.map((m) => m.pod_id)
+
+      // Get the pods user belongs to
+      podsResult = await adminClient
+        .from('pods')
+        .select(`
+          id, name, manager_id,
+          manager:user_profiles!pods_manager_id_fkey(id, full_name, avatar_url),
+          pod_members(
+            user_id, role, is_active,
+            user:user_profiles!pod_members_user_id_fkey(id, full_name, email, avatar_url)
+          )
+        `)
+        .eq('org_id', orgId)
+        .in('id', podIds)
+        .eq('is_active', true)
+        .is('deleted_at', null)
     }
+  }
 
-    const podIds = membershipResult.data.map((m) => m.pod_id)
-
-    // Get the pods user belongs to
-    podsResult = await adminClient
-      .from('pods')
-      .select(`
-        id, name, manager_id,
-        manager:user_profiles!pods_manager_id_fkey(id, full_name, avatar_url),
-        pod_members(
-          user_id, role, is_active,
-          user:user_profiles!pod_members_user_id_fkey(id, full_name, email, avatar_url)
-        )
-      `)
-      .eq('org_id', orgId)
-      .in('id', podIds)
+  // Step 1c: If still no pods, check if user is in a group (new groups system)
+  if (!podsResult.data || podsResult.data.length === 0) {
+    // Find groups where user is a member
+    const groupMembershipResult = await adminClient
+      .from('group_members')
+      .select('group_id')
+      .eq('user_id', userId)
       .eq('is_active', true)
-      .is('deleted_at', null)
 
-    if (!podsResult.data || podsResult.data.length === 0) {
-      return null // No active pods found
+    if (groupMembershipResult.data && groupMembershipResult.data.length > 0) {
+      const groupIds = groupMembershipResult.data.map((m) => m.group_id)
+
+      // Get the groups and their members
+      const groupsResult = await adminClient
+        .from('groups')
+        .select(`
+          id, name, manager_id,
+          manager:user_profiles!groups_manager_id_fkey(id, full_name, avatar_url),
+          group_members(
+            user_id, is_manager, is_active,
+            user:user_profiles!group_members_user_id_fkey(id, full_name, email, avatar_url)
+          )
+        `)
+        .eq('org_id', orgId)
+        .in('id', groupIds)
+        .eq('is_active', true)
+        .is('deleted_at', null)
+
+      if (groupsResult.data && groupsResult.data.length > 0) {
+        // Convert groups to pods-like structure for compatibility
+        podsResult = {
+          data: groupsResult.data.map((g) => ({
+            id: g.id,
+            name: g.name,
+            manager_id: g.manager_id,
+            manager: g.manager,
+            pod_members: (g.group_members || []).map((gm) => ({
+              user_id: gm.user_id,
+              role: gm.is_manager ? 'senior' : 'junior',
+              is_active: gm.is_active,
+              user: gm.user,
+            })),
+          })),
+          error: null,
+          count: null,
+          status: 200,
+          statusText: 'OK',
+        } as typeof podsResult
+      }
     }
+  }
+
+  // Step 1d: No pods or groups found
+  if (!podsResult.data || podsResult.data.length === 0) {
+    return null // User is not in any pod or group
   }
 
   // Aggregate team members from all managed pods
@@ -411,6 +462,12 @@ export async function getTeamWorkspace(): Promise<TeamWorkspaceData | null> {
     }
   })
 
+  // Get unique accounts from jobs for account count
+  const uniqueAccountIds = new Set<string>()
+  jobs.forEach((j) => {
+    if (j.accountName) uniqueAccountIds.add(j.accountName)
+  })
+
   // Compute stats
   const stats: TeamWorkspaceStats = {
     totalMembers: members.length,
@@ -418,6 +475,7 @@ export async function getTeamWorkspace(): Promise<TeamWorkspaceData | null> {
     totalSubmissions: submissions.length,
     totalJobs: jobs.filter((j) => j.status === 'open').length,
     totalPlacements: placements.filter((p) => p.status === 'active').length,
+    totalAccounts: uniqueAccountIds.size,
     inQueue: queue.length,
   }
 
