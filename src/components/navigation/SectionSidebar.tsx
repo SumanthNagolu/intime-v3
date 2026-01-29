@@ -200,18 +200,34 @@ export const sectionConfigs: Record<string, SectionConfig> = {
   },
   workspace: {
     id: 'workspace',
-    title: 'My Work',
+    title: 'My Workspace',
     icon: Home,
     basePath: '/employee/workspace',
     views: [],
     navLinks: [
-      { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/workspace/dashboard' },
-      { id: 'today', label: 'Today', icon: Calendar, href: '/employee/workspace/today' },
-      { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/desktop?tab=activities' },
-      { id: 'my-accounts', label: 'My Accounts', icon: Building2, href: '/employee/recruiting/accounts?owner=me' },
-      { id: 'my-jobs', label: 'My Jobs', icon: Briefcase, href: '/employee/recruiting/jobs?assigned=me' },
-      { id: 'my-submissions', label: 'My Submissions', icon: Send, href: '/employee/recruiting/submissions?owner=me' },
+      { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/workspace' },
+      { id: 'today', label: 'Today', icon: Clock, href: '/employee/workspace/today' },
+      { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/activities' },
+      { id: 'accounts', label: 'My Accounts', icon: Building2, href: '/employee/workspace/accounts' },
+      { id: 'jobs', label: 'My Jobs', icon: Briefcase, href: '/employee/workspace/jobs' },
+      { id: 'submissions', label: 'My Submissions', icon: Send, href: '/employee/workspace/submissions' },
       { id: 'reports', label: 'Reports', icon: FileBarChart, href: '/employee/workspace/reports' },
+    ],
+  },
+  team: {
+    id: 'team',
+    title: 'Team Workspace',
+    icon: Users,
+    basePath: '/employee/team',
+    views: [],
+    navLinks: [
+      { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/team' },
+      { id: 'today', label: 'Today', icon: Clock, href: '/employee/team/today' },
+      { id: 'activities', label: 'Activities', icon: Activity, href: '/employee/team/activities' },
+      { id: 'accounts', label: 'Accounts', icon: Building2, href: '/employee/team/accounts' },
+      { id: 'jobs', label: 'Jobs', icon: Briefcase, href: '/employee/team/jobs' },
+      { id: 'submissions', label: 'Submissions', icon: Send, href: '/employee/team/submissions' },
+      { id: 'reports', label: 'Reports', icon: FileBarChart, href: '/employee/team/reports' },
     ],
   },
   academy: {
@@ -285,7 +301,7 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
       <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
 
         {/* Workspace Toggle - Show at top for workspace-related sections */}
-        {!isCollapsed && (detectedSectionId === 'workspace' || detectedSectionId === 'jobs' || detectedSectionId === 'candidates' || detectedSectionId === 'accounts' || detectedSectionId === 'placements' || detectedSectionId === 'leads' || detectedSectionId === 'deals' || detectedSectionId === 'campaigns' || detectedSectionId === 'contacts') && (
+        {!isCollapsed && (detectedSectionId === 'workspace' || detectedSectionId === 'team' || detectedSectionId === 'jobs' || detectedSectionId === 'candidates' || detectedSectionId === 'accounts' || detectedSectionId === 'placements' || detectedSectionId === 'leads' || detectedSectionId === 'deals' || detectedSectionId === 'campaigns' || detectedSectionId === 'contacts') && (
           <WorkspaceToggle />
         )}
 
@@ -634,6 +650,7 @@ function detectSectionFromPath(pathname: string): string | null {
   if (pathname.includes('/crm/deals')) return 'deals'
   if (pathname.includes('/crm/campaigns')) return 'campaigns'
   if (pathname.includes('/employee/contacts')) return 'contacts'
+  if (pathname.includes('/employee/team')) return 'team'
   if (pathname.includes('/workspace')) return 'workspace'
   if (pathname.includes('/employee/academy')) return 'academy'
   return null

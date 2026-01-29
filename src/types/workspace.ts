@@ -593,6 +593,7 @@ export interface TeamWorkspaceStats {
   totalSubmissions: number
   totalJobs: number
   totalPlacements: number
+  totalAccounts: number
   inQueue: number
 }
 

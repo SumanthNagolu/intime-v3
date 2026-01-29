@@ -3,61 +3,40 @@ import {
   Search, Clock, Plus, Gauge, Settings,
   Calendar, CheckCircle, Package, TrendingUp, DollarSign,
   UserCheck, Send, Megaphone, Activity, UserCircle, Star,
-  UsersRound, Inbox, AlertTriangle, Award
+  UsersRound, Inbox, AlertTriangle, Award,
+  Shield, Network, Workflow, FileText, Bell, Database, Key, Flag, Timer,
+  ClipboardList, Receipt, Wallet, UserPlus,
+  LayoutGrid, ListTodo, Rocket, History, BarChart3, User, Kanban
 } from 'lucide-react'
-import { EntityNavTab } from './entity-navigation.types'
+import { EntityNavTab, EntityNavDropdownItem } from './entity-navigation.types'
 
-// Order: My Workspace, My Team Space, CRM, Accounts, Contacts, Jobs, Candidates
+// =============================================================================
+// UNIFIED WORKSPACE DROPDOWN ITEMS
+// Simple 3-option dropdown: My Space, Team Space, Scrum
+// =============================================================================
+export const workspaceDropdownItems: EntityNavDropdownItem[] = [
+  { id: 'ws-my-space', label: 'My Space', icon: User, href: '/employee/workspace', type: 'link' },
+  { id: 'ws-team-space', label: 'Team Space', icon: UsersRound, href: '/employee/team', type: 'link' },
+  { id: 'divider-1', label: '', type: 'divider' },
+  { id: 'ws-scrum', label: 'Scrum Board', icon: Kanban, href: '/employee/scrum', type: 'link' },
+]
+
+// Legacy exports for backwards compatibility
+export const mySpaceDropdownItems = workspaceDropdownItems
+export const teamSpaceDropdownItems = workspaceDropdownItems
+
+// Order: Workspaces, CRM, Accounts, Contacts, Jobs, Candidates
 export const topNavigationTabs: EntityNavTab[] = [
+  // =============================================================================
+  // WORKSPACES - My Workspace + Team Workspace (same sections, different data)
+  // =============================================================================
   {
-    id: 'workspace',
-    label: 'My Workspace',
+    id: 'workspaces',
+    label: 'Workspaces',
     entityType: 'job',
-    icon: LayoutDashboard,
+    icon: LayoutGrid,
     defaultHref: '/employee/workspace',
-    dropdown: [
-      // Overview
-      { id: 'my-dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/workspace', type: 'link' },
-      { id: 'today', label: 'Today', icon: Calendar, href: '/employee/workspace/today', type: 'link' },
-      { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/activities', type: 'link' },
-      { id: 'divider-1', label: '', type: 'divider' },
-      // My Pipeline
-      { id: 'my-submissions', label: 'My Submissions', icon: Send, href: '/employee/recruiting/submissions?owner=me', type: 'link' },
-      { id: 'my-interviews', label: 'My Interviews', icon: Calendar, href: '/employee/recruiting/interviews?owner=me', type: 'link' },
-      { id: 'my-offers', label: 'My Offers', icon: DollarSign, href: '/employee/recruiting/offers?owner=me', type: 'link' },
-      { id: 'my-placements', label: 'My Placements', icon: Award, href: '/employee/recruiting/placements?owner=me', type: 'link' },
-      { id: 'divider-2', label: '', type: 'divider' },
-      // My Entities
-      { id: 'my-accounts', label: 'My Accounts', icon: Building2, href: '/employee/recruiting/accounts?owner=me', type: 'link' },
-      { id: 'my-jobs', label: 'My Jobs', icon: Briefcase, href: '/employee/recruiting/jobs?assigned=me', type: 'link' },
-      { id: 'my-candidates', label: 'My Candidates', icon: Users, href: '/employee/recruiting/candidates?owner=me', type: 'link' },
-      { id: 'divider-3', label: '', type: 'divider' },
-      // Tracking
-      { id: 'my-commissions', label: 'My Commissions', icon: DollarSign, href: '/employee/recruiting/commissions', type: 'link' },
-      { id: 'my-timesheets', label: 'My Timesheets', icon: Clock, href: '/employee/recruiting/timesheets?owner=me', type: 'link' },
-    ],
-  },
-  {
-    id: 'team',
-    label: 'My Team Space',
-    entityType: 'job',
-    icon: UsersRound,
-    defaultHref: '/employee/team',
-    dropdown: [
-      // Overview
-      { id: 'team-dashboard', label: 'Team Dashboard', icon: UsersRound, href: '/employee/team', type: 'link' },
-      { id: 'team-performance', label: 'Performance', icon: TrendingUp, href: '/employee/team/performance', type: 'link' },
-      { id: 'divider-1', label: '', type: 'divider' },
-      // Team Pipeline
-      { id: 'team-submissions', label: 'Team Submissions', icon: Send, href: '/employee/recruiting/submissions', type: 'link' },
-      { id: 'team-interviews', label: 'Team Interviews', icon: Calendar, href: '/employee/recruiting/interviews', type: 'link' },
-      { id: 'team-placements', label: 'Team Placements', icon: Award, href: '/employee/recruiting/placements', type: 'link' },
-      { id: 'divider-2', label: '', type: 'divider' },
-      // Team Work
-      { id: 'team-activities', label: 'Team Activities', icon: Activity, href: '/employee/team/activities', type: 'link' },
-      { id: 'workqueue', label: 'Work Queue', icon: Inbox, href: '/employee/team/workqueue', type: 'link', badge: true },
-      { id: 'escalated', label: 'Escalated', icon: AlertTriangle, href: '/employee/team/escalated', type: 'link' },
-    ],
+    dropdown: workspaceDropdownItems,
   },
   {
     id: 'crm',
@@ -140,6 +119,69 @@ export const topNavigationTabs: EntityNavTab[] = [
       { id: 'new-candidate', label: 'Add Candidate', icon: Plus, href: '/employee/recruiting/candidates/new', type: 'link' },
     ],
   },
+  // ============================================================
+  // HR Tab - Human Resources module
+  // ============================================================
+  {
+    id: 'hr',
+    label: 'HR',
+    entityType: 'contact',  // Employees are a type of contact
+    icon: Users,
+    defaultHref: '/employee/hr/employees',
+    dropdown: [
+      { id: 'hr-employees', label: 'Employees', icon: Users, href: '/employee/hr/employees', type: 'link' },
+      { id: 'hr-pods', label: 'Pods', icon: Network, href: '/employee/hr/pods', type: 'link' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'hr-onboarding', label: 'Onboarding', icon: UserPlus, href: '/employee/hr/onboarding', type: 'link' },
+      { id: 'hr-onboarding-templates', label: 'Onboarding Templates', icon: ClipboardList, href: '/employee/hr/onboarding/templates', type: 'link' },
+    ],
+  },
+  // ============================================================
+  // Finance Tab - Finance module
+  // ============================================================
+  {
+    id: 'finance',
+    label: 'Finance',
+    entityType: 'invoice',
+    icon: DollarSign,
+    defaultHref: '/employee/finance/invoices',
+    dropdown: [
+      { id: 'finance-invoices', label: 'Invoices', icon: Receipt, href: '/employee/finance/invoices', type: 'link' },
+      { id: 'finance-payroll', label: 'Payroll', icon: Wallet, href: '/employee/finance/payroll', type: 'link' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'new-invoice', label: 'Create Invoice', icon: Plus, href: '/employee/finance/invoices/new', type: 'link' },
+      { id: 'new-payroll', label: 'Create Payroll', icon: Plus, href: '/employee/finance/payroll/new', type: 'link' },
+    ],
+  },
+  // ============================================================
+  // Admin Tab - Administration module
+  // ============================================================
+  {
+    id: 'admin',
+    label: 'Admin',
+    entityType: 'team',  // Admin manages teams/users
+    icon: Settings,
+    defaultHref: '/employee/admin/dashboard',
+    dropdown: [
+      // Main
+      { id: 'admin-dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/admin/dashboard', type: 'link' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      // User Management
+      { id: 'admin-users', label: 'Users', icon: Users, href: '/employee/admin/users', type: 'link' },
+      { id: 'admin-pods', label: 'Pods', icon: Network, href: '/employee/admin/pods', type: 'link' },
+      { id: 'admin-roles', label: 'Roles', icon: Shield, href: '/employee/admin/roles', type: 'link' },
+      { id: 'admin-permissions', label: 'Permissions', icon: Shield, href: '/employee/admin/permissions', type: 'link' },
+      { id: 'divider-2', label: '', type: 'divider' },
+      // System
+      { id: 'admin-settings', label: 'Settings', icon: Settings, href: '/employee/admin/settings', type: 'link' },
+      { id: 'admin-integrations', label: 'Integrations', icon: Workflow, href: '/employee/admin/integrations', type: 'link' },
+      { id: 'admin-workflows', label: 'Workflows', icon: Workflow, href: '/employee/admin/workflows', type: 'link' },
+      { id: 'divider-3', label: '', type: 'divider' },
+      // Monitoring
+      { id: 'admin-audit', label: 'Audit Logs', icon: FileText, href: '/employee/admin/audit', type: 'link' },
+      { id: 'admin-notifications', label: 'Notifications', icon: Bell, href: '/employee/admin/notifications', type: 'link' },
+    ],
+  },
 ]
 
 // Helper to get tab by ID
@@ -149,11 +191,18 @@ export function getNavTab(tabId: string): EntityNavTab | undefined {
 
 // Helper to determine active tab from pathname
 export function getActiveTabFromPath(pathname: string): string | null {
-  // Workspace paths
-  if (pathname.includes('/employee/workspace')) return 'workspace'
+  // Admin paths - check first (most specific)
+  if (pathname.includes('/employee/admin')) return 'admin'
 
-  // Team paths
-  if (pathname.includes('/employee/team')) return 'team'
+  // HR paths
+  if (pathname.includes('/employee/hr')) return 'hr'
+
+  // Finance paths
+  if (pathname.includes('/employee/finance')) return 'finance'
+
+  // Workspace paths (My Workspace and Team Workspace)
+  if (pathname.includes('/employee/workspace')) return 'workspaces'
+  if (pathname.includes('/employee/team')) return 'workspaces'
 
   // CRM paths
   if (pathname.includes('/employee/crm')) return 'crm'
@@ -165,15 +214,14 @@ export function getActiveTabFromPath(pathname: string): string | null {
   if (pathname.includes('/employee/recruiting/candidates') ||
       pathname.includes('/employee/recruiting/hotlist')) return 'candidates'
 
-  // Pipeline paths - map to workspace (user's pipeline) or team
+  // Pipeline paths - map to workspace
   if (pathname.includes('/employee/recruiting/submissions') ||
       pathname.includes('/employee/recruiting/interviews') ||
       pathname.includes('/employee/recruiting/offers') ||
       pathname.includes('/employee/recruiting/placements') ||
       pathname.includes('/employee/recruiting/commissions') ||
       pathname.includes('/employee/recruiting/timesheets')) {
-    // Check if it's filtered by owner=me, otherwise default to workspace
-    return 'workspace'
+    return 'workspaces'
   }
 
   return null
