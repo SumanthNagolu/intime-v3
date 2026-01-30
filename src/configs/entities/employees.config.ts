@@ -118,7 +118,7 @@ export const EMPLOYMENT_TYPE_CONFIG: Record<string, StatusConfig> = {
 export const employeesListConfig: ListViewConfig<Employee> = {
   entityType: 'employee',
   entityName: { singular: 'Employee', plural: 'Employees' },
-  baseRoute: '/employee/hr/employees',
+  baseRoute: '/employee/operations/employees',
 
   title: 'Employees',
   description: 'Manage internal staff and employee records',
@@ -127,9 +127,7 @@ export const employeesListConfig: ListViewConfig<Employee> = {
   primaryAction: {
     label: 'Add Employee',
     icon: Plus,
-    onClick: () => {
-      window.dispatchEvent(new CustomEvent('openEmployeeDialog', { detail: { dialogId: 'create' } }))
-    },
+    href: '/employee/operations/employees/new',
   },
 
   statsCards: [
@@ -305,9 +303,7 @@ export const employeesListConfig: ListViewConfig<Employee> = {
         : 'Add your first employee to get started',
     action: {
       label: 'Add Employee',
-      onClick: () => {
-        window.dispatchEvent(new CustomEvent('openEmployeeDialog', { detail: { dialogId: 'create' } }))
-      },
+      href: '/employee/operations/employees/new',
     },
   },
 

@@ -779,6 +779,12 @@ export function getSectionsForEntity(entityType: string): SectionDefinition[] {
       return offerSections
     case 'team':
       return teamSections
+    case 'department':
+      return departmentSections
+    case 'position':
+      return positionSections
+    case 'pod':
+      return podSections
     default:
       return []
   }
@@ -829,6 +835,179 @@ export const commonToolSections: SectionDefinition[] = [
   { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
   { id: 'history', label: 'History', icon: History, isToolSection: true },
 ]
+
+// ============================================================================
+// DEPARTMENT SECTIONS (HR Module - Phase 1)
+// ============================================================================
+/**
+ * Department sections - Organizational unit management
+ *
+ * MAIN SECTIONS (numbered 1-4):
+ *   - Summary: Department overview with KPIs (no number)
+ *   - Details: Name, code, description, cost center
+ *   - Hierarchy: Parent department and children
+ *   - Leadership: Department head assignment
+ *   - Budget: Budget allocation and tracking
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Employees: Employees in this department
+ *   - Positions: Positions within this department
+ *   - Children: Sub-departments
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, Documents, History
+ */
+export const departmentSections: SectionDefinition[] = [
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Department overview and key metrics' },
+
+  // Main sections (numbered 1-4)
+  { id: 'details', label: 'Details', icon: Building2, group: 'main', number: 1, description: 'Name, code, description, cost center' },
+  { id: 'hierarchy', label: 'Hierarchy', icon: Layers, group: 'main', number: 2, description: 'Parent and child departments' },
+  { id: 'leadership', label: 'Leadership', icon: UserCog, group: 'main', number: 3, description: 'Department head assignment' },
+  { id: 'budget', label: 'Budget', icon: DollarSign, group: 'main', number: 4, description: 'Budget allocation and tracking' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'employees', label: 'Employees', icon: Users, group: 'related', showCount: true, isRelatedData: true, description: 'Employees in this department' },
+  { id: 'positions', label: 'Positions', icon: Briefcase, group: 'related', showCount: true, isRelatedData: true, description: 'Positions within this department' },
+  { id: 'children', label: 'Sub-Departments', icon: Layers, group: 'related', showCount: true, isRelatedData: true, description: 'Child departments' },
+
+  // Tool sections (collapsible group)
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'Department activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Attached documents' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail' },
+]
+
+/**
+ * Helper to get department sections organized by group for sidebar rendering
+ */
+export function getDepartmentSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: departmentSections.find(s => s.isOverview),
+    mainSections: departmentSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: departmentSections.filter(s => s.isRelatedData),
+    toolSections: departmentSections.filter(s => s.isToolSection),
+  }
+}
+
+// ============================================================================
+// POSITION SECTIONS (HR Module - Phase 1)
+// ============================================================================
+/**
+ * Position sections - Job slot management within departments
+ *
+ * MAIN SECTIONS (numbered 1-4):
+ *   - Summary: Position overview with metrics (no number)
+ *   - Details: Title, code, description, level
+ *   - Department: Department assignment
+ *   - Compensation: Salary band configuration
+ *   - Headcount: Budget and fill status
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Employees: Employees in this position
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, Documents, History
+ */
+export const positionSections: SectionDefinition[] = [
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Position overview and key metrics' },
+
+  // Main sections (numbered 1-4)
+  { id: 'details', label: 'Details', icon: Briefcase, group: 'main', number: 1, description: 'Title, code, description, level' },
+  { id: 'department', label: 'Department', icon: Building2, group: 'main', number: 2, description: 'Department assignment' },
+  { id: 'compensation', label: 'Compensation', icon: DollarSign, group: 'main', number: 3, description: 'Salary band configuration' },
+  { id: 'headcount', label: 'Headcount', icon: Users, group: 'main', number: 4, description: 'Budget and fill status' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'employees', label: 'Employees', icon: Users, group: 'related', showCount: true, isRelatedData: true, description: 'Employees in this position' },
+
+  // Tool sections (collapsible group)
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'Position activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Attached documents' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail' },
+]
+
+/**
+ * Helper to get position sections organized by group for sidebar rendering
+ */
+export function getPositionSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: positionSections.find(s => s.isOverview),
+    mainSections: positionSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: positionSections.filter(s => s.isRelatedData),
+    toolSections: positionSections.filter(s => s.isToolSection),
+  }
+}
+
+// ============================================================================
+// POD SECTIONS (Enhanced for HR Module)
+// ============================================================================
+/**
+ * Pod sections - Team/pod management workspace
+ *
+ * MAIN SECTIONS (numbered 1-5):
+ *   - Summary: Pod overview with metrics (no number)
+ *   - Details: Name, type, description, region
+ *   - Members: Team members with roles
+ *   - Leadership: Pod manager assignment
+ *   - Settings: Sprint settings and notifications
+ *   - Metrics: Performance metrics and KPIs
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Assignments: Current assignments
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, History
+ */
+export const podSections: SectionDefinition[] = [
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Pod overview and key metrics' },
+
+  // Main sections (numbered 1-5)
+  { id: 'details', label: 'Details', icon: UsersRound, group: 'main', number: 1, description: 'Name, type, description, region' },
+  { id: 'members', label: 'Members', icon: Users, group: 'main', number: 2, showCount: true, description: 'Team members with roles' },
+  { id: 'leadership', label: 'Leadership', icon: UserCog, group: 'main', number: 3, description: 'Pod manager assignment' },
+  { id: 'settings', label: 'Settings', icon: ClipboardList, group: 'main', number: 4, description: 'Sprint settings and notifications' },
+  { id: 'metrics', label: 'Metrics', icon: BarChart3, group: 'main', number: 5, description: 'Performance metrics and KPIs' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'assignments', label: 'Assignments', icon: Briefcase, group: 'related', showCount: true, isRelatedData: true, description: 'Current assignments' },
+
+  // Tool sections (collapsible group - note: no documents for pods)
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'Pod activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail' },
+]
+
+/**
+ * Helper to get pod sections organized by group for sidebar rendering
+ */
+export function getPodSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: podSections.find(s => s.isOverview),
+    mainSections: podSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: podSections.filter(s => s.isRelatedData),
+    toolSections: podSections.filter(s => s.isToolSection),
+  }
+}
 
 // ============================================================================
 // HUBLOT-INSPIRED CONTACT SECTIONS (Category-Based Model)

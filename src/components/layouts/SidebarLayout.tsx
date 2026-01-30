@@ -2,7 +2,9 @@
 
 import * as React from "react"
 import { Suspense } from "react"
+import { usePathname } from "next/navigation"
 import { SectionSidebar } from "@/components/navigation/SectionSidebar"
+import { ModuleSidebar } from "@/components/navigation/ModuleSidebar"
 import { EntityJourneySidebar } from "@/components/navigation/EntityJourneySidebar"
 import { CampaignEntitySidebar } from "@/components/navigation/CampaignEntitySidebar"
 import { TopNavigation } from "@/components/navigation/TopNavigation"
@@ -11,6 +13,16 @@ import { useEntityData } from "@/components/layouts/EntityContextProvider"
 import { ENTITY_NAVIGATION_STYLES } from "@/lib/navigation/entity-navigation.types"
 import { ResizableSidebarWrapper } from "@/components/navigation/ResizableSidebarWrapper"
 import { cn } from "@/lib/utils"
+
+// Helper to detect module pages
+function getModuleFromPath(pathname: string): 'admin' | 'operations' | 'hr' | 'finance' | null {
+  if (pathname.startsWith('/employee/admin')) return 'admin'
+  if (pathname.startsWith('/employee/operations')) return 'operations'
+  // Legacy paths redirect to operations module
+  if (pathname.startsWith('/employee/hr')) return 'operations'
+  if (pathname.startsWith('/employee/finance')) return 'operations'
+  return null
+}
 
 // Keep old interface for backwards compatibility but it's no longer used
 interface SidebarSection {
@@ -68,9 +80,13 @@ function SidebarLayoutInner({
   sectionHasData,
   customSidebar,
 }: SidebarLayoutProps) {
+  const pathname = usePathname()
   const entityNav = useEntityNavigationSafe()
   const entityData = useEntityData()
   const currentEntity = entityNav?.currentEntity
+
+  // Detect if we're on a module page (Admin, HR, Finance)
+  const moduleId = getModuleFromPath(pathname)
 
   return (
     <div className={cn("h-screen flex flex-col overflow-hidden", className)}>
@@ -106,7 +122,11 @@ function SidebarLayoutInner({
                   sectionCounts={sectionCounts}
                 />
               )
+            ) : moduleId ? (
+              // Module pages (Admin, HR, Finance) use ModuleSidebar
+              <ModuleSidebar moduleId={moduleId} />
             ) : (
+              // Entity list pages use SectionSidebar
               <SectionSidebar sectionId={sectionId} />
             )}
           </ResizableSidebarWrapper>

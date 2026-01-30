@@ -7,7 +7,8 @@ import type { RoleCategory } from '@/lib/auth/permission-types'
 
 // Tab IDs from top-navigation.ts
 // Note: 'workspace' and 'team' merged into 'workspaces' dropdown
-type TabId = 'workspaces' | 'accounts' | 'contacts' | 'jobs' | 'candidates' | 'crm' | 'finance' | 'hr' | 'admin'
+// Note: 'hr' and 'finance' merged into 'operations'
+type TabId = 'workspaces' | 'accounts' | 'contacts' | 'jobs' | 'candidates' | 'crm' | 'operations' | 'admin'
 
 interface RoleNavigationConfig {
   visibleTabs: TabId[]
@@ -18,21 +19,21 @@ interface RoleNavigationConfig {
 export const ROLE_NAVIGATION_CONFIG: Record<RoleCategory, RoleNavigationConfig> = {
   // Admin - full access, default to Administration
   admin: {
-    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'operations', 'admin'],
     defaultTab: 'admin',
     defaultPath: '/employee/admin/dashboard',
   },
 
   // Executive - full access, default to My Work (dashboard focus)
   executive: {
-    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'operations', 'admin'],
     defaultTab: 'workspaces',
     defaultPath: '/employee/workspace/dashboard',
   },
 
   // Leadership - full access except some admin settings
   leadership: {
-    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'operations', 'admin'],
     defaultTab: 'workspaces',
     defaultPath: '/employee/workspace/dashboard',
   },
@@ -114,63 +115,63 @@ export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
   },
 
   // ============================================================
-  // HR ROLES - HR-focused tabs (includes Finance for payroll/billing)
+  // HR ROLES - Operations-focused tabs (HR + Finance merged)
   // ============================================================
   hr_manager: {
-    visibleTabs: ['workspaces', 'contacts', 'finance', 'hr'],
-    defaultTab: 'hr',
-    defaultPath: '/employee/hr/employees',
+    visibleTabs: ['workspaces', 'contacts', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/employees',
   },
   hr_specialist: {
-    visibleTabs: ['workspaces', 'contacts', 'finance', 'hr'],
-    defaultTab: 'hr',
-    defaultPath: '/employee/hr/employees',
+    visibleTabs: ['workspaces', 'contacts', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/employees',
   },
   hr_admin: {
-    visibleTabs: ['workspaces', 'contacts', 'finance', 'hr'],
-    defaultTab: 'hr',
-    defaultPath: '/employee/hr/employees',
+    visibleTabs: ['workspaces', 'contacts', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/employees',
   },
   hr: {
-    visibleTabs: ['workspaces', 'contacts', 'finance', 'hr'],
-    defaultTab: 'hr',
-    defaultPath: '/employee/hr/employees',
+    visibleTabs: ['workspaces', 'contacts', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/employees',
   },
 
   // ============================================================
-  // FINANCE ROLES - Finance-focused tabs
+  // FINANCE ROLES - Operations-focused tabs (HR + Finance merged)
   // ============================================================
   finance_manager: {
-    visibleTabs: ['workspaces', 'accounts', 'finance'],
-    defaultTab: 'finance',
-    defaultPath: '/employee/finance/invoices',
+    visibleTabs: ['workspaces', 'accounts', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/invoices',
   },
   finance_specialist: {
-    visibleTabs: ['workspaces', 'finance'],
-    defaultTab: 'finance',
-    defaultPath: '/employee/finance/invoices',
+    visibleTabs: ['workspaces', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/invoices',
   },
   finance: {
-    visibleTabs: ['workspaces', 'finance'],
-    defaultTab: 'finance',
-    defaultPath: '/employee/finance/invoices',
+    visibleTabs: ['workspaces', 'operations'],
+    defaultTab: 'operations',
+    defaultPath: '/employee/operations/invoices',
   },
 
   // ============================================================
   // ADMIN ROLES - Full access including admin tabs
   // ============================================================
   admin: {
-    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'operations', 'admin'],
     defaultTab: 'admin',
     defaultPath: '/employee/admin/dashboard',
   },
   super_admin: {
-    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'operations', 'admin'],
     defaultTab: 'admin',
     defaultPath: '/employee/admin/dashboard',
   },
   system_admin: {
-    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspaces', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'operations', 'admin'],
     defaultTab: 'admin',
     defaultPath: '/employee/admin/dashboard',
   },
