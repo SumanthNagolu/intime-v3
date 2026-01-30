@@ -1,6 +1,9 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { BarChart3 } from 'lucide-react'
 import {
   StatsOverview,
   WorkspaceActivitiesTable,
@@ -22,13 +25,21 @@ export function MyWorkspaceClient({ data }: MyWorkspaceClientProps) {
   return (
     <div className="p-6 space-y-6">
       {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-heading font-semibold text-charcoal-900">
-          My Workspace
-        </h1>
-        <p className="text-sm text-charcoal-500 mt-1">
-          Your personal dashboard for activities, submissions, and pipeline
-        </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-heading font-semibold text-charcoal-900">
+            My Workspace
+          </h1>
+          <p className="text-sm text-charcoal-500 mt-1">
+            Your daily tasks, activities, and active submissions
+          </p>
+        </div>
+        <Link href="/employee/workspace/reports">
+          <Button variant="outline" size="sm">
+            <BarChart3 className="w-4 h-4 mr-2" />
+            View Analytics
+          </Button>
+        </Link>
       </div>
 
       {/* Stats Overview */}
