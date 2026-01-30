@@ -27,6 +27,16 @@ import { reportsRouter } from '../routers/reports'
 import { benchRouter } from '../routers/bench'
 // HR module router
 import { hrRouter } from '../routers/hr'
+// Departments and Positions routers (HR Phase 1)
+import { departmentsRouter } from '../routers/departments'
+import { positionsRouter } from '../routers/positions'
+// HR Module Phase 2-4 routers
+import { offboardingRouter } from '../routers/offboarding'
+import { leaveRouter } from '../routers/leave'
+import { compensationRouter } from '../routers/compensation'
+import { performanceRouter } from '../routers/performance'
+import { expensesRouter } from '../routers/expenses'
+import { hrAnalyticsRouter } from '../routers/hrAnalytics'
 // Academy portal router
 import { academyRouter } from '../routers/academy'
 // Sequence templates router
@@ -112,6 +122,16 @@ export const appRouter = router({
   bench: benchRouter,
   // HR module
   hr: hrRouter,
+  // Departments and Positions (HR Phase 1)
+  departments: departmentsRouter,
+  positions: positionsRouter,
+  // HR Module Phase 2-4
+  offboarding: offboardingRouter,
+  leave: leaveRouter,
+  compensation: compensationRouter,
+  performance: performanceRouter,
+  expenses: expensesRouter,
+  hrAnalytics: hrAnalyticsRouter,
   // Academy portal
   academy: academyRouter,
   // Sequence templates

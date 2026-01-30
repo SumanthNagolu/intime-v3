@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // =====================================================
 // SCHEMAS
@@ -50,7 +51,8 @@ export const hrRouter = router({
         })
       )
       .query(async ({ ctx, input }) => {
-        const { supabase, orgId } = ctx
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
         const {
           search,
           status,
@@ -64,7 +66,7 @@ export const hrRouter = router({
           sortOrder,
         } = input
 
-        let query = supabase
+        let query = adminClient
           .from('employees')
           .select(
             `
@@ -75,15 +77,6 @@ export const hrRouter = router({
               email,
               avatar_url,
               phone
-            ),
-            manager:employees!employees_manager_id_fkey(
-              id,
-              user_id,
-              user:user_profiles!employees_user_id_fkey(
-                id,
-                full_name,
-                avatar_url
-              )
             )
           `,
             { count: 'exact' }
@@ -152,7 +145,7 @@ export const hrRouter = router({
           updatedAt: employee.updated_at,
           // Related data
           user: employee.user,
-          manager: employee.manager,
+          manager: null, // Manager fetched separately if needed
         }))
 
         return {
@@ -165,10 +158,11 @@ export const hrRouter = router({
     // GET EMPLOYEE STATS
     // ============================================
     stats: orgProtectedProcedure.query(async ({ ctx }) => {
-      const { supabase, orgId } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
 
       // Get all employees for this org
-      const { data: employees, error } = await supabase
+      const { data: employees, error } = await adminClient
         .from('employees')
         .select('id, status, hire_date, department')
         .eq('org_id', orgId)
@@ -215,9 +209,10 @@ export const hrRouter = router({
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
-        const { supabase, orgId } = ctx
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
 
-        const { data: employee, error } = await supabase
+        const { data: employee, error } = await adminClient
           .from('employees')
           .select(
             `
@@ -228,15 +223,6 @@ export const hrRouter = router({
               email,
               avatar_url,
               phone
-            ),
-            manager:employees!employees_manager_id_fkey(
-              id,
-              user_id,
-              user:user_profiles!employees_user_id_fkey(
-                id,
-                full_name,
-                avatar_url
-              )
             ),
             profile:employee_profiles(*)
           `
@@ -280,6 +266,128 @@ export const hrRouter = router({
       const departments = [...new Set(data?.map((e) => e.department).filter(Boolean))]
       return departments.sort()
     }),
+
+    // ============================================
+    // CREATE EMPLOYEE
+    // ============================================
+    create: orgProtectedProcedure
+      .input(
+        z.object({
+          firstName: z.string().min(1, 'First name is required'),
+          lastName: z.string().min(1, 'Last name is required'),
+          email: z.string().email('Valid email is required'),
+          phone: z.string().optional(),
+          jobTitle: z.string().min(1, 'Job title is required'),
+          department: z.string().min(1, 'Department is required'),
+          employmentType: z.enum(['fte', 'contractor', 'intern', 'part_time']),
+          managerId: z.string().uuid().optional(),
+          hireDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format'),
+          location: z.string().optional(),
+          workMode: z.enum(['onsite', 'remote', 'hybrid']).optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, profileId: currentUserProfileId } = ctx
+        const adminClient = getAdminClient()
+
+        // First, create or get the user profile
+        const { data: existingProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('email', input.email)
+          .eq('org_id', orgId)
+          .single()
+
+        let profileId: string
+
+        if (existingProfile) {
+          profileId = existingProfile.id
+        } else {
+          // Create a new user profile using admin client to bypass RLS
+          const { data: newProfile, error: profileError } = await adminClient
+            .from('user_profiles')
+            .insert({
+              org_id: orgId,
+              email: input.email,
+              full_name: `${input.firstName} ${input.lastName}`,
+              phone: input.phone,
+            })
+            .select('id')
+            .single()
+
+          if (profileError || !newProfile) {
+            console.error('Failed to create user profile:', profileError)
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Failed to create user profile',
+            })
+          }
+          profileId = newProfile.id
+        }
+
+        // Generate employee number
+        const { count } = await adminClient
+          .from('employees')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+
+        const employeeNumber = `EMP${String((count ?? 0) + 1).padStart(5, '0')}`
+
+        // Create the employee record using admin client to bypass RLS
+        const { data: employee, error: employeeError } = await adminClient
+          .from('employees')
+          .insert({
+            org_id: orgId,
+            user_id: profileId,
+            employee_number: employeeNumber,
+            status: 'onboarding',
+            employment_type: input.employmentType,
+            hire_date: input.hireDate,
+            job_title: input.jobTitle,
+            department: input.department,
+            manager_id: input.managerId,
+            location: input.location,
+            work_mode: input.workMode,
+            created_by: currentUserProfileId,
+            updated_by: currentUserProfileId,
+          })
+          .select(
+            `
+            *,
+            user:user_profiles!employees_user_id_fkey(
+              id,
+              full_name,
+              email,
+              avatar_url,
+              phone
+            )
+          `
+          )
+          .single()
+
+        if (employeeError || !employee) {
+          console.error('Failed to create employee:', employeeError)
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to create employee',
+          })
+        }
+
+        return {
+          id: employee.id,
+          userId: employee.user_id,
+          employeeNumber: employee.employee_number,
+          status: employee.status,
+          employmentType: employee.employment_type,
+          hireDate: employee.hire_date,
+          jobTitle: employee.job_title,
+          department: employee.department,
+          location: employee.location,
+          workMode: employee.work_mode,
+          user: employee.user,
+          createdAt: employee.created_at,
+        }
+      }),
 
     // ============================================
     // GET MANAGERS (for filter dropdown)
