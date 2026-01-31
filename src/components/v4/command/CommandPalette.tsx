@@ -28,6 +28,7 @@ import {
   Moon,
   Plus,
   Settings,
+  LayoutDashboard,
   Sun,
   Target,
   User,
@@ -35,6 +36,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getAllSchemas, type EntitySchema } from '@/lib/entity/schema'
+import { trpc } from '@/lib/trpc/client'
 
 // ============================================
 // Types
@@ -144,6 +146,21 @@ function CommandPaletteDialog({
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isDark, setIsDark] = useState(true)
+  const [debouncedQuery, setDebouncedQuery] = useState('')
+
+  // Debounce query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [query])
+
+  // Search
+  const { data: searchResults } = trpc.search.global.useQuery(
+    { query: debouncedQuery, limit: 5 },
+    { enabled: debouncedQuery.length > 1 }
+  )
 
   // Get entity schemas for navigation commands
   const schemas = useMemo(() => {
@@ -159,13 +176,39 @@ function CommandPaletteDialog({
     const builtinCommands: Command[] = [
       // Navigation
       {
+        id: 'nav-dashboard',
+        label: 'Go to Dashboard',
+        icon: LayoutDashboard,
+        shortcut: 'G D',
+        category: 'navigation',
+        action: () => router.push('/employee/recruiting/dashboard'),
+        keywords: ['home', 'overview', 'main'],
+      },
+      {
         id: 'nav-inbox',
         label: 'Go to Inbox',
         icon: Inbox,
         shortcut: 'G I',
         category: 'navigation',
         action: () => router.push('/inbox'),
-        keywords: ['home', 'work', 'tasks'],
+        keywords: ['work', 'tasks', 'notifications'],
+      },
+      // Admin
+      {
+        id: 'nav-admin-dashboard',
+        label: 'Admin Dashboard',
+        icon: LayoutDashboard,
+        category: 'navigation',
+        action: () => router.push('/employee/admin/dashboard'),
+        keywords: ['admin', 'system', 'health'],
+      },
+      {
+        id: 'nav-admin-users',
+        label: 'User Management',
+        icon: Users,
+        category: 'navigation',
+        action: () => router.push('/employee/admin/users'),
+        keywords: ['admin', 'users', 'roles', 'permissions'],
       },
       ...schemas.map(
         (schema): Command => ({
@@ -214,8 +257,30 @@ function CommandPaletteDialog({
       },
     ]
 
-    return [...builtinCommands, ...commands]
-  }, [schemas, commands, router, isDark])
+    const resultCommands = [...builtinCommands, ...commands]
+
+    if (searchResults && searchResults.length > 0) {
+      const searchCommands: Command[] = searchResults.map(item => {
+        let Icon = FileText
+        if (item.type === 'candidate') Icon = User
+        if (item.type === 'job') Icon = Briefcase
+        if (item.type === 'account') Icon = Building2
+
+        return {
+          id: `search-${item.type}-${item.id}`,
+          label: item.title,
+          icon: Icon,
+          category: 'search', // This ensures they appear in Search category
+          action: () => router.push(item.href),
+          keywords: [item.type, item.subtitle || ''],
+        }
+      })
+      
+      return [...searchCommands, ...resultCommands]
+    }
+
+    return resultCommands
+  }, [schemas, commands, router, isDark, searchResults])
 
   // Filter commands based on query
   const filteredCommands = useMemo(() => {

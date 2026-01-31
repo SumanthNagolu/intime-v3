@@ -449,6 +449,45 @@ export const activitiesRouter = router({
     }),
 
   // ============================================
+  // UPDATE ACTIVITY STATUS (KANBAN DRAG-DROP)
+  // ============================================
+  updateStatus: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      status: StatusEnum,
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // If completing, set completed_at. If opening/scheduling, clear it.
+      const updates: any = {
+        status: input.status,
+        updated_at: new Date().toISOString(),
+      }
+
+      if (input.status === 'completed') {
+        updates.completed_at = new Date().toISOString()
+      } else {
+        updates.completed_at = null
+      }
+
+      const { data, error } = await adminClient
+        .from('activities')
+        .update(updates)
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return { id: data.id, status: data.status }
+    }),
+
+  // ============================================
   // GET ACTIVITY STATS FOR DASHBOARD
   // ============================================
   getStats: orgProtectedProcedure
@@ -2187,48 +2226,6 @@ export const activitiesRouter = router({
         source: orgAdmin ? 'org_admin' : null,
       }
     }),
-  // ============================================
-  // UPDATE ACTIVITY STATUS (BOARD DRAG-DROP)
-  // ============================================
-  updateStatus: orgProtectedProcedure
-    .input(z.object({
-      id: z.string().uuid(),
-      status: z.string(), // Accepting string to allow 'todo'/'review' mapping if necessary, but ideally should leverage StatusEnum
-    }))
-    .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
-      const adminClient = getAdminClient()
 
-      // Look up user_profiles.id via auth_id
-      const { data: userProfile } = await adminClient
-        .from('user_profiles')
-        .select('id')
-        .eq('auth_id', user?.id)
-        .single()
-
-      const userProfileId = userProfile?.id
-
-      // Allow mapping 'todo' -> 'open', 'done' -> 'completed', etc if the UI sends those
-      // But TeamBoardSection sends: 'completed', 'waiting', 'in_progress', 'open' based on its getStatusFromColumn.
-      // So input.status should be valid.
-
-      const { data: activity, error } = await supabase
-        .from('activities')
-        .update({
-          status: input.status,
-          updated_at: new Date().toISOString(),
-          updated_by: userProfileId,
-        })
-        .eq('id', input.id)
-        .eq('org_id', orgId)
-        .select()
-        .single()
-
-      if (error) {
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-      }
-
-      return activity
-    }),
 })
 

@@ -7,8 +7,8 @@
  * Connected to real tRPC data with full keyboard navigation.
  */
 
-import { useState, useMemo, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   AlertTriangle,
   Briefcase,
@@ -412,8 +412,11 @@ function AccountDetailPanel({
 // Main Component
 // ============================================
 
-export default function AccountsPage() {
+function AccountsPageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const initialId = searchParams.get('id')
+
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -423,6 +426,16 @@ export default function AccountsPage() {
     search: searchQuery || undefined,
     status: statusFilter !== 'all' ? statusFilter : undefined,
   })
+
+  // Initialize selection from URL
+  useEffect(() => {
+    if (initialId && accounts.length > 0) {
+      const index = accounts.findIndex(a => a.id === initialId)
+      if (index !== -1) {
+        setSelectedIndex(index)
+      }
+    }
+  }, [initialId, accounts])
 
   // Selected account
   const selectedAccount = accounts[selectedIndex]
@@ -589,7 +602,13 @@ export default function AccountsPage() {
                   key={account.id}
                   account={account}
                   isSelected={index === selectedIndex}
-                  onSelect={() => setSelectedIndex(index)}
+                  onSelect={() => {
+                    setSelectedIndex(index)
+                    // Update URL
+                    const newUrl = new URL(window.location.href)
+                    newUrl.searchParams.set('id', account.id)
+                    window.history.pushState({}, '', newUrl.toString())
+                  }}
                 />
               ))}
             </div>
@@ -609,7 +628,12 @@ export default function AccountsPage() {
         <div className="fixed inset-0 z-40 md:relative md:inset-auto md:flex-1 md:min-w-0">
           <AccountDetailPanel
             account={selectedAccount}
-            onClose={() => setSelectedIndex(-1)}
+            onClose={() => {
+              setSelectedIndex(-1)
+              const newUrl = new URL(window.location.href)
+              newUrl.searchParams.delete('id')
+              window.history.pushState({}, '', newUrl.toString())
+            }}
             onNewJob={handleNewJob}
           />
         </div>
@@ -628,5 +652,18 @@ export default function AccountsPage() {
         </div>
       )}
     </div>
+  )
+}
+
+// Wrap in Suspense for useSearchParams
+export default function AccountsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-full bg-neutral-950">
+        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+      </div>
+    }>
+      <AccountsPageContent />
+    </Suspense>
   )
 }

@@ -22,6 +22,8 @@ import {
   Building2,
   Globe,
   Linkedin,
+  Download,
+  Star
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type {
@@ -109,8 +111,8 @@ import { CandidateWorkAuthEditDialog } from '../dialogs/CandidateWorkAuthEditDia
 import { CandidateSkillsEditDialog } from '../dialogs/CandidateSkillsEditDialog'
 
 /**
- * CandidateSummarySection - Comprehensive summary screen with all candidate info
- * Shows stats, profile, professional experience, education, skills, certifications, and submissions
+ * CandidateSummarySection - Cinematic Enterprise Redesign
+ * Features: Glassmorphism, Mesh Gradients, Premium Typography
  */
 export function CandidateSummarySection({
   candidate,
@@ -141,565 +143,269 @@ export function CandidateSummarySection({
   const activeCerts = certifications.filter(c => c.expiryStatus !== 'expired').slice(0, 4)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fade-in">
       {/* Edit Dialogs */}
       <CandidateOverviewEditDialog open={showProfileEdit} onOpenChange={setShowProfileEdit} />
       <CandidateWorkAuthEditDialog open={showAuthEdit} onOpenChange={setShowAuthEdit} />
       <CandidateSkillsEditDialog open={showSkillsEdit} onOpenChange={setShowSkillsEdit} />
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-4">
-        <StatCard
-          label="Experience"
-          value={candidate.yearsExperience ? `${candidate.yearsExperience} yrs` : '-'}
-          icon={<Briefcase className="h-5 w-5" />}
-        />
-        <StatCard
-          label="Desired Rate"
-          value={formatRate(candidate.desiredRate, candidate.rateCurrency, candidate.rateType || 'hourly')}
-          icon={<DollarSign className="h-5 w-5" />}
-        />
-        <StatCard
-          label="Availability"
-          value={formatAvailability(candidate.availability)}
-          subtitle={candidate.noticePeriod || undefined}
-          icon={<Clock className="h-5 w-5" />}
-        />
-        <StatCard
-          label="Submissions"
-          value={stats.totalSubmissions.toString()}
-          subtitle={`${stats.activeSubmissions} active`}
-          icon={<Send className="h-5 w-5" />}
-        />
+      {/* Hero Header - Cinematic Mesh Gradient */}
+      <div className="relative overflow-hidden rounded-3xl bg-mesh-cinematic p-8 shadow-premium-lg group">
+         <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
+         <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-50 pointer-events-none" />
+         
+         <div className="relative z-10 flex items-start justify-between">
+           <div className="flex items-start gap-6">
+              <div className="w-24 h-24 rounded-2xl border-2 border-white/60 bg-white shadow-lg overflow-hidden flex-shrink-0 relative group-hover:scale-105 transition-transform duration-300">
+                 {candidate.avatarUrl ? (
+                    <img src={candidate.avatarUrl} alt={candidate.fullName} className="w-full h-full object-cover" />
+                 ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-charcoal-50 text-charcoal-300">
+                       <UserIcon className="w-10 h-10" />
+                    </div>
+                 )}
+                 <div className="absolute bottom-0 right-0 p-1">
+                    <div className={cn("w-4 h-4 rounded-full border-2 border-white", 
+                       candidate.status === 'active' ? "bg-emerald-500" : "bg-charcoal-400"
+                    )} />
+                 </div>
+              </div>
+              
+              <div className="space-y-3 pt-1">
+                 <div>
+                    <h1 className="text-3xl font-bold text-charcoal-900 tracking-tight leading-none mb-2">
+                       {candidate.fullName}
+                    </h1>
+                    <div className="flex items-center gap-3 text-charcoal-600">
+                       <span className="text-lg font-medium">{candidate.title || 'Candidate'}</span>
+                       {candidate.location && (
+                          <>
+                             <span className="w-1 h-1 rounded-full bg-charcoal-400" />
+                             <span className="text-sm flex items-center gap-1">
+                                <MapPin className="w-3.5 h-3.5" /> {candidate.location}
+                             </span>
+                          </>
+                       )}
+                    </div>
+                 </div>
+                 
+                 <div className="flex items-center gap-3 pt-1">
+                    <Button size="sm" className="glass-button-primary h-8 px-4 text-xs uppercase tracking-wider font-semibold">
+                       <Download className="w-3 h-3 mr-2" /> Resume
+                    </Button>
+                    {candidate.linkedinUrl && (
+                       <Button size="sm" variant="ghost" className="glass-button h-8 w-8 p-0" asChild>
+                          <a href={candidate.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                             <Linkedin className="w-4 h-4 text-[#0077b5]" />
+                          </a>
+                       </Button>
+                    )}
+                 </div>
+              </div>
+           </div>
+
+           {/* Hero Stats */}
+           <div className="flex gap-4">
+              <div className="glass-panel p-4 rounded-xl backdrop-blur-md bg-white/40 min-w-[140px]">
+                 <div className="text-xs font-bold text-charcoal-500 uppercase tracking-wider mb-1">Experience</div>
+                 <div className="text-2xl font-bold text-charcoal-900">{candidate.yearsExperience ? `${candidate.yearsExperience}y` : '-'}</div>
+                 <div className="text-xs text-charcoal-600 font-medium mt-1">Senior Level</div>
+              </div>
+              <div className="glass-panel p-4 rounded-xl backdrop-blur-md bg-white/40 min-w-[140px]">
+                 <div className="text-xs font-bold text-charcoal-500 uppercase tracking-wider mb-1">Rate</div>
+                 <div className="text-2xl font-bold text-forest-700">
+                    {formatRate(candidate.desiredRate, candidate.rateCurrency, candidate.rateType || 'hourly').split('/')[0]}
+                 </div>
+                 <div className="text-xs text-charcoal-600 font-medium mt-1">/ {candidate.rateType || 'hr'}</div>
+              </div>
+           </div>
+         </div>
       </div>
 
-      {/* Profile Details Card */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Profile Details</CardTitle>
-          <Button variant="outline" size="sm" onClick={() => setShowProfileEdit(true)}>
-            <Pencil className="h-4 w-4 mr-2" />
-            Edit
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-            <DetailRow label="Full Name" value={candidate.fullName} />
-            <DetailRow
-              label="Email"
-              value={candidate.email}
-              icon={<Mail className="h-4 w-4 text-charcoal-400" />}
-            />
-            <DetailRow
-              label="Phone"
-              value={candidate.phone}
-              icon={<Phone className="h-4 w-4 text-charcoal-400" />}
-            />
-            <DetailRow
-              label="LinkedIn"
-              value={candidate.linkedinUrl ? 'View Profile' : null}
-              href={candidate.linkedinUrl || undefined}
-              icon={<Linkedin className="h-4 w-4 text-charcoal-400" />}
-            />
-            <DetailRow
-              label="Location"
-              value={candidate.location || (candidate.city && candidate.state ? `${candidate.city}, ${candidate.state}` : candidate.city)}
-              icon={<MapPin className="h-4 w-4 text-charcoal-400" />}
-            />
-            <DetailRow
-              label="Willing to Relocate"
-              value={candidate.willingToRelocate ? 'Yes' : 'No'}
-            />
-            <DetailRow label="Current Title" value={candidate.title} />
-            <DetailRow
-              label="Current Company"
-              value={candidate.currentCompany}
-              icon={<Building2 className="h-4 w-4 text-charcoal-400" />}
-            />
-            <DetailRow
-              label="Years Experience"
-              value={candidate.yearsExperience ? `${candidate.yearsExperience} years` : null}
-            />
-          </div>
-          {/* Professional Summary */}
-          {candidate.professionalSummary && (
-            <div className="mt-4 pt-4 border-t border-charcoal-100">
-              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                Professional Summary
-              </div>
-              <p className="text-sm text-charcoal-700 whitespace-pre-wrap">
-                {candidate.professionalSummary}
-              </p>
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-12 gap-8">
+         {/* Left Column - 8 cols */}
+         <div className="col-span-8 space-y-8">
+            
+            {/* Profile Details - Glass Panel */}
+            <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up">
+               <div className="px-6 py-4 border-b border-white/20 flex items-center justify-between bg-white/40">
+                  <h3 className="text-sm font-bold text-charcoal-900 uppercase tracking-widest flex items-center gap-2">
+                     <UserIcon className="h-4 w-4 text-forest-500" />
+                     Profile Details
+                  </h3>
+                  <Button variant="ghost" size="sm" onClick={() => setShowProfileEdit(true)} className="hover:bg-white/50 text-charcoal-500">
+                     <Pencil className="h-3.5 w-3.5 mr-1.5" /> Edit
+                  </Button>
+               </div>
+               <div className="p-6 bg-white/30">
+                  <div className="grid grid-cols-2 gap-x-12 gap-y-6">
+                     <DetailRow label="Email" value={candidate.email} icon={<Mail className="h-3.5 w-3.5" />} copyable />
+                     <DetailRow label="Phone" value={candidate.phone} icon={<Phone className="h-3.5 w-3.5" />} copyable />
+                     <DetailRow label="Current Company" value={candidate.currentCompany} icon={<Building2 className="h-3.5 w-3.5" />} />
+                     <DetailRow label="Willing to Relocate" value={candidate.willingToRelocate ? 'Yes' : 'No'} />
+                  </div>
+                  {candidate.professionalSummary && (
+                     <div className="mt-6 pt-6 border-t border-charcoal-100/50">
+                        <h4 className="text-xs font-bold text-charcoal-500 uppercase tracking-wider mb-3">Professional Summary</h4>
+                        <p className="text-sm text-charcoal-700 leading-relaxed">{candidate.professionalSummary}</p>
+                     </div>
+                  )}
+               </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
 
-      {/* Employment Preferences Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Employment Preferences</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-            <div>
-              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                Employment Types
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {candidate.employmentTypes?.map((type) => (
-                  <Badge key={type} variant="secondary" className="capitalize">
-                    {EMPLOYMENT_TYPE_LABELS[type] || type.replace('_', ' ')}
-                  </Badge>
-                )) || <span className="text-charcoal-400 text-sm">Not specified</span>}
-              </div>
-            </div>
-            <div>
-              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                Work Mode
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {candidate.workModes?.map((mode) => (
-                  <Badge key={mode} variant="secondary" className="capitalize">
-                    {mode === 'on_site' ? 'On-Site' : mode === 'remote' ? 'Remote' : 'Hybrid'}
-                  </Badge>
-                )) || <span className="text-charcoal-400 text-sm">Not specified</span>}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Compensation Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <DollarSign className="h-5 w-5" />
-            Compensation
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-            <DetailRow label="Rate Type" value={candidate.rateType ? candidate.rateType.charAt(0).toUpperCase() + candidate.rateType.slice(1) : null} />
-            <DetailRow
-              label="Desired Rate"
-              value={candidate.desiredRate ? formatRate(candidate.desiredRate, candidate.rateCurrency, candidate.rateType || 'hourly') : null}
-            />
-            <DetailRow
-              label="Minimum Rate"
-              value={candidate.minimumRate ? formatRate(candidate.minimumRate, candidate.rateCurrency, candidate.rateType || 'hourly') : null}
-            />
-            <DetailRow label="Currency" value={candidate.rateCurrency} />
-            <DetailRow label="Negotiable" value={candidate.isNegotiable === true ? 'Yes' : candidate.isNegotiable === false ? 'No' : null} />
-          </div>
-          {candidate.compensationNotes && (
-            <div className="mt-4 pt-4 border-t border-charcoal-100">
-              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                Compensation Notes
-              </div>
-              <p className="text-sm text-charcoal-700">{candidate.compensationNotes}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Work Authorization Card */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5" />
-            Work Authorization
-          </CardTitle>
-          <Button variant="outline" size="sm" onClick={() => setShowAuthEdit(true)}>
-            <Pencil className="h-4 w-4 mr-2" />
-            Edit
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-            <DetailRow label="Work Authorization" value={candidate.workAuthorization} />
-            <DetailRow label="Visa Status" value={formatVisaStatus(candidate.visaStatus)} />
-            <DetailRow
-              label="Visa Expiry"
-              value={candidate.visaExpiryDate ? new Date(candidate.visaExpiryDate).toLocaleDateString() : null}
-            />
-            <DetailRow label="Requires Sponsorship" value={candidate.requiresSponsorship === true ? 'Yes' : candidate.requiresSponsorship === false ? 'No' : null} />
-            <DetailRow label="Current Sponsor" value={candidate.currentSponsor} />
-            <DetailRow label="Is Transferable" value={candidate.isTransferable === true ? 'Yes' : candidate.isTransferable === false ? 'No' : null} />
-            <DetailRow label="Clearance Level" value={candidate.clearanceLevel} />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Availability Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Availability
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-            <DetailRow label="Availability" value={formatAvailability(candidate.availability)} />
-            <DetailRow
-              label="Available From"
-              value={candidate.availableFrom ? new Date(candidate.availableFrom).toLocaleDateString() : null}
-            />
-            <DetailRow label="Notice Period" value={candidate.noticePeriod} />
-            <DetailRow label="Willing to Relocate" value={candidate.willingToRelocate ? 'Yes' : 'No'} />
-            <DetailRow label="Open to Remote" value={candidate.isRemoteOk ? 'Yes' : 'No'} />
-            <DetailRow label="Relocation Preferences" value={candidate.relocationPreferences} />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Work History Card */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Briefcase className="h-5 w-5" />
-            Work History
-            {workHistory.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-charcoal-500">
-                ({workHistory.length})
-              </span>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {recentJobs.length > 0 ? (
-            <div className="space-y-4">
-              {recentJobs.map((job, index) => (
-                <div key={job.id} className={cn(index > 0 && 'pt-4 border-t border-charcoal-100')}>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-medium text-charcoal-900">{job.jobTitle}</div>
-                      <div className="text-sm text-charcoal-600 flex items-center gap-2">
-                        <Building2 className="h-3.5 w-3.5" />
-                        {job.companyName}
-                        {job.employmentTypeLabel && (
-                          <Badge variant="outline" className="text-xs">{job.employmentTypeLabel}</Badge>
-                        )}
-                      </div>
-                    </div>
-                    <div className="text-sm text-charcoal-500 text-right">
-                      <div>{formatDateRange(job.startDate, job.endDate, job.isCurrent)}</div>
-                      {job.location && (
-                        <div className="flex items-center gap-1 justify-end text-xs text-charcoal-400">
-                          <MapPin className="h-3 w-3" />
-                          {job.location}
+            {/* Work History - Glass Panel */}
+            <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={{ animationDelay: '100ms' }}>
+               <div className="px-6 py-4 border-b border-white/20 flex items-center justify-between bg-white/40">
+                  <h3 className="text-sm font-bold text-charcoal-900 uppercase tracking-widest flex items-center gap-2">
+                     <Briefcase className="h-4 w-4 text-forest-500" />
+                     Work History
+                  </h3>
+                  <span className="text-xs font-medium bg-charcoal-100 px-2 py-0.5 rounded-full text-charcoal-600">{workHistory.length}</span>
+               </div>
+               <div className="p-6 bg-white/30 space-y-6">
+                  {recentJobs.length > 0 ? recentJobs.map((job, index) => (
+                     <div key={job.id} className="relative pl-6 border-l-2 border-charcoal-100 last:border-0 pb-2">
+                        <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white bg-forest-500 shadow-sm" />
+                        <div className="flex justify-between items-start mb-1">
+                           <h4 className="font-bold text-charcoal-900">{job.jobTitle}</h4>
+                           <span className="text-xs font-medium text-charcoal-500 bg-white/50 px-2 py-0.5 rounded-md border border-white/40">
+                              {formatDateRange(job.startDate, job.endDate, job.isCurrent)}
+                           </span>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  {job.description && (
-                    <p className="text-sm text-charcoal-600 mt-2">{job.description}</p>
-                  )}
-                  {job.achievements.length > 0 && (
-                    <ul className="mt-2 text-sm text-charcoal-600 list-disc list-inside">
-                      {job.achievements.slice(0, 3).map((achievement, i) => (
-                        <li key={i}>{achievement}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-              {workHistory.length > 3 && (
-                <div className="text-center pt-2">
-                  <span className="text-sm text-charcoal-500">
-                    +{workHistory.length - 3} more positions
-                  </span>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-center py-6 text-charcoal-500">
-              <Briefcase className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p>No work history added</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Education Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5" />
-            Education
-            {education.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-charcoal-500">
-                ({education.length})
-              </span>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {recentEducation.length > 0 ? (
-            <div className="space-y-4">
-              {recentEducation.map((edu, index) => (
-                <div key={edu.id} className={cn(index > 0 && 'pt-4 border-t border-charcoal-100')}>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-medium text-charcoal-900">
-                        {edu.degreeDisplay || edu.degreeName || edu.degreeTypeLabel || 'Degree'}
-                      </div>
-                      <div className="text-sm text-charcoal-600">{edu.institutionName}</div>
-                    </div>
-                    <div className="text-sm text-charcoal-500 text-right">
-                      <div>{formatDateRange(edu.startDate, edu.endDate, edu.isCurrent)}</div>
-                      {edu.gpa && (
-                        <div className="text-xs text-charcoal-400">GPA: {edu.gpa}</div>
-                      )}
-                    </div>
-                  </div>
-                  {edu.honors && (
-                    <div className="text-sm text-charcoal-600 mt-1 italic">{edu.honors}</div>
-                  )}
-                </div>
-              ))}
-              {education.length > 2 && (
-                <div className="text-center pt-2">
-                  <span className="text-sm text-charcoal-500">
-                    +{education.length - 2} more entries
-                  </span>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-center py-6 text-charcoal-500">
-              <Award className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p>No education added</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Skills Card */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>
-            Skills
-            {skills.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-charcoal-500">
-                ({skills.length})
-              </span>
-            )}
-          </CardTitle>
-          <Button variant="outline" size="sm" onClick={() => setShowSkillsEdit(true)}>
-            <Pencil className="h-4 w-4 mr-2" />
-            Manage Skills
-          </Button>
-        </CardHeader>
-        <CardContent>
-          {skills.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {skills.map((skill) => {
-                const proficiency = PROFICIENCY_LABELS[skill.proficiencyLevel] || PROFICIENCY_LABELS[2]
-                return (
-                  <div
-                    key={skill.id}
-                    className={cn(
-                      'flex items-center gap-2 px-3 py-1.5 rounded-lg border',
-                      proficiency.color
-                    )}
-                  >
-                    <span className="font-medium">{skill.skillName}</span>
-                    {skill.yearsExperience && (
-                      <span className="text-xs opacity-75">
-                        ({skill.yearsExperience}y)
-                      </span>
-                    )}
-                    {skill.isVerified && (
-                      <ShieldCheck className="h-3.5 w-3.5" />
-                    )}
-                    {skill.isPrimary && (
-                      <Award className="h-3.5 w-3.5" />
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-charcoal-500">
-              <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p>No skills added yet</p>
-              <Button variant="outline" size="sm" className="mt-2" onClick={() => setShowSkillsEdit(true)}>
-                Add Skills
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Certifications Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5" />
-            Certifications
-            {certifications.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-charcoal-500">
-                ({certifications.length})
-              </span>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {activeCerts.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4">
-              {activeCerts.map((cert) => (
-                <div key={cert.id} className="p-3 border border-charcoal-200 rounded-lg">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-medium text-charcoal-900">
-                        {cert.acronym || cert.name}
-                      </div>
-                      {cert.acronym && cert.name !== cert.acronym && (
-                        <div className="text-sm text-charcoal-600">{cert.name}</div>
-                      )}
-                      {cert.issuingOrganization && (
-                        <div className="text-xs text-charcoal-500">{cert.issuingOrganization}</div>
-                      )}
-                    </div>
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        cert.expiryStatus === 'lifetime' && 'bg-green-50 text-green-700 border-green-200',
-                        cert.expiryStatus === 'active' && 'bg-blue-50 text-blue-700 border-blue-200',
-                        cert.expiryStatus === 'expiring_soon' && 'bg-amber-50 text-amber-700 border-amber-200',
-                        cert.expiryStatus === 'expired' && 'bg-red-50 text-red-700 border-red-200'
-                      )}
-                    >
-                      {cert.expiryStatus === 'lifetime' ? 'Lifetime' : cert.expiryStatus === 'expiring_soon' ? 'Expiring Soon' : cert.expiryStatus === 'expired' ? 'Expired' : 'Active'}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-6 text-charcoal-500">
-              <ShieldCheck className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p>No certifications added</p>
-            </div>
-          )}
-          {certifications.length > 4 && (
-            <div className="text-center pt-4">
-              <span className="text-sm text-charcoal-500">
-                +{certifications.length - 4} more certifications
-              </span>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Source & Tracking Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Source & Tracking</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-            <DetailRow label="Lead Source" value={candidate.source} />
-            <DetailRow label="Source Details" value={candidate.sourceDetails} />
-            <DetailRow label="Referred By" value={candidate.referredBy} />
-            <DetailRow label="On Hotlist" value={candidate.isOnHotlist ? 'Yes' : 'No'} />
-            <div className="col-span-2">
-              {candidate.tags && candidate.tags.length > 0 && (
-                <>
-                  <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                    Tags
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {candidate.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">{tag}</Badge>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-          {candidate.hotlistNotes && (
-            <div className="mt-4 pt-4 border-t border-charcoal-100">
-              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                Hotlist Notes
-              </div>
-              <p className="text-sm text-charcoal-700">{candidate.hotlistNotes}</p>
-            </div>
-          )}
-          {candidate.internalNotes && (
-            <div className="mt-4 pt-4 border-t border-charcoal-100">
-              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">
-                Internal Notes
-              </div>
-              <p className="text-sm text-charcoal-700">{candidate.internalNotes}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Active Submissions */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>
-            Active Submissions
-            {activeSubmissions.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-charcoal-500">
-                ({stats.activeSubmissions})
-              </span>
-            )}
-          </CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => onNavigate('submissions')}>
-            View All <ArrowRight className="h-4 w-4 ml-1" />
-          </Button>
-        </CardHeader>
-        <CardContent>
-          {activeSubmissions.length > 0 ? (
-            <div className="divide-y divide-charcoal-100">
-              {activeSubmissions.map((submission) => {
-                const stage = PIPELINE_STAGES.find((s) => s.id === getStageFromStatus(submission.status))
-                return (
-                  <div key={submission.id} className="py-3 flex items-center justify-between">
-                    <div>
-                      <div className="font-medium text-charcoal-900">
-                        {submission.job?.title || 'Unknown Job'}
-                      </div>
-                      <div className="text-sm text-charcoal-500">
-                        {submission.account?.name || 'Unknown Client'}
-                        {submission.submittedAt && (
-                          <> \u2022 {formatDistanceToNow(new Date(submission.submittedAt), { addSuffix: true })}</>
+                        <div className="text-sm font-medium text-forest-700 mb-2 flex items-center gap-1.5">
+                           {job.companyName}
+                           {job.location && <span className="text-charcoal-400 font-normal text-xs">• {job.location}</span>}
+                        </div>
+                        {job.description && (
+                           <p className="text-sm text-charcoal-600 leading-relaxed mb-2">{job.description}</p>
                         )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      {stage && (
-                        <Badge className={cn('capitalize', stage.bgColor, stage.textColor)}>
-                          {stage.label}
-                        </Badge>
-                      )}
-                      <Link
-                        href={`/employee/recruiting/submissions/${submission.id}`}
-                        className="text-sm text-gold-600 hover:text-gold-700"
-                      >
-                        View
-                      </Link>
-                    </div>
+                        {job.achievements.length > 0 && (
+                           <ul className="space-y-1">
+                              {job.achievements.slice(0, 2).map((achievement, i) => (
+                                 <li key={i} className="text-xs text-charcoal-500 flex items-start gap-2">
+                                    <span className="w-1 h-1 rounded-full bg-charcoal-300 mt-1.5 flex-shrink-0" />
+                                    {achievement}
+                                 </li>
+                              ))}
+                           </ul>
+                        )}
+                     </div>
+                  )) : (
+                     <EmptyState icon={Briefcase} label="No work history added" />
+                  )}
+               </div>
+            </div>
+
+            {/* Skills - Glass Panel */}
+            <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={{ animationDelay: '200ms' }}>
+               <div className="px-6 py-4 border-b border-white/20 flex items-center justify-between bg-white/40">
+                  <h3 className="text-sm font-bold text-charcoal-900 uppercase tracking-widest flex items-center gap-2">
+                     <Award className="h-4 w-4 text-gold-500" />
+                     Skills & Expertise
+                  </h3>
+                  <Button variant="ghost" size="sm" onClick={() => setShowSkillsEdit(true)} className="hover:bg-white/50 text-charcoal-500">
+                     <Pencil className="h-3.5 w-3.5 mr-1.5" /> Manage
+                  </Button>
+               </div>
+               <div className="p-6 bg-white/30">
+                  {skills.length > 0 ? (
+                     <div className="flex flex-wrap gap-2">
+                        {skills.map(skill => (
+                           <div key={skill.id} className="glass-button px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-medium text-charcoal-700">
+                              {skill.skillName}
+                              {skill.isPrimary && <Star className="w-3 h-3 text-gold-500 fill-gold-500" />}
+                              {skill.yearsExperience && <span className="text-xs text-charcoal-400 border-l border-charcoal-200 pl-2 ml-1">{skill.yearsExperience}y</span>}
+                           </div>
+                        ))}
+                     </div>
+                  ) : (
+                     <EmptyState icon={FileText} label="No skills added" />
+                  )}
+               </div>
+            </div>
+
+         </div>
+
+         {/* Right Column - 4 cols */}
+         <div className="col-span-4 space-y-6">
+            
+            {/* Active Submissions - Glass Panel */}
+            <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={{ animationDelay: '100ms' }}>
+               <div className="px-5 py-4 border-b border-white/20 bg-white/40 flex justify-between items-center">
+                  <h3 className="text-xs font-bold text-charcoal-900 uppercase tracking-wider">Active Submissions</h3>
+                  <Badge variant="secondary" className="bg-forest-50 text-forest-700 border-forest-100">{stats.activeSubmissions}</Badge>
+               </div>
+               <div className="p-2">
+                  {activeSubmissions.length > 0 ? activeSubmissions.map(sub => {
+                     const stage = PIPELINE_STAGES.find(s => s.id === getStageFromStatus(sub.status))
+                     return (
+                        <div key={sub.id} className="p-3 hover:bg-white/50 rounded-lg transition-colors group cursor-pointer border border-transparent hover:border-white/40">
+                           <div className="font-semibold text-charcoal-900 text-sm truncate">{sub.job?.title || 'Unknown Job'}</div>
+                           <div className="text-xs text-charcoal-500 truncate mb-2">{sub.account?.name}</div>
+                           <div className="flex justify-between items-center">
+                              {stage && (
+                                 <Badge className={cn('text-[10px] px-1.5 py-0', stage.bgColor, stage.textColor)}>
+                                    {stage.label}
+                                 </Badge>
+                              )}
+                              <span className="text-[10px] text-charcoal-400">{formatDistanceToNow(new Date(sub.submittedAt || Date.now()), { addSuffix: true })}</span>
+                           </div>
+                        </div>
+                     )
+                  }) : (
+                     <div className="p-8 text-center">
+                        <Send className="w-8 h-8 text-charcoal-200 mx-auto mb-2" />
+                        <p className="text-xs text-charcoal-400">No active submissions</p>
+                     </div>
+                  )}
+               </div>
+            </div>
+
+            {/* Employment Preferences */}
+            <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={{ animationDelay: '200ms' }}>
+               <div className="px-5 py-4 border-b border-white/20 bg-white/40">
+                  <h3 className="text-xs font-bold text-charcoal-900 uppercase tracking-wider">Preferences</h3>
+               </div>
+               <div className="p-5 space-y-4 bg-white/30">
+                  <div>
+                     <div className="text-[10px] font-bold text-charcoal-400 uppercase tracking-wider mb-2">Employment Types</div>
+                     <div className="flex flex-wrap gap-1.5">
+                        {candidate.employmentTypes?.map(type => (
+                           <Badge key={type} variant="outline" className="bg-white/50 text-charcoal-600 border-charcoal-200">{EMPLOYMENT_TYPE_LABELS[type] || type}</Badge>
+                        ))}
+                     </div>
                   </div>
-                )
-              })}
+                  <div>
+                     <div className="text-[10px] font-bold text-charcoal-400 uppercase tracking-wider mb-2">Work Mode</div>
+                     <div className="flex flex-wrap gap-1.5">
+                        {candidate.workModes?.map(mode => (
+                           <Badge key={mode} variant="outline" className="bg-white/50 text-charcoal-600 border-charcoal-200 capitalize">{mode.replace('_', ' ')}</Badge>
+                        ))}
+                     </div>
+                  </div>
+               </div>
             </div>
-          ) : (
-            <div className="text-center py-8 text-charcoal-500">
-              <Send className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p>No active submissions</p>
-              <Button variant="outline" size="sm" className="mt-2" onClick={() => onNavigate('submissions')}>
-                Submissions Tab
-              </Button>
+
+            {/* Education & Certs */}
+            <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={{ animationDelay: '300ms' }}>
+               <div className="px-5 py-4 border-b border-white/20 bg-white/40">
+                  <h3 className="text-xs font-bold text-charcoal-900 uppercase tracking-wider">Education</h3>
+               </div>
+               <div className="p-5 bg-white/30 space-y-4">
+                  {recentEducation.map(edu => (
+                     <div key={edu.id}>
+                        <div className="font-semibold text-charcoal-900 text-sm">{edu.institutionName}</div>
+                        <div className="text-xs text-charcoal-600">{edu.degreeDisplay || edu.degreeName}</div>
+                        <div className="text-[10px] text-charcoal-400 mt-0.5">{formatDateRange(edu.startDate, edu.endDate, edu.isCurrent)}</div>
+                     </div>
+                  ))}
+                  {recentEducation.length === 0 && <div className="text-xs text-charcoal-400 italic">No education listed</div>}
+               </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+
+         </div>
+      </div>
     </div>
   )
 }
@@ -721,67 +427,39 @@ function formatVisaStatus(status: string | null): string | null {
   return labels[status] || status
 }
 
-// Stat Card Component
-function StatCard({
-  label,
-  value,
-  subtitle,
-  icon,
-}: {
-  label: string
-  value: string
-  subtitle?: string
-  icon: React.ReactNode
-}) {
-  return (
-    <Card>
-      <CardContent className="pt-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-charcoal-100 rounded-lg text-charcoal-600">
-            {icon}
-          </div>
-          <div>
-            <div className="text-2xl font-semibold text-charcoal-900">{value}</div>
-            <div className="text-sm text-charcoal-500">{label}</div>
-            {subtitle && (
-              <div className="text-xs text-charcoal-400">{subtitle}</div>
+function DetailRow({ label, value, icon, href, copyable }: { label: string, value: string | null | undefined, icon?: React.ReactNode, href?: string, copyable?: boolean }) {
+   return (
+      <div className="group">
+         <div className="text-[10px] font-bold text-charcoal-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            {icon && <span className="text-charcoal-300">{icon}</span>}
+            {label}
+         </div>
+         <div className="text-sm font-medium text-charcoal-900 break-words">
+            {href ? (
+               <a href={href} target="_blank" rel="noopener noreferrer" className="text-forest-600 hover:text-forest-700 hover:underline">{value}</a>
+            ) : (
+               value || <span className="text-charcoal-300">-</span>
             )}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
+         </div>
+      </div>
+   )
 }
 
-// Detail Row Component
-function DetailRow({
-  label,
-  value,
-  icon,
-  href,
-}: {
-  label: string
-  value: string | null | undefined
-  icon?: React.ReactNode
-  href?: string
-}) {
-  return (
-    <div>
-      <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-1">
-        {label}
+function EmptyState({ icon: Icon, label }: { icon: any, label: string }) {
+   return (
+      <div className="flex flex-col items-center justify-center py-8 text-charcoal-400 border border-dashed border-charcoal-200 rounded-xl bg-white/20">
+         <Icon className="w-8 h-8 mb-2 opacity-30" />
+         <p className="text-xs font-medium">{label}</p>
       </div>
-      <div className="text-sm text-charcoal-900 flex items-center gap-2">
-        {icon}
-        {href && value ? (
-          <a href={href} target="_blank" rel="noopener noreferrer" className="text-gold-600 hover:text-gold-700 hover:underline">
-            {value}
-          </a>
-        ) : (
-          value || <span className="text-charcoal-400">-</span>
-        )}
-      </div>
-    </div>
-  )
+   )
+}
+
+function UserIcon(props: any) {
+   return (
+      <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+         <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1 .437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
+      </svg>
+   )
 }
 
 export default CandidateSummarySection

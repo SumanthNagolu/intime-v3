@@ -165,6 +165,9 @@ const config: Config = {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'gradient-mesh': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
 				'glass-gradient': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+				'aurora-green': 'radial-gradient(at 0% 0%, rgba(13, 76, 59, 0.15) 0px, transparent 50%)',
+				'aurora-gold': 'radial-gradient(at 100% 0%, rgba(212, 175, 55, 0.15) 0px, transparent 50%)',
+				'mesh-cinematic': 'radial-gradient(at 0% 0%, rgba(13, 76, 59, 0.2) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(201, 169, 97, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(13, 76, 59, 0.05) 0px, transparent 50%)',
 			},
 			backdropBlur: {
 				'xs': '2px',
@@ -224,6 +227,14 @@ const config: Config = {
 				glow: {
 					'0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(201, 169, 97, 0.5)' },
 					'50%': { opacity: '0.8', boxShadow: '0 0 30px rgba(201, 169, 97, 0.8)' },
+				},
+				float: {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				'pulse-glow': {
+					'0%, 100%': { opacity: '1', transform: 'scale(1)' },
+					'50%': { opacity: '0.8', transform: 'scale(1.05)' },
 				},
 			},
 			fontFamily: {

@@ -7,8 +7,8 @@
  * Connected to real data via tRPC.
  */
 
-import { useState, useMemo, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useMemo, useEffect, useCallback, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   AlertTriangle,
   Briefcase,
@@ -578,8 +578,11 @@ function SubmitCandidateModal({
 // Main Component
 // ============================================
 
-export default function JobsPage() {
+function JobsPageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const initialId = searchParams.get('id')
+
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<V4Job['status'] | 'all'>('all')
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -592,6 +595,18 @@ export default function JobsPage() {
     status: statusFilter === 'all' ? undefined : statusFilter,
     limit: 100,
   })
+
+  // Initialize selection from URL
+  useEffect(() => {
+    if (initialId && jobs.length > 0) {
+      const job = jobs.find(j => j.id === initialId)
+      if (job) {
+        setSelectedId(initialId)
+        const index = jobs.findIndex(j => j.id === initialId)
+        if (index !== -1) setSelectedIndex(index)
+      }
+    }
+  }, [initialId, jobs])
 
   // Mutations
   const { updateJobStatus, isUpdating } = useV4JobMutations()
@@ -825,6 +840,14 @@ export default function JobsPage() {
                   onSelect={() => {
                     setSelectedId(job.id === selectedId ? null : job.id)
                     setSelectedIndex(index)
+                    // Update URL
+                    const newUrl = new URL(window.location.href)
+                    if (job.id !== selectedId) {
+                      newUrl.searchParams.set('id', job.id)
+                    } else {
+                      newUrl.searchParams.delete('id')
+                    }
+                    window.history.pushState({}, '', newUrl.toString())
                   }}
                 />
               ))}
@@ -855,6 +878,9 @@ export default function JobsPage() {
             onClose={() => {
               setSelectedId(null)
               setSelectedIndex(-1)
+              const newUrl = new URL(window.location.href)
+              newUrl.searchParams.delete('id')
+              window.history.pushState({}, '', newUrl.toString())
             }}
             onSubmitCandidate={() => setShowSubmitModal(true)}
             onPublish={handlePublishJob}
@@ -885,5 +911,21 @@ export default function JobsPage() {
         />
       )}
     </div>
+  )
+}
+
+// Wrap in Suspense for useSearchParams
+export default function JobsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex h-full items-center justify-center bg-neutral-950">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+          <p className="text-neutral-400">Loading jobs...</p>
+        </div>
+      </div>
+    }>
+      <JobsPageContent />
+    </Suspense>
   )
 }

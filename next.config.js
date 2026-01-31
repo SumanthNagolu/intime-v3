@@ -21,6 +21,9 @@ const nextConfig = {
 
   // Exclude problematic packages from server bundling
   serverExternalPackages: ['@supabase/supabase-js', '@supabase/realtime-js', '@supabase/ssr'],
+  
+  // Transpile packages that use modern ESM
+  transpilePackages: ['@react-pdf/renderer'],
 
   experimental: {
     // Enable server components by default

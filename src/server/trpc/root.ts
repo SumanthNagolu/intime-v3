@@ -93,6 +93,7 @@ import { sprintsRouter } from '../routers/sprints'
 import { sprintItemsRouter } from '../routers/sprint-items'
 import { boardRouter } from '../routers/board'
 import { retrospectivesRouter } from '../routers/retrospectives'
+import { searchRouter } from '../routers/search'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -190,6 +191,7 @@ export const appRouter = router({
   sprintItems: sprintItemsRouter,
   board: boardRouter,
   retrospectives: retrospectivesRouter,
+  search: searchRouter,
 })
 
 export type AppRouter = typeof appRouter

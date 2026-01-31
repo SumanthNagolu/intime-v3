@@ -1,0 +1,703 @@
+/**
+ * Ashby/Jira Style Design System
+ *
+ * Light mode, data-dense, enterprise-grade recruiting platform.
+ * Inspired by Ashby ATS, Jira, and Notion.
+ */
+
+/* ============================================
+   CSS Variables - Light Theme
+   ============================================ */
+
+:root {
+  /* Background colors */
+  --ashby-bg: #ffffff;
+  --ashby-bg-secondary: #f7f8fa;
+  --ashby-bg-tertiary: #f0f1f3;
+  --ashby-bg-hover: #f0f1f3;
+  --ashby-bg-active: #e8e9eb;
+  --ashby-bg-selected: #e7f0ff;
+
+  /* Border colors */
+  --ashby-border: #e1e4e8;
+  --ashby-border-strong: #d0d4d9;
+  --ashby-border-subtle: #ebeef1;
+
+  /* Text colors */
+  --ashby-text-primary: #1a1a1a;
+  --ashby-text-secondary: #5c5c5c;
+  --ashby-text-muted: #8c8c8c;
+  --ashby-text-placeholder: #b3b3b3;
+
+  /* Brand/Accent colors */
+  --ashby-accent: #0052cc;
+  --ashby-accent-hover: #0747a6;
+  --ashby-accent-light: #e7f0ff;
+  --ashby-accent-text: #0052cc;
+
+  /* Status colors */
+  --ashby-success: #36b37e;
+  --ashby-success-bg: #e3fcef;
+  --ashby-warning: #ffab00;
+  --ashby-warning-bg: #fffae6;
+  --ashby-error: #de350b;
+  --ashby-error-bg: #ffebe6;
+  --ashby-info: #0065ff;
+  --ashby-info-bg: #e7f0ff;
+
+  /* Pipeline stage colors (Ashby-style) */
+  --ashby-stage-new: #6554c0;
+  --ashby-stage-screening: #0065ff;
+  --ashby-stage-interview: #00b8d9;
+  --ashby-stage-offer: #36b37e;
+  --ashby-stage-hired: #00875a;
+  --ashby-stage-rejected: #de350b;
+
+  /* Shadows */
+  --ashby-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ashby-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --ashby-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* Spacing */
+  --ashby-sidebar-width: 240px;
+  --ashby-sidebar-collapsed: 56px;
+  --ashby-header-height: 56px;
+
+  /* Typography */
+  --ashby-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --ashby-font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+.ashby-app {
+  font-family: var(--ashby-font-sans);
+  background: var(--ashby-bg-secondary);
+  color: var(--ashby-text-primary);
+  min-height: 100vh;
+}
+
+/* ============================================
+   Sidebar
+   ============================================ */
+
+.ashby-sidebar {
+  width: var(--ashby-sidebar-width);
+  background: var(--ashby-bg);
+  border-right: 1px solid var(--ashby-border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  transition: width 0.2s ease;
+}
+
+.ashby-sidebar.collapsed {
+  width: var(--ashby-sidebar-collapsed);
+}
+
+.ashby-sidebar-header {
+  height: var(--ashby-header-height);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ashby-border-subtle);
+}
+
+.ashby-sidebar-logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ashby-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ashby-sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.ashby-nav-section {
+  margin-bottom: 16px;
+}
+
+.ashby-nav-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ashby-text-muted);
+  padding: 8px 12px 4px;
+}
+
+.ashby-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--ashby-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.ashby-nav-item:hover {
+  background: var(--ashby-bg-hover);
+  color: var(--ashby-text-primary);
+}
+
+.ashby-nav-item.active {
+  background: var(--ashby-bg-selected);
+  color: var(--ashby-accent);
+  font-weight: 500;
+}
+
+.ashby-nav-item .icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.ashby-nav-item .count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--ashby-text-muted);
+  background: var(--ashby-bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+/* ============================================
+   Main Content Area
+   ============================================ */
+
+.ashby-main {
+  margin-left: var(--ashby-sidebar-width);
+  min-height: 100vh;
+  background: var(--ashby-bg-secondary);
+  transition: margin-left 0.2s ease;
+}
+
+.ashby-sidebar.collapsed + .ashby-main {
+  margin-left: var(--ashby-sidebar-collapsed);
+}
+
+/* ============================================
+   Page Header
+   ============================================ */
+
+.ashby-page-header {
+  background: var(--ashby-bg);
+  border-bottom: 1px solid var(--ashby-border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ashby-page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ashby-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ashby-page-title .count {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ashby-text-muted);
+}
+
+.ashby-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
+   Tabs
+   ============================================ */
+
+.ashby-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 24px;
+  background: var(--ashby-bg);
+  border-bottom: 1px solid var(--ashby-border);
+}
+
+.ashby-tab {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ashby-text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s ease;
+}
+
+.ashby-tab:hover {
+  color: var(--ashby-text-primary);
+}
+
+.ashby-tab.active {
+  color: var(--ashby-accent);
+  border-bottom-color: var(--ashby-accent);
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+
+.ashby-card {
+  background: var(--ashby-bg);
+  border: 1px solid var(--ashby-border);
+  border-radius: 8px;
+  box-shadow: var(--ashby-shadow-sm);
+}
+
+.ashby-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ashby-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ashby-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ashby-text-primary);
+}
+
+.ashby-card-body {
+  padding: 20px;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.ashby-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  outline: none;
+}
+
+.ashby-btn-primary {
+  background: var(--ashby-accent);
+  color: white;
+}
+
+.ashby-btn-primary:hover {
+  background: var(--ashby-accent-hover);
+}
+
+.ashby-btn-secondary {
+  background: var(--ashby-bg);
+  color: var(--ashby-text-primary);
+  border: 1px solid var(--ashby-border);
+}
+
+.ashby-btn-secondary:hover {
+  background: var(--ashby-bg-hover);
+  border-color: var(--ashby-border-strong);
+}
+
+.ashby-btn-ghost {
+  background: transparent;
+  color: var(--ashby-text-secondary);
+}
+
+.ashby-btn-ghost:hover {
+  background: var(--ashby-bg-hover);
+  color: var(--ashby-text-primary);
+}
+
+.ashby-btn-sm {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* ============================================
+   Table
+   ============================================ */
+
+.ashby-table-container {
+  background: var(--ashby-bg);
+  border: 1px solid var(--ashby-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ashby-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.ashby-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ashby-text-muted);
+  background: var(--ashby-bg-secondary);
+  border-bottom: 1px solid var(--ashby-border);
+}
+
+.ashby-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--ashby-border-subtle);
+  color: var(--ashby-text-primary);
+}
+
+.ashby-table tr:hover {
+  background: var(--ashby-bg-hover);
+}
+
+.ashby-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ashby-table tr.selected {
+  background: var(--ashby-bg-selected);
+}
+
+/* ============================================
+   Kanban Board
+   ============================================ */
+
+.ashby-kanban {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  overflow-x: auto;
+  min-height: calc(100vh - 180px);
+}
+
+.ashby-kanban-column {
+  flex: 0 0 280px;
+  background: var(--ashby-bg-secondary);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 200px);
+}
+
+.ashby-kanban-column-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ashby-border);
+  background: var(--ashby-bg);
+  border-radius: 8px 8px 0 0;
+}
+
+.ashby-kanban-column-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ashby-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ashby-kanban-column-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ashby-text-muted);
+  background: var(--ashby-bg-tertiary);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.ashby-kanban-column-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ashby-kanban-card {
+  background: var(--ashby-bg);
+  border: 1px solid var(--ashby-border);
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--ashby-shadow-sm);
+}
+
+.ashby-kanban-card:hover {
+  box-shadow: var(--ashby-shadow-md);
+  border-color: var(--ashby-border-strong);
+}
+
+.ashby-kanban-card-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ashby-text-primary);
+  margin-bottom: 4px;
+}
+
+.ashby-kanban-card-subtitle {
+  font-size: 13px;
+  color: var(--ashby-text-secondary);
+  margin-bottom: 8px;
+}
+
+.ashby-kanban-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ashby-text-muted);
+}
+
+/* ============================================
+   Badges
+   ============================================ */
+
+.ashby-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.ashby-badge-default {
+  background: var(--ashby-bg-tertiary);
+  color: var(--ashby-text-secondary);
+}
+
+.ashby-badge-success {
+  background: var(--ashby-success-bg);
+  color: var(--ashby-success);
+}
+
+.ashby-badge-warning {
+  background: var(--ashby-warning-bg);
+  color: #946f00;
+}
+
+.ashby-badge-error {
+  background: var(--ashby-error-bg);
+  color: var(--ashby-error);
+}
+
+.ashby-badge-info {
+  background: var(--ashby-info-bg);
+  color: var(--ashby-info);
+}
+
+/* ============================================
+   Search Input
+   ============================================ */
+
+.ashby-search {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.ashby-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  font-size: 14px;
+  border: 1px solid var(--ashby-border);
+  border-radius: 6px;
+  background: var(--ashby-bg);
+  color: var(--ashby-text-primary);
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.ashby-search-input:focus {
+  border-color: var(--ashby-accent);
+  box-shadow: 0 0 0 3px var(--ashby-accent-light);
+}
+
+.ashby-search-input::placeholder {
+  color: var(--ashby-text-placeholder);
+}
+
+.ashby-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--ashby-text-muted);
+}
+
+/* ============================================
+   Filter Pills
+   ============================================ */
+
+.ashby-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ashby-filter-pill {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ashby-text-secondary);
+  background: var(--ashby-bg);
+  border: 1px solid var(--ashby-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ashby-filter-pill:hover {
+  border-color: var(--ashby-border-strong);
+  background: var(--ashby-bg-hover);
+}
+
+.ashby-filter-pill.active {
+  background: var(--ashby-accent-light);
+  color: var(--ashby-accent);
+  border-color: var(--ashby-accent);
+}
+
+/* ============================================
+   Avatar
+   ============================================ */
+
+.ashby-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ashby-bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ashby-text-secondary);
+}
+
+.ashby-avatar-sm {
+  width: 24px;
+  height: 24px;
+  font-size: 11px;
+}
+
+.ashby-avatar-lg {
+  width: 40px;
+  height: 40px;
+  font-size: 15px;
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+
+.ashby-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.ashby-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--ashby-text-muted);
+  margin-bottom: 16px;
+}
+
+.ashby-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ashby-text-primary);
+  margin-bottom: 4px;
+}
+
+.ashby-empty-description {
+  font-size: 14px;
+  color: var(--ashby-text-secondary);
+}
+
+/* ============================================
+   Loading Spinner
+   ============================================ */
+
+.ashby-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--ashby-border);
+  border-top-color: var(--ashby-accent);
+  border-radius: 50%;
+  animation: ashby-spin 0.6s linear infinite;
+}
+
+@keyframes ashby-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 768px) {
+  .ashby-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .ashby-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .ashby-main {
+    margin-left: 0;
+  }
+
+  .ashby-kanban {
+    padding: 16px;
+  }
+
+  .ashby-kanban-column {
+    flex: 0 0 260px;
+  }
+}

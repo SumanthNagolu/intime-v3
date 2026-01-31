@@ -305,6 +305,19 @@
     box-shadow: 2px 2px 0px 0px rgba(10, 58, 42, 0.8);
   }
 
+  /* Cinematic Glass - The new standard */
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl shadow-forest-900/5;
+  }
+
+  .glass-button {
+    @apply bg-white/50 backdrop-blur-md border border-white/60 shadow-sm hover:bg-white/80 transition-all duration-300;
+  }
+  
+  .glass-button-primary {
+    @apply bg-forest-500/90 text-white backdrop-blur-md shadow-lg shadow-forest-900/20 hover:bg-forest-600 transition-all duration-300;
+  }
+
   /* Premium Gradient Text - Brand Colors */
   .gradient-text-forest {
     background: linear-gradient(135deg, #0D4C3B 0%, #0A3A2A 100%);

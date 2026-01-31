@@ -7,8 +7,8 @@
  * Connected to real tRPC data with full keyboard navigation.
  */
 
-import { useState, useMemo, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useMemo, useEffect, useCallback, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   AlertTriangle,
   Briefcase,
@@ -281,6 +281,15 @@ function CandidateDetailPanel({
   onClose: () => void
   onSubmitToJob: () => void
 }) {
+  const router = useRouter()
+  
+  const handleClose = () => {
+    onClose()
+    // Clear ID param from URL without refreshing
+    const newUrl = new URL(window.location.href)
+    newUrl.searchParams.delete('id')
+    window.history.pushState({}, '', newUrl.toString())
+  }
   const initials = `${candidate.firstName?.[0] || '?'}${candidate.lastName?.[0] || ''}`
   const hasResume = !!candidate.resumeUrl
 
@@ -321,7 +330,7 @@ function CandidateDetailPanel({
             </div>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-1.5 rounded-md hover:bg-neutral-800 transition-colors"
           >
             <X className="w-5 h-5 text-neutral-400" />
@@ -535,8 +544,11 @@ function CandidateDetailPanel({
 // Main Component
 // ============================================
 
-export default function CandidatesPage() {
+function CandidatesPageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const initialId = searchParams.get('id')
+  
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -547,6 +559,16 @@ export default function CandidatesPage() {
     search: searchQuery || undefined,
     status: statusFilter !== 'all' ? statusFilter : undefined,
   })
+
+  // Initialize selection from URL
+  useEffect(() => {
+    if (initialId && candidates.length > 0) {
+      const index = candidates.findIndex(c => c.id === initialId)
+      if (index !== -1) {
+        setSelectedIndex(index)
+      }
+    }
+  }, [initialId, candidates])
 
   const { createSubmission } = useV4SubmissionMutations()
 
@@ -735,7 +757,13 @@ export default function CandidatesPage() {
                   key={candidate.id}
                   candidate={candidate}
                   isSelected={index === selectedIndex}
-                  onSelect={() => setSelectedIndex(index)}
+                  onSelect={() => {
+                    setSelectedIndex(index)
+                    // Update URL
+                    const newUrl = new URL(window.location.href)
+                    newUrl.searchParams.set('id', candidate.id)
+                    window.history.pushState({}, '', newUrl.toString())
+                  }}
                 />
               ))}
             </div>
@@ -774,5 +802,18 @@ export default function CandidatesPage() {
         </div>
       )}
     </div>
+  )
+}
+
+// Wrap in Suspense for useSearchParams
+export default function CandidatesPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-full bg-neutral-950">
+        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+      </div>
+    }>
+      <CandidatesPageContent />
+    </Suspense>
   )
 }

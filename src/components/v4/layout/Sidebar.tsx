@@ -24,6 +24,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCommandPalette } from '../command/CommandPalette'
+import { NotificationBell } from './NotificationBell'
 
 // ============================================
 // Types
@@ -242,17 +243,20 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
             InTime
           </span>
         )}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="ml-auto p-1.5 rounded text-[var(--linear-text-muted)] hover:text-[var(--linear-text-primary)] hover:bg-[var(--linear-surface-hover)] transition-colors"
-        >
-          <ChevronRight
-            className={cn(
-              'w-4 h-4 transition-transform',
-              collapsed && 'rotate-180'
-            )}
-          />
-        </button>
+        <div className="ml-auto flex items-center gap-1">
+          <NotificationBell />
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="p-1.5 rounded text-[var(--linear-text-muted)] hover:text-[var(--linear-text-primary)] hover:bg-[var(--linear-surface-hover)] transition-colors"
+          >
+            <ChevronRight
+              className={cn(
+                'w-4 h-4 transition-transform',
+                collapsed && 'rotate-180'
+              )}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Search trigger */}

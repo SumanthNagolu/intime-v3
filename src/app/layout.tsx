@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { CommandPaletteProvider } from '@/components/navigation/CommandPaletteProvider';
+import { CommandPaletteProvider } from '@/components/v4/command/CommandPalette';
 import { TRPCProvider } from '@/lib/trpc/Provider';
 
 export const metadata: Metadata = {

@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button'
 import {
   Users, Briefcase, Award, Activity, ArrowRight,
   UserCircle, Calendar, TrendingUp, Clock, Gauge,
-  Building2, BarChart3, CheckCircle2, UserCheck
+  Building2, BarChart3, CheckCircle2, UserCheck,
+  LayoutGrid, List as ListIcon
 } from 'lucide-react'
 import type {
   TeamEntityData,
@@ -18,6 +19,7 @@ import type {
 } from '@/types/workspace'
 import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
+import { KanbanBoard } from '../board/KanbanBoard'
 
 interface TeamOverviewSectionProps {
   team: TeamEntityData
@@ -30,8 +32,8 @@ interface TeamOverviewSectionProps {
 }
 
 /**
- * TeamOverviewSection - Premium SaaS-level Summary view
- * Features: KPI cards, team stats, member overview, activity feed
+ * TeamOverviewSection - Cinematic Enterprise Redesign
+ * Features: Glassmorphism, Mesh Gradients, Kanban Integration
  */
 export function TeamOverviewSection({
   team,
@@ -42,6 +44,7 @@ export function TeamOverviewSection({
   metrics,
   onNavigate,
 }: TeamOverviewSectionProps) {
+  const [viewMode, setViewMode] = React.useState<'list' | 'board'>('board')
   const activeMembers = members.filter(m => m.isActive)
   const recentActivities = activities.slice(0, 5)
   const topJobs = jobs.filter(j => j.status === 'open' || j.status === 'active').slice(0, 5)
@@ -51,486 +54,316 @@ export function TeamOverviewSection({
   const getDelay = (index: number) => ({ animationDelay: `${index * 75}ms` })
 
   return (
-    <div className="space-y-6">
-      {/* Premium KPI Grid - Clean monochromatic design */}
-      <div className="grid grid-cols-4 gap-4">
-        {/* Team Size */}
-        <div
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in cursor-pointer"
-          style={getDelay(0)}
-          onClick={() => onNavigate('members')}
-        >
-          <div className="flex items-start justify-between">
-            <div className="space-y-2">
-              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Team Size</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
-                  {metrics.activeMembers}
-                </span>
-                <span className="text-sm text-charcoal-400">members</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal-600">
-                  {metrics.membersOnVacation > 0 && (
-                    <>
-                      <span className="w-2 h-2 rounded-full bg-amber-500" />
-                      {metrics.membersOnVacation} on leave
-                    </>
-                  )}
-                  {metrics.membersOnVacation === 0 && (
-                    <>
-                      <span className="w-2 h-2 rounded-full bg-success-500" />
-                      All available
-                    </>
-                  )}
-                </span>
-              </div>
+    <div className="space-y-8 animate-fade-in">
+      {/* Hero Header - Cinematic Mesh Gradient */}
+      <div className="relative overflow-hidden rounded-3xl bg-mesh-cinematic p-8 shadow-premium-lg group">
+        <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-50 pointer-events-none" />
+        
+        <div className="relative z-10 flex items-start justify-between">
+          <div className="space-y-4 max-w-2xl">
+            <div className="flex items-center gap-3 animate-slide-up" style={getDelay(0)}>
+              <Badge variant="outline" className="bg-white/30 backdrop-blur-md border-white/40 text-charcoal-900 font-medium px-3 py-1">
+                {team.code || 'TEAM'}
+              </Badge>
+              <span className="text-sm font-medium text-charcoal-600 uppercase tracking-widest">
+                Overview
+              </span>
             </div>
-            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
-              <Users className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
-            </div>
-          </div>
-          <ArrowRight className="absolute bottom-4 right-4 h-4 w-4 text-charcoal-300 opacity-0 transform translate-x-2 group-hover:opacity-50 group-hover:translate-x-0 transition-all duration-300" />
-        </div>
+            
+            <h1 className="text-display font-bold text-charcoal-900 tracking-tight leading-tight animate-slide-up" style={getDelay(1)}>
+              {team.name}
+              <span className="text-forest-600/60 block text-2xl mt-1 font-light tracking-normal">
+                {team.description || 'Managing recruitment pipeline & operations'}
+              </span>
+            </h1>
 
-        {/* Open Jobs */}
-        <div
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in cursor-pointer"
-          style={getDelay(1)}
-          onClick={() => onNavigate('jobs')}
-        >
-          <div className="flex items-start justify-between">
-            <div className="space-y-2">
-              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Open Jobs</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
-                  {metrics.openJobs}
-                </span>
+            <div className="flex items-center gap-6 pt-2 animate-slide-up" style={getDelay(2)}>
+              <div className="flex -space-x-3">
+                {activeMembers.slice(0, 5).map((m, i) => (
+                  <div key={m.id} className="w-10 h-10 rounded-full border-2 border-white bg-charcoal-100 flex items-center justify-center overflow-hidden shadow-sm hover:scale-110 transition-transform duration-300 z-10">
+                    {m.avatarUrl ? (
+                      <img src={m.avatarUrl} alt={m.fullName} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xs font-medium text-charcoal-600">{m.fullName.charAt(0)}</span>
+                    )}
+                  </div>
+                ))}
+                {activeMembers.length > 5 && (
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-charcoal-50 flex items-center justify-center shadow-sm z-0">
+                    <span className="text-xs font-bold text-charcoal-600">+{activeMembers.length - 5}</span>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal-600">
-                  <span className="w-2 h-2 rounded-full bg-charcoal-400" />
-                  {metrics.activeSubmissions} active submissions
-                </span>
+              <div className="h-8 w-px bg-charcoal-900/10" />
+              <div className="flex gap-4">
+                 <div className="space-y-0.5">
+                    <p className="text-xs font-bold text-charcoal-500 uppercase tracking-wider">Manager</p>
+                    <p className="text-sm font-semibold text-charcoal-900">{team.manager?.fullName || 'Unassigned'}</p>
+                 </div>
               </div>
-            </div>
-            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
-              <Briefcase className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
             </div>
           </div>
-          <ArrowRight className="absolute bottom-4 right-4 h-4 w-4 text-charcoal-300 opacity-0 transform translate-x-2 group-hover:opacity-50 group-hover:translate-x-0 transition-all duration-300" />
-        </div>
 
-        {/* Active Placements */}
-        <div
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in"
-          style={getDelay(2)}
-        >
-          <div className="flex items-start justify-between">
-            <div className="space-y-2">
-              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Active Placements</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
-                  {metrics.activePlacements}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-success-600">
-                  <TrendingUp className="w-3 h-3" />
-                  {metrics.placementsMTD} MTD
-                </span>
-              </div>
-            </div>
-            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
-              <Award className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
-            </div>
+          {/* Key KPI - Glass Float */}
+          <div className="hidden lg:block animate-float">
+             <div className="glass-panel p-6 rounded-2xl w-64 backdrop-blur-xl bg-white/40">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold text-charcoal-500 uppercase tracking-wider">Team Velocity</span>
+                  <TrendingUp className="h-4 w-4 text-forest-600" />
+                </div>
+                <div className="flex items-baseline gap-2">
+                   <span className="text-4xl font-bold text-charcoal-900">{metrics.placementsMTD}</span>
+                   <span className="text-sm font-medium text-forest-600">Placements</span>
+                </div>
+                <div className="mt-2 text-xs text-charcoal-600 flex items-center gap-1">
+                   <div className="w-full bg-charcoal-200/50 rounded-full h-1.5 overflow-hidden">
+                      <div className="bg-gradient-to-r from-forest-500 to-emerald-400 h-full w-[70%]" />
+                   </div>
+                   <span>70% to goal</span>
+                </div>
+             </div>
           </div>
-        </div>
-
-        {/* Workload */}
-        <div
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in cursor-pointer"
-          style={getDelay(3)}
-          onClick={() => onNavigate('workload')}
-        >
-          <div className="flex items-start justify-between">
-            <div className="space-y-2">
-              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Avg Load Factor</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
-                  {metrics.avgLoadFactor}%
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className={cn(
-                  "inline-flex items-center gap-1.5 text-xs font-medium",
-                  metrics.avgLoadFactor > 80 ? "text-error-600" :
-                    metrics.avgLoadFactor > 60 ? "text-amber-600" : "text-charcoal-600"
-                )}>
-                  <span className={cn(
-                    "w-2 h-2 rounded-full",
-                    metrics.avgLoadFactor > 80 ? "bg-error-500" :
-                      metrics.avgLoadFactor > 60 ? "bg-amber-500" : "bg-charcoal-400"
-                  )} />
-                  {metrics.avgLoadFactor > 80 ? "High load" :
-                    metrics.avgLoadFactor > 60 ? "Moderate" : "Available capacity"}
-                </span>
-              </div>
-            </div>
-            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
-              <Gauge className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
-            </div>
-          </div>
-          <ArrowRight className="absolute bottom-4 right-4 h-4 w-4 text-charcoal-300 opacity-0 transform translate-x-2 group-hover:opacity-50 group-hover:translate-x-0 transition-all duration-300" />
         </div>
       </div>
 
+      {/* KPI Grid - Glass Cards */}
+      <div className="grid grid-cols-4 gap-6">
+        <KPICard
+          title="Open Jobs"
+          value={metrics.openJobs}
+          subValue={`${metrics.activeSubmissions} active subs`}
+          icon={Briefcase}
+          trend="up"
+          onClick={() => onNavigate('jobs')}
+          delay={0}
+        />
+        <KPICard
+          title="Active Placements"
+          value={metrics.activePlacements}
+          subValue="Revenue Generating"
+          icon={Award}
+          trend="neutral"
+          delay={1}
+        />
+        <KPICard
+          title="Avg Load Factor"
+          value={`${metrics.avgLoadFactor}%`}
+          subValue={metrics.avgLoadFactor > 80 ? "High Load" : "Optimal"}
+          icon={Gauge}
+          trend={metrics.avgLoadFactor > 80 ? "down" : "up"}
+          onClick={() => onNavigate('workload')}
+          delay={2}
+        />
+        <KPICard
+          title="Activities"
+          value={metrics.openActivities}
+          subValue="Pending Action"
+          icon={Activity}
+          trend="neutral"
+          onClick={() => onNavigate('activities')}
+          delay={3}
+        />
+      </div>
+
       {/* Main Content Grid */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-8">
         {/* Left Column - 8 cols */}
-        <div className="col-span-8 space-y-6">
-          {/* Team Details Card */}
-          <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up">
-            <div className="px-6 py-4 border-b border-charcoal-100">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
-                    <Users className="h-5 w-5 text-charcoal-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-charcoal-900">Team Details</h3>
-                    <p className="text-xs text-charcoal-500">Team information and configuration</p>
-                  </div>
+        <div className="col-span-8 space-y-8">
+          
+          {/* Activity Board Section */}
+          <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={getDelay(1)}>
+            <div className="px-6 py-5 border-b border-white/20 flex items-center justify-between bg-white/40">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-forest-50 to-white border border-white/60 shadow-sm flex items-center justify-center text-forest-600">
+                  <Activity className="h-5 w-5" />
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100"
-                  onClick={() => onNavigate('details')}
+                <div>
+                  <h3 className="font-bold text-charcoal-900 text-lg">Team Activities</h3>
+                  <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wide">
+                    {metrics.openActivities} Pending Tasks
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-center bg-charcoal-100/50 p-1 rounded-lg border border-charcoal-200/50">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={cn(
+                    "p-1.5 rounded-md transition-all duration-200",
+                    viewMode === 'list' 
+                      ? "bg-white shadow-sm text-charcoal-900" 
+                      : "text-charcoal-500 hover:text-charcoal-700"
+                  )}
                 >
-                  View Details
-                  <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                </Button>
+                  <ListIcon className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setViewMode('board')}
+                  className={cn(
+                    "p-1.5 rounded-md transition-all duration-200",
+                    viewMode === 'board' 
+                      ? "bg-white shadow-sm text-charcoal-900" 
+                      : "text-charcoal-500 hover:text-charcoal-700"
+                  )}
+                >
+                  <LayoutGrid className="h-4 w-4" />
+                </button>
               </div>
             </div>
-            <div className="p-6">
-              <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                <InfoField label="Team Name" value={team.name} icon={Users} />
-                <InfoField label="Team Code" value={team.code || '—'} />
-                <InfoField label="Type" value={team.groupType?.replace(/_/g, ' ')} className="capitalize" />
-                <InfoField label="Status" value={team.isActive ? 'Active' : 'Inactive'} />
-                {team.parentGroup && (
-                  <InfoField label="Parent Group" value={team.parentGroup.name} icon={Building2} />
-                )}
-                {team.manager && (
-                  <InfoField label="Manager" value={team.manager.fullName} icon={UserCircle} />
-                )}
-                {team.supervisor && (
-                  <InfoField label="Supervisor" value={team.supervisor.fullName} icon={UserCheck} />
-                )}
-                <InfoField label="Security Zone" value={team.securityZone || 'Default'} />
-              </div>
-              {team.description && (
-                <div className="mt-4 pt-4 border-t border-charcoal-100">
-                  <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider mb-2">Description</p>
-                  <p className="text-sm text-charcoal-700">{team.description}</p>
-                </div>
-              )}
-            </div>
-          </div>
 
-          {/* Team Managers Card */}
-          {teamManagers.length > 0 && (
-            <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(1)}>
-              <div className="px-6 py-4 border-b border-charcoal-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
-                    <UserCheck className="h-5 w-5 text-charcoal-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-charcoal-900">Team Managers</h3>
-                    <p className="text-xs text-charcoal-500">Members with management roles</p>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="space-y-3">
-                  {teamManagers.slice(0, 3).map((member) => (
-                    <div
-                      key={member.id}
-                      className="flex items-center justify-between p-3 rounded-lg bg-charcoal-50 hover:bg-charcoal-100 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-charcoal-200 flex items-center justify-center">
-                          {member.avatarUrl ? (
-                            <img src={member.avatarUrl} alt={member.fullName} className="w-10 h-10 rounded-full object-cover" />
-                          ) : (
-                            <span className="text-sm font-medium text-charcoal-600">
-                              {member.fullName?.split(' ').map(n => n[0]).join('')}
-                            </span>
-                          )}
-                        </div>
-                        <div>
-                          <p className="font-medium text-charcoal-900">{member.fullName}</p>
-                          <p className="text-xs text-charcoal-500">{member.title || 'Team Manager'}</p>
-                        </div>
-                      </div>
-                      <Badge className="bg-charcoal-100 text-charcoal-700 border-charcoal-200">
-                        Manager
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Pending Activities Card */}
-          <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(2)}>
-            <div className="px-6 py-4 border-b border-charcoal-100">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
-                    <Activity className="h-5 w-5 text-charcoal-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-charcoal-900">Pending Activities</h3>
-                    <p className="text-xs text-charcoal-500">{metrics.openActivities} open activities</p>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100"
-                  onClick={() => onNavigate('activities')}
-                >
-                  View All
-                  <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100"
-                  onClick={() => onNavigate('board')}
-                >
-                  Board View
-                  <BarChart3 className="ml-1 h-3.5 w-3.5" />
-                </Button>
-              </div>
-            </div>
-            <div className="divide-y divide-charcoal-100">
-              {recentActivities.length > 0 ? (
-                recentActivities.map((activity) => (
-                  <div key={activity.id} className="px-6 py-3 hover:bg-charcoal-50 transition-colors">
-                    <div className="flex items-start gap-3">
-                      <div className={cn(
-                        "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
-                        activity.priority === 'high' ? "bg-error-100" : "bg-charcoal-100"
-                      )}>
-                        <Activity className={cn(
-                          "h-4 w-4",
-                          activity.priority === 'high' ? "text-error-600" : "text-charcoal-500"
-                        )} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-charcoal-900 truncate">{activity.subject}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-xs text-charcoal-500">{activity.type}</span>
-                          {activity.dueDate && (
-                            <>
-                              <span className="w-1 h-1 rounded-full bg-charcoal-300" />
-                              <span className="text-xs text-charcoal-500">
-                                Due {formatDistanceToNow(new Date(activity.dueDate), { addSuffix: true })}
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <Badge
-                        className={cn(
-                          "text-xs",
-                          activity.status === 'completed' ? "bg-success-50 text-success-700" : "bg-charcoal-100 text-charcoal-600"
-                        )}
-                      >
-                        {activity.status}
-                      </Badge>
-                    </div>
-                  </div>
-                ))
+            <div className="p-6 bg-white/30 min-h-[400px]">
+              {viewMode === 'board' ? (
+                <KanbanBoard activities={activities} />
               ) : (
-                <div className="px-6 py-8 text-center">
-                  <CheckCircle2 className="h-8 w-8 text-charcoal-300 mx-auto mb-2" />
-                  <p className="text-sm text-charcoal-500">No pending activities</p>
+                <div className="space-y-2">
+                   {recentActivities.map((activity) => (
+                      <div key={activity.id} className="group flex items-center gap-4 p-4 rounded-xl bg-white/60 border border-white/40 hover:bg-white hover:shadow-elevation-sm transition-all duration-300">
+                         <div className={cn(
+                            "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110",
+                            activity.priority === 'high' ? "bg-error-50 text-error-600" : "bg-charcoal-50 text-charcoal-500"
+                         )}>
+                            {activity.priority === 'high' ? <Activity className="h-5 w-5" /> : <Clock className="h-5 w-5" />}
+                         </div>
+                         <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-charcoal-900 truncate">{activity.subject}</h4>
+                            <div className="flex items-center gap-3 mt-1">
+                               <Badge variant="secondary" className="bg-charcoal-100/50 text-charcoal-600 border-charcoal-200/50 text-[10px] uppercase tracking-wider">{activity.type}</Badge>
+                               {activity.dueDate && (
+                                  <span className="text-xs text-charcoal-500">Due {formatDistanceToNow(new Date(activity.dueDate), { addSuffix: true })}</span>
+                               )}
+                            </div>
+                         </div>
+                         <div className="text-right">
+                             <Badge className={cn(
+                                "capitalize",
+                                activity.status === 'completed' ? "bg-emerald-50 text-emerald-700 border-emerald-100" : 
+                                activity.status === 'in_progress' ? "bg-blue-50 text-blue-700 border-blue-100" :
+                                "bg-charcoal-50 text-charcoal-600 border-charcoal-100"
+                             )}>
+                                {activity.status.replace('_', ' ')}
+                             </Badge>
+                         </div>
+                      </div>
+                   ))}
+                   {recentActivities.length === 0 && (
+                      <div className="flex flex-col items-center justify-center h-64 text-charcoal-400">
+                         <CheckCircle2 className="h-12 w-12 mb-3 opacity-20" />
+                         <p className="text-sm font-medium">No pending activities</p>
+                      </div>
+                   )}
                 </div>
               )}
             </div>
+            {viewMode === 'list' && (
+               <div className="px-6 py-4 bg-white/40 border-t border-white/20 flex justify-center">
+                  <Button variant="ghost" className="text-xs font-medium text-charcoal-500 hover:text-charcoal-900" onClick={() => onNavigate('activities')}>
+                     View All Activities <ArrowRight className="ml-1 h-3 w-3" />
+                  </Button>
+               </div>
+            )}
           </div>
+
         </div>
 
         {/* Right Column - 4 cols */}
         <div className="col-span-4 space-y-6">
-          {/* Quick Stats Card */}
-          <div className="rounded-xl border border-charcoal-200/60 bg-charcoal-50 shadow-elevation-sm overflow-hidden animate-slide-up">
-            <div className="px-5 py-4 border-b border-charcoal-200/60">
-              <div className="flex items-center gap-2">
-                <BarChart3 className="h-4 w-4 text-charcoal-500" />
-                <h3 className="font-semibold text-charcoal-900 text-sm">Quick Stats</h3>
-              </div>
-            </div>
-            <div className="p-5 space-y-4">
-              <QuickStatItem
-                icon={Users}
-                label="Active Members"
-                value={metrics.activeMembers}
-                onClick={() => onNavigate('members')}
-              />
-              <QuickStatItem
-                icon={Building2}
-                label="Assigned Accounts"
-                value={accounts.length}
-                onClick={() => onNavigate('accounts')}
-              />
-              <QuickStatItem
-                icon={Briefcase}
-                label="Assigned Jobs"
-                value={jobs.length}
-                onClick={() => onNavigate('jobs')}
-              />
-              <QuickStatItem
-                icon={Activity}
-                label="Open Activities"
-                value={metrics.openActivities}
-                onClick={() => onNavigate('activities')}
-              />
-              <QuickStatItem
-                icon={Award}
-                label="Placements MTD"
-                value={metrics.placementsMTD}
-              />
+          
+          {/* Quick Stats - Glass Card */}
+          <div className="glass-panel rounded-2xl p-6 animate-slide-up" style={getDelay(2)}>
+            <h3 className="text-sm font-bold text-charcoal-900 uppercase tracking-widest mb-6 flex items-center gap-2">
+               <BarChart3 className="h-4 w-4 text-gold-500" />
+               Quick Stats
+            </h3>
+            <div className="space-y-4">
+               <QuickStatRow label="Active Members" value={metrics.activeMembers} icon={Users} onClick={() => onNavigate('members')} />
+               <QuickStatRow label="Assigned Accounts" value={accounts.length} icon={Building2} onClick={() => onNavigate('accounts')} />
+               <QuickStatRow label="Assigned Jobs" value={jobs.length} icon={Briefcase} onClick={() => onNavigate('jobs')} />
+               <QuickStatRow label="Placements MTD" value={metrics.placementsMTD} icon={Award} highlight />
             </div>
           </div>
 
-          {/* Top Jobs Card */}
-          {topJobs.length > 0 && (
-            <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(1)}>
-              <div className="px-5 py-4 border-b border-charcoal-100">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Briefcase className="h-4 w-4 text-charcoal-500" />
-                    <h3 className="font-semibold text-charcoal-900 text-sm">Active Jobs</h3>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs text-charcoal-500 hover:text-charcoal-700 h-7 px-2"
-                    onClick={() => onNavigate('jobs')}
-                  >
-                    View All
-                  </Button>
-                </div>
-              </div>
-              <div className="divide-y divide-charcoal-100">
-                {topJobs.map((job) => (
-                  <div key={job.id} className="px-5 py-3 hover:bg-charcoal-50 transition-colors">
-                    <p className="text-sm font-medium text-charcoal-900 truncate">{job.title}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      {job.accountName && (
-                        <span className="text-xs text-charcoal-500 truncate">{job.accountName}</span>
-                      )}
-                      <span className="text-xs text-charcoal-400">
-                        {job.submissionCount} submissions
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Performance Summary Card */}
-          <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(2)}>
-            <div className="px-5 py-4 border-b border-charcoal-100">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-charcoal-500" />
-                  <h3 className="font-semibold text-charcoal-900 text-sm">MTD Performance</h3>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs text-charcoal-500 hover:text-charcoal-700 h-7 px-2"
-                  onClick={() => onNavigate('performance')}
-                >
-                  Details
+          {/* Top Jobs - Glass Card */}
+          <div className="glass-panel rounded-2xl overflow-hidden animate-slide-up" style={getDelay(3)}>
+             <div className="px-6 py-4 border-b border-white/20 bg-white/40 flex justify-between items-center">
+                <h3 className="text-sm font-bold text-charcoal-900 uppercase tracking-widest">Active Jobs</h3>
+                <Button variant="ghost" size="sm" className="h-6 w-6 p-0 rounded-full" onClick={() => onNavigate('jobs')}>
+                   <ArrowRight className="h-3 w-3 text-charcoal-500" />
                 </Button>
-              </div>
-            </div>
-            <div className="p-5 space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-charcoal-600">Placements</span>
-                <span className="text-sm font-semibold text-charcoal-900">{metrics.placementsMTD}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-charcoal-600">Submissions</span>
-                <span className="text-sm font-semibold text-charcoal-900">{metrics.submissionsMTD}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-charcoal-600">Activities Completed</span>
-                <span className="text-sm font-semibold text-charcoal-900">{metrics.activitiesCompletedMTD}</span>
-              </div>
-            </div>
+             </div>
+             <div className="p-2">
+                {topJobs.map((job) => (
+                   <div key={job.id} className="p-3 hover:bg-white/50 rounded-lg transition-colors cursor-pointer group">
+                      <div className="font-semibold text-charcoal-900 text-sm truncate group-hover:text-forest-600 transition-colors">{job.title}</div>
+                      <div className="flex justify-between items-center mt-1">
+                         <span className="text-xs text-charcoal-500 truncate max-w-[120px]">{job.accountName}</span>
+                         <span className="text-[10px] font-medium bg-charcoal-100 text-charcoal-600 px-1.5 py-0.5 rounded-full border border-charcoal-200">
+                            {job.submissionCount} subs
+                         </span>
+                      </div>
+                   </div>
+                ))}
+             </div>
           </div>
+
         </div>
       </div>
     </div>
   )
 }
 
-// Helper components
-interface InfoFieldProps {
-  label: string
-  value: string | null | undefined
-  icon?: React.ComponentType<{ className?: string }>
-  className?: string
-}
-
-function InfoField({ label, value, icon: Icon, className }: InfoFieldProps) {
+// KPI Card Component
+function KPICard({ title, value, subValue, icon: Icon, trend, onClick, delay }: any) {
   return (
-    <div className="space-y-1">
-      <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">{label}</p>
-      <div className="flex items-center gap-2">
-        {Icon && <Icon className="h-4 w-4 text-charcoal-400" />}
-        <span className={cn("text-sm text-charcoal-900", className)}>{value || '—'}</span>
-      </div>
-    </div>
-  )
-}
-
-interface QuickStatItemProps {
-  icon: React.ComponentType<{ className?: string }>
-  label: string
-  value: number
-  onClick?: () => void
-}
-
-function QuickStatItem({ icon: Icon, label, value, onClick }: QuickStatItemProps) {
-  return (
-    <div
-      className={cn(
-        "flex items-center justify-between",
-        onClick && "cursor-pointer hover:opacity-80 transition-opacity"
-      )}
-      onClick={onClick}
+    <div 
+       className={cn(
+          "glass-panel rounded-2xl p-5 relative overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-premium animate-fade-in",
+          onClick && "cursor-pointer"
+       )}
+       style={{ animationDelay: `${delay * 100}ms` }}
+       onClick={onClick}
     >
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-charcoal-200/60">
-          <Icon className="h-4 w-4 text-charcoal-500" />
-        </div>
-        <span className="text-sm text-charcoal-600">{label}</span>
-      </div>
-      <span className="text-lg font-semibold text-charcoal-900">{value}</span>
+       <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-white/20 to-transparent rounded-bl-full pointer-events-none opacity-50" />
+       
+       <div className="flex justify-between items-start mb-4">
+          <div className="w-10 h-10 rounded-xl bg-charcoal-50/80 border border-white/60 flex items-center justify-center text-charcoal-500 group-hover:text-forest-600 group-hover:scale-110 transition-all duration-300">
+             <Icon className="h-5 w-5" />
+          </div>
+          {trend === 'up' && <div className="text-emerald-500 bg-emerald-50 rounded-full p-1"><TrendingUp className="h-3 w-3" /></div>}
+       </div>
+       
+       <div className="space-y-1 relative z-10">
+          <h4 className="text-xs font-bold text-charcoal-500 uppercase tracking-wider">{title}</h4>
+          <div className="text-2xl font-bold text-charcoal-900 tracking-tight">{value}</div>
+          <p className="text-xs font-medium text-charcoal-400">{subValue}</p>
+       </div>
     </div>
   )
+}
+
+// Quick Stat Row Component
+function QuickStatRow({ label, value, icon: Icon, onClick, highlight }: any) {
+   return (
+      <div 
+         className={cn(
+            "flex items-center justify-between p-3 rounded-xl transition-all duration-200",
+            onClick ? "hover:bg-white/60 cursor-pointer group" : "",
+            highlight ? "bg-gradient-to-r from-forest-50/50 to-transparent border border-forest-100/50" : "bg-transparent border border-transparent"
+         )}
+         onClick={onClick}
+      >
+         <div className="flex items-center gap-3">
+            <div className={cn(
+               "w-8 h-8 rounded-lg flex items-center justify-center",
+               highlight ? "bg-forest-100 text-forest-600" : "bg-charcoal-50 text-charcoal-400 group-hover:bg-white group-hover:text-charcoal-600"
+            )}>
+               <Icon className="h-4 w-4" />
+            </div>
+            <span className={cn("text-sm font-medium", highlight ? "text-forest-900" : "text-charcoal-600")}>{label}</span>
+         </div>
+         <span className={cn("text-base font-bold", highlight ? "text-forest-600" : "text-charcoal-900")}>{value}</span>
+      </div>
+   )
 }
 
 export default TeamOverviewSection
