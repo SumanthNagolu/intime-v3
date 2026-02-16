@@ -1,0 +1,388 @@
+{
+  "lessonId": "ch09-l07",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 7,
+  "title": "Claim Setup Rules",
+  "subtitle": "Understand the automated processes and rule sets that govern claim and exposure setup in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T18:31:09.975348+00:00",
+  "estimatedMinutes": 75,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a major car accident involving multiple vehicles and injuries. When the first notice of loss comes in, how does ClaimCenter instantly know if it's a simple fender-bender or a complex case requiring specialized adjusters, specific activities, and initial financial estimates?",
+      "question": "What automated processes kick in the moment a claim is reported to ensure it's handled efficiently and correctly from the very start?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the automated claim setup process and its core components: segmentation, assignment, and workplan.",
+        "Identify and explain the purpose and execution order of the various rule sets involved in claim and exposure setup, including Loaded, Presetup, Segmentation, Assignment, Workplan, Postsetup, Initial Reserve, Preupdate, and Validation rules.",
+        "Differentiate between claim-level and exposure-level rule execution and their implications for claim processing.",
+        "Recognize how activity setup rules are integrated into the broader claim and exposure setup workflows."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon how ClaimCenter uses rules to automate various processes. You've likely seen how policies are associated with claims and how basic claim information is entered.",
+      "warmupQuestion": "Think about a new claim being entered into ClaimCenter. What are some immediate actions or decisions that the system might need to make without human intervention?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Automated Claim Setup Process",
+      "narrative": "When a claim is initiated in ClaimCenter, whether through the New Claim Wizard, the portal, or an external FNOL application, it immediately enters an **automated claim setup process**. This process is crucial for ensuring that claims are handled efficiently and consistently from the outset. The automated setup is triggered only when the New Claim Wizard completes, or via specific API calls, and cannot be invoked directly from other rules. \n\nDuring this setup, three primary actions occur, often referred to as 'SAW':\n\n1.  **Segmentation**: This determines the overall strategy for processing the claim. For instance, is it a straightforward case or one that demands specialized adjuster expertise due to its complexity?\n2.  **Assignment**: This identifies who is responsible for the claim. While a user can manually assign a claim, automated rules often determine the appropriate group and individual.\n3.  **Workplan Creation**: A series of activities, collectively known as the 'workplan', are generated and assigned. These activities outline the necessary steps to process the claim and designate who is responsible for each task.\n\nThese automated steps ensure that every claim is immediately ready for adjudication, with a clear path forward and assigned responsibilities.",
+      "keyPoints": [
+        "Automated claim setup is triggered upon claim creation via NCW, portal, or FNOL import.",
+        "The process involves Segmentation, Assignment, and Workplan (SAW).",
+        "Segmentation defines the claim processing strategy.",
+        "Assignment determines the responsible group and individual.",
+        "Workplan creation generates initial activities for claim processing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Introduction to Claim Setup Rules"
+        },
+        {
+          "slideNumber": 4,
+          "caption": "The intake process: automated claim setup flowchart"
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Overview of automated claim setup and its core components (SAW)"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Claim Setup Rule Sets: An Overview",
+      "narrative": "ClaimCenter utilizes a comprehensive series of rule sets to manage the claim and exposure setup process. While some of these rules are exclusive to the initial setup, others are also used at various points outside of the setup phase. It's important to note that for most rule sets, there are both claim-level and exposure-level rules, with claim-level rules typically executing before exposure-level rules.\n\nThe full sequence of rules begins with **Loaded** and **Presetup** rules, which run before the main 'SAW' rules. The core **Segmentation**, **Assignment**, and **Workplan** rules then execute. When Workplan rules create activities, a smaller set of **Activity rules** (Presetup, Assignment, Postsetup) are triggered for each new activity. Finally, **Postsetup**, **Initial Reserve**, **Preupdate**, and **Validation** rules complete the process.\n\nNot all rule sets run in every scenario. For example, Loaded rules only execute for FNOL imported claims, and Assignment rules only run if automated assignment is selected. If no activities are created by Workplan rules, the subsequent activity rules are skipped. Understanding this sequence is key to configuring ClaimCenter's automated behavior.\n\n**Exposures** play a significant role in claim setup. They can either exist at the start of setup (created in the New Claim Wizard or imported) or be created dynamically during setup, typically within the Presetup rules. If no exposures are present, exposure-level rules are naturally skipped. The segmentation of a claim often heavily depends on its exposures, making their early creation or presence critical.",
+      "keyPoints": [
+        "Claim setup involves a sequence of rule sets: Loaded, Presetup, Segmentation, Assignment, Workplan, Activity rules, Postsetup, Initial Reserve, Preupdate, and Validation.",
+        "Some rule sets are unique to setup, while others are used throughout the claim lifecycle.",
+        "Claim-level rules generally run before exposure-level rules.",
+        "Exposures can be pre-existing or created during setup, typically in Presetup rules.",
+        "The presence and segmentation of exposures often influence claim segmentation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "The complete sequence of claim setup rule sets"
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The role and creation of exposures in claim setup"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Pre-Segmentation Rules: Loaded and Presetup",
+      "narrative": "Before the core segmentation, assignment, and workplan rules execute, two important rule sets may run: Loaded and Presetup rules.\n\n**Loaded rules** are specifically designed for claims and exposures that enter ClaimCenter through an FNOL import interface. Their primary purpose is to transform and reconcile initial claim data from an external format into a structure suitable for ClaimCenter. This can involve sanity checks, data aggregations, transformations, and logging the import process. The specifics of Loaded rules are highly dependent on the external FNOL application, which is why the base configuration provides only stub rule sets that require custom configuration.\n\n**Presetup rules** execute actions that must occur at the very beginning of the setup process, regardless of how the claim was entered, and particularly before segmentation. The most common action performed by Presetup rules is the automated creation of one or more exposures based on the nature of the claim. For instance, in the base configuration, Presetup rules are responsible for creating relevant Workers' Compensation (WC) exposures, such as Medical Details, Indemnity (Time Loss), and/or Liability exposures, based on initial claim information. This functionality is also configurable through ClaimCenter's administrative business rules.",
+      "keyPoints": [
+        "Loaded rules are exclusive to claims imported via FNOL, handling data transformation and logging.",
+        "Presetup rules execute early in the setup process, before segmentation.",
+        "A key function of Presetup rules is to automatically create exposures, such as for Workers' Compensation claims."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Purpose and examples of Loaded rules in claim setup"
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Purpose and examples of Presetup rules, particularly for exposure creation"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Core Setup Rules: Segmentation and Assignment",
+      "narrative": "The heart of automated claim setup lies in **Segmentation** and **Assignment** rules, which determine *how* a claim will be processed and *who* will process it.\n\n**Segmentation rules** apply to both claims and exposures, but only during claim setup. Their purpose is to 'segment' the object, meaning to identify a high-level strategy for processing it. This simplifies subsequent logic for assignment routing, activity creation, and initial reserves. In the base configuration, exposures are segmented first (e.g., low, medium, or high complexity), and then the claim is segmented, often adopting the segment of its most complex exposure. For example, a Workers' Comp claim with a 'fatal' injury might segment the exposure as 'complex'.\n\n**Assignment rules** determine the group and individual responsible for a claim or exposure. These rules run when a claim is created and the 'use automatic assignment' option is selected, assigning the claim first, then its exposures. While exposures are typically assigned to the same group and user as the claim, rules can dictate otherwise. Assignment rules can also run outside of initial setup, such as when a claim or exposure is reassigned automatically. Assignment logic can leverage the claim's segment, geography, customer importance, and other characteristics.\n\nIt's crucial to understand the distinction: **Segmentation determines the *strategy* for processing an object, while Assignment determines the *group and owner* responsible for it.** Segmentation is a one-time process during initial setup, setting a single field on the object. Assignment, however, can occur multiple times throughout an object's lifecycle.",
+      "keyPoints": [
+        "Segmentation rules define the processing strategy for claims and exposures, simplifying later rule sets.",
+        "Exposure segmentation typically occurs before claim segmentation.",
+        "Assignment rules determine the responsible group and user for claims and exposures.",
+        "Assignment can occur during initial setup or later reassignments.",
+        "Segmentation defines 'strategy' (how), while Assignment defines 'responsibility' (who)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Purpose and examples of Segmentation rules"
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Purpose and examples of Assignment rules"
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Key differences between Segmentation and Assignment"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Workplan and Post-Assignment Rules",
+      "narrative": "After segmentation and assignment, the automated setup process moves to creating the initial work required for the claim and then performing any final post-setup actions.\n\n**Workplan rules** are responsible for creating the initial set of activities for a claim and its exposures. ClaimCenter uses activities to track all necessary work, assigning each task to a specific group and individual. For example, claim-level workplan rules might create activities like 'Investigate accident scene' or 'Get police report,' while exposure-level rules might create 'Contact claimant' or 'Get damage estimates for vehicle.' Each activity created by these rules then goes through its own mini-setup process, involving its own Presetup, Assignment, and Postsetup rule sets. Activities can also be created later in the claim's lifecycle, and they will also follow these activity rule sets.\n\nOnce Segmentation, Assignment, and Workplan creation are complete, **Postsetup rules** execute. These rules perform any final actions required at the end of the claim setup process, typically involving setting specific fields on the claim or exposure. A common example in the base application is recommending an appropriate auto body shop for repairs based on factors like geography and preferred vendors, or setting a claim's SIU status if a fraud review activity was created.\n\nIn summary, the automated claim setup process ensures that claims are segmented for strategic processing, assigned to the correct personnel, and equipped with an initial workplan, followed by any necessary final adjustments.",
+      "keyPoints": [
+        "Workplan rules create initial activities for claims and exposures.",
+        "Each new activity triggers its own Presetup, Assignment, and Postsetup rule sets.",
+        "Postsetup rules perform final actions after Segmentation, Assignment, and Workplan are complete.",
+        "Postsetup actions often involve setting specific claim or exposure fields."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Purpose and examples of Workplan rules"
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Summary of automated claim setup: Segmentation, Assignment, Workplan"
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Purpose and examples of Postsetup rules"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Final Claim Setup Rules: Initial Reserve, Preupdate, and Validation",
+      "narrative": "The final stages of the automated claim setup involve setting initial financial estimates and ensuring data integrity.\n\n**Initial Reserve rules** are used to set preliminary financial reserves for existing exposures. For certain exposure types, a 'usual and reasonable' estimate can be automatically made for the amount required to indemnify the claimant. It's important to note that there are no claim-level initial reserve rules; this functionality applies only at the exposure level. This feature is also available through ClaimCenter's administrative business rules.\n\n**Preupdate and Validation rules** are unique in that they run not only when an object (like a claim or exposure) is initially created during setup, but also whenever it is changed and an attempt is made to save it to the database. This means they are executed frequently throughout the claim's lifecycle.\n\n*   **Preupdate rules** perform final actions or make changes/additions to an object *before* it is validated and saved. For example, a Preupdate rule might create an SIU review activity if changes to a claim cause it to cross a fraud detection threshold.\n*   **Validation rules** ensure that the object's data is complete, correct, and consistent. They allow ClaimCenter to reject an object if it fails to meet predefined standards. For instance, a validation rule might reject the creation of a claim if the loss date is in the future. A critical distinction is that `reject()` functions are never called in Preupdate rules, and changes or additions are never made in Validation rules. Validation rules are covered in more detail in a separate lesson.\n\nThese final rule sets ensure that claims are financially provisioned and that all data adheres to business standards before being permanently saved.",
+      "keyPoints": [
+        "Initial Reserve rules set preliminary financial estimates for exposures only, not claims.",
+        "Preupdate and Validation rules run during object creation and whenever an object is changed/saved.",
+        "Preupdate rules make final changes or additions before validation.",
+        "Validation rules ensure data completeness, correctness, and consistency, rejecting invalid objects.",
+        "Preupdate rules do not call `reject()`, and Validation rules do not make changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Purpose and scope of Initial Reserve rules"
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Overview of Preupdate and Validation rules"
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Examples of Preupdate and Validation rule applications"
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Review of claim setup rules and their execution context"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "In-Depth: Presetup Rules and Workers' Comp Exposures",
+      "narrative": "Let's take a closer look at **Presetup rules**, which are executed whenever an object of a specific entity type is created. While five entities have presetup rule sets (Activity, Claim, Exposure, Matter, TransactionSet), our primary focus during claim setup is on Claim and Exposure presetup rules. Recall that these rules perform actions that must occur early in the setup process, particularly before segmentation.\n\nIn the base configuration of ClaimCenter, the most prominent example of a Presetup rule is `CPRO1000 — WCDefaultExposures`, found within `ClaimPresetup.grs`. This rule is crucial for Workers' Compensation (WC) claims, as it automatically creates the necessary exposures upon intake. It leverages the `createRelevantWorkCompExposures()` function from `FNOL.gsx`.\n\nThis function, defined as an enhancement to the `Claim` entity in `FNOL.gsx`, uses 'Yes/No' answers from the New Claim Wizard (NCW) to determine which WC exposures to create. For instance:\n*   A Medical Details exposure is created unless 'Medical attention required?' is 'No' AND 'Incident Only' is 'Yes'.\n*   An Indemnity (Time Loss) exposure is created if 'Lost Time from Work' is 'Yes' OR 'Injury/Illness result in Death?' is 'Yes'.\n*   An Employer Liability exposure is created if the 'EmployerLiabilityQ' field is 'Yes'.\n\nThe `createAndSetUpExposure()` method is then called to instantiate these exposures. Following exposure creation, the `linkWCExposuresToCoverages()` method matches these newly created exposures to the relevant coverages on the policy, such as `WCWorkersCompCov` (Statutory Workers' Comp) and `WCEmpLiabCov` (Workers’ Comp Employer's Liability). This ensures that the WC claim is properly structured with its associated medical, indemnity, and liability components right from the start.",
+      "keyPoints": [
+        "Presetup rules execute early in the setup process, before segmentation, for specific entities.",
+        "The base configuration's `CPRO1000 — WCDefaultExposures` rule automatically creates Workers' Compensation exposures.",
+        "The `createRelevantWorkCompExposures()` function in `FNOL.gsx` uses NCW answers to determine WC exposure types.",
+        "Exposures are linked to policy coverages using `linkWCExposuresToCoverages()`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Section heading for Presetup rules"
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Entities with Presetup rule sets and their execution during claim setup"
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Example: Presetup rules automatically creating Workers' Comp exposures"
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Code excerpt from FNOL.gsx (part 1) showing exposure creation logic"
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Code excerpt from FNOL.gsx (part 2) showing coverage linking logic"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through how Presetup rules function in ClaimCenter, specifically focusing on the automatic creation of Workers' Compensation exposures based on initial claim details.",
+      "transcriptSummary": "The demo illustrates the `CPRO1000 - WCDefaultExposures` rule in action. It shows how selecting specific options in the New Claim Wizard for a Workers' Comp claim triggers the Presetup rules to automatically generate Medical Details, Indemnity, and Employer Liability exposures, streamlining the claim intake process."
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "In-Depth: Segmentation Rules and `actions.exit()`",
+      "narrative": "Segmentation rules are fundamental to defining the processing strategy for claims and exposures. Both the `Claim` and `Exposure` entities have a `Segment` typekey field, which refers to the `ClaimSegment` typelist. If you need to introduce new segmentation categories, you must first modify this typelist in Guidewire Studio and restart Studio for the changes to take effect.\n\n**Exposure segmentation rules** execute before claim segmentation rules. A common example from the base application is `ESG01000 - Auto` within `ExposureSegmentationRules.grs`. This rule set contains child rules like `ESG01100 - Auto low`, `ESG01200 - Auto Medium`, and `ESG01300 - Auto High`. These rules evaluate conditions such as injury severity or total loss status to assign an appropriate segment (e.g., `auto_high`) to the exposure.\n\nA critical best practice in segmentation rules is the use of `actions.exit()`. Once a rule successfully assigns a segment to an object, there's no need for further rules in that set to execute. Calling `actions.exit()` immediately terminates the entire rule set, preventing unintended segment overwrites by subsequent sibling rules. Rules are executed sequentially from top to bottom, so ordering them logically, with the most specific or urgent rules first, is essential.\n\n**Claim segmentation rules** often depend on the segments assigned to their exposures. In the base application, a common practice is to assign the claim segment based on the 'highest' (most complex) segment among its exposures. For auto claims, for instance, `CSG01100 - Auto` in `ClaimSegmentationRules.grs` checks for existing exposures and assigns the claim the segment of the most complex exposure. If no exposures exist, a default segment like `auto_low` is assigned. This ensures that the claim's overall strategy reflects the most complex component of the loss.",
+      "keyPoints": [
+        "Claim and Exposure entities use the `ClaimSegment` typelist for segmentation.",
+        "Exposure segmentation rules run before claim segmentation rules.",
+        "The `actions.exit()` method is crucial in segmentation rules to prevent unintended segment overwrites.",
+        "Claim segmentation often assigns the segment of the most complex exposure."
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Ordering Segmentation Rules",
+          "content": "Always order your segmentation rules from most specific/complex to least specific/default. Use `actions.exit()` at the end of each rule's ACTION block once a segment has been assigned to prevent subsequent rules from overwriting the chosen segment."
+        },
+        {
+          "type": "gotcha",
+          "title": "Typelist Caching",
+          "content": "Remember that Studio caches typelist values during startup. If you create new segments in the `ClaimSegment` typelist, you must stop and restart Studio for it to recognize the new values."
+        }
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Section heading for Segmentation rules"
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Claim and Exposure Segment fields and the ClaimSegment typelist"
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Example of Exposure segmentation rules in the base application"
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Importance of `actions.exit()` after segmenting an object"
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Claim segmentation rules in the base application (part 1)"
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Claim segmentation rules in the base application (part 2), showing logic for highest exposure segment"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how segmentation rules are applied to claims and exposures, illustrating how different claim characteristics lead to various segment assignments.",
+      "transcriptSummary": "The demo highlights the execution of segmentation rules. It demonstrates how an exposure's severity or total loss status influences its segment, and how the claim's segment is then derived from the most complex exposure, showcasing the `actions.exit()` mechanism."
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Exposure and Activity Setup Rules",
+      "narrative": "While claim setup is a one-time event that occurs when a claim is initially created, **exposure and activity setup** can happen multiple times throughout the life of a claim. This is because new exposures or activities might be added as the claim progresses.\n\nWhen an exposure is created (after the initial claim setup), it triggers its own series of setup rules. This sequence largely mirrors the claim setup process, including **Presetup**, **Segmentation**, **Assignment**, **Workplan**, **Postsetup**, **Initial Reserve**, **Preupdate**, and **Validation** rules. All of these are exposure-level rules, except for the activity rules that might be triggered. It's worth noting that while an `ExposureLoaded` rule set exists, it's not automatically run during claim setup; it must be manually triggered if desired.\n\n**Activity setup rules** form a simpler loop within both claim and exposure setup. When an activity is created, it goes through its own dedicated set of rules: **Presetup**, **Assignment**, **Postsetup**, **Preupdate**, and **Validation**. All of these are activity-level rules. Unlike claims and exposures, activities are not segmented, do not have their own workplan, and do not have initial reserves. This streamlined process ensures that each individual task is properly configured, assigned, and validated without the overhead of the full claim or exposure setup sequence.",
+      "keyPoints": [
+        "Exposure and activity setup can occur multiple times during a claim's lifecycle.",
+        "Exposure setup rules largely mirror claim setup rules, but are exposure-level.",
+        "Activity setup rules are a simpler sequence: Presetup, Assignment, Postsetup, Preupdate, Validation.",
+        "Activities are not segmented, do not have workplans, and do not have initial reserves."
+      ],
+      "figures": [
+        {
+          "slideNumber": 33,
+          "caption": "Section heading for Exposure and Activity setup"
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Comparison of claim setup (once) vs. exposure/activity setup (multiple times)"
+        },
+        {
+          "slideNumber": 35,
+          "caption": "Sequence of rule sets for exposure setup"
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Sequence of rule sets for activity setup"
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Which rule set category does not provide rules for both claims and\nexposures?",
+      "referenceAnswer": "The correct answer is Initial Reserve rules, which provides rules only at the exposure\nlevel.",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "a wa a rule set category do exposure rules run before claim rules?",
+      "referenceAnswer": "The correct answer is Segmentation. Exposure rules are run first because claim\nsegmentation typically depends upon the outcome of exposure segmentation.",
+      "questionKey": "slide-42"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What type of objects are most likely to be created in\n(a) Presetup rules?\n: (b) Workplan rules?",
+      "referenceAnswer": "The correct answer is for (a) Presetup rules, is exposures.\nThe correct answer is for (b) Workplan rules is activities.",
+      "questionKey": "slide-44"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Which claim-evel rule set categories are also executed outside of claim\nsetup?\n\nFor each, give a non-claim setup example of when they might run.",
+      "referenceAnswer": "The correct answers are:\nAssignment rules — Run whenever an object such as an activity is reassigned using\nautomated assignment.\nPreupdate rules — Run whenever an object such as an exposure is created or\nmodified.\nValidation rules — Run whenever an object such as an activity is created or modified.\nSS eeesee seen ee ese",
+      "questionKey": "slide-46"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Inthe diagram, what rule sets are included\n: in “activity rules”? Segmentation\n\nInitial Reserve",
+      "referenceAnswer": "The correct answer is activity presetup,\nactivity assignment, activity postsetup,\nactivity preupdate, and activity validation.",
+      "questionKey": "slide-48"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Automated claim setup is a critical process initiated upon claim creation, involving segmentation, assignment, and workplan generation.",
+        "A comprehensive suite of rule sets (Loaded, Presetup, Segmentation, Assignment, Workplan, Postsetup, Initial Reserve, Preupdate, Validation) orchestrates claim and exposure setup.",
+        "Exposure-level rules often run before claim-level rules, particularly in segmentation, and Initial Reserve rules are exposure-specific.",
+        "Presetup rules are vital for creating initial exposures (e.g., Workers' Comp), while Workplan rules generate activities.",
+        "Preupdate and Validation rules are executed both during initial setup and whenever an object is modified, ensuring data integrity throughout the claim's lifecycle.",
+        "Activity setup follows a simpler rule sequence (Presetup, Assignment, Postsetup, Preupdate, Validation) and can occur multiple times."
+      ],
+      "realWorldConnection": "In real Guidewire projects, understanding these claim setup rules is paramount for configuring ClaimCenter to align with specific business processes. Properly configured rules ensure claims are automatically routed to the right adjusters, necessary activities are generated, and initial financial estimates are set, leading to faster, more consistent, and compliant claim handling. Customizing these rules allows insurers to adapt ClaimCenter to unique lines of business, regional requirements, and fraud detection strategies, ultimately improving operational efficiency and customer satisfaction."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment involves exploring and modifying existing ClaimCenter rules to enhance automated claim setup. You will first explore the current rule configurations for presetup and segmentation. Then, you will implement a new rule to set a note for unverified policies and another rule to customize segmentation logic for property claims, specifically for fraud detection.",
+      "objectives": [
+        "Explore the existing Presetup and Segmentation rule sets in Guidewire Studio.",
+        "Implement a new Presetup rule to add a specific note to claims with unverified policies.",
+        "Implement a new Segmentation rule to identify and segment property claims based on specific fraud detection criteria."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_07_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_07_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_07_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_07_02.mp4"
+    }
+  ]
+}

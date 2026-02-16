@@ -1,0 +1,248 @@
+{
+  "lessonId": "ch04-l26",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 26,
+  "title": "Activities",
+  "subtitle": "Learn how PolicyCenter activities streamline tasks, manage workflows, and keep users informed.",
+  "synthesizedAt": "2026-02-16T17:30:48.571393+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a customer service representative at an insurance company. Every day, you have a list of tasks: follow up on a policy application, alert an underwriter about a high-risk submission, or remind yourself to send a welcome packet to a new client. How do you keep track of all these diverse responsibilities without anything falling through the cracks?",
+      "question": "How can a system like PolicyCenter help you manage your daily tasks efficiently and ensure critical actions are never missed?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define an Activity as the term is used in PolicyCenter.",
+        "Explain the difference between a Manual and Automatic Activity.",
+        "Define an Activity Pattern.",
+        "Describe the Activity life cycle.",
+        "Discern an Underwriter Activity from a General Activity."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely used task management systems or to-do lists in your personal or professional life. PolicyCenter's activities function similarly, but with specific integrations and automation tailored for insurance operations.",
+      "warmupQuestion": "Think about a time you had a complex project with multiple steps. How did you ensure all tasks were completed and nothing was overlooked?",
+      "hint": "Consider tools you might have used, like calendars, checklists, or project management software."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Activities: Your PolicyCenter Task List",
+      "narrative": "In PolicyCenter, activities are not just simple to-do items; they are versatile tools intricately associated with various business objects like accounts, policies, and transactions. As Tanya, a Customer Service Representative, might wonder, PolicyCenter provides a structured task list to help users manage their workload effectively. An activity represents a specific task or issue that requires attention and resolution. By linking activities directly to accounts, policies, or transactions, PolicyCenter ensures a seamless workflow where tasks can be triggered by or respond to changes in policy status or transaction updates. This structured approach helps processes and users assign work, alert others to important events, and manage the completion of policy jobs, ensuring that all necessary tasks are addressed promptly and efficiently.\n\nActivities can be assigned in two primary ways: manually or automatically. In a manual assignment, the user or code creating the activity explicitly selects an owner. This is useful for direct requests or self-reminders. For instance, a user might manually create an activity to follow up on a customer's inquiry. Automatic assignments, on the other hand, leverage predefined business rules and logic to evaluate the activity and allocate it to the appropriate owner. An example of this is PolicyCenter automatically creating an activity to alert a supervisor if a specific task becomes past due, or if an external system fails to complete an expected task. This automation significantly improves workflow efficiency and ensures that tasks are routed to the right person or group without manual intervention. To keep track of these tasks, PolicyCenter offers convenient ways to view activities. Users can access their assigned tasks from the **Desktop Summary** for a quick overview or navigate to the **My Activities** screen for more detailed management. This centralized access ensures users are always aware of their responsibilities and can prioritize their work effectively.",
+      "keyPoints": [
+        "Activities are tasks or issues associated with accounts, policies, or transactions.",
+        "They enable work assignment, event alerts, and policy job management.",
+        "Activities can be assigned manually (user-chosen owner) or automatically (business rule-driven).",
+        "Users can view and manage activities from the Desktop Summary or My Activities screen."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Activities are associated with accounts and policies, forming a seamless workflow."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "An overview of activities in PolicyCenter, highlighting their purpose and associations."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustration of manual versus automatic activity assignment methods."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Screenshot showing how activities are viewed within the PolicyCenter Desktop."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Lifecycle of an Activity: From Creation to Completion",
+      "narrative": "To standardize how activities are created and managed, PolicyCenter utilizes **activity patterns**. These patterns act as templates, defining crucial details such as the activity's subject, priority, and the number of days until it's due. For example, an 'Manually Rate Policy' activity pattern might specify a medium priority and a five-day due period. Administrators can customize these patterns through the PolicyCenter Administration interface, tailoring them to specific business needs. Configuration users can even add new fields to the activity pattern entity, such as a 'Required Role' field, to further refine assignment logic and ensure the right person handles the task.\n\nOnce an activity is created, it embarks on a lifecycle with several distinct stages. It begins as 'new or updated,' visually marked with a star icon. This indicates either a newly assigned task or one recently modified by another user, prompting immediate attention. After a user views the activity, it transitions to a normal 'in progress' state, losing its star indicator. This signifies that the activity has been acknowledged and is actively being worked on. Every activity is assigned a due date, and if this date passes without completion, the activity becomes 'overdue,' with its due date prominently displayed in red. This visual cue serves as an urgent reminder for the user to address the task promptly.\n\nIf an overdue activity remains unaddressed past its designated escalation date, it enters the 'escalated' stage, marked by an exclamation icon. This status signifies increased priority and demands immediate action to resolve the pending task. Finally, an activity concludes its lifecycle by either being 'completed' or 'skipped.' Completion means the task has been successfully carried out, while skipping indicates the task is no longer relevant. Once an activity is closed, it disappears from active lists, allowing users to focus on current tasks, unless specific filtering criteria are applied to view completed activities. This structured lifecycle ensures that tasks are tracked, prioritized, and managed efficiently from initiation to resolution.",
+      "keyPoints": [
+        "Activity patterns are templates that standardize activity creation, defining subject, priority, and due dates.",
+        "The activity lifecycle includes 'new or updated' (star icon), 'in progress' (normal), 'overdue' (red due date), and 'escalated' (exclamation icon).",
+        "Activities are closed by 'completion' or 'skipped' if irrelevant, then removed from active lists."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Activity patterns standardize how tasks are created, ensuring consistency."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The 'new or updated' stage of an activity, marked by a star icon."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "An activity transitions to 'in progress' once viewed, losing the star indicator."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An 'overdue' activity is indicated by a red due date, signaling urgency."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "An 'escalated' activity, marked by an exclamation icon, requires immediate attention."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Activities are concluded by completion or being skipped, then removed from active lists."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Managing Activities: Types, Ownership, and Queues",
+      "narrative": "Effective activity management is crucial for maintaining workflow efficiency and ensuring that critical tasks, like reviewing high-risk policy submissions, are handled promptly. As Dalia, an Underwriter, might need to be notified of significant risks, PolicyCenter offers various activity types and management features to support this. The most common are **General activity patterns**, which serve as versatile templates for tasks across different processes. A General activity is simply a task to do, without involving specific authority for its completion. For instance, an activity to 'Send welcome packet' would be a general activity.\n\nIn contrast, the **Underwriter Review activity** type is specific to underwriting processes. It's typically initiated when a Customer Service Representative (CSR) or another user creating a policy feels an underwriter's input is necessary, often due to an underwriting issue raised on the Risk Analysis page. When an Underwriter Review activity is created, the policy is locked, preventing further changes until the underwriter completes their review. Once the underwriter reviews the issue and completes the activity, the lock is released, and another activity might be sent back to the original requestor, allowing the job to progress. This process is pivotal during risk analysis, ensuring policies meet underwriting criteria before proceeding.\n\nActivity ownership can be either explicit or implicit. An activity is **explicitly assigned** when a specific user is chosen by the creator or through routing rules. Changes to the job or account won't affect this ownership. Conversely, an activity is **implicitly assigned** to a user who holds a specific role on a job or account, such as 'the underwriter for Big Lake Bakery.' If that role is later reassigned to another user, all implicitly assigned activities will automatically transfer to the new role holder. This dynamic flexibility ensures the right person always handles the task, even if team roles evolve. For team-based task distribution, **activity queues** act as repositories linked to groups. Users within a group can claim ownership of queued activities, promoting shared responsibility and balanced workload. From the Desktop, users can navigate to 'My Queue' and 'Assign Next to Me' to self-assign tasks, provided they have the necessary permissions. Finally, PolicyCenter allows for flexibility in task completion; non-mandatory activities can be **skipped** if they become irrelevant, helping users maintain focus on crucial activities and optimizing workflow efficiency.",
+      "keyPoints": [
+        "General activities are common tasks without specific authority, while Underwriter Review activities require underwriter input for risk analysis.",
+        "Underwriter Review activities lock policies until completion, ensuring proper review.",
+        "Activity ownership can be explicit (assigned to a specific user) or implicit (assigned to a role, dynamic with role changes).",
+        "Activity queues are group-associated repositories where users can claim tasks, promoting shared responsibility.",
+        "Non-mandatory activities can be skipped to maintain focus on relevant tasks."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Effective activity management is crucial for maintaining workflow efficiency."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "General activities are common tasks without specific authority involved."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Underwriter Review activities are specific requests for underwriter input on underwriting issues."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Illustration of explicit versus implicit activity ownership."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Activity queues facilitate shared responsibility and balanced workload within groups."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Overview of actions users can take with activities, including skipping non-mandatory tasks."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Customizing Activities for Business Needs",
+      "narrative": "PolicyCenter's activity framework is highly configurable, allowing organizations to tailor it to their unique business requirements. Common customizations often involve tweaking existing activity patterns, refining assignment logic, and adjusting notification settings. For example, a carrier might want to add a 'Required Role' field to activity patterns to ensure that only users with a specific role can be assigned certain types of activities. This enhances task tracking and ensures that specialized tasks are handled by qualified personnel.\n\nAnother typical customization involves the assignment logic itself. While PolicyCenter provides robust out-of-the-box routing rules, businesses often need to implement custom logic to handle complex scenarios, such as assigning activities based on policy line, premium amount, or even the geographical location of the insured. This ensures that activities are routed to the most appropriate team or individual, minimizing delays and improving efficiency. Notification settings can also be customized to alert users through various channels (e.g., email, in-app notifications) when an activity is created, becomes overdue, or escalates. For instance, the 'Overdue Premium Report batch process' can be configured to create a 'Premium report overdue' activity for the underwriter, ensuring they are promptly informed of critical financial tasks. These adjustments cater to specific business needs, enhancing the user experience and overall task efficiency, ultimately leading to better policy handling and customer service.",
+      "keyPoints": [
+        "Activity patterns can be customized with new fields (e.g., 'Required Role') to enhance task tracking.",
+        "Assignment logic can be tailored to specific business rules for complex routing scenarios.",
+        "Notification settings can be adjusted to ensure timely alerts for activity status changes.",
+        "Customizations improve user experience and task efficiency, aligning activities with organizational goals."
+      ],
+      "figures": [
+        {
+          "slideNumber": 31,
+          "caption": "A review of lesson objectives, highlighting key concepts related to activities and their customization."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of viewing and creating activities in PolicyCenter. Pay close attention to how activities are accessed from the Desktop Summary and My Activities screens, and observe the process of selecting activity patterns and assigning tasks.",
+      "transcriptSummary": "The demo covers navigating to the Desktop Summary and My Activities screens to view existing tasks. It then proceeds to demonstrate how to create a new activity, including selecting an appropriate activity pattern, defining its subject and priority, and assigning it to a user or queue. The video highlights the intuitive interface for efficient task management."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are a new Customer Service Representative (CSR) in PolicyCenter. Your supervisor has asked you to create an activity to remind yourself to follow up on a new policy submission that requires additional documentation from the insured. You want to ensure this task is visible on your desktop and has a clear due date.",
+      "question": "Walk through the steps to manually create a 'Follow-up on Documentation' activity for yourself, setting its priority to 'Normal' and due in 3 days. How would you ensure it appears on your 'My Activities' list?",
+      "hints": [
+        "Start by navigating to the appropriate screen for creating a new activity.",
+        "Look for options to select an activity pattern or define a custom activity.",
+        "Remember to assign it to yourself and set the due date.",
+        "Consider where you would typically view your assigned tasks."
+      ],
+      "expectedApproach": "The learner should navigate to the 'New Activity' option, select a 'General' activity pattern (or create a custom one if available), input 'Follow-up on Documentation' as the subject, set priority to 'Normal', specify a due date 3 days from now, and assign it to their own user account. They would then verify its presence on the 'My Activities' screen."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "/~ — Give one example of how an activity can help users manage their work.",
+      "referenceAnswer": "Assign work to a user, alert users to certain events, manage how policy jobs are\ncompleted.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What business objects can have an associated activity?",
+      "referenceAnswer": "Accounts, policies and transactions (jobs).",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "e What is an activity pattern?",
+      "referenceAnswer": "An activity pattern is a description of how to create a specific activity.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "e Is an activity always assigned to a group? A user?",
+      "referenceAnswer": "Activities can be assigned to users, groups or queues. In addition, a user is assigned\nto a group; a queue contains activities assigned to a group.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Who can modify an activity?",
+      "referenceAnswer": "The activity owner and anyone with manager permissions.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Activities are essential for task management in PolicyCenter, linking to accounts, policies, and transactions.",
+        "They can be manually or automatically assigned, using activity patterns as templates.",
+        "Activities follow a lifecycle: new/updated, in progress, overdue, escalated, and completed/skipped.",
+        "PolicyCenter supports General and Underwriter Review activity types, with explicit or implicit ownership.",
+        "Activity queues facilitate team-based task distribution and management.",
+        "Customizations allow tailoring activities to specific business needs, enhancing efficiency."
+      ],
+      "realWorldConnection": "In real Guidewire projects, effective activity management is critical for operational efficiency, ensuring that underwriting reviews are timely, customer requests are addressed, and compliance tasks are completed. Customizing activity patterns and assignment logic directly impacts how quickly and accurately policies are processed, ultimately affecting customer satisfaction and business profitability.",
+      "nextLessonPreview": "Having understood how activities streamline task management, our next lesson will delve into 'Roles and Permissions.' We'll explore how different user roles interact with activities and other system functionalities, shaping user access and responsibilities within PolicyCenter."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to simulate the creation of an automatic activity based on a business rule. Imagine a scenario where a premium report becomes overdue. Using the PolicyCenter interface (or a sandbox environment if available), identify where an underwriter would view an activity related to an overdue premium report. Then, describe the steps an administrator would take to configure a new activity pattern for 'Overdue Premium Report Follow-up' that automatically assigns to the relevant underwriter group and escalates after 5 days.",
+      "objectives": [
+        "Locate and identify automatically generated activities.",
+        "Understand the administrative configuration of activity patterns.",
+        "Apply knowledge of activity lifecycle and assignment to a real-world scenario."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_27_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_27_01.mp4"
+    }
+  ]
+}

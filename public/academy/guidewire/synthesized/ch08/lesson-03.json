@@ -1,0 +1,277 @@
+{
+  "lessonId": "ch08-l03",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 3,
+  "title": "Configuring Job WIzards",
+  "subtitle": "Mastering the configuration of job wizards in PolicyCenter for streamlined user workflows.",
+  "synthesizedAt": "2026-02-16T18:17:29.200407+00:00",
+  "estimatedMinutes": 65,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a new insurance product in PolicyCenter, and your business users need a guided, multi-step process to collect complex policy information, perform risk analysis, and issue policies. A poorly configured workflow can lead to user frustration, errors, and delays in policy issuance.",
+      "question": "How can you design and configure a robust, intuitive job wizard that guides users efficiently through intricate business transactions?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the architecture of job wizards",
+        "Configure existing job wizards",
+        "Create and modify job wizard steps"
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with various user interfaces in PolicyCenter, such as the Account File or Policy Summary, which are examples of location groups. You've also probably used wizards for tasks like creating a new submission or processing a policy change.",
+      "warmupQuestion": "What are some key differences you've observed between a multi-step wizard and a typical tabbed interface in PolicyCenter?",
+      "hint": "Think about navigation and the flow of information."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Job Wizards and Their Architecture",
+      "narrative": "Job wizards are fundamental to guiding users through complex business transactions in PolicyCenter. Unlike standard location groups that might present multiple screens simultaneously via tabs, a job wizard is a specialized location designed with a sequential flow, displaying only one screen at a time. This guided approach is crucial for processes like creating a new submission, processing a renewal, or handling a policy change, where information needs to be collected and operations performed in a specific order.\n\nAs you can see in the figure, a job wizard is composed of several key IJI (Internal Java Interface) elements that act as building blocks. These include an **Actions menu** for common tasks, an **Info bar** displaying policy or account details, and a **Tool bar** with navigation buttons like 'Back' and 'Next'. The core of the wizard's navigation is provided by **Dependent steps**, which are an ordered set of labels representing individual screens, often requiring completion of a prior step before access. Additionally, **Independent steps** offer flexibility, allowing users to access certain screens at any time, regardless of their current position in the wizard. The **Tab bar** runs across the top of the application, and the **Screen** itself contains the content for each step.\n\nWhile job wizards and location groups share similarities—both are assigned to a single tab, reference multiple screens, and can have unordered screens, along with shared tab bars, info bars, and action menus—they also have critical distinctions. Wizards feature a dedicated toolbar for screen navigation and access screens directly, rather than through intermediate pages. A defining characteristic of wizards is their inherent order for a set of screens, and crucially, the availability of wizard screens can be dynamically tied to the user's current position within the wizard. For instance, a step might only become 'available' (clickable) after specific data is entered in a preceding step, even if it's 'visible'.\n\nPolicyCenter's base application leverages job wizards extensively. Every job, such as a submission, renewal, or policy change, has an associated job wizard. The `SubmissionWizard.pcf` file, for example, defines the steps for collecting submission information, guiding users through pre-qualification, policy details, risk analysis, quoting, and issuance. Other examples include the `Renewal Wizard`, `Reinstatement Wizard`, `Policy Change Wizard`, `Audit Wizard`, `Cancellation Wizard`, `Rewrite Wizard`, and `Issuance Wizard`.\n\nArchitecturally, a job wizard is simpler than a location group, consisting of `JobWizardStep` elements that directly point to individual screens. These steps are often organized into `WizardStepGroup` or `WizardStepSet` elements. `WizardStepSet`s are particularly useful for defining common logic across multiple steps, especially when steps vary by line of business (LOB). For example, a submission wizard might have a 'sandwich-like' structure where the first and last steps are consistent across all LOBs, while the interior steps dynamically change based on the selected LOB. This modularity allows for efficient configuration and maintenance of complex workflows.",
+      "keyPoints": [
+        "Job wizards provide a guided, sequential flow for complex business transactions, displaying one screen at a time.",
+        "Key components include dependent and independent steps, toolbars for navigation, and direct screen access.",
+        "Unlike location groups, wizard screen availability can be tied to the user's progress within the wizard.",
+        "PolicyCenter's base application uses wizards for all major jobs (e.g., Submission, Renewal, Policy Change).",
+        "Job wizard architecture involves `JobWizardStep`s pointing to screens, often grouped by `WizardStepGroup`s or `WizardStepSet`s for shared logic or LOB-specific variations."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory overview of job wizards."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of a job wizard's components, including the tab bar, actions menu, info bar, toolbar, dependent steps, independent steps, and the screen content."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Highlights the similarities between job wizards and location groups in PolicyCenter."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Outlines the key differences that distinguish job wizards from location groups."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Lists common job wizards found in the base PolicyCenter application, such as Submission, Renewal, and Policy Change wizards."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustrates the architectural structure of a job wizard, showing how steps are organized into groups and sets, and how they link to screens."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Provides an overview of the different configuration levels within a job wizard, from the wizard level down to individual steps."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A transition slide indicating the shift to discussing job wizard configuration specifics."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Job Wizard vs. Location Group",
+          "content": "A **Job Wizard** guides users through a complex, ordered transaction with step-specific navigation and availability. A **Location Group** provides access to related screens, often through tabs, without a strict sequential flow."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Configuring Job Wizard Properties and Entry Points",
+      "narrative": "Configuring job wizards involves defining their overall behavior, permissions, and how users access them. Each job wizard is defined by a PCF file, such as `SubmissionWizard.pcf`, which specifies its steps and the screens they render. These screens, like 'New Submission' or 'Policy Info', are themselves PCF files that define their content and components.\n\nOne crucial property at the job wizard level is `countsAsWork`. When `countsAsWork` is set to `true`, any changes made within the wizard are saved to the user's session and listed in the 'Unsaved Work' menu if the user navigates away before completing the wizard. This allows users to resume their work later in the same session. Changes are committed to the database when navigating within the wizard using 'Previous'/'Next' buttons, or explicitly by clicking 'Save Draft'. If `countsAsWork` is `false`, the wizard won't appear in 'Unsaved Work', though changes are still stored in the session until committed or the session expires. It's important to note that if a user logs out or the session times out before changes are committed, any unsaved work is lost, regardless of the `countsAsWork` setting. This behavior is detailed in the PolicyCenter Application Guide under 'Saving your work in PolicyCenter wizards'.\n\nAnother set of critical properties are `canVisit` and `canEdit`. The `canVisit` property determines whether a user has permission to view the job wizard at all. The `canEdit` property, if `true`, allows a user to modify information within the wizard when it's in edit mode. These properties are often tied to user permissions or the job's state. For example, a bound (completed) submission is typically viewable (`canVisit` is true) but not editable (`canEdit` is false), preventing changes to a finalized policy. Conversely, a submission in 'Draft' state would allow editing. These properties are essential for enforcing business rules and security, leveraging the availability framework discussed in the Product Model Guide.\n\nJob wizards can have multiple entry points, allowing them to be accessed from different parts of the application with varying initial data. An entry point defines the parameters (objects) required to start the wizard, such as `SubmissionWizard(submission : Submission, policyPeriod : PolicyPeriod)`. These objects must be declared on the wizard's 'Variables' tab. To navigate to a job wizard, UI widgets use an `action` property with the syntax `EntryPointName.go(objectsToPass)`. The `.go` method navigates to the specified location, passing the required objects. For instance, `UJobForward.go(job)` would navigate to the job wizard associated with the provided `job` object.",
+      "keyPoints": [
+        "Job wizard configuration involves defining properties within its PCF file, which links to individual screen PCFs.",
+        "`countsAsWork` determines if a wizard appears in 'Unsaved Work' for session-based recovery.",
+        "`canVisit` controls viewing permissions, while `canEdit` controls editing permissions, often based on user roles and job status.",
+        "Job wizards can have multiple entry points, defined by expected objects, to support diverse navigation paths.",
+        "Navigation to a wizard uses `EntryPointName.go(objectsToPass)` syntax in UI widget actions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "An example of a job wizard's structure in PCF, showing entry points, steps, and properties."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Explains the `countsAsWork` property and its impact on saving and resuming work in a job wizard."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Details the `canVisit` and `canEdit` properties, illustrating how they control access and modification permissions for a job wizard."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Shows how job wizard entry points are defined and how other UI elements reference them for navigation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Unsaved Work vs. Database Commit",
+          "content": "Remember that `countsAsWork` only affects whether a wizard appears in the 'Unsaved Work' list. Changes are stored in the user's session, but are only committed to the database when you explicitly save (e.g., 'Save Draft') or navigate using wizard buttons ('Next', 'Back'). Session expiration will clear unsaved work."
+        },
+        {
+          "type": "best_practice",
+          "title": "Granular Permissions",
+          "content": "Use `canVisit` and `canEdit` to implement granular permissions, ensuring users only interact with job wizards in appropriate states (e.g., viewing a bound policy, editing a draft submission). This aligns with the availability concepts for product model patterns."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the configuration options available at the job wizard level in PolicyCenter. Pay close attention to how properties like `countsAsWork`, `canVisit`, and `canEdit` are set and what impact they have on user experience and data persistence.",
+      "transcriptSummary": "The demo illustrates how to access and modify job wizard properties within Guidewire Studio. It highlights the practical implications of setting `countsAsWork` for 'Unsaved Work' functionality and demonstrates how `canVisit` and `canEdit` control user access and modification rights based on job state and permissions."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuring Job Wizard Steps and Screen Content",
+      "narrative": "Beyond the overall wizard configuration, individual job wizard steps are where the detailed user interaction and data collection occur. These steps can be organized and customized in several ways to create a logical and efficient workflow.\n\n**`WizardStepGroup`** elements allow you to visually group related steps together. Steps within a group are typically indented and share a single parent label, making the sidebar navigation cleaner and more organized. For example, in a `SubmissionWizard`, 'Policy Contract' might be a group containing 'Policy Info', 'Drivers', and 'Vehicles' steps. Unlike `WizardStepSet`s, groups primarily serve a visual and organizational purpose and do not have an `available` property, only a `visible` property.\n\n**`WizardStepSet`** and **`WizardStepSetRef`** are powerful tools for managing shared logic and line-of-business (LOB) specific steps. A `WizardStepSet` defines a collection of wizard steps that share common properties like `visible`, `available`, and `mode`. This is particularly useful when certain steps need to appear or behave differently based on the selected LOB. For instance, a `SubmissionWizard` might use different step sets for Personal Auto versus Workers' Compensation submissions, dynamically swapping out the relevant screens and logic. A `WizardStepSetRef` is simply a reference to the PCF file where the step set is defined.\n\n**Independent job wizard steps** offer flexibility by allowing users to access them at any time, regardless of their current position in the wizard. To make a step independent, you set its `independent` attribute to `true`. These steps are typically listed at the bottom of the sidebar, separate from the dependent, ordered steps, and are not navigated using the 'Back'/'Next' toolbar buttons. An example is the 'Tools' section in the `SubmissionWizard`.\n\n**The order of job wizard steps** is determined by their sequence in the PCF file. PolicyCenter displays all visible steps in the order they are declared. Dependent steps always appear in the top section of the sidebar, while independent steps are always in the bottom section. Child steps within a `WizardStepGroup` are indented to show their hierarchical relationship.\n\nFinally, each **`JobWizardStep` links directly to a screen PCF** file. This screen PCF contains all the content for that step, including input widgets, data display, and buttons. The screen's `Title` property determines the text in the title bar, while its `Label` property sets the text displayed in the sidebar. Wizard navigation buttons ('Previous'/'Next') are handled automatically, but toolbar buttons can be configured based on the job type and status. When a job wizard step references a screen, it uses the syntax `ScreenPropertyOfJobWizardStep = EntryPointOfScreen(objectsToPass)`, ensuring the correct data context is passed to the screen.",
+      "keyPoints": [
+        "`WizardStepGroup`s visually organize and indent child steps under a single label.",
+        "`WizardStepSet`s define collections of steps with shared logic (visibility, availability, mode), often used for LOB-specific variations.",
+        "Independent steps (`independent=true`) are accessible anytime, listed separately, and not part of the sequential 'Back'/'Next' flow.",
+        "The order of wizard steps in the UI is determined by their declaration order in the PCF file.",
+        "Each `JobWizardStep` points to a screen PCF, which defines the step's content, title, and label."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Illustrates the concept of a `WizardStepGroup` for organizing and indenting related wizard steps."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explains `WizardStepSet` and `WizardStepSetRef` for grouping steps with shared logic or LOB-specific variations."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Describes how to configure independent job wizard steps and their behavior in the UI."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Clarifies how the order of job wizard steps is determined and displayed in the user interface."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Details the relationship between job wizard steps and screen PCF files, including screen properties and button behavior."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Modular Design with Step Sets",
+          "content": "Leverage `WizardStepSet`s to create modular and maintainable wizard configurations, especially when dealing with multiple lines of business. This reduces redundancy and simplifies updates."
+        },
+        {
+          "type": "gotcha",
+          "title": "Order in PCF",
+          "content": "Remember that the visual order of dependent steps is strictly based on their declaration order in the PCF file. There is no separate attribute to control this order."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on configuring individual job wizard steps. You will see how to define step groups, implement step sets for conditional logic, and configure independent steps. Pay attention to how these configurations affect the sidebar navigation and the overall user flow.",
+      "transcriptSummary": "The demo showcases the practical application of `WizardStepGroup` for visual organization, `WizardStepSet` for dynamic step inclusion based on LOB, and setting the `independent` attribute for flexible navigation. It illustrates how these configurations are made in Studio and their impact on the wizard's appearance and behavior."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are tasked with modifying the `SubmissionWizard` for a new commercial auto product. The business requires that the 'Drivers' and 'Vehicles' steps should only be visible if the policy period's `PersonalAutoLine` is active, and they should be grouped under a 'Policy Details' label. Additionally, a new 'Risk Assessment' step needs to be added, which can be accessed at any time, regardless of the user's current position in the wizard.",
+      "question": "How would you configure the `SubmissionWizard` PCF to meet these requirements?",
+      "hints": [
+        "Consider using a `WizardStepGroup` for 'Drivers' and 'Vehicles'.",
+        "Think about the `visible` property for the group, tied to the `PersonalAutoLine` status.",
+        "For 'Risk Assessment', consider the `independent` attribute."
+      ],
+      "expectedApproach": "Create a `WizardStepGroup` for 'Policy Details' containing 'Drivers' and 'Vehicles' steps, setting its `visible` property to a condition checking `policyPeriod.PersonalAutoLine.IsActive`. Add a new `JobWizardStep` for 'Risk Assessment' and set its `independent` attribute to `true`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Name three things that are true of a job wizard that are not true ofa\n\no location group.",
+      "referenceAnswer": "Name three things that are true of a job wizard that are not true ofa\nlocation group.\n\nPossible answers:\n* job wizard screens are ordered.\n* job wizards have toolbars used to navigate through the ordered screens.\n\n* job wizard screens can have conditional availability tied to where you are at in the\njob wizard.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Why would you want to put job wizard steps into a step group? A step\n\n¢ set?",
+      "referenceAnswer": "ae my would you want to put job wizard steps into a step group? A step\n’ ?\n\nYou might put steps into a step set when you want to control the visibility or availability\nof multiple steps with a single condition. You might put steps into a step group when\nyou want the steps to be indented with a single label displayed over all of them.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What attribute controls the order of appearance of job wizard steps in the\no user interface?",
+      "referenceAnswer": "What attribute controls the order of appearance of job wizard steps in the\nuser interface?\n\nThere is no attribute that controls the order of appearance. Order of appearance is\nbased on the order in which the wizard steps are listed in the PCF file.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "ae ee does a step behave differently if you set its independent attribute to\n, ?",
+      "referenceAnswer": "ae tae does a step behave differently if you set its independent attribute to\n’ ?\n\nSetting a step’s independent attribute to true will list it at the bottom of the sidebar, and\nit cannot be navigated to using the Back/Next toolbar buttons.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What is a job wizard's entry point? What other elements of the user\n¢ interface reference a job wizard's entry point?",
+      "referenceAnswer": "What is a job wizard's entry point? What other elements of the user\ninterface reference a job wizard's entry point?\n\nAjob wizard's entry point is the internal name for the job wizard. It is used by\nnavigation widgets which navigate to the job wizard when clicked.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Job wizards provide a structured, guided workflow for complex business transactions in PolicyCenter.",
+        "Key architectural components include `JobWizardStep`s, `WizardStepGroup`s, and `WizardStepSet`s, each serving distinct organizational and logical purposes.",
+        "Job wizard properties like `countsAsWork`, `canVisit`, and `canEdit` control user experience, data persistence, and access permissions.",
+        "The order of wizard steps is determined by their sequence in the PCF file, with independent steps offering flexible navigation.",
+        "Entry points define how wizards are accessed, allowing for dynamic initialization with specific objects."
+      ],
+      "realWorldConnection": "Understanding job wizard configuration is crucial for any Guidewire developer. Properly configured wizards ensure that business users can efficiently process submissions, renewals, and policy changes, reducing errors and improving operational efficiency. By leveraging step groups, sets, and conditional logic, you can create highly adaptable workflows that meet diverse business requirements across different lines of business.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into customizing individual screen PCF files that make up these wizard steps, exploring how to add and configure widgets to collect and display data effectively."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this exercise, you will apply your knowledge of job wizard configuration to an existing PolicyCenter application. You will be tasked with modifying a `SubmissionWizard` to include new steps, group existing ones, and implement conditional visibility based on a policy's line of business. You will also configure an independent step and verify its behavior.",
+      "objectives": [
+        "Modify an existing job wizard PCF file.",
+        "Create and configure `WizardStepGroup`s and `WizardStepSet`s.",
+        "Implement conditional visibility for wizard steps.",
+        "Add and configure an independent job wizard step."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_03_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_03_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_03_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_03_02.mp4"
+    }
+  ]
+}

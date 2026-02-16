@@ -1,0 +1,311 @@
+{
+  "lessonId": "ch07-l09",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 9,
+  "title": "Introducation to Gosu Rules",
+  "subtitle": "Explore the structure, hierarchy, and execution of Gosu rules in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T18:02:45.562555+00:00",
+  "estimatedMinutes": 85,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a developer at an insurance company, and a new regulatory change requires that all claims involving a specific type of property damage must automatically be assigned to a specialized team for review. Manually assigning these claims would be time-consuming and prone to errors.",
+      "question": "How can you ensure that these complex business rules are consistently and automatically applied across the entire Guidewire application, regardless of how a claim is entered or updated?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define Gosu rules and their purpose in Guidewire applications.",
+        "Describe the anatomy of a Gosu rule, including root entity, condition, and action.",
+        "Explain the hierarchy of Gosu rules, including rule set categories, rule sets, and individual rules.",
+        "Illustrate the execution flow of \"execute all\" rule sets, considering parent-child relationships and conditions.",
+        "Differentiate between \"execute all\" and \"exit after first action\" rule sets and explain the various actions.exit() methods.",
+        "Apply knowledge of Gosu rules to implement a business requirement for contact assignment."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon the concept of business logic and how applications respond to events. You've seen how Guidewire applications manage entities and their lifecycle.",
+      "warmupQuestion": "Think about a time you encountered an application that seemed to \"know\" what to do next based on your input. What kind of underlying logic do you think was at play?",
+      "hint": "Consider how applications automate decisions or workflows based on specific criteria."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Gosu Rules and Their Structure",
+      "narrative": "Gosu rules are fundamental to customizing Guidewire InsuranceSuite products, allowing you to implement specific business logic. At their core, a Gosu rule is a specialized Gosu class with a `.gr` file extension, representing a single decision point. This decision typically follows an \"If {some conditions} Then {take some actions}\" structure. For instance, if an `ABPerson` lacks an email address, a rule might trigger a `Flag Entry` to notify users. Guidewire applications are designed to execute different sets of rules when specific events occur to an entity. For example, when an `ABContact` is saved, the system might run both `ABContactPreupdate` and `ABContactValidation` rules.\n\nGosu rules are incredibly versatile and are used across various functions within Guidewire applications, as shown in **Figure 5**. Common examples include activity escalation rules (escalating activities open too long), claim assignment rules (assigning claims to specific groups/users), and account validation rules (verifying account validity before database commitment). These rules are triggered by specific events, such as an activity exceeding its escalation date, a claim being created, or an account being modified.\n\nEvery Gosu rule has a distinct anatomy, as illustrated in **Figure 6**. It starts with a **Root entity**, which is the input parameter for the rule. Each rule also has a unique **Name** that follows a defined naming convention, like `ABPU1010 - Contact Created`. The heart of the rule is its **Condition**, a Boolean expression that evaluates to `true` or `false`. It's important to note that the \"if\" is implicit; you only provide the Boolean expression. If the condition evaluates to `true`, the Guidewire application executes the **Action** defined within the rule. If the condition is `false`, nothing happens, and the rule's action is skipped. Guidewire strongly recommends thoroughly documenting the functional logic of rules before implementation, as creating them requires in-depth domain knowledge and technical expertise. Changes to Gosu rules often necessitate an application server restart.",
+      "keyPoints": [
+        "Gosu rules are `.gr` files representing \"If-Then\" decisions.",
+        "Rules are triggered by entity events (e.g., saving an `ABContact`).",
+        "Common uses include validation, assignment, and escalation.",
+        "Rule anatomy includes a root entity, unique name, Boolean condition, and an action."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of Gosu rules in Guidewire applications."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key characteristics and examples of Gosu rules."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Examples of Gosu rules in action across Guidewire InsuranceSuite applications."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The fundamental components and structure of a Gosu rule."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Functional Logic First",
+          "content": "Guidewire strongly recommends developing and documenting the functional logic of rules before implementing them in Gosu. This ensures clarity and organization, especially in large implementations."
+        },
+        {
+          "type": "gotcha",
+          "title": "Application Restart",
+          "content": "After making changes to Gosu rules, you typically need to restart the application server for the changes to take effect."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Hierarchy of Gosu Rules",
+      "narrative": "Guidewire applications organize Gosu rules into a structured hierarchy, making them manageable and logical. As shown in **Figure 7**, this hierarchy consists of **Rule Set Categories** at the top, which contain one or more **Rule Sets**, and each rule set, in turn, contains one or more individual **Rules**.\n\nA **Rule Set Category** is a high-level grouping of rule sets that share a common business purpose and a specific triggering event. **Figure 8** illustrates how rule set categories like `EventMessage`, `Preupdate`, and `Validation` are organized. You can create new rule set categories, but this is generally recommended only for unique, high-level business needs. If you create a new rule set category, you must also write the necessary code to trigger its rule sets. **Figure 9** provides examples of these categories: `EventMessage` handles event processing and message generation, `Preupdate` performs domain logic before committing an entity, and `Validation` ensures data integrity. These categories are associated with triggers that fire during specific application events, such as saving an entity.\n\nMoving down the hierarchy, a **Rule Set** is a logical grouping of individual rules that are specific to a business function and share the same root entity and common triggers. **Figure 10** shows an example of the `ABContact Preupdate` rule set, which groups rules related to modifying contact and related entities. Rules within a rule set are organized into a hierarchy that reflects your business model. When a rule set is triggered, all rules within it are executed in their defined order, unless an `exit()` command is encountered. For existing rule set categories like `Event Messaging`, `Pre-update`, and `Validation`, you don't need to write trigger code for new rule sets.\n\nFinally, at the lowest level are the individual **Rules**, as depicted in **Figure 11**. If a parent rule's condition is false, neither its action nor any of its child rules are executed. Rules are executed in the order they appear in the hierarchy. For example, `ABPU1000` might gather rules for all contacts, and its child rules (like `ABPU1010` for contact creation or `ABPU1020` for assigned user changes) only run if `ABPU1000`'s condition is true. Similarly, `ABPU2000` might check if a contact is an `ABPerson`, and its children (like `ABPU2010` for flagging missing email addresses) would only execute if that condition is met. You have the flexibility to create new Gosu rules and configure their execution by defining appropriate conditions.",
+      "keyPoints": [
+        "Rules are organized into a hierarchy: Rule Set Category > Rule Set > Rule.",
+        "Rule Set Categories group rule sets by high-level purpose and trigger.",
+        "Rule Sets group individual rules sharing a root entity and triggers.",
+        "Individual rules execute based on their condition and parent rule conditions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "The hierarchical structure of Gosu rules in Guidewire applications."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Rule Set Categories as collections of rule sets with common purpose and triggers."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Examples of common Rule Set Categories and their functions."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Rule Sets as logical groupings of rules sharing a root entity and triggers."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Individual Gosu rules within a rule set hierarchy, showing parent-child relationships."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Root Entity",
+          "content": "The root entity is the input parameter for a rule, determining the class of objects the rule set is tied to and the object available to the rules when triggered."
+        },
+        {
+          "type": "tip",
+          "title": "Customizing Rule Sets",
+          "content": "For existing rule set categories (Event Messaging, Pre-update, Validation), you do not need to write trigger code when creating new rule sets."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Rule Execution: The \"Execute All\" Flow (Part 1)",
+      "narrative": "When a rule set is triggered, Guidewire generally executes all active rules within that set, following the order defined by their hierarchy. This \"execute all\" behavior is common, especially for rule sets like validation rules, where all conditions need to be checked. As illustrated in **Figure 12**, rules are executed sequentially. A rule will *not* be executed if its condition is false, if the rule is deactivated, or if its parent's condition is false. The numbers to the left of the rules in the screenshot indicate the execution order.\n\nLet's walk through an example using the `ABContactPreupdate.grs` rule set.\n\n1.  The process begins with `ABPU1000 - Subtype ABContact`. As shown in **Figure 13**, if its condition is `true`, the application executes its action and then proceeds to evaluate its child rules.\n2.  Next, its first child, `ABPU1010 - Contact created`, is evaluated. In **Figure 14**, if `ABPU1010`'s condition is `true`, its action is executed. Since this rule has no children, execution moves to its next sibling.\n3.  Then, `ABPU1020 - Assigned user changed` is considered. **Figure 15** shows that if `ABPU1020`'s condition is `false`, the application skips its action and does not check for any children. Instead, it moves directly to the next sibling rule.\n4.  Following this, `ABPU1030 - Flag invalid address` is evaluated. If its condition is `true`, as depicted in **Figure 16**, the application executes its action. Having no children, execution then moves to its next sibling. This sequential evaluation ensures that all relevant rules are considered, unless explicitly skipped by a false condition or deactivation.",
+      "keyPoints": [
+        "\"Execute all\" rule sets run all active rules in hierarchical order.",
+        "Rules are skipped if their condition is false, they are deactivated, or their parent's condition is false.",
+        "Execution proceeds sequentially through siblings if a rule has no children or its children are skipped."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Overview of 'execute all' rule execution, showing sequential processing and conditions for skipping rules."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Step 1: Execution of parent rule ABPU1000 when its condition is true."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Step 1a: Execution of child rule ABPU1010 when its condition is true."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Step 1b: Skipping child rule ABPU1020 when its condition is false."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Step 1c: Execution of child rule ABPU1030 when its condition is true."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Rule Execution: The \"Execute All\" Flow (Part 2)",
+      "narrative": "Continuing our example of the \"execute all\" flow:\n\n1.  After `ABPU1030`, the next rule is `ABPU1040 - Unverify changed bank accounts`. As shown in **Figure 17**, if `ABPU1040`'s condition is `false`, the application skips its action and does not check for children. Since there are no more siblings at this level, execution moves one level back up to check if the parent (`ABPU1000`) has a next sibling.\n2.  The next top-level rule is `ABPU2000 - Subtype ABPerson`. In **Figure 18**, if `ABPU2000`'s condition is `false`, the application skips its action and all its child rules. Execution then moves to the next sibling at the same level.\n3.  Even if `ABPU2000` was true, its child `ABPU2010 - Flag lack of email address` would be evaluated. **Figure 19** shows that if `ABPU2010`'s condition is `false`, its action is skipped. If there are no more siblings, execution moves back up to the parent's level.\n4.  Next, `ABPU3000 - Subtype AB--Vendor` is evaluated. As depicted in **Figure 20**, if its condition is `true`, the application executes its action. Since it has no children, execution moves to its next sibling.\n5.  Finally, `ABPU4000 - Subtype ABLawFirm` is considered. **Figure 21** shows that if its condition is `true`, the application executes its action. With no children, siblings, or parent siblings remaining, the rule set execution is finished. This detailed step-by-step process highlights how the rules engine systematically traverses the hierarchy, executing or skipping rules based on their conditions and activation status.",
+      "keyPoints": [
+        "Execution moves up the hierarchy when no more siblings or children are present.",
+        "A false parent condition prevents execution of all its child rules.",
+        "The rule set finishes when all rules have been evaluated or skipped."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Step 1d: Skipping child rule ABPU1040 and moving up the hierarchy."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Step 2: Skipping parent rule ABPU2000 and its children due to a false condition."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Step 2a: Skipping child rule ABPU2010 and moving up the hierarchy."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Step 3: Execution of top-level rule ABPU3000 when its condition is true."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Step 4: Execution of top-level rule ABPU4000, completing the rule set execution."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Rule Execution: \"Exit After First Action\" and Exit Methods",
+      "narrative": "While many rule sets execute all rules, some are designed to \"exit after the first action.\" This means that once a condition is met and its associated action is performed, the rule set stops processing further rules. This behavior is crucial for scenarios where only one decision or action is needed, such as in assignment rules where you want to assign an object only once. **Figure 22** illustrates a `ClaimSegmentationRules.grs` rule set, which is an example of an \"exit after first action\" rule set. Here, rules are executed in hierarchical order, but the process stops as soon as an `exit()` command is encountered.\n\nGuidewire Studio provides several methods to control the flow of rule execution, allowing you to exit a rule set at specific points. These `actions.exit()` methods are vital for preventing later rules from overwriting earlier decisions. **Figure 23** shows the syntax `actions.exit()` and lists various options:\n*   `actions.exit()`: This is the simplest and most commonly used method. It immediately stops processing the entire rule set as soon as it's encountered.\n*   `actions.exitAfter()`: This method executes the current rule's child rules and *then* exits the entire rule set.\n*   `actions.exitToNextParent()`: This skips to the next rule that is at the same level as the current rule's parent, effectively skipping any remaining child rules of the current rule.\n*   `actions.exitToNextRoot()`: This skips to the next top-level rule, bypassing any other rules in the current top-level branch. This is useful when you have distinct decision blocks within a rule set.\n*   `actions.exitToNext()`: This stops processing the current rule and immediately moves to the next peer rule (a rule at the same level in the hierarchy). This is rarely used in very complex action sections.\n\nTypically, an `exit` action is placed as the last action within a rule, ensuring that all other defined actions for that rule are completed before the rule set's execution flow is altered. For instance, in ClaimCenter, segmentation rules use `actions.exit()` to set the `Segment` property on new claims and exposures, ensuring that once a segment is determined, no other rule reassigns it.",
+      "keyPoints": [
+        "\"Exit after first action\" rule sets stop execution once a condition is met and action is taken.",
+        "actions.exit() is the simplest method to stop rule set processing.",
+        "Other exit methods (exitAfter, exitToNextParent, exitToNextRoot, exitToNext) provide fine-grained control over execution flow.",
+        "Exit actions are usually the last action in a rule."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Rule execution flow for an 'exit after first action' rule set, stopping upon the first exit command."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Different `actions.exit()` methods available for controlling rule set execution flow."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Exit After First Action",
+          "content": "A rule set where execution stops once the first true condition is found and its action is taken, preventing subsequent rules from running."
+        },
+        {
+          "type": "best_practice",
+          "title": "Placement of Exit Actions",
+          "content": "Always place an `exit` action as the last action in a rule to ensure all other defined actions for that rule are completed first."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through implementing a business requirement using Gosu rules. The goal is to automatically assign new contacts with flag entries to their creator and add a descriptive note. Pay close attention to how display keys are created and how the Gosu rule leverages entity events to achieve this automation.",
+      "transcriptSummary": "The demo begins by setting up two new display keys (`x.contact assigned` and `x.new contact with flag entries auto assigned`) in `display.properties` to support the new functionality. It then explains that a Gosu rule is the ideal solution for the requirement of automatically assigning flagged contacts to their creator and adding a note, because rules are triggered by entity events regardless of the event's source (UI or integration). The video emphasizes that Gosu rules ensure consistent execution of logic."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team has decided to implement a new rule that automatically flags any `ABCompany` contact that does not have a primary contact assigned. This flag should help users identify incomplete company profiles.",
+      "question": "How would you begin to structure a Gosu rule for this requirement, considering the rule's anatomy and hierarchy? Specifically, identify the root entity, a suitable rule set category, and a potential condition.",
+      "hints": [
+        "Think about the entity being evaluated.",
+        "Consider when this check should occur (e.g., before saving, after creation).",
+        "What property of the `ABCompany` would you check?"
+      ],
+      "expectedApproach": "The learner should identify `ABCompany` as the root entity, `Validation` or `Preupdate` as a suitable rule set category, and a condition like `ABCompany.PrimaryContact == null`."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Building on the previous practice, you now need to implement the action for the rule that flags `ABCompany` contacts without a primary contact. The action should create a `Flag Entry` on the `ABCompany` to notify users.",
+      "question": "Write a conceptual Gosu code snippet for the action part of this rule. Assume you have access to the `ABCompany` entity as `company` within the rule.",
+      "hints": [
+        "How do you create a new object in Gosu?",
+        "What properties would a `Flag Entry` need (e.g., `Subject`, `Description`, `Target`)?",
+        "How do you add a new `Flag Entry` to an `ABCompany`?"
+      ],
+      "expectedApproach": "The learner should create a new `FlagEntry` object, set its properties (e.g., `Subject`, `Description`, `Target` to `company`), and then add it to the `company`'s `FlagEntries` collection."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis the significance of a rule set's root entity?",
+      "referenceAnswer": "Whatis the significance of a rule set's root entity?\noY” Every rule set is tied to an entity, known as the root entity. This determines which class\nof objects the rule set is tied to. It also determines the object available to the rules in\nthe rule set when the rule set is triggered.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the difference between an \"execute all\" rule set and an “exit after\nYo first action\" rule set?",
+      "referenceAnswer": "Whatis the difference between an \"execute all\" rule set and an “exit after\na first action\" rule set?\n? In an “execute all\" rule set, all rules are executed. For example, validation rule sets are\nexecute all. All validation conditions are checked, regardless of how many are true. In\nan \"exit after first action\" rule set, you do not typically execute all rules. When the first\ntrue condition is found, the action associated with that condition is taken and the rule\nset is exited. For example, assignment rule sets are exit after first action. Once an\nassignment is made, the rule set exits so that later code doesn't reassign the object.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whatis the effect of deactivating a rule?",
+      "referenceAnswer": "rules \"on\" and \"off\".",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu rules (`.gr` files) automate business logic based on \"If-Then\" conditions triggered by entity events.",
+        "Rules have a root entity, a unique name, a Boolean condition, and an action.",
+        "Rules are organized hierarchically: Rule Set Category > Rule Set > Rule.",
+        "\"Execute all\" rule sets process every active rule, while \"exit after first action\" rule sets stop after the first successful action.",
+        "actions.exit() and related methods provide granular control over rule execution flow."
+      ],
+      "realWorldConnection": "Gosu rules are the backbone of Guidewire's configurability, allowing insurance companies to adapt their core systems to unique business processes, regulatory changes, and evolving market demands without altering the base code. This flexibility is critical for maintaining agility and competitive advantage in the insurance industry.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the Gosu language syntax and common patterns used in writing effective rules and other customizations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "The student exercise on slide 35 indicates a hands-on task related to Gosu Rules. This assignment will challenge you to apply the concepts learned in this lesson to create or modify Gosu rules within a Guidewire environment.",
+      "objectives": [
+        "Implement a new Gosu rule to address a specific business requirement.",
+        "Define the rule's root entity, condition, and action.",
+        "Integrate the new rule into an existing rule set hierarchy.",
+        "Test the rule's execution to ensure it behaves as expected."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_09.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_09.mp4"
+    }
+  ]
+}

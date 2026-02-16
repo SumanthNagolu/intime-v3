@@ -1,0 +1,164 @@
+{
+  "lessonId": "ch13-l07",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 7,
+  "title": "Impact Testing",
+  "subtitle": "Understand the purpose, process, and best practices for using impact testing in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T19:10:49.291272+00:00",
+  "estimatedMinutes": 28,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your company is about to roll out a significant update to its insurance rates. This change could impact thousands of policies, and a miscalculation could lead to financial losses or customer dissatisfaction. How can you confidently predict the exact effect of these new rates before they go live?",
+      "question": "What tools or processes would you use to thoroughly evaluate the financial impact of a rate change on your entire book of business?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define impact testing and its purpose within PolicyCenter.",
+        "Describe the key steps involved in the impact testing process.",
+        "Identify critical considerations for policy selection in an impact testing run.",
+        "Explain how to configure impact testing for specific scenarios, such as rating renewals.",
+        "Recognize important warnings and recommendations for using impact testing effectively and safely."
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored how rate books and rate routines define policy premiums. Recall how different factors and calculations contribute to the final cost of an insurance policy.",
+      "warmupQuestion": "Before we dive into impact testing, consider: What challenges might arise when trying to manually assess the effect of a rate change across many diverse policies?",
+      "hint": "Think about consistency, volume, and accuracy."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Impact Testing: Purpose, Process, and Policy Selection",
+      "narrative": "Impact testing is a powerful feature in PolicyCenter designed to help you understand the **effect that changing rate books and rate routines will have on policy premiums** for a selected group of policies. As a Rating Analyst, you'll use this tool to predict outcomes before deploying new rates, ensuring accuracy and minimizing risks.\n\nThe process begins by selecting policies from your application database. PolicyCenter then creates 'baseline periods' by re-rating these selected policies using their last known state and the *active* rate book. For example, if a policy originally had one vehicle and later a second was added, the baseline would re-rate the policy with both vehicles for the full period. These baseline periods are then cloned to create 'test versions' of the quotes. You then select specific *comparison rate books* to rate these test policies against the baselines. Finally, PolicyCenter displays the impact results, often visualized through graphs showing policy count and financial impact across various premium change ranges.\n\nBefore initiating an impact testing run, **careful consideration of policy selection is crucial**. Impact testing can be a resource-intensive process, with completion time varying significantly based on the number of policies and your system's hardware. To ensure efficiency and meaningful results, it's a **best practice to run impact testing on a representative sample of your policies** rather than your entire book of business. This helps you get accurate insights without overwhelming your system.",
+      "keyPoints": [
+        "Impact testing predicts premium changes from new rate books/routines.",
+        "The process involves creating baselines, cloning for tests, and comparing with selected rate books.",
+        "Policy selection is critical due to performance impact; use a representative sample."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "This slide introduces impact testing, explaining its purpose: to see the effect of rate book and routine changes on policy premiums for a group of policies."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "The diagram illustrates the impact testing process, from selecting policies and creating baselines to selecting rate books and displaying results."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "This slide highlights the importance of careful policy selection for impact testing, noting potential time consumption and recommending a representative sample."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Policy Selection",
+          "content": "To manage performance and obtain meaningful results, always run impact testing on a representative sample of your policies, not your entire book."
+        },
+        {
+          "type": "definition",
+          "title": "Impact Testing",
+          "content": "A PolicyCenter feature that generates test policy periods and rates them using active and selected comparison rate books to assess the impact of rate changes on policy premiums."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the user interface for impact testing in PolicyCenter, showing you how to initiate a test and navigate through the process of selecting policies and rate books.",
+      "transcriptSummary": "The video provides a visual guide to accessing the Impact Testing screen, specifying criteria to filter policies (e.g., product, jurisdiction), and selecting the rate books for comparison. It highlights the wizard-driven nature of the process."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Configuring Impact Testing and Important Considerations",
+      "narrative": "While impact testing provides robust out-of-the-box functionality, PolicyCenter also offers significant configuration options to tailor it to your specific needs. By default, impact testing does not include renewals and rates all baseline and test policy periods as *submission jobs*. However, you can configure impact testing to rate renewals as *renewal jobs* instead. This is particularly useful if your rate routines include special steps for renewals or if your rate tables contain factors that vary based on the job type (submission vs. renewal).\n\nBeyond renewal handling, you can further customize impact testing by writing your own implementation of the impact testing plugin interface. This allows you to define how test periods are created—perhaps by copying submissions or spinning off policies in a unique way—or to alter how alternate rate books are selected. This flexibility ensures that impact testing can accurately reflect complex business logic.\n\nIt's crucial to remember that impact testing is designed exclusively for **test environments** and should always be run on a **copy of production data**. It is only accessible when the server is in development or test modes. Impact testing significantly affects system performance and creates test policy periods that are stored in the database. For these reasons, **impact testing is explicitly not accessible in production mode**. Always refer to the 'Impact testing warnings and recommendations' article in the PolicyCenter Application Guide for detailed best practices, such as disabling integrations and preventing other users from making rating-related changes during a test run.",
+      "keyPoints": [
+        "Impact testing can be configured to rate renewals as renewal jobs, not just submissions.",
+        "Custom plugin implementations allow for flexible test period creation and rate book selection.",
+        "Impact testing is strictly for test environments, not production, due to performance and data storage implications."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "This slide explains that impact testing can be configured to rate renewals as renewal transactions, rather than the default submission jobs, to account for specific rate routines."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "This slide details additional configuration options, such as customizing test period creation and alternate rate book selection through plugin interface implementation."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "This slide outlines critical warnings and recommendations for impact testing, emphasizing its use in test environments only and its impact on system performance."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Production Environment Restriction",
+          "content": "Impact testing is strictly forbidden in a production environment. It is designed for development or test modes only, as it impacts system performance and creates persistent test data."
+        },
+        {
+          "type": "tip",
+          "title": "Customizing Impact Testing",
+          "content": "For advanced scenarios, you can implement your own impact testing plugin interface to customize how test periods are created or how alternate rate books are selected."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new rate book is being developed for your auto insurance product. You need to verify its impact on existing policies, especially how it handles renewals, before it's approved for deployment.",
+      "question": "Given the default behavior of impact testing, what specific configuration change would you consider to accurately assess the new rate book's effect on renewal policies, and why is this important?",
+      "hints": [
+        "Recall how impact testing handles job types by default.",
+        "Think about why renewal jobs might have different rating logic than submission jobs."
+      ],
+      "expectedApproach": "Identify the default behavior for renewals in impact testing and then state the configuration option to change it, explaining the rationale based on rate routine or table differences."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is the purpose of impact testing?",
+      "referenceAnswer": "oe To predict what will happen when a rate book changes.",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Can impact testing be run in a production environment?",
+      "referenceAnswer": "oe No. Impact testing is designed to be run in a test environment on a copy of the production data.",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Impact testing allows you to predict the premium changes resulting from new rate books or routines.",
+        "The process involves creating baselines, cloning policies, and comparing them against selected rate books.",
+        "Careful policy selection, often a representative sample, is crucial for efficient and accurate testing.",
+        "Impact testing can be configured to handle renewals as renewal jobs, reflecting specific rating logic.",
+        "Customizations are possible through plugin interfaces for advanced test period creation or rate book selection.",
+        "Impact testing is strictly for test environments and never for production, due to performance and data integrity concerns."
+      ],
+      "realWorldConnection": "In real Guidewire projects, impact testing is indispensable for quality assurance and risk management. It empowers rating analysts and developers to validate complex rate changes, ensuring that new products or updates are deployed with confidence, avoiding costly errors and maintaining customer trust."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_07_01.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_07_01.mp4"
+    }
+  ]
+}

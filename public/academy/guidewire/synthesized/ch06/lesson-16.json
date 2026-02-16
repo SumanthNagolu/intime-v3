@@ -1,0 +1,279 @@
+{
+  "lessonId": "ch06-l16",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 16,
+  "title": "Managing Disbursements",
+  "subtitle": "Learn how BillingCenter handles refunds, both manually and automatically, through its lifecycle and configurations.",
+  "synthesizedAt": "2026-02-16T17:53:56.510548+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a policyholder, Mrs. Smith, accidentally overpays her premium by $500. She calls, expecting a quick refund. As a billing clerk, you need to ensure this refund is processed efficiently.",
+      "question": "How does BillingCenter ensure Mrs. Smith gets her money back, and what steps are involved, whether it's handled by a person or automatically?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the lifecycle of a disbursement in BillingCenter.",
+        "Differentiate between manual and automatic disbursement processes.",
+        "Explain how to manually initiate a disbursement and its approval flow.",
+        "Identify the key functions of the Automatic Disbursement batch process.",
+        "Configure billing plan settings to control automatic disbursement behavior, including surplus calculation, due dates, and approval requirements."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with core BillingCenter concepts such as accounts, policies, payments, and the role of unapplied funds in managing incoming money.",
+      "warmupQuestion": "Recall a time you or someone you know received a refund from a company. What was your expectation for how quickly and easily that refund would be processed?",
+      "hint": "Think about the steps involved from the customer's perspective and what might happen behind the scenes."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Disbursement Lifecycle",
+      "narrative": "In BillingCenter, a **disbursement** is essentially a refund paid to an account when there are surplus funds. This often happens due to a policy cancellation, an overpayment, or a rate adjustment. While BillingCenter typically handles these automatically, a billing clerk can also initiate a disbursement manually, as highlighted by Zhang in our scenario. \n\nThe disbursement process follows a clear lifecycle. It begins when an account has excess unapplied funds, triggering the creation of a disbursement. Depending on the amount and how it was initiated, the disbursement might require approval. If no approval is needed, or once approved, its status changes to 'Approved'. Even after approval, a user can manually reject a disbursement up until its due date. On the due date, a batch process runs, changing the disbursement's status to 'Sent', indicating that the payment request has been issued. At this stage, the disbursement can no longer be rejected but can be 'Voided' if, for example, it cannot be delivered due to incorrect bank details or address. This structured lifecycle ensures that refunds are processed systematically and with appropriate oversight.",
+      "keyPoints": [
+        "A disbursement is a refund for surplus account funds.",
+        "Common reasons include policy cancellation, overpayment, or rate adjustment.",
+        "The lifecycle involves creation, potential approval/rejection, and eventual sending or voiding.",
+        "Disbursements are typically handled automatically, but can be initiated manually."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide setting the stage for managing disbursements."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marcus, the Business Analyst, asks about refunds, and Zhang, the Billing Clerk, explains that most are automatic but can be manual."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The first stage of the disbursement lifecycle: excess unapplied funds lead to disbursement creation."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The second stage: a disbursement is created and, if no approval is needed, is automatically approved."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The third stage: if approval is required, a user can approve or reject the disbursement. It can also be manually rejected even after approval, up to the due date."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The final stage: on the due date, a batch process sends the disbursement. If undeliverable, it can be voided."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Manual Disbursement Process",
+      "narrative": "While most disbursements are automatic, billing clerks can initiate them manually when needed. Insurers often implement restrictions on manual disbursements, limiting who can create them and setting an upper limit on the amount a user can disburse without approval. When a BillingCenter user creates a manual disbursement, the system checks their **disbursement approval limit**. If the amount is within their limit, the disbursement is automatically approved. However, if the amount exceeds the user's limit, BillingCenter creates an approval activity, assigning it to another user with a sufficient approval limit. The disbursement's status remains 'Awaiting Approval' until this activity is completed. Once approved, its status becomes 'Approved'; if rejected, it becomes 'Rejected'.\n\nThe manual disbursement process typically involves a two-step wizard. The first step, as shown in the figure, requires entering customer details, selecting the unapplied fund (a disbursement can only draw from a single source of unapplied funds), specifying the amount, payment date, reason, and payee information. BillingCenter validates that the amount to disburse does not exceed the available unapplied amount before proceeding. The second step is a simple confirmation. After creation and approval, the **Disbursement batch process** plays a crucial role. This batch process, typically run daily, identifies approved disbursements that have reached their due date and initiates their payment. It creates a request for payment through integration with a third-party system and updates the disbursement status to 'Sent'. If the due date hasn't been reached, the disbursement is ignored by the batch process until it's due.",
+      "keyPoints": [
+        "Manual disbursements are initiated by BillingCenter users.",
+        "User approval limits determine if a manual disbursement requires additional approval.",
+        "The manual disbursement wizard requires selecting a single unapplied fund source.",
+        "The Disbursement batch process pays approved disbursements on their due date, changing their status to 'Sent'."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "This diagram illustrates the actors and flow for a manual disbursement, emphasizing user permissions and approval limits."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Screenshot of the Account Disbursement Wizard - Step 1, showing fields for customer, disbursement, and payee details."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explanation of the Disbursement batch process, which issues payments for approved disbursements on their due date and updates their status to 'Sent'."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Unapplied Funds",
+          "content": "Money from payments that has not yet been distributed to unpaid invoice items. It can be held at the account level (Default Unapplied) or policy level (Designated Unapplied)."
+        },
+        {
+          "type": "tip",
+          "title": "Single Source Rule",
+          "content": "Remember that a manual disbursement can only draw from a single source of unapplied funds. If an account has surplus in multiple unapplied funds, separate disbursements are required for each."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the steps of creating a manual disbursement in BillingCenter, from initiating the wizard to confirming the details.",
+      "transcriptSummary": "The video shows how to navigate to the Account Disbursement wizard, fill in the required fields such as amount, reason, and payee, and complete the manual disbursement creation process. It highlights the validation steps and the final confirmation."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What does a billing clerk need to do to ensure that most refunds are sent\nY to policyholders?",
+      "referenceAnswer": "Y to policyholders?\nNo action is needed — BillingCenter automatically handles disbursements.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "- — Identify the actor that initiates each step for a manual and an automatic\n: disbursement (1 of 2).",
+      "referenceAnswer": "¢ disbursement (1 of 2).",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "- — Identify the actor that initiates each step for a manual and an automatic\n: disbursement (2 of 2).",
+      "referenceAnswer": "¢ disbursement (2 of 2).",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Automatic Disbursement Process",
+      "narrative": "While manual disbursements are available, the majority of refunds in BillingCenter are handled automatically. This is a key efficiency goal for insurers like Succeed Insurance. The **Automatic Disbursement batch process** is responsible for this automation. When this batch process runs, it systematically sweeps through unapplied accounts, looking for surplus funds that are eligible for disbursement.\n\nThe behavior of this batch process, including how it determines if there's unapplied money to disburse, the disbursement due date, and whether approval is required, is primarily controlled by **billing plan settings**. This means that the system's automated actions are configurable and tailored to an insurer's specific business rules. Once an automatic disbursement is created and approved (if required), its subsequent lifecycle—including being sent by the Disbursement batch process—mirrors that of a manual disbursement. The core difference lies in the initiation: instead of a user, the system itself, guided by billing plan configurations, identifies and processes the refund. The Automatic Disbursement batch process first checks for accounts with positive unapplied balances. For each such account, it attempts to allocate the unapplied money to any eligible unsettled invoice items. Only if surplus unapplied funds *remain* after this allocation does the batch process create a disbursement. This prevents disbursing money when there are still outstanding invoices to be paid. This batch process is typically run daily to ensure timely refunds.",
+      "keyPoints": [
+        "Most disbursements are created automatically by the Automatic Disbursement batch process.",
+        "Billing plan settings control the behavior of automatic disbursements.",
+        "The Automatic Disbursement batch process allocates unapplied funds to unsettled invoices first, then creates a disbursement for any remaining surplus.",
+        "Once created and approved, automatic disbursements follow the same lifecycle as manual ones."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Zhang explains to Marcus that most disbursements at Succeed Insurance are automatic."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "This diagram illustrates the actors and flow for an automatic disbursement, highlighting the role of billing plan settings."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Details the Automatic Disbursement batch process, which allocates funds and creates disbursements for surplus amounts."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 2,
+      "context": "This demonstration will show you how the Automatic Disbursement batch process works in BillingCenter, observing how surplus funds are identified and a disbursement is automatically generated.",
+      "transcriptSummary": "The video illustrates the automatic disbursement process, demonstrating how BillingCenter identifies an account with surplus unapplied funds and automatically creates a disbursement based on predefined billing plan settings, without manual intervention."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Billing Plan Settings for Automatic Disbursements",
+      "narrative": "The intelligence behind automatic disbursements lies in the **billing plan settings**. These settings dictate how the Automatic Disbursement batch process determines if there's a surplus, when the disbursement should be paid, and if it requires approval. The 'Automatic Disbursements' section of a billing plan contains several crucial options.\n\nFirst, to determine if a surplus exists, two fields are used:\n*   **Amount Available**: This specifies how the monetary amount available for disbursing is calculated. Options include:\n    *   **Unapplied minus amount under contract**: BillingCenter subtracts the unpaid amount under contract from the unapplied funds.\n    *   **Unapplied minus billed**: BillingCenter subtracts the unpaid amount that has been billed from the unapplied funds.\n*   **Creation Threshold**: This sets an upper limit for trivial amounts. For example, a setting of $4.99 means the batch process will ignore unapplied amounts of $4.99 or less, preventing the creation of very small, uneconomical disbursements.\n\nNext, for setting the disbursement's due date, the **Days Until Payment Created** field is used. The batch process adds this number of days to the current date to determine the due date. This allows for a buffer, such as clearing time for incoming payments, before the refund is actually issued.\n\nFinally, for handling approvals, two fields are critical:\n*   **Approval Required**: This 'Yes/No' setting enables or disables the creation of an approval activity if the automatic disbursement exceeds a specified value. Generally, this is set to 'Yes' to ensure oversight for larger amounts.\n*   **Approval Required Threshold**: This field specifies the monetary threshold above which an automatic disbursement requires approval. Disbursements less than or equal to this amount are automatically approved. For instance, if set to $1,000, any disbursement greater than $1,000 will trigger an approval activity.",
+      "keyPoints": [
+        "Billing plan settings control the behavior of the Automatic Disbursement batch process.",
+        "Amount Available and Creation Threshold determine if a surplus exists for disbursement.",
+        "Days Until Payment Created sets the disbursement's due date.",
+        "Approval Required and Approval Required Threshold manage the approval process for automatic disbursements."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "An overview of the billing plan settings specifically for automatic disbursements."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Marcus asks how surplus is determined, and Zhang explains it's controlled by billing plan settings."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Detailed explanation of 'Amount Available' (Unapplied minus under contract/billed) and 'Creation Threshold' settings."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Explanation of the 'Days Until Payment Created' setting, which determines the disbursement's due date."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Explanation of 'Approval Required' and 'Approval Required Threshold' settings for managing automatic disbursement approvals."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Configuring Thresholds",
+          "content": "Carefully configure the 'Creation Threshold' to avoid processing trivial refunds that might cost more to process than their value. Similarly, set the 'Approval Required Threshold' to balance efficiency with necessary financial oversight."
+        },
+        {
+          "type": "definition",
+          "title": "Amount Under Contract",
+          "content": "Refers to the total unpaid amount for a policy that is still 'under contract,' meaning the policy is active and these charges are expected to be paid, even if not yet billed."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Given: $1000 in Default Unapplied, billed invoice items amounting to\n¢ $200, and unbilled invoice items amounting to $600:\n\nHow much money is available for automatic disbursement if Unapplied\nminus under contract is used for the calculation?\n\nHow much money is available for automatic disbursement if Unapplied\nminus billed is used for the calculation?",
+      "referenceAnswer": "a. $200\nb. $800",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policyholder's account has $1,500 in Default Unapplied funds. There are no outstanding billed invoice items, but there are unbilled invoice items totaling $300. The billing plan is configured with 'Unapplied minus under contract' for 'Amount Available' and an 'Approval Required Threshold' of $1,000.",
+      "question": "Will an automatic disbursement be created, and if so, what will be its initial amount and status?",
+      "hints": [
+        "First, calculate the available amount using the 'Unapplied minus under contract' rule.",
+        "Then, compare this available amount to the 'Approval Required Threshold' to determine the status."
+      ],
+      "expectedApproach": "Calculate available funds ($1500 - $300 = $1200). Compare $1200 to the $1000 threshold. Since $1200 > $1000, a disbursement of $1200 will be created with a status of 'Awaiting Approval'."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Disbursements are refunds for surplus unapplied funds, initiated manually or automatically.",
+        "The disbursement lifecycle involves creation, approval/rejection, sending, and potential voiding.",
+        "Manual disbursements are user-initiated, subject to approval limits, and draw from a single unapplied fund source.",
+        "Automatic disbursements are initiated by a batch process, controlled by billing plan settings.",
+        "Billing plan settings determine surplus calculation (e.g., 'Unapplied minus under contract'), due dates, and approval requirements for automatic disbursements."
+      ],
+      "realWorldConnection": "Efficient disbursement management is crucial for customer satisfaction and financial accuracy in any Guidewire BillingCenter implementation. Properly configuring automatic disbursements minimizes manual effort, reduces errors, and ensures timely refunds, directly impacting policyholder trust and operational costs. Understanding these processes is vital for both billing clerks and system configurators to maintain a healthy billing ecosystem."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access your BillingCenter training environment. Practice creating a manual disbursement for an account with surplus funds. Then, simulate a scenario where an automatic disbursement would be created, observing its lifecycle and how billing plan settings influence its behavior, including requiring approval.",
+      "objectives": [
+        "Manually create a disbursement in BillingCenter.",
+        "Verify the approval process for manual disbursements.",
+        "Observe the creation and status changes of an automatic disbursement.",
+        "Identify the impact of billing plan settings on automatic disbursement amounts and approvals."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_16_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_16_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_16_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_16_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Billing_16_03.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_16_03.mp4"
+    }
+  ]
+}

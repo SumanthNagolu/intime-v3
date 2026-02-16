@@ -1,0 +1,350 @@
+{
+  "lessonId": "ch07-l07",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 7,
+  "title": "Introduction to locations",
+  "subtitle": "Explore Guidewire Locations: navigable UI elements that define application structure and user flow.",
+  "synthesizedAt": "2026-02-16T18:01:12.521235+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're navigating a complex application, clicking links, opening new windows, or filling out multi-step forms. Each of these interactions relies on a fundamental concept: where you are, and where you're going. In Guidewire, these 'wheres' are called Locations.",
+      "question": "How do applications manage the flow of users through different screens and functionalities, and what are the building blocks that enable this navigation?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what a 'Location' is within the Guidewire application framework.",
+        "Identify and describe the seven primary types of Locations: Page, Location Group, Wizard, Popup, Worksheet, Forward, and Exit Point.",
+        "Explain the purpose and typical use cases for each Location type.",
+        "Differentiate between Location types based on their screen content, navigation methods, and UI display characteristics.",
+        "Understand how Locations contribute to user navigation and application structure in Guidewire.",
+        "Implement basic navigation to a Location, such as opening a Popup from a UI element."
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with various user interfaces, navigating through different screens, opening dialogs, or completing multi-step processes. This lesson builds on that intuitive understanding of application flow.",
+      "warmupQuestion": "Think about a common application you use daily. How does it guide you from one task or piece of information to another?",
+      "hint": "Consider how different parts of the application appear, disappear, or change based on your actions."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Locations and Pages",
+      "narrative": "In Guidewire applications, the concept of a **Location** is fundamental to defining how users navigate and interact with the system. At its core, a Location is a PCF (Page Configuration Framework) element that a user can navigate to. It's important to understand that Locations themselves do not define any visual content directly. Instead, they act as containers for one or more **Screen** elements, which are responsible for rendering the actual UI. Locations also play a crucial role in security, as they can leverage system permissions to control what users can see or access within the application.\n\nOne of the simplest and most common types of Locations is a **Page**. A Page is designed to contain a single screen and is primarily used within larger structures called Location Groups. While a Page displays a single screen, it's the Location Group that provides the surrounding context and navigation. Understanding Pages is key to grasping how individual views are presented to the user within a structured application flow.",
+      "keyPoints": [
+        "A Location is a navigable PCF element that contains Screen containers.",
+        "Locations use system permissions to control user access.",
+        "A Page is a Location that contains a single screen.",
+        "Pages are typically used within Location Groups."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of how Locations fit into the Guidewire application structure, illustrating their role in navigation."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definition and key characteristics of a Location in Guidewire, emphasizing its role as a navigable PCF element."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An example of a Page, demonstrating its single-screen content within the context of a larger application view."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location",
+          "content": "A PCF element that a user can navigate to. Locations do not define visual content but contain Screen containers and can use system permissions for access control."
+        },
+        {
+          "type": "definition",
+          "title": "Page",
+          "content": "A Location that contains a single screen. Pages are exclusively used within Location Groups."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Exploring Location Groups and Wizards",
+      "narrative": "Building on the concept of Pages, a **Location Group** can be thought of as a 'page group'—a collection of pages, each with its own screen. Location Groups are designed to gather a set of screens that display data about a single primary object (like a contact, policy, or claim) or serve a major application function (such as searching). All pages within a Location Group share a common info bar, actions menu, and side bar, providing a consistent user experience. Users navigate between pages in a Location Group by clicking links in the side bar. This structure allows for both navigation to the Location Group itself (displaying the first page) or to any specific page within it.\n\nFor more complex business processes, Guidewire applications utilize **Wizards**. A Wizard is an ordered collection of screens used to guide users through a multi-step task, displaying only one screen at a time. While the screens have a defined order, users might sometimes traverse them out of sequence. Similar to Location Groups, Wizards typically feature a single info bar, actions menu, and side bar, but they also include a toolbar with 'Back' and 'Next' buttons to facilitate step-by-step navigation. Examples include the New Claim Wizard in ClaimCenter for creating claims, the Submission Wizard in PolicyCenter for managing policies, and various transaction entry wizards in BillingCenter. These examples highlight how Wizards streamline intricate workflows across different Guidewire products.",
+      "keyPoints": [
+        "A Location Group is a collection of pages, sharing common info bar, actions menu, and side bar.",
+        "Location Groups are used for single primary objects or major application functions.",
+        "A Wizard is an ordered collection of screens for complex business processes.",
+        "Wizards include navigation buttons (Back/Next) and share common UI elements."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "An example of a Location Group in ClaimCenter, showcasing its shared tab bar, info bar, actions menu, and side bar for navigation between related pages."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A conceptual diagram of a Wizard, illustrating its multi-screen structure and dedicated navigation controls for sequential processes."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The New Claim Wizard in ClaimCenter, demonstrating a multi-step process for creating new claims."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The Submission Wizard in PolicyCenter, used for creating, modifying, renewing, or canceling policies through an ordered sequence of screens."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The Agency Bill Payment Wizard in BillingCenter, an example of a wizard used for entering transactions and managing accounts."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location Group",
+          "content": "A collection of pages that share a common info bar, actions menu, and side bar, used to display data about a single primary object or major application function."
+        },
+        {
+          "type": "definition",
+          "title": "Wizard",
+          "content": "An ordered collection of screens used to execute a complex business process, featuring a single info bar, actions menu, side bar, and navigation buttons."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Popups, Worksheets, Forwards, and Exit Points",
+      "narrative": "Beyond the primary navigation structures, Guidewire offers several specialized Location types for specific interaction patterns. A **Popup** contains a single screen and is designed to return the user to the previous Location once it's closed. These are engineered to mimic traditional pop-up windows but avoid the synchronization issues that can arise with true separate windows, offering a seamless user experience with an automatic 'Return to previous location' link.\n\n**Worksheets** provide a unique display area within the user interface. A Worksheet contains a single screen rendered in the workspace frame, typically appearing across the bottom of the screen. Unlike other UI elements, worksheets are only visible when a screen is actively displayed within them, and multiple worksheets can be navigated via tabs.\n\nFor more dynamic navigation, a **Forward** Location contains logic to execute before navigating to another Location. This is incredibly powerful, allowing developers to modify data or determine the destination Location based on data context or user permissions. Forwards act as intelligent intermediaries, directing users to the most appropriate view.\n\nFinally, an **Exit Point** is a Location that points to a URL outside of the Guidewire application. These are commonly used to provide users with easy access to other applications, such as reporting tools, or external websites. Exit Points do not contain a Screen widget directly or indirectly, as their purpose is to redirect the user externally.",
+      "keyPoints": [
+        "Popups display a single screen and return to the previous Location upon closure.",
+        "Worksheets display a single screen in the workspace frame at the bottom of the UI.",
+        "Forwards contain logic to determine the next Location or modify data before navigation.",
+        "Exit Points link to external URLs, typically for accessing other applications."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "An example of a Popup screen, showing its temporary nature and the 'Return to previous location' link."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A Worksheet displaying a screen within the workspace frame at the bottom of the application UI."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "A diagram illustrating how a Forward Location can use business logic to decide the navigation path to different Locations."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "An example of an Exit Point, which directs users to an external URL outside the Guidewire application."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Popup",
+          "content": "A Location containing a single screen that returns the user to the previous Location once closed, mimicking a separate window without synchronization issues."
+        },
+        {
+          "type": "definition",
+          "title": "Worksheet",
+          "content": "A Location containing a single screen rendered in the workspace frame, typically at the bottom of the UI, visible only when active."
+        },
+        {
+          "type": "definition",
+          "title": "Forward",
+          "content": "A Location containing logic to execute before navigating to another Location, often used to determine the destination based on data or permissions."
+        },
+        {
+          "type": "definition",
+          "title": "Exit Point",
+          "content": "A Location that points to a URL outside of the Guidewire application, used for accessing other applications or websites."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Reviewing Location Types and Navigation Methods",
+      "narrative": "To solidify our understanding, let's review the seven types of Locations and their typical navigation patterns. Each Location type serves a distinct purpose and is accessed using specific navigation methods. **Pages**, **Location Groups**, **Wizards**, and **Forwards** are generally navigated using the `go()` function. This function is suitable for primary application flows and direct navigation to main screens or structured processes. For instance, navigating to a new claim process or a contact summary would typically use `go()`.\n\nIn contrast, **Popups** and **Exit Points** are usually accessed using the `push()` function. The `push()` method is ideal for opening temporary views, like a detail popup, or for redirecting to an external site, as it often implies a return to the originating context or a departure from the application. Finally, **Worksheets**, which appear in the dedicated workspace frame at the bottom of the UI, are navigated using `goInWorkspace()`. This method specifically targets the worksheet area, ensuring the screen is rendered in its intended location. Understanding these distinctions is crucial for correctly structuring application navigation and ensuring a smooth user experience.",
+      "keyPoints": [
+        "Pages, Location Groups, Wizards, and Forwards typically use `go()` for navigation.",
+        "Popups and Exit Points typically use `push()` for navigation.",
+        "Worksheets use `goInWorkspace()` for navigation, rendering content in the workspace frame.",
+        "Each navigation method is suited for specific Location types and UI behaviors."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "A visual summary of the seven Location types, illustrating their conceptual relationships and primary functions."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A comprehensive table summarizing each Location type, its typical navigation method, what it initially displays, and where in the UI it is located."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Location Type",
+            "Typical Navigation Method",
+            "Initially Displays",
+            "Initial Display Located In"
+          ],
+          "rows": [
+            [
+              "Page",
+              "go()",
+              "Screen",
+              "Screen area"
+            ],
+            [
+              "Location Group",
+              "go()",
+              "First child page",
+              "Screen area"
+            ],
+            [
+              "Wizard",
+              "go()",
+              "First screen",
+              "Screen area"
+            ],
+            [
+              "Popup",
+              "push()",
+              "Screen",
+              "Originating frame"
+            ],
+            [
+              "Worksheet",
+              "goInWorkspace()",
+              "Screen",
+              "Workspace frame"
+            ],
+            [
+              "Forward",
+              "go()",
+              "Nothing",
+              "N/A"
+            ],
+            [
+              "Exit Point",
+              "push()",
+              "External page or web site",
+              "New window (or entire existing window)"
+            ]
+          ],
+          "caption": "Summary of Location types and their navigation characteristics."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Setting the Stage for a Navigation Implementation",
+      "narrative": "Now that we've explored the various types of Locations, let's consider a practical application of this knowledge. A common business requirement in Guidewire applications involves enhancing user interaction by making certain fields navigable. For instance, in the base configuration of TrainingApp, contacts can have an 'Assigned User' responsible for maintaining their information. A business partner might request that this 'Assigned User' field be made clickable. When a user with appropriate permissions (e.g., a Contact Administrator) clicks on the assigned user's name, the system should open a popup displaying the user's details, allowing for easy viewing or modification.\n\nDuring the initial analysis for such a requirement, it's crucial to identify existing components. In this specific scenario, a popup for user details, named `UserDetailPopup.pcf`, already exists. This simplifies the task significantly, as we don't need to build the popup's visual content or worry about permission control (which is already implemented within the popup itself). Our primary task then becomes writing the necessary code to trigger the opening of this `UserDetailPopup` when the 'Assigned User' field is clicked. This scenario perfectly illustrates how understanding Location types, particularly Popups, is essential for implementing common UI enhancements.",
+      "keyPoints": [
+        "Business requirements often involve making UI fields navigable.",
+        "Identifying existing Location components (like a Popup) streamlines implementation.",
+        "The task is to write code to open a specific Popup Location when a field is clicked."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "The business requirement to make the 'Assigned User' field navigable, with a visual representation of the field on the contact summary screen."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "A visual representation of the UI, highlighting the 'Assigned User' field that will be made navigable in the upcoming demonstration."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how to make the 'Assigned User' field navigable on the Contact Summary screen. Pay attention to how the `UserDetailPopup.pcf` is invoked to display user details.",
+      "transcriptSummary": "This demo illustrates how to make the 'Assigned User' field navigable on the Contact Summary screen. It begins by identifying the existing `UserDetailPopup.pcf` and then proceeds to show the code implementation required to open this popup when the user field is clicked, allowing administrators to view or modify user details."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team is developing a new feature that requires a user to confirm an action before proceeding. This confirmation should appear as a temporary, modal dialog that, once closed, returns the user to their previous screen.",
+      "question": "Which Guidewire Location type would be most appropriate for this confirmation dialog, and what navigation method would you typically use to open it?",
+      "hints": [
+        "Consider the temporary nature of the dialog and the requirement to return to the previous screen.",
+        "Think about which Location type is designed to mimic a separate window without synchronization issues.",
+        "Recall the navigation methods (`go()`, `push()`, `goInWorkspace()`) and their typical uses."
+      ],
+      "expectedApproach": "Identify 'Popup' as the appropriate Location type due to its temporary, single-screen nature and automatic return to the previous Location. The typical navigation method for a Popup is `push()`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "~ Of the seven types of Locations listed... ’ Locations\nie Which two contain multiple screens and have their own\n¢ info bar, actions menu, and side bar? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS",
+      "referenceAnswer": "~ — Of the seven types of Locations listed...\nA Which two contain multiple screens and have their own\n¢ info bar, actions menu, and side bar?\n\nThe correct response is:\nLocation Group and Wizard\n\nSooo ooo ooo ooo ooo\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "~ — Of the seven types of Locations listed...\nie Which two renders a screen somewhere other than the\n: screen area?\n\nSooo ooD Oooo oOooooMoS\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "referenceAnswer": "~ — Of the seven types of Locations listed...\nA Which one renders a screen somewhere other than the\nscreen area?\n\nThe correct response is:\nWorksheet and Exit Point\n\nSooo ooo ooo ooo ooo\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "~ ~ Of the seven types of Locations listed... ’ Locations\nie Which one typically navigates to one of several Locations\n¢ based on business logic? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS",
+      "referenceAnswer": "' Forward\n! |",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "7~ ~ Of the seven types of Locations listed... Locations\nie For each Location, what method would you usually use to\n¢ navigate to it? Page\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point\n\nSooo ooD Oooo oOooooMoS",
+      "referenceAnswer": "4\n¢\n¢\n\nSooo ooo ooo ooo ooo\n\n,~ — Of the seven types of Locations listed...\nFor each Location, what method would you usually use to\nnavigate to it?\n\nThe correct responses are:\n\nUse go() to navigate to Pages, Location Groups, Wizards, and\nForwards.\n\nUse push() to navigate to Popups and Exit Points.\nUse goInWorkspace() to navigate to Worksheets.\n\nLocations\nPage\n\nLocation\nGroup\n\nWizard\n\nPopup\n\nWorksheet\nForward\n\nExit Point",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Locations are fundamental PCF elements that define navigable points within Guidewire applications.",
+        "There are seven primary Location types: Page, Location Group, Wizard, Popup, Worksheet, Forward, and Exit Point.",
+        "Each Location type serves a specific purpose, from displaying single screens (Page) to managing complex workflows (Wizard) or external links (Exit Point).",
+        "Navigation methods (`go()`, `push()`, `goInWorkspace()`) are specific to Location types, dictating how users interact with different parts of the UI.",
+        "Understanding Locations is crucial for designing and implementing effective user navigation and application structure."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly identifying and implementing Location types is essential for building intuitive and efficient user interfaces. Whether you're creating a new claim process, integrating with a third-party reporting tool, or simply displaying contact details, the choice of Location directly impacts user experience and application functionality.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the practical implementation of Locations, focusing on how to configure and customize them using PCF files and Gosu code."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the concepts learned, complete the 'Introduction to Locations' student exercise. This hands-on task will reinforce your understanding of Location types and their practical application in a Guidewire environment.",
+      "objectives": [
+        "Apply knowledge of Location types to a given business scenario.",
+        "Practice identifying the appropriate Location for specific navigation requirements.",
+        "Gain experience with basic configuration related to Locations."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_07.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_07.mp4"
+    }
+  ]
+}

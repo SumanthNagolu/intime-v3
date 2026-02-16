@@ -1,0 +1,506 @@
+{
+  "lessonId": "ch11-l04",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 4,
+  "title": "Bundles and Database Transactions",
+  "subtitle": "Mastering Guidewire bundles for robust database operations and data integrity.",
+  "synthesizedAt": "2026-02-16T19:24:23.473506+00:00",
+  "estimatedMinutes": 150,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a complex insurance application. A user updates a policy, which involves changing multiple related records like customer details, coverage options, and premium calculations. If one of these updates fails, you wouldn't want some changes to save while others don't, leading to inconsistent data.",
+      "question": "How can we ensure that all related database changes either succeed completely or fail entirely, maintaining data integrity in our application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and function of Guidewire bundles in managing database transactions.",
+        "Differentiate between read-only and writable bundles, and current and new bundles.",
+        "Describe the accessor flow for retrieving entity instances, including the role of local and global caches.",
+        "Identify scenarios requiring automatic versus manual bundle processing.",
+        "Demonstrate how to create, modify, and commit entity instances using Gosu bundle APIs (`runWithNewBundle`, `newBundle`, `add`).",
+        "Explain restrictions on copying entity instances between bundles.",
+        "Utilize methods to track changes and retrieve original values of entity properties.",
+        "Apply best practices for updating large numbers of entities in integration resources, including paging and regular commits."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with object-oriented programming concepts, where objects represent real-world entities. You also understand basic database operations like inserting, updating, and deleting rows.",
+      "warmupQuestion": "Think about a time you've used a 'save' or 'commit' function in an application. What did you expect to happen if an error occurred during that process?",
+      "hint": "Consider the importance of 'all or nothing' operations in financial or critical data systems."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Bundles and Entity Instances",
+      "narrative": "In Guidewire, managing database transactions efficiently is crucial for maintaining data integrity. Guidewire applications achieve this by grouping entity instances into structures called **bundles**. Think of a bundle as an in-memory container for entity instances that directly correspond to rows in your database. This container can hold new entity instances, existing ones that have been changed, or even those marked for retirement (deletion). The core idea is that all changes within a bundle are treated as a single unit of work for the database.\n\nIn object-oriented programming, an instance of a class is an object. In database design, an instance of an entity is a row of data. Guidewire bridges this gap: when you create a new instance of an entity like `Contact` in Gosu or Java, the application not only creates a unique object in memory but also prepares it for potential insertion as a new row in a database table. Configurators and integrators often refer to these as 'database-backed entities' or 'entities of type `entity.KeyableBean`', meaning they are destined for the database when the bundle is committed.\n\nThe `gw.transaction.Bundle` class in Gosu represents this concept. It implements the `entity.BundleProvider` interface and manages a graph of objects. You can add beans (entity instances) to a bundle using the `add` method, mark them for removal with `delete`, and finally, invoke the `commit` method to save all changes to the database. When you want to view or modify an existing entity, the application first reads the data from the database, loads it into an object instance, places this instance into a bundle, allows for modifications, and then commits the bundle back to the database. This structured approach ensures that all related changes are processed together, preventing partial updates and maintaining consistency.",
+      "keyPoints": [
+        "Bundles are in-memory containers for grouping entity instances for database transactions.",
+        "An entity instance in Guidewire represents both an object in memory and a potential database row.",
+        "The `gw.transaction.Bundle` class manages entity instances and facilitates database operations.",
+        "Viewing or modifying entities involves reading them into a bundle, making changes, and committing the bundle."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to the concept of bundles in Guidewire."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of a bundle containing various entity instances like BankAccount, FlagEntry, and LegalCase, highlighting its role in managing database transactions."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram illustrating how entity instances are read from and written to the database via a bundle for viewing or modification."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Database-Backed Entity",
+          "content": "An entity that implements the `KeyableBean` delegate, meaning it can be inserted into the database when its bundle is committed."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Efficient Data Retrieval with Accessors and Caching",
+      "narrative": "When an application needs to retrieve entity instances, it typically does so either via a direct query or through **accessors** from an existing entity instance. Accessors are far more common than explicit queries; a single user interface page might trigger thousands of accessor calls. For example, `aBContact.PrimaryAddress` returns a single address entity, while `aBContact.BankAccounts` returns an array of bank account entities.\n\nPerforming a full database query for every accessor call would be prohibitively expensive due to the overhead of network communication and database processing. To mitigate this, Guidewire employs a two-level caching mechanism: a local bundle cache and a global application server cache. This system significantly reduces the number of direct database calls.\n\nLet's trace the accessor flow using `claim.Policy` as an example. When `claim.Policy` is executed, the system first checks the **local bundle** (which is specific to the current transaction or user session) to see if the `Policy` entity already exists there. If not found in the local bundle, the system then checks the **global cache** on the application server. This global cache stores frequently accessed entities and is shared across multiple user sessions or transactions. If the `Policy` is still not found in the global cache, only then does the system query the **database**.\n\nOnce the `Policy` entity is found in the database, it is retrieved and flows back up through the global cache and finally into the local bundle. This ensures that subsequent requests for the same `Policy` within the same session or even across different sessions (if in global cache) can be served much faster. If a new request for `claim.Policy` comes from a different bundle, the system will again check the local bundle (which will be empty for this new bundle), then find it in the global cache, and retrieve it into the new local bundle. While tuning the global cache is an advanced topic beyond this course, understanding this multi-level retrieval process is key to comprehending Guidewire's performance optimizations.",
+      "keyPoints": [
+        "Entity instances are read via queries or more frequently, via accessors.",
+        "Guidewire uses a two-level caching system (local bundle and global cache) to optimize data retrieval.",
+        "The accessor flow prioritizes checking the local bundle, then the global cache, before querying the database.",
+        "Caching reduces database load and improves application performance."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Illustrates how entity instances are read, either via a query or through accessors, and introduces the concept of two levels of caching."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Initial state of the accessor flow for `claim.Policy`, showing the bundle, app server, and database."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Step 1: The local bundle is checked first when `claim.Policy` is accessed."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Step 2: If not in the local bundle, the global cache on the application server is checked."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Step 3: If not in the global cache, the database is queried for the Policy entity."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Step 4: If found in the database, the Policy is retrieved back through the global cache."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Step 5: The Policy entity is finally loaded into the local bundle."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Scenario: A new request for `claim.Policy` is made from a different local bundle."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "The Policy is found in the global cache, bypassing a database call for the new request."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "The Policy entity is retrieved from the global cache into the new local bundle."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Bundle Types and Contexts",
+      "narrative": "Guidewire distinguishes between different types of bundles based on their purpose and behavior. A **read-only bundle** contains entity instances retrieved from the database, either as a result of a query or referenced by a foreign key from another entity already in a read-only bundle. As the name suggests, entity instances within a read-only bundle cannot be directly modified. To make changes or delete an entity, you must first copy it from the read-only bundle into a **writable bundle**.\n\nWritable bundles are where the actual editing, creation, or retirement of entity instances takes place. These are the bundles you interact with when you intend to persist changes to the database. It's important to note that not all writable bundles necessarily result in a database commit. For instance, a user might start editing data in the UI and then abandon the task, or errors might prevent a commit, leading to a cancellation.\n\nBeyond read-only and writable, bundles also operate within specific **contexts**. The **current bundle** is automatically created by the Guidewire application and contains entity instances available to the current code context, such as the user interface or plugins. Its read/write status depends on the context; for example, in the UI, it's often read-only until a user initiates an edit, at which point it becomes writable. Integration developers can access the current bundle using `gw.transaction.Transaction.getCurrent()`.\n\nIn contrast, a **new bundle** is explicitly created by integration code. Unlike a current bundle, you have full control over its lifecycle, including when it's committed, without worrying about subsequent UI interactions. New bundles are always writable, making them ideal for programmatic data creation or modification in scenarios like web services or batch processes where there isn't an existing UI-driven bundle context. However, you must be careful not to modify the same entity instance in more than one bundle, as this can lead to an `IllegalBundleTransferException` if you try to add a modified entity to a new bundle.",
+      "keyPoints": [
+        "Read-only bundles are for viewing data; writable bundles are for modifying or creating data.",
+        "Entity instances must be copied from a read-only to a writable bundle before modification.",
+        "The 'current bundle' is automatically managed by the application based on context (e.g., UI, plugins).",
+        "A 'new bundle' is explicitly created by code, always writable, and offers more control over its commit cycle.",
+        "Avoid modifying the same entity in multiple bundles to prevent `IllegalBundleTransferException`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Compares read-only bundles (for query results and foreign keys) with writable bundles (for editing, creating, or retiring entities)."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Explains the concept of 'current bundles' (application-created) and 'new bundles' (integration code-created), detailing their characteristics and use cases."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Reference Replace",
+          "content": "When copying an entity from one bundle to another using `bundle.add(entity)`, it's standard practice to reassign the return value to the original variable (e.g., `company = currentBundle.add(company)`). This ensures your variable always references the writable copy, preventing confusion and memory waste."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Transactional Commits: Automatic vs. Manual",
+      "narrative": "The process of sending the entities within a bundle to the database is known as **committing the bundle**. A crucial aspect of Guidewire's bundle mechanism is its transactional nature: if a bundle commit succeeds, all database changes occur within a single database transaction. Conversely, if any part of the commit fails, the entire database update is rolled back, and Gosu throws an exception. This 'all or nothing' approach is fundamental to maintaining data consistency and integrity.\n\nIn many common programming contexts, bundle commits are handled **automatically** by the Guidewire application. You typically don't need to explicitly manipulate bundles when working within business rules, workflows, certain plugins, or when making changes through the user interface. In these scenarios, the application intelligently determines the appropriate time to commit changes, additions, or retirements to the database based on the context. For example, in ClaimCenter, after the first step of the New Claim wizard, a claim number generator plugin might be called, followed by an explicit commit by the application before moving to the next step. The plugin itself doesn't need to manage the bundle.\n\nHowever, there are specific situations where your code must **explicitly manage bundles**, leading to **manual bundle processing**. This is typically required for integration resources that operate outside the standard UI flow or need fine-grained control over transactions. Key scenarios include web services that make database changes, batch processes that modify data, and modifications to entities returned from queries (which are initially in read-only bundles). Additionally, certain plugins might require manual bundle management. These special bundle issues, particularly concerning web services and batch processes, are critical for integration developers to understand and will be discussed in more detail later in this course.",
+      "keyPoints": [
+        "Bundle commits are transactional: all changes succeed or fail as a group.",
+        "Automatic bundle processing occurs in contexts like business rules, workflows, and UI interactions.",
+        "Manual bundle processing is required for web services, batch processes, and modifying queried entities.",
+        "A failed commit results in a full rollback and an exception."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Explains the transactional nature of bundle commits, where all database changes succeed or fail together, and notes when commits are automatic versus manual."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Lists contexts where explicit bundle manipulation is not required, such as business rules, workflows, and UI changes, as the application handles commits automatically."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Outlines scenarios where manual bundle processing is necessary, including web services, batch processes, and modifying queried entities."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Data Integrity",
+          "content": "The transactional nature of bundles is a cornerstone of Guidewire's data integrity. Always design your code to leverage this 'all or nothing' behavior to prevent inconsistent data states."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Gosu Bundle APIs and Current Bundle Management",
+      "narrative": "Gosu provides a rich set of capabilities for working with bundles, but it's important to remember a fundamental rule: only database-backed entities (those of type `entity.KeyableBean`) can be added to a bundle. Each such entity has a `Bundle` property that allows you to access the bundle it currently belongs to.\n\nWith Gosu, you can perform several key operations: create new bundles, modify entity instances within writable bundles, identify if an entity instance has changed since it was read from the database, and copy *unchanged* entity instances from one bundle to another. You can also commit a bundle, which persists its changes to the database. It's crucial to understand that you cannot modify entity instances in a read-only bundle directly, nor can you remove an entity instance from a bundle once it's been added (though you can mark it for deletion). A newly created entity instance is inherently treated as 'changed' from a bundle perspective.\n\nAs an integration developer, you'll frequently interact with the **current bundle**. This bundle references data in the User Interface or entities used by a plugin. You can retrieve it using `gw.transaction.Transaction.getCurrent()`. Once you have a reference to the current bundle, you can call `bundle.commit()` to save all entity instances within it to the database. However, this action requires careful consideration. Committing the current bundle inappropriately can lead to serious data integrity problems, especially in contexts like Rule sets or PCF code where the application expects to manage the commit cycle. Guidewire web services and batch processes, by design, do not have a current bundle, so they must explicitly create new bundles for any data creation or modification tasks. Always ensure that any explicit commit is appropriate for your specific programming context; if in doubt, consult Guidewire documentation or support.",
+      "keyPoints": [
+        "Only `entity.KeyableBean` entities can be added to bundles.",
+        "Gosu allows creating, modifying (in writable bundles), copying (unchanged), and committing bundles.",
+        "The current bundle can be accessed via `gw.transaction.Transaction.getCurrent()`.",
+        "Explicitly committing the current bundle requires caution to avoid data integrity issues.",
+        "Web services and batch processes must create new bundles as they lack a current bundle."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "Summarizes Gosu's capabilities with bundles, including creating, modifying, copying, and committing entities, along with restrictions."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "An introductory slide emphasizing the importance for integration developers to be familiar with bundle coding constructs and syntax."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Details how to get and commit the current bundle using `gw.transaction.Transaction.getCurrent()` and `bundle.commit()`, with warnings about appropriate usage."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Inappropriate Commits",
+          "content": "Committing a bundle explicitly in contexts like Rule sets or PCF code can disrupt the application's intended transaction flow and cause data integrity problems. Only commit a bundle if you are certain it's the correct action for your programming context."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Explicitly Managing Bundles: `runWithNewBundle` and `newBundle`",
+      "narrative": "When you need to explicitly manage database changes outside of the automatic bundle processing contexts, Guidewire provides two primary methods for creating new bundles: `runWithNewBundle` and `newBundle`.\n\n`gw.transaction.Transaction.runWithNewBundle()` is a block-based API that creates a new, always writable bundle. It comes in two signatures: one without a specified user and one that takes a `user` object. If no user is specified, the bundle code executes with the permissions of the user who triggered the event (e.g., UI user, web service user). If there's no inherent user (like in some batch processes or unauthenticated web services), you *must* use the signature that specifies a user. All commits within this bundle are limited by the associated user's permissions; an `InsufficientPermissionException` will be thrown if the user lacks necessary rights. A key advantage of `runWithNewBundle` is that it **automatically commits the bundle** at the end of the block, so you don't need to call `commit()` explicitly. Any entity instantiated within this block will automatically be added to the bundle and persisted.\n\nFor developers who prefer a more explicit, non-block-based approach, `gw.transaction.Transaction.newBundle()` creates a new writable bundle without an associated code block. With this method, the caller is entirely responsible for explicitly committing the bundle using `bundle.commit()`. This approach does not allow you to specify a user directly, meaning the code must execute within an existing user session context for the commit to succeed. If no user context is available, it will fail. This method gives you more granular control over when the commit occurs, but also places the responsibility of managing the commit (or rollback) squarely on your shoulders.\n\nRegardless of which method you choose, a critical point to remember is to avoid concurrent data modification. If an entity instance exists in a modified form in more than one bundle, and both bundles attempt to commit, the second commit will fail with a concurrent data modification exception. Always ensure an entity is modified in only one bundle at a time.",
+      "keyPoints": [
+        "`runWithNewBundle` creates a new, writable bundle, automatically committing changes at the block's end.",
+        "`runWithNewBundle` can specify a user, limiting commits by their permissions.",
+        "`newBundle` creates a new, writable bundle, requiring explicit `bundle.commit()` and an existing user session context.",
+        "New entities instantiated within a `runWithNewBundle` block are automatically added and persisted.",
+        "Avoid modifying the same entity in multiple bundles to prevent concurrent modification exceptions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Explains `gw.transaction.Transaction.runWithNewBundle()`, its two signatures (with/without user), and its automatic commit behavior."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Code example demonstrating how a new `ABPerson` entity is created and automatically added to the bundle within a `runWithNewBundle` block."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Introduces `gw.transaction.Transaction.newBundle()`, highlighting that it creates a bundle without a code block, requires explicit `bundle.commit()`, and needs a user session context."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Creating a New Entity with runWithNewBundle",
+          "code": "gw.transaction.Transaction.runWithNewBundle(\\ newBundle -> {\n  var newEntity = new ABPerson()\n  newEntity.LastName = \"Jones\"\n}, username)",
+          "explanation": "This code creates a new `ABPerson` instance within the `runWithNewBundle` block. The `newEntity` will automatically be added to `newBundle` and committed to the database when the block completes, using the specified `username`'s permissions."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating a New Bundle with newBundle",
+          "code": "uses trainingapp.base.QueryUtil\nuses gw.transaction.Transaction\n\nvar targetPerson = QueryUtil.findPerson(\"ab:5\")\nvar newBundle = Transaction.newBundle()\ntargetPerson = newBundle.add(targetPerson)\nnewBundle.commit()",
+          "explanation": "This example shows how to create a bundle using `newBundle()`. It then adds an existing `targetPerson` to this new bundle and explicitly calls `newBundle.commit()` to save the changes. Note that `targetPerson` is reassigned to the version within the new bundle."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Handling Query Results, Foreign Keys, and New Entities",
+      "narrative": "When you retrieve entity instances from the database using the Query API, the results are **always returned in a read-only bundle**. This holds true regardless of where the query is executed, even if it's within a writable bundle block. If you intend to modify these queried entities and persist those changes, you must first copy them into a writable bundle. This is achieved using the bundle's `add` method: `targetEntity = writableBundle.add(targetEntity)`. The `add` method returns a handle to the entity as it exists in the new writable bundle. It's a standard convention, known as a **reference replace**, to reassign the return value to your original variable, ensuring you're always working with the writable copy.\n\nReferences from a parent entity to a foreign key or array key automatically cause the referenced entity instances to be loaded into the same bundle as the parent. If the parent is in a read-only bundle, the referenced entities will also be read-only. If the parent is in a writable bundle, the referenced entities will be added to that same writable bundle. This means if you've already copied a parent entity to a writable bundle, its related foreign key entities will automatically be writable too, without needing a separate `add` call.\n\nCreating **new entity instances** requires careful handling. For the block-based `runWithNewBundle` syntax, you must instantiate the entity *within* the block. This automatically associates the new entity with the writable bundle. If you use the alternative `newBundle` syntax, you must explicitly pass the writable bundle to the entity's constructor (e.g., `new Address(newBundle)`) to ensure it's placed in the correct bundle. Newly created entities cannot be copied between bundles; they must be created directly in the bundle from which they will be committed.\n\nThere are strict **restrictions on copying entity instances** between bundles. You can only copy an entity instance from one bundle to another if it is **unmodified**. This means if an entity has been changed, or if it's a newly created entity (which is inherently marked as changed), you cannot copy it. Attempting to add a modified entity to a new bundle will throw an `IllegalBundleTransferException`. Furthermore, you cannot 'move' a new entity instance from one bundle to another, as 'move' implies deletion from the original bundle, and you cannot delete a newly created entity from a bundle. Always create new entities in the bundle they will be committed from.",
+      "keyPoints": [
+        "Query results are always in read-only bundles and must be copied to a writable bundle for modification using `bundle.add()`.",
+        "Foreign key and array key entities are loaded into the same bundle as their parent.",
+        "New entity instances must be created directly within the intended writable bundle (either within a `runWithNewBundle` block or by passing the bundle to the constructor).",
+        "Only unmodified entity instances can be copied between bundles.",
+        "Modified or newly created entities cannot be copied or moved between bundles."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Demonstrates how to copy an entity instance from a read-only bundle to a writable or new bundle using the `add` method, with a code example."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Code example showing how query results (read-only) are copied to a new writable bundle within a `runWithNewBundle` block for modification."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Alternative syntax example for handling query results, demonstrating explicit `newBundle()` creation and `commit()` call."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Explains how foreign key and array key references cause related entities to be loaded into the same bundle as the parent entity, with a code example."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Illustrates how to create new entity instances within a `runWithNewBundle` block or by passing the bundle to the constructor for the alternative syntax."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Visualizes the restrictions on copying entity instances between bundles, differentiating between unmodified, modified, and new entities."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Copying an Entity and Modifying Query Results (runWithNewBundle)",
+          "code": "gw.transaction.Transaction.runWithNewBundle(\\newBundle -> {\n  var queryObj = gw.api.database.Query.make(ABCompany)\n  queryObj.compare(ABCompany#Name, Equals, \"Albertson's\")\n  var targetCompany = queryObj.select().AtMostOneRow\n\n  // targetCompany must be copied from read-only bundle to new bundle\n  targetCompany = newBundle.add(targetCompany)\n\n  // Set the Inspection fields as appropriate\n  targetCompany.InspectionRequired = true\n  targetCompany.InspectionDate = java.util.Date.Now\n}, username)",
+          "explanation": "This code queries for 'Albertson's', which returns a read-only `ABCompany`. It then copies this entity into `newBundle` using `add()` and reassigns `targetCompany` to the writable copy, allowing modification of `InspectionRequired` and `InspectionDate`. The changes are committed automatically at the end of the block."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating a New Address Entity (Alternative Syntax)",
+          "code": "var newBundle = gw.transaction.Transaction.newBundle()\nvar newAddress = new Address(newBundle)\nnewAddress.City = \"Marina Del Rey\"\nnewAddress.State = State.TC_CA\nnewBundle.commit()",
+          "explanation": "This example demonstrates creating a new `Address` entity using the alternative `newBundle()` syntax. The `newBundle` instance is passed directly to the `Address` constructor, associating the new entity with this specific bundle. The bundle is then explicitly committed."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Integration User Permissions",
+          "content": "When using `runWithNewBundle` with a specified user, avoid hardcoding 'su' (superuser). Instead, configure specific integration users with only the necessary permissions to prevent security issues and misuse."
+        },
+        {
+          "type": "gotcha",
+          "title": "IllegalBundleTransferException",
+          "content": "If you attempt to add an entity instance that has already been modified (or is newly created) in its existing bundle to a new bundle, Gosu will throw an `IllegalBundleTransferException`. Ensure entities are unmodified before copying, or create new entities directly in the target bundle."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Tracking Entity Changes and Original Values",
+      "narrative": "In Guidewire, it's often necessary to track whether an entity instance or a specific property has changed since it was initially loaded from the database. This capability is crucial for auditing, triggering business logic, or generating history events. Prior to a bundle commit, Gosu intelligently retains a copy of each entity instance as it existed when it was first read from the database. This allows you to compare current values with their original states.\n\nSeveral properties and methods facilitate working with this original data:\n\n*   **`entityName.Changed`**: This boolean property returns `true` if *any* property on the entity instance has been modified since it was read from the database. It's a quick way to check if an entity has been touched at all.\n*   **`entityName.isFieldChanged(Entity#FieldName)`**: This method provides a more granular check, returning `true` only if a *specific* property (identified by `Entity#FieldName`) has changed since the entity instance was loaded. This is useful when you only care about modifications to particular fields.\n*   **`entityName.getOriginalValue(Entity#FieldName.getPropertyInfo())`**: This powerful method allows you to retrieve the original value of a specific property before any modifications were made. The data type returned by `getOriginalValue` will match the data type of the named property (e.g., `Integer`, `String`, `Boolean`, `Date`, `Typekey`, or `Entity` for foreign keys).\n\nWhen working with `Typekey` properties, `getOriginalValue` returns the original `Typekey` object. To get its display name (e.g., 'Pending' from a status Typekey), you would cast the result and access its name property. For `Foreign Key` properties, `getOriginalValue` returns the ID of the original referenced entity instance. To access data from that original entity (like its display name), you would retrieve the entity instance that the foreign key previously referenced using its ID. For example, to log a change from 'Alice Applegate' to 'Ben Baker' for an assigned user, you'd use `getOriginalValue` to get the previous user's ID and then load that user entity to get their display name.\n\nThese capabilities are invaluable for implementing robust business logic, creating audit trails, and ensuring that your application can react appropriately to data modifications.",
+      "keyPoints": [
+        "Gosu retains original entity values before commit for change tracking.",
+        "`entityName.Changed` checks if any property on an entity has changed.",
+        "`entityName.isFieldChanged(Entity#FieldName)` checks if a specific property has changed.",
+        "`entityName.getOriginalValue(Entity#FieldName.getPropertyInfo())` retrieves the original value of a property.",
+        "Special handling is needed for Typekey and Foreign Key properties when retrieving original values."
+      ],
+      "figures": [
+        {
+          "slideNumber": 33,
+          "caption": "An empty slide, likely a section break or transition."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Details properties and methods for working with original data, including `Changed`, `isFieldChanged`, and `getOriginalValue`."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "Code example demonstrating the use of `isFieldChanged` and `getOriginalValue` to track and retrieve original inspection date for an `ABCompany`."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "An empty slide, likely a section break or transition."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Using Original Values to Create a Note",
+          "code": "private static function createABCompanyNoteForInspection(targetCompany: ABCompany, inspectionDate: Date) {\n  var hasInspectionDateChanged = targetCompany.isFieldChanged(ABCompany#InspectionDate)\n  if (hasInspectionDateChanged) {\n    var newNote = new ContactNote()\n    newNote.Subject = \"Change to inspection date\"\n    newNote.ContactNoteType = typekey.ContactNoteType.TC_DATA_UPDATE\n    var originalInspectionDate = targetCompany.getOriginalValue(ABCompany#InspectionDate.getPropertyInfo()) as Date\n    // Further logic to include originalInspectionDate in the note content\n  }\n}",
+          "explanation": "This function checks if the `InspectionDate` field of an `ABCompany` has changed. If it has, it creates a new `ContactNote` and retrieves the `originalInspectionDate` to potentially include it in the note's content, providing an audit trail. Since this method is called from the UI, the current UI bundle will commit these changes."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Optimizing Database Updates for Large Datasets",
+      "narrative": "When dealing with integration resources like web services, batch processes, or certain plugins, there is no 'current bundle' automatically provided by the application. This is because these resources often handle a massive number of entities or perform complex, long-running tasks. In such scenarios, you must explicitly use `Transaction.runWithNewBundle()` or `Transaction.newBundle()` to manage your database transactions. The challenge lies in determining the optimal bundle size, as a 'large number of entities' is a relative term with no universal recommendation.\n\nA naive approach to updating a large number of entities in a batch process, such as loading all query results into a single bundle and then committing, can lead to severe performance and memory issues. If a query returns hundreds of thousands of entities, loading them all into one bundle can exhaust memory. Furthermore, if your code uses accessors (dot notation) to retrieve foreign keys or array keys from these entities, those referenced objects will also be loaded into the *same* bundle, causing it to grow exponentially. By the time the commit is attempted, the bundle could contain millions of entities, all part of a single, massive database transaction, which significantly impacts performance.\n\nA **better approach** for large-scale updates involves **paging with regular commits**. This strategy breaks down the large dataset into smaller, manageable chunks. For example, you might set a `pageSize` (e.g., 10,000 entities) to limit how many entities are loaded into memory at once. Then, within each page, you further partition the entities into `chunkSize` (e.g., 250 entities) and process each chunk within its *own* `runWithNewBundle` block. This means each `chunkSize` of entities, plus any accessed related entities, forms a smaller bundle that is committed independently. This significantly reduces memory footprint and breaks down a single large transaction into many smaller, faster ones. While this approach generally performs better, optimal page and bundle sizes vary greatly depending on specific tables, queries, databases, and environments. Performance testing is crucial to find the right balance.\n\nHowever, paging with modifications introduces a critical consideration: if you modify any of the properties that were part of your original query criteria, it can **reposition the database cursor**. This means that after committing changes to a row, the database might re-evaluate the query, causing subsequent fetches to skip rows that should have been processed next. This can lead to incomplete or incorrect processing of your dataset. Therefore, when using paging with modifications, be extremely cautious about which fields you update, especially those involved in the query's `WHERE` clause or `ORDER BY` clause. Always prioritize filtering at the database level rather than in memory to leverage the database's strengths.",
+      "keyPoints": [
+        "Integration resources (web services, batch processes) lack a current bundle and require explicit bundle management.",
+        "Loading large datasets into a single bundle causes memory and performance issues due to large transaction sizes.",
+        "Paging with regular commits (processing data in smaller chunks with separate bundles) is a better approach for large updates.",
+        "Optimal page and bundle sizes require performance testing and vary by environment.",
+        "Modifying queried properties during paging can reposition the database cursor, leading to skipped rows."
+      ],
+      "figures": [
+        {
+          "slideNumber": 37,
+          "caption": "Highlights that integration resources lack a current bundle and must use explicit bundle creation, emphasizing best practices for large updates like paging and query optimization."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Illustrates a 'simple-minded' batch process approach that loads all query results into a single bundle, explaining the memory and performance problems."
+        },
+        {
+          "slideNumber": 39,
+          "caption": "Presents a 'better approach' using paging and regular commits, with a code example demonstrating how to partition results into smaller chunks for individual bundle commits."
+        },
+        {
+          "slideNumber": 40,
+          "caption": "Discusses considerations for paging and regular commits, noting that optimal sizes vary and paging may not work well with certain modifications."
+        },
+        {
+          "slideNumber": 41,
+          "caption": "Visual representation of paging with modifications, showing the initial state of the app server and database."
+        },
+        {
+          "slideNumber": 42,
+          "caption": "Illustrates the code retrieving the first two rows using paging."
+        },
+        {
+          "slideNumber": 43,
+          "caption": "Shows a modification being made to a property that was part of the original query."
+        },
+        {
+          "slideNumber": 44,
+          "caption": "Demonstrates how modifying a queried property repositions the cursor, causing subsequent rows to be skipped."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Simple-Minded Batch Process (Problematic)",
+          "code": "gw.transaction.Transaction.runWithNewBundle(\\ newBundle -> {\n  queryResults.each(\\ oneResult -> {\n    var entityToModify = newBundle.add(oneResult)\n    // ... modify entityToModify ...\n  })\n}, username)",
+          "explanation": "This code attempts to process all `queryResults` within a single `runWithNewBundle` block. If `queryResults` is very large, this will lead to a massive bundle, high memory consumption, and a single, slow database transaction, making it inefficient for batch processing."
+        },
+        {
+          "language": "gosu",
+          "title": "Paging Plus Regular Commits (Better Approach)",
+          "code": "var pageSize = 10000\nvar chunkSize = 250\nresults.setPageSize(pageSize)\nfor( entities in com.google.common.collect.Iterables.partition(results, chunkSize) ) {\n  gw.transaction.Transaction.runWithNewBundle( \\ bundle -> {\n    for( e in entities) {\n      var entityToModify = bundle.add(e)\n      // ... modify entityToModify ...\n    }\n  }, username )\n}",
+          "explanation": "This improved approach uses `pageSize` to fetch results in batches and then `chunkSize` to process and commit smaller groups of entities within separate `runWithNewBundle` blocks. This reduces memory usage and breaks down the overall operation into many smaller, more efficient database transactions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Query Best Practices",
+          "content": "Always perform filtering and sorting at the database level rather than in memory. Let the database do what it's good at to improve performance. Refer to the Guidewire Query API lesson for more details."
+        },
+        {
+          "type": "warning",
+          "title": "Paging with Modifications Gotcha",
+          "content": "Be extremely careful when modifying fields that were part of your query criteria (e.g., in `WHERE` or `ORDER BY` clauses) while using paging. Such modifications can reposition the database cursor, causing rows to be skipped in subsequent fetches."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through practical examples of working with Gosu bundles, showing how to create, modify, and commit entity instances, and illustrating the concepts discussed in the previous sections.",
+      "transcriptSummary": "The video provides a hands-on walkthrough of Gosu bundle operations, including creating new bundles, adding entities, making modifications, and observing the commit behavior. It reinforces the difference between automatic and manual bundle management."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis a bundle?",
+      "referenceAnswer": "A Guidewire bundle is a set of in-memory entities that are saved to the database as a\nunit. Each bundle corresponds to one database transaction.",
+      "questionKey": "slide-47"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "For each of the following, identify if its an example of auto commit or\nmanual commit?\n\nA) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\nD) Code executed from the UI in read-only mode",
+      "referenceAnswer": "A) Queried entities that must be modified\nManual commit\nB) Code executed from the Ul in edit mode\nAuto commit\nC) Code executed in business rules\nAuto commit\nD) Code executed from the UI in read-only mode\nManual commit",
+      "questionKey": "slide-49"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What kind of entities are initially put into read-only bundles?\nUnder what circumstance would you need to copy one of those entities\nto a writable bundle and how is this done?",
+      "referenceAnswer": "Entities that are the result of a query are put into read-only bundles, and entities\nreferenced by foreign key are put into a read-only bundle if the referencing entity is\nalso in a read-only bundle.\n\nYou need to copy these entities to a writable bundle if you need to modify them, which\nis done via the bundle's add method.",
+      "questionKey": "slide-51"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Guidewire bundles are transactional containers for managing database-backed entity instances.",
+        "Data retrieval uses a multi-level caching system (local bundle, global cache) before hitting the database.",
+        "Bundles can be read-only (for viewing) or writable (for modification/creation), and managed automatically or manually.",
+        "`runWithNewBundle` provides automatic commits within a block, while `newBundle` requires explicit `commit()`.",
+        "Query results are read-only and must be copied to a writable bundle for modification.",
+        "New entities must be created directly within the intended writable bundle.",
+        "Only unmodified entities can be copied between bundles; modified or new entities cannot.",
+        "Gosu provides methods like `isFieldChanged` and `getOriginalValue` to track entity changes.",
+        "For large-scale updates in integration resources, use paging with regular commits to optimize memory and performance, but be aware of cursor repositioning issues."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of bundles is fundamental for developing robust integrations, custom business logic, and efficient batch processes. Correct bundle usage ensures that policy data, claim information, and contact details remain consistent across the application, preventing data corruption and enabling reliable system operations. Mismanaging bundles can lead to subtle bugs, performance bottlenecks, and critical data integrity failures that are difficult to diagnose."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to create a Gosu script that performs the following:\n1.  Query for an existing `ABCompany` (e.g., 'Albertson's').\n2.  Using a new bundle, modify one of its properties (e.g., `InspectionRequired` to `true`).\n3.  Check if the `InspectionRequired` field was actually changed from its original value.\n4.  If it was changed, create a new `ContactNote` associated with the company, detailing the change (e.g., 'Inspection required status changed from [original value] to [new value]').\n5.  Ensure all changes are committed to the database.",
+      "objectives": [
+        "Practice querying for existing entities.",
+        "Demonstrate creating and using a new writable bundle.",
+        "Apply the `add` method to copy entities into a writable bundle.",
+        "Utilize `isFieldChanged` and `getOriginalValue` to track and report changes.",
+        "Create and associate a new entity instance (ContactNote) within the bundle.",
+        "Successfully commit changes to the database."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_04_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_04_01.mp4"
+    }
+  ]
+}

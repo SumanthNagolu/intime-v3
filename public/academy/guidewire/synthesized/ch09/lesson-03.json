@@ -1,0 +1,266 @@
+{
+  "lessonId": "ch09-l03",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 3,
+  "title": "Configuring Claim Intake",
+  "subtitle": "Mastering ClaimCenter wizards for efficient and adaptable claim processing workflows.",
+  "synthesizedAt": "2026-02-16T18:27:23.598525+00:00",
+  "estimatedMinutes": 120,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a new customer calls to report a complex auto accident. They're stressed, and you need to gather all the necessary details quickly and accurately, from policy information to loss specifics and involved parties. A clunky, disorganized system could lead to missed information, frustrated customers, and delayed claims.",
+      "question": "How can we design our claim intake process to be intuitive, efficient, and adaptable to different claim types, ensuring no critical detail is overlooked?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the fundamental structure and purpose of wizards in ClaimCenter.",
+        "Distinguish between wizards and location groups, highlighting their key differences in step management.",
+        "Explain how wizard entry points are defined and used for navigation.",
+        "Identify the components of a wizard step and a wizard step set, and how they control step behavior.",
+        "Understand the concept of PCF modes for creating variant screens within wizard steps.",
+        "Configure the order and availability of steps within a ClaimCenter wizard."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with ClaimCenter's user interface, including tabs, sidebars, and location groups. You also have a basic understanding of PCF files as the building blocks of ClaimCenter's UI.",
+      "warmupQuestion": "Think about a multi-step process you've encountered in ClaimCenter. What made it easy or difficult to navigate?",
+      "hint": "Consider how information was presented and how you moved from one step to the next."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding ClaimCenter Wizards",
+      "narrative": "ClaimCenter's user interface is designed to guide users through complex tasks efficiently. One powerful tool for this is the **wizard**. Wizards are sequences of steps, or screens, that are logically ordered to help users accomplish a specific, often complex, task. A prime example is the **First Notice of Loss (FNOL) Wizard**, which streamlines the process of collecting initial claim information. While this lesson focuses on the FNOL Wizard, it's important to remember that many other wizards exist in the base application, particularly for payment creation, and they follow similar organizational principles. The steps presented in a wizard can dynamically change based on conditions like the loss type or policy type, ensuring a tailored experience for the user. For instance, a Personal Auto claim will display a different set of steps than a Worker's Compensation claim.\n\nYou might notice that wizards share some structural similarities with **location groups**. Both feature a sidebar that lists multiple pages or steps, and they share an info bar and actions menu across these screens. This commonality helps maintain a consistent user experience within ClaimCenter. However, a key distinction lies in their purpose and how they manage navigation. A wizard is specifically designed as a list of sequential (and optionally non-sequential) screens that guide a user through a complex task in a logical, step-by-step manner, acting as a cohesive unit of work.\n\nThe differences become clearer when we look at how steps are managed. While both wizards and location groups can control the *visibility* of menu links (whether a link appears at all), wizards introduce a more granular control over *availability*. For a wizard, the availability of a visible menu link often depends on the user's current position within the wizard. This means you typically cannot jump directly from step two to step four without first completing step three, enforcing a structured workflow. This sequential progression is a hallmark of wizards, unlike location groups where navigation between pages is generally more flexible. Furthermore, wizards declare their steps directly, rather than through separate pages, simplifying their configuration for sequential processes.",
+      "keyPoints": [
+        "Wizards are sequential (or optionally non-sequential) sequences of screens designed to complete complex tasks.",
+        "The FNOL Wizard is a key example, adapting steps based on claim conditions like loss type.",
+        "Wizards share UI elements (sidebar, info bar, actions menu) with location groups.",
+        "Wizards enforce sequential step completion through availability controls, unlike location groups.",
+        "Wizard steps are declared directly within the wizard, not via separate pages."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory overview of ClaimCenter wizards."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "An example of the FNOL Wizard, illustrating its sequential steps for a Personal Auto claim."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A visual comparison highlighting shared UI elements between wizards and location groups."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Key characteristics of wizards, emphasizing sequential steps and dynamic availability."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team wants to ensure that new adjusters follow a specific flow when creating a claim, preventing them from skipping critical information.",
+      "question": "How would you explain the primary difference between a ClaimCenter wizard and a standard location group in terms of user navigation and task completion?",
+      "hints": [
+        "Think about the 'flow' of work.",
+        "Consider how 'availability' of steps is typically handled."
+      ],
+      "expectedApproach": "Focus on the sequential nature and enforced progression of wizards versus the more flexible navigation of location groups."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Wizard Architecture and Navigation",
+      "narrative": "The architecture of a ClaimCenter wizard is structured to manage its sequential flow effectively. It consists of two primary levels of configuration: the **Wizard level** and the **Wizard Step level**. At the Wizard level, you define the overall entry point and navigation to the wizard, along with permissions for users to access and edit its content. Each individual **Wizard Step** then points directly to a specific screen that it renders. This step level is where you configure the logic for each screen, including its visibility, editability, and the determination of the next step in the sequence, as well as the overall order of steps within the wizard. This direct screen reference by wizard steps is a key differentiator from location groups, which use an intermediary \"page\" object.\n\nTo further streamline configuration, wizard steps can be organized into **Wizard Step Sets**. These sets allow developers to apply identical logic, such as visibility conditions, to multiple steps simultaneously. For example, if a series of steps is only relevant for property claims, you can group them into a wizard step set and apply a single visibility condition: \"visible if the claim's loss type is property.\" This significantly reduces redundant configuration and improves maintainability.\n\nFor users to access a wizard, it must have defined **entry points**. These entry points provide a name and a signature that navigation widgets can call. A single wizard can have multiple entry points, which is incredibly useful when the wizard needs to be accessed from different parts of the application with varying initial information. For instance, the FNOLWizard might have an entry point that takes no arguments (for starting a new claim from scratch), another that expects a `Policy Type` object, one that takes an existing `Claim` object, or even one that uses `search criteria`. Each object expected in the signature of an entry point must be explicitly declared on the wizard's Variables tab, ensuring that the necessary data is available when the wizard is invoked.\n\nNavigating to a wizard from other parts of ClaimCenter, such as a tab bar or a menu item, typically involves using an action attribute on the navigation widget. The syntax for this action is `pcf.LocationEntryPoint.method(objectList)`. Here, `LocationEntryPoint` refers to one of the defined entry points on the destination wizard's Entry Points tab. The `method` is usually `go()`, indicating navigation to that location. The `objectList` is a comma-delimited list of objects that must match the number and type of arguments expected by the chosen location entry point. For example, a \"New Claim\" menu item on the Claim tab might have an action of `FNOLWizard.go()`, which navigates to the FNOLWizard using its entry point that expects no arguments. This mechanism ensures that the correct wizard flow is initiated with the appropriate context.",
+      "keyPoints": [
+        "Wizards are configured at two levels: the wizard itself (entry, permissions) and individual wizard steps (screen, logic, order).",
+        "Wizard steps directly reference screens, unlike location groups which use pages.",
+        "Wizard Step Sets group multiple steps to apply common logic, like visibility conditions.",
+        "Wizards can have multiple entry points, allowing flexible access with different initial data.",
+        "Navigation to a wizard uses `EntryPointOfLocation.go(variablesToPass)` syntax in action attributes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "A diagram illustrating the two-level structure of a wizard and its direct screen references."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "An explanation of Wizard Step Sets for grouping steps with shared configuration logic."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "A screenshot showing wizard entry points, their signatures, and corresponding variable declarations."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An example of navigating to a wizard from a menu item using the 'go' method."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the structural components of a ClaimCenter wizard, showing how wizard steps and entry points are defined within the application.",
+      "transcriptSummary": "The demo highlights the wizard's PCF file, demonstrating how individual wizard steps are declared and how entry points are configured with their respective signatures and variables, providing a practical view of the concepts just discussed."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You are tasked with creating a new wizard for a specific internal process. You need to ensure that this wizard can be accessed from two different locations: one where no initial data is available, and another where a `Policy` object is already selected.",
+      "question": "Describe how you would configure the wizard's entry points and how a navigation widget would call each of these entry points.",
+      "hints": [
+        "Remember the `Entry Points` tab and the `Variables` tab.",
+        "Consider the `action` attribute syntax for navigation widgets."
+      ],
+      "expectedApproach": "Explain defining two entry points with different signatures (one empty, one with a `Policy` object) and then show the `pcf.LocationEntryPoint.go()` syntax for calling each."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Variant Steps and PCF Modes",
+      "narrative": "ClaimCenter's flexibility extends to allowing wizard steps to appear in different forms, adapting to specific claim circumstances. These are known as **variant steps**, where the same logical step can present a distinct user interface depending on underlying data, such as the Line of Business (LOB) or policy type. For example, the \"Loss Details\" screen for an Auto policy will look significantly different from the \"Loss Details\" screen for a Worker’s Compensation policy, displaying fields relevant only to that specific claim type. This dynamic presentation ensures that users only see and interact with the information pertinent to the claim they are processing, enhancing efficiency and reducing potential errors.\n\nThis dynamic behavior is achieved through the concept of **PCF modes**. A PCF (Page Configuration File) can have multiple \"versions\" or modes, each tailored for different circumstances. These modes are differentiated by a suffix appended to the PCF file's name, separated by a dot (e.g., `FNOLWizard_NewLossDetailsScreen.default`, `FNOLWizard_NewLossDetailsScreen.PR`, `FNOLWizard_NewLossDetailsScreen.WC`). The specific mode to be displayed at runtime is determined by the `mode` property configured in the parent object that references the PCF. This property typically evaluates to a code value from a defined list, such as `gw.config.LOBAbstraction.ForClaim.ForLossType.getUIMode(Claim)`.\n\nIt's crucial to manage these modes carefully. Only legitimate code values from the specified list are normally allowed. If the value of the `mode` property evaluates to something that doesn't match any of the defined modal suffixes for the PCF, a runtime error will occur. To prevent this, it's considered a best practice to always create a **`-default` mode** for any modal PCF you develop. If a value doesn't match any other defined mode, the system will gracefully fall back to displaying the `-default` mode, preventing application crashes and providing a consistent user experience.\n\nWhen working with modal PCFs in Guidewire Studio, you'll encounter the **Shared Section Mode widget**. This widget automatically appears at the top of any `PanelSet` or `InputSet` reference that has modes. It's a convenient Studio feature that allows developers to easily switch between and view the different modes of a panel set directly within the design environment. This widget cannot be manually added or moved, as it's an integral part of Studio's functionality for managing modal UI components. While the `mode` property for the `Panel` or `Input Set Ref` is automatically generated by Studio, understanding its underlying mechanism is vital for effective configuration.",
+      "keyPoints": [
+        "Variant steps allow the same logical wizard step to display different UI based on conditions (e.g., Loss Type).",
+        "PCF modes enable these variants, with different versions of a PCF file distinguished by suffixes.",
+        "The `mode` property determines which PCF mode is displayed at runtime.",
+        "A `-default` mode is a best practice to prevent runtime errors if no specific mode matches.",
+        "The Shared Section Mode widget in Studio helps developers view and manage different PCF modes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "An introductory slide to the concept of variant steps in ClaimCenter wizards."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A comparison of Loss Details screens, showing variants for Auto and Worker's Compensation policies."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "An illustration of PCF file naming conventions for different modes and the 'mode' property configuration."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A screenshot of the Shared Section Mode widget in Guidewire Studio, used for managing modal PCFs."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will illustrate the concept of modular PCF basics, specifically how different modes of a PCF file are configured and how they result in variant screens within a wizard.",
+      "transcriptSummary": "The demo showcases how a single logical screen can have multiple physical PCF files (modes) and how the system dynamically selects the appropriate mode based on claim attributes, demonstrating the power of variant steps."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Ordering and Configuration of Wizard Steps",
+      "narrative": "The order in which wizard steps appear in the sidebar and are presented to the user is directly determined by their sequential listing within the wizard's PCF file. Just like locations in a location group, the physical arrangement of `WizardStep` elements in the XML structure dictates the user's progression. For instance, in the FNOLWizard, the \"Find Policy\" step is typically at the top, applying universally to all Lines of Business (LOBs). Subsequent steps, however, often become LOB-dependent, meaning a General Liability claim might follow a different sequence or set of steps compared to a Personal Auto claim, reflecting the unique data collection requirements of each. This flexibility allows for highly customized claim intake workflows.\n\nEach individual `WizardStep` object within the wizard's PCF file is a powerful configuration element that represents a single screen in the wizard. Key properties of a `WizardStep` include:\n*   `id*`: A unique identifier for the step (e.g., \"Services\").\n*   `screen*`: Specifies the actual screen PCF file that this wizard step will display (e.g., `FNOLWizard_ServicesScreen(Claim, wizardinfo)`).\n*   `mode`: As discussed earlier, this property determines which variant of the screen PCF to load, often based on dynamic conditions like `Claim.LossType`.\n*   `allowFinish`: A boolean property that, when set to `true`, enables the user to click the \"Finish\" button from this step, allowing early completion of the wizard if all critical information has been gathered.\n*   `available`: This property controls whether the step is accessible to the user. It can be a simple boolean (`true` or `false`) or a complex expression (e.g., `wizardInfo.someCondition`) that dynamically determines availability based on the wizard's state or claim data. If `available` is not `true`, the screen is not accessible for all claims.\n\nTo manage common properties and logic across multiple related steps, **Wizard Step Set** objects are used. A `WizardStepSet` acts as a container, grouping several `WizardStep` objects together. The primary benefit of a step set is that it allows you to define common `available` and `visible` properties at the set level. This means that if the step set itself is available and visible, then all the individual steps contained within it will typically also be available and visible, unless overridden at the individual step level. For example, a step set for \"Documents\" might only be available if the claim has certain characteristics, and all document-related steps within that set would then inherit this availability. To add a step to a step set, developers simply drag it from the toolbox and drop it into the appropriate spot within the `WizardStepSet` in Guidewire Studio. This hierarchical organization simplifies complex wizard configurations and promotes reusability of logic.",
+      "keyPoints": [
+        "The order of wizard steps is determined by their sequence in the wizard's PCF file.",
+        "Wizard steps can be LOB-dependent, presenting different flows for different claim types.",
+        "`WizardStep` properties like `id`, `screen`, `mode`, `allowFinish`, and `available` control step behavior.",
+        "`allowFinish` enables early wizard completion from a specific step.",
+        "`available` dynamically controls step accessibility based on conditions.",
+        "`WizardStepSet` objects group steps to apply common `available` and `visible` properties, simplifying configuration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "A diagram showing how the order of wizard steps is determined by their sequence in the wizard PCF file."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "A screenshot of a Wizard Step's properties, highlighting 'screen', 'mode', 'allowFinish', and 'available'."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "An illustration of a Wizard Step Set grouping multiple steps with shared properties for streamlined configuration."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will provide a comprehensive overview of configuring the FNOL Wizard, bringing together the concepts of wizard structure, variant steps, and step ordering.",
+      "transcriptSummary": "The demo walks through modifying an existing FNOL wizard, showing how to adjust step order, configure step properties like availability, and implement modal screens to adapt the claim intake process for different scenarios."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis the structure of a wizard?",
+      "referenceAnswer": "¢ The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.\nSe see aS SSeS\nnl",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "How does a wizard reference a screen, and howis this different from\nKs how a location group references a screen?",
+      "referenceAnswer": "Se see aS SSeS",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What happens when a screen’s mode property does not match any of\nKs the defined modes?",
+      "referenceAnswer": "displayed; otherwise, a runtime error occurs.\nSe see aS SSeS",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter wizards provide structured, sequential workflows for complex tasks like claim intake, adapting dynamically to claim conditions.",
+        "Wizards differ from location groups by enforcing sequential step availability and directly referencing screens via wizard steps.",
+        "Wizard entry points define how users access the wizard, supporting various initial data contexts.",
+        "PCF modes enable variant screens within wizard steps, allowing UI customization based on runtime conditions, with a `-default` mode as a best practice.",
+        "Wizard step order is determined by PCF file sequence, and `WizardStep` properties (`screen`, `mode`, `allowFinish`, `available`) control individual step behavior.",
+        "Wizard Step Sets group related steps to apply common logic, simplifying configuration."
+      ],
+      "realWorldConnection": "Mastering wizard configuration is essential for tailoring ClaimCenter to specific business needs. By effectively using wizard steps, modes, and entry points, you can design intuitive and efficient claim intake processes that reduce errors, accelerate claim processing, and improve adjuster productivity, directly impacting an insurer's operational efficiency and customer satisfaction. This directly translates to faster claims resolution and a better experience for policyholders."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Please complete the lab called Configuring the FNOL Wizard in the Student Workbook.",
+      "objectives": [
+        "Practice modifying an existing wizard's structure.",
+        "Configure wizard step properties such as availability and screen references.",
+        "Implement PCF modes to create variant screens for different claim scenarios.",
+        "Test the configured wizard to ensure proper flow and dynamic behavior."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_03_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_03_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_03_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_03_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "CC_03_03.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_03_03.mp4"
+    }
+  ]
+}

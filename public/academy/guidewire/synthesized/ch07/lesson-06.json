@@ -1,0 +1,344 @@
+{
+  "lessonId": "ch07-l06",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 6,
+  "title": "Introduction to Detail views",
+  "subtitle": "Learn to design and implement flexible Detail Views for managing single records.",
+  "synthesizedAt": "2026-02-16T18:00:36.830541+00:00",
+  "estimatedMinutes": 85,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a new user interface in a Guidewire application to display all the critical information about a customer, a policy, or a claim. You need to present a lot of related data in an organized, user-friendly way, allowing users to view, create, and edit records efficiently.",
+      "question": "How can you design a flexible and reusable UI component that effectively manages and displays a single record's detailed information, ensuring a consistent user experience across different parts of the application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the purpose and fundamental structure of Detail Views.",
+        "Differentiate between inline Detail View widgets and reusable Detail View PCF files.",
+        "Explain how Detail Views are organized using Input Columns for layout.",
+        "Describe the role of Panel Ref widgets in referencing reusable Detail Views.",
+        "Understand the function and typical placement of Toolbars and Edit Buttons in Detail Views.",
+        "Apply best practices for creating and configuring Detail Views in Guidewire Studio."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall how screens and basic containers are structured in Guidewire applications, and how atomic widgets are used to display individual data fields.",
+      "warmupQuestion": "What are some challenges you've faced when trying to display complex, multi-field data for a single record in a user interface?",
+      "hint": "Think about organization, reusability, and editability of UI components."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Detail View Fundamentals",
+      "narrative": "Detail Views are a cornerstone of Guidewire application interfaces, serving as primary containers designed to organize and manage a collection of related pieces of information that constitute a single record. Think of them as the central hub for displaying all the granular details of an entity like a User, Claim, or Policy. While their most common use is to present individual fields of an entity instance, the system imposes no strict constraints on the information displayed. A Detail View can present data from multiple entities, even unrelated ones, or include calculated and static values.\n\nThe core purpose and recommended practice for Detail Views, however, is to present users with *all* relevant detailed information for a given interface, and *no* irrelevant information. This generally means focusing on the fields of a particular entity and potentially a small number of closely related entities. Structurally, Detail View panels must contain at least one column and can include as many columns as necessary to effectively present widgets to the user. These columns are crucial for organizing atomic widgets, which are the smallest, indivisible UI components that display or accept data.",
+      "keyPoints": [
+        "Detail Views are primary containers for single records.",
+        "They organize atomic widgets to display related information.",
+        "They enable viewing, creating, and editing records.",
+        "Detail Views must contain at least one Input Column for layout."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of Detail View capabilities and characteristics."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A review of Detail View functionality, emphasizing its role as a primary container for single records and its use of input columns."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Detail View Structure: An Example Walkthrough",
+      "narrative": "Let's explore the practical structure of a Detail View using the `ABContactSummary` screen as an example. Every Guidewire user interface begins with a **Screen**, which acts as the top-level container, grouping all other secondary and primary containers. This is the canvas upon which your UI is built.\n\nWithin a Screen, you might often find a **Card View**, which is a secondary container. Card Views are used to group primary containers, providing an additional layer of organization. While not strictly mandatory (a Detail View could be added directly to a Screen), they are common for structuring complex pages.\n\nThe next layer is the **Detail View Panel** itself. This panel is where the detailed information for a record resides. Crucially, a Detail View Panel *must* contain at least one **Input Column**. You can think of the Detail View as a container specifically designed to hold these Input Columns. An Input Column's primary role is to contain atomic widgets and arrange them in a vertical layout. If you need to organize widgets horizontally within the Detail View, you simply add more Input Columns, placing them side-by-side to create a multi-column layout. This hierarchical structure ensures that information is presented logically and efficiently to the user.",
+      "keyPoints": [
+        "Screens are top-level containers.",
+        "Card Views are secondary containers, grouping primary containers.",
+        "Detail View Panels are primary containers for detailed record information.",
+        "Input Columns within a Detail View organize atomic widgets vertically and horizontally."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "Example (1 of 4): The ABContactSummary screen, showing the top-level Screen container."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Example (2 of 4): The ABContactSummary screen with a Card View added as a secondary container."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Example (3 of 4): The Detail View Panel introduced, highlighting the requirement for at least one Input Column."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Example (4 of 4): Adding a second Input Column to the Detail View to organize widgets horizontally."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Inline Widgets vs. Reusable PCF Files",
+      "narrative": "When working with containers like Detail View panels, it's essential to understand the distinction between an **inline widget** and a **reusable PCF file**. This choice significantly impacts the modularity and maintainability of your application.\n\nAn **inline Detail View widget** is declared directly as a child container within another PCF file (e.g., a Screen, Card, or List Detail Panel). The key characteristic here is that it is *not reusable*. Other containers cannot directly reference an inline container. It inherits the root object associated with its parent container, meaning it operates on the same data context as its parent. While you can define a variable for an inline Detail View widget object, this is uncommon.\n\nIn contrast, a **reusable Detail View Panel** is defined as a top-level container in its *own separate PCF file*. These files typically end with the 'DV' suffix (e.g., `ABContactSummaryDV.pcf`). The primary advantage of this approach is reusability: if a container is likely to be needed in multiple places across your application, creating it as a PCF file makes it modular and easy to reference. A reusable Detail View PCF file takes its own root object as an input parameter, giving it a distinct data context. Other PCF files can then reference this reusable container using a **Panel Ref widget**, which we'll explore shortly. Both inline and reusable containers can exercise control over all their contained elements, but the reusability factor is the critical differentiator.",
+      "keyPoints": [
+        "Inline Detail View widgets are not reusable and inherit their parent's root object.",
+        "Reusable Detail View PCF files are separate files, define their own root object, and can be referenced by other containers.",
+        "Panel Ref widgets are used to reference reusable PCF files."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A comparison highlighting the differences and similarities between inline Detail View widgets and reusable Detail View PCF files."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "PCF File",
+          "content": "PCF (Page Configuration File) files are XML-based configuration files in Guidewire applications that define the structure and content of user interface pages and components."
+        },
+        {
+          "type": "best_practice",
+          "title": "When to Use Reusable PCFs",
+          "content": "Always create a PCF file for a container if it is likely to be needed in multiple places. This promotes modularity, reduces code duplication, and simplifies maintenance."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing an Inline Detail View: A Step-by-Step Example",
+      "narrative": "To illustrate the concept of an inline Detail View, let's walk through an example of how the `ABContactSummary` screen could be implemented. In this scenario, all components are defined within a single PCF file, making them non-reusable outside of this specific file.\n\nFirst, you would create the `ABContactSummaryScreen.pcf` file. Within this file, you define a new root object, for instance, `anABContact : ABContact`. This root object serves as the primary data source for all widgets within this screen.\n\nNext, you would add a **Card** container directly within this `ABContactSummaryScreen.pcf` file. This card acts as a secondary container, helping to group related elements visually.\n\nFollowing the Card, you would then add the **Detail View** itself, still within the same `ABContactSummaryScreen.pcf` file. This Detail View is now an *inline* widget, meaning its definition is embedded directly into its parent's PCF. Finally, you would add the **Input Columns** and the various **atomic widgets** (like text inputs, labels, etc.) that display the actual data. Notice that in Studio, all these elements would typically appear with a consistent color (e.g., yellow) because they are all defined within the same PCF file. A key takeaway here is that since everything is inline, there's only one root object (`anABContact`), and all the inline containers and widgets have direct access to it, effectively 'inheriting' it.",
+      "keyPoints": [
+        "An inline Detail View is defined within the same PCF file as its parent (e.g., Screen or Card).",
+        "All components (Screen, Card, Detail View, Input Columns, widgets) reside in one file.",
+        "Inline components inherit the root object of their parent.",
+        "This approach results in non-reusable UI components."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Inline widget example (1 of 8): Creating the ABContactSummaryScreen.pcf and defining its root object."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Inline widget example (2 of 8): Adding a Card container within the ABContactSummaryScreen.pcf."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Inline widget example (3 of 8): Adding the Detail View as an inline widget within the Card."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Inline widget example (4 of 8): Adding Input Columns and atomic widgets, all defined within the same PCF file."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Implementing a Reusable Detail View: A Modular Approach",
+      "narrative": "Now, let's contrast the inline approach with implementing a **reusable Detail View**, which is the recommended practice for components that will be used in multiple places. This method promotes modularity and maintainability.\n\nThe process begins similarly: you create the `ABContactSummaryScreen.pcf` and define its root object, `anABContact : ABContact`. You then add a **Card** container to this screen, just as before.\n\nThe crucial difference comes next. Instead of defining the Detail View directly within `ABContactSummaryScreen.pcf`, you create a *new, separate PCF file* specifically for the Detail View, for example, `ABContactSummaryDV.pcf`. Within this new file, you define its *own* root object, also named `anABContact : ABContact` (or a different name, as long as it's consistent within that PCF). You then add the Input Columns and atomic widgets to this `ABContactSummaryDV.pcf` file to define its layout and content.\n\nFinally, to include this reusable Detail View in your `ABContactSummaryScreen.pcf`, you use a **Panel Ref widget**. The Panel Ref widget is essential for referencing external PCF files. You specify the filename of the reusable Detail View (e.g., `ABContactSummaryDV.pcf`) in the `def` property of the Panel Ref. Importantly, the Panel Ref also allows you to pass arguments to the included container, typically passing the root object (`anABContact`) from the parent screen to the reusable Detail View. This mechanism ensures that the reusable component receives the necessary data context to function correctly, making it a powerful tool for building scalable and modular Guidewire UIs.",
+      "keyPoints": [
+        "A reusable Detail View is created as a separate PCF file (e.g., `ABContactSummaryDV.pcf`).",
+        "The reusable PCF defines its own root object.",
+        "The `Panel Ref` widget is used in a parent container to include and pass arguments to the reusable Detail View.",
+        "This approach enables modularity and reusability across the application."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Reusable widget example (5 of 8): Creating the ABContactSummaryScreen.pcf and defining its root object."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Reusable widget example (6 of 8): Adding a Card container to the ABContactSummaryScreen.pcf."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Reusable widget example (7 of 8): Creating a separate ABContactSummaryDV.pcf with its own root object, Input Columns, and widgets."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Reusable widget example (8 of 8): Using a Panel Ref widget in ABContactSummaryScreen.pcf to include and pass arguments to the reusable ABContactSummaryDV.pcf."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demo provides a visual overview of the current ABContactSummary screen, highlighting the hierarchy of containers and the inline nature of the existing Detail View. Pay attention to the color coding in Studio and how it indicates container types and references.",
+      "transcriptSummary": "The demo explains Studio's color coding for PCF elements (light blue for referenced, dark blue for indirectly referenced, gray for inline). It then navigates through the ABContactSummary screen, showing the location, screen, and an inline Detail View with its input column and widgets, emphasizing the blank properties of an inline Detail View when clicked."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Toolbars and Edit Buttons for User Interaction",
+      "narrative": "Beyond simply displaying information, Detail Views often require user interaction, such as editing records. This is where **Toolbars** and **Edit Buttons** come into play. A toolbar is a horizontal bar of widgets associated with a container, allowing users to take action on the data within that container. Toolbars can be directly added to a Screen, Panel Ref, or List View Input. While they can be associated with Detail View Panels, Card View Panels, and other list panels, they are typically placed at a higher level in the UI hierarchy, such as directly on a Screen.\n\nToolbars usually contain **button widgets**, with **Edit Buttons** being a common and critical set. The Edit Buttons widget provides a predefined set of controls for managing the edit state of a screen:\n\n*   When a user clicks **Edit**, the input widgets on the screen switch from read-only to edit mode. Additionally, an entry is made in the unsaved work menu for the data-backed object (entity) on the screen, indicating pending changes.\n*   When a user clicks **Update**, the Guidewire application commits the changes to the data-backed object in the database. The input widgets revert from edit mode to read-only, and the entry in the unsaved work menu is removed.\n*   When a user clicks **Cancel**, the Guidewire application discards any uncommitted changes to the data-backed object. The input widgets switch back to read-only mode, and the entry in the unsaved work menu is also removed.\n\nUnderstanding how to effectively use toolbars and edit buttons is crucial for creating interactive and functional user interfaces that allow users to manage their data efficiently.",
+      "keyPoints": [
+        "Toolbars provide action buttons for container widgets.",
+        "Toolbars are typically added to Screens, Panel Refs, or List View Inputs.",
+        "Edit Buttons control the edit state of input widgets.",
+        "Edit, Update, and Cancel buttons manage data commitment and the unsaved work menu."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "An illustration of toolbars, showing their placement and typical contents."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "A detailed explanation of Edit Buttons, including the functionality of Edit, Update, and Cancel actions."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "A user story for implementing a Social Media tab, setting the stage for the upcoming demonstration."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration walks through the process of creating a reusable Detail View PCF file, moving existing widgets into it, defining its root object, and then referencing it from multiple locations using a Panel Ref widget. This is a core skill for building modular UIs.",
+      "transcriptSummary": "The demo outlines steps to create a reusable DetailView: create a PCF folder and a new DetailView PCF file (e.g., SocialMediaDV.pcf), move widgets from an existing Card View into this new DetailView, define a root object for the DetailView, and finally, reference this new reusable DetailView from both the Social Media Screen and the Social Media Card using a Panel Ref widget. It also covers adding a Toolbar and Edit Buttons."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demo shows how to modify the layout of a reusable Detail View by adding a second Input Column and rearranging widgets to achieve a two-column display. This highlights the flexibility of Detail Views for organizing atomic widgets.",
+      "transcriptSummary": "The demo addresses a business request to display social media data in two columns. It demonstrates opening the `SocialMediaDV.pcf` file, adding a new Input Column, dragging existing URL widgets into the new column, and then adding a label and a divider to balance the layout, showcasing the immediate visual impact in the application."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've been tasked with creating a new Detail View for displaying policyholder contact information. This view will be used on both the main policy summary screen and a separate contact management screen.",
+      "question": "Would you implement this Detail View as an inline widget or a reusable PCF file? Explain your reasoning, considering the requirements for reusability and data context.",
+      "hints": [
+        "Think about the primary difference in how inline widgets and reusable PCF files are defined and referenced.",
+        "Consider how the root object is handled in each approach and its implications for data access.",
+        "What are the long-term benefits of choosing one approach over the other for a component used in multiple places?"
+      ],
+      "expectedApproach": "Learners should choose to implement the Detail View as a reusable PCF file. The explanation should highlight that a reusable PCF file can be referenced by multiple parent containers (screens) using a Panel Ref, avoiding duplication. It should also mention that a reusable PCF defines its own root object, which is passed as an argument, providing a clear data context independent of the parent's direct inheritance."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your team has implemented a reusable Detail View for claim details. Now, users need to be able to edit these details, save their changes, or discard them.",
+      "question": "Describe the steps you would take to add 'Edit,' 'Update,' and 'Cancel' functionality to this claim details view. Where would you typically place these controls in the UI hierarchy?",
+      "hints": [
+        "Recall the specific widget that provides the 'Edit,' 'Update,' and 'Cancel' buttons.",
+        "Think about the typical container element where toolbars are added.",
+        "Consider the hierarchy: Screen -> Toolbar -> Edit Buttons."
+      ],
+      "expectedApproach": "Learners should describe adding a Toolbar to the Screen container element that references the reusable Detail View. Within this Toolbar, they would add an 'Edit Buttons' widget. They should also explain that for the input widgets within the Detail View to become editable, the entire hierarchy, starting from the Page location down to the input widget, must be set to 'editable'."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ADetail View that displays data must have at least one root object. Why?",
+      "referenceAnswer": "The input widgets of a Detail View must reference some object in order to specify\nwhere the data they display comes from. This object must be the root object, or an\nobject related to the root object. Therefore, in order to display data, a root object is\nneeded.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "ADetail View that displays data must have at least one input column.\n¢ Why?",
+      "referenceAnswer": "A Detail View that displays data must have at least one input column.\nWhy?\n\nInput columns are used to organize atomic widgets in a Detail View. Every input\nwidget must be in an input column. If a Detail View displays data, then it has at least\none input widget, which means it must have at least one input column.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What determines if a detail view panel is reusable or not?",
+      "referenceAnswer": "If a Detail View is declared as the parent object of a PCF file, then it is reusable. It can\nbe referenced by any number of other containers.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "The def property of a Panel Ref usually has a value in the format of “x(y)”\n\no A) What information comes before the parenthesis? (What is the x?)\n\nB) What information is defined within the parenthesis? (What is the y?)",
+      "referenceAnswer": "The correct responses are:\nA) The xis the name of the container to reference.\nB) The y is a list of objects to pass to the child container to use as root objects.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "AScreen with Card references a Detail View. The Detail View contains a\nx Text Input widget. To allow the user to edit the text input value, what must\nbe set to editable?",
+      "referenceAnswer": "The Input Widget and all of the containers that directly or indirectly contain it must be\nset to editable. The editable hierarchy begins with a location PCF Element. Assuming\nthat the Screen declared in a Page location, then the Page location must be set to\neditable.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "e In Studio, can you add Edit Buttons directly to:\n\no A) Aninline Detail View widget?\n\nB) ADetail View PCF file?",
+      "referenceAnswer": "In Studio, can you add Edit Buttons directly to:\n\n¢ A\n\nB\n\nA\n\nAn inline Detail View widget?\nA Detail View PCF file?\n\nCorrect responses are:\n\nNo, you cannot add Edit Buttons directly to a Detail View widget. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Detail\nView widget can be declared on a Screen.\n\nNo, you cannot add Edit Buttons directly to a Detail View PCF file. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Panel Ref\ncan reference the Detail View PCF file.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-7",
+      "question": "Where do you typically add a toolbar with edit buttons?",
+      "referenceAnswer": "Where do you typically add a toolbar with edit buttons?\n\nYou add a toolbar with edit buttons typically to the Screen container element.",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Detail Views are primary containers for organizing and displaying single record data.",
+        "Input Columns are essential for structuring the layout of atomic widgets within a Detail View.",
+        "Inline Detail Views are embedded within a parent PCF and are not reusable, inheriting the parent's root object.",
+        "Reusable Detail Views are defined in separate PCF files, have their own root objects, and are referenced via Panel Ref widgets.",
+        "Panel Ref widgets are crucial for integrating reusable components and passing data (root objects) to them.",
+        "Toolbars, typically placed on the Screen, provide action buttons like Edit, Update, and Cancel to manage record editability and data persistence."
+      ],
+      "realWorldConnection": "Mastering Detail Views is fundamental for building robust, maintainable, and user-friendly interfaces in Guidewire applications. By understanding how to structure, reuse, and enable interaction with these views, you can efficiently manage complex data for core business entities like policies, claims, and accounts, ensuring a consistent and intuitive user experience across the platform.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced customization options for Detail Views and how to integrate them with other complex UI components, further enhancing your ability to build sophisticated Guidewire interfaces."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "You will apply the concepts learned in this lesson to create a new reusable Detail View from scratch. This involves configuring its layout with multiple input columns and populating it with atomic widgets to display specific entity data, then integrating it into an existing screen using a Panel Ref.",
+      "objectives": [
+        "Create a new PCF file for a reusable Detail View.",
+        "Define a root object for the Detail View.",
+        "Organize atomic widgets using multiple Input Columns for a multi-column layout.",
+        "Integrate the reusable Detail View into a parent screen using a Panel Ref widget.",
+        "Ensure the Detail View correctly displays data by passing the appropriate root object."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_06_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Fund_06_02.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_06_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Fund_06_03.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_06_03.mp4"
+    }
+  ]
+}

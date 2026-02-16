@@ -1,0 +1,126 @@
+{
+  "lessonId": "ch13-l04",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 4,
+  "title": "Rating Worksheets",
+  "subtitle": "Uncover the detailed calculations behind policy premiums with rating worksheets.",
+  "synthesizedAt": "2026-02-16T19:09:29.173096+00:00",
+  "estimatedMinutes": 38,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter reviewing a complex commercial policy, and the quoted premium seems unexpectedly high. Or perhaps you're a developer debugging a new rating algorithm that isn't producing the desired results. How can you quickly pinpoint exactly how a policy's premium was calculated, step-by-step, with all the actual values?",
+      "question": "What tool in PolicyCenter provides this granular transparency into the rating process?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and utility of rating worksheets in PolicyCenter.",
+        "Identify the key user roles (underwriters, auditors, developers) who leverage rating worksheets and for what reasons.",
+        "Explain the type of detailed premium calculation information presented in a rating worksheet.",
+        "Recall the necessary permission setting to view rating worksheets."
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with policy quoting and understand that PolicyCenter calculates premiums based on various factors and rating algorithms. You might have also encountered situations where understanding the 'why' behind a premium was crucial.",
+      "warmupQuestion": "Think about a time you needed to explain a policy's premium to a stakeholder or debug a calculation. What information would have been most helpful to have readily available?",
+      "hint": "Consider the level of detail required to trace a calculation."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Rating Worksheets: Purpose and Users",
+      "narrative": "Rating worksheets are an invaluable tool within PolicyCenter, providing a transparent window into the complex calculations that determine a policy's premium. As an implementation architect, Julia explains that a rating worksheet details every step of the calculation, including the actual values used during the rating process. This level of detail is crucial for various stakeholders.\n\nFor instance, **underwriters and auditors** frequently use these worksheets to understand precisely how a policy's premium was derived. This insight allows them to answer customer questions, verify compliance, and make informed adjustments, such as applying rating overrides, if necessary. Imagine an auditor needing to explain a policy's rating to a state regulator years after the fact; the worksheet provides the immutable record. The reference guide highlights that auditors can use this information to explain to a state regulator how a policy was rated, even years after the policy rating occurred.\n\n**Developers**, on the other hand, find rating worksheets indispensable for debugging rating code. When a premium calculation doesn't yield the expected result, the worksheet allows them to trace the execution path of the rate routine, identify incorrect values, or pinpoint logic errors.\n\nEssentially, rating worksheets are designed to offer a deep dive into the rating process's outcomes. They present authorized users with a detailed view of premium calculations, showing the actual values that a rate routine used for a quoted policy or transaction. This includes critical information like the rate book code and edition, the rate routine code and version, and all the specific values that fed into the calculation. This comprehensive view ensures clarity and accountability in the rating process.",
+      "keyPoints": [
+        "Rating worksheets show detailed calculation steps and actual values used during policy rating.",
+        "Underwriters and auditors use worksheets to understand premium derivation, answer questions, and make adjustments.",
+        "Developers use worksheets for debugging rating code and tracing calculation logic.",
+        "Worksheets provide insight into rate book code, edition, rate routine code, version, and operand values."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of what a rating worksheet is and its general utility."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key user roles who benefit from rating worksheets and their specific use cases."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The core purposes of rating worksheets in providing transparency into premium calculations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is a Rating Worksheet?",
+          "content": "A rating worksheet is a detailed report that shows the calculation steps and actual values used by the rating engine to determine a policy's premium for a quoted policy or transaction."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through accessing and navigating a rating worksheet within PolicyCenter. Pay close attention to how the various calculation steps and values are presented, and how you can use this information to understand the premium breakdown.",
+      "transcriptSummary": "The demonstration will show how to locate a quoted policy, open its rating worksheet, and examine the detailed premium calculation steps, including rate book and routine information, and the actual values used for different coverages."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You're a new developer tasked with validating a recent change to a 'Vehicle Type Factor' in a personal auto policy. After quoting a policy, you need to verify that the correct factor was applied in the calculation.",
+      "question": "After opening the rating worksheet for the quoted policy, what specific elements would you look for to confirm the 'Vehicle Type Factor' used in the premium calculation for a particular vehicle?",
+      "hints": [
+        "Recall what a rating worksheet shows for each rated object.",
+        "Think about how individual factors are presented within the calculation steps.",
+        "Look for the 'Operand' and 'Operand value' columns, as mentioned in the reference guide example."
+      ],
+      "expectedApproach": "The learner should identify looking for the specific coverage being rated (e.g., Liability), then locating the step that applies the 'vehicleTypeFactor'. They should check the 'Operand' column for 'vehicleTypeFactor' and the 'Operand value' column to see the actual value applied, potentially cross-referencing with the table lookup indicated (e.g., 'table:Vehicle Type Factor')."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What permission setting allows users to view rating worksheets?",
+      "referenceAnswer": "The user must have the ratingworksheetview permission to be able to view a rating worksheet.",
+      "questionKey": "slide-8"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Rating worksheets provide a detailed, step-by-step breakdown of policy premium calculations.",
+        "They are essential for underwriters and auditors to understand and verify premiums, and for developers to debug rating logic.",
+        "Worksheets display actual values, rate book codes, rate routine codes, and versions used in calculations.",
+        "The `ratingworksheetview` permission is required to access rating worksheets."
+      ],
+      "realWorldConnection": "In real Guidewire projects, rating worksheets are critical for ensuring transparency and accuracy in pricing. They empower business users to validate premiums and developers to efficiently troubleshoot rating engine behavior, ultimately leading to more reliable and auditable insurance products.",
+      "nextLessonPreview": "Next, we'll explore how to configure and customize rating worksheets to display specific information relevant to your unique business needs."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "The 'Rating worksheet investigation' exercise will guide you through exploring a live rating worksheet in PolicyCenter. You will navigate to a quoted policy, access its rating worksheet, and identify specific details such as the rate book, rate routine, and actual values used for a particular coverage. This hands-on task will solidify your understanding of how to interpret these critical documents.",
+      "objectives": [
+        "Locate and open a rating worksheet for a quoted policy.",
+        "Identify the rate book code and edition used for a specific coverage.",
+        "Identify the rate routine code and version applied to a specific coverage.",
+        "Extract actual operand values used in a premium calculation step."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_04_01.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_04_01.mp4"
+    }
+  ]
+}

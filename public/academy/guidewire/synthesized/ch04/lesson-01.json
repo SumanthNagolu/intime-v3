@@ -1,0 +1,245 @@
+{
+  "lessonId": "ch04-l01",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 1,
+  "title": "Accounts",
+  "subtitle": "Understand the core concept of accounts in PolicyCenter and their relationship to policies.",
+  "synthesizedAt": "2026-02-16T17:15:09.692519+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a customer service representative, Tanya, and a customer calls asking about their 'policy.' You quickly realize they have multiple policies, some personal, some for their business. How do you get a complete picture of this customer's entire relationship with the insurer?",
+      "question": "What is the fundamental entity in PolicyCenter that ties all of a customer's interactions and policies together?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose of accounts in PolicyCenter and why they exist separately from policies.",
+        "Understand the difference between person and company accounts.",
+        "Describe how accounts relate to policies through the insured relationship.",
+        "Explain how the name clearance process prevents duplicate accounts.",
+        "Identify producer codes and organizations.",
+        "Navigate and utilize the Account Summary Dashboard."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with customer management systems in other contexts, where a 'customer record' or 'client file' aggregates all information. PolicyCenter uses a similar concept, but with specific insurance industry nuances.",
+      "warmupQuestion": "Before diving into PolicyCenter, consider: why might an insurance company want to manage a customer's information separately from their individual insurance contracts?",
+      "hint": "Think about changes that affect a customer globally versus changes that only affect one specific policy."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Accounts: The Customer Relationship Container",
+      "narrative": "In PolicyCenter, an **account** serves as the primary container for an entire customer relationship. It's the top-level entity in the data model that groups together all aspects of a customer: their various policies, associated contacts, ongoing activities, important documents, and billing information. This deliberate separation of the account from individual policies is a cornerstone of PolicyCenter's design, offering insurers the flexibility to manage the customer holistically, rather than on a fragmented, policy-by-policy basis. For developers, grasping this distinction is crucial as it directly influences how you'll query data, construct user interface components, and implement business logic.\n\nThis architectural choice to keep accounts and policies as distinct entities is intentional and powerful. An account represents the *customer*, while a policy represents a *specific insurance contract*. This separation allows PolicyCenter users to manage customer information independently of any particular policy. Consider the practical implications: if a customer service representative needs to update a customer's address, that change should ideally propagate across all their policies. Similarly, an underwriter might need to view all policies under a single commercial account to accurately assess the overall risk exposure. This design also facilitates different permission models, enabling granular access control where certain users can access account-level data without seeing specific policy details, or vice versa.\n\nAn account holder can be either a **person** or a **company**, a fundamental distinction that permeates the data model. A person account represents an individual customer, such as someone purchasing a personal auto or homeowner's policy. Conversely, a company account represents a business entity, like a construction firm or a retail chain. The account holder type dictates the specific fields available on the account; for instance, a person account includes fields like first name, last name, and date of birth, while a company account features fields such as company name, FEIN, and industry code. From a developer's standpoint, you'll encounter this distinction in the entity model, UI configurations, and validation rules, often handled through entity subtypes to manage this polymorphism.",
+      "keyPoints": [
+        "An account is the top-level entity representing a customer relationship, grouping policies, contacts, activities, documents, and billing.",
+        "Accounts and policies are separate entities: account = customer, policy = contract.",
+        "This separation allows holistic customer management, consistent data updates, and flexible permission models.",
+        "Account holders can be a 'Person' or 'Company', which determines available fields and UI presentation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An account in PolicyCenter serves as the central hub for all customer-related information, distinct from individual policies."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of how accounts organize multiple policies, highlighting their separate yet related nature."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Accounts can be held by either a 'Person' or a 'Company', influencing the data fields and business logic."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Account",
+          "content": "In PolicyCenter, an account is the top-level entity that represents a customer relationship, grouping all associated policies, contacts, activities, documents, and billing information."
+        },
+        {
+          "type": "best_practice",
+          "title": "Data Model Separation",
+          "content": "The separation of accounts and policies is a core design principle. It enables insurers to manage customer information independently of specific contracts, leading to greater flexibility and data consistency."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Account Relationships, Policies, and Name Clearance",
+      "narrative": "It might seem counterintuitive at first, but a single contact can actually hold **multiple accounts** in PolicyCenter, each serving a distinct purpose. For example, John Smith might have a personal auto account managed by one agent and a separate commercial account for his landscaping business managed by a different commercial lines broker. Each of these accounts can have its own producer, a unique set of policies, and separate billing arrangements. This many-to-one relationship, where one contact can be associated with multiple accounts, is vital to understand when developing search functionalities or reporting tools, as finding a contact doesn't automatically mean you've located all their associated accounts.\n\nWhen considering the **account-to-policy relationship**, an account can be associated with zero, one, or many policies. It's perfectly valid for an account to exist without any policies—perhaps a quote was initiated but never bound, or the customer is still in the setup phase. Once an account has at least one active policy, the account holder is then referred to as 'the insured.' For commercial lines, this relationship can become more complex: a single parent account can encompass multiple distinct 'insureds' as related accounts. For instance, General Motors could be the parent account, with separate insureds for Chevy, Buick, and GMC, each with their own policies. However, a crucial rule to remember is that a policy can *only* belong to one account. This is a strict many-to-one relationship: many policies can link to one account, but never the reverse.\n\n**Name clearance** is a critical process in account management, and it's a frequent point of customization for developers. When a user attempts to create a new account, PolicyCenter doesn't immediately create it. Instead, it first performs a search against existing producer and account databases to prevent duplicates. This is essential because the same customer might request quotes at different times using slightly varied names (e.g., 'Demo Deliveries,' 'Demo Deliveries Inc.,' or 'Demo Delivers'). The name clearance process identifies these potential matches and presents them to the user, who then decides whether to utilize an existing account or create a new one. From a configuration perspective, you can customize the search criteria, the matching algorithm, and the user interface that displays the results, making it a common area for implementation-specific adjustments.",
+      "keyPoints": [
+        "A single contact can be associated with multiple accounts, each for a different purpose (e.g., personal vs. business).",
+        "An account can have zero, one, or many policies, but a policy can only belong to one account (many-to-one relationship).",
+        "Name clearance is a crucial process that searches for existing accounts by name to prevent duplicates during new account creation.",
+        "Name clearance is highly customizable, allowing adjustments to search criteria, matching algorithms, and UI."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "A single person can be associated with multiple accounts, each serving a distinct purpose."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Accounts can hold multiple policies, but each policy is uniquely linked to one account."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Name clearance is the process PolicyCenter uses to check for existing accounts before creating a new one, preventing duplicates."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Policy-to-Account Relationship",
+          "content": "Remember: Many policies can belong to one account, but one policy can NEVER belong to many accounts. This is a strict many-to-one relationship."
+        },
+        {
+          "type": "best_practice",
+          "title": "Customizing Name Clearance",
+          "content": "Name clearance is a common customization point. Tailoring the search criteria and matching logic to an insurer's specific needs can significantly improve data quality and user experience."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Producer Codes, Supporting Information, and the Account Dashboard",
+      "narrative": "When creating an account, you are required to provide an **organization** and a **producer code**. A **producer** is a general term for any third party, typically an insurance agent or broker, who brings business to the insurer. An **organization** is the group or agency to which that producer belongs, and a **producer code** is the unique identifier assigned to that specific producer. This information is captured at the point of account creation to enable the insurer to consistently track which agent and agency originated the business. This tracking is fundamental for calculating commissions, generating book-of-business reports, and managing producer workflows. As a developer, you will frequently interact with the producer model, as producers can also pre-qualify applicants in certain configurations. While we'll delve deeper into organizations and producer codes in a later lesson, it's essential to understand now that every account is linked to a producer.\n\nPolicyCenter offers a comprehensive array of **supporting information** for each account, which is typically organized into various tabs or sections within the Account workspace. Beyond the basic account details, you'll find contacts associated with the account, physical locations, pending activities, notes from underwriters and service representatives, attached documents, billing summaries, claims history, and a complete policy transaction history. Each of these elements represents a crucial facet of the customer relationship. From a developer's perspective, this supporting information is loaded through the account's entity graph. You'll often be tasked with configuring which sections appear, what data they display, and their order, ensuring the UI meets specific business requirements.\n\nThe **Account Summary Dashboard** serves as the central hub for account management, typically being the first screen users encounter when opening an account. It's designed to provide a complete, at-a-glance overview of the customer. The dashboard features panels detailing the account holder, a general overview, billing information, current activities, and a list of all associated policies. You'll also find sections for policy transactions, claims history, related accounts, producer information, and locations. The Billing section is particularly noteworthy, as it displays aggregated billing data seamlessly pulled from BillingCenter via the integration layer. This includes details like the next invoice date, the last payment received, and the overall billing status. This integration between PolicyCenter and BillingCenter is a common and critical component you'll frequently work with in real-world implementations.",
+      "keyPoints": [
+        "Every account is linked to a producer and their organization via a unique producer code, essential for tracking business origination.",
+        "Accounts store rich supporting information: contacts, locations, activities, notes, documents, billing, claims, and policy history.",
+        "The Account Summary Dashboard is the central hub, providing an at-a-glance overview of all account details.",
+        "The Billing section on the dashboard integrates with BillingCenter, displaying aggregated financial data."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Producers, representing third parties like agents or brokers, are linked to accounts via producer codes and organizations."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "PolicyCenter provides a wide range of supporting information for each account, accessible through various tabs and sections."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "The Account Summary Dashboard offers a comprehensive overview of an account, including integrated billing and activity information."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Producer Code",
+          "content": "A unique identifier assigned to an insurance agent or broker (producer) that tracks their association with an account and policies, crucial for commissions and reporting."
+        },
+        {
+          "type": "tip",
+          "title": "Billing Integration",
+          "content": "The billing information on the Account Summary Dashboard is typically pulled from Guidewire BillingCenter through an integration. Understanding this integration is key for developers working with financial data."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see the step-by-step process of creating a new account in PolicyCenter, including the name clearance process and selecting the account holder type.",
+      "transcriptSummary": "This demo shows how to create a new person account, starting from the Desktop. It covers the name clearance search, selecting 'Person' as the account holder type, entering address details with auto-fill, and assigning a producer code. The demo concludes with the newly created account's summary dashboard and how to withdraw an account."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new individual, Sarah Chen, calls to get a quote for a personal auto policy. She has never been a customer before.",
+      "question": "Walk through the process of creating a new account for Sarah Chen. What steps do you take to ensure she doesn't already have an account, and what information is essential to capture initially?",
+      "hints": [
+        "Start from the PolicyCenter Desktop and select 'Actions' -> 'New Account'.",
+        "Remember the name clearance process: what do you do if no matches are found?",
+        "What type of account holder will Sarah Chen be?",
+        "What basic contact and address information is required?"
+      ],
+      "expectedApproach": "Navigate to Actions > New Account. Enter Sarah Chen's name for name clearance. If no matches, select 'Person' as the account holder type. Fill in her name, address, and select a producer code. Observe the new account's status."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demo illustrates how to navigate and explore an existing account, focusing on the Account Summary Dashboard and its various supporting information panels, including integrated billing data.",
+      "transcriptSummary": "The demo showcases navigating to an existing account (Wright Construction) and exploring its Account Summary Dashboard. It highlights various information panels like account holder details, activities, policy terms, claims, and billing. It also demonstrates how to view and edit contacts and locations associated with the account, explaining how locations are stored at the account level for maintenance."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A customer from 'Wright Construction' calls with a question about their recent billing statement. You need to quickly access their account and find the relevant billing details.",
+      "question": "Locate the 'Wright Construction' account in PolicyCenter. Once on the Account Summary Dashboard, identify where you would find aggregated billing information and briefly describe what details are typically displayed there.",
+      "hints": [
+        "Use the search functionality to find the account by name.",
+        "Once on the dashboard, look for specific panels or sections related to financial information.",
+        "Recall which external system PolicyCenter integrates with for billing data."
+      ],
+      "expectedApproach": "Search for 'Wright Construction' account. Navigate to its Account Summary Dashboard. Locate the 'Billing' section/panel. Note the types of information displayed, such as next invoice date, last payment, and overall billing status, understanding it comes from BillingCenter."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is the purpose of an account?",
+      "referenceAnswer": "An account gives PolicyCenter users the flexibility to create and manage a customer's account independent of policies with which the account may be associated. The ability to manage an account separately from a policy can be useful when assigning policy and account visibility to different types of users.\n\nIn addition, PolicyCenter utilizes the name clearance function to ensure that a person or company is not an existing account and that they are not represented by another producer for the given policy type.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "How many accounts can a policy be attached to?",
+      "referenceAnswer": "A policy can belong to only one account.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Accounts are the top-level entity in PolicyCenter, representing the entire customer relationship.",
+        "Accounts are distinct from policies, allowing for holistic customer management and flexible data handling.",
+        "Accounts can be for 'Person' or 'Company' entities, influencing data fields.",
+        "The name clearance process is crucial for preventing duplicate accounts.",
+        "Every account is linked to a producer and organization via a producer code.",
+        "The Account Summary Dashboard provides a comprehensive view of all account-related information, including integrated billing data."
+      ],
+      "realWorldConnection": "Understanding accounts is foundational for any Guidewire developer. In real-world projects, you'll constantly interact with account entities for data modeling, UI development, integration with other systems like BillingCenter and ClaimCenter, and implementing business logic. A solid grasp of accounts ensures you can effectively build and customize PolicyCenter solutions.",
+      "nextLessonPreview": "Building on our understanding of accounts, our next lesson will dive into 'Policy Transactions,' where you'll learn how submissions, quotes, and policy changes flow through the system."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "It's time to get hands-on with PolicyCenter! You'll set up your virtual machine (VM) environment and then practice the core account management tasks we've covered in this lesson.",
+      "objectives": [
+        "Start your PolicyCenter application in the provided VM environment.",
+        "Successfully log into PolicyCenter.",
+        "Practice searching for existing accounts using various criteria.",
+        "Explore the Account Summary Dashboard and supporting information for an existing account (e.g., 'Wright Construction').",
+        "Create a new 'Person' account from scratch, going through the name clearance process."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_policy_01_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_01_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_policy_01_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_01_02.mp4"
+    }
+  ]
+}

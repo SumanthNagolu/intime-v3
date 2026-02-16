@@ -1,0 +1,138 @@
+{
+  "lessonId": "ch04-l22",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 22,
+  "title": "Contingencies",
+  "subtitle": "Learn how PolicyCenter manages conditional policy issuance and post-issuance requirements.",
+  "synthesizedAt": "2026-02-16T17:28:09.956633+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you've just issued a new auto policy to a young driver, promising a 'good student' discount. However, the discount is conditional on receiving their latest report card within 30 days. What happens if that report card never arrives, or if their grades aren't as expected? How do you ensure the policy accurately reflects the agreed-upon terms and conditions?",
+      "question": "How can an insurance system effectively track and enforce these post-issuance conditions to prevent policy errors and maintain compliance?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the role and purpose of contingencies in policy management.",
+        "Identify how contingencies are integrated and configured within PolicyCenter.",
+        "Learn to add, manage, and resolve contingencies in PolicyCenter.",
+        "Recognize the importance of contingencies for compliance and risk reduction."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored the policy issuance process. Now, we'll build on that by considering situations where a policy is issued with conditions that need to be met *after* the initial issuance.",
+      "warmupQuestion": "Think about any real-world situations where a service or product you received had a condition attached that you needed to fulfill later. How was that condition tracked?",
+      "hint": "Consider things like rebates, warranties, or conditional approvals."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Integrating and Configuring Contingencies in PolicyCenter",
+      "narrative": "In the dynamic world of insurance, policies are sometimes issued with conditions that require fulfillment *after* the initial issuance. For instance, an underwriter might offer a good driver discount to a younger driver, contingent on receiving a school transcript. Or, a commercial lines policy might have an underwriting period where property inspections and risk evaluations occur post-issuance. This is where **contingencies** become crucial. A contingency is essentially a mechanism to manage this additional work and take specific actions if conditions aren't met in a timely manner. It's associated directly with a policy, not just a single transaction, meaning it can persist beyond any specific policy change.\n\nPolicyCenter seamlessly integrates contingencies as a core part of the policy itself. This means all contingent information is accessible and manageable directly within the policy lifecycle, ensuring efficient management aligned with business needs and underwriting requirements. Unlike older systems that might prevent policy issuance without immediate documentation, PolicyCenter provides a dedicated place to attach contingency-related information, allowing policies to be issued while still tracking outstanding requirements.\n\nFor developers, configuring contingencies primarily involves the `ContingencyEnhancement.gs` file. This is where you'll find methods to manage and manipulate contingency data, from handling unresolved contingencies to recalculating action start dates. Understanding these configurations is vital for precise control over how contingencies affect policy transactions. PolicyCenter also employs specific batch processes to ensure contingencies are addressed timely, maintaining the integrity of policy data and compliance with business rules. The two main batch processes associated with contingencies are:\n1.  **Handle Unresolved Contingency**: This process identifies contingencies that have passed their action start date without being resolved.\n2.  **Recalculate Contingency Action Start Date**: This ensures that the dates for potential actions remain accurate based on policy changes or other factors.\n\nBy leveraging these tools, PolicyCenter ensures that even when a policy is issued with pending requirements, those requirements are systematically tracked and managed, reducing the risk of policy errors and ensuring compliance.",
+      "keyPoints": [
+        "Contingencies manage post-issuance conditions for policies.",
+        "They are integrated directly into the policy lifecycle in PolicyCenter.",
+        "Configuration is handled via `ContingencyEnhancement.gs` for precise control.",
+        "Batch processes like \"Handle Unresolved Contingency\" ensure timely action.",
+        "Contingencies help maintain policy accuracy and compliance."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "This slide illustrates how contingencies are integrated into PolicyCenter, showing an underwriter's perspective on managing conditional discounts."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This figure highlights the configuration file (`ContingencyEnhancement.gs`) and key batch processes used to manage contingencies in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is a Contingency?",
+          "content": "A contingency in PolicyCenter is a mechanism to manage additional work required after a policy is issued or changed. It tracks conditions that need to be met (e.g., receiving a document) and can trigger actions like policy changes or cancellations if those conditions are not fulfilled by a specified date. Contingencies are associated with the policy itself, not just a single transaction."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through the process of adding a contingency to a policy in PolicyCenter. Pay close attention to how you navigate to the Risk Analysis section, specify contingency details like name, description, and due date, and observe the configurable actions that can be triggered.",
+      "transcriptSummary": "The demo shows how to access an unissued policy, navigate to the Risk Analysis section, and add a new contingency under the 'Contingencies' tab. It details entering a meaningful name, description, and a due date, along with selecting a specific action (e.g., policy change, cancellation) to take if the contingency is not resolved. The demonstration also highlights how notes, documents, and activities can be attached to a contingency, and how the system reminds users of outstanding contingencies throughout the submission process. Finally, it covers the process of resolving a contingency and viewing its updated status."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your underwriting team frequently issues personal auto policies with a 'new driver safety course' discount. This discount is contingent on the insured submitting proof of course completion within 60 days of policy issuance. If proof is not received, the discount should be removed, leading to a policy change.",
+      "question": "Outline the steps you would take in PolicyCenter to set up this contingency for a new policy. What information would you include, and what action would you configure for non-resolution?",
+      "hints": [
+        "Think about the specific tab in the Risk Analysis section where you'd initiate this process.",
+        "Consider the key fields you'd fill out in the 'New Contingency' screen.",
+        "What kind of action would be appropriate if the safety course proof isn't submitted?"
+      ],
+      "expectedApproach": "The learner should describe navigating to the Risk Analysis > Contingencies tab, selecting 'Add Contingency', providing a name (e.g., 'New Driver Safety Course Proof'), a description, a due date (60 days out), and configuring an action to 'Change Policy' to remove the discount if unresolved."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Describe a business situation that calls for a contingency. Draw upon\n\nYo your industry experience as you come up with ideas.",
+      "referenceAnswer": "Answers vary by audience, but the most common answer is getting a student report\ncard to offer a personal auto policy discount.",
+      "questionKey": "slide-7"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": ",7~ — Can you add extra information to a Contingency? Give one or more\n\nYo examples.",
+      "referenceAnswer": ",7~ — Can you add extra information to a Contingency? Give one or more\n¢ examples.\n\nYes. You can add Notes, Documents, and Activities to a Contingency.",
+      "questionKey": "slide-9"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": ",~ — Give one or more examples of appropriate actions related to a\nYo contingency.",
+      "referenceAnswer": "Yo contingency.\nChanging the policy, canceling the policy, or canceling and rewriting the policy.",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Contingencies are crucial for managing post-issuance conditions and requirements in PolicyCenter.",
+        "They are seamlessly integrated into the policy lifecycle and configured via `ContingencyEnhancement.gs`.",
+        "PolicyCenter provides tools to add, track, manage, and resolve contingencies, including attaching notes, documents, and activities.",
+        "Specific actions (e.g., policy change, cancellation) can be configured to trigger if contingencies are unresolved by their due date.",
+        "Effective contingency management is vital for ensuring policy compliance, accuracy, and reducing underwriting risks."
+      ],
+      "realWorldConnection": "In real Guidewire projects, robust contingency management directly translates to reduced operational risk and improved customer satisfaction. By systematically tracking outstanding requirements, insurers can avoid errors, ensure policies are always compliant with underwriting rules and regulations, and maintain accurate pricing, ultimately leading to a more efficient and reliable policy administration process.",
+      "nextLessonPreview": "In our next lesson, we'll delve into policy holds and underwriting referral reasons, expanding on how these elements interact with contingencies to form a cohesive system for comprehensive policy management."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "For this assignment, you will simulate the process of managing a contingency within a PolicyCenter environment. Your task is to create a new policy (or use an existing unissued policy), add a contingency for a specific post-issuance requirement (e.g., proof of a home security system installation), and then demonstrate how to resolve that contingency. Document the steps you take and the status changes observed.",
+      "objectives": [
+        "Practice adding a new contingency to a policy.",
+        "Configure contingency details, including due dates and potential actions.",
+        "Attach relevant notes or documents to a contingency.",
+        "Successfully resolve a contingency and observe its status update."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_23_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_23_01.mp4"
+    }
+  ]
+}

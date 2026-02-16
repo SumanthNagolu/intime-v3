@@ -1,0 +1,415 @@
+{
+  "lessonId": "ch11-l18",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 18,
+  "title": "Batch Processes",
+  "subtitle": "Learn to understand, manage, and develop custom background tasks in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T19:02:33.112652+00:00",
+  "estimatedMinutes": 135,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance application needs to perform routine, resource-intensive tasks like generating daily reports, escalating overdue activities, or identifying duplicate contacts. These tasks can't be done by a user clicking a button; they need to run reliably in the background, often on a schedule. How would you ensure these critical operations are handled efficiently without impacting user experience?",
+      "question": "What mechanisms would you put in place to manage these essential, non-interactive background operations?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define batch processes and their role in Guidewire applications.",
+        "Differentiate between predefined and custom batch processes.",
+        "Explain various methods for executing and scheduling batch processes, including UI, API, and cron schedules.",
+        "Describe the architectural components and steps involved in creating a custom batch process.",
+        "Implement key methods (`doWork`, `checkInitialConditions`, `requestTermination`) for custom batch processes.",
+        "Apply best practices for efficiently updating the database within batch processes, including handling bundles and paging."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered background jobs or scheduled tasks in other software systems or even your operating system. Think about how these tasks are typically configured and what their purpose is.",
+      "warmupQuestion": "What are some common characteristics of tasks that are best suited for background processing rather than direct user interaction?",
+      "hint": "Consider factors like execution time, resource usage, and user dependency."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Batch Processes",
+      "narrative": "Batch processes are fundamental to the operation of Guidewire applications, performing tasks independently of direct user interaction. These are background processes designed for efficiency and automation, often running on a periodic schedule. By default, a batch process executes its work on the batch server within a single process. However, in a clustered Guidewire environment, process-intensive tasks can be distributed across multiple servers using a mechanism called a **work queue** (or distributed work queue). In this setup, a 'writer' batch process loads the queue with work items, which are then completed in parallel by 'worker' processes that can run on any server in the cluster. This distributed approach significantly enhances processing capabilities.\n\nGuidewire applications support two main types of batch processes: **predefined** and **custom**. Predefined batch processes are built into the core application and handle essential functionalities, such as managing account inactivity or generating database statistics. These are configured in the base application and perform actions on specific entities or the entire system. Custom batch processes, available in applications built on the Carbon platform (ClaimCenter 6.0+, PolicyCenter 4.0+, BillingCenter 3.0+, ContactManager 6.0+), allow integration developers to create new processes tailored to specific business needs. These custom processes offer greater flexibility, enabling periodic scheduling of work beyond what the base application provides, and can include triggers to integration points. Developers can schedule or manually run these processes, but direct configuration is typically done through code and configuration files.\n\nBatch processes can be executed in several ways. The most common method is periodically based on a defined schedule. They can also be run immediately from the Internal Tools UI, or programmatically through an API call, such as a web service or command line. Not every batch process is configured for all execution options; for example, the 'Duplicate Contacts Finder' can be run from the UI and scheduled, but isn't explicitly configured for API execution (though UI-runnable processes are inherently API-runnable). The `BatchProcessType` typelist controls these execution options, and while you can add typecodes to this list for custom processes, you cannot add typecodes to the `BatchProcessTypeUsage` typelist, which defines the categories of execution.",
+      "keyPoints": [
+        "Batch processes are background tasks running independently of user interaction, often on a schedule.",
+        "Distributed work queues allow batch processes to leverage multiple servers in a Guidewire cluster for parallel processing.",
+        "Guidewire offers predefined batch processes for core functionality and custom batch processes for tailored business needs.",
+        "Batch processes can be executed via schedule, UI, or API, with execution options controlled by the `BatchProcessType` typelist."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the concept of batch processes."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definition and core characteristics of a batch process, including its default execution and distributed work queue capabilities."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Comparison of predefined and custom batch processes, highlighting their configuration and use cases."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Common execution options for batch processes, such as scheduling, UI, and API calls."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "How batch processes can integrate with Guidewire messaging to launch external processes or coordinate data submission."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Managing and Scheduling Batch Processes",
+      "narrative": "Guidewire provides robust tools for managing and monitoring batch processes. The **Batch Process Info UI screen**, accessible through Internal Tools (by setting `EnableInternalTools` to `true` in `config.xml` and pressing ALT+SHIFT+T), is your central hub. This screen allows you to run batch processes on demand and view their status. By default, it lists schedulable and runnable processes, but you can filter the display to show 'Any', 'Schedulable', or 'Runnable' processes. The 'Run' button immediately starts a selected batch process, and the 'Last Run Status' column updates to reflect its progress.\n\nBeyond the main list, the UI offers 'Chart' and 'History' cards for detailed insights. The **History card** lists all instances of a selected batch process, defaulting to failed instances but configurable to show all. For each instance, you can see start and complete times, the number of operations (work items), failed operations, and the reason for any failures. An 'operation' is an arbitrary measure of the work a batch process performs.\n\nScheduling a batch process is typically done in the `scheduler-config.xml` file, located under `configuration.config.scheduler`. This file contains `<ProcessSchedule/>` elements, each describing which batch process to execute and when. The `<CronSchedule/>` child element defines the precise timing using various attributes like `seconds`, `minutes`, `hours`, `dayofmonth`, `month`, and `dayofweek`. It's generally recommended to schedule resource-intensive processes in hours rather than minutes, especially during off-peak times, to minimize server load. The Guidewire scheduler uses the application server's time for reference. Special characters like `*` (all values), `?` (without regard to value), `,` (multiple values), and `/` (increments) provide flexible scheduling options. Once scheduled, the Batch Process Info UI screen will display the Cron schedule criteria and the 'Next Scheduled Run' time.\n\nFor processes configured as API runnable, you can execute them from the command line or through a web service. The command line syntax involves `maintenance_tools -startprocess <processName> -user <user> -password <password> -server <server>`. For web service APIs, you would use `maintenanceToolsAPI.startBatchProcess(\"processName\")`, leveraging the `gw.webservice.ab.abl000.MaintenanceToolsAPI`. This provides programmatic control over batch process execution, allowing integration with external systems or automated scripts.",
+      "keyPoints": [
+        "The Batch Process Info UI (Internal Tools) is used to run, monitor, and view the history of batch processes.",
+        "The History card provides detailed information on past batch process runs, including failures.",
+        "Batch processes are scheduled using `<CronSchedule/>` elements in `scheduler-config.xml`, with flexible timing attributes.",
+        "API-runnable batch processes can be started from the command line or via web services for programmatic control."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "An overview of how batch processes are run within the Guidewire system."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The Batch Process Info UI screen, showing options to filter, refresh, and manually run batch processes."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The Chart and History cards, providing detailed execution logs and status for batch process instances."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Configuration details for scheduling batch processes using the `<CronSchedule/>` element in `scheduler-config.xml`."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Example of how scheduled batch processes appear in the Batch Process Info UI, including Cron schedule and next run time."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Syntax and examples for running batch processes from a command line or through a web service API."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A visual transition slide."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Character",
+            "Description",
+            "Example"
+          ],
+          "rows": [
+            [
+              "*",
+              "Means all values",
+              "dayofmonth means run the process every day"
+            ],
+            [
+              "?",
+              "Used only for dayofmonth and dayofweek attribute and means without regard to this value",
+              "dayofmonth=\"?\" means 'Run at noon every weekday (without regard to the day of the month)'"
+            ],
+            [
+              ",",
+              "Separates multiple values",
+              "dayofweek =\"MON,FRI\" means every Monday and Friday. Do not includes spaces after the comma."
+            ],
+            [
+              "/",
+              "Specifies increments",
+              "minut means start at minute 0 and run every 15 minutes."
+            ],
+            [
+              "L",
+              "Used only for dayofmonth and dayofweek and means the last day of the month/week",
+              ""
+            ]
+          ],
+          "caption": "Special characters for CronSchedule attributes."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Running a Batch Process via Web Service API",
+          "code": "var maintenanceToolsAPI = new MaintenanceToolsAPI()\nvar processID = maintenanceToolsAPI.startBatchProcess(\"DuplicateContacts\")",
+          "explanation": "This Gosu code demonstrates how to instantiate the MaintenanceToolsAPI and call its `startBatchProcess` method to initiate a batch process by its name."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Developing Custom Batch Processes",
+      "narrative": "Creating a custom batch process in Guidewire involves several architectural components and configuration steps. At its core, a custom batch process is implemented by a Gosu class that is invoked by the `ProcessesPlugin`. This plugin contains a switch statement that, for each custom batch process type, specifies the class to execute. PolicyCenter, ClaimCenter, and TrainingApp typically implement the `IProcessesPlugin` in their base applications, while BillingCenter and ContactManager may require you to implement it.\n\nThe development process for a custom batch process, such as flagging contacts with overdue legal reports, generally follows these steps:\n\n1.  **Add BatchProcessType typecode**: All batch processes are listed in `BatchProcessType.ttx`. You must add a new typecode here to represent your custom process. This typecode must be associated with one or more categories from `BatchProcessTypeUsage` (e.g., `APIRunnable`, `Schedulable`, `UIRunnable`, `MaintenanceOnly`) to define how it can be executed. You cannot add new categories to `BatchProcessTypeUsage`.\n2.  **Create custom batch process class**: This Gosu class must extend `BatchProcessBase` and implement its `doWork` method. The constructor must call `super()`, passing the appropriate `BatchProcessType` typecode. The `doWork` method contains the core logic of your batch process.\n3.  **Configure ProcessesPlugin class**: The `ProcessesPlugin` class (which implements `IProcessesPlugin`) needs to be modified. Its `createBatchProcess` method, which takes a `BatchProcessType` parameter, uses a switch statement to instantiate the correct custom batch process class based on the typecode.\n4.  **Configure the IProcessesPlugin registry entry**: In Studio, you'll register your `ProcessesPlugin` class by creating or modifying an `IProcessesPlugin.gwp` file in `config.Plugin.registry`. This entry links the `IProcessesPlugin` interface to your custom Gosu class.\n5.  **Configure the `scheduler-config.xml` file**: To schedule your custom batch process, you'll add a `<ProcessSchedule/>` entry to `scheduler-config.xml`, specifying your process name and a `<CronSchedule/>` for its execution timing.\n6.  **Deploy changes**: After making these code and configuration changes, you must restart your Guidewire server for them to take effect.\n\nWithin your custom batch process class, several methods are crucial. The `doWork` method is where the primary logic resides. The `checkInitialConditions` method, which the application calls to determine if a batch process should start, should return `true` if conditions are met. It's vital for this method to execute quickly, checking environmental conditions rather than performing long-running database queries. If it returns `false`, the process will pause and retry. The `requestTermination` method handles requests to stop the batch process, for example, when a user clicks 'Stop' in the UI or the application is shutting down. Your code should be designed to respect the `TerminateRequested` property and exit loops gracefully to ensure proper termination. Other useful methods on `BatchProcessBase` include `getDescription`, `incrementOperationsCompleted`, `incrementOperationsFailed`, and `Exclusive` for tracking progress and managing concurrency.",
+      "keyPoints": [
+        "Custom batch processes are implemented as Gosu classes called by the `ProcessesPlugin`.",
+        "Creating a custom batch process involves adding a `BatchProcessType` typecode, implementing the batch class, configuring the `ProcessesPlugin`, registering the plugin, and scheduling it in `scheduler-config.xml`.",
+        "The custom batch class must extend `BatchProcessBase` and override `doWork` for its core logic.",
+        "`checkInitialConditions` determines if a process should start, and `requestTermination` handles graceful shutdown requests.",
+        "Properly handling `TerminateRequested` is crucial for reliable batch process termination."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Architectural overview of how custom batch processes are integrated and called by the `ProcessesPlugin`."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A use case example for a custom batch process, outlining the high-level steps for its creation."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "How to add a new typecode to `BatchProcessType.ttx` and associate it with `BatchProcessTypeUsage` categories."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Code example illustrating the basic structure of a custom batch process class extending `BatchProcessBase`."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explanation of the `checkInitialConditions` method, its purpose, and best practices for its implementation."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Details on the `requestTermination` method, how it's triggered, and the importance of designing for graceful termination."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "A list of other important methods and properties available on the `BatchProcessBase` class for managing batch process execution."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Custom Batch Process Class Structure",
+          "code": "package trn.ta.batch.legalreport\n\nuses gw.api.database.Relop\nuses gw.processes.BatchProcessBase\nuses gw.transaction.Transaction\n\nclass FlagOverdueLegalReportsBatch extends BatchProcessBase {\n  construct () {\n    super( BatchProcessType.TC_FLAGOVERDUELEGALREPORTS )\n  }\n\n  override function doWork() {\n    // Core logic of the batch process goes here\n    // ...\n  }\n\n  override function requestTermination() : boolean {\n    super.requestTermination()\n    return true\n  }\n\n  override function checkInitialConditions() : boolean {\n    // Check environmental conditions quickly\n    return true\n  }\n}",
+          "explanation": "This code snippet shows the basic structure of a custom batch process class, extending `BatchProcessBase` and overriding key methods like `doWork`, `requestTermination`, and `checkInitialConditions`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Quick `checkInitialConditions`",
+          "content": "Ensure your `checkInitialConditions` method completes quickly. It should primarily check environmental conditions (like server run level) and *not* perform long-running database queries. Database checks should be part of the `doWork` method."
+        },
+        {
+          "type": "warning",
+          "title": "Graceful Termination",
+          "content": "While `requestTermination` can return `false`, it's strongly recommended to design your batch process to actually terminate. Returning `false` only delays application shutdown or run level changes, which will eventually proceed regardless, potentially leaving your batch process in an inconsistent state."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring and Deploying Custom Batch Processes",
+      "narrative": "Once your custom batch process class is defined, you need to integrate it into the Guidewire application's plugin system and schedule it for execution. This involves configuring the `ProcessesPlugin` class, registering it, and setting up the schedule.\n\nFirst, you must **configure the `ProcessesPlugin` class**. This class, typically found in `trn.ta.batch` (or a similar package in your project), implements the `IProcessesPlugin` interface. Its `createBatchProcess` method is crucial: it takes a `BatchProcessType` and returns a `BatchProcess` object. Within this method, you'll add a `switch` statement with a `case` clause that matches your custom batch process's typecode (e.g., `BatchProcessType.TC_FLAGOVERDUELEGALREPORTS`). When this typecode is encountered, your custom batch process class (e.g., `new FlagOverdueLegalReportsBatch()`) is instantiated. This ensures the application knows which class to execute for your specific batch process type.\n\nNext, you need to **configure the `IProcessesPlugin` registry entry**. In Guidewire Studio, navigate to `configuration > config > Plugins > registry`. Here, you'll find or create an `IProcessesPlugin.gwp` file. This plugin registry entry specifies the `IProcessesPlugin` interface and links it to your custom `ProcessesPlugin` Gosu class (e.g., `trn.ta.batch.ProcessesPlugin`). This registration is how the Guidewire system discovers and uses your custom plugin implementation.\n\nTo schedule your batch process, you'll **configure the `scheduler-config.xml` file**. This file, located under `configuration.config.scheduler`, defines when batch processes run. You'll add a `<ProcessSchedule>` element for your custom batch process, specifying its `process` attribute (which should match your `BatchProcessType` typecode). Inside this, a `<CronSchedule>` element will define the execution frequency using attributes like `dayofmonth`, `dayofweek`, and `hours`. For example, `hours=\"3\"` would schedule the process to run at 3 AM using a 24-hour clock. The `dayofmonth=\"?\"` and `dayofweek=\"*\"` attributes are common for daily schedules, meaning 'without regard to the day of the month' and 'all days of the week', respectively.\n\nFinally, after all these code and configuration changes (new Gosu plugin class, modified plugin registry, new typelist typecode, modified `scheduler-config.xml`), you must **deploy these changes**. This typically involves restarting your Guidewire server. In Studio, you can stop a running server and then start it again in 'Run' or 'Debug' mode. This deployment ensures that your new batch process type, its implementation, and its schedule are loaded and recognized by the application.",
+      "keyPoints": [
+        "The `ProcessesPlugin` class must be modified to instantiate your custom batch process class based on its typecode.",
+        "An `IProcessesPlugin.gwp` registry entry links the `IProcessesPlugin` interface to your custom `ProcessesPlugin` Gosu class.",
+        "The `scheduler-config.xml` file defines the execution schedule for your batch process using `<ProcessSchedule>` and `<CronSchedule>` elements.",
+        "Deployment requires restarting the Guidewire server to apply all code and configuration changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Code example showing how to modify the `ProcessesPlugin` class to include your custom batch process type."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Screenshot demonstrating how to configure the `IProcessesPlugin` registry entry in Guidewire Studio."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Example XML configuration for scheduling a custom batch process in `scheduler-config.xml`."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Visual representation of the deployment steps, including restarting the server after code and configuration changes."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "A visual transition slide."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Configuring ProcessesPlugin for Custom Batch Process",
+          "code": "package trn.ta.batch\n\nuses gw.plugin.processing.IProcessesPlugin\nuses gw.processes.BatchProcess\nuses trn.ta.batch.legalreport.FlagOverdueLegalReportsBatch\n\nclass ProcessesPlugin implements IProcessesPlugin {\n\n  override function createBatchProcess(type : BatchProcessType, arguments : Object[]) : BatchProcess {\n    switch(type) {\n      case BatchProcessType.TC_FLAGOVERDUELEGALREPORTS:\n        return new FlagOverdueLegalReportsBatch()\n      default:\n        return null\n    }\n  }\n}",
+          "explanation": "This Gosu code snippet shows how the `createBatchProcess` method in `ProcessesPlugin` uses a switch statement to instantiate `FlagOverdueLegalReportsBatch` when its specific typecode is encountered."
+        },
+        {
+          "language": "xml",
+          "title": "Scheduling in scheduler-config.xml",
+          "code": "<!-- Run every day at 3am EST -->\n<ProcessSchedule process=\"FlagOverdueLegalReports\">\n  <CronSchedule dayofmonth=\"?\"\n                dayofweek=\"*\"\n                hours=\"3\"/>\n</ProcessSchedule>",
+          "explanation": "This XML configuration schedules the `FlagOverdueLegalReports` batch process to run daily at 3 AM. `dayofmonth=\"?\"` means it runs regardless of the day of the month, and `dayofweek=\"*\"` means it runs on all days of the week."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Database Interaction in Batch Processes",
+      "narrative": "When working with batch processes, a critical consideration is how to efficiently and safely interact with the database, especially when dealing with large volumes of data. Unlike many other programming contexts in Guidewire (like rule execution or UI code) where a 'current bundle' is automatically available, **batch processes do not have a current bundle**. This means you must explicitly create a new bundle for any data changes you intend to make and then commit those changes with the appropriate user context. You can achieve this using `Transaction.runWithNewBundle(bundle -> {}, \"user\")` or `Transaction.newBundle()`.\n\nUpdating the database in a batch process requires careful design to avoid performance issues and memory errors. A problematic approach often involves querying a large result set and adding every entity to a single bundle for modification. This can lead to excessive memory consumption and poor bundle performance, as every new accessor drags an entity into the bundle, making it grow uncontrollably. This is particularly inefficient when dealing with potentially thousands or millions of rows.\n\nA **better approach** for updating large numbers of rows involves **paging with regular commits**. This strategy breaks down the large query result into smaller, manageable pages, and then commits changes for each page. For example, you might fetch entities in partitions of 250, process them within a new bundle, and then commit. This keeps bundle sizes small, reducing memory footprint and improving transaction performance. While there's no 'one size fits all' optimal page and bundle size (it varies with tables, queries, and environments), performance testing can help determine the best values. Even with paging, very large queries can still be slow, and paging doesn't work well if you modify the columns you queried on, as this can reposition the cursor and cause rows to be skipped.\n\nTo address the issue of cursor repositioning when modifying queried fields, `BatchProcessBase` includes a method called `setChunkingById(queryResult, chunkSize)`. This method is designed to handle modifications to properties that were part of the original query. Instead of skipping rows, `setChunkingById` continuously repositions the cursor to the first page of the query, ensuring all relevant rows are processed without omissions. This is a crucial best practice for maintaining data integrity and efficiency in complex batch updates.",
+      "keyPoints": [
+        "Batch processes require explicit bundle creation (`Transaction.runWithNewBundle` or `Transaction.newBundle`) as they lack a 'current bundle'.",
+        "Avoid adding all queried entities to a single bundle to prevent memory and performance issues.",
+        "Implement paging with regular commits to process large datasets efficiently, keeping bundle sizes small.",
+        "`BatchProcessBase.setChunkingById` helps manage cursor repositioning when modifying queried fields, preventing skipped rows."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Key considerations for updating the database within a batch process, emphasizing the absence of a current bundle."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "An example of a problematic database update approach in a batch process, highlighting memory and bundle performance issues."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Code example demonstrating a better approach using paging and regular commits for efficient database updates."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Explanation of challenges with paging when modifying queried fields and how `setChunkingById` provides a solution."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Problematic Database Update Approach",
+          "code": "uses gw.api.database.Query\nuses gw.transaction.Transaction\n\nTransaction.runWithNewBundle(\\bundle -> {\n  var queryObj = Query.make(ABContact)\n  var queryResult = queryObj.select()\n  for (e in queryResult) {\n    var entityToModify = bundle.add(e)\n    // ... modify entityToModify ...\n  }\n}, \"user\")",
+          "explanation": "This problematic code attempts to process an entire query result within a single bundle, which can lead to memory and performance issues for large datasets."
+        },
+        {
+          "language": "gosu",
+          "title": "Better Approach: Paging with Regular Commits",
+          "code": "uses com.google.common.collect.Iterables\nuses gw.api.database.Query\nuses gw.transaction.Transaction\n\nvar queryObj = Query.make(ABContact)\nvar queryResult = queryObj.select()\nqueryResult.setPageSize(10000)\n\nfor (entities in Iterables.partition(queryResult, 250)) {\n  Transaction.runWithNewBundle(\\bundle -> {\n    for (e in entities) {\n      var entityToModify = bundle.add(e)\n      // ... modify entityToModify ...\n    }\n  }, \"user\")\n}",
+          "explanation": "This improved code uses paging (`setPageSize`) and partitions the result set into smaller chunks (`Iterables.partition`), processing and committing each chunk within its own bundle to manage memory and transaction size."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Bundle Management",
+          "content": "Always create a new bundle for database changes within a batch process. Keep bundles as small as possible by using paging and committing changes regularly to optimize performance and memory usage."
+        },
+        {
+          "type": "warning",
+          "title": "Accessor Usage",
+          "content": "Be cautious with how you use accessors. Every new accessor can pull an entity into the bundle, increasing its size. For large-scale operations, consider strategies that minimize the number of entities held in memory at any given time."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a custom batch process, from defining its typecode to configuring its execution. Pay close attention to how the different configuration files and Gosu classes interact.",
+      "transcriptSummary": "The video demonstrates how to create a custom batch process, including adding a `BatchProcessType` typecode, implementing the batch class with `doWork`, configuring the `ProcessesPlugin`, registering the plugin, and setting up the schedule in `scheduler-config.xml`. It highlights the necessary code modifications and configuration steps."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to create a new custom batch process called 'DailyCleanup' that runs every night at 2 AM. This process should be runnable from the UI and also schedulable. You've already created the Gosu class `DailyCleanupBatch` that extends `BatchProcessBase` and contains the `doWork` logic.",
+      "question": "What are the next steps to integrate and schedule this 'DailyCleanup' batch process into your Guidewire application?",
+      "hints": [
+        "Think about where new batch process types are defined.",
+        "Consider which plugin needs to be aware of your new batch class.",
+        "Remember where batch process schedules are configured."
+      ],
+      "expectedApproach": "The learner should identify the need to add a typecode to `BatchProcessType.ttx` with `UIRunnable` and `Schedulable` categories, modify the `ProcessesPlugin` to instantiate `DailyCleanupBatch`, ensure the `IProcessesPlugin` registry is correct, and add a `<ProcessSchedule>` entry to `scheduler-config.xml` with a `CronSchedule` for 2 AM daily."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the three ways a batch process can be run? Which of the three is the most common?",
+      "referenceAnswer": "Three way to run a batch process are:\n* Scheduled\n¢ Run from the UI\n\n« Run from the web service API\n\nSee eee ee eae\n\nScheduled is the most common way to run a batch process.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When you add a new batch process typecode to BatchProcess Type,\n¢ why must you add one or more categories to the typecode?",
+      "referenceAnswer": "The categories of a BatchProcessType typecode determines how the batch process\ncan be run (from the UI, scheduled, from the API, and/or in maintenance level).\n\nSee eee ee eae",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "When creating a custom batch process, do you need to implement the\nProcessesPlugin or just modify it?",
+      "referenceAnswer": "For PolicyCenter and ClaimCenter, the IProcessesPlugin file already exists in the base\napplication and you only need to modify the ProcessesPlugin class which implements\nthe IProcessesPlugin interface.\n\nFor BillingCenter and ContactManager, you need to create an IProcessesPlugin\nregistry file that implements the IProcessesPlugin interface in a new class.\n\nSee eee ee eae",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Foracustom batch process, what method or methods require\nimplementation?",
+      "referenceAnswer": "Only the doWork method is required.\n\nSee eee ee eae",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "How does a batch process commit changes to the database?",
+      "referenceAnswer": "The code must create a new bundle using runWithNewBundle and add the entities to\nbe changed and committed to that bundle.\n\nSee eee ee eae",
+      "questionKey": "slide-41"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Batch processes are essential background tasks in Guidewire, performing work independently of user interaction, often on a schedule.",
+        "They can be predefined or custom, with custom processes offering flexibility for specific business needs.",
+        "Execution options include scheduling (via `scheduler-config.xml` using Cron syntax), manual UI triggers, and programmatic API calls.",
+        "Creating a custom batch process involves defining a `BatchProcessType` typecode, implementing a Gosu class extending `BatchProcessBase`, configuring the `ProcessesPlugin`, registering it, and scheduling it.",
+        "Key methods in a custom batch class are `doWork` (core logic), `checkInitialConditions` (pre-execution checks), and `requestTermination` (graceful shutdown).",
+        "Database updates in batch processes require explicit bundle management (no current bundle) and best practices like paging with regular commits to handle large datasets efficiently and prevent memory issues."
+      ],
+      "realWorldConnection": "In real Guidewire projects, batch processes are critical for maintaining data integrity, automating routine administrative tasks, and integrating with external systems. Properly designed and implemented batch processes ensure that your application runs smoothly, efficiently, and reliably, even under heavy load, by offloading resource-intensive operations to the background. Understanding these concepts is vital for any developer or administrator working with Guidewire applications.",
+      "nextLessonPreview": "In the next lesson, we'll explore advanced debugging techniques for troubleshooting complex issues in Guidewire applications, including those encountered in batch processes."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the concepts learned, you will create a custom batch process that identifies and flags inactive accounts within the Guidewire application. This process should run once a week and be viewable/runnable from the Internal Tools UI. You will implement the necessary Gosu class, configure its typecode, integrate it with the `ProcessesPlugin`, and set up its weekly schedule.",
+      "objectives": [
+        "Create a new `BatchProcessType` typecode with appropriate usage categories.",
+        "Implement a custom Gosu class extending `BatchProcessBase` with a `doWork` method to identify inactive accounts.",
+        "Modify the `ProcessesPlugin` to instantiate your custom batch process.",
+        "Configure the `IProcessesPlugin` registry entry.",
+        "Add a `<ProcessSchedule>` entry to `scheduler-config.xml` for weekly execution.",
+        "Deploy and verify the custom batch process in the Guidewire application."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_18_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_18_01.mp4"
+    }
+  ]
+}

@@ -1,0 +1,332 @@
+{
+  "lessonId": "ch12-l03",
+  "chapterId": 12,
+  "chapterSlug": "ch12",
+  "lessonNumber": 3,
+  "title": "Enhancing and visualizing product in APD in PolicyCenter",
+  "subtitle": "Learn to transform mind maps into interactive product models and refine them in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T19:06:38.305417+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your team has spent weeks conceptualizing a new insurance product, mapping out every detail in a mind map. Now, it's time to bring that product to life within PolicyCenter, making it interactive and ready for review. How do you bridge the gap between a conceptual design and a functional product?",
+      "question": "What are the critical steps to convert a product mind map into a fully visualized and enhanced product within PolicyCenter, ready for simulation and team review?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and steps of the visualization phase in Advanced Product Designer (APD).",
+        "Explain how to create, edit, update, and remove visualized products in PolicyCenter.",
+        "Identify the different Product Design Modes and their implications.",
+        "Detail how to enhance visualized products by setting usage, availability, default, minimum, and maximum values for fields, clauses, and clause terms.",
+        "Explain how to define and manage drop-down lists within visualized products.",
+        "Describe the process of creating and managing product editions based on effective dates.",
+        "Outline how to add pricing details to visualized products for quote simulation.",
+        "Understand how to simulate policy transactions and share visualized products with team members."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Before diving into visualization, you've likely spent time conceptualizing business requirements and structuring them into a stable mind map. This foundational work is crucial for a smooth transition into the visualization phase.",
+      "warmupQuestion": "What are some key elements you would expect to see in a well-structured product mind map that would be essential for building out a product in PolicyCenter?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Visualization Phase: From Mind Map to Interactive Product",
+      "narrative": "Once your product's business requirements are solidified in a mind map, the next critical step is to bring that conceptual design into PolicyCenter using **Advanced Product Designer (APD)**. APD acts as the bridge, transforming your mind map into a tangible, visualized product within PolicyCenter. This **visualization phase** is comprehensive, focusing on several key activities:\n\nFirst, you'll **visualize the product** by importing the mind map directly into PolicyCenter. This initial import lays the groundwork, creating the basic structure of your product. After the initial visualization, the focus shifts to **making enhancements**. This involves refining the product model properties, such as defining field usage (e.g., whether a field is derived, hidden, or user-entered and required for specific actions like binding or quoting) and setting clause availability. You'll also specify default, minimum, and maximum values for various fields and clause terms, ensuring data integrity and guiding user input. Furthermore, you'll learn to create **editions** based on effective dates, allowing for version control and future product changes without server restarts. Adding **pricing** details is another crucial enhancement, enabling the simulation of the quote process.\n\nWith the product visualized and enhanced, you can then **simulate policy transactions**. This involves creating submissions and navigating through the product screens, providing a realistic 'look and feel' of how the product will behave in a live environment. This simulation is vital for early testing and validation. Finally, the visualized product can be **shared and reviewed** with team members by exporting it as a product template, facilitating collaborative feedback and iterative improvements.\n\nAPD introduces **Product Design Modes** in PolicyCenter, offering different levels of interaction with visualized products: **HIDDEN**, **USER**, **DESIGNER**, and **DEVELOPER**. These modes control visibility and editing capabilities, with 'Developer' mode granting the most extensive control, including the ability to remove products. You can create a visualized product either by importing a mind map or a product template. Templates are particularly useful for moving products between different PolicyCenter environments. Visualized products can be edited from the Product Definition screen or within a policy transaction. Updates can be sourced from either the original mind map or a template, with specific rules governing how changes (additions, name changes, marker changes, deletions) are handled during the update process. For instance, new additions in the mind map are added to the visualized product, but deletions in the mind map must be manually deleted from the visualized product. Removing a visualized product is only possible in Developer mode, provided there are no bound transactions or policy transactions that cannot be automatically withdrawn.\n\nThroughout this process, you'll be working with core PolicyCenter entities like **Product, Product Line, and Risk Object**, which form the backbone of your insurance offerings. The ability to modify clauses, subclauses, and clause terms—including their availability, usage, and value constraints—is central to tailoring the product to specific business requirements. You can also define and link drop-down lists, either to other lists within the product or to PolicyCenter typelists like 'Jurisdiction', providing flexible data entry options. These detailed enhancements, while documented in mind map notes, are often configured directly within PolicyCenter's Product Definition screens.",
+      "keyPoints": [
+        "The visualization phase transforms mind maps into interactive products in PolicyCenter using APD.",
+        "Key activities include creating, enhancing, simulating, sharing, and reviewing products.",
+        "Product Design Modes (Hidden, User, Designer, Developer) control interaction levels.",
+        "Visualized products can be created, edited, updated, and removed within PolicyCenter.",
+        "Enhancements involve setting field usage, clause availability, default, min/max values, and managing drop-down lists.",
+        "Editions allow for versioning and non-disruptive updates to product model properties and subclause relationships.",
+        "Pricing details can be added to simulate the quote process."
+      ],
+      "figures": [
+        {
+          "slideNumber": 1,
+          "caption": "Overview of the Visualization Phase and detailed steps for creating, enhancing, simulating, and sharing products in PolicyCenter using Advanced Product Designer. This slide also outlines Product Design Modes and various modification capabilities for clauses, subclauses, and clause terms."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Advanced Product Designer (APD)",
+          "content": "A Guidewire tool that integrates with PolicyCenter to allow users to visually design, enhance, and manage insurance products, often starting from conceptual mind maps."
+        },
+        {
+          "type": "tip",
+          "title": "Mind Map Stability",
+          "content": "Ensure your mind map has reached a high level of stability before importing it into PolicyCenter. Frequent structural changes to the mind map after import can lead to more manual adjustments in the visualized product."
+        },
+        {
+          "type": "gotcha",
+          "title": "Mind Map Deletions",
+          "content": "When updating a visualized product from a mind map, deletions in the mind map are NOT automatically reflected in PolicyCenter. You must manually delete these elements from the visualized product."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see the initial steps of creating a visualized product by importing a mind map into PolicyCenter and navigating its basic structure.",
+      "transcriptSummary": "This video demonstrates the process of importing a product mind map into PolicyCenter using Advanced Product Designer. It highlights how the conceptual design is translated into a basic visualized product and shows initial navigation through the product's screens."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You have a new 'Simple Small Business' product mind map ready for visualization in PolicyCenter. Your task is to import this mind map and verify its basic structure.",
+      "question": "Using Advanced Product Designer, import the 'Simple Small Business' product mind map into PolicyCenter. After import, navigate to the Product Definition screen and confirm that the main product lines and risk objects are correctly visualized.",
+      "hints": [
+        "Ensure your PolicyCenter instance is running and you have appropriate permissions (e.g., Developer mode).",
+        "Locate the 'Import Mind Map' option within the Product Management section of PolicyCenter.",
+        "After import, search for your new product in the Product Definition list."
+      ],
+      "expectedApproach": "Access PolicyCenter, navigate to Product Management, select 'Import Mind Map', choose the 'Simple Small Business' mind map file, and then verify the imported product's structure."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demo illustrates how to enhance drop-down lists within your visualized product, including defining new lists and linking them to existing PolicyCenter typelists.",
+      "transcriptSummary": "The video showcases the steps to modify and extend drop-down lists in a visualized product. It covers adding new list items, referencing other lists, and integrating with PolicyCenter's typelist functionality, such as for jurisdictions."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "guided",
+      "scenario": "Based on the Succeed Insurance business requirements, you need to enhance the drop-down lists in your visualized product. Specifically, a new drop-down for 'Business Type' needs to be added with predefined options.",
+      "question": "Enhance the visualized 'Simple Small Business' product by adding a new drop-down list for 'Business Type' with at least three sample options (e.g., 'Retail', 'Service', 'Manufacturing').",
+      "hints": [
+        "Locate the section for managing drop-down lists within the Product Definition screen.",
+        "Ensure you save your changes after adding the new drop-down list and its items."
+      ],
+      "expectedApproach": "Navigate to the Product Definition screen for the 'Simple Small Business' product, find the drop-down list configuration, add a new drop-down, and populate it with the specified options."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "Observe how to apply usage and availability properties to fields and clauses, making them 'Derived', 'Hidden', 'Unavailable', or 'Required for Bind/Issue/Quote'.",
+      "transcriptSummary": "This demonstration focuses on configuring product model properties related to usage and availability. It illustrates setting fields as derived, hidden, or user-entered with specific requirements (e.g., required for quote, bind, or issue), and managing clause availability."
+    },
+    {
+      "type": "practice",
+      "id": "practice-3",
+      "level": "guided",
+      "scenario": "For the 'Simple Small Business' product, the 'Years in Business' field should be 'User Entered: Required for Quote', and a specific 'Cyber Liability' clause should only be 'Available' under certain conditions.",
+      "question": "Configure the 'Years in Business' field to be 'User Entered: Required for Quote' and set the 'Cyber Liability' clause to be 'Unavailable' by default in your visualized product.",
+      "hints": [
+        "Find the field usage properties for 'Years in Business' on the relevant product screen.",
+        "Locate the clause availability settings for 'Cyber Liability' within the product definition."
+      ],
+      "expectedApproach": "Access the product definition, modify the 'Years in Business' field's usage property, and adjust the 'Cyber Liability' clause's availability setting."
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demo shows how to set default, minimum, and maximum values for fields and clause terms, including considerations for calculated values and restrictions.",
+      "transcriptSummary": "The video demonstrates the process of assigning default values to fields, exposure fields, clause terms, and drop-down lists. It also covers setting minimum and maximum values for numeric and option clause terms, highlighting the differences between fixed and calculated values, and important restrictions."
+    },
+    {
+      "type": "practice",
+      "id": "practice-4",
+      "level": "guided",
+      "scenario": "The 'Coverage Limit' field for a specific coverage in the 'Simple Small Business' product needs a default value of $100,000, a minimum of $50,000, and a maximum of $500,000.",
+      "question": "Apply the specified default, minimum, and maximum values to the 'Coverage Limit' field within your visualized 'Simple Small Business' product.",
+      "hints": [
+        "Navigate to the specific coverage or clause term where the 'Coverage Limit' field is defined.",
+        "Ensure you input the values correctly and save the changes."
+      ],
+      "expectedApproach": "Locate the 'Coverage Limit' field's properties within the product definition and set its default, minimum, and maximum values as required."
+    },
+    {
+      "type": "demo",
+      "id": "demo-5",
+      "videoIndex": 4,
+      "context": "Learn how to create and manage product editions, understanding their effective dates and cascading nature for product evolution.",
+      "transcriptSummary": "This demonstration explains the concept of product editions, showing how to create new editions with unique effective dates. It covers how editions inherit and override properties from previous editions, and how PolicyCenter selects the appropriate edition based on the policy's effective date."
+    },
+    {
+      "type": "practice",
+      "id": "practice-5",
+      "level": "guided",
+      "scenario": "Your 'Simple Small Business' product needs a new edition to be released next quarter, incorporating updated rates and a new subclause relationship.",
+      "question": "Create a new edition for the 'Simple Small Business' product line with an effective date for the next quarter. Verify that it inherits properties from the Base edition.",
+      "hints": [
+        "Ensure your Product Design Mode is set to 'Designer' or 'Developer'.",
+        "Locate the 'Editions' management section for your product line.",
+        "After creating, review the new edition's properties to confirm inheritance."
+      ],
+      "expectedApproach": "Access the product line's edition management, create a new edition with a future effective date, and observe its initial state, which should reflect the Base edition's properties."
+    },
+    {
+      "type": "demo",
+      "id": "demo-6",
+      "videoIndex": 5,
+      "context": "See how to add pricing details to your visualized product, allowing for rate entry and premium calculation simulation during policy transactions.",
+      "transcriptSummary": "The video illustrates where and how to input pricing details for a visualized product, both on the Product Definition screen and within a policy submission. It demonstrates how entering rates affects the policy premium during the quote process."
+    },
+    {
+      "type": "practice",
+      "id": "practice-6",
+      "level": "guided",
+      "scenario": "To enable quote simulation, you need to add basic pricing details for a specific coverage in the 'Simple Small Business' product.",
+      "question": "Add a sample rate to a coverage within your visualized 'Simple Small Business' product. Then, create a new submission and verify that the rate is applied during the quote process.",
+      "hints": [
+        "Pricing details can be added on the Product Definition screen or directly within a submission.",
+        "Look for the 'Pricing' tab or step during a submission to enter rates.",
+        "Ensure the rate you enter is visible and impacts the calculated premium."
+      ],
+      "expectedApproach": "Navigate to the relevant coverage in the product definition, add a sample rate, then initiate a new submission for the 'Simple Small Business' product, and verify the rate's application in the pricing step."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The visualization phase in APD transforms conceptual mind maps into interactive PolicyCenter products.",
+        "Products are created by importing mind maps or templates, and can be edited, updated, and removed based on Product Design Modes.",
+        "Enhancements include configuring field usage, clause availability, drop-down lists, and setting default, min/max values.",
+        "Editions provide version control, allowing product changes to be deployed with effective dates without server restarts.",
+        "Adding pricing enables realistic simulation of policy transactions and quote processes.",
+        "Simulating transactions and sharing templates are crucial for validation and collaboration."
+      ],
+      "realWorldConnection": "In real Guidewire projects, efficiently moving from product concept to a functional, testable model is paramount. APD's visualization and enhancement capabilities significantly accelerate product launches by allowing business analysts and product managers to directly configure and test product behavior within PolicyCenter, reducing reliance on developers for initial iterations and ensuring faster time-to-market for new insurance offerings."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your final task is to consolidate your understanding of the visualization and enhancement process. You will take a provided 'Simple Small Business' product mind map and fully visualize it in PolicyCenter, applying several key enhancements.",
+      "objectives": [
+        "Import the 'Simple Small Business' mind map into PolicyCenter to create a visualized product.",
+        "Configure at least three field usage properties (e.g., 'Required for Quote', 'Hidden').",
+        "Set default, minimum, and maximum values for at least two numeric fields or clause terms.",
+        "Create a new product edition with a future effective date.",
+        "Add sample pricing details for at least one coverage.",
+        "Simulate a new submission for the enhanced product and verify your configurations."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Accessing Advanced.mp4",
+      "path": "/academy/guidewire/videos/ch12/Accessing Advanced.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Adding pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Adding pricing.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Advance product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Advance product.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Creating Editions.mp4",
+      "path": "/academy/guidewire/videos/ch12/Creating Editions.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "Demonstration Modeling Clauses and Clause Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Demonstration Modeling Clauses and Clause Terms.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "Documenting General Information about the Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting General Information about the Product.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "Documenting Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Pricing.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "Documenting Risk Assessment Details.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Risk Assessment Details.mp4"
+    },
+    {
+      "index": 9,
+      "filename": "Enhancing Drop-down .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Drop-down .mp4"
+    },
+    {
+      "index": 10,
+      "filename": "Enhancing Product Model .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model .mp4"
+    },
+    {
+      "index": 11,
+      "filename": "Enhancing Product Model Properties .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model Properties .mp4"
+    },
+    {
+      "index": 12,
+      "filename": "Installed product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Installed product.mp4"
+    },
+    {
+      "index": 13,
+      "filename": "Modeling Attributes.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Attributes.mp4"
+    },
+    {
+      "index": 14,
+      "filename": "Modeling Clauses and Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Clauses and Terms.mp4"
+    },
+    {
+      "index": 15,
+      "filename": "Modeling Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Pricing.mp4"
+    },
+    {
+      "index": 16,
+      "filename": "Modeling Product, Product Line, and General Information Demo.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Product, Product Line, and General Information Demo.mp4"
+    },
+    {
+      "index": 17,
+      "filename": "Modeling Risk Objects and Exposures.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Risk Objects and Exposures.mp4"
+    },
+    {
+      "index": 18,
+      "filename": "Modeling Schedules.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Schedules.mp4"
+    },
+    {
+      "index": 19,
+      "filename": "Product Metadata Short Name.mp4",
+      "path": "/academy/guidewire/videos/ch12/Product Metadata Short Name.mp4"
+    },
+    {
+      "index": 20,
+      "filename": "Validate and Generate Product 2.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product 2.mp4"
+    },
+    {
+      "index": 21,
+      "filename": "Validate and Generate Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product.mp4"
+    },
+    {
+      "index": 22,
+      "filename": "Visualized Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Visualized Product.mp4"
+    }
+  ]
+}

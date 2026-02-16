@@ -1,0 +1,216 @@
+{
+  "lessonId": "ch07-l22",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 22,
+  "title": "Introduction to Entity Names",
+  "subtitle": "Learn how to define and utilize user-friendly entity names for improved application performance.",
+  "synthesizedAt": "2026-02-16T18:13:45.417385+00:00",
+  "estimatedMinutes": 35,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine navigating a Guidewire application where every contact, policy, or claim was identified only by a cryptic database ID. It would be incredibly difficult to find what you're looking for, right? User interfaces need clear, human-readable labels for data.",
+      "question": "How can we ensure that complex entity instances are displayed in a user-friendly way across the application, without compromising system performance?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what an entity name is and its purpose in Guidewire applications.",
+        "Explain how the DisplayName property is used to access an entity's user-friendly name.",
+        "Describe the scenarios where entity names are displayed in the user interface.",
+        "Identify when and why to create or modify entity name type definitions.",
+        "Implement basic and complex Gosu logic within entity name definitions for customized display.",
+        "Recognize the performance benefits associated with using entity names."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of the Guidewire data model, how entities are structured, and how they are typically presented in the user interface. Think about how you've seen contact names, policy numbers, or claim IDs displayed in various screens.",
+      "warmupQuestion": "What are some challenges of displaying raw database IDs or full entity details directly in a user interface, both for user experience and application performance?",
+      "hint": "Consider the amount of data that might need to be loaded and how quickly users can identify specific records."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Defining Entity Names and the DisplayName Property",
+      "narrative": "In Guidewire applications, an **entity name** provides a user-friendly, human-readable label for an instance of a given entity. Instead of seeing a generic ID like `ABContact:12345`, you might see 'John Doe' or 'Acme Corp'. This significantly improves the user experience by making data easily identifiable.\n\nEvery entity instance in Guidewire has a built-in `DisplayName` property. This property returns a string value that represents the entity's user-friendly name. For example, `anAddress.DisplayName` would return a formatted address string, or `anABCompany.DisplayName` would return the company's name. The `DisplayName` property is always accessible and serves as the default way to retrieve an entity's name.\n\nHow is this `DisplayName` value determined? It's defined within an **entity name file**, which contains at least one default entity name type definition. These definitions are written in Gosu, allowing for flexible and dynamic string generation. If an entity already has an existing entity name type definition, you can modify its Gosu code to change how the `DisplayName` property returns its string value. If no definition exists, you can create a new entity name file for that specific entity. This new file will contain the Gosu code that defines the default `DisplayName` behavior. It's also possible for an entity name file to contain more than one entity name type definition, though you can only modify, not delete, base configuration definitions.\n\nOne of the most significant advantages of using entity name type definitions is their positive impact on application performance. Guidewire applications use these definitions to retrieve only the *limited information* necessary from the database to construct the display name string. This practice avoids the need to load all fields for an entity, and potentially its sub-entities, into memory just to get a display name. This selective data retrieval ensures that the application does not load an entire entity and its related sub-entities into memory simply to generate a few field values for display, thereby improving overall application responsiveness and efficiency.\n\nConsider the `ContactNote` entity as an example. Its entity name definition, shown in the figure, uses Gosu to combine the `CreateTime` and a truncated version of the `Body` text. This function calculates the UI-friendly name for each `ContactNote` instance, demonstrating how simple Gosu logic can be used to create meaningful display names.",
+      "keyPoints": [
+        "Entity names provide user-friendly labels for entity instances.",
+        "The `DisplayName` property is the default way to access an entity's name.",
+        "Entity name definitions are configured in Gosu within entity name files.",
+        "They enhance application performance by retrieving only necessary data for display."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory overview of entity names and their role in Guidewire applications."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key characteristics and examples of the `DisplayName` property for various entity instances."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Gosu code example for defining the `DisplayName` of a `ContactNote` entity, illustrating performance optimization."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Entity Name",
+          "content": "A user interface friendly name for an instance of a given entity, making it easily identifiable in the application."
+        },
+        {
+          "type": "best_practice",
+          "title": "Performance Optimization",
+          "content": "Entity names are designed to retrieve only limited information from the database, avoiding full entity loads and significantly improving application performance when displaying lists or references."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "ContactNote Entity Name Definition",
+          "code": "return CreateTime + \": \" + Body.elide(35)",
+          "explanation": "This Gosu code snippet from the `ContactNote.en` file defines how the `DisplayName` for a `ContactNote` entity is constructed. It concatenates the `CreateTime` with a colon and a truncated version (elided to 35 characters) of the `Body` text. If the body is empty, it defaults to '(no body text)'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Entity Name Usage and Complex Implementations",
+      "narrative": "Entity names are widely used throughout Guidewire applications to enhance usability. You'll commonly see them when displaying entity instances in various UI components, such as drop-down lists of contacts, search results, or information widgets. For example, instead of a raw ID, a drop-down list might show 'Albertson's' or 'AB Construction'. They are also explicitly referenced when accessing the `DisplayName` property of an entity instance in Gosu code.\n\nEntities optionally contain the `DisplayName` attribute. If you don't explicitly specify a value for this attribute, the `entity.DisplayName` method will default to returning the value of the entity's primary attribute. If you subtype an entity that already has a specified display name, the `entity.DisplayName` method will return the name of the subtype key. This default behavior can sometimes be sufficient, but for richer display, a custom entity name definition is often preferred.\n\nIt's important to note that the base configuration of a Guidewire application typically provides entity names only for primary, core entities. This means that for any custom entities you add to the data model, or for existing entities whose display names are referenced in the user interface but lack a definition, you will need to create an entity name file. If you attempt to use the `DisplayName` property for an entity without an entity name type definition, the application will default to displaying a list of its fields, which is often not user-friendly, as shown with the `aFlagEntry.DisplayName` example in the figure.\n\nBecause entity name types are defined using Gosu, they can incorporate complex logic to generate highly customized display names. Common operations include:\n*   **Conditional logic**: For instance, an `ABPerson` display name might append a middle name only if it's not null, or an activity display name could show 'Open:' for open activities and 'Closed:' for closed ones.\n*   **String manipulation**: This could involve converting order numbers to all capital letters or masking credit card numbers to show only the last four digits.\n*   **Calculations**: An `ABCompany` display name might append the number of employees at the end of the company name.\n\nThe `EFTData.en` example in the figure demonstrates a complex entity name type. This Gosu code uses conditional logic and a Guidewire API (`EncryptionMaskExpressions.maskBankAccountNumber`) to mask all but the last three digits of a bank account number, providing a secure and user-friendly display. This flexibility allows developers to create sophisticated display names that meet specific business requirements while maintaining data privacy and readability.\n\nTo deploy any new entity name types or changes to existing ones, you **must restart the server** for the changes to take effect.",
+      "keyPoints": [
+        "Entity names are used in UI components like drop-downs and search results.",
+        "If undefined, `DisplayName` defaults to the entity's primary attribute or subtype key.",
+        "Custom entities or those without base definitions require new entity name files.",
+        "Gosu enables complex logic (conditional, string manipulation, calculations) in entity names.",
+        "Server restart is required to deploy entity name changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Examples of where entity names are displayed in various Guidewire user interface components."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Illustrates the default output when calling `DisplayName` for an entity without a defined entity name file."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Gosu code for `EFTData.en` demonstrating conditional logic and string manipulation in complex entity names."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Custom Entity Names",
+          "content": "For any custom entities added to your data model, or for existing entities whose names are displayed in the UI but lack a definition, consider creating an entity name file to ensure a user-friendly experience."
+        },
+        {
+          "type": "gotcha",
+          "title": "Undefined DisplayName",
+          "content": "Calling `DisplayName` on an entity without a defined entity name file will result in a list of its fields, which is generally not user-friendly. Always define entity names for UI-facing entities."
+        },
+        {
+          "type": "warning",
+          "title": "Server Restart Required",
+          "content": "Any changes or additions to entity name types require a server restart to be deployed and take effect in the application."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Complex EFTData Entity Name Type",
+          "code": "var sb = new java.lang.StringBuilder()\nif (BankName != null and BankName.length() > 0) {\n  sb.append(BankName)\n}\nif (sb.length() > 0) {\n  sb.append(\", \")\n}\nsb.append(EncryptionMaskExpressions.maskBankAccountNumber(BankAcco))",
+          "explanation": "This Gosu code from `EFTData.en` demonstrates conditional logic and string manipulation. It first appends the `BankName` if available, then adds a comma, and finally appends a masked version of the `BankAccountNumber` using a Guidewire API, ensuring sensitive information is protected while still providing a useful display name."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a new entity name file for a `Policy_EXD` entity, defining its variables, and implementing the Gosu logic for its `DisplayName` property. Pay close attention to how variables are defined in the variable table and how the Gosu editor is used to construct the return string.",
+      "transcriptSummary": "The demonstration shows how to create a new entity name file for the `Policy_EXD` entity within the Guidewire Studio. It details the process of defining variables such as policy number, subtype, and policy owner in the variable table, and then writing Gosu code in the return value pane to construct the entity's `DisplayName`. The demo also highlights the importance of restarting the server for changes to take effect."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A business analyst has requested that the `Claim` entity's `DisplayName` in the user interface should clearly show the claim number and its current status. Specifically, they want it formatted as 'Claim #[ClaimNumber] - [ClaimStatus]'.",
+      "question": "Assuming `ClaimNumber` and `ClaimStatus` are direct properties of the `Claim` entity, what Gosu code would you write in the `Claim.en` entity name file to achieve this desired `DisplayName` format?",
+      "hints": [
+        "Remember that Gosu uses the `+` operator for string concatenation.",
+        "You can directly access entity properties within the entity name definition's Gosu code."
+      ],
+      "expectedApproach": "The learner should use string literals for 'Claim #' and ' - ' and concatenate them with the `ClaimNumber` and `ClaimStatus` properties of the `Claim` entity."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Foran ABPerson object, name an example of when the object's entity\n¢ name might appear in the user interface.\n\nee ee a",
+      "referenceAnswer": "Possible answers: a drop-down list that displays a list of ABPersons; an info bar\nwidget with a value property set to the ABPerson's DisplayName.",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What property points to an object's default entity name type?\n4\n¢\n¢\nee ee a",
+      "referenceAnswer": "DisplayName",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "For which entities do you need to create an entity name file?\n\n4\n¢\n¢\nee ee a",
+      "referenceAnswer": "Custom entities and other entities whose display names are referenced in the user\ninterface but do not already have entity names.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What must you do to deploy new entity name types or changes to\nie existing entity name types?\n\n¢\n\nee ee a",
+      "referenceAnswer": "[a\n\nWhat must you do to deploy new entity name types or changes to\nA existing entity name types?\n\nYou must restart the server.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Entity names provide user-friendly, human-readable labels for entity instances in Guidewire applications.",
+        "The `DisplayName` property is the standard way to access an entity's default name.",
+        "Entity name definitions are configured using Gosu code within entity name files, allowing for dynamic string generation.",
+        "They significantly improve application performance by retrieving only the necessary data for display, avoiding full entity loads.",
+        "New entity name files are required for custom entities or existing entities whose display names are referenced in the UI but lack a definition.",
+        "Gosu enables complex logic (conditional, string manipulation, calculations) within entity name definitions.",
+        "A server restart is mandatory to deploy any new or modified entity name types."
+      ],
+      "realWorldConnection": "Entity names are fundamental to creating an intuitive and efficient user experience in Guidewire applications. By providing clear labels for records in lists, search results, and detail views, they enable users to quickly identify and interact with the correct data. Without well-defined entity names, users would face confusion and increased effort, leading to decreased productivity and potential errors in critical business processes.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into advanced Gosu features and best practices for writing efficient and maintainable code within Guidewire applications."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Based on the demonstration and the concepts learned, create an entity name file for a custom entity in your local Guidewire development environment. Define appropriate variables and implement Gosu logic to display a meaningful and user-friendly name for instances of that entity in the user interface. Remember to restart your server to see the changes.",
+      "objectives": [
+        "Practice creating new entity name files.",
+        "Define variables within an entity name definition.",
+        "Implement Gosu code to construct a custom `DisplayName` string.",
+        "Successfully deploy entity name changes by restarting the Guidewire server."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_22.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_22.mp4"
+    }
+  ]
+}

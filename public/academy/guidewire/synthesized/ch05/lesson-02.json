@@ -1,0 +1,291 @@
+{
+  "lessonId": "ch05-l02",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 2,
+  "title": "Introduction to Claim Maintenance",
+  "subtitle": "Understand the core components and processes for managing claims in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:34:52.982888+00:00",
+  "estimatedMinutes": 110,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a complex insurance claim involving multiple injured parties, damaged property, and ongoing medical treatments. Without a clear, organized system, tracking every detail, payment, and task can quickly become overwhelming and lead to errors.",
+      "question": "How can a robust claims management system like ClaimCenter ensure all aspects of a claim are meticulously maintained and processed efficiently?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Identify and describe the purpose of key claim components in ClaimCenter, including Policy, Claim, Contacts, Incidents, Service Requests, Exposures, Activities, Documents, Notes, Matters, Reserve Lines, and Checks.",
+        "Explain how ClaimCenter integrates with external systems for policy administration and vendor services.",
+        "Recognize the distinct claim maintenance needs and functionalities for different user roles: Customer Service Representative (CSR), Adjuster, and Supervisor.",
+        "Demonstrate basic navigation and information retrieval within ClaimCenter for claim search, workplan management, and monitoring escalated activities."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall how any complex project or case requires organized information and task management to succeed. In the insurance world, a claim is a highly complex 'project' that demands meticulous organization.",
+      "warmupQuestion": "Think about a time you had to manage a lot of disparate information for a single goal. What tools or strategies did you use to keep everything organized and on track?",
+      "hint": "Consider how you tracked tasks, communications, and critical details."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Foundation: Policy and Claim",
+      "narrative": "At the heart of every insurance interaction is a **policy**, which serves as the contract between the carrier and the insured, outlining the specific types of losses the carrier promises to cover. These specific types of losses are known as **coverages**. It's crucial to understand that ClaimCenter itself is not the system of record for policies; instead, it integrates with an external Policy Administration System (PAS). When policy information is needed, ClaimCenter queries the PAS and copies the relevant details into the claim file. Unlike other elements of a claim, there is only one policy associated with a claim.\n\nWhen a loss occurs, it initiates a **claim**, which is essentially an event where one or more potentially covered losses have taken place. The policy's line of business, such as Workers' Compensation, Auto, or Property, directly determines the line of business for the claim itself. For example, a Workers' Compensation policy will lead to a Workers' Compensation claim. A key aspect of the claims process is verifying that the reported loss is indeed covered by the policy. Even if a coverage exists on the policy, the loss might not be covered if it occurred outside the policy's effective dates, was specifically excluded (like earthquake damage in a standard homeowners policy), or if the amount of loss falls outside the policy's terms, such as a deductible exceeding the damage amount. ClaimCenter acts as an electronic file, collecting and tracking all information and work related to handling the claim from the first notice of loss through financial transactions.",
+      "keyPoints": [
+        "A policy is the contract defining coverages; ClaimCenter integrates with an external PAS for policy data.",
+        "A coverage specifies the types of losses covered by a policy.",
+        "A claim is an event of potentially covered losses, with its line of business determined by the policy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A Claims Supervisor highlights the transition from physical claim files to electronic management in ClaimCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definitions of 'Policy' as a contract and 'Coverage' as a specific type of loss covered, with a note on Workers' Compensation."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Explains a 'Claim' as an event of loss and how the policy's line of business dictates the claim's line of business."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Identifying Participants and Documenting Losses: Contacts and Incidents",
+      "narrative": "Every claim involves various individuals and organizations, collectively known as **contacts**. These contacts represent the 'who' of a claim and are typically captured during the initial claim creation, though additional information may be gathered later. Each contact must have one or more defined roles, such as the claimant seeking compensation, the reporter who filed the claim, a doctor treating an injury, or an auto repair shop providing an estimate. Contacts can be broadly categorized into those involved directly with the loss event (like an injured person) and those providing services (like vendors).\n\nEqually important are **incidents**, which represent the 'what' that was lost or damaged. An incident is a collection of information about the damage itself, typically representing an item that suffered loss. For instance, in a claim involving a personal injury, the incident would be referred to as an 'injury incident' (or 'body incident' technically), detailing the person suffering one or more injuries or lost wages. Like contacts, incidents are often captured during the initial claim intake process, ensuring that all information about the damage is recorded from the outset. ClaimCenter allows for the creation of incidents even after a claim is initially established, accessible through the claim's Loss Details screen.",
+      "keyPoints": [
+        "Contacts are people or organizations related to a claim, each with specific roles.",
+        "Incidents describe the 'what' that was lost or damaged, such as injuries or property damage."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Illustrates contacts as individuals or organizations with roles related to a claim, involved either in the loss or providing services."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Defines an 'Incident' as the 'what' that was lost or damaged, representing a collection of information about the damage."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Facilitating External Work and Tracking Potential Payments: Service Requests and Exposures",
+      "narrative": "To manage external work related to a claim, ClaimCenter utilizes **Service Requests**. These are formal requests for work to be performed by a vendor, and they are usually tied to a specific incident. For example, a service request might be created for hospitalization, emergency evacuation, or physical therapy for a recuperating patient. Service requests can be initiated either during the initial claim creation or at any point thereafter. A significant advantage of ClaimCenter is its ability to automatically submit these requests to vendors, often through a vendor portal, ensuring prompt action. Service requests can be for a 'Quote only' to compare prices, a 'Service only' to perform work, or 'both Quote and Service', allowing for comprehensive tracking of vendor communications and quotes.\n\nFor many claims, a single loss event can involve multiple coverages and claimants. To meticulously track the progress of each potential payment or **indemnity** (compensation for a covered loss), ClaimCenter uses **exposures**. An exposure is a specific set of data designed to track a potential indemnity from one particular coverage to one specific claimant. In the context of Workers' Compensation, the primary goal of an exposure is to compensate the worker for medical expenses and lost wages. It's important to note that the term 'exposure' is used differently in ClaimCenter than in Policy Administration Systems (PAS). While an underwriter in a PAS might view possible coverages as exposures, in ClaimCenter, exposures are created based on the coverages that are deemed to be in effect for a particular claimant, focusing on the financial liability for a specific loss.",
+      "keyPoints": [
+        "Service Requests are formal requests for vendor work, often linked to incidents, and can be for quotes, services, or both.",
+        "Exposures are ClaimCenter's mechanism to track potential indemnities (payments) from a specific coverage to a claimant."
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Indemnity",
+          "content": "A payment in compensation for a covered loss. In Workers' Compensation, this typically includes medical expenses and compensation for lost wages."
+        }
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Explains Service Requests as requests for vendor work, usually related to an incident, and lists examples and types."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Defines 'Exposure' as a data set to track potential indemnity from one coverage to one claimant, especially in Workers' Compensation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Orchestrating Work and Recording Information: Activities, Documents, and Notes",
+      "narrative": "The entire process of handling a claim in ClaimCenter can be viewed as the completion of its **activities**. An activity is a task that must be performed to process a claim, and the full set of activities for a given claim is referred to as its 'workplan'. Each activity is assigned to a specific user, includes an expected due date, and tracks its status (e.g., pending, completed). ClaimCenter significantly improves upon traditional 'diary' features found in legacy systems by allowing both users and the system to create and assign tasks, with robust assignment rules for automation. Activity due dates and statuses are critical for business processes and reporting, ensuring tasks are completed in a timely manner.\n\nBeyond tasks, claims require comprehensive record-keeping. **Documents** are electronic files or physical pieces of paper that contain information relevant to the claim. This can range from the First Report of Injury (FROI) and medical diagnoses to photographs, diagrams, and estimates. Documents are crucial for tracking information that exists both physically (e.g., floor plans, mechanic assessments) and electronically (e.g., emails, scanned photos). Unlike many other claim objects that ClaimCenter might generate automatically, documents are typically added manually by users.\n\nFinally, **notes** provide a detailed textual record of the actions taken, decisions made, and the thought process behind processing a claim. While activities manage *what* needs to be done, notes explain *why* and *how*. Users can manually create notes and associate them with specific parts of the claim (the claim itself, a contact, or an exposure) without being tied to a specific date or user. ClaimCenter also has robust visibility rules to control who can view or edit notes, and notes can be generated automatically by the system, offering a comprehensive audit trail and context for claim handlers.",
+      "keyPoints": [
+        "Activities are tasks assigned to users, forming the claim's 'workplan', with due dates and statuses.",
+        "Documents are electronic or physical files containing relevant claim information, typically added manually.",
+        "Notes are detailed text entries recording actions, thoughts, and processes, providing context and an audit trail."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Defines 'Activities' as tasks required to process a claim, forming the 'workplan', with due dates and statuses."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explains 'Documents' as electronic or physical files relevant to a claim, such as photographs, diagrams, or assessments."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Describes 'Notes' as text entries detailing events, actions, and thought processes during claim handling."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Managing Legalities, Funds, and Payments: Matters, Reserve Lines, and Checks",
+      "narrative": "In claims that involve legal proceedings, **matters** are used to track all pertinent information related to a single potential lawsuit. This includes critical details such as case numbers, court dates, and the primary attorneys involved. The litigation screen in ClaimCenter provides a comprehensive list of all legal matters and pending litigation associated with a claim, ensuring that all legal aspects are managed systematically.\n\nFinancially, ClaimCenter employs **reserve lines** to manage funds set aside for expected payments against an exposure. A reserve line can be thought of as a dedicated 'T-account' for a specific aspect of exposure processing, tracking both credits and debits. Every exposure can have one or more reserve lines. For instance, a single exposure for a collision coverage might have separate reserve lines for auto body damage and glass damage if the carrier tracks these payment types distinctly. Reserve lines are implemented through transactions that either add to or subtract from the allocated amount, providing a clear financial picture of potential liabilities.\n\nFinally, **checks** represent any type of payment made from ClaimCenter, whether it's a physical paper check or an Electronic Funds Transfer (EFT). A single check can be associated with one or more reserve lines and may contain multiple payment transactions. This flexibility is crucial for scenarios involving recurring payments (e.g., for ongoing medical care) or multiple payees (e.g., in litigation where a settlement is split between a claimant and their lawyer). The Financials > Checks screen lists all checks generated for a claim, including details like check number, payee, gross amount, issue date, and status, providing a complete audit trail of all financial disbursements.",
+      "keyPoints": [
+        "Matters track information related to potential lawsuits, including case numbers and court dates.",
+        "Reserve lines are amounts of money set aside for payments against an exposure, managed through transactions.",
+        "Checks represent any type of payment (physical or EFT) and can include multiple transactions from different reserve lines."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Defines 'Matters' as a data set pertaining to a potential lawsuit, including case numbers and attorney details."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Explains 'Reserve lines' as money set aside for payments against an exposure, implemented through transactions."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Describes 'Checks' as any type of payment (physical or EFT), which may contain multiple payment transactions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Claim Maintenance from Different User Perspectives",
+      "narrative": "ClaimCenter is designed to support various roles within an insurance company, each with unique needs and responsibilities for claim maintenance. Understanding these perspectives is key to appreciating the system's comprehensive functionality.\n\nFor a **Customer Service Representative (CSR)** like Tanya, the primary challenge often involves locating a claim with minimal information. Customers might call in without their claim number, knowing only details like a license plate number, a policy number, or even the amount of a check they received. Tanya needs the ability to perform flexible and robust claim searches to quickly retrieve the correct claim and assist the customer, often by viewing basic claim information and activities.\n\nAn **Adjuster** like Tanvi, on the other hand, manages a high volume of independent tasks across multiple claims daily. These tasks vary in importance and urgency. Tanvi requires tools to effectively check and organize her personal workload, prioritize activities, and access relevant documents for each claim. The 'workplan' feature and document management capabilities are crucial for an adjuster to stay on top of their responsibilities and ensure timely claim progression.\n\nFinally, a **Supervisor** like Jun is responsible for the overall quality and timeliness of claim processing within their team. Jun needs to monitor team performance, identify any issues requiring special attention, and manage the workload distribution among adjusters. Features like escalated activities and team dashboards are vital for a supervisor to maintain oversight, intervene when necessary, and ensure that claims are handled correctly and efficiently, aligning with corporate policies and best practices.",
+      "keyPoints": [
+        "CSRs require flexible claim search capabilities to assist customers with limited information.",
+        "Adjusters need robust tools to manage their daily workplan and access claim documents efficiently.",
+        "Supervisors utilize ClaimCenter to monitor team workload, identify escalated issues, and ensure timely claim processing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "A Customer Service Representative (CSR) expresses the need for flexible claim search capabilities when customers lack claim numbers."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "An Adjuster highlights the need to check and organize a diverse daily workload across multiple claims."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "A Claims Supervisor outlines responsibilities for ensuring correct and timely claim processing, managing team workload, and addressing issues."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show you how a Customer Service Representative (CSR) can efficiently search for a claim using various pieces of information and then navigate to view its associated activities.",
+      "transcriptSummary": "The video demonstrates using ClaimCenter's search functionality, including partial information searches, to locate a specific claim. It then highlights how to access and review the activities associated with that claim, mimicking a CSR's typical workflow."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "Watch how an Adjuster uses ClaimCenter to manage their daily workplan, prioritize tasks, and access important documents related to their assigned claims.",
+      "transcriptSummary": "This demo illustrates an Adjuster's perspective, showing how they navigate their workplan to view assigned activities and their statuses. It also demonstrates how to easily locate and open documents attached to a claim, which is crucial for claim processing."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration focuses on a Supervisor's view, showing how they can monitor escalated activities and manage their team's workload to ensure critical tasks are addressed promptly.",
+      "transcriptSummary": "The video showcases the Supervisor's dashboard and tools for identifying escalated activities that require immediate attention. It also demonstrates how supervisors can gain an overview of their team's workload and ensure proper distribution of tasks."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A claimant calls, upset because they haven't received a confirmation for their recent physical therapy appointment, which they believe was approved. They can only provide their policy number and the approximate date of the incident.",
+      "question": "As a CSR, how would you use ClaimCenter to quickly find this claim and verify the status of the physical therapy service request?",
+      "hints": [
+        "Start by using the policy number and incident date in the claim search.",
+        "Once the claim is open, consider which section would contain information about external services.",
+        "Look for 'Service Requests' or 'Services' within the claim details."
+      ],
+      "expectedApproach": "Search for the claim using the provided policy number and incident date. Once the claim is located and opened, navigate to the 'Services' or 'Service Requests' section to find the physical therapy request and check its status."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Within a claim, what is an incident?",
+      "referenceAnswer": "An incident is the “what” that was lost or damaged.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatare the three types of Service Requests?",
+      "referenceAnswer": "Quote only\nQuote and service\nService only",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is an exposure?",
+      "referenceAnswer": "An exposure is used to track a potential indemnity from one coverage to one\nclaimant.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Whatis a set of activities on a claim called?",
+      "referenceAnswer": "A Workplan",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "InClaimCenter, what two mechanisms are referred to as a check?",
+      "referenceAnswer": "A physical paper check and an electronic funds transfer",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter organizes claim information into distinct components: Policy, Claim, Contacts, Incidents, Service Requests, Exposures, Activities, Documents, Notes, Matters, Reserve Lines, and Checks.",
+        "Each component plays a specific role in tracking the 'who, what, when, why, and how' of a claim.",
+        "ClaimCenter integrates with external systems for policy data and vendor services, streamlining the claims process.",
+        "Different user roles (CSR, Adjuster, Supervisor) interact with ClaimCenter's features based on their specific claim maintenance needs, from searching to managing workloads and monitoring escalated items."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of these core ClaimCenter entities is fundamental. It enables effective system configuration, seamless integration with other enterprise systems, and accurate training for end-users, ensuring efficient and compliant claim management that directly impacts customer satisfaction and operational costs.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the First Notice of Loss (FNOL) process, exploring how new claims are initiated and the critical information captured at the outset."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment will guide you through starting the ClaimCenter application in a Virtual Machine (VM) and then performing a basic claim maintenance activity to familiarize yourself with the system's interface and core functionalities.",
+      "objectives": [
+        "Successfully start and access the ClaimCenter application within your provided Virtual Machine environment.",
+        "Navigate to a specific claim and identify its key components (e.g., Contacts, Activities, Documents).",
+        "Perform a basic claim maintenance task, such as adding a new note to a claim or updating the status of an activity."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_02_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_02_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_02_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_02_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Claim_02_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_02_03.mp4"
+    }
+  ]
+}

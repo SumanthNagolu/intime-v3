@@ -1,0 +1,359 @@
+{
+  "lessonId": "ch08-l09",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 9,
+  "title": "Concepts of Revisioning Contact and Loaction information",
+  "subtitle": "Explore how PolicyCenter manages and revises critical contact and location data across accounts and policies.",
+  "synthesizedAt": "2026-02-16T18:21:28.288273+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a long-standing customer calls to update their last name after getting married, or moves to a new address. How does an insurance system ensure that their historical policy documents reflect their old information, while all new policies and communications use their updated details? It's a complex challenge to maintain data accuracy and historical integrity simultaneously.",
+      "question": "How can an insurance system effectively manage changes to customer contact and location information while preserving historical records for legal and operational needs?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the concept of Policy Periods and how they relate to policy revisions.",
+        "Explain why contact and location information needs to be both shared and revisioned in PolicyCenter.",
+        "Differentiate between data stored only on the Account and data stored on both Policy and Account.",
+        "Describe how PolicyCenter handles current, future-dated, and back-dated changes to revisioned contact data.",
+        "Identify examples of revisioned and non-revisioned contact and location fields.",
+        "Explain the impact of changing account location information on different policy transaction states.",
+        "Recognize how PolicyCenter supports configuration for location revisioning."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about how PolicyCenter manages policy data, including the concept of a PolicyPeriod representing a 'version' of a policy at a given point in time. This lesson builds on that understanding by focusing on specific types of data – contacts and locations – that have unique sharing and revisioning requirements.",
+      "warmupQuestion": "Think about a time you updated your personal information (like an address or phone number) with a service provider. How quickly did those changes reflect across all your interactions with them, and what happened to your old information?",
+      "hint": "Consider the difference between data that needs to be historically preserved and data that always needs to be current."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Policy Revisions and the Need for Shared, Revisioned Data",
+      "narrative": "In PolicyCenter, every change to a policy, such as an amendment or renewal, creates a new **PolicyPeriod**. Think of a PolicyPeriod as a distinct 'version' of the policy, each with its own effective and expiration dates. This allows PolicyCenter to maintain a complete historical record of the policy as it evolves over real-world time, which we call **model time**. When a policy undergoes changes, the entire hierarchy of Guidewire entities associated with that policy branch is cloned into new rows in the database. The cloned branch is then updated with the specific changes, ensuring that previous versions remain intact for historical accuracy. These changes become visible only when viewing the policy from the effective date of that specific branch. \n\nWhile most policy objects (like vehicles or coverages) live exclusively within a PolicyPeriod, certain entities like **contacts** and **locations** have a dual existence. They reside not only on the policy but also on the account level. This dual existence is crucial for two main reasons: **sharing** and **revisioning**. Sharing contact and location information at the account level prevents redundant data entry and reduces errors, as the same contact can play multiple roles across different policies or the account itself. However, because certain contact and location details are considered part of the legally binding policy contract, they must also be revisioned. This means that when a policy is issued, PolicyCenter captures a snapshot of this information as it was at that specific point in time. If the information changes later due to a new job, a new version is created, preserving the old data for historical reference. This balance of sharing and revisioning ensures both efficiency and historical accuracy.",
+      "keyPoints": [
+        "A PolicyPeriod represents a specific 'version' of a policy, effective for a defined date range.",
+        "PolicyCenter uses 'model time' to track real-world changes and create new policy revisions.",
+        "Contacts and locations are shared between accounts and policies to avoid data re-entry and allow for multiple roles.",
+        "Information that is part of the policy contract must be revisioned to preserve historical accuracy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to the concepts of revisioning contact and location information."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates how PolicyPeriods represent different versions of a policy over model time, with each change creating a new revision."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Depicts the shared nature of contact and location information between the account and policies, highlighting the benefits."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Explains the dual need for sharing and revisioning information in PolicyCenter, especially for data that is part of the policy contract."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "PolicyPeriod",
+          "content": "A PolicyPeriod is one 'version' of a policy, storing information for a specific revision of the contractual period. Each transaction (submission, change, renewal) creates a new PolicyPeriod entity."
+        },
+        {
+          "type": "definition",
+          "title": "Model Time",
+          "content": "The actual real-world time when policies are created or jobs are bound. It tracks the history of changes in the system."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Contact Revisioning: When and Where Data Lives",
+      "narrative": "Contacts and locations are unique because they exist both on the policy and on the account. This means their information can change independently. For instance, if a contact changes their last name, PolicyCenter updates it on the account. However, this change doesn't automatically propagate to already bound policies. To update the name on a bound policy, a new policy change job must be executed. This ensures that the original policy contract remains historically accurate, while future transactions can reflect the updated name. Insurers often prefer updated documents, but also need to track the historical name.\n\nPolicyCenter handles this by allowing jobs to pick up the most recent account-level contact information for **revisioned fields**. When a new policy job starts, it can pull the latest contact data from the account, making that new data effective from the job's effective date forward. For the period before the job's effective date, the policy still retains the old information. It's crucial to understand that not all contact fields are revisioned. Some data, like a contact's name, resides both inside and outside the PolicyPeriod graph because it needs to be shared *and* revisioned. Other data, such as a phone number, typically lives only outside the policy graph (on the account) because it needs to be shared but doesn't require a historical record; you always want the most current number. Once a policy period is 'bound' or 'promoted' (made legally enforced), all data inside its PolicyPeriod graph, including revisioned contact information, becomes immutable.",
+      "keyPoints": [
+        "Contact and location information exists on both the account and policy, allowing independent changes.",
+        "Changes to account-level contact information do not automatically update bound policies; a new policy job is required.",
+        "Policy jobs can pick up the most recent account-level contact data for revisioned fields, effective from the job's date.",
+        "Some contact fields (e.g., name) are revisioned and shared, while others (e.g., phone number) are only shared (non-revisioned).",
+        "Once a policy period is bound, its revisioned data is immutable."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Illustrates a scenario where a contact's name changes after a policy is bound, demonstrating the need for contact revisioning."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Explains how policy jobs pick up current contact data from the account, creating new policy revisions with updated information."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Compares data that lives only on the account (shared, not revisioned) versus data that lives on both policy and account (shared and revisioned)."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Revisioned Fields",
+          "content": "Fields whose historical values are preserved within each PolicyPeriod because they are considered part of the policy contract. Examples include contact names, dates of birth, and marital status."
+        },
+        {
+          "type": "definition",
+          "title": "Non-Revisioned Fields",
+          "content": "Fields that are shared across policies and accounts but do not require historical tracking. Only the most current value is maintained, typically at the account level. Examples include phone numbers."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show you how contact data synchronizes from the account to the policy in PolicyCenter, highlighting the initial setup and how information is shared.",
+      "transcriptSummary": "The demo illustrates the creation of a new policy and how existing contact information from the account is automatically pulled into the policy. It emphasizes the initial synchronization of contact details, such as name and address, ensuring consistency between the account and the new policy submission."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Handling Current, Future-Dated, and Back-Dated Contact Changes",
+      "narrative": "PolicyCenter intelligently handles contact data changes based on the job's effective date relative to the contact's last update time. This ensures data integrity across various scenarios. \n\nFor **current-dated changes**, where the contact's last update time is less than or equal to the job's effective date (and the job is not in the future), contact data is fully synchronized between the account and the policy throughout the job. Any edits made to revisioned contact information, such as a last name, are reflected on both the account and the policy. The contact's last update time is then set to the job's effective date or the current date if modified at the account level. Submissions and issuances always sync contacts to the account.\n\n**Future-dated changes** occur when the current date is earlier than the job's effective date. In this case, PolicyCenter copies the current information from the account to the policy at the start of the job. However, changes made during the job do *not* flow back up to the account immediately, as the account-level data must remain current. Instead, these changes create a work item for a batch process (e.g., 'Apply Pending Account Data Updates') that automatically updates the account-level contact data on the job's effective date. The contact's last update time is set to the current date, not the future effective date, because account contact data cannot be future-dated.\n\nFor **back-dated changes**, where the contact's last update time is later than the job's effective date, PolicyCenter uses the policy-level data and makes changes only at the policy level. It does *not* copy data down from the account (to avoid overwriting historically correct data) nor does it automatically copy changes back up to the account. Instead, PolicyCenter creates activities and notes, suggesting that the user may want to manually apply these changes at the account level, giving them control over historical data integrity.",
+      "keyPoints": [
+        "Current-dated changes: Contact data is synced between account and policy; last update time is modified.",
+        "Future-dated changes: Data copied from account to policy, but changes don't flow back immediately. A batch process updates the account on the effective date.",
+        "Back-dated changes: Policy-level data is used, changes are made only at the policy level. Activities and notes are created to suggest manual account updates."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Introduces a complex scenario involving multiple changes to a contact over time, setting the stage for different revisioning behaviors."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Explains how PolicyCenter handles current-dated changes, including synchronization with account data and updating the contact's last update time."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Details the process for future-dated changes, where data is copied down and a batch process handles future account updates."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Describes how back-dated changes are managed, focusing on policy-level data and the creation of activities for manual account updates."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Contact Last Update Time",
+          "content": "PolicyCenter tracks the 'LastUpdateTime' of a contact. If modified in a policy job, it's set to the job's effective date. If modified at the account level, it's set to the current date. This timestamp is crucial for determining how changes are handled."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Revisioned and Non-Revisioned Contact Fields in Practice",
+      "narrative": "The Contact data model in PolicyCenter is specifically designed to manage the synchronization and revisioning of contact information. Fields like `FirstName`, `LastName`, `LicenseState`, and `LicenseNum` on the `Person` subtype of the `Contact` entity are typically **revisioned fields**. These fields are marked as 'synced' and are shared between the account and policy. When an open job is active, these fields can synchronize with the account, meaning that upon binding, they hold a copy of the account fields at that specific time. If the account information for these revisioned fields changes *after* a policy is bound, the bound policy remains unaffected, preserving its historical state.\n\nConversely, fields such as `CellPhone` on the `Person` subtype are **non-revisioned fields** and typically reside only on the account. This means they are shared but not revisioned, as there's usually no need for a historical record of a phone number; the most current one is always desired. PolicyCenter's default application configuration dictates when synchronization occurs: it's always synchronized during submission and issuance jobs, but follows specific rules (based on effective date and last update time) during policy change, rewrite, reinstatement, or renewal jobs. During audit and cancellation jobs, contact information is never synchronized. This granular control allows insurers to define precisely which pieces of contact information are part of the policy contract and require revisioning, and which should always reflect the most current state.",
+      "keyPoints": [
+        "The Contact data model supports synchronization and revisioning.",
+        "Revisioned fields (e.g., `FirstName`, `LastName`) are synced between account and policy and are part of the policy contract.",
+        "Non-revisioned fields (e.g., `CellPhone`) are only on the account, shared but not historically tracked.",
+        "Synchronization behavior varies by job type (submission, change, audit, etc.)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Illustrates the Contact entity model, showing examples of revisioned (synced) and non-revisioned fields for a Person contact type."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Provides a detailed example of how future-dated and back-dated changes to contact information (marital status, birth year) are handled in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Configuration for Revisioned Fields",
+          "content": "PolicyCenter allows configuration on a field-by-field basis for each contact role to determine whether basic contact information or account-level role-specific information should be revisioned. Refer to the PolicyCenter Application Guide for a complete list."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "UI Examples: Contact Revisioning in Action",
+      "narrative": "Let's walk through a practical example in the PolicyCenter user interface to solidify these concepts. When a new Personal Auto policy is created for 'Jane Smith', who is single and born in 1967, this information is captured as part of the initial submission. If Jane then calls on a later date (e.g., 02/22/19) to report that she will be getting married on a future date (03/01/19) and wants to change her marital status to 'Married' and add a new driver, a **future-dated policy change** is initiated. The UI will show different values for her last name and marital status depending on the effective date being viewed. Crucially, the account contact information isn't updated until the policy change's effective date (03/01/19), handled by the 'Apply Pending Account Data Updates' batch process.\n\nNow, consider a **back-dated policy change**. If, on 03/15/2019, Jane calls to correct her birth year to 1965, effective from the beginning of the policy (01/01/2019), this triggers a back-dated change. PolicyCenter will create activities and notes on the account, suggesting that the user might want to manually apply this change at the account level. This is because back-dated changes do not automatically update the account to prevent overwriting more current data. The user then has the discretion to update the account manually, ensuring historical accuracy for that specific policy while maintaining the current state of the account.",
+      "keyPoints": [
+        "Creating a submission establishes initial contact information for a policy.",
+        "Future-dated policy changes update contact information on the policy from the effective date, with account updates handled by a batch process.",
+        "Back-dated policy changes update policy-level data but generate activities/notes for manual account updates.",
+        "Activities and notes on the account guide users to apply back-dated changes manually when necessary."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Shows the PolicyCenter UI for creating a new Personal Auto submission, capturing initial contact details for Jane Smith."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Illustrates a future-dated policy change in the UI, where Jane's marital status and last name are updated for a future effective date."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Depicts a back-dated policy change in the UI, correcting Jane's birth year effective from the policy's start date."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Displays the activities and notes created on the account after a back-dated policy change, prompting manual account updates."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will walk through the process of handling future-dated and back-dated policy changes for revisioned contact data within PolicyCenter's user interface.",
+      "transcriptSummary": "The demo showcases how to initiate a future-dated policy change to update a contact's marital status and how PolicyCenter processes this change. It then demonstrates a back-dated change to a contact's birth date, illustrating the creation of activities and notes for manual account updates, reinforcing the concepts of revisioning behavior."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Why do you need revisioned fields on contacts or locations?",
+      "referenceAnswer": "considered part of the policy contract and thus cannot be changed once the policy is\nbound and the contract written. If the field is revisioned, it can be changed on the\naccount level even after the policy is bound. The information is updated on the\naccount and can be obtained by policies for future jobs.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "lrue or false: Contact data is always synced to account during\nsubmission and issuance.",
+      "referenceAnswer": "True.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "lrueor false: During a back dated policy change, contact data is copied\nfrom policy to account.",
+      "referenceAnswer": "False. Contact data is not copied from policy to account for a back dated policy\nchange.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "How does PolicyCenter handle back dated changes on contact data?",
+      "referenceAnswer": "to the policy. A user can decide whether to apply the changes or not at the account\nlevel. The changes must be applied manually.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through applying the concepts of revisioning contact and location information in a simulated PolicyCenter environment. You will practice creating policy changes that involve future-dated and back-dated updates to contact details, observing how PolicyCenter manages data synchronization and historical records.",
+      "objectives": [
+        "Create a new policy submission with initial contact details.",
+        "Execute a future-dated policy change to update contact information (e.g., marital status, last name).",
+        "Observe how PolicyCenter handles the synchronization of future-dated changes to the account.",
+        "Perform a back-dated policy change to correct historical contact information (e.g., date of birth).",
+        "Identify the activities and notes generated for back-dated changes and understand the need for manual account updates."
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Location Sharing and Revisioning Fundamentals",
+      "narrative": "Just like contact information, **location information** is also shared between accounts and policies in PolicyCenter. This sharing offers significant benefits, primarily by avoiding redundant data entry and reducing errors, especially when the same location is used across multiple policies for an account. For example, a business might have a single primary location that applies to several different business policies. \n\nPolicyCenter's approach to locations mirrors that of contacts: it supports both sharing and revisioning. Information that is considered part of the policy contract for an issued PolicyPeriod must be revisioned. This means that if a policy is issued with a specific location address, that address is preserved as part of that policy's historical record. If the location changes later (e.g., the business moves), a new policy job will create a new revision with the updated address, while the old policy retains the original address. This ensures that you can always retrieve the location information as it was at any given point in time. Location information typically includes basic details like address, city, state, and location name, but can also encompass policy-specific details like tax location. PolicyCenter stores location information at both the account and policy levels, and it is revisioned on a field-by-field basis. During draft jobs, policy and account location information is always synchronized, ensuring that you're working with the most up-to-date details before a policy is bound.",
+      "keyPoints": [
+        "Location information is shared between accounts and policies to prevent re-entry and allow reuse.",
+        "Information part of the policy contract (e.g., address) is revisioned to maintain historical accuracy.",
+        "Location information includes basic details (address, city, state) and policy-specific data (tax location).",
+        "Location revisioning is field-by-field, and account/policy locations are always synchronized in draft jobs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 34,
+          "caption": "An introductory slide for the section on location revisioning."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "A visual placeholder for the start of the location revisioning discussion."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Illustrates how location information is shared between the account and policies, highlighting the benefits."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "Reiterates that PolicyCenter supports both sharing and revisioning for information that can change, including locations."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Lists common types of location information, distinguishing between basic and policy-specific details."
+        },
+        {
+          "slideNumber": 39,
+          "caption": "Explains the concept of location revisioning, noting that it's field-by-field and synchronized in draft jobs."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Impact and Configuration of Location Information Changes",
+      "narrative": "Changing account-level location information has different impacts depending on the state of associated policy transactions. For **pending policy transactions**, any changes to account-level location information are immediately reflected, as these transactions always display the most up-to-date account data. This ensures that any work in progress uses the current information. However, for **quoted policy transactions** that are not yet bound, if a revisioned field on the account location changes, a validation error will occur at bind time. This necessitates a re-quote to ensure the policy contract reflects the accurate, updated location details before it becomes legally binding. For **bound policies or completed policy transactions**, each bound policy transaction receives a synchronized copy of the location information at the time of binding. Therefore, changes to account-level location information after a policy is bound will not affect the historical record of that specific bound policy.\n\nPolicyCenter provides robust configuration options for managing location data. Users can extend entities such as `PolicyLocation` and `AccountLocation`, as well as line-of-business specific locations like `BOPLocation` or `IMLocation`. This flexibility allows administrators to define precisely which fields are revisioned on `PolicyLocation` or `AccountLocation`. Furthermore, the configuration determines on which jobs and when location information is synchronized between the account and policy. This granular control ensures that the system behaves according to specific business rules and regulatory requirements, maintaining both operational efficiency and data integrity.",
+      "keyPoints": [
+        "Account location changes immediately affect pending policy transactions.",
+        "Quoted policy transactions require re-quoting if revisioned account location fields change before binding.",
+        "Bound policies are unaffected by subsequent account location changes, preserving historical data.",
+        "PolicyCenter allows configuration of revisioned location fields and synchronization timing for various job types.",
+        "Location-related entities like `PolicyLocation`, `AccountLocation`, and LOB-specific locations can be extended."
+      ],
+      "figures": [
+        {
+          "slideNumber": 40,
+          "caption": "Outlines how changes to account location information affect pending, quoted, and bound policy transactions."
+        },
+        {
+          "slideNumber": 41,
+          "caption": "Details the configuration options available for location-related entities, including which fields are revisioned and when synchronization occurs."
+        },
+        {
+          "slideNumber": 42,
+          "caption": "Provides an example of revisioned location fields within the `PolicyLocation` entity, such as `AddressL1`, `City`, and `State`."
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyPeriods are versions of a policy, tracking changes over model time.",
+        "Contacts and locations are shared between accounts and policies for efficiency, but also revisioned for historical accuracy.",
+        "Revisioned fields are part of the policy contract and are immutable once bound; non-revisioned fields always show current data.",
+        "PolicyCenter handles current, future-dated, and back-dated changes differently, impacting synchronization and requiring manual intervention for back-dated account updates.",
+        "Location information follows similar sharing and revisioning principles as contact data, with configurable fields and synchronization rules.",
+        "Changes to account-level location data have varying impacts on policy transactions depending on their status (pending, quoted, bound)."
+      ],
+      "realWorldConnection": "In real Guidewire projects, understanding contact and location revisioning is critical for designing robust data models, configuring business rules, and ensuring compliance. It directly impacts how customer service representatives handle updates, how historical policies are viewed for claims or audits, and how integrations with external systems (like CRM or billing) must be designed to maintain data consistency across the enterprise. Proper implementation of these concepts prevents data discrepancies, improves operational efficiency, and supports accurate reporting and legal compliance."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_09_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_09_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_09_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_09_02.mp4"
+    }
+  ]
+}

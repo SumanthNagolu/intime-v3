@@ -1,0 +1,216 @@
+{
+  "lessonId": "ch13-l06",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 6,
+  "title": "Rating Overrides",
+  "subtitle": "Manually adjust policy premiums in PolicyCenter for unique risk scenarios and expert judgment.",
+  "synthesizedAt": "2026-02-16T19:10:28.714953+00:00",
+  "estimatedMinutes": 61,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter, and the automated rating engine has calculated a premium for a complex commercial policy. However, based on your expert judgment and unique risk factors not fully captured by the system, you believe the premium needs a slight adjustment to accurately reflect the risk or secure the business.",
+      "question": "How can you manually intervene in an otherwise automated premium calculation process while ensuring proper oversight and compliance?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define rating overrides and their purpose in PolicyCenter.",
+        "Identify the conditions and locations for applying rating overrides.",
+        "Distinguish between what can and cannot be overridden in a policy's cost.",
+        "Explain the impact of rating overrides on PolicyCenter's data model and permissions.",
+        "Describe how rating overrides are handled across various policy transactions."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored how PolicyCenter's rating engine automatically calculates premiums based on rate books and policy data. This automation ensures consistency and efficiency.",
+      "warmupQuestion": "Before we dive into manual adjustments, take a moment to recall: What are the key components that PolicyCenter's rating engine uses to determine a policy's premium?",
+      "hint": "Think about the data points stored within a 'cost' entity."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Rating Overrides and Their Application",
+      "narrative": "In the world of insurance, while automation streamlines many processes, there are times when human expertise is indispensable. This is where **rating overrides**, also known as **manual rating**, come into play. A rating override allows an authorized user, typically an underwriter, to manually adjust the premium that PolicyCenter's automated rating engine has calculated for a policy. This capability is crucial for handling unique risk profiles or competitive situations that might not be fully captured by standard rating algorithms.\n\nIt's important to understand the workflow for applying these overrides. You cannot simply enter an override at any point. The system requires that a policy first be **rated by the engine** to generate an initial quote. Only *after* viewing these initial results can a user decide to apply overrides, and only in areas where overrides are explicitly permitted.\n\n The process is cyclical: once a quote is generated, the rating engine selects the appropriate rate book and calls a rate routine for each cost item (like a coverage). This constructs a worksheet with calculated results, leading to the initial premium displayed on the Quote screen. If an override is then applied, the user will **override costs and then rerate** the policy. This sends the new, manually adjusted values back through the rating engine, which then recalculates and presents the new premium results on the Quote screen. This iterative process ensures that even manual adjustments are integrated back into the system's overall calculation logic.",
+      "keyPoints": [
+        "Rating overrides allow manual adjustment of automatically generated premiums.",
+        "They are also known as manual rating.",
+        "Overrides can only be applied *after* an initial policy rating.",
+        "Applying an override requires rerating the policy to see the new premium."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Rating overrides enable manual adjustment of premiums calculated by the rating engine."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overrides can only be applied after an initial quote has been generated and where permitted."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The workflow for rating overrides involves quoting, overriding, and rerating to update the premium."
+        }
+      ],
+      "estimatedMinutes": 8
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Identifying Overridable Cost Components and Lines of Business",
+      "narrative": "To effectively use rating overrides, it's essential to understand the underlying cost structure within PolicyCenter. Every cost in PolicyCenter is an entity that stores several details related to rating a policy. These include the **Base Rate** (the rate found from a rate table lookup), the **Adjusted Rate** (the base rate after applying factors like deductibles or taxes), the **Basis** (the underlying value used for calculation, e.g., payroll), the **ProrataFactor**, the **Term Amount** (premium for a full policy term), and the **Amount** (term amount adjusted for the effective period).\n\nRating overrides specifically target certain financial components. You can override the **Base Rate** and the **Adjusted Rate**. Additionally, you can enter an **un-prorated amount for the term amount** or a **prorated flat cost** directly. This flexibility allows for precise manual adjustments. However, it's important to note that if a policy has rating overrides, PolicyCenter automatically creates an **underwriting issue** before the quote can be released. This issue must be approved by an underwriter, ensuring that all manual adjustments are properly reviewed and authorized before agents or policyholders view the pricing.\n\nIn the base configuration of PolicyCenter, rating overrides are enabled for specific lines of business (LOBs), including **Workers' Compensation**, **Inland Marine**, and **Commercial Property**. This doesn't mean they're limited to these; the system is configurable to add rating override capabilities to other LOBs as needed.\n\nConversely, there are certain types of costs where rating overrides are **not appropriate** and are typically disabled. For instance, you generally cannot override **tax calculations**, as these are often mandated by regulations. Similarly, **experience modifiers** and **schedule credits** usually do not allow overrides because users directly enter these values when editing the policy, making a separate override mechanism redundant. It's also customary for some Inland Marine coverages to have manually determined rates set during risk entry, rather than as an override after rating.",
+      "keyPoints": [
+        "PolicyCenter costs store details like Base Rate, Adjusted Rate, Term Amount, and Amount.",
+        "You can override Base Rate, Adjusted Rate, un-prorated term amount, or a prorated flat cost.",
+        "Rating overrides trigger an underwriting issue requiring approval.",
+        "Base configuration LOBs supporting overrides include Workers' Compensation, Inland Marine, and Commercial Property.",
+        "Costs like tax calculations, experience modifiers, and schedule credits typically cannot be overridden."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "PolicyCenter stores various details within a cost entity, including rates and amounts."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Specific cost components like base rate, adjusted rate, and term amount can be overridden."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Rating overrides are supported in Workers' Compensation, Inland Marine, and Commercial Property LOBs by default."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Certain costs, such as tax calculations and experience modifiers, are not suitable for overrides."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Underwriting Issue",
+          "content": "An underwriting issue of type `QuoteHasManualOverrides` is automatically created when rating overrides are applied, requiring underwriter approval before the quote can be released."
+        }
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Developer Insights, Permissions, and Transactional Behavior of Overrides",
+      "narrative": "For developers, understanding how PolicyCenter handles costs with overrides is crucial. When a rate is overridden, specific properties are set for a cost entity. Each cost entity maintains distinct columns for its original (Standard), overridden (Override), and final (Actual) values for Base Rate, Adjusted Rate, Term Amount, and Amount. For example, `StandardBaseRate` holds the engine-calculated value, `OverrideBaseRate` stores the manual adjustment, and `ActualBaseRate` reflects the rate used for the final premium calculation, incorporating any override. The `CostDataWithOverrideSupport` class provides methods to simplify handling these overridden costs, allowing rating code to be nearly as straightforward for lines supporting overrides as for those that don't.\n\nSecurity and control are paramount with manual adjustments. PolicyCenter implements specific **permissions** to manage who can view and apply rating overrides. The `editratingoverrides` permission allows users, typically underwriters, to edit or delete overrides on the Rating Override screen and to rerate the policy. The `viewratingoverrides` permission grants access to view the Rating Override screen and related policy information, usually for underwriters and internal managers. A third permission, `quotewithrateandpremiumoverrides`, allows quoting a policy with overrides and bypassing certain referral processes. These permissions ensure that only authorized personnel can manipulate or even see these sensitive manual adjustments.\n\nFinally, it's important to understand how rating overrides behave across different **policy transactions**. Overrides entered in any PolicyCenter job are generally set for a policy period and **preserved for future jobs**. For instance, an override applied to liability coverage in an initial submission will carry forward to a subsequent policy change transaction. However, there are specific scenarios where overrides are **not preserved**:\n*   **Reinstatement**: Overrides are lost if the overridden costs occur after a cancellation date, especially if new costs are created upon reinstatement.\n*   **Rewrite**: Preservation depends on the copied date; if overridden costs are effective only after or before this date, they might not be picked up.\n*   **Renewal**: Overrides from a previous policy term are copied to the renewal job, but they trigger a **referral reason** for an underwriter to review and decide if they should continue for the new term.\n*   **Anniversary Rating Date (ARD)** changes in Workers' Compensation can also affect overrides, requiring rechecking.\nThis nuanced handling ensures that manual adjustments are managed consistently while allowing for necessary re-evaluation in critical policy lifecycle events.",
+      "keyPoints": [
+        "Cost entities have `Standard`, `Override`, and `Actual` columns for rates and amounts.",
+        "`CostDataWithOverrideSupport` class aids developers in handling overrides.",
+        "Permissions (`editratingoverrides`, `viewratingoverrides`, `quotewithrateandpremiumoverrides`) control access to overrides.",
+        "Overrides are generally preserved across policy transactions but have exceptions for reinstatement, rewrite, and renewal.",
+        "Renewal overrides trigger an underwriter referral."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "PolicyCenter's data model for costs includes standard, override, and actual values for rates and amounts."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Specific permissions control who can view, edit, or quote with rating overrides."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Rating overrides are typically preserved across policy transactions, with specific exceptions for reinstatement, rewrite, and renewal."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Permission",
+            "Description",
+            "Code Example"
+          ],
+          "rows": [
+            [
+              "Edit rate and premium overrides",
+              "Edit or delete override on the Rating Override screen; rerate policy",
+              "editratingoverrides (Underwriter only)"
+            ],
+            [
+              "View rate and premium overrides",
+              "View Rating Override screen and policy",
+              "viewratingoverrides (Underwriters and policy managers only)"
+            ],
+            [
+              "Quote with rate and premium overrides",
+              "Quote policy with overrides and bypass referring to",
+              "quotewithrateandpremiumoverrides (Underwriters and most)"
+            ]
+          ],
+          "caption": "Permissions for managing rating overrides in PolicyCenter."
+        }
+      ],
+      "estimatedMinutes": 8
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of applying a rating override in PolicyCenter. Pay close attention to how the system guides you to the override screen, how you enter the manual adjustment, and the subsequent rerating process that updates the policy premium.",
+      "transcriptSummary": "The video shows how to navigate to the Rating Overrides screen from a quoted policy, enter a new adjusted rate for a specific coverage, and then rerate the policy. It highlights how the 'Actual' column reflects the overridden value, and the 'Standard' column retains the original system-calculated rate, demonstrating the immediate impact on the premium."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are an underwriter reviewing a Commercial Property policy for a new client, \"Green Acres Nursery.\" The automated rating engine has quoted a premium, but you've identified a unique risk mitigation factor (e.g., advanced fire suppression system) that wasn't fully accounted for, leading to a slightly higher Adjusted Rate than you believe is fair. You want to reduce the Adjusted Rate for the \"Nurseries\" class code.",
+      "question": "Describe the steps you would take in PolicyCenter to apply an override to the Adjusted Rate for the \"Nurseries\" class code and observe the impact on the policy premium.",
+      "hints": [
+        "Remember that an initial quote must exist before you can apply overrides.",
+        "Locate the specific button on the Quote screen that allows you to access override functionality.",
+        "Identify the correct field to modify for an Adjusted Rate override.",
+        "What action must you take after entering the override to see its effect?"
+      ],
+      "expectedApproach": "The learner should describe navigating to the Quote screen, clicking \"Override Rating,\" locating the \"Nurseries\" class code, entering a new value in the \"Override Adjusted Rate\" field, and then clicking \"Rerate\" to see the updated premium."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "When can rating be overridden?",
+      "referenceAnswer": "After obtaining a quote from the rating engine, rates and amounts can be overridden and the policy is rated again.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Rating overrides provide a mechanism for manual adjustment of premiums after an initial quote.",
+        "They are applied to specific cost components like base rate, adjusted rate, or term amount.",
+        "Certain LOBs (WC, IM, CP) support overrides by default, while others (e.g., tax calculations) do not.",
+        "Overrides trigger underwriting issues for review and require specific user permissions.",
+        "Their preservation across policy transactions varies, with renewals requiring underwriter re-approval."
+      ],
+      "realWorldConnection": "In real Guidewire projects, rating overrides are critical for maintaining underwriting flexibility and competitiveness. They empower underwriters to apply their expert judgment to unique risks, ensuring that policies are priced accurately even when standard algorithms fall short. This balance between automation and manual intervention is key to managing exceptions, securing business, and maintaining compliance with internal review processes."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access a PolicyCenter environment with appropriate permissions. Navigate to an existing Workers' Compensation policy, initiate a policy change, and obtain a quote. Then, apply a rating override to a specific coverage's adjusted rate or term amount. Observe the changes on the Rating Overrides screen and the Quote screen after rerating. Document the steps you took and the observed impact on the premium.",
+      "objectives": [
+        "Practice navigating to and utilizing the Rating Overrides screen.",
+        "Successfully apply a manual override to a policy cost.",
+        "Understand the immediate impact of an override on policy premium.",
+        "Reinforce the process of rerating a policy after applying overrides."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_06_01.mp4"
+    }
+  ]
+}

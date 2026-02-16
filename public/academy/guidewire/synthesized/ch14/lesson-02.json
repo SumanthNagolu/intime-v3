@@ -1,0 +1,238 @@
+{
+  "lessonId": "ch14-l02",
+  "chapterId": 14,
+  "chapterSlug": "ch14",
+  "lessonNumber": 2,
+  "title": "Configuring Costs Data Objects",
+  "subtitle": "Mastering CostData objects for accurate policy rating and financial data management in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T19:12:29.716847+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing a new insurance product. Accurate pricing and tracking of costs are crucial for profitability and compliance. PolicyCenter's rating engine needs a way to build up these costs flexibly before they are finalized and stored.",
+      "question": "How does PolicyCenter manage the complex process of calculating, merging, and persisting policy costs without directly manipulating database entities during rating?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and lifecycle of CostData objects within the PolicyCenter rating engine.",
+        "Describe how to define and construct new CostData subclasses for custom cost entities.",
+        "Identify the role of Keys and KeyValues in linking and merging CostData objects.",
+        "Understand the process of merging CostData objects and populating cost entities.",
+        "Explain the concept of Cost VersionLists and the implementation of getVersionedCosts()."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with basic Gosu object-oriented programming concepts, PolicyCenter's entity model, and the general idea of how a rating engine calculates premiums.",
+      "warmupQuestion": "Think about how PolicyCenter typically stores policy-related data in the database. What challenges might arise if the rating engine directly modified these entities during complex calculations?",
+      "hint": "Consider the implications of concurrent changes, versioning, and performance."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to CostData Objects",
+      "narrative": "In PolicyCenter, the rating engine uses a specialized type of object called **CostData objects** to handle the intricate process of calculating and managing policy costs. These are not directly stored in the database; instead, they are plain old Gosu objects (POGOs) that act as temporary mirrors of your actual cost entities. This design allows the rating engine immense flexibility to build up cost information during the rating process without the overhead and complexity of direct database interactions.\n\nThink of CostData objects as a staging area. The rating engine creates them, performs various calculations, merges them, and prorates them as needed. Only at the very end of the rating process are these finalized CostData objects copied to the actual cost entities, which are then persisted in the PolicyCenter database. This separation is crucial because directly modifying cost entities during rating can be challenging, involving subtle aspects like splitting and merging entities, and tracking revisions across effective time, especially with window mode changes.\n\nThe `CostData` base class provides a foundation for all CostData objects. It includes common financial fields that directly correspond to the cost delegate, such as standard, override, and actual values for base and adjusted rates, term amounts, and prorated amounts. Beyond just data fields, it also offers essential methods used by the rating engine, including `mergeIfCostEqual()`, `copyStandardColumnsToActualColumns()`, and `setRounding()`, which streamline the manipulation and finalization of cost data.",
+      "keyPoints": [
+        "CostData objects are POGOs used by the rating engine to build up cost entities flexibly.",
+        "They mirror cost entities but are not directly maintained in the database.",
+        "After rating, CostData objects are merged, prorated, and copied to actual cost entities.",
+        "The CostData base class provides common financial fields and utility methods for rating."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Overview of CostData objects in the rating process."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Diagram illustrating the role of CostData objects between the rating engine and cost entities in the database."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Key general properties and methods provided by the CostData base class."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "POGO (Plain Old Gosu Object)",
+          "content": "A simple Gosu object that does not extend from a Guidewire entity, often used for temporary data structures or calculations."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Defining and Constructing CostData Classes",
+      "narrative": "To integrate your custom cost entities with the rating engine, you must define a corresponding **CostData subclass** for each cost subtype entity. The naming convention is straightforward: take the name of your cost entity and append 'Data' to it (e.g., `PACostData` for `PACost`, `PersonalAutoCovCostData` for `PersonalAutoCovCost`). These subclasses must extend either the abstract `CostData` class or a more specific child class tailored for your line of business, such as `PACostData` for Personal Auto.\n\nWithin your CostData subclass, you'll need to add member variables that directly correspond to the columns on your associated cost entity. This ensures that the CostData object can accurately mirror the data. Additionally, you must implement abstract properties and methods inherited from the base class, such as `KeyValues()`, `setSpecificFieldsOnCost()`, and `getVersionedCosts()`, which we'll explore further.\n\n**Keys** play a vital role in linking CostData objects to other objects. Unlike normal entities that use foreign keys, CostData objects use a `Key` object. This `Key` encapsulates the numeric `FixedId` of an entity instance along with its type, essentially acting as a simple container for a foreign key in the rating context. For example, a `PersonalAutoCovCostData` class might have `Key` type private variables for `PersonalAutoCov` and `PersonalVehicle`, linking it to specific coverage and vehicle instances.\n\nWhen creating instances of your CostData classes, you'll primarily use **constructors**. Guidewire provides two main types: a **date-based constructor** and a **cost-based constructor**. The date-based constructor is typically used to create *new* CostData objects for a cost-bearing object on the policy graph, taking effective and expiration dates, currency, and a rate cache as parameters. You can add more parameters to set specific member variables. The cost-based constructor, on the other hand, is used to create a CostData object based on an *existing* cost entity. While constructors for backward compatibility exist, Guidewire Best Practices recommend always using constructors that include a currency argument, even if not running in multi-currency mode, to facilitate future transitions.",
+      "keyPoints": [
+        "Create a CostData subclass for every cost subtype entity, named `CostEntityName + Data`.",
+        "Extend `CostData` or a line-specific child class.",
+        "Add member variables matching cost entity columns and implement abstract methods.",
+        "Keys link CostData objects to entity instances using `FixedId`.",
+        "Date-based constructors create new CostData; cost-based constructors create CostData from existing costs.",
+        "Always use constructors with currency arguments for future compatibility."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Steps for defining a new CostData subclass, including naming conventions and required implementations."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Explanation of 'Keys' in CostData objects, showing how they link to entity instances using `FixedId`."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Overview of the different CostData constructors, highlighting date-based and cost-based types."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the Guidewire Studio to locate and examine key methods within the `AbstractCostDatabase` class, providing a practical view of the concepts discussed.",
+      "transcriptSummary": "The video demonstrates how to find and inspect the `MergeIfCostEqual`, `CopyStandardColumnsToActualColumns`, `KeyValues` property, and `setSpecificFieldsOnCost` methods in Guidewire Studio. It explains their functions in merging CostData objects, copying standard columns, determining object equality, and setting specific fields on cost entities, respectively."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Merging and Populating CostData Objects",
+      "narrative": "After the rating engine generates various CostData objects for each line of business, a critical step is **merging** these objects. The abstract rating engine intelligently merges CostData objects that represent similar costs. For two CostData objects to be considered mergeable, they must meet specific criteria: they must have different but adjacent date ranges (e.g., January 1-March 15 and March 16-December 31), possess the same price (indicated by the `TermAmount` property), and represent pricing for the same kind of cost for the same underlying thing. For instance, two personal auto coverage CostData objects would merge if they share the same coverage ID and vehicle ID, even if this requires checking multiple properties.\n\nTo facilitate this merging process, CostData subclasses must implement the **`KeyValues()`** property. This function is crucial for the rating engine to determine if two CostData objects are 'the same' for merging purposes, especially when dealing with multiple slices in a policy branch. `KeyValues()` provides a list of values that collectively identifies the unique characteristics of a CostData object. It typically includes subtype-specific columns that uniquely identify the set of related costs and the object whose price is represented. It's important not to confuse `KeyValues` (a list of values for comparison) with `Key` objects (which contain a numeric `FixedId` and entity type for linking).\n\nOnce CostData objects are finalized, the rating engine needs to create new cost entities or update existing ones based on these objects. This is where the **`setSpecificFieldsOnCost()`** method comes into play. CostData subclasses must implement this method to set any subtype-specific fields on the newly created or pre-existing cost entity. While the CostData base class handles the replication of all common fields (like amounts and rates), `setSpecificFieldsOnCost()` is responsible for populating fields unique to that subtype, such as foreign keys to coverages or other specific values. For non-foreign key properties, you can set them directly on the cost entity. However, for foreign key properties, you must use methods like `setFieldValue()` provided by the CostData class, as CostData objects store the entity's `FixedId` encapsulated in a `Key` object, not a direct entity reference.",
+      "keyPoints": [
+        "CostData objects merge if they have adjacent date ranges, same `TermAmount`, and represent the same cost for the same thing.",
+        "`KeyValues()` identifies if two CostData objects are 'the same' for merging.",
+        "`setSpecificFieldsOnCost()` populates subtype-specific fields on cost entities.",
+        "Use `setFieldValue()` for foreign key properties, as CostData objects store `Key` objects, not direct entity references."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Illustration of how the rating engine merges CostData objects with similar costs over different date ranges."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Example of the `KeyValues()` property in `PersonalAutoCovCostData.gs` and its role in identifying CostData object sameness."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explanation of `setSpecificFieldsOnCost()` method for populating cost entities with subtype-specific data."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "KeyValues() Implementation",
+          "content": "Carefully consider how the `KeyValues()` method is implemented. Errors in this method can lead to corrupted rating data during the merge process, as it dictates how objects are identified as 'the same'."
+        },
+        {
+          "type": "best_practice",
+          "title": "Setting FK Properties",
+          "content": "Always use `setFieldValue()` for foreign key properties when implementing `setSpecificFieldsOnCost()`, as CostData objects store `Key` objects, not direct entity instances. Direct assignment will not work for FKs."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Managing Cost Version Lists",
+      "narrative": "A crucial concept in PolicyCenter's cost management is the **Cost VersionList**. This is essentially a collection of cost rows that collectively represent the cost for the *same thing* over different periods. Each row within a VersionList corresponds to a distinct date range and its associated price. For example, for a `PersonalAutoCovCostData` object, its `getVersionedCosts()` method would return a VersionList containing all `PersonalAutoCovCost` entity instances that apply to the same vehicle, each potentially covering a different time slice.\n\nImplementing the **`getVersionedCosts()`** method in your CostData subclass is often the most complex task, as it requires a deep understanding of PolicyCenter's revisioning system. The calling code expects this method to return a list containing either a single matching version of a cost entity or an empty list if no existing cost entities correspond to the current CostData object. This method is responsible for matching the CostData object to its corresponding persisted cost entities.\n\nA general strategy for implementing `getVersionedCosts()` involves first obtaining a version list reference for the relevant object that bears the cost. If your CostData class includes an associated `Key` member field, this significantly simplifies the process, as you can use this `Key` to efficiently find the matching version list from the `PolicyPeriod`. You then iterate through all costs for the target object and determine which cost entity instances align with the current CostData object based on its identifying properties. This careful matching ensures that the rating engine can correctly identify and update existing costs or create new ones as needed, maintaining the integrity of the policy's financial history.",
+      "keyPoints": [
+        "A Cost VersionList is a set of cost rows representing the cost for the same thing over different date ranges.",
+        "`getVersionedCosts()` matches a CostData object to its corresponding cost entities.",
+        "This method is complex due to PolicyCenter's revisioning system.",
+        "A common approach uses the `Key` field to find matching version lists from the `PolicyPeriod`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Visual representation of a Cost VersionList, showing multiple cost rows for the same coverage on Auto 1 over different date ranges."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Explanation of the `getVersionedCosts()` method and its role in matching CostData objects to cost entity version lists."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are tasked with extending an existing PolicyCenter product to include a new type of 'Special Equipment Coverage' for commercial vehicles. This new coverage will have its own cost entity, `SpecialEquipmentCovCost`, and you need to ensure it integrates correctly with the rating engine.",
+      "question": "Based on what you've learned, outline the key steps you would take to define a new `SpecialEquipmentCovCostData` class. Specifically, what abstract methods would you need to implement, and what considerations would you have for its constructor and `KeyValues()` property?",
+      "hints": [
+        "Remember the naming convention for CostData subclasses.",
+        "Think about how `SpecialEquipmentCovCostData` would link to a specific vehicle and coverage.",
+        "Consider the criteria for merging and how `KeyValues()` helps identify 'sameness'."
+      ],
+      "expectedApproach": "The learner should describe creating the `SpecialEquipmentCovCostData` class, extending `CostData`, adding member variables for `Key` objects (e.g., vehicle ID, coverage ID), implementing `KeyValues()` to return these IDs, and implementing `setSpecificFieldsOnCost()` to set FKs using `setFieldValue()`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are CostData objects? How are they named?",
+      "referenceAnswer": "CostData subclass has the same name as the cost entity followed by the suffix “Data”.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "e Describe briefly the two CostData constructors.",
+      "referenceAnswer": "- Date-based constructor is created based on effective and expiration dates,\nusually for a new cost object.\n+ Cost-based constructor is created based on a pre-existing cost object that is\npassed-in as a parameter.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "e Why are KeyValues needed?",
+      "referenceAnswer": "KeyValues property creates a list of the Key Values. The rating engine uses it as it\nmerges CostData objects.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Why can you not set properties directly on cost entities for both FKs?",
+      "referenceAnswer": "ae Why can you not set properties directly on cost entities for both FKs?\nor For non-FK properties, you can set the properties directly on the cost entity instance.\nFor FK properties, this approach does not work, because CostData objects store the\nentity's fixed ID encapsulated in a key object. So the methods\nsetSpecificFieldsOnCost and setFieldValue provided by the CostData class must be\nused to set the foreign key properties.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "CostData objects are temporary POGOs used by the rating engine to build and manage costs before persisting them to database entities.",
+        "Custom CostData subclasses must be created for each cost entity, following specific naming conventions and extending the `CostData` base class.",
+        "Keys link CostData objects to specific entity instances using `FixedId` values.",
+        "The `KeyValues()` method is critical for identifying 'sameness' between CostData objects, enabling the rating engine to merge them correctly.",
+        "`setSpecificFieldsOnCost()` populates cost entities, using `setFieldValue()` for foreign key properties.",
+        "Cost VersionLists track cost changes over time, and `getVersionedCosts()` matches CostData objects to these historical cost entities."
+      ],
+      "realWorldConnection": "Understanding CostData objects is fundamental for anyone customizing PolicyCenter's rating engine. Properly configuring these objects ensures accurate premium calculations, correct handling of policy changes over time, and robust financial data management, which are all vital for an insurer's operational efficiency and regulatory compliance.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into advanced rating engine configurations, exploring how to implement complex rating logic and integrate with external rating services."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This hands-on exercise will guide you through the process of configuring CostData objects in a PolicyCenter development environment. You will practice defining a new CostData subclass, implementing its key methods, and observing its behavior within the rating engine.",
+      "objectives": [
+        "Create a new CostData subclass for a custom cost entity.",
+        "Implement the `KeyValues()` property to ensure correct merging behavior.",
+        "Implement the `setSpecificFieldsOnCost()` method to populate cost entity fields.",
+        "Implement the `getVersionedCosts()` method to correctly match cost versions."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Conf_02_01.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_02_01.mp4"
+    }
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "lessonId": "ch09-l14",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 14,
+  "title": "Configuring Claim History",
+  "subtitle": "Understand ClaimCenter's audit trail and how to customize history events for specific tracking needs.",
+  "synthesizedAt": "2026-02-16T18:38:16.995029+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a complex claim involving multiple adjusters, external vendors, and significant financial transactions. Without a clear, immutable record of every action, it would be nearly impossible to audit, resolve disputes, or ensure compliance. How do you maintain a transparent and legally defensible audit trail for every claim?",
+      "question": "What mechanisms are essential for tracking every critical event and change within a claim's lifecycle?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and components of ClaimCenter's claim history.",
+        "Identify standard claim history event types and their origins.",
+        "Describe how to define and record custom claim history events.",
+        "Utilize Gosu methods to detect field changes and retrieve original values for history records."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered audit trails or activity logs in various software applications. Recall how these systems track user actions and data changes, providing transparency and accountability. ClaimCenter's history feature serves a similar, but highly specialized, purpose for insurance claims.",
+      "warmupQuestion": "Think about a time you needed to trace back a change in a system. What information was most crucial for you to find?",
+      "hint": "Consider who did what, when, and what changed."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Claim History and Records",
+      "narrative": "ClaimCenter's **Claim History** serves as an indispensable, uneditable audit trail, meticulously recording significant events and actions taken on a claim. This feature is crucial for maintaining a legally referenceable record, detailing who performed what action and when. It's not just about major actions; the system can track a wide array of events, from simple claim views to complex field changes, including both old and new values.\n\nEach entry in this history is called a **History Record**, documenting a single, recordable claim action or event. These records are structured with several key fields to provide comprehensive detail:\n\n*   **Type**: This identifies the specific claim event that triggered the history entry, such as an exposure being opened, a check being stopped, or an activity's due date changing.\n*   **Related To**: This indicates whether the event pertains to the entire claim or a specific component, like an individual exposure or a reserve line.\n*   **User**: This field logs the person or system that initiated the event.\n*   **Event Time Stamp**: This records the exact date and time the event occurred, with entries typically displayed in descending order.\n*   **Description**: An optional field that provides a brief narrative of the event. ClaimCenter generates descriptions for its standard entries, and you can add custom descriptions for events defined by your own rules.\n*   **Link**: Also optional, this field provides a direct link to the detail view (DV) of the object involved in the event, if available. For instance, in the base configuration, links are enabled for Transaction Approvals, allowing for quick review of approval details. While the creation of a Reserve isn't recorded in the base application's claim history, the flexibility to add custom events means you can configure ClaimCenter to track almost any event an insurer deems important.",
+      "keyPoints": [
+        "Claim history is an uneditable, legally referenceable audit trail of claim events.",
+        "History records document single claim actions or events.",
+        "Key fields include Type, Related To, User, Event Time Stamp, Description, and Link."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the ClaimCenter History screen, showing the interface for viewing claim events."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Visual representation of the Claim History screen, highlighting its uneditable nature and ability to track various actions."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Detailed breakdown of the fields within a single Claim History record, explaining each component."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Claim History",
+          "content": "An uneditable, legally referenceable record of all important events and actions taken on a claim within ClaimCenter."
+        },
+        {
+          "type": "definition",
+          "title": "History Record",
+          "content": "A single entry in the claim history, documenting a specific claim action or event with detailed fields such as Type, User, and Event Time Stamp."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through navigating to and viewing the standard claim history records within ClaimCenter. Pay close attention to how different actions are logged and the details provided in each history entry.",
+      "transcriptSummary": "The video shows how to access the History screen from a claim's sidebar, filter history events by type, and examine the details of various automatically generated history records, such as 'Viewed' or 'Flagged' events."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Claim History Types and the HistoryType Typelist",
+      "narrative": "ClaimCenter categorizes each history record by a **Claim History Type**, which describes the event that caused the record to be created. For example, when a claim is closed, a history record of type 'Closed' is generated. The History screen itself includes a filter, allowing users to search for events of a particular type, which is incredibly useful for auditing or investigating specific claim activities.\n\nClaimCenter comes with a set of **standard history types** that automatically trigger the creation of claim history records. These built-in events cover common actions such as editing a claim, assigning it to an adjuster, viewing it, or processing approvals. It's important to note that even if no custom rules are configured, these base history types are automatically tracked by the system.\n\nThese standard history event types are defined within the **HistoryType typelist**. This typelist is internal to ClaimCenter and, as such, **cannot be directly edited**. However, it contains a crucial type called `Custom`. This `Custom` type is the gateway for defining and implementing your own unique history events, allowing insurers to track specific business processes or data changes that are not covered by the base application. The `HistoryType` typelist can be viewed in the Data Dictionary or Guidewire Studio, providing a comprehensive list of all predefined and available history event types.",
+      "keyPoints": [
+        "Claim history types categorize events, enabling filtering and specific tracking.",
+        "ClaimCenter automatically tracks standard events like editing, assigning, and viewing.",
+        "The `HistoryType` typelist defines standard events and includes a 'Custom' type for extensibility.",
+        "The `HistoryType` typelist is internal and cannot be directly edited."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Explanation of Claim History Types, their purpose, and examples of standard events."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Screenshot of the HistoryType typelist in ClaimCenter, highlighting its internal nature and the 'Custom' type."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A transition slide indicating the shift from standard history to custom history configuration."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Claim History Type",
+          "content": "A categorization of a claim event that causes a history record to be created, such as 'Closed' or 'Assigned'."
+        },
+        {
+          "type": "gotcha",
+          "title": "HistoryType Typelist Immutability",
+          "content": "The HistoryType typelist is an internal Guidewire typelist and cannot be directly edited. Custom history types must be added to the CustomHistoryType typelist instead."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis a ClaimCenter claim history record?",
+      "referenceAnswer": "y ¢\nThe correct answer is an uneditable record of some important event or action taken on\nthe claim.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-10"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "!fno active rules write claim history records, will any claim history\n¢ records be written?",
+      "referenceAnswer": "The correct answer is yes, the base history types are automatically tracked, and do\nnot depend on rules.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Creating and Recording Custom Claim History Events",
+      "narrative": "While ClaimCenter provides a robust set of standard history events, business requirements often necessitate tracking more specific or unique actions. This is where **custom claim history types** come into play. To define a new custom history event, you must add it to the `CustomHistoryType` typelist. This typelist is specifically designed for user-defined history events and can be extended to meet your organization's needs. When you add a new entry to `CustomHistoryType`, the value you provide in the `Name` field will appear as the history type on the Claim History screen.\n\nOnce your custom history type is defined, the next step is to **record these custom history events** within ClaimCenter. This is typically achieved by creating a **preupdate rule** in Gosu. A preupdate rule is ideal because it executes before a claim object is saved, allowing you to capture specific conditions or changes. Within this rule, you'll use the `createCustomHistoryEvent()` method on the `Claim` object.\n\nThe syntax for this method is straightforward: `Claim.createCustomHistoryEvent(CustomHistoryType.TC_CustomHistoryType, Text)`. Here, `Claim` refers to the specific claim object to which you're adding the history record. `CustomHistoryType.TC_CustomHistoryType` specifies the custom history type you defined in the `CustomHistoryType` typelist (e.g., `CustomHistoryType.TC_ExposureNoReserves`). Finally, `Text` is a string that will be displayed in the 'Description' column of the history record on the UI, providing context for the event. This powerful combination of typelist extension and Gosu rules allows for highly granular and business-specific tracking of claim activities.",
+      "keyPoints": [
+        "Custom history types are defined in the `CustomHistoryType` typelist.",
+        "The `Name` field in `CustomHistoryType` becomes the history type displayed on screen.",
+        "Custom history events are recorded using preupdate rules and the `Claim.createCustomHistoryEvent()` method.",
+        "The `createCustomHistoryEvent()` method requires a custom history type and a descriptive text."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Illustration of the CustomHistoryType typelist, showing how custom event types are defined and added."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Gosu code example demonstrating the `createCustomHistoryEvent()` method within a preupdate rule."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Recording a Custom History Event",
+          "code": "CONDITION (exposure : entity.Exposure) :\n  // Add condition to check if exposure has no reserves\n  // ...\nACTION :\n  Claim.createCustomHistoryEvent(CustomHistoryType.TC_ExposureNoReserves, \"Exposure created with no reserves.\")",
+          "explanation": "This example shows how to use the `createCustomHistoryEvent()` method within a rule to log a custom event when an exposure is created or updated without reserves. The `TC_ExposureNoReserves` is a custom type defined in the `CustomHistoryType` typelist."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Descriptive Custom History Types",
+          "content": "When adding new entries to the CustomHistoryType typelist, choose clear and concise names that accurately reflect the event being tracked. This improves readability and usability of the history log."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Detecting Field Changes and Retrieving Original Values",
+      "narrative": "When configuring rules to record custom history events, especially those triggered by data modifications, it's often necessary to determine if a specific field has actually changed. ClaimCenter provides the `isFieldChanged()` method for this purpose. This method is incredibly useful for setting the condition of a preupdate rule, ensuring that a history record is only created when a relevant field's value has been altered.\n\nThe `isFieldChanged()` method returns a boolean value (`true` if the field has changed, `false` otherwise). Its syntax can be `entity.isFieldChanged(entity#field)` or simply `entity.isFieldChanged(field)`. For instance, `claim.isFieldChanged(\"CoverageInQuestion\")` would check if the 'CoverageInQuestion' field on the claim object has been modified.\n\nBeyond just knowing *if* a field changed, you might also need to know its **original value** before the change occurred. This information is invaluable for creating descriptive history entries, allowing you to log both the old and new values. The `getOriginalValue()` method serves this purpose. Similar to `isFieldChanged()`, its syntax can be `entity.getOriginalValue(entity#field)` or `entity.getOriginalValue(field)`.\n\nIt's important to note that `getOriginalValue()` returns an ordinary object. Therefore, you will often need to **cast the result** to the appropriate data type (e.g., `String`, `Integer`, `Boolean`) to correctly access its display name or value for use in your history record's description. By combining `isFieldChanged()` and `getOriginalValue()`, you can create highly detailed and informative custom history events that precisely track data evolution within ClaimCenter.",
+      "keyPoints": [
+        "The `isFieldChanged()` method detects if a field's value has changed, returning a boolean.",
+        "Use `isFieldChanged()` in preupdate rule conditions to trigger history events only on relevant changes.",
+        "The `getOriginalValue()` method retrieves a field's value before it was changed.",
+        "Results from `getOriginalValue()` often require casting to the correct data type for display."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Gosu code example demonstrating the `isFieldChanged()` method for detecting changes in claim fields."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Gosu code example illustrating the `getOriginalValue()` method to retrieve a field's prior value."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Detecting Field Changes",
+          "code": "CONDITION (claim : entity.Claim):\n  return claim.isCoverageInQuestionFactorsNotEmpty() or claim.isFieldChanged(\"CoverageInQuestion\")",
+          "explanation": "This condition checks if either 'CoverageInQuestionFactors' are not empty or if the 'CoverageInQuestion' field itself has been changed. This is a common pattern for triggering rules based on data modifications."
+        },
+        {
+          "language": "gosu",
+          "title": "Retrieving Original Field Values",
+          "code": "var originalStatus = claim.getOriginalValue(\"ClaimStatus\").DisplayName as String\nvar newStatus = claim.ClaimStatus.DisplayName as String\nClaim.createCustomHistoryEvent(CustomHistoryType.TC_ClaimStatusChange, \"Claim status changed from \" + originalStatus + \" to \" + newStatus)",
+          "explanation": "This snippet demonstrates how to get the original value of the 'ClaimStatus' field, cast it to a String, and then use both the original and new values to create a descriptive custom history event."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how custom history records, configured using the techniques discussed, appear within ClaimCenter. Observe how the custom event types and descriptions provide specific insights into claim changes.",
+      "transcriptSummary": "The video illustrates the creation of a custom history event by modifying a claim field that is monitored by a preupdate rule. It then navigates to the History screen to show the newly created custom history record, highlighting its custom type and description."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "|sit possible to define new types of history events?",
+      "referenceAnswer": "y ¢\nThe correct answer is yes, by adding them to the CustomHistoryType typelist and\ncreating rules to record them.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your organization wants to track every time a claim's 'Loss Cause' field is changed. This is a critical field for reporting and analysis, and knowing its history is important.",
+      "question": "How would you begin to configure ClaimCenter to record a custom history event whenever the 'Loss Cause' field on a claim is modified? Specifically, what typelist would you modify, and what Gosu method would you use in a rule?",
+      "hints": [
+        "Think about where custom history types are defined.",
+        "Consider the method used to explicitly create a history entry from a rule.",
+        "Remember the method for detecting if a field has changed."
+      ],
+      "expectedApproach": "First, add a new typecode (e.g., `TC_LossCauseChanged`) to the `CustomHistoryType` typelist. Then, create a preupdate rule on the `Claim` entity. The condition of this rule would use `claim.isFieldChanged(\"LossCause\")`. The action would use `Claim.createCustomHistoryEvent(CustomHistoryType.TC_LossCauseChanged, \"Loss Cause changed.\")`."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Building on the previous scenario, your team now wants the custom history record for 'Loss Cause' changes to be more informative. They want the description to explicitly state what the 'Loss Cause' was *before* the change and what it is *after* the change.",
+      "question": "Modify your approach to include the original and new 'Loss Cause' values in the custom history event's description. What specific Gosu method would you use to retrieve the original value, and how would you incorporate it into the description string?",
+      "hints": [
+        "The method for retrieving the original value returns a generic object.",
+        "You'll need to cast the original value to its appropriate type to access its display name.",
+        "String concatenation is useful for building descriptive messages."
+      ],
+      "expectedApproach": "Within the preupdate rule's action, use `claim.getOriginalValue(\"LossCause\")` and cast it to the appropriate type (e.g., `typecode.LossCause`). Then, access its `DisplayName` property. Combine this with the current `claim.LossCause.DisplayName` to form a descriptive string for the `createCustomHistoryEvent()` method, like: `\"Loss Cause changed from \" + originalLossCause.DisplayName + \" to \" + claim.LossCause.DisplayName`."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter's history provides an uneditable audit trail of all claim actions and events.",
+        "History records contain essential fields like Type, User, and Event Time Stamp.",
+        "Standard history events are automatically tracked and defined in the internal `HistoryType` typelist.",
+        "Custom history events can be defined by extending the `CustomHistoryType` typelist.",
+        "Gosu preupdate rules, `isFieldChanged()`, and `getOriginalValue()` methods are used to create and populate custom history records with detailed information."
+      ],
+      "realWorldConnection": "In real Guidewire projects, robust claim history configuration is vital for compliance, fraud detection, and performance analysis. By accurately tracking every significant change and action, insurers can ensure accountability, provide transparent reporting to regulators, and gain insights into claim handling efficiency. Custom history events allow businesses to tailor this audit trail to their unique operational needs, making ClaimCenter an even more powerful tool for managing the entire claim lifecycle.",
+      "nextLessonPreview": "Next, we'll explore how to configure and manage activities within ClaimCenter, which are crucial for guiding adjusters through the claim process and ensuring timely task completion."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the lab exercise 'Track changes to salvage status' in the Student Workbook. This hands-on task will guide you through defining a custom history type and implementing a Gosu rule to record changes to a claim's salvage status, including both the old and new values.",
+      "objectives": [
+        "Add a new typecode to the `CustomHistoryType` typelist.",
+        "Create a preupdate rule to detect changes to a specific claim field.",
+        "Use `isFieldChanged()` and `getOriginalValue()` to create a descriptive custom history event."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_14_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_14_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_14_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_14_02.mp4"
+    }
+  ]
+}

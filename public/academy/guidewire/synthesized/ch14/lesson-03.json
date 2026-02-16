@@ -1,0 +1,213 @@
+{
+  "lessonId": "ch14-l03",
+  "chapterId": 14,
+  "chapterSlug": "ch14",
+  "lessonNumber": 3,
+  "title": "Rating Engine Configuration",
+  "subtitle": "Understand the architecture and configuration of PolicyCenter's rating engine for accurate premium calculation.",
+  "synthesizedAt": "2026-02-16T19:12:56.226379+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance carrier launching a new product, but your current rating system can't handle its unique pricing rules, like seasonal discounts or complex multi-coverage bundles. If your rating engine isn't flexible, you risk losing customers or miscalculating premiums, impacting profitability and compliance.",
+      "question": "How can PolicyCenter's rating engine be configured to adapt to diverse and evolving product pricing requirements?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the core components of the PolicyCenter default rating engine.",
+        "Differentiate between slice mode and window mode rating and identify appropriate costs for each.",
+        "Explain the roles of AbstractRatingEngine and AbstractRatingEngineBase classes.",
+        "Identify and describe the key methods that must be overridden in line-specific rating engines.",
+        "Outline the general steps involved in rating a single cost."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of PolicyCenter's data model, particularly `CostData` objects, and basic configuration principles. Recall how `CostData` objects represent the financial aspects of a policy.",
+      "warmupQuestion": "What are some common factors that influence an insurance premium, and how might these change over the life of a policy?",
+      "hint": "Think about policy changes, endorsements, and renewals."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Default Rating Engine Architecture",
+      "narrative": "The PolicyCenter default rating engine is a foundational component for calculating policy costs and premiums. It's primarily composed of three main parts: `IRatingPlugin`, `AbstractRatingEngine`, and `CostData`. The `IRatingPlugin` serves as the initial entry point, responsible for initializing and invoking the actual rating engines for each line of business (LOB). In the base application, you'll find two key implementations of `IRatingPlugin`: `SysTableRatingPlugin` and `PCRatingPlugin`. \n\nThe `SysTableRatingPlugin` provides a default, system-table-based rating engine that can be used across all LOBs. In contrast, the `PCRatingPlugin` offers more specialized rating engines, such as `PARatingEngine` for personal auto and `CPRatingEngine` for commercial property. These engines leverage Guidewire Rating Management (RTM) to efficiently look up rate factors and execute complex rating algorithms. \n\nThe `AbstractRatingEngine` class is crucial as it defines a set of predefined methods that must be implemented by its subclasses, allowing carriers to tailor rating logic to their specific needs. The `CostData` class, which was covered in detail in the 'Configuring CostData Objects' lesson, is fundamental to representing and manipulating cost information throughout the rating process. This lesson will specifically focus on how the `PARatingEngine` utilizes the main methods of the `AbstractRatingEngine`, assuming a Personal Auto LOB with a Rating Management license and `PCRatingPlugin` as the default.",
+      "keyPoints": [
+        "The default rating engine consists of IRatingPlugin, AbstractRatingEngine, and CostData.",
+        "IRatingPlugin has two main implementations: SysTableRatingPlugin (system table based) and PCRatingPlugin (uses RTM for LOB-specific engines).",
+        "AbstractRatingEngine provides a base structure for LOB-specific rating engines.",
+        "CostData objects are central to representing and managing policy costs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of rating engine classes and methods, illustrating the hierarchical structure."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Diagram showing the default rating engine components: IRatingPlugin, AbstractRatingEngine, and CostData, with specific implementations like PCRatingPlugin leading to PARatingEngine and CPRatingEngine."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "General Rating Process and Slice Mode",
+      "narrative": "The general rating process in PolicyCenter can be conceptualized as rating individual 'slices' of a policy and then consolidating the resulting `CostData` objects. This approach allows the rating code to dynamically split, merge, prorate, and sum `CostData` objects until all calculations are complete. Each line of business rating engine implements its unique logic to perform these calculations, but they all extend `AbstractRatingEngine.gs`, which itself extends `AbstractRatingEngineBase.gs`. The `rate()` method within `AbstractRatingEngineBase.gs` outlines the overarching process. \n\nThis process begins by identifying all dates where changes occur in a policy branch to obtain policy line versions, known as 'slices'. These slices are then rated, creating `CostData` objects for items within that specific slice. Subsequently, equal `CostData` objects are merged using their `KeyValues()` property, and certain `CostData` objects are prorated by updating their amount fields. Finally, the policy is rated in 'window mode' to create `CostData` objects that might depend on sums of other `CostData` objects, before the final build phase. \n\n**Slice mode** is particularly useful when policy data changes across effective time, such as adding a new vehicle or coverage. Each time a job edits a policy period, a new version (slice) is created. In slice mode, you view policy data as of a specific date, and PolicyCenter automatically retrieves the correct version of each object for that date. Costs that are suitable for slice mode are those that can be prorated based on date and whose associated cost is linear, increasing with time. For instance, adding a vehicle or coverage typically increases the premium proportionally over the policy term. This allows for accurate recalculation of premiums for past and future periods when changes occur mid-term.",
+      "keyPoints": [
+        "The general rating process involves getting slices, rating slices, merging, prorating, rating in window mode, and building.",
+        "Each LOB rating engine extends AbstractRatingEngine, which extends AbstractRatingEngineBase.",
+        "Slice mode views policy data as of a specific date, creating new versions when changes occur.",
+        "Costs rated in slice mode are typically linear and can be prorated based on dates (e.g., coverage for a vehicle)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "The six-step general rating process, starting from getting slices to the final build."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "An example illustrating slice mode, showing how policy costs for Auto 1 and Auto 2 limits change across different policy periods due to policy edits."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Description of costs suitable for slice mode, emphasizing proratable and linear costs that increase with time, such as adding a vehicle or coverage."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Window Mode and Core Abstract Classes",
+      "narrative": "While slice mode focuses on policy data as of a specific date, **window mode** allows you to view all policy data versions across all dates in effective time. This comprehensive view is essential for calculating costs that are not tied to a specific slice or date range. Costs rated in window mode are typically those that cannot be prorated based on dates, or those that depend on the sum of `CostData` objects created in slice mode. Examples include one-time policy sign-up costs, discounts (e.g., a fixed 10% for good driving), fixed percentage taxes, or flat penalties for cancelled policies. These costs are usually calculated at the end of the rating process, after all other slice-mode costs have been determined, as their calculation often relies on the total premium amount. It's important to note that in the base application, prorating logic generally assumes all costs are linear, though non-linear costs for seasonal items might require special handling.\n\nAt the heart of PolicyCenter's rating architecture are the `AbstractRatingEngine` and `AbstractRatingEngineBase` classes. Most of the rating code for typical carriers resides in separate rating engine classes for each line of business, and each of these line-specific engines extends the `AbstractRatingEngine` class. The `AbstractRatingEngine` class, in turn, extends the `AbstractRatingEngineBase` class. Both of these abstract classes provide the fundamental structure for rating and contain important utility methods for tasks like prorating and merging costs. The `AbstractRatingEngine` class is designed to be line-based and should be extended when rating line-specific policies. Conversely, the `AbstractRatingEngineBase` class is typically extended only when rating multi-line policies one slice at a time, and it also determines whether rating should be calculated from the start of a period or from a change date forward. These classes are critical for ensuring a consistent and extensible rating framework across different LOBs.",
+      "keyPoints": [
+        "Window mode allows viewing all policy data versions across all dates in effective time.",
+        "Costs rated in window mode are typically non-proratable and depend on sums of slice-mode costs (e.g., discounts, taxes, flat rates).",
+        "AbstractRatingEngine serves as the base for LOB-specific rating engines.",
+        "AbstractRatingEngineBase is extended for multi-line policies and provides core rating structure and utility methods."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "An example of window mode, showing how all versions of policy data across different effective dates are viewed to calculate total premium and tax."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Description of costs suitable for window mode, highlighting non-proratable costs like discounts, taxes, and minimum premiums that are calculated after slice-mode costs."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A blank slide used as a visual separator, leading into the discussion of core abstract rating classes."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explanation of AbstractRatingEngine and AbstractRatingEngineBase, detailing their roles as base classes for LOB-specific rating and multi-line policy rating, respectively, and their provision of utility methods."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing Rating Logic: Overridable Methods and Cost Calculation",
+      "narrative": "To implement specific rating logic for a line of business, several key methods within the `AbstractRatingEngine` must be overridden. These methods are typically invoked from the `rateOnly` method of `AbstractRatingEngineBase`, unless explicitly excluded. In the base application, both `PARatingEngine` and `CPRatingEngine` override all of these. \n\n1.  **`existingSliceModeCosts()`**: This method determines which costs are considered slice-mode costs and might not be rated again if only changes from a specific date forward are being processed. It finds existing slice-mode costs and creates representative `CostData` objects, often omitting costs like taxes that are handled in window mode.\n2.  **`createCostDataForCosts()`**: This method is responsible for preparing for any cost subtype returned by `existingSliceModeCosts()`. It creates and returns an appropriate `CostData` object for a given cost entity instance.\n3.  **`rateSlice()`**: This is where the core rating algorithms for each slice are implemented. It first asserts that the specified bean is in slice mode. If it's a canceled slice, it logs the line version and slice date; otherwise, it calculates `CostData` objects for each slice. This method is the typical place for implementing formulas, including rate table lookups. For example, in `PARatingEngine`, it rates line-level coverages by iterating through vehicles in each slice version, then calls `rateVehicleCoverage` for vehicle-level coverages.\n4.  **`rateWindow()`**: This method calculates all window-mode costs for the `PolicyLine`. It creates and rates costs that depend on the sum of previous slice costs or span the entire period, rating them just once. Examples include `rateTaxes` and `rateCancellationShortRatePenalty` methods, which calculate taxes based on the sum of actual cost objects or apply penalties. \n\nWhen rating a single item within either `rateSlice()` or `rateWindow()`, such as a coverage or tax, the general steps involve: determining start, end, and rating dates; creating a new `CostData` object; applying a rating algorithm (setting basis, base rate, looking up factors, calculating adjusted rate, and term amount); and finally, adding the `CostData` to an array. An important step here is `copyStandardColumnsToActualColumns()`. Standard values are calculated by rating routines, while actual values are either standard values or override values. This method copies standard values to actual columns. If an override is enabled, the `CostDataWithOverride` base class is used, which includes logic to correctly populate actual columns, allowing for manual adjustments to premiums.",
+      "keyPoints": [
+        "Line-specific rating engines must override existingSliceModeCosts(), createCostDataForCosts(), rateSlice(), and rateWindow().",
+        "existingSliceModeCosts() identifies existing slice-mode costs.",
+        "createCostDataForCosts() creates CostData objects for specific cost entities.",
+        "rateSlice() implements core rating algorithms for each policy slice, including rate lookups.",
+        "rateWindow() calculates window-mode costs like taxes and discounts, which depend on aggregated slice costs.",
+        "Rating a single cost involves determining dates, creating CostData, applying algorithms, and copying standard to actual columns (using CostDataWithOverride for overrides)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "The first set of methods that must be overridden in line-specific rating engines: existingSliceModeCosts(), createCostDataForCosts(), and rateSlice()."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "The second key method to override: rateWindow(), which handles window-mode costs that depend on aggregated slice costs or span the entire period."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "General steps for rating a single item, including determining dates, creating CostData, applying rating algorithms, and copying standard to actual columns."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how the AbstractRatingEngine and AbstractRatingEngineBase classes are structured in PolicyCenter Studio, and how the core `rateOnly` method orchestrates the rating process by calling the various overridable methods.",
+      "transcriptSummary": "The demo navigates through `AbstractRatingEngine` and `AbstractRatingEngineBase` classes in Studio, highlighting the `RateOnly` method's core logic for the rating process, including getting policy line versions, rating slices, merging/prorating costs, and rating in window mode. It then details the overridable methods like `existingSliceModeCosts`, `rateSlice`, `rateWindow`, and `createCostDataForCost`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What costs can be rated in slice mode?\n\nseo eooce Sse Sbeese505",
+      "referenceAnswer": "What costs can be rated in slice mode?\n\nor Costs that can be pro-rated based on date and are linear.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What costs can be rated in window mode?\n\nseo eooce Sse Sbeese505",
+      "referenceAnswer": "created in slice mode.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What method can be called to copy standard columns to actual\no columns?\n\nseo eooce Sse Sbeese505",
+      "referenceAnswer": "o columns?\ncopyStandardColumnsToActualColumns()",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new personal auto product requires a special discount that applies only once per policy term, regardless of policy changes, and a new coverage that is prorated based on its effective date.",
+      "question": "Which rating mode (slice or window) would be most appropriate for implementing the special discount, and which for the new proratable coverage? Justify your choices.",
+      "hints": [
+        "Consider how each rating mode handles changes over time and whether costs are linear or one-time.",
+        "Think about whether the cost needs to be recalculated for every policy period segment or just once for the entire term."
+      ],
+      "expectedApproach": "Identify the characteristics of the discount (one-time, term-based) and the coverage (proratable, date-dependent) and map them to the definitions of slice mode and window mode."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyCenter's rating engine is built on IRatingPlugin, AbstractRatingEngine, and CostData, allowing for flexible LOB-specific implementations.",
+        "Rating occurs in two primary modes: slice mode for date-prorated, linear costs, and window mode for non-proratable, aggregated costs like discounts and taxes.",
+        "AbstractRatingEngine and AbstractRatingEngineBase provide the core framework and utility methods for rating.",
+        "Key methods like existingSliceModeCosts(), createCostDataForCosts(), rateSlice(), and rateWindow() must be overridden to define LOB-specific rating logic.",
+        "The general steps for rating a single cost involve date determination, CostData creation, algorithm application, and copying standard to actual values, with support for overrides."
+      ],
+      "realWorldConnection": "Mastering rating engine configuration is vital for Guidewire developers. It enables carriers to accurately price complex insurance products, respond quickly to market changes with new rates or discounts, and ensure compliance with regulatory requirements. A well-configured rating engine directly impacts a carrier's profitability and competitive edge.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced rating techniques, including integrating with external rating services and handling complex rating scenarios like multi-line policies."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through modifying an existing rating engine to implement a new rating factor or adjust how a specific cost is calculated. You will practice identifying the relevant overridable methods and applying changes within a line-specific rating engine.",
+      "objectives": [
+        "Locate and modify methods within a line-specific rating engine.",
+        "Implement a new rating factor or adjust an existing cost calculation.",
+        "Test the changes to ensure accurate premium calculation."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Conf_03_01.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_03_01.mp4"
+    }
+  ]
+}

@@ -1,0 +1,366 @@
+{
+  "lessonId": "ch06-l09",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 9,
+  "title": "Receiving Direct Bill Payments",
+  "subtitle": "Mastering payment processing in BillingCenter for efficient financial operations.",
+  "synthesizedAt": "2026-02-16T17:49:31.382226+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a new billing clerk, and a customer calls, confused about a payment they sent. You need to quickly understand how BillingCenter processes payments, whether they're automatic or manual, and how to track them. Without a clear understanding, you risk misapplying funds or delaying critical financial updates.",
+      "question": "How does BillingCenter ensure every payment finds its way to the correct invoice, even when the destination isn't immediately clear?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the payment lifecycle for both automatic and responsive payment",
+        "Enter multiple direct bill payments into BillingCenter",
+        "Enter a single direct bill payment into BillingCenter"
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered various payment methods in your daily life, from automatic bill pay to manually writing checks. In a business context, these methods have specific processes to ensure accuracy and compliance.",
+      "warmupQuestion": "Think about a time you've paid a bill. What steps were involved, and what information was needed to ensure your payment was correctly applied?",
+      "hint": "Consider the difference between setting up a recurring payment versus making a one-time payment."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Payment Lifecycle: Automatic vs. Responsive",
+      "narrative": "As a business analyst, Marcus is keen to grasp the intricacies of the payment lifecycle within BillingCenter, and Zhang, a seasoned billing clerk, is ready to guide him. The journey begins with understanding the two fundamental types of payments: **automatic** and **responsive**.\n\nAt the heart of this distinction lies the **payment instrument**, which specifies how a policyholder intends to submit payments. This instrument could be a credit card, bank details for an ACH/EFT transfer, or simply a 'Responsive' designation. Each insured account typically has one or more payment instruments, with one set as default. However, settings on the invoice stream can override this default for specific policies.\n\nAn **automatic payment instrument** (like ACH/EFT or credit card) means the insurer bills the account directly, and the payment is processed without requiring a manual response from the insured. This streamlines operations but necessitates integration work with external financial systems. Conversely, a **responsive payment** means the insurer bills the account, and the insured must manually send a payment, such as a check. It's crucial to remember that sensitive financial information is usually tokenized and stored securely in external systems, with BillingCenter holding only the token. This initial understanding sets the stage for diving into the detailed processes of each payment type.",
+      "keyPoints": [
+        "Payments are categorized as either automatic or responsive.",
+        "A payment instrument defines the payment method (e.g., credit card, bank transfer).",
+        "Automatic payments are insurer-initiated and require integration; responsive payments are insured-initiated manual responses.",
+        "Sensitive financial data is typically tokenized and stored externally."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide setting the stage for the payment lifecycle discussion."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marcus, a Business Analyst, and Zhang, a Billing Clerk, begin their discussion on the payment lifecycle, covering both automatic and responsive payments."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "This slide defines automatic and responsive payments, highlighting the role of payment instruments and the necessity of integration for electronic payments."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Payment Instrument",
+          "content": "In BillingCenter, a payment instrument specifies how a policyholder intends to submit payments, representing the payment method (e.g., credit card, bank details)."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Automatic Payment Lifecycle in Detail",
+      "narrative": "The automatic payment process is a streamlined, insurer-managed flow designed for efficiency. It kicks off with the **Invoice batch process**, which triggers the creation of a payment request. This request is a crucial internal record that manages the lifecycle of the payment, dictating when BillingCenter sends the request to the financial institution.\n\nOnce the payment request is generated, the **Payment Request batch process** takes over, controlling the timing and transmission of this request to the designated financial institution. What happens next can vary based on the insurer's setup and the financial institution's capabilities. Typically, the financial institution sends the funds to the insurer. Initially, these funds are placed into an **unapplied fund**, a temporary holding area. From here, a subsequent batch process will distribute the money to the appropriate invoice items.\n\nAlternatively, some insurers might opt for an 'assumed payment' model. In this scenario, a payment is posted to BillingCenter on the payment request draft date, assuming the payment will be made. Later, the insurer reconciles the actual receipts from the financial institution. Regardless of the specific model, several batch processes run overnight, including **New Payment**, **Invoice**, **Invoice Due**, and **Automatic Disbursement**. These processes are responsible for applying the unapplied funds to any outstanding invoice items. The key takeaway for automatic payments is that they are entirely managed by the insurer, requiring no direct response from the insured unless a change is needed.",
+      "keyPoints": [
+        "The Invoice batch process initiates payment requests.",
+        "The Payment Request batch process manages sending requests to financial institutions.",
+        "Funds are initially placed in an unapplied fund before distribution by batch processes.",
+        "Overnight batch processes (New Payment, Invoice, Invoice Due, Automatic Disbursement) apply unapplied funds.",
+        "Automatic payments are insurer-managed, requiring no insured response."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "The first step in the automatic payment overview: the Invoice batch process creates a payment request."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The second step: the Payment Request batch process manages the payment request lifecycle and timing of transmission to the bank."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The third step: the financial institution sends money to an unapplied fund, awaiting distribution by batch processes."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The final step: overnight batch processes apply unapplied funds to outstanding invoices, completing the automatic payment cycle."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "The Responsive Payment Lifecycle",
+      "narrative": "In contrast to automatic payments, the **responsive payment** process places the onus on the policyholder to initiate payment after receiving an invoice. This journey begins when the **Invoice batch process** generates and sends an invoice directly to the policyholder. This notification prompts the policyholder to take action.\n\nUpon receiving the invoice, the policyholder sends their payment to the insurer. While an insurer *could* immediately distribute this payment, it's more common for a billing clerk to record details for several checks or other manual payments. These payments are then initially placed into an **unapplied fund**. This fund acts as a temporary holding area, similar to the automatic payment process, ensuring all incoming funds are accounted for before allocation.\n\nJust like with automatic payments, the distribution of these unapplied funds happens overnight through a series of batch processes. These include the **New Payment**, **Invoice**, **Invoice Due**, and **Automatic Disbursement** batches. Each of these processes plays a role in applying the money from the unapplied fund to the invoice items that are not yet fully paid. This ensures that even manual payments are systematically allocated, maintaining accurate financial records within BillingCenter.",
+      "keyPoints": [
+        "The Invoice batch process sends invoices directly to policyholders for responsive payments.",
+        "Policyholders manually send payments to the insurer.",
+        "Payments are initially placed into an unapplied fund.",
+        "Overnight batch processes distribute funds from the unapplied fund to pay invoice items."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "The first step in the responsive payment overview: the Invoice batch process sends an invoice to the policyholder."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "The second step: the policyholder sends a payment, which is initially placed into an unapplied fund by the insurer."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "The final step: overnight batch processes distribute funds from the unapplied fund to pay outstanding invoices."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "The Critical Role of Unapplied Funds and Cash Separation",
+      "narrative": "A fundamental concept in BillingCenter's payment processing is the **unapplied fund**. Regardless of whether a payment is automatic or responsive, all funds received by BillingCenter first pass through an unapplied fund before they are allocated to specific invoice items. Think of it as a temporary escrow account for incoming money.\n\nBillingCenter offers flexibility in how these funds are managed at the account level, primarily through the concept of **cash separation**. A setting on the account determines whether it uses a single unapplied fund for all its policies or a separate unapplied fund for each policy. When **cash separation is disabled**, the account operates with a single 'Default Unapplied' fund. Any positive balance in this fund can be used to pay eligible invoice items for which the account is the payer, encompassing policies owned by the account, account-level charges, and even items from other accounts or producers if assigned for payment.\n\nHowever, when **cash separation is enabled**, each policy within an account has its own 'Designated Unapplied' fund. This means payments are managed at the policy level, allowing BillingCenter to automatically target a payment specifically towards eligible invoice items belonging to that policy. This prevents funds intended for one policy from inadvertently paying for another, even if both are under the same account. It's important to note that batch processes using a payment allocation plan cannot cross these unapplied boundaries; money in one designated fund cannot be used for a policy with a different designated fund. Even with cash separation, an account always retains a 'Default Unapplied' fund to handle account-level charges.",
+      "keyPoints": [
+        "All payments in BillingCenter are initially routed through an unapplied fund.",
+        "Cash separation determines if an account uses a single 'Default Unapplied' fund or separate 'Designated Unapplied' funds per policy.",
+        "With cash separation enabled, payments are managed at the policy level, ensuring funds are applied to the correct policy's invoices.",
+        "Batch processes cannot cross unapplied fund boundaries when cash separation is active."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "An example illustrating a single 'Default Unapplied' fund for an account with cash separation disabled, where all payments flow into one pool."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "An example showing how cash separation enables each policy to have its own 'Designated Unapplied' fund, allowing for policy-level payment management."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Unapplied Fund",
+          "content": "A temporary holding account in BillingCenter where all incoming payments are initially placed before being allocated to specific invoice items."
+        },
+        {
+          "type": "definition",
+          "title": "Cash Separation",
+          "content": "An account behavior in BillingCenter where each policy has its own designated unapplied fund, ensuring payments for a given policy are used only for that policy's invoice items."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ae How does the unallocated money get distributed?",
+      "referenceAnswer": ": “ There are four batch processes that allocate money sitting in unapplied funds.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "A Quick Tour: Payments for a New Policy",
+      "narrative": "Let's walk through a practical scenario to solidify our understanding of the payment lifecycle for a new policy. Imagine a new policy is effective today. Initially, no payment is expected because no invoice has been billed yet, and the first payment isn't due for another month. At this point, the Designated Unapplied fund for this policy is empty, awaiting its first incoming funds.\n\nFast forward to the due date of the first invoice. BillingCenter will display an alert, both on the Policy Summary and Account Summary screens, indicating that the policy will become delinquent if payment isn't received today. The 'Current Payment Expected' field is now populated, reflecting the billed amount, but the 'Designated Unapplied' fund remains empty as no payment has arrived yet.\n\nNow, assume the insurer receives the expected payment. Crucially, this money doesn't immediately clear the 'Current Payment Expected' status. Instead, it first lands in the 'Designated Unapplied' fund, which is the policy's specific unapplied fund. The Policy Summary still shows a 'Current Payment Expected' because the funds haven't yet been applied to the actual invoices. It's a holding pattern, awaiting allocation.\n\nThe final step in this mini-tour occurs when one of the regularly scheduled batch processes runs. This batch process takes the money from the 'Designated Unapplied' fund and applies it to the billed invoice. Once this happens, the 'Designated Unapplied' fund becomes empty again, and the 'Current Payment Expected' status is cleared, reflecting that the invoice has been paid. This sequence clearly demonstrates the temporary nature of the unapplied fund and the critical role of batch processes in finalizing payment allocation.",
+      "keyPoints": [
+        "New policies initially have no expected payments until an invoice is billed.",
+        "Upon the invoice due date, BillingCenter alerts users if payment is not received.",
+        "Received payments are first held in the 'Designated Unapplied' fund.",
+        "Batch processes are responsible for moving funds from 'Designated Unapplied' to pay billed invoices."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "The initial state of a new policy: effective today, no payment expected, and an empty Designated Unapplied fund."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "The policy's status on the due date of the first invoice, showing an alert for delinquency if payment is not received."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "The policy's status after an expected payment is received, showing the money in the Designated Unapplied fund but not yet applied to invoices."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "The policy's status after a batch process applies the payment from the Designated Unapplied fund to the billed invoice."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "A transition slide, indicating the completion of the payment walkthrough and readiness for the next topic."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Efficiently Entering Multiple Payments with the Wizard",
+      "narrative": "For situations where you need to enter several payments into BillingCenter simultaneously, such as those received via mail or from a bank statement without direct integration, the **Multiple Payment Entry wizard** is your go-to tool. This wizard is conveniently accessible from your desktop and is designed for quick, bulk data entry.\n\nStep 1 of the wizard presents a full page of empty lines, allowing you to rapidly input details for numerous payments. If you need more lines, a simple click of the 'Add' button expands your entry options. The wizard includes search facilities to help you accurately locate the target entity for each payment. Once you enter a value for an account, policy, invoice, or producer, the other three target fields become uneditable, streamlining the selection process and reducing errors.\n\nWhile this screen supports direct bill, list bill, and agency bill payments, our focus here is on direct bill. In the base application, only 'Check' and 'Cash' are available as payment instruments. However, BillingCenter's configurability allows you to extend this to include other payment methods like credit cards, automatic payments, bank transfers, and electronic transfers, provided the necessary integration work is completed. This wizard significantly enhances efficiency when processing a batch of manual payments.",
+      "keyPoints": [
+        "The Multiple Payment Entry wizard is used for entering several payments from a single screen.",
+        "It's ideal for payments received via mail or from bank statements without direct integration.",
+        "The wizard provides quick entry lines and search facilities for target entities.",
+        "It supports direct bill, list bill, and agency bill, and can be configured for various payment instruments."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "The Multiple Payment Entry wizard, showing its interface for quickly entering details for several payments simultaneously."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how to efficiently use the Multiple Payment Entry wizard to record several payments received by the insurer.",
+      "transcriptSummary": "This video guides you through navigating to the Multiple Payment Entry wizard, inputting payment details for various accounts and policies, and confirming the batch entry. Pay attention to how the system assists in identifying the correct payment targets."
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Handling Payments with Unknown Destinations: Suspense Payments",
+      "narrative": "Sometimes, a payment arrives, but its intended target—the specific policy or account—is not yet known or doesn't exist in BillingCenter. This is where **suspense payments** come into play. Marcus raises this common challenge, and Zhang explains that BillingCenter classifies such payments as suspense payments.\n\nSuspense payments are crucial when money is received for a policy or account that hasn't been created in BillingCenter yet, or if the information simply isn't available at the time of entry. A classic example is a payment for a new policy that hasn't been bound, or an account that's still being set up. To manage these, each suspense payment is placed into its own dedicated **Suspense Payment Unapplied fund**. This ensures that the funds are securely held and clearly separated from other unapplied funds, awaiting identification.\n\nOnce the destination of a suspense payment becomes known—for instance, when the new policy is bound or the account is created—BillingCenter facilitates the transfer of the money. The funds are moved from the temporary Suspense Payment Unapplied fund to the correct 'Designated Unapplied' fund for the identified policy. It's important not to confuse suspense payments with 'suspense items,' which are a different concept related to portions of a direct bill payment held in suspense when the account is known but the specific policy period, invoice, or charge is not. This mechanism ensures that no payment is lost, even when its initial target is ambiguous.",
+      "keyPoints": [
+        "Suspense payments are used when the target policy or account is unknown or doesn't exist in BillingCenter.",
+        "Each suspense payment is held in its own 'Suspense Payment Unapplied' fund.",
+        "Once the target is identified, funds are moved to the correct 'Designated Unapplied' fund.",
+        "Suspense payments are distinct from 'suspense items'."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "Marcus asks about payments for unknown targets, leading Zhang to introduce the concept of suspense payments."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "This slide explains that suspense payments are for unknown targets and are initially placed in their own 'Suspense Payment Unapplied' fund."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "This slide illustrates how suspense payments are moved to the correct unapplied fund once their destination becomes known."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Suspense Payment",
+          "content": "A payment received by BillingCenter for which the target policy or account is not yet known or does not exist, placed in a dedicated Suspense Payment Unapplied fund."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What do you do when entering a batch of multiple payments, and the\naccount number you have been given as a reference for a payment is not\n4 known by BillingCenter?",
+      "referenceAnswer": "Select Suspense instead of Payment as the Type on the Multiple Payment Entry\nscreen.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "ae Where is unallocated money held?",
+      "referenceAnswer": ": “ In an unapplied fund, which can be Default Unapplied (if the account does not use\ncash separation), Designated Unapplied (if the account uses cash separation), or a\nSuspensePayment unapplied fund if the destination of the payment is unknown.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Entering and Immediately Applying Single Direct Bill Payments",
+      "narrative": "Sometimes, a policyholder sends a late payment, and you need to apply it immediately to a past-due invoice. Marcus inquires about this, and Zhang confirms that the **Direct Bill Payment screen** is specifically designed for this purpose, allowing for immediate allocation.\n\nTo enter a single payment and allocate it directly, you start by navigating to the relevant account. The next critical step is to select the correct **unapplied fund**. If the account uses cash separation, you *must* select the designated unapplied account for the specific policy you are paying. This ensures that the payment is correctly targeted. After selecting the fund, you enter the payment amount and specify the payment instrument. As soon as you move out of the 'Amount' field, BillingCenter will propose a default allocation in the 'Preview Distribution' area, guided by the account's payment allocation plan. You also have the option to add a new payment instrument if needed.\n\nOnce you're satisfied with the allocation, clicking 'Execute' saves your payment and applies the funds. However, there are scenarios where you might want to save the payment without immediate distribution, such as when an insured sends an advanced payment before an invoice is billed, or if there's a question about the payment. In these cases, you would click 'Execute Without Distribution' to simply save the payment to the applicable unapplied fund, allowing for later allocation by a batch process or manual intervention. This screen provides granular control over individual payment processing.",
+      "keyPoints": [
+        "The Direct Bill Payment screen is used for entering and immediately allocating single payments.",
+        "Always select the correct unapplied fund, especially with cash separation.",
+        "BillingCenter proposes a default allocation based on the payment allocation plan.",
+        "Click 'Execute' to save and apply the payment, or 'Execute Without Distribution' to save to the unapplied fund for later allocation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 33,
+          "caption": "A transition slide leading into the discussion on immediate payment application."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Marcus asks about immediately applying late payments, and Zhang introduces the Direct Bill Payment screen as the solution."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "The Direct Bill Payment screen, illustrating the steps for entering a single payment and previewing its distribution."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "A blank slide, serving as a visual break or continuation of the Direct Bill Payment screen discussion."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "L== When making a single payment on the Direct Bill Payment screen, why is\n2 it important to select the correct unapplied fund?",
+      "referenceAnswer": "Only those invoice items that are payable from the selected unapplied fund are\ndisplayed in the Distribution tab. (In the next lesson, you will learn how to add other\nitems to the distribution.)",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policyholder, Jane Doe (Account #ABC123), has just sent a check for $750 to cover her overdue premium for Policy PA-773-1. You need to enter this payment into BillingCenter and ensure it's immediately applied to her outstanding invoice.",
+      "question": "Using the Direct Bill Payment screen, how would you process Jane Doe's payment to ensure it's allocated to Policy PA-773-1's overdue invoice?",
+      "hints": [
+        "Start by navigating to Jane Doe's account.",
+        "Remember to select the specific unapplied fund associated with Policy PA-773-1 if cash separation is enabled.",
+        "After entering the amount, observe the 'Preview Distribution' area to confirm the proposed allocation."
+      ],
+      "expectedApproach": "Navigate to the account, select 'New Direct Bill Payment', choose the correct Designated Unapplied fund for Policy PA-773-1, enter the amount and check number, verify the distribution, and click 'Execute'."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You've received a batch of five checks in the mail. Three are for known accounts/policies, one is for a new policy that hasn't been bound yet, and one is an advance payment for an existing policy that doesn't have a billed invoice yet.",
+      "question": "Describe the steps you would take using BillingCenter's payment entry tools to process this batch of diverse payments, ensuring each is handled appropriately.",
+      "hints": [
+        "Consider which tool is best for multiple entries.",
+        "How would you handle the payment for the un-bound policy?",
+        "What option would you use for the advance payment without an immediate invoice?"
+      ],
+      "expectedApproach": "Use the Multiple Payment Entry wizard. For known accounts/policies, enter details directly. For the un-bound policy, select 'Suspense' as the type. For the advance payment, enter it but note that it will sit in the unapplied fund until an invoice is generated or manually distributed later."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "BillingCenter processes payments through either automatic or responsive lifecycles, both utilizing unapplied funds.",
+        "All payments initially flow into an unapplied fund (Default, Designated, or Suspense Payment Unapplied) before allocation.",
+        "Cash separation allows for policy-level management of unapplied funds.",
+        "The Multiple Payment Entry wizard is efficient for batch payments, including suspense payments for unknown targets.",
+        "The Direct Bill Payment screen provides granular control for single payments and immediate allocation."
+      ],
+      "realWorldConnection": "In real Guidewire projects, accurately processing direct bill payments is critical for maintaining financial integrity, ensuring customer satisfaction, and preventing delinquencies. Understanding these lifecycles and tools allows billing clerks to efficiently manage incoming funds, reconcile accounts, and provide timely service to policyholders, directly impacting the insurer's bottom line and reputation.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into payment allocation plans and explore how to manually adjust payment distributions to handle complex scenarios."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access the BillingCenter training environment. Practice entering a batch of payments using the Multiple Payment Entry wizard, including at least one payment designated as 'Suspense'. Then, navigate to an account with an overdue invoice and use the Direct Bill Payment screen to enter a single payment, ensuring it is immediately applied to the outstanding balance.",
+      "objectives": [
+        "Locate and utilize the Multiple Payment Entry wizard.",
+        "Successfully enter payments for known and unknown targets.",
+        "Navigate to an account and use the Direct Bill Payment screen.",
+        "Enter and immediately distribute a single payment to an overdue invoice."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_09_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_09_01.mp4"
+    }
+  ]
+}

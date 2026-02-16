@@ -1,0 +1,417 @@
+{
+  "lessonId": "ch11-l16",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 16,
+  "title": "Acknowledging Messages",
+  "subtitle": "Interpret and manage external system responses to Guidewire messages.",
+  "synthesizedAt": "2026-02-16T19:01:03.447255+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your Guidewire application sends critical policy updates to an external billing system. If the billing system doesn't confirm receipt or reports an error, how do you ensure data consistency and prevent financial discrepancies? Message acknowledgment is key to knowing the status of every integration.",
+      "question": "How does Guidewire reliably track whether an external system successfully received and processed a message, or if it encountered an issue?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and types of message acknowledgments in Guidewire.",
+        "Explain the transactional flow of messages and acknowledgments within Guidewire servers.",
+        "Identify the roles of transport and reply plugins in processing synchronous and asynchronous acknowledgments.",
+        "Differentiate between positive acknowledgments, negative acknowledgments (errors), duplicate messages, and no-response scenarios.",
+        "Explain how messages transition between the Message and MessageHistory tables based on acknowledgment status.",
+        "Implement Gosu code to report positive acknowledgments, retryable errors, non-retryable errors, and duplicate messages.",
+        "Configure synchronous acknowledgment within a transport plugin.",
+        "Configure asynchronous acknowledgment using a web service API or a reply plugin."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, you learned how to configure message destinations and send messages from Guidewire. Now, we'll build on that by understanding how Guidewire processes responses from external systems.",
+      "warmupQuestion": "Think about a typical client-server interaction. What kind of responses do you expect after sending a request?",
+      "hint": "Consider both success and failure scenarios."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Message Acknowledgment Fundamentals",
+      "narrative": "Message acknowledgment is the crucial process by which Guidewire interprets and reacts to responses from external systems after sending a message. This ensures that Guidewire applications maintain an accurate state of integration activities. For instance, if a bank account verification message is sent, the external system must acknowledge it, often synchronously, to confirm the account's status. This requires careful design, especially for asynchronous scenarios.\n\nUnderstanding the server and transaction flow is vital for designing robust integrations. A message's journey through Guidewire involves several transactions. Initially, **Transaction 1** creates the message and generates its payload, typically on the UI role server using Event Fired rules. If any part of the payload needs to be generated just before sending, it can occur on the messaging role server. Optionally, **Transaction 2** can transform the message payload immediately before sending. **Transaction 3** is dedicated to sending the message to the external system. If the external system provides a synchronous acknowledgment, this acknowledgment is processed within Transaction 3. Finally, for asynchronous acknowledgments, **Transaction 4** handles the response separately. This transactional structure is important because it dictates what work is rolled back if an error occurs at any stage. Guidewire expects a response for every sent message, whether immediate (synchronous) or eventual (asynchronous). These responses can be positive acknowledgments, negative acknowledgments (errors), or, in some cases, no response at all.",
+      "keyPoints": [
+        "Message acknowledgment is Guidewire's interpretation of external system responses.",
+        "Messages are processed in 2-4 transactions, determining rollback behavior.",
+        "Synchronous acknowledgments occur within the send transaction; asynchronous acknowledgments are separate."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A use case demonstrating the need for synchronous message acknowledgment from an external system for bank account verification."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Diagram illustrating Guidewire servers and the multi-transaction process for messaging, including synchronous and asynchronous acknowledgment points."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Title slide introducing the concept of Message Acknowledgment."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Acknowledgment Mechanisms and Response Types",
+      "narrative": "The mechanism for acknowledging messages in Guidewire often depends on whether the response is synchronous or asynchronous. Each message destination can utilize up to three plugins: a request plugin (for payload transformation, not acknowledgment), a transport plugin, and a reply plugin. The **transport plugin** is mandatory and handles sending the message. If an acknowledgment is received *synchronously*, the transport plugin also processes this reply. For *asynchronous* acknowledgments, an optional **reply plugin** initializes a listener queue to process these replies. Alternatively, an external system can acknowledge a message using a remote call, such as the `IMessageToolsAPI` or a custom-built web service, which handles the reply independently of the destination's plugins.\n\nGuidewire interprets external system responses into three primary types: a **positive acknowledgment (ACK)**, an **error (negative acknowledgment or NACK)**, or a **duplicate response**. It's also critical to consider how to handle scenarios where the external system never sends a response. The status of messages is tracked in two key tables: the `Message` table and the `MessageHistory` table. The `Message` table holds messages that require further processing (e.g., unsent, failed, pending acknowledgment). Once a message is positively acknowledged, skipped, or retried, it moves to the `MessageHistory` table, which stores completed messages. This history table can grow significantly and requires regular pruning using methods like `purgeCompletedMessages` from the `MessageToolsAPI` to maintain database performance.",
+      "keyPoints": [
+        "Transport plugins handle synchronous acknowledgments.",
+        "Reply plugins or remote APIs handle asynchronous acknowledgments.",
+        "Guidewire interprets responses as positive ACK, error (NACK), or duplicate.",
+        "Messages move from the `Message` table to `MessageHistory` upon successful acknowledgment, skipping, or retry."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Overview of plugins (transport, reply) and remote API calls involved in acknowledging messages."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Diagram illustrating how Guidewire interprets external system responses: positive ACK, error, duplicate, or no response."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Visual representation of the `Message` table (for active messages) and `MessageHistory` table (for completed messages)."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Positive Acknowledgments and Initial Send Exceptions",
+      "narrative": "When an external system successfully receives and processes a message, Guidewire records this as a **positive acknowledgment (ACK)**. Upon receiving an ACK, Guidewire performs two key actions: it moves the message from the `Message` table to the `MessageHistory` table, and it updates the message's status to reflect the acknowledgment. The `Status` field, an integer on both tables, indicates the message's state. For instance, a status of '10' in `MessageHistory` signifies 'Acked'. Other statuses in the `Message` table include 'Pending send (1)', 'Pending ack (2)', and 'Retryable error (4)'. Production code should never directly modify these tables.\n\nHowever, not all message sends are successful. An **exception** thrown in a transport plugin's `send` method (e.g., `java.net.ConnectionException`) is distinct from a reported error. When such an exception occurs, Guidewire's default response is to retry sending the message automatically until it reaches a predefined maximum number of retries, which is configured for the message's destination. During this process, the message remains in the `Message` table with a status like 'Pending send (1)'. If a message is 'safe ordered' (associated with a primary entity), subsequent messages for that destination/entity pair will not be sent until the current message is either successfully acknowledged or manually skipped by an administrator. Skipping a message or resuming a suspended destination is often necessary to allow other messages to be processed.",
+      "keyPoints": [
+        "Positive acknowledgments move messages from `Message` to `MessageHistory` and update their status.",
+        "Message statuses are integer fields, with specific meanings for pending, acknowledged, and error states.",
+        "Exceptions during initial send trigger automatic retries until a maximum limit is reached.",
+        "Safe-ordered messages block subsequent sends until resolved."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Screenshot of the Message and MessageHistory tables, highlighting message statuses after a positive acknowledgment."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Example of the Message table showing a message in 'Pending send' status after an initial send exception."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Direct Table Modification",
+          "content": "Production code should not directly modify the Message or MessageHistory tables. Use Guidewire's provided APIs for message management."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Handling External System Errors and Retries",
+      "narrative": "When an external system reports an error, it's known as a **Negative Acknowledgment (NACK)**. Guidewire applications typically treat these as **retryable errors**, indicating a temporary condition like network problems, authentication issues, or a full file system. The mechanism for reporting a NACK mirrors that of an ACK: synchronously in the transport plugin or asynchronously via a reply plugin or remote API. When a retryable error occurs, the message remains in the `Message` table with a 'Retryable error (4)' status.\n\nTo retry a message, a copy of the original message is created with a new message ID and then sent. This new message references the same triggering entity and event as the original. The original message is then moved to the `MessageHistory` table with a status like 'Error retried (12)'. It's crucial that each retry attempt uses a *different* `SenderRefID` to prevent the external system from treating it as a duplicate and ignoring it. Guidewire does not inherently treat messages with a non-zero duplicate count differently, but best practice dictates processing duplicates reported by the external system to retain maximum information. If an external system reports a message as a duplicate, the original message in `MessageHistory` can have its duplicate count incremented.\n\nFinally, a critical scenario is when there is **no response** from the external system. The message remains in the `Message` table with a 'Pending acknowledged (2)' status. This situation often requires manual evaluation to determine the cause and appropriate resolution, potentially involving custom batch processes or database monitoring tools to flag overdue messages. The table below contrasts different retry scenarios, highlighting when automatic retries occur, whether the `SenderRefID` should be the same, and what specifies the maximum retry count.",
+      "keyPoints": [
+        "Negative acknowledgments (NACKs) are treated as retryable errors by Guidewire.",
+        "Retrying an error creates a new message instance with a new ID but links to the same event.",
+        "Use different `SenderRefID` for retried messages to avoid duplicate issues.",
+        "No response scenarios require monitoring and manual intervention.",
+        "Retry behavior varies based on whether the error is an initial send exception or an external system error."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Message table showing a message in 'Retryable error' status due to a Negative Acknowledgment from an external system."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Example of the Message and MessageHistory tables after a message has been retried, showing the original moved to history and a new message created."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "MessageHistory table demonstrating how duplicate messages are recorded."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Message table showing a message in 'Pending acknowledged' status when no response is received from the external system."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Table contrasting different message retry scenarios: initial send error, external system error, and manual retry."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Scenario",
+            "What is the problem?",
+            "Who initiates the retry?",
+            "Should each attempt use the same SenderRefID?",
+            "What specifies the max retry number?"
+          ],
+          "rows": [
+            [
+              "Initial send error (Automatic retry during)",
+              "Exception thrown in beforeSend or send methods",
+              "Internal Guidewire behavior",
+              "Yes",
+              "Max Retries property"
+            ],
+            [
+              "External system error (Automatic retry after)",
+              "External System reports an error",
+              "Integration code",
+              "No",
+              "Integration code"
+            ],
+            [
+              "Manual retry",
+              "Message needs manual intervention",
+              "Administrator using Retry button",
+              "Yes",
+              "n/a"
+            ]
+          ],
+          "caption": "Comparison of different message retry scenarios and their characteristics."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Coding for Message Acknowledgment",
+      "narrative": "Implementing message acknowledgment involves specific Gosu methods to report the outcome of message processing. For a **positive acknowledgment**, you call `aMessage.reportAck()`. This moves the message to `MessageHistory` and updates its status. Often, this is followed by updating related entity statuses, such as setting a `BankAccount` to `Verified`.\n\nWhen an external system reports an error, you must decide whether to retry the message. If the message is below its maximum retry limit, you use `aMessage.reportError(retryTime)`. This tells Guidewire to clone and resend the message at a specified future time. The `retryTime` can be calculated using a backoff multiplier to increase the delay between retries. Each resend should use a new `SenderRefID`. If the message has reached its maximum retry limit, you call `aMessage.reportError(errorCategory)`. This marks the message with a specific error category (defined in the `ErrorCategory` typelist extension) and stops further automatic retries. In this case, an administrator should be alerted, typically via email or an assigned activity.\n\nFor **duplicate messages**, if the external system reports a message as a duplicate, you query the `MessageHistory` table for the original message using its `SenderRefID` and then call `messageHistory.reportDuplicate()` on the found history entry. This increments the duplicate count for the original message. Finally, for messages that receive **no response**, a custom batch process or database monitoring tool should periodically query the `Message` table for messages pending acknowledgment for an extended period. Once identified, these messages typically require manual evaluation and resolution, which might involve flagging an entity (e.g., `Contact` with `OVERDUE LEGAL REPORT`) and alerting an administrator.",
+      "keyPoints": [
+        "Use `reportAck()` for positive acknowledgments.",
+        "Use `reportError(retryTime)` for retryable errors below the max retry limit.",
+        "Use `reportError(errorCategory)` for errors at the max retry limit, and alert administrators.",
+        "Use `reportDuplicate()` on `MessageHistory` for duplicate messages.",
+        "Implement batch processes to detect and handle messages with no response."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "This is a blank transition slide."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Gosu code example demonstrating how to report a positive acknowledgment using `aMessage.reportAck()` and update an entity's status."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Code examples for reporting errors below the maximum retry limit, showing how to calculate `retryTime` and use `reportExternalSystemError`."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explanation of how to define and use `ErrorCategory` typekeys for reporting errors when the maximum retry limit is reached."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Code example illustrating the use of `message.reportError(errorCategory)` and `alertAdminAboutMessageError` when max retries are exhausted."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Gosu code example for reporting duplicate messages by querying `MessageHistory` and calling `reportDuplicate()`."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Code example of a batch process (`FlagOverdueLegalReportsBatch`) that queries the `Message` table to identify and flag entities for messages without responses."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "SenderRefID for Retries",
+          "content": "If a message is resent due to a retryable error, each attempt should use a different `SenderRefID`. This prevents external systems from treating subsequent attempts as duplicates and ignoring them."
+        },
+        {
+          "type": "definition",
+          "title": "Backoff Multiplier",
+          "content": "A backoff multiplier is a value used to arithmetically increase the retry interval, ensuring longer waits between successive retry attempts (e.g., 30s, 60s, 120s)."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Reporting Positive Acknowledgment",
+          "code": "aMessage.reportAck()\n(aMessage.MessageRoot as BankAccount).IsVerified = VerificationStatus.TC_VERIFIED",
+          "explanation": "This code snippet shows how to report a positive acknowledgment for a message and then update the `IsVerified` status of the associated `BankAccount` entity."
+        },
+        {
+          "language": "gosu",
+          "title": "Reporting Errors Below Max Retries",
+          "code": "if (aMessage.RetryCount < maxRetriesForRetryableMessage) {\n  var backOffMultiplier = aMessage.RetryCount + 1\n  var waitTime = 30 * backOffMultiplier\n  var retryTime = Date.Now.addSeconds(waitTime)\n  aMessage.reportError(retryTime)\n  output += String.format(\"Message will be retried at %tH:%tM:%tS\", retryTime, retryTime, retryTime)\n} else { /* ... handle max retries ... */ }",
+          "explanation": "This example demonstrates how to calculate a `retryTime` using a backoff multiplier and then call `aMessage.reportError(retryTime)` to schedule a message for retry when it's below the maximum retry limit."
+        },
+        {
+          "language": "gosu",
+          "title": "Reporting Errors at Max Retries",
+          "code": "if (aMessage.RetryCount < maxRetriesForRetryableMessage) { /* ... */ } else {\n  output += String.format(\"Retry max reached %s\", maxRetriesForRetryableMessage)\n  aMessage.reportError(errorCategory)\n  alertAdminAboutMessageError(aMessage)\n}",
+          "explanation": "When the maximum retry limit is reached, this code calls `aMessage.reportError(errorCategory)` to mark the message as a permanent error and then alerts an administrator."
+        },
+        {
+          "language": "gosu",
+          "title": "Reporting Duplicates",
+          "code": "var aMessageHistory = Query.make(MessageHistory).compare(MessageHistory#SenderRefID, Relop.Equals, senderRefID).select().AtMostOneRow\nif (aMessageHistory != null) {\n  Transaction.current().add(aMessageHistory)\n  aMessageHistory.reportDuplicate()\n  output = String.format(\"Duplicate reported for MessageHistory with SenderRefID: %s\", senderRefID)\n}",
+          "explanation": "This code queries the `MessageHistory` table for an existing message using its `SenderRefID` and then calls `reportDuplicate()` on the found `MessageHistory` instance to mark it as a duplicate."
+        },
+        {
+          "language": "gosu",
+          "title": "Checking for Messages Without Responses",
+          "code": "var messages = Query.make(Message)\n  .compare(Message#Status, Relop.Equals, MessageStatus.TC_PENDINGACK)\n  .compare(Message#CreationTime, Relop.LessThan, Date.Now.addHours(-24))\n  .select().toTypedArray()\n\nfor (message in messages) {\n  var contact = message.MessageRoot as Contact\n  if (contact != null) {\n    contact.addFlag(ContactFlag.TC_OVERDUELEGALREPORT)\n  }\n}",
+          "explanation": "This batch process code queries the `Message` table for messages that are in 'Pending acknowledged' status and are older than 24 hours. For each such message, it flags the associated `Contact` with an 'Overdue Legal Report' flag."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Configuring Acknowledgment Mechanisms",
+      "narrative": "Configuring message acknowledgment involves setting up the appropriate plugins and code to handle responses. For **synchronous acknowledgment**, the acknowledgment is received and processed directly within the transport plugin's `send` method. The external system's response (e.g., an `ackCode`) determines whether `aMessage.reportAck()` is called for a positive acknowledgment, or `aMessage.reportError()` for an error. For instance, a '00' ackCode might signify success, leading to `reportAck()` and updating the `BankAccount` status to `Verified`, while an '01' might indicate a payload format error, triggering `reportError(ErrorCategory.TC_PAYLOAD_FORMAT)`.\n\n**Asynchronous acknowledgment** offers more flexibility. External systems can reply using a published web service API, such as the `MessagingToolsAPI` or a custom API. The `MessagingToolsAPI.ackMessage` method allows external systems to acknowledge a pending message or report an error. While it can acknowledge or report errors, custom web services are recommended for scenarios requiring additional logic or data changes upon acknowledgment. Another common mechanism for asynchronous acknowledgment is the **reply plugin**. The `initTools` method of a reply plugin is executed during server startup to provide resources like `MessageFinder` for processing replies. The core logic resides in the `onMessage` method, which executes within a transactional context. Here, the plugin finds the pending acknowledgment message using `MessageFinder.findBySenderRefID` and then handles duplicates, errors (e.g., `_MESSAGE_INVALID`, `_TEMP_UNAVAILABLE`), or positive acknowledgments (`_MESSAGE_OK`) by calling `aMessage.reportError()` or `aMessage.reportAck()` accordingly. After making any code changes to plugins or destinations, you must deploy these changes by restarting the Guidewire server, preferably in Debug mode during development.",
+      "keyPoints": [
+        "Synchronous acknowledgment logic resides in the transport plugin's `send` method.",
+        "Asynchronous acknowledgment can use `MessagingToolsAPI`, custom web services, or a reply plugin.",
+        "Reply plugins use `initTools` for setup and `onMessage` for processing asynchronous replies.",
+        "`onMessage` in reply plugins handles duplicates, errors, and positive acknowledgments.",
+        "Server restart is required to deploy plugin and destination changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "Title slide: Configure message acknowledgment mechanisms."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Gosu code example for synchronous acknowledgment within a transport plugin's `send` method, showing how to interpret an `ackCode`."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Explanation of asynchronous acknowledgment via a web service API, highlighting `MessagingToolsAPI` and custom APIs."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Gosu code for the `initTools` method of a reply plugin, showing initialization of `MessageFinder` and other resources."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Gosu code for the `onMessage` method of a reply plugin, demonstrating how to find messages and handle duplicate acknowledgments."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Gosu code continuation for the `onMessage` method, illustrating how to handle errors and positive acknowledgments based on message properties."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Screenshot showing the steps to deploy code changes by restarting the Guidewire server from Studio."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Synchronous Acknowledgment in Transport Plugin",
+          "code": "var ackCode = bankAPI.verifyAccount(aMessage.SenderRefID, transformedPayload, accNumber)\n\nswitch (ackCode) {\n  case \"01\":\n    aMessage.reportError(ErrorCategory.TC_PAYLOAD_FORMAT)\n    break\n  case \"00\":\n    aMessage.reportAck()\n    (aMessage.MessageRoot as BankAccount).IsVerified = VerificationStatus.TC_VERIFIED\n    break\n  default:\n    // ... handle other codes ...\n}",
+          "explanation": "This code snippet from a transport plugin's `send` method shows how to call an external `bankAPI` for account verification. Based on the `ackCode` received, it either reports a payload format error or a positive acknowledgment, updating the `BankAccount` status."
+        },
+        {
+          "language": "gosu",
+          "title": "Reply Plugin initTools Method",
+          "code": "package trainingapp.demo.messaging\n\nclass DemoMessageReply implements MessageReply, MessageLifecycleAware {\n  var finder: MessageFinder\n  var destinationID: String\n  var listenerQueueReceiver: QueueReceiver = null\n  static final var _MESSAGE_OK: String = \"REQUEST_MESSAGE_OK\"\n  // ... other constants ...\n\n  override function initTools(destinationID: String, pluginParameters: Map<String, String>) {\n    this.destinationID = destinationID\n    finder = new MessageFinder()\n    // ... setup listenerQueueReceiver ...\n  }\n  // ...\n}",
+          "explanation": "This excerpt from a `DemoMessageReply` plugin shows the `initTools` method, which is called during server startup. It initializes the `MessageFinder` and sets up other resources needed for processing asynchronous replies."
+        },
+        {
+          "language": "gosu",
+          "title": "Reply Plugin onMessage Method (Part 1: Finding Message & Duplicates)",
+          "code": "override function onMessage(jmsMessage: javax.jms.Message) {\n  if (jmsMessage typeis TextMessage) {\n    try {\n      _handler.execute(\\-> {\n        var aMessage = finder.findBySenderRefID(_senderRefID, _destinationID)\n\n        if (aMessage == null || jmsMessage.getStringProperty(_MESSAGE_DUPLICATE).HasContent || aMessage.AckCount > 0) {\n          var aMessageHistory = finder.findHistoryBySenderRefID(_senderRefID, _destinationID)\n          if (aMessageHistory != null) {\n            Transaction.current().add(aMessageHistory)\n            aMessageHistory.reportDuplicate()\n          }\n        } else { /* ... handle non-duplicates ... */ }\n      })\n    } catch (throwable : Exception) { throwable.printStackTrace() } \n  }\n}",
+          "explanation": "This `onMessage` method processes incoming JMS text messages. It uses `MessageFinder` to locate the pending message. If the message is not found, is marked as a duplicate, or has already been acknowledged, it attempts to find the message in `MessageHistory` and reports it as a duplicate."
+        },
+        {
+          "language": "gosu",
+          "title": "Reply Plugin onMessage Method (Part 2: Handling Errors & Acks)",
+          "code": "if (aMessage != null && aMessage.AckCount == 0) {\n  if (jmsMessage.getStringProperty(_MESSAGE_INVALID).HasContent) {\n    aMessage.reportError()\n  }\n  if (jmsMessage.getStringProperty(_TEMP_UNAVAILABLE).HasContent) {\n    aMessage.reportError(typekey.ErrorCategory.TC_NO_CONNECTION)\n  }\n  if (jmsMessage.getStringProperty(_MESSAGE_OK).HasContent) {\n    aMessage.reportAck()\n  }\n}",
+          "explanation": "This continuation of the `onMessage` method handles the actual acknowledgment. If the message is valid and not yet acknowledged, it checks for specific properties in the JMS message (`_MESSAGE_INVALID`, `_TEMP_UNAVAILABLE`, `_MESSAGE_OK`) to determine whether to report a generic error, a 'No Connection' error, or a positive acknowledgment."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through various asynchronous acknowledgment scenarios, showing how Guidewire processes different types of responses from an external system.",
+      "transcriptSummary": "The video demonstrates how Guidewire handles asynchronous acknowledgments, including positive acknowledgments, errors, and duplicates. It highlights the changes in message status and table transitions within the Guidewire application for each scenario."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a messaging acknowledgement from an external system?",
+      "referenceAnswer": "Amessaging acknowledgement is Guidewire's process for interpreting a messaging\nresponse from an external system.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatare the possible ways Guidewire can interpret an external system's\na response to a message?",
+      "referenceAnswer": "Guidewire can interpret an external system's response, if one exists, as a positive\nacknowledgement (ACK), negative acknowledgment (NACK), or duplicate.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Under what three circumstances is an entry added to the\n: MessageHistory table?",
+      "referenceAnswer": "Amessage is added to the message history table when a message is positively\nacknowledged, skipped, or retried. For the first two, the message is removed entirely\nfrom the Message table. For the third, a copy of the original message remains in the\nMessage table.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Under what circumstances are acknowledgements processed:\n\no A) By the transport plugin?\n\nB) By the reply plugin?\n\nC) Without involvement from any plugin?",
+      "referenceAnswer": "A) When the reply is received synchronously.\n\nB) When the reply is received asynchronously through a listener or polling\nmechanism.\n\nC) When the reply is received asynchronously by an external system call to an API.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "When should you use each of the following methods?\n\no A) aMessage.reportError(retryTime)?\n\nB) aMessage.reportError(errorCategory)?",
+      "referenceAnswer": "A) When the message needs to be retried and the message has not reached its\nmaximum number of retries.\n\nB) When the message needs to be retried, but the message has reached its\nmaximum number of retries.",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Message acknowledgment is crucial for reliable Guidewire integrations, interpreting external system responses (ACK, NACK, Duplicate, No Response).",
+        "Messages move between `Message` and `MessageHistory` tables based on their processing status.",
+        "Synchronous acknowledgments are handled by the transport plugin; asynchronous ones by reply plugins or remote APIs.",
+        "Gosu methods like `reportAck()`, `reportError(retryTime)`, `reportError(errorCategory)`, and `reportDuplicate()` are used to programmatically manage message status.",
+        "Careful configuration and coding are required for both synchronous and asynchronous acknowledgment mechanisms to ensure data consistency and proper error handling."
+      ],
+      "realWorldConnection": "In real Guidewire projects, robust message acknowledgment ensures that critical business processes, like policy issuance, claims payments, or account updates, are accurately reflected across all integrated systems. Without proper acknowledgment, data inconsistencies can lead to operational errors, financial discrepancies, and a breakdown of trust in the system. Implementing these patterns correctly is fundamental to building resilient and reliable integrations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this exercise, you will configure synchronous acknowledgment for a message destination. This involves modifying a transport plugin to interpret an external system's immediate response and update the message status accordingly.",
+      "objectives": [
+        "Modify a transport plugin to process synchronous acknowledgments.",
+        "Implement logic to call `reportAck()` or `reportError()` based on the external system's response.",
+        "Verify the message status transitions in the Guidewire application."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_16_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_16_01.mp4"
+    }
+  ]
+}

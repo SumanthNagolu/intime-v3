@@ -1,0 +1,265 @@
+{
+  "lessonId": "ch11-l14",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 14,
+  "title": "Message Payload Transformation",
+  "subtitle": "Learn to dynamically modify outbound message payloads using Guidewire message request plugins.",
+  "synthesizedAt": "2026-02-16T18:59:34.664485+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your bank's system needs to send a customer's savings account verification to an external partner. However, the external system requires a unique identifier based on the message's age and a specific reference value that isn't available until just before sending. How do you ensure the message payload is perfectly tailored to the external system's requirements at the last possible moment?",
+      "question": "What mechanisms can Guidewire provide to dynamically transform message payloads right before they are sent?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and use cases for message payload transformation.",
+        "Describe the Guidewire server and transaction context for payload generation and transformation.",
+        "Understand the concept of late binding and its application in message payloads.",
+        "Identify the role of the SenderRefID in message identification and replies.",
+        "Implement a MessageRequest plugin class to transform message payloads and set SenderRefID.",
+        "Configure the plugin registry and message destination for payload transformation.",
+        "Deploy changes related to message payload transformation."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with Guidewire's messaging system, including how messages are created using Event Fired rules and the basic concept of plugins for integration.",
+      "warmupQuestion": "Think about a scenario where a message payload generated at the time of an event might need to be modified just before it leaves your system. What kind of information might change or become available at that very last moment?",
+      "hint": "Consider timestamps, external system IDs, or dynamic calculations."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Message Transformation Use Cases and Transaction Context",
+      "narrative": "Message payload transformation is a crucial aspect of integrating Guidewire applications with external systems, especially when the external system has specific data format or content requirements that cannot be fully met at the time the message is initially generated. A common use case involves dynamically modifying the message payload to include information that is only known immediately before the message is sent. For instance, a bank savings account verification message might need a token replaced with the message's age (calculated at send-time) and a unique reference value added to help the external system identify the message.\n\nGuidewire's messaging system operates across multiple transactions and server roles, which is vital for understanding where payload work should occur. Payload generation, typically done in Event Fired rules, primarily happens on the UI role server, which manages the user's session. This ensures the payload reflects a consistent snapshot of the system at the event's occurrence. However, if a portion of the payload must be generated immediately before sending, this 'late binding' occurs on the messaging role server.\n\nMessages are processed in a series of transactions: Transaction 1 creates the message and generates its initial payload. Transaction 2, which is optional, is where message payload transformation (like late binding) takes place, just before sending. Transaction 3 handles the actual sending of the message and synchronous acknowledgements. Finally, Transaction 4 processes asynchronous acknowledgements. This transaction structure is critical because any exception thrown during a transaction will cause the work within that specific transaction to be rolled back, ensuring data consistency.",
+      "keyPoints": [
+        "Message payload transformation addresses external system data requirements not met at initial message generation.",
+        "Payload generation occurs on the UI server via Event Fired rules.",
+        "Payload transformation (late binding) occurs on the messaging server just before send.",
+        "Message processing involves distinct transactions, with transformation in an optional second transaction."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A use case illustrating the need for message payload transformation, including replacing a token with message age and adding a reference value."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of Guidewire servers and messaging transactions, highlighting where message generation and payload transformation occur."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An empty slide, often used as a visual break or transition in presentations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Payload Generation Location",
+          "content": "The majority of payload generation should be done in Event Fired rules on the UI role server to ensure a consistent snapshot of the system at the time the event occurred."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Late Binding and the SenderRefID",
+      "narrative": "A key technique in message payload transformation is **late binding**. A late binding value, often referred to as a token, is a message payload value that cannot be determined when the payload is initially generated (at event-time). Instead, this value is obtained and substituted into the payload right before the message is sent (at send-time). This is particularly useful for values like a send timestamp, the message ID, or an identifier from the external system received in reply to a previous message. For example, if a second message needs an ID from the reply to a first message, and the second message is created before that reply is received, late binding is the only way to include that ID.\n\nTypically, values intended for late binding are added to the message payload using placeholders, often marked by special character delimiters (e.g., `<@@` and `@@>`). The `MessageRequest` plugin is then responsible for replacing these placeholders with the actual, dynamically determined values in the outbound message. It's crucial to be cautious with late binding; it should primarily be used for send-time specific data, not to capture entity data that has changed *after* message creation, as the payload should ideally reflect the system state at the time the Event Fired rule executed.\n\nAnother important optional message identifier is the `SenderRefID`. This ID is determined by Guidewire, though in some cases, the external system might determine it. Its primary purpose is to allow the external system to identify which request message it is responding to. When an asynchronous reply is received, the `SenderRefID` is used to locate the original message to acknowledge, even if the message was sent multiple times due to errors. While the `Message` entity also has a `PublicID` field, Guidewire generally recommends using `SenderRefID` for external system identification due to numerous base application methods that leverage it.",
+      "keyPoints": [
+        "Late binding substitutes values into the payload at send-time, not event-time.",
+        "Placeholders (tokens) are used for late-bound values and replaced by the MessageRequest plugin.",
+        "The SenderRefID is an optional message identifier used by external systems for replies.",
+        "SenderRefID should be set once and remain consistent across retries."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Explanation of payload late binding, defining it as a send-time substitution of values not available at event-time."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Details on the SenderRefID, an optional message identifier used for external system replies, and its attributes on the Message entity."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "An empty slide, serving as a visual break."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Late Binding Caution",
+          "content": "Do not use late binding to capture entity data that has changed after message creation. The payload should reflect a consistent snapshot of the system at the time the Event Fired rule executed."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Implementing the Message Request Plugin",
+      "narrative": "The `MessageRequest` plugin is the core component for performing payload transformations before a message is sent. It acts as an intermediary, called by the messaging system immediately before the transport plugin sends the payload to the external system. Its responsibilities include transforming the payload, replacing any late binding tokens with actual values, and optionally setting the `SenderRefID` on the message object, or even adding the `SenderRefID` value directly to the message payload.\n\nTo create a `MessageRequest` plugin, you define a Gosu class that implements the `MessageRequest` interface. A recommended package naming convention is `<company>.<app_code>.messaging.<functional_area>`, for example, `trainingapp.messaging.bank`. The most critical method to override in this interface is `beforeSend(aMessage : Message)`, which is called just before the message is sent. This method receives the `Message` object and *must* return the transformed payload as a `String`. If no transformation is needed, the original payload should be returned. The `Message` entity instance within this method's scope is part of Transaction 2.\n\nOther methods like `afterSend`, `resume`, `suspend`, and `shutdown` are also part of the `MessageRequest` interface. `afterSend` performs post-processing after the message is sent but is typically not implemented for request plugins. `resume`, `suspend`, and `shutdown` are called when the destination state changes or the server shuts down, allowing plugins to acquire or release external resources (e.g., JMS/JDBC connections). While often empty for request plugins, they are crucial for transport and reply plugins in production environments. If resource initialization fails in `resume`, throwing a `gw.plugin.messaging.InitializationException` will force the destination into a suspended state, requiring manual intervention.",
+      "keyPoints": [
+        "The MessageRequest plugin transforms payloads and sets late-bound values before sending.",
+        "Implement the `MessageRequest` interface in a Gosu class.",
+        "The `beforeSend` method is where payload transformation logic resides and must return the (transformed) payload.",
+        "Other methods like `afterSend`, `resume`, `suspend`, and `shutdown` handle lifecycle events and resource management."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Diagram illustrating the role of the Message Request Plugin in payload transformation before sending to an external system."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Code example demonstrating the basic structure of a `BankAccountVerificationRequest` class implementing the `MessageRequest` interface, including the `beforeSend` method signature."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "MessageRequest Plugin Class Structure",
+          "code": "package trainingapp.messaging.bank\n\nclass BankAccountVerificationRequest implements MessageRequest {\n\n  @GParam(\"aMessage\", \"Message object sent by event fired rule\")\n  @GReturns(\"Payload, transformed or not\")\n  override function beforeSend(aMessage : Message) : String { ... }\n\n  override function afterSend(p0 : Message) : void { ... }\n\n  // Other methods like resume, suspend, shutdown would also be here\n}",
+          "explanation": "This snippet shows the basic structure of a Gosu class implementing the `MessageRequest` interface. The `beforeSend` method is where the core payload transformation logic will be implemented."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Coding Payload Transformation and SenderRefID Logic",
+      "narrative": "Within the `beforeSend` method of your `MessageRequest` plugin, you implement the logic to set the `SenderRefID` and transform the message payload. It's crucial that your `beforeSend` implementation is **idempotent**, meaning it can be called multiple times and have the same effect. This is because messages might be retried if initial sending attempts fail. Therefore, the `SenderRefID` should only be set once for a new message.\n\nTo set the `SenderRefID`, you first check if `aMessage.SenderRefID` is `null`. If it is, you can assign a unique identifier, commonly `aMessage.PublicID`. This ensures consistency across retries, allowing Guidewire to find the correct message to acknowledge regardless of which specific instance the external system is replying to. While `Message` also has a `PublicID`, `SenderRefID` is preferred due to its integration with base application methods like `IMessagingToolsAPI.getMessageID`.\n\nFor payload transformation, you start by creating a mutable `transformedPayload` variable based on `aMessage.Payload`. Then, you apply your specific transformation logic. For example, if the message is for a `BankAccountType.TC_SAVINGS` account, you might add the `SenderRefID` to the payload. A common late binding task is calculating the age of the message. This involves comparing `aMessage.CreationTime` to the current time just before sending, using `DateUtil.secondsSince()`. You then replace a predefined token (e.g., `<@@ageOfMessageInSeconds@@>`) in the `transformedPayload` with the calculated `ageInSeconds`. Finally, the `beforeSend` method *must* return this `transformedPayload`. It's important to return a *transformed* payload rather than modifying the message payload directly, as this allows for appropriate re-transformation during later retry attempts.",
+      "keyPoints": [
+        "The `beforeSend` method must be idempotent to handle message retries.",
+        "Set `SenderRefID` once, typically using `aMessage.PublicID`, for consistent message identification.",
+        "Payload transformation involves creating a mutable copy, applying logic (e.g., adding `SenderRefID`, calculating message age), and replacing tokens.",
+        "Always return the `transformedPayload` from the `beforeSend` method."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Code example showing how to set the `SenderRefID` within the `beforeSend` method, ensuring it's set only once."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Code example demonstrating payload transformation logic, including adding `SenderRefID` and replacing a token with the calculated age of the message."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Setting SenderRefID",
+          "code": "override function beforeSend(aMessage : Message) : String {\n  if (aMessage.SenderRefID == null) {\n    aMessage.SenderRefID = aMessage.PublicID\n  }\n  // ... rest of transformation logic\n}",
+          "explanation": "This code ensures that the `SenderRefID` is set only if it hasn't been set already, typically using the message's `PublicID` for uniqueness."
+        },
+        {
+          "language": "gosu",
+          "title": "Transforming Payload with Late Binding",
+          "code": "var transformedPayload = aMessage.Payload\nif ((aMessage.MessageRoot as BankAccount).AccountType == BankAccountType.TC_SAVINGS) {\n  transformedPayload = transformedPayload + aMessage.SenderRefID // Example: add SenderRefID\n  var ageInSeconds = String.valueOf(DateUtil.secondsSince(aMessage.CreationTime))\n  var token = \"<@@ageOfMessageInSeconds@@>\"\n  if (transformedPayload.contains(token)) {\n    transformedPayload = transformedPayload.replaceFirst(token, ageInSeconds)\n  }\n}\nreturn transformedPayload",
+          "explanation": "This example shows how to modify the `transformedPayload` by conditionally adding the `SenderRefID` and replacing a specific token with the calculated age of the message in seconds. The modified payload is then returned."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Idempotent beforeSend",
+          "content": "Always ensure your `beforeSend` method is idempotent. This means it should produce the same result if called multiple times with the same input, which is critical for message retry scenarios."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Configuring and Deploying Message Transformation",
+      "narrative": "After implementing your `MessageRequest` plugin class, the next steps involve configuring it within Guidewire Studio and deploying the changes. First, you need to create an entry in the plugin registry. This is done by navigating to `configuration.config.Plugins.registry` in Studio and creating a new plugin entry. You'll specify a `Name` for your plugin (e.g., `BankAccountVerificationRequest`) and select `MessageRequest` as its `Interface`. Then, you'll link it to your Gosu class, such as `trainingapp.messaging.bank.BankAccountVerificationRequest`.\n\nOnce the plugin is registered, you must configure the specific message destination to use your new `MessageRequest` plugin. Navigate to `configuration.config.Messaging` and open `messaging-config.xml`. In the Messaging editor, select the relevant destination (e.g., one for bank account verifications) and assign your newly created plugin to the `Request Plugin` field. Each destination can use only one `MessageRequest` plugin. Unlike some pre-defined plugins, you can implement any number of `MessageRequest`, `MessageTransport`, and `MessageReply` plugins, but a destination will only utilize one of each type.\n\nFinally, to apply all these changes, you need to deploy them. This typically involves restarting your Guidewire server. In Studio, you can stop a running server and then start it again in either Run or Debug mode. This ensures that the application picks up your new plugin class, plugin registry entry, and destination configuration, enabling your message payload transformations to take effect.",
+      "keyPoints": [
+        "Create a plugin registry entry for your `MessageRequest` class, specifying its name and interface.",
+        "Configure the message destination in `messaging-config.xml` to use your registered `MessageRequest` plugin.",
+        "Deploy changes by restarting the Guidewire server for the configurations to take effect."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Screenshot showing the process of creating a new plugin registry entry for the `BankAccountVerificationRequest`."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Screenshot illustrating how to configure the plugin by selecting the Gosu class implementation in the Plugins Registry."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Screenshot of the Messaging editor, highlighting where to configure a message destination to use a specific `MessageRequest` plugin."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Screenshot demonstrating how to deploy code changes by restarting the server in Guidewire Studio."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Plugin Parameters",
+          "content": "While this example doesn't use them, `MessageRequest` plugins can implement `InitializablePlugin` to access parameters defined in the Studio Plugins registry. This is useful for separating variable or environment-specific data (like external system server names or timeout values) from your code."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of examining a message payload transformation in action, showing how late-bound values are substituted.",
+      "transcriptSummary": "The demo illustrates a scenario where a message payload is transformed, specifically focusing on how a token representing the 'age of message' is replaced with a calculated value just before the message is sent. It highlights the interaction between the Event Fired rules and the MessageRequest plugin."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "With regards to payload generation and payload transformation:\nA) Onwhich server does each take place?\nB) At what point in time does each take place?",
+      "referenceAnswer": "A) Payload generation occurs on the application/UI server. Payload transformation occurs on the batch/integration server.\nB) Payload generation occurs during Event Fired rules (right after the triggering event occurs). Payload transformation occurs right before the message is sent (in the request plugin's beforeSend method.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Under what circumstance would you need to late bind a message\n¢ payload?",
+      "referenceAnswer": "You would need to late bind a message if information that needs to go in the message payload is not known at the time the message payload is generated in Event Fired rules.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Message payload transformation is essential for meeting external system requirements not met at event-time.",
+        "Payload generation occurs on the UI server, while transformation (late binding) occurs on the messaging server.",
+        "The `MessageRequest` plugin's `beforeSend` method is where late binding and payload transformation logic is implemented.",
+        "The `SenderRefID` provides a consistent identifier for external systems to reference messages.",
+        "Proper configuration in the plugin registry and message destination, followed by server restart, is required for deployment."
+      ],
+      "realWorldConnection": "In real Guidewire projects, message payload transformation is frequently used to adapt standard Guidewire data into specific formats required by diverse external systems, such as legacy mainframes, third-party analytics platforms, or regulatory reporting services. This ensures seamless integration and data consistency across an enterprise architecture."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Configure message payload transformation in a Guidewire application. This involves creating a `MessageRequest` plugin, implementing the `beforeSend` method to perform late binding (e.g., calculating message age or adding a dynamic reference ID), registering the plugin, and configuring a message destination to use it. Finally, deploy and test your changes to ensure the payload is transformed as expected.",
+      "objectives": [
+        "Create and implement a `MessageRequest` plugin.",
+        "Apply late binding logic within the `beforeSend` method.",
+        "Configure the plugin registry and message destination.",
+        "Deploy and verify message payload transformations."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_14_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_14_01.mp4"
+    }
+  ]
+}

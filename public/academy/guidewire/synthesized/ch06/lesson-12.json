@@ -1,0 +1,369 @@
+{
+  "lessonId": "ch06-l12",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 12,
+  "title": "Processing a Delinquency",
+  "subtitle": "Understand how BillingCenter automatically manages overdue payments and policy cancellations.",
+  "synthesizedAt": "2026-02-16T17:51:08.370682+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a policyholder misses a payment. What happens next? Does the system automatically flag it, send reminders, or even initiate a cancellation process? In the world of insurance billing, managing overdue payments efficiently is crucial for both financial health and customer relations.",
+      "question": "How does BillingCenter ensure that overdue payments are handled systematically, from initial notification to potential policy cancellation?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe how BillingCenter automatically initiates and manages delinquency processes for overdue payments.",
+        "Explain the critical roles of workflows and delinquency plans in automating and customizing delinquency handling.",
+        "Outline the typical lifecycle and key events of a standard past due delinquency in BillingCenter.",
+        "Identify how BillingCenter users are informed about active delinquencies and track their progress.",
+        "Demonstrate how to simulate and test delinquency processing within BillingCenter.",
+        "Detail the configuration settings available on the General and Workflow tabs of a delinquency plan."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about BillingCenter's core functions, including invoicing and payment processing. Now, we'll build on that by exploring what happens when payments don't arrive on time.",
+      "warmupQuestion": "Think about any experience you've had with overdue bills in other systems. What were the typical steps taken to address them?",
+      "hint": "Consider notifications, late fees, and potential service interruptions."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Delinquency Processing",
+      "narrative": "When a policyholder misses a payment, BillingCenter doesn't just let it slide. It automatically initiates a **delinquency** process. A delinquency is a structured process designed to manage unexpected occurrences like overdue payments, aiming to bring the client back into compliance. It signifies that a policy is at risk for cancellation due to inaction, such as a missed payment. Most delinquencies are triggered automatically, for instance, by the Invoice Due batch process when an invoice becomes one day overdue.\n\nBillingCenter handles two common types of direct bill delinquencies:\n\n*   **Past Due**: This occurs one day after an unpaid or partially paid invoice becomes due.\n*   **Not Taken**: This happens when the first invoice for a policy is past due, and no payment has been received. This often indicates a policyholder decided not to accept an automatic renewal offer.\n\nWhen a delinquency starts, alert bars immediately appear on the account and policy summary screens, making it clear to anyone viewing the account or policy that it's delinquent. Delinquencies are also conveniently listed on the 'My Delinquencies' screen on the Desktop. While most are automatic, BillingCenter also provides 'Start Delinquency' buttons on the Account Summary and Policy Summary screens for manual initiation when needed, such as for an overdue agency bill policy.",
+      "keyPoints": [
+        "Delinquency is an automated process for overdue payments.",
+        "Common types are Past Due and Not Taken.",
+        "Alerts are visible on summary screens and the 'My Delinquencies' screen."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of delinquency processing in BillingCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marci explains to Marcus that BillingCenter automatically initiates a Past Due delinquency for overdue payments."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Definition of delinquency and how it's triggered, along with common types."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Key Resources: Workflows and Delinquency Plans",
+      "narrative": "Two crucial resources underpin delinquency handling in BillingCenter: **workflows** and **delinquency plans**. A workflow is a multistep process designed to manage complex business processes, making them ideal for automating delinquency handling. Workflows encapsulate all logic in one place, define flows with conditional branching, and can execute steps immediately, after a time delay, or upon an external event.\n\nFor example, a workflow for a past due delinquency might include events like 'Dunning Letter 1' and 'Late Fee' occurring immediately after the delinquency starts. 'Dunning Letter 1' triggers a notification to the insured, often integrated with a document production system. Subsequent events, like 'Dunning Letter 2' and 'Notice of Intent to Cancel,' are typically scheduled a week or more apart. These workflow events provide BillingCenter users with a clear way to track the progress of a delinquency.\n\nThe **delinquency plan** is the controlling mechanism behind the entire delinquency process. It dictates which workflow to use for each specific delinquency reason. For instance, a plan might specify that a 'Past Due' delinquency uses 'Workflow ABC.' The plan also defines the timing of workflow events and, if applicable, the late fee amount to be charged. It's important to note that if a policy period has a specified delinquency plan, it takes precedence over the account's delinquency plan. Both delinquency plans and their associated workflows are highly configurable to meet specific customer requirements.",
+      "keyPoints": [
+        "Workflows automate complex delinquency processes.",
+        "Delinquency plans control which workflow is used for each reason.",
+        "Plans define event timing and late fees."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Workflows are multistep processes well-suited for automating delinquency handling."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The delinquency plan is the controlling mechanism, linking reasons to workflows and defining event timing."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Delinquency Plan Precedence",
+          "content": "If an overdue invoice item is related to a policy-level charge and the policy has a delinquency plan, BillingCenter uses the policy's plan. Otherwise, it uses the account's plan. For account-level charges, the account's delinquency plan is always used."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "The Lifecycle and Progression of a Standard Delinquency",
+      "narrative": "Let's walk through the typical lifecycle of a 'standard' past due delinquency, as handled by BillingCenter's default workflow. This process involves several key events:\n\n1.  **Alert**: An initial warning of impending delinquency is issued.\n2.  **Dunning Letter 1 & Late Fee**: One day after the due date, the first dunning letter is sent, and a late fee is charged.\n3.  **Dunning Letter 2**: Approximately eight days after the due date, a second dunning letter is sent.\n4.  **Notice of Intent to Cancel**: Around fifteen days after the due date, a notice of intent to cancel is sent to the Policy Administration System (PAS).\n5.  **Collections**: If payment is still not received, the delinquency may be referred to a collection agency, typically around 46 days after the due date.\n\nCrucially, a Past Due delinquency is automatically closed at any point if BillingCenter receives payment for the overdue amount. Many of these workflow events are date and time-driven, with the **inception date** marking the start of delinquency processing—typically the day after an unpaid invoice becomes due.\n\nTwo key batch processes drive the delinquency forward:\n\n*   **Invoice Due batch process**: This process initiates a past due delinquency when it detects an unpaid or partially paid invoice that is past due.\n*   **Workflow Writer batch process**: This process 'wakes up' active workflows that are suspended, waiting for a specific date to be reached or a period of time to elapse.\n\nWorkflows also generate **activities**, which serve as reminders or notifications. An **Approval activity** (e.g., for cancellation) blocks workflow processing until an authorized user approves or rejects it, often leading to different processing paths. In contrast, a **Notification activity** is purely informational, simply informing users that something has occurred.",
+      "keyPoints": [
+        "Standard delinquency follows a sequence of dunning letters, cancellation notice, and potential collections.",
+        "Payment for the overdue amount automatically closes the delinquency.",
+        "The Invoice Due and Workflow Writer batch processes drive delinquency progression.",
+        "Approval activities can pause workflows, while notification activities are informational."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "The lifecycle of a past due 'standard' delinquency, showing key events and their timing."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Explanation of how delinquencies progress, involving batch processes and activities."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "This slide serves as a visual break or transition point within the lesson."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Inception Date",
+          "content": "The inception date is the date when BillingCenter begins to take action on the delinquency. If a grace period is configured, the inception date is after the grace period has passed. Otherwise, it's the same as the start date."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Simulating a Delinquency for Testing",
+      "narrative": "Understanding delinquency processing conceptually is one thing, but seeing it in action and knowing how to test it is invaluable for business analysts and configuration developers alike. BillingCenter provides tools specifically designed for this purpose, particularly useful in a development environment.\n\nTo simulate a delinquency, you typically need to manipulate the system clock and manually run batch processes. This allows you to fast-forward through the days and trigger the events that would normally occur automatically over time. For example, you can advance the system clock to the day after an invoice is due, then run the 'Invoice Due' batch process to initiate the delinquency. Subsequently, you can advance the clock further and run the 'Workflow Writer' batch process to move the delinquency through its various stages, such as sending dunning letters or triggering approval activities. This hands-on simulation helps you observe the alerts, activities, and status changes in real-time, confirming that the configured delinquency plan and workflow behave as expected.",
+      "keyPoints": [
+        "Simulating delinquencies is crucial for testing configurations.",
+        "Testing involves manipulating the system clock and running batch processes.",
+        "This allows observation of alerts, activities, and status changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Marcus expresses interest in simulating a delinquency to understand testing procedures, and Marci agrees to demonstrate."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the steps of testing delinquency processing in BillingCenter. Pay close attention to how the system clock is advanced and how batch processes are run to trigger delinquency events.",
+      "transcriptSummary": "The demo illustrates how to set up an account and policy, advance the system clock past an invoice due date, and run the Invoice Due batch process to initiate a delinquency. It then shows how to use the Workflow Writer batch process to advance the delinquency through its stages, highlighting the alerts and activities generated."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What purpose does the Workflow Writer batch process serve?",
+      "referenceAnswer": "until a date has been reached or an amount of time has elapsed.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "How does BillingCenter know which workflow to use to process a given\ndelinquency?",
+      "referenceAnswer": "delinquency?\nThe delinquency plan associates each delinquency reason with the appropriate\nworkflow.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "How does a Billing Clerk know that a policy is in delinquency?",
+      "referenceAnswer": "Te Alert bars on the Account Summary and Policy Summary screens inform users of\nan active delinquency. Also, delinquencies are listed on the My Delinquencies screen\non the Desktop.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Given the delinquency shown below, what needs to happen to move the\ndelinquency forward?\n\nT] Q) Name ‘Account#\nDelinquencies\n\nEvents ‘Complete Target Date\n\nYes 09/25/2019\n\nYes 09/25/2019\n\n——— 10/02/2019\n\n10/09/2019\n\n11/09/2019\n\n01/23/2020\n\nOct 2, 2019\n\nCompletion Date\n09/25/2019\n09/25/2019\n\nDescription\n\nDunning Letter 1\n\nLate Fee\n\nDunning Letter 2\n\nSend Notice of Intent To Cancel\nCollections\n\nWriteoff\n\nTrigger\nInception Date\n\nInception Date\n\nInception Date +7 days\nInception Date + 14 days\nInception Date + 45 days\nInception Date + 120 days",
+      "referenceAnswer": "is waiting on a date.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "How does an approval activity influence workflow?",
+      "referenceAnswer": "How does an approval activity influence workflow?\no An approval activity blocks workflow processing until it is either approved or rejected.\nTypically, the workflow performs different processing depending on the outcome of an\napproval activity.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Delinquency Review: Initial Stages – Invoice Due and Day +1",
+      "narrative": "Let's review a past due delinquency walkthrough, similar to what you might see in a demo or during testing. This sequence of screenshots illustrates a delinquency handled by the `StdDelinquency` workflow, which is part of BillingCenter's base configuration.\n\nInitially, on the invoice due date, the Policy Summary screen displays an alert. This alert warns that the policy will become delinquent if the expected payment is not received by the current date. This serves as a proactive notification, giving the policyholder a final chance to make the payment before the formal delinquency process begins.\n\nFast forward one day: it's now one day past the due date, and no payment has been received. The Policy Summary screen updates to show a more critical alert, indicating that the policy now has one or more active Past Due delinquencies. A similar alert would also be visible on the Account Summary screen. This immediate visual cue is crucial for BillingCenter users to identify and address delinquent accounts. Clicking on this alert bar provides a convenient shortcut, taking you directly to the detailed delinquency information, where you can investigate further. At this point, the Policy Summary also clearly displays the past due amount and any applicable late fee, such as $50 in this example, providing a quick financial overview of the delinquency.",
+      "keyPoints": [
+        "On the due date, an alert warns of impending delinquency.",
+        "One day past due, a critical alert confirms active delinquency.",
+        "Alerts provide quick access to delinquency details and show past due amounts/late fees."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "On the invoice due date, an alert warns that the policy will become delinquent if payment is not received."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "One day past the due date, the policy summary shows an active Past Due delinquency, the past due amount, and a late fee."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Delinquency Review: Tracking Progress and Late Fees",
+      "narrative": "Continuing our walkthrough on the same day (one day past the invoice due date), navigating to the Delinquencies screen for the policy provides a comprehensive view of the active delinquency. Here, you can see that the status is 'Open' and the delinquency reason is 'Past Due'.\n\nThe 'Events' area of this screen is particularly important as it lists all the workflow events, allowing you to track the delinquency's progress. In our example, two events have already completed: 'Dunning Letter 1' and 'Late Fee'. The next scheduled event is 'Dunning Letter 2', which will trigger the sending of a second dunning letter to the policyholder. The 'Inception Date' is clearly marked, indicating the start date of the delinquency, which, in this scenario, is one day after the unpaid invoice's due date.\n\nTo confirm the financial impact, the policy's Charges screen will show the late fee that was applied. This demonstrates how the delinquency plan's specified late fee amount is automatically charged as part of the workflow, ensuring that all associated costs are accurately recorded and billed. This level of detail across different screens helps BillingCenter users understand both the process and financial implications of a delinquency.",
+      "keyPoints": [
+        "The Delinquencies screen shows status, reason, and completed/upcoming workflow events.",
+        "The Inception Date marks the start of the delinquency process.",
+        "The Charges screen confirms the application of late fees."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "The Delinquencies screen shows the delinquency status, reason, and completed workflow events like Dunning Letter 1 and Late Fee."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "The Charges screen displays the late fee that was applied as part of the delinquency process."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Delinquency Review: Approvals and Notifications",
+      "narrative": "Moving forward to one week after the delinquency started, the Policy Summary screen continues to indicate an active Past Due delinquency, with the payment still outstanding and the late fee prominently displayed. This persistent alert ensures that the delinquency remains top-of-mind for BillingCenter users.\n\nOn the Delinquency screen, you'll now observe that the 'Dunning Letter 2' event has completed. More significantly, new activities have been created and are listed in the 'Activities' area. These activities are crucial for managing the next steps:\n\n*   **Approve Cancellation activity**: This is an **Approval activity** and is mandatory. It blocks the workflow from proceeding until a billing manager or another authorized person explicitly approves the cancellation. This ensures human oversight for critical actions like policy cancellation.\n*   **Sent Dunning Letter activity**: This is a **General activity** and is purely informational, requiring no approval. It simply confirms that the second dunning letter was sent.\n\nBillingCenter's business rules can be configured to assign these activities to appropriate users. For instance, informational notifications might go to day-to-day account handlers, while cancellation approvals are typically routed to supervisors. Up to this point, the delinquency process has largely progressed automatically, but the 'Approve Cancellation' activity introduces a point where manual intervention and approval are required. To move the workflow forward, a user must click the detail link for the 'Approve Cancellation' activity and then click the 'Approve' button. If this activity isn't completed by its due date, it can be escalated according to configured business rules.",
+      "keyPoints": [
+        "One week later, the delinquency remains active, and Dunning Letter 2 is complete.",
+        "Approval activities (e.g., 'Approve Cancellation') block workflow until approved.",
+        "Notification activities are informational and require no approval.",
+        "Manual approval is required for critical actions like cancellation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 28,
+          "caption": "One week after the delinquency started, the Policy Summary still shows an active Past Due delinquency."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "The Delinquencies screen shows Dunning Letter 2 completed and new activities, including a mandatory 'Approve Cancellation' activity."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "A user approves the 'Approve Cancellation' activity, allowing the delinquency workflow to proceed."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Configuring Activity Assignments",
+          "content": "Ensure your BillingCenter configuration routes approval activities to appropriate personnel (e.g., supervisors) and notification activities to relevant operational staff to maintain efficient workflow management and accountability."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Delinquency Review: Cancellation Notice and Pending Status",
+      "narrative": "After the 'Approve Cancellation' activity has been completed, the workflow can proceed. One week later, the 'Send Notice of Intent To Cancel' event has successfully completed. This action triggers the creation of an informational activity, 'Cancellation Notification,' to keep BillingCenter users informed about the delinquency's progress without requiring further approval.\n\nCrucially, upon execution of this event, the policy's cancellation status in BillingCenter changes to 'Pending Cancellation.' It's important to understand that BillingCenter itself does not directly cancel the policy. Instead, it sends a notification or request to the Policy Administration System (PAS) to initiate the actual cancellation. Once the PAS binds the cancellation, it communicates this back to BillingCenter. At that point, BillingCenter handles the financial reconciliation, either billing the insured for any remaining balance or disbursing a refund.\n\nWhile the `StdDelinquency` workflow includes placeholder events like 'Collection,' 'Writeoff,' and 'Rescind/Reinstate,' these require additional configuration and integration (especially for 'Collection') to implement their full logic. The delinquency workflow's logic ultimately determines when the delinquency status changes to 'Closed' and the workflow execution stops, signifying the resolution or final disposition of the overdue payment issue.",
+      "keyPoints": [
+        "The 'Send Notice of Intent To Cancel' event completes, updating the policy status to 'Pending Cancellation'.",
+        "BillingCenter requests cancellation from the PAS; it does not directly cancel policies.",
+        "Further workflow events like 'Collection' and 'Writeoff' require additional configuration.",
+        "Delinquency closes when its defined outcome is reached."
+      ],
+      "figures": [
+        {
+          "slideNumber": 31,
+          "caption": "One week later, the 'Send Notice of Intent To Cancel' event has completed, and a cancellation notification is created."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "The Policy Summary screen shows the policy's cancellation status as 'Pending Cancellation' after the notice is sent."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Deep Dive into Delinquency Plans: General and Workflow Tabs",
+      "narrative": "As Marcus rightly observes, delinquency plans are central to how BillingCenter manages overdue payments. A delinquency plan acts as the crucial link between a billing issue, such as an overdue invoice, and the specific logic (workflow) designed to handle that issue. Every account must have a delinquency plan, and a policy may optionally have one, with the policy's plan taking precedence if specified.\n\nDelinquency plans are configured through two main tabs:\n\n1.  **General Tab**: This tab specifies settings that apply to all delinquencies managed by this plan. Key settings include:\n    *   **Late Fee**: Defines the amount (e.g., $50) that will be charged if the workflow includes a late fee event.\n    *   **Grace Period Days**: Specifies the number of days allowed to pass before a delinquency is initiated. A setting of '0' means immediate initiation. The date the delinquency starts is the **inception date**.\n    *   **Amount Thresholds**: These fields define values BillingCenter uses for handling past due amounts, such as 'Write-Off Threshold' or 'Enter Delinquency Thresholds' for accounts and policies. These thresholds help determine when certain actions, like writing off a small balance, should occur.\n\n2.  **Workflow Tab**: This tab defines one or more reasons that will trigger delinquency processing and associates a specific delinquency workflow with each reason. For example, a plan might support 'Past Due' and 'Not Taken' reasons. 'Past Due' might be linked to the 'Standard Delinquency' workflow, while 'Not Taken' could be linked to a 'Cancel Immediately' workflow. The tab also lists the events within the selected workflow, specifying their timing relative to a trigger date (e.g., 'Inception Date + 7 days') and whether they are automatic or require approval. This granular control allows for highly customized delinquency processes tailored to different billing scenarios.",
+      "keyPoints": [
+        "Delinquency plans link billing issues to handling logic (workflows).",
+        "The General tab configures universal settings like late fees and grace periods.",
+        "The Workflow tab associates delinquency reasons with specific workflows and defines event timing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 33,
+          "caption": "Marcus asks about delinquency plans, and Marci explains their role as the link between billing issues and handling logic."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "The General tab of a delinquency plan, showing settings for fees, grace period, and amount thresholds."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "The Workflow tab of a delinquency plan, illustrating how delinquency reasons are mapped to specific workflows and their events."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Delinquency Thresholds",
+          "content": "BillingCenter's delinquency thresholds (e.g., Enter Delinquency Threshold, Write-Off Threshold) allow you to define minimum amounts for initiating a delinquency or writing off small uncollectable balances, providing flexibility in managing different scales of overdue payments."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new policyholder has just missed their first payment for a direct bill policy. The invoice was due yesterday, and no payment has been received.",
+      "question": "Based on what you've learned, describe the immediate steps BillingCenter will take and what a Billing Clerk would see first when logging in today.",
+      "hints": [
+        "Consider the two main types of delinquencies and which one applies here.",
+        "Think about the visual cues BillingCenter provides for active delinquencies.",
+        "What batch process would have run overnight to initiate this?"
+      ],
+      "expectedApproach": "Identify the delinquency type (Not Taken), explain the automatic initiation by the Invoice Due batch process, and describe the alert bars on the Account/Policy Summary screens and the listing on the My Delinquencies screen."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your team is designing a new delinquency plan for high-value commercial accounts. They want to ensure a 5-day grace period before any delinquency actions begin, and they need a specific workflow for 'Failure to Report' premium, distinct from 'Past Due'.",
+      "question": "Which tabs of the delinquency plan would you configure, and what specific settings would you adjust to meet these requirements?",
+      "hints": [
+        "Think about where global settings like grace periods are defined.",
+        "Consider where different delinquency reasons are linked to their respective workflows.",
+        "Remember the 'Inception Date' concept in relation to grace periods."
+      ],
+      "expectedApproach": "Explain configuring the 'General' tab for 'Grace Period Days' (set to 5). Then, describe configuring the 'Workflow' tab to add a 'Failure to Report' reason and associate it with a custom workflow, distinct from the 'Past Due' reason's workflow."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "BillingCenter automatically initiates delinquencies (Past Due, Not Taken) for overdue payments.",
+        "Workflows define the multi-step process for handling delinquencies, while delinquency plans control which workflow is used for each reason.",
+        "The standard delinquency lifecycle involves dunning letters, cancellation notices, and potential collections, with automatic closure upon payment.",
+        "Batch processes (Invoice Due, Workflow Writer) and activities (Approval, Notification) drive and track delinquency progression.",
+        "Delinquency plans are configured via General (fees, grace period) and Workflow (reason-to-workflow mapping, event timing) tabs.",
+        "Simulating delinquencies in a development environment is crucial for testing configurations."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a robust understanding of delinquency processing is vital for configuring billing operations that are both compliant with regulations and effective in recovering overdue funds. Properly configured delinquency plans and workflows ensure consistent customer communication, timely financial actions, and efficient management of at-risk policies, directly impacting an insurer's cash flow and customer retention.",
+      "nextLessonPreview": "In our next lesson, we'll explore advanced configuration options for delinquency plans and discuss integration points with external systems for document generation and policy administration."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment will give you hands-on experience with delinquency processing in BillingCenter. You will:\n\n1.  **Explore a delinquency plan**: Navigate to an existing delinquency plan in BillingCenter and examine its General and Workflow tabs. Identify the grace period, late fee, and the workflows associated with 'Past Due' and 'Not Taken' reasons.\n2.  **Test delinquency processing**: Using a development environment, create a new account and policy, then simulate a 'Past Due' delinquency by advancing the system clock and running the necessary batch processes. Observe the alerts, activities, and status changes as the delinquency progresses through its initial stages.",
+      "objectives": [
+        "Locate and interpret delinquency plan configurations.",
+        "Initiate and observe a simulated delinquency in BillingCenter.",
+        "Identify key system responses during delinquency progression."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_12_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_12_01.mp4"
+    }
+  ]
+}

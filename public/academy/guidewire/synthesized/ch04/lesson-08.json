@@ -1,0 +1,284 @@
+{
+  "lessonId": "ch04-l08",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 8,
+  "title": "Renewals",
+  "subtitle": "Mastering the policy renewal process in Guidewire PolicyCenter for developers.",
+  "synthesizedAt": "2026-02-16T17:20:16.588474+00:00",
+  "estimatedMinutes": 48,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a major insurance carrier with millions of policies. Each year, a significant portion of these policies are due for renewal, involving potential changes in coverage, premiums, and terms. Managing this process efficiently and accurately is critical for both customer satisfaction and the insurer's bottom line.",
+      "question": "How can Guidewire PolicyCenter be configured to automate and manage such a complex, high-volume process while allowing for necessary manual interventions?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "In this section, we'll look at the renewal process from a high-level perspective.",
+        "Understanding this workflow is key to managing policy periods, coverage changes, and premium adjustments.",
+        "This process begins well before a policy term ends, involving both automated and manual steps."
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of policy lifecycle management in PolicyCenter, specifically how policies are created and maintained. Think about how a policy's state changes over time and what events might trigger those changes.",
+      "warmupQuestion": "What are some key pieces of information that would need to be carried over or updated when a policy moves from one term to the next?",
+      "hint": "Consider the policyholder, coverages, and financial aspects."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Fundamentals of Policy Renewals",
+      "narrative": "For developers customizing Guidewire PolicyCenter, a comprehensive understanding of the renewal process is paramount. It's not merely about writing code; it's about aligning technical solutions with core business needs, much like a business analyst would. This holistic view ensures that any configuration or customization effectively supports the insurer's strategic goals and adheres to regulatory requirements. \n\nAt its core, a renewal in PolicyCenter extends an existing policy into a new term. This extension can be quite dynamic, potentially incorporating changes in coverages, endorsements, and premium adjustments. The inherent flexibility of renewals makes them highly configurable, allowing insurers to tailor the process to their specific products and markets. As developers, we must grasp how these configurations influence PolicyCenter's data model, particularly key entities such as `PolicyPeriod` and `PolicyTerm`, which define the policy's lifecycle.\n\nRenewals can be initiated in two primary ways: automatically or manually. The default and most common approach is an **automatic start**, typically configured to commence a specified number of days (e.g., 180 days) before the current policy term's expiration date. This 'X' factor is highly configurable and often varies based on the policy's nature and complexity. Alternatively, renewals can be **manually started**. This might be necessary if an insurer wishes to initiate the renewal process earlier than the automated schedule, or if specific, significant changes are required at the time of renewal that necessitate direct user intervention. This flexibility allows insurers to fine-tune renewal timing based on their unique business rules and policy characteristics. The overarching renewal workflow is a sophisticated, often fully automated process designed to quote and bind renewals efficiently. It incorporates various checkpoints for condition verification and document generation, making a developer's understanding of its intricacies crucial for effective customization.",
+      "keyPoints": [
+        "Developers need a holistic understanding of renewals to effectively customize PolicyCenter.",
+        "Renewals extend policies into new terms, allowing for coverage and premium adjustments.",
+        "Renewals can start automatically (X days before expiration) or manually.",
+        "The renewal workflow automates quoting and binding, with checkpoints for conditions and documents.",
+        "Renewal jobs can conclude as Renewed, Non-renewed, or Not Taken."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Developers must understand the full scope of renewals to effectively customize PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Renewals in PolicyCenter extend a policy into a new term, allowing for configurable changes."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Renewals can be started automatically (default) or manually, based on business needs."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The renewal workflow automates processing, but some renewals may require user review."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The end results of a renewal job can be Renewed, Non-renewed, or Not taken."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Non-renewed",
+          "content": "An insurer's decision not to renew a policy, often due to financial unfavorability (e.g., too many claims) or regulatory restrictions. Non-renewal is highly regulated, especially for personal lines, requiring specific advance notice."
+        },
+        {
+          "type": "definition",
+          "title": "Not Taken",
+          "content": "An insured's decision not to renew a policy, perhaps due to finding a better rate elsewhere or changes in premium. If an insured is offered a renewal but never makes payment, the renewal term typically becomes 'Not Taken' after a timeout."
+        },
+        {
+          "type": "definition",
+          "title": "Short-term Renewal",
+          "content": "In some cases, a policy may be renewed for a period shorter than the full term. This often occurs when an insurer needs to provide a legally stipulated amount of advance notice for cancellation, and the renewal date falls within that notice period. The policy is renewed for just long enough to satisfy the notice requirement."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Managing Pre-renewal Directions",
+      "narrative": "The **renewal wizard** in PolicyCenter serves as a critical user interface for managing renewals that require manual intervention. This wizard is particularly relevant for renewals that are manually started or those automatically initiated but subsequently referred to an end-user for review due to specific conditions. For developers, understanding how this UI functions and how it can be customized via PCF (PolicyCenter File) files is essential for meeting unique business requirements. It provides a structured way for users to gather, display, and modify renewal information.\n\n**Pre-renewal directions** play a pivotal role in guiding the renewal process, allowing users to override the default automated renewal path. These directions, such as 'non-renew' or 'not-taken,' offer flexibility in managing policy outcomes. For instance, a user can proactively set a policy to 'non-renew' if the insurer decides not to continue coverage, or 'not-taken' if the insured has indicated they will not renew. Developers must understand how these directions are stored within the data model and processed by the system to ensure compliance and alignment with business objectives. \n\nManaging pre-renewal directions is typically done through the PolicyCenter UI, where users can set or modify a policy's renewal path. It's crucial to note that a policy can have **only one active pre-renewal direction at any given time**. This ensures clarity and prevents conflicting instructions for the renewal workflow. Developers should design UI customizations that simplify the management of these directions, making it intuitive for users to apply, change, or delete them as needed. Configuring pre-renewal directions involves setting up rules that dictate when and how these directions can be applied, which is vital for maintaining regulatory compliance and supporting specific business processes. For example, a user can override an automated renewal by entering a pre-renewal direction that forces the renewing term into an 'Automated Non-Renewal' or 'Manual Renewal' state. Furthermore, existing pre-renewal directions can be modified or deleted. For instance, a 'non-renew' direction could be changed to a 'not-taken' direction, or simply deleted, which would then allow the policy to renew automatically. A key constraint to remember is that **a pre-renewal direction cannot be created for a policy period that has already been renewed**, as its purpose is to influence the upcoming renewal.",
+      "keyPoints": [
+        "The renewal wizard is used for manual or referred renewals, allowing user intervention.",
+        "Pre-renewal directions (non-renew, not-taken) override automated renewal processes.",
+        "Only one active pre-renewal direction can exist for a policy at a time.",
+        "Pre-renewal directions can be managed via the UI, including modification and deletion.",
+        "Pre-renewal directions cannot be created for policies that have already been renewed."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "The renewal wizard provides a UI for manual and referred renewals."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Pre-renewal directions allow overriding automated renewals, like setting a policy to non-renew."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Developers need to understand how pre-renewal directions are managed in the base configuration."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Pre-renewal directions allow users to override default automated renewals to non-renew or manual renewal."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A policy can have only one active pre-renewal direction, which can be modified or deleted."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Managing Pre-renewal Directions",
+          "content": "Ensure that UI customizations facilitate easy management of pre-renewal directions, making it clear to users which direction is active and how to modify or delete it. This prevents confusion and ensures compliance."
+        },
+        {
+          "type": "warning",
+          "title": "Pre-renewal Direction Constraint",
+          "content": "You cannot create pre-renewal directions for a policy period which has already been renewed. Pre-renewal direction cannot be set/edited on a policy if there is a renewal on the active policy."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This video demonstrates how the renewal workflow can be customized within PolicyCenter. Pay attention to the configuration options that allow tailoring the process to specific business rules.",
+      "transcriptSummary": "The demo covers various points of customization within the renewal workflow, highlighting how developers can alter steps, conditions, and actions to meet unique business and regulatory requirements. It emphasizes the flexibility of PolicyCenter's workflow engine."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An underwriter has identified a policy that should not be renewed due to excessive claims. You need to configure PolicyCenter to reflect this decision.",
+      "question": "Walk through the steps to set a 'Non-Renew' pre-renewal direction for a policy in PolicyCenter.",
+      "hints": [
+        "Start by navigating to the policy's details.",
+        "Look for actions related to policy management or renewals.",
+        "Remember to provide a reason for the non-renewal."
+      ],
+      "expectedApproach": "From the 'Actions' menu on a policy, select 'Pre-renewal Direction'. Choose 'Non-Renew' and provide a reason. Save the changes and verify the direction is set on the policy summary."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This video illustrates how PolicyCenter handles mid-term policy changes when a renewal is already in progress. Observe how the system integrates these changes to ensure the renewal reflects the most current policy data.",
+      "transcriptSummary": "The demo showcases the process of making a policy change (e.g., coverage adjustment, rate change) during the current policy term while a future renewal is pending. It demonstrates how PolicyCenter prompts the user to apply these changes to the renewal, ensuring data consistency."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "guided",
+      "scenario": "A policyholder requests a change to their policy (e.g., adding a new coverage) while their policy is already in the renewal process. You need to ensure this change is reflected in the upcoming renewal.",
+      "question": "Describe the process of initiating a renewal, then making a policy change, and finally ensuring that the change is applied to the renewal.",
+      "hints": [
+        "First, manually start a renewal for an in-force policy.",
+        "Then, make an endorsement or change on the original policy.",
+        "Consider how PolicyCenter typically handles changes when a future revision already exists."
+      ],
+      "expectedApproach": "Start a renewal for an in-force policy. Make a policy change (e.g., endorsement) on the original policy and issue it. PolicyCenter will display a special screen asking whether to apply (merge) these changes forward to the renewal period. Confirm to apply the changes to the renewal."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This video focuses on automating the renewal process in PolicyCenter. Pay attention to how batch jobs are configured to trigger renewals and streamline operations.",
+      "transcriptSummary": "The demo explains how to set up and manage batch jobs for automatic renewals. It covers configuring parameters like the renewal process lead time and the frequency of batch job execution, demonstrating how to optimize these jobs for efficiency and timely renewals."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "In-depth Look at the Automated Renewal Workflow",
+      "narrative": "The renewal workflow in PolicyCenter is a sophisticated, detailed sequence of steps designed to automate the quoting and binding of renewals. This process can be initiated in two ways: automatically by the **start renewal batch job**, which periodically searches for policies expiring within a configurable 'X' number of days (e.g., 180 days), or manually from the user interface. Regardless of the initiation method, both paths trigger the same underlying renewal workflow.\n\nOnce initiated, the renewal workflow proceeds through several automated stages. It typically involves quoting the renewal, performing various condition checks, and potentially sending out documents at different points. The workflow is designed to reach the effective date of the new term, at which point it completes the renewal job. The outcome is influenced by any pre-renewal directions: if a 'non-renew' or 'not-taken' direction exists, the job will conclude in that respective state. Otherwise, the policy is automatically bound and renewed.\n\nCrucially, the automated renewal workflow can be **manually interrupted**. This often occurs when an underwriter or agent needs to make changes to the renewal job. By 'editing the policy transaction,' users can divert the renewal from its automated path. This allows for significant flexibility, such as changing a 'non-renew' status to 'renewed' or vice versa. Before the renewal is re-quoted, users have the option to set a 'non-renew' or 'not-taken' status even if no pre-renewal direction was initially present, effectively completing the renewal job in that state. After manually quoting the renewal job, there are two primary bind options: 'Renew' and 'Issue now'. Selecting 'Renew' places the job back into the automated renewal workflow for eventual binding, while 'Issue now' immediately binds the renewal job, completing the process. The ability to edit the policy transaction multiple times before the workflow completes provides extensive control over the renewal outcome.\n\nPolicyCenter also provides mechanisms for managing **underwriting issues** in renewals. These issues allow underwriters to track concerns with a policy version, specifying issue types, descriptions, and points where they might block policy transaction progress. Issues can be raised manually via the UI, automatically through Evaluation rule sets in Guidewire Studio, or generated from **referral reasons** added to the policy. Referral reasons, which can be added at any time, create underwriting issues when a policy transaction (like a renewal) is processed. Open underwriting issues must be reviewed and approved by a user with sufficient underwriting authority before a renewal can be successfully completed, ensuring that all risks are properly assessed.",
+      "keyPoints": [
+        "The renewal workflow is initiated by batch jobs or manually, leading to quoting and binding.",
+        "Pre-renewal directions dictate the final state (renewed, non-renewed, not-taken).",
+        "The automated workflow can be manually interrupted to edit transactions and change outcomes.",
+        "Bind options include 'Renew' (re-enters workflow) and 'Issue now' (immediate binding).",
+        "Underwriting issues and referral reasons can block renewal progress, requiring approval."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "The automated renewal workflow details the process from initiation to binding, including manual interruption points."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Configuring Batch Jobs",
+          "content": "The `Policy Renewal Start` batch process looks for policies expiring in 'X' days (default 180). This 'X' value and the batch process frequency (configured in `scheduler-config.xml` and `config.xml`) are crucial for timely automated renewals. System administrators can also run this batch process outside its schedule."
+        },
+        {
+          "type": "gotcha",
+          "title": "Policy Changes and Renewals",
+          "content": "If a policy is changed in the current period while a future renewal revision already exists, PolicyCenter will display a special screen asking the user whether to apply (merge) these changes forward to the renewal period. This ensures the renewal reflects the most up-to-date policy information."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the three ways that a renewal job can end?",
+      "referenceAnswer": "taken (when the insured chooses not to renew the policy).",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Under what two circumstances is the renewal wizard typically used?",
+      "referenceAnswer": "policy must be changed at renewal time.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.",
+      "referenceAnswer": "/~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\n: times out.\nThe renewal flow does time out, and the renewal term is Not Taken.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "How many pre-renewal directions can a policy have?",
+      "referenceAnswer": "How many pre-renewal directions can a policy have?\nA policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time .",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "When should you not create a pre-renewal direction?",
+      "referenceAnswer": "not need human review of the job while it's being executed.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The renewal process is critical for policy lifecycle management, involving both automated and manual steps.",
+        "Developers must understand the full workflow to effectively customize PolicyCenter.",
+        "Pre-renewal directions allow overriding automated renewals, with only one active direction at a time.",
+        "The renewal wizard facilitates manual and referred renewals.",
+        "The detailed renewal workflow involves quoting, condition checks, and binding, with options for manual intervention.",
+        "Policy changes during a term can be merged into pending renewals."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering renewals means you can configure PolicyCenter to handle diverse business rules, ensure regulatory compliance, and optimize operational efficiency for insurers, directly impacting customer retention and revenue.",
+      "nextLessonPreview": "Next, we'll expand our knowledge of policy lifecycle management by delving into cancellations, reinstatements, and rewrites, exploring how these critical processes are handled in PolicyCenter.",
+      "figures": [
+        {
+          "slideNumber": 30,
+          "caption": "Review of lesson objectives: describing the renewal process, simple business flow, and pre-renewal functionality."
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_09_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_09_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_09_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_09_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "In_Policy_09_03.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_09_03.mp4"
+    }
+  ]
+}

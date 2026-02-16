@@ -1,0 +1,375 @@
+{
+  "lessonId": "ch08-l05",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 5,
+  "title": "Concepts of Revisioning",
+  "subtitle": "Understand how PolicyCenter tracks policy changes over effective and model time.",
+  "synthesizedAt": "2026-02-16T18:18:46.980715+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a customer calls to update their car's color on their auto policy, then later adds a new driver, and finally removes a coverage. Each of these actions changes the policy's state. How does PolicyCenter keep a precise, legally-binding record of every single change, ensuring you can always see the policy 'as it was' on any given date?",
+      "question": "How does an insurance system manage the complex history of policy changes without losing past versions or creating data inconsistencies?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define EffDated entities and their role in tracking policy state over time.",
+        "Explain the purpose of PolicyPeriod as the root of an effective-dated graph.",
+        "Differentiate between model time and effective time in the context of policy revisioning.",
+        "Describe how sub-objects are revisioned across effective time, including the use of EffectiveDate and ExpirationDate.",
+        "Compare and contrast slice mode and window mode for accessing policy data.",
+        "Utilize PolicyCenter APIs to retrieve policy data in both slice mode and window mode."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored basic entity structures and how data is stored in PolicyCenter. Now, we'll build on that understanding to see how PolicyCenter handles the dynamic nature of insurance policies, where data changes frequently over time.",
+      "warmupQuestion": "Think about any system you've used that tracks changes to documents or records. How did it manage different versions or historical states?",
+      "hint": "Consider version control systems or audit trails."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding EffDated Entities and Their Structure",
+      "narrative": "At the core of PolicyCenter's revisioning capabilities are **EffDated entities**. These special entities are designed to track the state of an object over 'effective time,' meaning they record when a particular version of an entity is valid. Unlike standard editable entities, EffDated entities include `EffectiveDate` and `ExpirationDate` columns, which define their active period. A `null` value in these date fields typically means the entity shares the effective and expiration dates of its root `PolicyPeriod`.\n\nEvery EffDated entity is part of an 'effective dated graph,' with a special `effdatedbranch` entity at its root. In the default configuration, the `PolicyPeriod` entity serves as this root, acting as a container for all other EffDated entities on a policy. It's crucial to understand that `PolicyPeriod` itself is not EffDated; rather, it's of type `effDatedBranch`. When changes occur, PolicyCenter doesn't 'revision' the `PolicyPeriod` directly. Instead, it clones the entire `PolicyPeriod` (the 'box') and then revisions the EffDated objects within it (the 'stuff'). This creates a new 'box' (a new `PolicyPeriod`) containing updated versions of the EffDated entities.\n\nKey columns for EffDated entities include `FixedId`, `Branch`, and `BasedOn`. The `FixedId` is a unique identifier generated when an object is first created and remains constant across all versions of that object. This allows PolicyCenter to recognize different versions as the 'same' underlying item (e.g., the same vehicle, even if its color changes). The `Branch` column is a foreign key linking the entity to its containing `PolicyPeriod`, ensuring all entities within the same policy revision share the same `Branch` value. The `BasedOn` property points back to the prior version of the entity, creating a historical chain that tracks how an object evolved over time. When creating a new EffDated entity, you must specify its type as 'effdated' and its `effDatedBranchType` as 'PolicyPeriod' in its `.eti` file, following existing examples like `PersonalVehicle.eti`.",
+      "keyPoints": [
+        "EffDated entities track state over effective time using `EffectiveDate` and `ExpirationDate`.",
+        "`PolicyPeriod` is the root (`effDatedBranch`) for all EffDated entities on a policy.",
+        "`FixedId` uniquely identifies an object across all its versions.",
+        "`Branch` links an entity to its specific `PolicyPeriod` revision.",
+        "`BasedOn` links an entity to its previous version, forming a historical chain."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of EffDated entities and their purpose in PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Details on EffDated entities, highlighting their effective date fields and relationship to `effdatedbranch`."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The `PolicyPeriod` entity as the root of EffDated entities, illustrated with an `.eti` file snippet."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Explanation of key EffDated entity columns: `EffectiveDate`, `ExpirationDate`, `FixedId`, `Branch`, and `BasedOn`."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Guidelines and examples for creating new EffDated entities in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "EffDated Entity",
+          "content": "An entity type in PolicyCenter designed to track the state of an object over a specific range of effective time, using `EffectiveDate` and `ExpirationDate` fields."
+        },
+        {
+          "type": "best_practice",
+          "title": "FixedId Importance",
+          "content": "The `FixedId` is crucial for identifying different versions of the *same* object across policy revisions. If `FixedId`s don't match, they represent entirely different objects."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "PersonalVehicle.eti snippet for EffDated entity",
+          "code": "<?xml version=\"1.0\"?>\n<entity\n  xmlns=\"http://guidewire.com/datamodel\"\n  desc=\"Personal Vehicle\"\n  displayName=\"Personal Vehicle\"\n  effDatedBranchType=\"PolicyPeriod\"\n  entity=\"PersonalVehicle\"\n  type=\"effdated\"\n  table=\"personalvehicle\">\n  <implementsInterface iface=\"gw.api.copier.EffDatedCopyable\" impl=\"gw.lob.pa.PersonalVehicleEffDatedCopier\"/>\n  <column desc=\"Internal field for storing the reference date of this entity on bound policy periods.\" name=\"ReferenceDateInternal\" type=\"datetime\"/>\n  <column desc=\"Make of the vehicle.\" name=\"Make\" type=\"varchar\">\n    <columnParam name=\"size\" value=\"40\"/>\n  </column>\n</entity>",
+          "explanation": "This XML snippet from `PersonalVehicle.eti` demonstrates how an entity is defined as `type=\"effdated\"` and linked to `PolicyPeriod` as its `effDatedBranchType`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Policy Revisioning: Model Time vs. Effective Time",
+      "narrative": "PolicyCenter tracks policy changes across two distinct time dimensions: **model time** and **effective time**. Understanding this distinction is fundamental to grasping how revisioning works.\n\n**Model time** refers to the actual real-world date and time when policy transactions (like submissions, policy changes, or renewals) are bound. It's akin to an audit trail, recording *when* a change became legally binding. When a policy revision, or 'branch,' is bound, PolicyCenter assigns it a `ModelDate` and increments its `ModelNumber`. The branch with the latest `ModelNumber` for a given `PeriodID` represents the currently active, legally enforced policy revision. PolicyCenter retains older branches in the database, allowing you to view the policy's state at any past model date.\n\n**Effective time**, on the other hand, is the time dimension *of the policy itself* within a `PolicyPeriod`. It defines the range of dates for which a particular policy contract or its sub-objects are valid. For instance, a policy period might cover one year (e.g., April 1 to March 31). Within this period, individual sub-objects like vehicles or coverages might have their own `EffectiveDate` and `ExpirationDate`, meaning they are only active for a portion of the overall policy period. This dimension is unique to policy systems, as it dictates *what* was covered and *when*.\n\nEach `PolicyPeriod` represents a 'version' of the policy, with its `PeriodStart` and `PeriodEnd` defining the actual term. An `EditEffectiveDate` indicates when changes from a job are applied. A new `PolicyPeriod` is created for each transaction (e.g., submission, policy change), forming a chain of revisions. The `BasedOn` property on a `PolicyPeriod` links it to the previous `PolicyPeriod` it was cloned from, illustrating the lineage of policy revisions. For example, if a car's color changes, a new `PolicyPeriod` is created, and the new car object's `BasedOn` points to the previous car object, while the new `PolicyPeriod`'s `BasedOn` points to the prior `PolicyPeriod`.",
+      "keyPoints": [
+        "Model time tracks *when* policy changes are bound in the real world.",
+        "Effective time tracks *what* is covered and *when* within the policy period.",
+        "Each `PolicyPeriod` is a 'version' of the policy, defining its effective term.",
+        "`BasedOn` property links policy revisions and sub-object versions to their predecessors."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "An example illustrating the `BasedOn` property for `Driver` and `PersonalVehicle` entities across policy changes."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "A visual representation of the structure of revisioning across effective time."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Explanation of the `PolicyPeriod` entity as a 'version' of the policy, including its dates and relationship to policy terms."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A clear distinction between model time (real-world binding) and effective time (policy coverage duration)."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "An example demonstrating how model time and effective time interact with policy revisions and sub-object changes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Model Time",
+          "content": "The actual real-world time when policy transactions are created or bound, used for auditing and tracking the history of changes."
+        },
+        {
+          "type": "definition",
+          "title": "Effective Time",
+          "content": "The time dimension of the policy itself, defining the period for which the policy contract or its sub-objects are valid."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Revisioning Sub-objects Across Effective Time",
+      "narrative": "Every `PolicyPeriod` entity serves as the root of a complex graph of sub-objects, such as drivers, vehicles, and coverages. When one of these sub-objects changes across effective time, PolicyCenter doesn't simply update the existing record. Instead, it clones the object into a new row in the database. This new row will have different `EffectiveDate` and `ExpirationDate` values, reflecting the specific time range during which that version of the object was valid.\n\nConsider a scenario where a customer initially has a red car on their policy, effective from March 1st to December 31st. If, on September 1st, the customer reports that the car was painted blue, PolicyCenter handles this by creating two distinct rows for the vehicle. The first row represents the 'red car' and is now effective from March 1st with an `ExpirationDate` of September 1st. The second row represents the 'blue car' and becomes effective from September 1st with an `ExpirationDate` of December 31st. Notice a critical detail: the `ExpirationDate` of the first row is identical to the `EffectiveDate` of the second row. This ensures a seamless transition, where the first row is effective *up to* the exact date and time of expiration, but *not including* it, while the second row takes over from that exact point.\n\nAn object is considered effective at a `specified_date` if the condition `effective_date <= specified_date < expiration_date` is true. If an `EffectiveDate` or `ExpirationDate` property is `null` in the database, Gosu automatically interprets it as the `PeriodStart` or `PeriodEnd` of the containing `PolicyPeriod`, respectively. Importantly, both versions of the car (red and blue) will share the same `FixedId`, confirming they are different states of the *same* physical vehicle, not two separate vehicles.",
+      "keyPoints": [
+        "Sub-objects are cloned into new database rows when they change across effective time.",
+        "Each cloned version has specific `EffectiveDate` and `ExpirationDate` values.",
+        "The `ExpirationDate` of an older version matches the `EffectiveDate` of the newer version for seamless transitions.",
+        "An object is effective if `effective_date <= specified_date < expiration_date`.",
+        "Null effective/expiration dates default to the `PolicyPeriod`'s start/end dates."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Initial state of a sub-object (vehicle) in a personal auto submission, showing its effective time."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Introduction to a policy change where a sub-object's state changes, leading to a new policy revision."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Detailed illustration of how a sub-object (vehicle color) is revisioned across effective time, resulting in two distinct rows with matching `FixedId`s."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Date Boundary Logic",
+          "content": "Remember the effective date logic: `effective_date <= specified_date < expiration_date`. This means an object is effective *up to, but not including* its `ExpirationDate`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Accessing Policy Data: Slice Mode vs. Window Mode",
+      "narrative": "PolicyCenter offers two primary modes for accessing policy data, each suited for different needs: **slice mode** and **window mode**. These modes determine how you view the various versions of policy objects across effective time.\n\n**Slice mode** provides a snapshot of the policy data as of a *specific date* in effective time. When you query objects in slice mode, PolicyCenter automatically retrieves the correct version of each object that was effective on that particular 'slice date.' It filters out any objects or versions that were not active on that date. For example, if you view a policy in slice mode as of April 30th, you might see one red car. If you then change the slice date to May 30th, you might see two cars (one red, one blue), reflecting an addition that became effective in May. This mode is ideal when you need to understand the policy's exact state at a precise historical or future point.\n\n**Window mode**, in contrast, allows you to view *all versions* of policy data across the entire effective time range of a `PolicyPeriod`. Instead of a single snapshot, you get a comprehensive list of all objects that ever existed on the policy, along with all their historical versions and their respective effective and expiration dates. For instance, if a car changed color three times, window mode would show you three distinct versions of that car, each with its own effective date range. This is achieved by accessing the `VersionList` property on a `PolicyPeriod`, which provides a collection of all object versions. Window mode is particularly useful for auditing, reporting, or analyzing the complete evolution of an object over the policy term, such as calculating total costs for a vehicle across its entire lifecycle on the policy. The example scenario, where a car is added and then removed, clearly illustrates how slice mode provides a filtered view, while window mode reveals the full history.",
+      "keyPoints": [
+        "Slice mode provides a snapshot of policy data as of a specific effective date.",
+        "Window mode provides all versions of policy data across the entire effective time range.",
+        "Slice mode automatically filters objects not effective on the slice date.",
+        "Window mode is useful for viewing the complete history and evolution of objects."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "An overview introducing the concepts of window mode and slice mode for accessing policy data."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Description of the two modes to access a branch's objects: slice mode for a specific date and window mode for all versions."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "An example scenario involving a submission, adding a car, and removing a car, used to illustrate slice and window modes."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Visualizing policy data in slice mode, showing how the view changes based on the specified effective date."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Visualizing policy data in window mode, which lists all versions of cars that existed on the policy at any point in time."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Choosing the Right Mode",
+          "content": "Use slice mode when you need the policy's state at a specific moment. Use window mode when you need the full history or to iterate through all versions of an object."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through how to interact with policy data in slice mode within PolicyCenter, showing how the view of policy objects changes based on the selected effective date.",
+      "transcriptSummary": "The demonstration illustrates navigating PolicyCenter's user interface to change the effective date and observe how the displayed policy information, specifically regarding vehicles, updates dynamically to reflect the policy's state as of that chosen date. It highlights the real-time application of slice mode in the UI."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Working with Slice Mode API: `getSlice(sliceDate)`",
+      "narrative": "When you need to programmatically access policy data as of a specific effective date, PolicyCenter provides the `getSlice(sliceDate)` API. This method is typically called on a `PolicyPeriod` object and returns a new `PolicyPeriod` instance that is in slice mode. Any subsequent navigation down the object graph from this sliced `PolicyPeriod` will also automatically operate in slice mode, meaning all retrieved sub-objects will represent their versions effective on the specified `sliceDate`.\n\nIt's generally considered a best practice to call `getSlice()` on the root `PolicyPeriod` and then navigate down the object graph. This approach simplifies development because you don't have to worry about individual sub-objects being unavailable at the `sliceDate`. If you were to call `getSlice()` on a sub-object directly, you would need to ensure that the sub-object was indeed effective on that date; otherwise, Gosu would throw an exception. By starting from the `PolicyPeriod`, PolicyCenter handles the filtering and ensures only effective sub-objects are returned.\n\nTo access the latest bound `PolicyPeriod` for a job, you should use `Job.finder.findJobByJobNumber(\"...\").LatestPeriod`. This ensures you are working with the most current legally enforced version. The `sliceDate` you pass must fall within the `PeriodStart` and `PeriodEnd` of the `PolicyPeriod`. You can verify the behavior of `getSlice()` using the Gosu Tester, and its effects are analogous to using the date selector in the PolicyCenter user interface to view a policy's state on a particular date.",
+      "keyPoints": [
+        "The `getSlice(sliceDate)` method returns a `PolicyPeriod` in slice mode.",
+        "Navigating from a sliced `PolicyPeriod` automatically retrieves sub-objects in slice mode.",
+        "Best practice is to call `getSlice()` on the root `PolicyPeriod`.",
+        "Use `Job.finder.findJobByJobNumber().LatestPeriod` to get the latest bound `PolicyPeriod`.",
+        "The `sliceDate` must be within the `PolicyPeriod`'s effective range."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Explanation of the `getSlice(sliceDate)` API for accessing policy data in slice mode."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "An example of using `getSlice` in Gosu Tester, with verification shown via the PolicyCenter UI date selector."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "A blank slide, likely for a visual break or transition, but included as a figure as per instructions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Root-Level Slicing",
+          "content": "Always call `getSlice()` on the `PolicyPeriod` itself, then navigate down. This prevents exceptions from trying to slice a sub-object that wasn't effective on the chosen date."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Example: getSlice using Gosu Tester",
+          "code": "uses java.text.SimpleDateFormat\nvar branch = Job.finder.findJobByJobNumber(\"47586734721\").LatestPeriod\nvar dateFormat = new SimpleDateFormat(\"M/dd/yyyy\")\nvar sliceDate = dateFormat.parse(\"05/01/2012\") // Example slice date\nvar sliceView = branch.getSlice(sliceDate)\n\nvar i=1\nfor (v in sliceView.PersonalAutoLine.Vehicles) {\n  print (\"Vehicle \"+i + \": \" + v.DisplayName)\n  i++\n}",
+          "explanation": "This Gosu code snippet demonstrates how to obtain a sliced view of a policy period and then iterate through the vehicles effective on the specified `sliceDate`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Working with Window Mode API: `VersionList`",
+      "narrative": "For scenarios requiring a complete historical view of an object across all effective time within a `PolicyPeriod`, PolicyCenter provides **window mode** access through the `VersionList` API. The `VersionList` represents all versions of a particular object that existed on a policy during its term.\n\nYou can obtain an object's `VersionList` property to access its full history. Once you have a `VersionList`, you can use methods like `versionList.AllVersions` to retrieve a list of all versions of that object, sorted by their effective date. This is incredibly useful if, for example, a car was added and then later removed; `AllVersions` would still list both its presence and eventual removal, along with its specific effective and expiration dates. Another useful method is `versionList.AsOf(date)`, which returns the single version of the object that was effective on the specified date, or `null` if no version was effective.\n\nTo get all versions of all vehicles that ever existed on a policy, you can use `branch.PersonalAutoLine.VersionList.Vehicles.flatMap(A vl -> vl.AllVersions)`. The `flatMap` function is powerful here, as it maps each vehicle's `VersionList` to its `AllVersions` and then flattens these into a single list of all vehicle versions. Similarly, you can retrieve all costs associated with a personal auto policy using `branch.PersonalAutoLine.VersionList.PACosts.flatMap(A cl -> cl.AllVersions)`. For accessing objects as of a specific date in window mode, you can use `VersionList.VehiclesAsOf(\"YYYY-MM-DD\")` or `VersionList.PACostsAsOf(\"YYYY-MM-DD\")` which will return a list of objects effective on that date, but still in window mode, allowing further navigation to their version lists if needed.",
+      "keyPoints": [
+        "`VersionList` provides access to all versions of an object across effective time.",
+        "`versionList.AllVersions` retrieves all historical versions of an object, sorted by effective date.",
+        "`versionList.AsOf(date)` gets the specific version effective on a given date.",
+        "`flatMap` is useful for aggregating all versions from multiple `VersionList`s.",
+        "Window mode APIs are essential for comprehensive historical analysis and reporting."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Explanation of the `VersionList` API for accessing all versions of an object in window mode."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Examples demonstrating how to use `VersionList.AllVersions` and `VersionList.AsOf(date)` for vehicles."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Gosu code examples for retrieving all versions of all vehicles and all vehicles as of a specific date using `VersionList`."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Gosu code examples for retrieving all costs on a personal auto policy and all costs on a vehicle at a specific date using `VersionList`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "VersionList",
+          "content": "A collection that represents all historical versions of a specific object within a policy period across effective time."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Get all versions of a particular car",
+          "code": "var val = vehicleVL.AllVersions",
+          "explanation": "This line of Gosu code retrieves all historical versions of a specific vehicle from its `VersionList`."
+        },
+        {
+          "language": "gosu",
+          "title": "Get car version effective on a specific date",
+          "code": "var vehOnDate = vehicleVL.AsOf(date)",
+          "explanation": "This code retrieves the version of the vehicle that was effective on the specified `date`."
+        },
+        {
+          "language": "gosu",
+          "title": "All versions of all vehicles that ever existed on the Policy",
+          "code": "var branch = Job.finder.findJobByJobNumber(\"206921\").LatestPeriod\nbranch.PersonalAutoLine.VersionList.Vehicles.flatMap(A vl -> vl.AllVersions).each(A v -> print(v))",
+          "explanation": "This Gosu snippet demonstrates how to get a flattened list of all historical versions for all vehicles associated with a policy, using `flatMap` to process each vehicle's `VersionList`."
+        },
+        {
+          "language": "gosu",
+          "title": "All vehicles as of specific date (window mode)",
+          "code": "var branch = Job.finder.findJobByJobNumber(\"206921\").LatestPeriod\nbranch.PersonalAutoLine.VersionList.VehiclesAsOf(\"2012-06-02\").each(A v -> print(v))",
+          "explanation": "This code retrieves all vehicles that were effective on '2012-06-02', returning them in window mode."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A customer's auto policy (Job Number: '987654321') had a red car added on March 1st, 2023, effective for the entire policy period. On June 15th, 2023, the customer reported the car was painted blue. The policy period ends on December 31st, 2023.",
+      "question": "Using Gosu, how would you retrieve the vehicle object representing the 'blue car' as of July 1st, 2023, using slice mode? Then, how would you get all versions of this specific car (red and blue) using window mode?",
+      "hints": [
+        "First, get the `LatestPeriod` for the given job number.",
+        "To use slice mode, apply `getSlice()` with the appropriate date.",
+        "To get all versions of a specific car, you'll need to access its `VersionList` and then `AllVersions`."
+      ],
+      "expectedApproach": "Get the latest policy period. For slice mode, call `getSlice()` with July 1st, then navigate to the vehicle. For window mode, access the vehicle's `VersionList` and then its `AllVersions` property."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are EffDated entities?",
+      "referenceAnswer": "They have an effective date and an expiration date.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What is the difference between effective time and model time?",
+      "referenceAnswer": "What is the difference between effective time and model time?\n\nModel time is the actual real-world time when policies are created or jobs are bound.\nEffective time is the time dimension of the policy itself within the policy period.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "EffDated entities track an object's state over effective time using `EffectiveDate` and `ExpirationDate`.",
+        "`PolicyPeriod` acts as the root (`effDatedBranch`) for all revisioned entities on a policy.",
+        "Model time records *when* changes are bound, while effective time defines *what* is covered and *when* within the policy period.",
+        "Sub-objects are cloned and assigned new effective/expiration dates when they change, maintaining the same `FixedId`.",
+        "Slice mode provides a snapshot of policy data at a specific effective date.",
+        "Window mode provides a complete history of all object versions across effective time via `VersionList`.",
+        "Gosu APIs like `getSlice()` and `VersionList.AllVersions` allow programmatic access to policy data in both modes."
+      ],
+      "realWorldConnection": "In real Guidewire projects, understanding revisioning is critical for accurate policy administration, claims processing, and billing. Developers frequently use slice mode to display the policy's current state to users or for rating calculations, while window mode is essential for historical reporting, auditing, and complex data analysis that requires the full lineage of policy changes. Correctly implementing these concepts ensures data integrity and compliance with insurance regulations."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_05_01.mp4"
+    }
+  ]
+}

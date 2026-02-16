@@ -1,0 +1,386 @@
+{
+  "lessonId": "ch09-l02",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 2,
+  "title": "Line of Business",
+  "subtitle": "Understanding ClaimCenter's hierarchical model for organizing policies, coverages, and claims.",
+  "synthesizedAt": "2026-02-16T18:26:35.483390+00:00",
+  "estimatedMinutes": 180,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance company with a diverse portfolio, from personal auto to commercial property. How do you efficiently manage claims across these vastly different products, ensuring the right information is captured and reported accurately? A robust system is crucial for streamlining operations and maintaining compliance.",
+      "question": "How does ClaimCenter organize its data to handle the complexities of various insurance products and their associated claims?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the six levels of the ClaimCenter Line of Business (LOB) model and their interrelationships.",
+        "Explain the purpose and function of each LOB model level, including Loss Type, LOB Code, Policy Type, Coverage Type, Exposure Type, and Coverage Subtype.",
+        "Identify how the LOB model is implemented in ClaimCenter using typelists and their parent/child relationships.",
+        "Outline the process for adding new elements to the LOB model in Guidewire Studio.",
+        "Recognize the importance of external typelists and the implications of modifying LOB model elements.",
+        "Understand best practices for managing LOB model typecodes, including why deletion is discouraged."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered different ways companies categorize their products or services. Think about how a large retailer might group its inventory (e.g., by department, brand, or product type) to manage it effectively.",
+      "warmupQuestion": "What are some benefits of having a well-defined categorization system in any business context?",
+      "hint": "Consider reporting, user experience, and data consistency."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to the ClaimCenter Line of Business (LOB) Model",
+      "narrative": "At the heart of ClaimCenter's ability to manage diverse insurance products and claims is its **Line of Business (LOB) model**. This model provides a structured hierarchy for organizing policies, coverages, and covered losses, which is fundamental to how the system operates. Understanding this model is key to configuring ClaimCenter to match your company's specific product offerings and claims handling processes.\n\nThe LOB model directly influences several critical aspects of ClaimCenter. For instance, it dictates how reporting is structured, ensuring that data can be aggregated and analyzed meaningfully across different business lines. It also determines which coverages are displayed for a claim associated with a particular policy type, streamlining the adjuster's workflow. Furthermore, the model controls which user interface (UI) elements are presented to capture specific information for a given exposure, ensuring that adjusters only see relevant fields.\n\nClaimCenter's LOB model is a robust, six-level hierarchy designed to provide granular control and flexibility. While the base configuration comes with preconfigured business lines, it's highly probable that you'll need to customize or even completely redefine these to align with your company's unique products. Ideally, your ClaimCenter LOBs should mirror the lines defined in your Policy Administration System (PAS) to facilitate seamless data exchange and integration.",
+      "keyPoints": [
+        "The LOB model is ClaimCenter's core hierarchy for organizing policies, coverages, and losses.",
+        "It impacts reporting, coverage display, and UI element presentation.",
+        "The model has six levels and should ideally match your Policy system's lines of business.",
+        "Customization of the base configuration is usually required to match company products."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the ClaimCenter Line of Business (LOB) model."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This slide illustrates the six-level hierarchy of the LOB model and its impact on ClaimCenter functionality."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Loss Type and LOB Code: The Top Levels of the Hierarchy",
+      "narrative": "The LOB model begins with the **Loss Type**, which represents the highest-level category of loss. This is a broad, general industry classification for Property & Casualty (P&C) insurance activities, such as Auto, Liability, Property, Travel, or Workers' Compensation. Loss Type serves as a crucial tie-in for policies, coverages, and claims that deal with similar types of losses. It's particularly useful for dynamically generating user interfaces and for high-level reporting.\n\nFor example, if a claim's Loss Type is 'Auto', the New Claim Wizard might display a 'Vehicles' step. Tying UI visibility to Loss Type, rather than more granular policy types, helps maintain simpler logic, especially as new policy types are added over time. Below Loss Type is the **LOB Code** (Line Of Business Code), which provides a more granular business categorization. While a Loss Type can encompass many LOB Codes, each LOB Code belongs to only one Loss Type. For instance, the 'Auto' Loss Type might include 'Personal Auto Line' and 'Commercial Auto Line' LOB Codes.\n\nLOB Codes are more granular than Loss Types for reporting purposes but are less commonly used as direct determinants for claims handling logic. In the ClaimCenter base application, both Loss Type and LOB Code are prominently displayed on the Claim Status screen, providing a quick overview of the claim's general status. Loss Type is also frequently used in Workplan rules to trigger specific actions or workflows based on the nature of the claim.",
+      "keyPoints": [
+        "Loss Type is the highest-level category of loss, used for UI generation and reporting.",
+        "LOB Code is a more granular business categorization below Loss Type, primarily for reporting.",
+        "A Loss Type can have many LOB Codes, but an LOB Code belongs to only one Loss Type.",
+        "Both Loss Type and LOB Code are visible on the Claim Status screen, and Loss Type can drive Workplan rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "This figure illustrates Loss Type as the highest-level category, with examples like Auto, Liability, and Property."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "LOB Code provides a more granular categorization under Loss Type, such as Personal Auto or Commercial Property."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Examples of Loss Type and LOB Code in the ClaimCenter UI, including the Claim Status page and Workplan rules."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Policy Type and Coverage Type: Defining Products and Indemnification",
+      "narrative": "Moving down the hierarchy, we encounter **Policy Type**, which describes a specific product sold to customers. This product promises to pay money when certain types of losses occur. Policy Type has a many-to-many (M:M) relationship with LOB Code, meaning a business unit can sell multiple policy types, and a single policy type might be offered by multiple business units. For example, a 'Commercial Package' policy type could be associated with 'General Liability Line', 'Commercial Property Line', and 'Inland Marine Line' LOB Codes.\n\nPolicy Types are crucial in the New Claim Wizard, where adjusters select the policy type to search for or create an unverified policy. This selection guides the subsequent steps of the claim creation process. The Policy General page for a claim also prominently displays the Policy Type, providing essential context.\n\nFurther specifying the indemnification, **Coverage Type** defines what, specifically, will be covered by the insurer in the event of a loss. It also has a many-to-many (M:M) relationship with Policy Type. A single policy can include numerous coverage types, and a particular coverage type might appear on more than one kind of policy. For instance, a 'Commercial Property' policy might include 'Building Coverage' and 'Extra Expense Coverage', while 'Homeowners' policies might include 'Homeowners Med Pay'. These levels allow for a flexible and comprehensive definition of insurance products and their associated protections.",
+      "keyPoints": [
+        "Policy Type defines a specific insurance product offered to customers.",
+        "Policy Type has an M:M relationship with LOB Code.",
+        "Coverage Type specifies what is indemnified by the insurer.",
+        "Coverage Type has an M:M relationship with Policy Type."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Policy Type represents specific products like Commercial Package or Homeowners, with an M:M relationship to LOB Code."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Policy Type in the ClaimCenter UI, shown during policy search in the New Claim Wizard and on the Policy General page."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Coverage Type specifies the exact indemnification, such as General Liability or Building Coverage, with an M:M relationship to Policy Type."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Coverage Type in the ClaimCenter User Interface",
+      "narrative": "The **Coverage Type** plays a significant role in how information is presented and managed within the ClaimCenter user interface. It helps adjusters quickly identify the specific protections afforded by a policy and how those protections apply to various aspects of a claim.\n\nOn the Policy > General page for a claim, you'll find a list of Policy-level Coverages. This list clearly identifies the type of each coverage, providing an overview of the policy's protections. These policy-level coverages are distinct from coverages that might be tied to specific risk units, such as a particular vehicle or property. For example, in a Workers' Comp claim, you might see 'Workers' Comp Employers Liability' listed with its associated limits.\n\nFurthermore, when viewing the Exposures list for a claim, the Coverage Type is displayed for each exposure. This allows adjusters to see which specific coverage is applicable to a given exposure. For instance, an exposure might be linked to 'Collision' coverage, 'Medical Payments' coverage, or 'Liability - Bodily Injury and Property Damage' coverage. This clear linkage helps adjusters understand the scope of each exposure and the relevant policy terms.",
+      "keyPoints": [
+        "Coverage Type is visible in the ClaimCenter UI on the Policy > General page and in the Exposures list.",
+        "Policy-level coverages provide an overview of policy protections.",
+        "Exposure-level coverages link specific coverages to individual exposures within a claim."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "The Policy-level Coverages list on the Policy > General page for a Workers' Comp claim, showing various Coverage Types."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "The Exposures list displaying Coverage Types applicable to each exposure, such as Vehicle Collision or MedPay."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Exposure Type: Streamlining Information Gathering",
+      "narrative": "During the claims process, adjusters must gather specific information related to the relevant coverage. If ClaimCenter had a unique detail view for every single coverage type, the system would become unwieldy, given that carriers often offer hundreds of coverages. To simplify this, ClaimCenter introduces the concept of an **Exposure Type**.\n\nAn Exposure Type is a standardized set of information needed during claims processing that relates to one or more similar types of coverages. For example, both 'Collision' and 'Liability – Bodily Injury and Property Damage' coverages might involve damage to a vehicle. Regardless of which specific coverage applies, the same kind of information needs to be gathered: extent of damage, towing details, total loss status, etc. Therefore, these coverages can map to a single Exposure Type, such as 'Vehicle Damage'. This Exposure Type then governs the information captured during the claims process, streamlining the UI and data collection.\n\nThe relationship between Coverage Type and Exposure Type is many-to-many (M:M). A single Coverage Type can map to multiple Exposure Types (e.g., 'Liability – Bodily Injury and Property Damage' might map to 'Vehicle Damage', 'Property Damage', and 'Bodily Injury Damage'). Conversely, an Exposure Type can map to multiple Coverage Types (e.g., 'Vehicle Damage' maps to 'Collision' and 'Liability – Bodily Injury and Property Damage'). In the ClaimCenter UI, Exposure Type is listed in the Exposures list and appears in the title bar of new exposure detail views, clearly indicating the type of information being gathered.",
+      "keyPoints": [
+        "Exposure Type simplifies information gathering by grouping similar coverages.",
+        "It defines a standard set of information needed for claims processing.",
+        "Coverage Type to Exposure Type has an M:M relationship.",
+        "Exposure Type is visible in the Exposures list and new exposure detail views."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Exposure Type defines the information to gather about an exposure, such as Injury, Vehicle, or Property."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Examples of Exposure Type in the ClaimCenter UI, including the Exposures list and new exposure detail screens."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Coverage Subtype: Handling Complex Coverage-Exposure Mappings",
+      "narrative": "While Exposure Type simplifies information gathering, there are situations where the same pair of Coverage Type and Exposure Type might map together in different ways, or where additional context about the loss circumstance is needed. To address these complexities, ClaimCenter introduces an additional layer in the LOB model: **Coverage Subtype**.\n\nA Coverage Subtype is essentially a unique pair consisting of one Coverage Type and one Exposure Type. It breaks down the many-to-many (M:M) relationship between Coverage Type and Exposure Type into two one-to-many (1:M) relationships. This allows for more nuanced mappings. For example, the 'Liability – Bodily Injury and Property Damage' coverage might map to the 'Vehicle Damage' exposure type, but under different circumstances (e.g., damage to the insured's vehicle vs. a third-party vehicle). The Coverage Subtype helps differentiate these scenarios.\n\nAnother example is a 'General Liability' coverage for a Commercial Package policy, which might have different limits (e.g., $100,000 for Premises/Operations and $50,000 for Products/Completed Operations). While the Exposure Type might remain 'General Damage' (as the information gathered is similar), the Coverage Subtype determines which financial limit is relevant based on the circumstance of the loss. In the ClaimCenter UI, when creating a new exposure, adjusters might select a Coverage Subtype from a fly-out menu after choosing the covered item and Coverage Type, allowing them to specify the exact nature of the exposure and its associated rules.",
+      "keyPoints": [
+        "Coverage Subtype is an additional layer that maps Coverage Type to Exposure Type.",
+        "It resolves complexities where the same coverage-exposure pair behaves differently.",
+        "A Coverage Subtype is a unique pair of one Coverage Type and one Exposure Type.",
+        "It helps determine relevant limits or specific circumstances of a loss.",
+        "Adjusters select Coverage Subtypes when creating new exposures in the UI."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Coverage Subtype acts as an intermediary layer to represent complex M:M mappings between Coverage Type and Exposure Type."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "This diagram shows Coverage Subtype as the link between Coverage Type and Exposure Type, illustrating its role in the LOB hierarchy."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "An example from the ClaimCenter UI demonstrating how Coverage Subtype is selected when creating a new exposure, such as 'Liability - Bodily Injury'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Origin of LOB Model Data",
+      "narrative": "Understanding where the information for each level of the LOB model originates is crucial for effective integration and configuration. The top four levels of the LOB model – **Loss Type, LOB Code, Policy Type, and Coverage Type** – are typically derived from the Policy Administration System (PAS). If your PAS is Guidewire PolicyCenter, standard accelerators and integrations exist to seamlessly transfer this information to ClaimCenter when a policy is shared.\n\nHowever, for other PAS systems, custom integrations must be built, and the specifics of data exchange can vary significantly. Integrating a PAS with ClaimCenter can be a complex process, requiring careful planning and development to ensure data consistency and accuracy across systems.\n\nIn contrast, the lower two levels of the LOB model – **Exposure Type and Coverage Subtype** – are unique to ClaimCenter. These levels do not have direct equivalents in a PAS. Exposure Type, as we've discussed, is specifically designed to streamline the gathering of information about a loss within ClaimCenter, focusing on the claims handling process rather than policy definition. Similarly, Coverage Subtype is a ClaimCenter-specific construct used to manage the intricate mappings between coverage types and exposure types, especially for complex coverages. Therefore, while the policy-related data flows from the PAS, the claims-specific structuring at the lower levels is managed entirely within ClaimCenter.",
+      "keyPoints": [
+        "Loss Type, LOB Code, Policy Type, and Coverage Type are typically derived from the Policy Administration System (PAS).",
+        "Integration with PolicyCenter is streamlined, but other PAS systems require custom integrations.",
+        "Exposure Type and Coverage Subtype are unique to ClaimCenter and have no PAS equivalent.",
+        "These ClaimCenter-specific levels streamline information gathering and manage complex coverage-exposure mappings."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "This figure highlights which LOB levels are typically determined by the Policy Administration System (PAS) and which are unique to ClaimCenter."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "LOB Model Implementation Using Typelists in Guidewire Studio",
+      "narrative": "In ClaimCenter, the entire LOB model is robustly implemented using a series of six interconnected **typelists**. This typelist functionality, built into Guidewire Studio, provides a highly convenient and structured mechanism for tracking the intricate relationships between the various levels of the LOB model. Each typelist contains typecodes, and these typecodes reference other typecodes in the typelists above and below them, forming a cohesive, hierarchical structure.\n\nFor example, a 'PersonalAuto' policy typecode in the PolicyType typelist would reference its parent LOB code, 'PersonalAutoLine', and also its numerous child coverage typecodes, such as 'PACollisionCov' and 'PAComprehensiveCov'. This interconnectedness is managed through special 'Children' and 'Parents' nodes available for each element within the LOB typelists in Guidewire Studio. The 'Children' node displays relationships with elements in the next level down (e.g., PolicyType's children are CoverageTypes), while the 'Parents' node shows relationships with elements in the next level up (e.g., PolicyType's parent is LOBCode). Loss Type has no parents, and Exposure Type has no children.\n\nBeyond direct hierarchical relationships, some LOB typelists are also associated with 'other' typelists through an 'Other Categories' node. These associations can be 'incoming' or 'outgoing' and are crucial for driving specific UI behaviors or linking to external systems. For instance, the PolicyType typelist might be categorized by `SourceSystem` (e.g., 'PC' for PolicyCenter) or `PolicyTab` values, which define which menu links (like vehicles or endorsements) appear in the Claim Policy location group. These 'Other Categories' are also visible in the 'Incoming Categories' and 'Outgoing Categories' tabs within the LOB typelists in Studio, providing a comprehensive view of all associated typecodes.",
+      "keyPoints": [
+        "The LOB model is implemented using six interconnected typelists in ClaimCenter.",
+        "Typecodes in each typelist reference parent and child typecodes.",
+        "Guidewire Studio uses 'Children' and 'Parents' nodes to manage these relationships.",
+        "'Other Categories' nodes link LOB typelists to external typelists, driving UI behavior and system integrations."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "This slide introduces the concept of configuring the LOB model."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "The LOB model is managed through six interconnected typelists, where typecodes reference each other."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Each element in an LOB typelist has 'Children' and 'Parents' nodes to define its hierarchical relationships."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "The 'Other Categories' node associates LOB typelists with external typelists, influencing UI and system behavior."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through navigating and exploring the various typelists that comprise the Line of Business model within Guidewire Studio. Pay close attention to how the parent and child relationships are displayed.",
+      "transcriptSummary": "The demo shows how to access LOB typelists in Guidewire Studio, specifically focusing on PolicyType.ttx. It highlights the 'Children' and 'Parents' nodes, demonstrating how different levels of the LOB model are linked and how to view their relationships."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to understand the existing LOB model in your ClaimCenter instance to prepare for a new product launch. Specifically, you want to see how 'Personal Auto' policies are structured.",
+      "question": "Using Guidewire Studio, navigate to the PolicyType typelist and explore the 'PersonalAuto' typecode. Identify its parent LOB Code and at least three child Coverage Types.",
+      "hints": [
+        "Open Guidewire Studio and locate the `configuration > config > Extensions > Typelist` folder.",
+        "Double-click `PolicyType.ttx`.",
+        "Find the 'PersonalAuto' typecode and expand its 'Parents' and 'Children' nodes."
+      ],
+      "expectedApproach": "Learners will open PolicyType.ttx in Studio, find 'PersonalAuto', and examine its parent (PersonalAutoLine) and children (e.g., PACollisionCov, PAComprehensiveCov, PAMedPayCov)."
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Configuring and Managing the LOB Model",
+      "narrative": "When making modifications to the LOB model, such as adding new elements, it's a best practice to start from a parent node and work your way downward through the hierarchy. For instance, if you're adding new coverage types to an existing policy type, you would first select that policy type in Studio, then choose to 'Add new... CoverageType'. You can either define a completely new coverage type or link an existing one that isn't yet associated with that policy type. The only exception to this rule is when adding a new Loss Type, as it sits at the top of the hierarchy and has no parent. Failing to link a new item to its appropriate parent node can lead to server startup errors, so careful attention to these relationships is critical. Continue this process, adding coverage subtypes to coverage types, and exposure types to coverage subtypes, until all necessary changes are complete. Remember, ExposureType is the lowest level, so it will not have any child items to add.\n\nIt's also important to be aware that the six LOB typelists are not isolated; they often have references to and from other 'external' typelists within the ClaimCenter data model. These external typelists, such as `InsuranceLine`, `ClaimTier`, `SourceSystem`, or `LossPartyType`, can drive statistical reporting, UI behavior, or other application logic. Consequently, a change to an LOB typelist might necessitate corresponding additions, removals, or modifications in these external typelists. There can even be cascading references across three or more typelists (e.g., Loss Type referenced by Pri Contributing Factors, which is referenced by Sec Contributing Factors). The 'Incoming Categories' and 'Outgoing Categories' tabs in Studio's LOB Typelists are invaluable tools for identifying these dependencies.\n\nWhile you *can* remove typecodes from the LOB model, Guidewire strongly advises against it. If any record in the database or any code in the application refers to a deleted typecode, the application server will fail to start, causing significant disruption. Instead, the recommended approach is to either remove connections (specifically in M:M relationships) or, more commonly, **retire** typecodes. Retiring a typecode allows existing objects and code that use it to continue functioning without issues, while preventing the creation of new instances. This is particularly useful for archived claims or if a typecode needs to be reactivated later. Deletion should only be considered if you are absolutely certain the typecode has never been used, will never be used, and all references to it have been meticulously removed throughout the application.",
+      "keyPoints": [
+        "When adding LOB model items, start from the parent node and work downward (except for Loss Type).",
+        "Failing to link new items to parents can prevent the server from starting.",
+        "LOB typelists are interconnected with many 'external' typelists, requiring careful management of dependencies.",
+        "Guidewire strongly recommends against deleting typecodes due to potential server errors.",
+        "Best practices for managing unused typecodes include removing M:M connections or retiring the typecode."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "Best practices for adding new items to the Line of Business model, emphasizing starting from the parent and working downward."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "This figure illustrates common external typelists that interact with the LOB model, highlighting potential cascading dependencies."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Guidewire's recommendations for removing typecodes from the LOB model, strongly advising against deletion in favor of retiring or removing connections."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Adding LOB Items",
+          "content": "Always start adding new LOB items from the parent node and work downwards. This ensures proper linking and prevents server startup issues. The only exception is adding a new LossType, which has no parent."
+        },
+        {
+          "type": "warning",
+          "title": "Deleting Typecodes",
+          "content": "Never delete typecodes from the LOB model unless you are 100% certain it has never been used and all references are removed. Deleting can cause server failures. Prefer retiring typecodes instead."
+        },
+        {
+          "type": "tip",
+          "title": "Managing External Typelist Dependencies",
+          "content": "Use the 'Incoming Categories' and 'Outgoing Categories' tabs in Guidewire Studio when modifying LOB typelists. These tabs display all external typelist dependencies, helping you identify and manage cascading changes."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will walk you through the process of configuring lines of business in Guidewire Studio, including adding new elements and understanding the implications of changes.",
+      "transcriptSummary": "The demo illustrates how to add a new coverage type to an existing policy type in Guidewire Studio. It emphasizes the importance of linking to parent nodes and highlights the 'Other Categories' tab for managing external typelist associations."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your company is introducing a new 'Commercial Inland Marine' policy type under the existing 'Property' Loss Type and 'Inland Marine Line' LOB Code. You need to add this new policy type and associate it with a new 'Transit Coverage' coverage type.",
+      "question": "Outline the steps you would take in Guidewire Studio to add the 'Commercial Inland Marine' policy type and link it to the 'Inland Marine Line' LOB Code and a new 'Transit Coverage' coverage type. What considerations should you keep in mind regarding external typelists?",
+      "hints": [
+        "Remember the 'start from parent and work downward' rule.",
+        "Consider which typelists you'll need to modify first.",
+        "Think about how the new policy type might interact with `SourceSystem` or `PolicyTab` typelists."
+      ],
+      "expectedApproach": "Learners should describe navigating to LOBCode.ttx, finding 'Inland Marine Line', adding 'Commercial Inland Marine' as a child PolicyType. Then, navigating to PolicyType.ttx, finding 'Commercial Inland Marine', and adding 'Transit Coverage' as a child CoverageType. They should also mention checking 'Other Categories' for relevant external typelists."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis ClaimCenter’s line of business (LOB) model?",
+      "referenceAnswer": "The correct answer is the hierarchy that organizes policies, coverages, and covered\nlosses.\nSe see aS SSeS",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the purpose of the Coverage Subtype in the LOB model?",
+      "referenceAnswer": "exposure types.\nSe see aS SSeS",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Which two levels of the LOB model are not typically derived from the\n: policy administration system?",
+      "referenceAnswer": "The correct answers are exposure type and coverage subtype.\nSe see aS SSeS",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "i “ typelist, outside of the LOB model, must every exposure type be\n, ?",
+      "referenceAnswer": "The correct answer is incident type.\nSe see aS SSeS",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Why does Guidewire recommend to not delete typecodes from the Line\nPa of Business model?",
+      "referenceAnswer": "The correct answer is that it can result in inconsistencies which will cause the server\nnot to start.\nSe see aS SSeS",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The ClaimCenter LOB model is a six-level hierarchy (Loss Type, LOB Code, Policy Type, Coverage Type, Coverage Subtype, Exposure Type) that organizes insurance products and claims.",
+        "Each level serves a specific purpose, from broad categorization (Loss Type) to detailed information gathering (Exposure Type) and complex mapping (Coverage Subtype).",
+        "The LOB model is implemented using interconnected typelists in Guidewire Studio, with parent/child relationships defining the hierarchy.",
+        "Loss Type, LOB Code, Policy Type, and Coverage Type typically originate from the PAS, while Exposure Type and Coverage Subtype are ClaimCenter-specific.",
+        "When configuring the LOB model, always add new items by starting from a parent node and working downward.",
+        "Be aware of external typelist dependencies and the cascading effects of changes.",
+        "Guidewire strongly recommends retiring typecodes instead of deleting them to avoid server startup issues."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a well-configured LOB model is foundational. It ensures that your ClaimCenter instance accurately reflects your company's product offerings, streamlines claims processing by presenting relevant UI elements, and provides robust data for reporting and analytics. Misconfigurations can lead to inefficient workflows, incorrect data capture, and system instability, highlighting the importance of understanding and correctly applying these concepts."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment involves hands-on exploration and configuration of the Line of Business model within Guidewire Studio. You will first explore existing LOB typelists to understand their structure and then practice configuring new elements.",
+      "objectives": [
+        "Navigate and inspect LOB typelists in Guidewire Studio.",
+        "Identify parent-child relationships and 'Other Categories' associations within the LOB model.",
+        "Simulate adding new LOB elements (e.g., policy types, coverage types) following best practices.",
+        "Recognize the impact of LOB model changes on external typelists."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_02_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_02_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_02_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_02_02.mp4"
+    }
+  ]
+}

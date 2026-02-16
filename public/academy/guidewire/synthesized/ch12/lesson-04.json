@@ -1,0 +1,280 @@
+{
+  "lessonId": "ch12-l04",
+  "chapterId": 12,
+  "chapterSlug": "ch12",
+  "lessonNumber": 4,
+  "title": "Finalizing and Generating Product from APD in policycenter",
+  "subtitle": "Learn to finalize, generate, and deploy insurance products from Advanced Product Designer to PolicyCenter.",
+  "synthesizedAt": "2026-02-16T19:07:04.850552+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you've spent weeks meticulously designing a new insurance product in Advanced Product Designer (APD), configuring every detail from coverages to pricing. Now, it's perfect in the visualization tool, but your underwriters can't actually use it in PolicyCenter to write policies.",
+      "question": "What critical steps must you take to transform your visualized product into a fully functional, deployable product within PolicyCenter?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the three main steps involved in finalizing an insurance product within PolicyCenter.",
+        "Explain the purpose and importance of metadata, specifically Short Names (*PD), in product finalization.",
+        "Identify the requirements and best practices for defining Short Names (*PD) in the product model.",
+        "Outline the preparatory steps required before generating product code, including setting the Gosu package.",
+        "Differentiate between generating and deploying a product on a local machine versus directly on the Guidewire Cloud Platform.",
+        "List the key artifacts generated during the product finalization process and identify elements that are excluded.",
+        "Understand the concept of product regeneration and the lifecycle of editions in an installed product."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with Advanced Product Designer (APD) to define and refine insurance products, understanding how to configure policy lines, coverages, and attributes. You also have a basic understanding of PolicyCenter's role in policy administration.",
+      "warmupQuestion": "What do you think is the biggest challenge in translating a product design from a visual tool into a functional application?",
+      "hint": "Consider the technical details and underlying code required for an application like PolicyCenter."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Product Finalization: Metadata and Preparation",
+      "narrative": "After meticulously refining and enhancing your insurance product in Advanced Product Designer (APD), the next crucial phase is **finalization**. This process transforms your visualized product into the concrete artifacts PolicyCenter needs to function, including user interface elements, the product model, and entities. The ultimate outcome is an installed product ready for use.\n\nProduct finalization involves three key steps:\n\n1.  **Adding and Reviewing Metadata**: This is a critical initial step. You must add metadata to all elements within the product model tree. It's essential to ensure these follow Guidewire suggested standards or project-specific agreements. All content should be thoroughly reviewed.\n2.  **Setting the Package Name for Generated Product Line Gosu Files**: You'll define the `APDProductLinesGosuPackage` script parameter. This parameter specifies the Gosu package where PolicyCenter will generate the Gosu files for your product lines. By default, this is `ext.lob`, and the package is created in the `gsrc` directory.\n3.  **Validating and Generating the Product**: This involves validating the product definition, generating the product code, and then restarting PolicyCenter to load the new product.\n\n**Product Metadata** plays a vital role in this process. Metadata becomes visible when the Product Design Mode is set to 'Designer' or above. Fields labeled `(*PD)` are metadata fields, and you **must** populate all of them for product generation to succeed, even though they are not required for merely visualizing the product. These fields include crucial business descriptions and short names. The product model is considered invalid until all required metadata has been entered.\n\n**Short Name (*PD)** fields are particularly important. When in 'Developer' Product Design Mode, these fields appear on the Product Definition screens for various elements like clauses, clause terms, lines, risk objects, exposures, attributes, typelists, and typelist options. After finalization, these short names translate directly into PolicyCenter Studio elements such as entity names, column names, typelists, and typecodes. You can add short names in a few ways: by setting 'Default additional fields?' to 'yes' during mind map import (which auto-generates concatenated names that may need updating), by defining them directly in the mind map for topics with markers, or by manually adding them in the visualized product screens.\n\nThere are strict **requirements for Short Name (*PD) fields**: they must start with an uppercase letter, include only letters, digits, or '$', cannot contain spaces, and must be unique within their specific scope (e.g., clauses unique within a product line, clause terms unique within a parent clause). They also cannot be Java, Gosu, or certain database keywords and are subject to character limits. Adhering to **best practices** means creating short names that follow agreed-upon naming conventions. For new APD-generated entities, avoid appending `_Ext` or line prefixes, as PolicyCenter handles these automatically during code generation. For example, an entity short name like `SimpleSmallBusiness` might generate an entity `SSBSimpleSmallBusiness` where `SSB` is the line prefix.",
+      "keyPoints": [
+        "Product finalization converts visualized APD products into deployable PolicyCenter artifacts.",
+        "Metadata, especially Short Names (*PD), is mandatory for product generation, translating to PolicyCenter Studio elements.",
+        "Short Names have strict naming conventions, uniqueness rules, and character limits.",
+        "Setting the `APDProductLinesGosuPackage` parameter defines where generated Gosu files reside."
+      ],
+      "figures": [
+        {
+          "slideNumber": 1,
+          "caption": "Overview of Product Finalization steps, metadata requirements, and Short Name (*PD) details."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Naming Conventions",
+          "content": "Always create short names that adhere to best-practice naming conventions agreed upon by your organization or project team. This ensures consistency and maintainability."
+        },
+        {
+          "type": "warning",
+          "title": "Metadata is Mandatory for Generation",
+          "content": "While you can visualize a product without all metadata, product generation will fail if all fields labeled (*PD) are not populated. The product model is not valid until all metadata is entered."
+        },
+        {
+          "type": "definition",
+          "title": "Product Model",
+          "content": "The PolicyCenter product model defines the insurance products offered. These definitions, called patterns, are used during the submission process to generate instances of policies, policy lines, or coverages. Most patterns include 'pattern' in their name, except for the Product entity itself."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how to add and manage product metadata, specifically focusing on the Short Name (*PD) fields within the visualized product screens in PolicyCenter.",
+      "transcriptSummary": "This video guides you through the process of manually adding Short Names (*PD) to various elements in the visualized product model. It highlights where these fields appear and emphasizes their importance for successful product generation."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You have a new 'Simple Small Business' product line visualized in APD, but it's missing some critical metadata. Before you can generate the product, you need to ensure all Short Name (*PD) fields are correctly populated.",
+      "question": "Navigate to your 'Simple Small Business' product in the visualized product screens and add appropriate Short Names (*PD) to at least two clauses and one risk object, ensuring they meet the specified requirements.",
+      "hints": [
+        "Remember that Short Names must start with an uppercase letter, contain no spaces, and be unique within their scope.",
+        "Refer to the 'Adding Short Names' section in the lesson for methods to input these values.",
+        "Consider using a consistent naming convention, like `SSB<ClauseName>` for clauses within the Simple Small Business line."
+      ],
+      "expectedApproach": "Open the Simple Small Business product in APD, navigate to a clause and a risk object, locate the Short Name (*PD) fields, and input valid names according to the rules."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Product Generation, Deployment, and Management",
+      "narrative": "Before you can initiate product generation, ensure your **Product Design Mode is set to Developer**, as product generation is exclusively available in this mode. Additionally, you must define the Gosu package for your product lines using the `APDProductLinesGosuPackage` script parameter, which defaults to `ext.lob` in `gsrc`. Optionally, if not already done, move your product to the PolicyCenter instance where it will be generated, tested, and deployed.\n\nOnce metadata is complete and prerequisites are met, you are ready to **validate and generate the product**. This can be done either on a local PolicyCenter instance or directly on the Guidewire Cloud Platform (GWCP). The process involves validating the product definition and then generating the product code. After generation, a restart of PolicyCenter is required to load the new product.\n\nWhen you generate the product code, it creates an **Installed Product** by generating essential artifacts for PolicyCenter. These include user interface elements (page configuration files), the product model, and the entity model. This process creates files primarily in the `config` and `gsrc` directories of PolicyCenter. It's important to note that certain visualization items are *excluded* from the generated product, such as the rate in pricing, event data, and editions containing product model properties and subclause relationships. The display of risk objects, exposures, and coverages in the installed product's Risk Details screen follows specific rules.\n\n**Regenerating the Product** is necessary if you continue product development in Guidewire Studio or Product Designer while also making changes in APD. When you regenerate, APD will issue warnings for certain modified files that will be overwritten. This ensures your installed product remains updated with your latest APD designs.\n\nFinally, **Loading Editions into the Installed Product** is a powerful feature. Editions contain product model properties and parent-child clause relationships. After initial product generation, you can load these editions into the installed product. Editions are created in the visualized product line and stored in the PolicyCenter database once the product template is loaded. They allow you to make non-structural changes to the product model properties and subclause relationships in an installed product *without restarting the server* (e.g., making a coverage unavailable). However, structural changes, such as adding a new coverage or field, require regenerating the product code and restarting the server. Loading editions is a two-step process: 'Preload editions' loads them without immediate use, and 'Activate editions' makes them active for policy transactions. In production, you cannot activate preloaded editions with issues, but in development/test environments, you can override this with the `APDBlockInvalidEditionsInDev` script parameter.",
+      "keyPoints": [
+        "Product generation requires 'Developer' mode and setting the Gosu package parameter.",
+        "Products can be generated locally or directly on Guidewire Cloud Platform.",
+        "The installed product includes UI elements, product model, and entity model, but excludes certain visualization items.",
+        "Regeneration updates the installed product, overwriting specific modified files.",
+        "Editions allow non-structural product model changes without server restarts, while structural changes require regeneration and restart."
+      ],
+      "figures": [
+        {
+          "slideNumber": 1,
+          "caption": "Detailed steps for product generation, deployment, and management of installed products and editions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Product Design Mode",
+          "content": "Product generation is only possible when the Product Design Mode is set to 'Developer'. Ensure this setting is correctly configured before attempting to generate your product."
+        },
+        {
+          "type": "tip",
+          "title": "Editions for Flexibility",
+          "content": "Leverage editions for non-structural changes to your product model (e.g., availability of coverages) to avoid server restarts and streamline updates in production environments."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration illustrates the process of validating and generating a product on a local PolicyCenter instance, showing the steps involved after all metadata has been entered.",
+      "transcriptSummary": "The video walks through the validation and generation of a product locally. It covers initiating the process, observing the progress, and confirming the successful creation of the product code, which is a prerequisite for deployment."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "Observe how to validate and generate a product directly on the Guidewire Cloud Platform, showcasing an alternative deployment strategy compared to local generation.",
+      "transcriptSummary": "This demo focuses on the steps to validate and generate a product when working with the Guidewire Cloud Platform. It highlights the interface and process for deploying the product directly to cloud instances like Dev 1 or Dev 2, streamlining the cloud deployment workflow."
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration focuses on the installed product, specifically how to load and manage editions, which allow for flexible updates to your product model without full regeneration.",
+      "transcriptSummary": "The video explains the concept of an installed product and demonstrates the process of loading editions. It covers both preloading and activating editions, illustrating how these can be used to manage product model properties and subclause relationships post-generation."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Product finalization involves adding metadata, setting Gosu package names, and generating code.",
+        "Short Names (*PD) are crucial metadata fields that translate to PolicyCenter Studio elements and must adhere to strict rules.",
+        "Product generation can occur locally or on the Guidewire Cloud Platform, creating UI, product, and entity models.",
+        "Regeneration updates existing installed products, while editions allow for flexible, non-structural changes without server restarts.",
+        "Structural changes to the product model always require regeneration and a server restart."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering product finalization ensures that the innovative insurance products designed by business analysts can be seamlessly implemented and used by underwriters, directly impacting the speed and efficiency of bringing new offerings to market. Proper metadata and understanding of editions are key to maintainable and agile product development."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment will guide you through the practical steps of finalizing and deploying a 'Simple Small Business' product within PolicyCenter, from adding necessary metadata to generating and loading editions.",
+      "objectives": [
+        "Manually add Short Name (*PD) metadata to various elements of a visualized product.",
+        "Validate the product definition and generate the product code on a local PolicyCenter instance.",
+        "Load and activate editions into the newly installed product."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Accessing Advanced.mp4",
+      "path": "/academy/guidewire/videos/ch12/Accessing Advanced.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Adding pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Adding pricing.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Advance product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Advance product.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Creating Editions.mp4",
+      "path": "/academy/guidewire/videos/ch12/Creating Editions.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "Demonstration Modeling Clauses and Clause Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Demonstration Modeling Clauses and Clause Terms.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "Documenting General Information about the Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting General Information about the Product.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "Documenting Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Pricing.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "Documenting Risk Assessment Details.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Risk Assessment Details.mp4"
+    },
+    {
+      "index": 9,
+      "filename": "Enhancing Drop-down .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Drop-down .mp4"
+    },
+    {
+      "index": 10,
+      "filename": "Enhancing Product Model .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model .mp4"
+    },
+    {
+      "index": 11,
+      "filename": "Enhancing Product Model Properties .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model Properties .mp4"
+    },
+    {
+      "index": 12,
+      "filename": "Installed product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Installed product.mp4"
+    },
+    {
+      "index": 13,
+      "filename": "Modeling Attributes.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Attributes.mp4"
+    },
+    {
+      "index": 14,
+      "filename": "Modeling Clauses and Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Clauses and Terms.mp4"
+    },
+    {
+      "index": 15,
+      "filename": "Modeling Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Pricing.mp4"
+    },
+    {
+      "index": 16,
+      "filename": "Modeling Product, Product Line, and General Information Demo.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Product, Product Line, and General Information Demo.mp4"
+    },
+    {
+      "index": 17,
+      "filename": "Modeling Risk Objects and Exposures.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Risk Objects and Exposures.mp4"
+    },
+    {
+      "index": 18,
+      "filename": "Modeling Schedules.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Schedules.mp4"
+    },
+    {
+      "index": 19,
+      "filename": "Product Metadata Short Name.mp4",
+      "path": "/academy/guidewire/videos/ch12/Product Metadata Short Name.mp4"
+    },
+    {
+      "index": 20,
+      "filename": "Validate and Generate Product 2.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product 2.mp4"
+    },
+    {
+      "index": 21,
+      "filename": "Validate and Generate Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product.mp4"
+    },
+    {
+      "index": 22,
+      "filename": "Visualized Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Visualized Product.mp4"
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "lessonId": "ch11-l17",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 17,
+  "title": "Authentication",
+  "subtitle": "Mastering user, API, and database authentication in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T19:01:46.427599+00:00",
+  "estimatedMinutes": 95,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your Guidewire application needs to integrate with a corporate single sign-on (SSO) system, allowing users to log in seamlessly without re-entering credentials. Or perhaps an external system needs to securely exchange data with your application via an API. How do you ensure these interactions are secure and properly verified?",
+      "question": "What mechanisms does Guidewire provide to authenticate diverse users and systems, and how can you customize them to fit specific security requirements?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Identify various authentication scenarios in Guidewire applications.",
+        "Describe the default user authentication flow and the roles of its key components.",
+        "Implement custom AuthenticationSourceCreatorPlugin to handle diverse credential sources.",
+        "Implement custom AuthenticationServicePlugin to validate user credentials against internal or external systems.",
+        "Explain the process of registering and deploying custom authentication plugins in Guidewire Studio.",
+        "Outline the default SOAP web service API authentication flow.",
+        "Customize WebservicesAuthenticationPlugin for specific web service authentication requirements.",
+        "Understand the function and implementation of DBAuthenticationPlugin for secure database connections."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with the basic concepts of user authentication (usernames, passwords, login forms) and have a foundational understanding of how plugins extend Guidewire application functionality.",
+      "warmupQuestion": "Think about a time you logged into an application using a corporate SSO. What do you think happens behind the scenes to verify your identity?",
+      "hint": "Consider the difference between verifying who you are (authentication) and what you can do (authorization)."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Authentication Scenarios and User Flow Overview",
+      "narrative": "Authentication is a fundamental security process that verifies the identity of a user or system attempting to access a Guidewire application. Guidewire applications support a variety of authentication scenarios, each tailored to different use cases. The most common scenario involves a user logging into a Guidewire application through a standard web form. Beyond human users, Guidewire applications frequently interact with external systems via SOAP web service APIs, requiring these systems to authenticate themselves. Similarly, when a Guidewire application needs to connect to third-party databases to share or retrieve data, the application itself must be authenticated to the database.\n\nThe default user authentication flow in Guidewire is a structured, multi-step process designed to handle login requests efficiently and securely. It begins when an authentication request, typically from a web browser, is received by the Guidewire application. This request usually contains a username and password. If the user isn't already logged in, the application initiates the login sequence. The core of this process involves externalizing the logic for extracting login information and verifying credentials through specialized plugins. This modular approach allows for significant customization to integrate with various authentication services, such as corporate LDAP directories or single sign-on (SSO) systems, ensuring flexibility while maintaining a robust security framework.",
+      "keyPoints": [
+        "Guidewire supports user, SOAP web service API, and database authentication.",
+        "User authentication typically involves a web form login.",
+        "SOAP API authentication allows external systems to interact with Guidewire.",
+        "Database authentication secures Guidewire's connection to external databases.",
+        "The default user authentication flow consists of six distinct steps, involving plugins and external services."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Overview of common authentication scenarios in Guidewire applications."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of the authentication process within Guidewire."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Detailed six-step flow of default user authentication in Guidewire."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "User Authentication: The Source Creator Plugin",
+      "narrative": "The first specialized component in the user authentication flow is the **Authentication Source Creator plugin**. This plugin plays a crucial role by acting as an intermediary, receiving raw user credential information and converting it into a structured `AuthenticationSource` object. This object is then passed to the `AuthenticationServicePlugin` for further processing. The `AuthenticationSourceCreatorPlugin` can handle various types of input, including username/password pairs from web form logins, single sign-on (SSO) credentials, or even client certificates.\n\nWhen implementing a custom `AuthenticationSourceCreatorPlugin`, you'll typically extend the `AuthenticationSourceCreatorPlugin` interface and implement its `createSourceFromHTTPRequest` method. This method receives an `HttpServletRequest` object, from which you'll extract the credential information. For instance, the default implementation retrieves 'username' and 'password' attributes from the HTTP request. If you're using a source type other than `UserNamePasswordAuthenticationSource`, you have two main options: either extend your custom `AuthenticationSource` type from `UserNamePasswordAuthenticationSource` to maintain compatibility with the existing authentication process, or include specific logic in the `AuthenticationServicePlugin` to differentiate between various `AuthenticationSource` types. This flexibility allows you to adapt Guidewire's authentication to diverse client requirements, such as distinguishing between logins from the user interface versus an API or Studio.",
+      "keyPoints": [
+        "The `AuthenticationSourceCreatorPlugin` converts raw credentials into a structured `AuthenticationSource` object.",
+        "It handles various credential types like web form logins, SSO, and client certificates.",
+        "Custom implementations override `createSourceFromHTTPRequest` to extract credentials from `HttpServletRequest`.",
+        "Credentials can be retrieved from HTTP request attributes, headers (for basic auth), or other custom means.",
+        "Careful consideration is needed when using custom `AuthenticationSource` types that don't inherit from `UserNamePasswordAuthenticationSource`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "The role of the Authentication Source Creator plugin in processing user credentials."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Gosu code example for creating a custom AuthenticationSourceCreatorPlugin."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Client Certificate Security",
+          "content": "For stronger client certificate implementations, consider storing certificates and keys in a keystore (e.g., Java KeyStore) to prevent private key exportability. Hardware key stores (like smart cards) offer even greater assurance."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Custom AuthenticationSourceCreatorPlugin",
+          "code": "package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.AuthenticationSource\nuses gw.plugin.security.AuthenticationSourceCreatorPlugin\nuses gw.plugin.security.UserNamePasswordAuthenticationSource\nuses javax.servlet.http.HttpServletRequest\n\nclass CustomAuthenticationSourceCreatorPlugin implements AuthenticationSourceCreatorPlugin {\n\n  override function createSourceFromHTTPRequest (request : HttpServletRequest) : AuthenticationSource {\n    var username = request.getAttribute(\"username\") as String\n    var password = request.getAttribute(\"password\") as String\n    return new UserNamePasswordAuthenticationSource(username, password)\n  }\n}",
+          "explanation": "This simple Gosu code demonstrates how to implement the `AuthenticationSourceCreatorPlugin` interface. It overrides the `createSourceFromHTTPRequest` method to extract 'username' and 'password' attributes from the `HttpServletRequest` and then constructs a `UserNamePasswordAuthenticationSource` object, which is a common subtype of `AuthenticationSource`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "User Authentication: The Service Plugin",
+      "narrative": "Once the `AuthenticationSourceCreatorPlugin` has prepared the credentials, the `AuthenticationServicePlugin` takes over. This plugin is the decision-maker, responsible for determining whether a user is permitted to log into the Guidewire application. It typically validates user credentials against an external system, such as Microsoft Active Directory or an LDAP directory, or against the internal Guidewire database. For custom implementations, you'll need to override the `authenticate()` method, which is invoked for both user interface and web service API requests.\n\nWithin the `authenticate()` method, you'll first validate the type of `AuthenticationSource` received, often ensuring it's a `UserNamePasswordAuthenticationSource` or a custom subtype. After extracting the username and password, your custom logic can then perform authentication against an external service. If an external service has already verified the password (as in an SSO scenario), your plugin might only need to check for the user's presence in the system. However, if a password check is required, the `AuthenticationServicePluginCallbackHandler` interface provides the `verifyInternalCredentials()` method. This callback handler is crucial because it allows your plugin, which doesn't execute in the context of a specific user, to legitimately access Guidewire's User and Credential tables. The `findUser()` method retrieves the user's `PublicID`, and `verifyInternalCredentials()` validates the provided password against the stored one, returning a `CredentialVerificationResult` indicating success or various failure states like `BAD_USERID`, `CREDENTIAL_LOCKED`, or `PASSWORD_MISMATCH`. A successful authentication concludes with the plugin returning the user's `PublicID`.",
+      "keyPoints": [
+        "The `AuthenticationServicePlugin` determines if a user can log in, validating credentials against external systems or the Guidewire database.",
+        "Custom implementations override the `authenticate()` method.",
+        "The `AuthenticationServicePluginCallbackHandler` is used to interact with Guidewire's internal user data (e.g., `findUser`, `verifyInternalCredentials`).",
+        "The `authenticate` method returns the user's `PublicID` on success or throws an exception on failure.",
+        "Error handling within the plugin should categorize different authentication problems using specific exception classes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "The Authentication Service plugin's role in validating user credentials."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Gosu code example for creating a custom AuthenticationServicePlugin (Part 1)."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Gosu code example for creating a custom AuthenticationServicePlugin (Part 2), focusing on callback handler usage."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "CredentialVerificationResult",
+          "content": "This enum indicates the outcome of credential verification, with possible values like `BAD_USERID`, `WAIT_TO_RETRY`, `CREDENTIAL_LOCKED`, `PASSWORD_MISMATCH`, or `SUCCESS`."
+        },
+        {
+          "type": "warning",
+          "title": "Authentication Exceptions",
+          "content": "When handling errors in authentication service plugins, it's crucial to catch and categorize exceptions. While the UI often shows a generic message, `DisplayableLoginException` allows you to provide a custom message to the user. Other exceptions like `FailedLoginException`, `InactiveUserException`, or `LockedCredentialException` are important for logging and diagnostics."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Custom AuthenticationServicePlugin (Part 1)",
+          "code": "package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.*\nuses javax.security.auth.login.FailedLoginException\n\nclass CustomAuthenticationServicePlugin implements AuthenticationServicePlugin {\n\n  private var handler : AuthenticationServicePluginCallbackHandler = null\n\n  override function authenticate (source : AuthenticationSource) : String {\n    if (!(source typeis UserNamePasswordAuthenticationSource)) {\n      throw new IllegalArgumentException(\"Authentication source type \" + source.getClass().getName() + \" is not known to this plugin\")\n    }\n    var uNameSource = source as UserNamePasswordAuthenticationSource\n    var username = uNameSource.getUsername()\n    var password = uNameSource.getPassword()\n\n    // ... (External authentication logic would go here)\n\n    // ... (Remaining internal Guidewire database verification logic)\n  }\n\n  override property set Callback(handler : AuthenticationServicePluginCallbackHandler) {\n    this.handler = handler\n  }\n}",
+          "explanation": "This snippet shows the initial structure of a custom `AuthenticationServicePlugin`. It defines a private variable for the callback handler, implements the `authenticate` method to validate the `AuthenticationSource` type and extract credentials, and includes the `set Callback` property to receive the callback handler from the application platform."
+        },
+        {
+          "language": "gosu",
+          "title": "Custom AuthenticationServicePlugin (Part 2)",
+          "code": "if (this.handler == null) {\n  throw new AuthenticationException(\"Callback handler not set\")\n}\nvar userPublicID = this._handler.findUser(username)\nif (userPublicID == null) {\n  throw new FailedLoginException(\"Bad user name: \" + username)\n}\nvar returnCode = this._handler.verifyInternalCredential(userPublicID, password)\nif (returnCode == CredentialVerificationResult.BAD_USERID) {\n  throw new FailedLoginException(\"Bad user name: \" + username)\n} else if (returnCode == CredentialVerificationResult.PASSWORD_MISMATCH) {\n  throw new FailedLoginException(\"Bad password for user: \" + username)\n} else if (returnCode == CredentialVerificationResult.CREDENTIAL_LOCKED) {\n  throw new LockedCredentialException(\"User account locked: \" + username)\n} else if (returnCode == CredentialVerificationResult.WAIT_TO_RETRY) {\n  throw new MustWaitToRetryException(\"Too many failed login attempts for user: \" + username)\n} else if (returnCode == CredentialVerificationResult.SUCCESS) {\n  return userPublicID\n} else {\n  throw new AuthenticationException(\"Unknown authentication error for user: \" + username)\n}",
+          "explanation": "This continuation of the `authenticate` method demonstrates how to use the `AuthenticationServicePluginCallbackHandler`. It first checks if the handler is set, then uses `findUser` to retrieve the user's `PublicID`. If the user is found, `verifyInternalCredential` is called to validate the password. Based on the `CredentialVerificationResult`, appropriate exceptions are thrown or the `PublicID` is returned for successful authentication."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing and Deploying User Authentication Plugins",
+      "narrative": "Bringing your custom authentication logic to life involves a clear set of implementation and deployment steps. First, you'll create your custom `AuthenticationSourceCreatorPlugin` and `AuthenticationServicePlugin` classes, writing the Gosu code that defines how credentials are extracted and verified. These classes encapsulate your specific authentication requirements, whether it's integrating with an external LDAP server, an SSO solution, or handling unique client certificate scenarios.\n\nOnce your plugin classes are developed, the next critical step is to **register** them within your Guidewire application. This is done through the Plugins Registry Editor in Guidewire Studio. You'll specify the Gosu class for your custom plugins, effectively telling the Guidewire application to use your custom implementations instead of the default ones. This registration ensures that when an authentication event occurs, your custom logic is invoked. Finally, to activate these changes, you must **deploy** your new or modified plugin classes and plugin registry files. This typically involves restarting the Guidewire server from Studio, either in Run or Debug mode. This process ensures that the application loads your updated configurations and begins using your custom authentication plugins, making your security enhancements active.",
+      "keyPoints": [
+        "Custom user authentication involves creating both `AuthenticationSourceCreatorPlugin` and `AuthenticationServicePlugin` classes.",
+        "Plugins must be registered in Guidewire Studio using the Plugins Registry Editor.",
+        "Registration links your custom Gosu class to the plugin interface.",
+        "Deployment requires restarting the Guidewire server to apply changes.",
+        "The use case for custom plugins is to authenticate users based on specific username and password requirements."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "High-level use case and steps for implementing custom user authentication plugins."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Screenshot of the Plugins Registry Editor in Guidewire Studio for registering plugins."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Steps for deploying plugin and code changes by restarting the Guidewire server."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through a practical example of the user authentication flow, showing how a user logs into a Guidewire application and the underlying plugin interactions.",
+      "transcriptSummary": "The video illustrates the step-by-step process of user authentication, from the initial login request to the verification of credentials by the Authentication Source Creator and Authentication Service plugins, culminating in a successful user session."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "SOAP Web Service API Authentication Flow",
+      "narrative": "Beyond human users, Guidewire applications frequently engage in machine-to-machine communication via SOAP web service APIs. This requires a distinct authentication flow to ensure secure interactions between systems. The default SOAP web service API authentication flow is an eight-step process, similar in principle to user authentication but with key differences tailored for programmatic access.\n\nUnlike user authentication, the `AuthenticationSourceCreatorPlugin` is *not* invoked for web service API logins. Instead, authentication information, typically a username and password, is found in either the HTTP request headers or the SOAP headers. This information is then encapsulated in a `WebservicesAuthenticationContext` object, which is passed directly to the `DefaultWebservicesAuthenticationPlugin`. This plugin initiates the credential verification process, first attempting to authenticate against the Guidewire database. If successful, it then calls the implemented `AuthenticationServicePlugin` for further authentication, potentially against an external service. The `AuthenticationServicePlugin` verifies credentials and returns the user's `PublicID` to the `DefaultWebservicesAuthenticationPlugin`, which ultimately returns a `User` object (or null for failure) to the Guidewire application. It's important to note that for most environments, you won't need to write a new `WebservicesAuthenticationPlugin` implementation; typical changes to authentication logic are usually handled within your `AuthenticationServicePlugin` implementation, which is referenced by both user and web service flows.",
+      "keyPoints": [
+        "SOAP web service API authentication is an 8-step flow for machine-to-machine communication.",
+        "The `AuthenticationSourceCreatorPlugin` is bypassed; credentials are in HTTP or SOAP headers.",
+        "The `WebservicesAuthenticationContext` object carries credentials to the `DefaultWebservicesAuthenticationPlugin`.",
+        "Authentication involves verification against the Guidewire database and potentially an external service via the `AuthenticationServicePlugin`.",
+        "Most customizations for web service authentication occur within the `AuthenticationServicePlugin`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Introduction to SOAP Web service API authentication."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Detailed eight-step flow of default SOAP web service API authentication."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "SOAP Web Service API Authentication Plugin",
+      "narrative": "The `WebservicesAuthenticationPlugin` is central to handling authentication for SOAP web service connections. The default implementation, `DefaultWebservicesAuthenticationPlugin`, performs two primary operations: it scans HTTP request headers for authentication information and then authenticates against the local application users stored in the Guidewire database. Crucially, this default plugin then calls the registered `AuthenticationServicePlugin` for further authentication. This interaction is vital to understand, as any custom `AuthenticationServicePlugin` you implement will also be leveraged by the web service authentication flow.\n\nWhile the default plugin supports WS-I web service connections and looks for authentication information in HTTP headers, you might need a custom implementation to alter its behavior. For example, you could change how credentials are retrieved from different headers or implement entirely custom logic. To do this, you'd create your own class that implements the `WebservicesAuthenticationPlugin` interface. This interface has a single `authenticate` method that accepts a `WebservicesAuthenticationContext` parameter. This context object provides access to HTTP headers and request SOAP headers, allowing you to extract authentication details. If authentication succeeds, your `authenticate` method should return the relevant `User` object from the Guidewire database; if it fails, it should return `null` or throw a `WsiAuthenticationException`. A critical best practice is to *never* call a Guidewire web service from within the `AuthenticationServicePlugin` when it's being invoked by the `WebservicesAuthenticationPlugin`, as this can lead to an endless loop.",
+      "keyPoints": [
+        "The `WebservicesAuthenticationPlugin` handles name/password authentication for SOAP web services.",
+        "The default implementation scans HTTP headers and calls the `AuthenticationServicePlugin`.",
+        "Custom implementations can change credential retrieval or implement custom logic.",
+        "The `authenticate` method takes a `WebservicesAuthenticationContext` and returns a `User` object on success.",
+        "Avoid calling Guidewire web services from within the `AuthenticationServicePlugin` to prevent infinite loops."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "The role and functionality of the SOAP Webservices Authentication plugin."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Gosu code example for a custom WebservicesAuthenticationPlugin."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Visual representation of the interaction between the Webservices Authentication plugin and the Authentication Service plugin."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Avoid Infinite Loops",
+          "content": "Never call a Guidewire web service from within the `Authentication Service plugin` when it's being invoked by the `WebservicesAuthenticationPlugin` to prevent creating an endless loop."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Custom WebservicesAuthenticationPlugin",
+          "code": "package trn.ta.plugin.userauthentication\n\nuses gw.plugin.security.*\nuses gw.util.Pair\nuses gw.xsd.guidewire.soapheaders.Authentication\n\nclass CustomWebservicesAuthenticationPlugin implements WebservicesAuthenticationPlugin {\n  override function authenticate(context : WebservicesAuthenticationContext) : User {\n    var user : User = null\n    var authMethods = new ArrayList<AuthenticationMethod>()\n\n    var headersFromEnvelope = context.RequestSoapHeaders\n    // Logic to extract username/password from headersFromEnvelope\n    // ...\n\n    // Example: Assuming username/password are extracted into 'username' and 'password' variables\n    var username = \"extractedUsername\"\n    var password = \"extractedPassword\"\n\n    // Call getUser method to authenticate against Guidewire DB and AuthenticationServicePlugin\n    user = UsernamePasswordAuthenticationMethod.getUser(username, password)\n\n    return user\n  }\n}",
+          "explanation": "This Gosu code outlines a custom `WebservicesAuthenticationPlugin`. It implements the `authenticate` method, which would typically contain logic to retrieve credentials from `RequestSoapHeaders` or `HttpHeaders`. It then calls `UsernamePasswordAuthenticationMethod.getUser` to perform authentication against the Guidewire database and the `AuthenticationServicePlugin`, returning the authenticated `User` object."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Database Authentication",
+      "narrative": "Beyond authenticating users and external systems, Guidewire applications also need to securely connect to their underlying databases. This is where the **Database Authentication plugin (DBAuthenticationPlugin)** comes into play. This plugin is essential for managing the credentials required for the Guidewire application server to establish a connection with its database server, especially in enterprise environments where flexible and secure database authentication is paramount.\n\nA `DBAuthenticationPlugin` can be customized to retrieve database username and password information from various secure sources, such as external systems, encrypted password files on the local file system, or by implementing custom encryption/hashing logic. The credentials provided by this plugin are then substituted into the `database-config.xml` file wherever `${username}` or `${password}` placeholders are found within the `<dbcp-connection-pool />` element. This abstraction ensures that sensitive database credentials are not hardcoded or exposed in plain text within configuration files. When implementing a custom `DBAuthenticationPlugin`, you'll override the `retrieveUsernameAndPassword` method. This method takes the database name as a parameter and is expected to return a `UsernamePasswordPair` object containing the database username and password. The deployment of these changes, similar to other plugins, involves restarting the Guidewire server to ensure the application uses your updated database connection logic.",
+      "keyPoints": [
+        "The `DBAuthenticationPlugin` secures the Guidewire application's connection to its database server.",
+        "It retrieves database username and password from various sources (external systems, encrypted files).",
+        "The plugin's output replaces `${username}` and `${password}` placeholders in `database-config.xml`.",
+        "Custom implementations override `retrieveUsernameAndPassword` to return a `UsernamePasswordPair`.",
+        "Deployment of database authentication plugin changes requires a server restart."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "The role of the Database Authentication plugin in securing database connections."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Gosu code example for a custom Database Authentication plugin."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Steps for deploying database authentication code changes by restarting the Guidewire server."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Custom DBAuthenticationPlugin Example",
+          "code": "package trn.ta.plugin.dbauthentication\n\nuses gw.plugin.dbauth.DBAuthenticationPlugin\nuses gw.plugin.dbauth.UsernamePasswordPair\nuses javax.naming.Context\nuses javax.naming.InitialContext\n\nclass CustomDBAuthenticationPlugin implements DBAuthenticationPlugin {\n\n  override function retrieveUsernameAndPassword(dbName : String) : UsernamePasswordPair {\n    var initCtx = new InitialContext()\n    var envCtx = initCtx.lookup(\"java:comp/env\") as Context\n    var username = envCtx.lookup(\"jdbc/GuidewireDBUsername\") as String\n    var password = envCtx.lookup(\"jdbc/GuidewireDBPassword\") as String\n    return new UsernamePasswordPair(username, password)\n  }\n}",
+          "explanation": "This Gosu example shows a basic `DBAuthenticationPlugin` implementation. The `retrieveUsernameAndPassword` method uses JNDI (`InitialContext`) to look up the database username and password from the application's environment context, then returns them as a `UsernamePasswordPair` object. In a real-world scenario, this logic would be more complex, potentially involving encryption or external credential stores."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "__ The user, API, and database authentication mechanisms reference which\n7’ plugin(s)?\now A) AuthenticationSourceCreatorPlugin\nB) AuthenticationServicePlugin\nC) WebservicesAuthenticationPlugin\nD) DBAuthenticationPlugin",
+      "referenceAnswer": "A) User\nB) User and API\nC) API\nD) Database",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your Guidewire application needs to integrate with a new external identity provider (IdP) that provides user credentials via a custom HTTP header, not the standard username/password attributes. You also need to ensure that the `AuthenticationServicePlugin` can validate these users against an external LDAP directory.",
+      "question": "Outline the key steps and plugin modifications required to support this custom authentication flow for user logins.",
+      "hints": [
+        "Which plugin is responsible for extracting credentials from the HTTP request?",
+        "Which plugin is responsible for validating credentials against an external system?",
+        "What methods in the `AuthenticationServicePlugin` would you need to override or implement to connect to LDAP?"
+      ],
+      "expectedApproach": "The learner should identify that `AuthenticationSourceCreatorPlugin` needs modification to read the custom HTTP header. The `AuthenticationServicePlugin` needs to be customized to connect to the LDAP directory for credential verification, potentially using a third-party library or a custom integration. Both plugins would then need to be registered and the server restarted."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Guidewire offers flexible authentication mechanisms for users, SOAP APIs, and database connections.",
+        "User authentication relies on `AuthenticationSourceCreatorPlugin` (for credential extraction) and `AuthenticationServicePlugin` (for credential validation).",
+        "`AuthenticationServicePlugin` is a central component, often integrating with external identity providers like LDAP or SSO.",
+        "SOAP API authentication uses `WebservicesAuthenticationPlugin` and also leverages `AuthenticationServicePlugin`.",
+        "`DBAuthenticationPlugin` secures the Guidewire application's connection to its database.",
+        "Custom plugins are registered in Studio and deployed by restarting the server."
+      ],
+      "realWorldConnection": "In real Guidewire projects, customizing authentication is crucial for enterprise integration. It allows Guidewire applications to seamlessly fit into existing IT infrastructures, leveraging corporate identity management systems (like Active Directory or Okta) for single sign-on, securing machine-to-machine communication, and protecting sensitive database access. This ensures compliance, enhances user experience, and strengthens overall security posture.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into authorization, exploring how Guidewire controls what authenticated users and systems are permitted to do within the application."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to configure an external authentication service for user logins. This involves modifying the existing `AuthenticationSourceCreatorPlugin` to extract credentials from a simulated custom source and updating the `AuthenticationServicePlugin` to validate these credentials against a mock external service (e.g., a simple hardcoded check or a simulated LDAP lookup). Finally, register and deploy your custom plugins.",
+      "objectives": [
+        "Practice implementing `AuthenticationSourceCreatorPlugin`.",
+        "Practice implementing `AuthenticationServicePlugin`.",
+        "Gain experience with plugin registration in Guidewire Studio.",
+        "Understand the deployment process for authentication changes."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_17_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_17_01.mp4"
+    }
+  ]
+}

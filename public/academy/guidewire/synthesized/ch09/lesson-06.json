@@ -1,0 +1,297 @@
+{
+  "lessonId": "ch09-l06",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 6,
+  "title": "Writing Claim and Exposure Validation Rules",
+  "subtitle": "Learn to implement robust data validation using ClaimCenter's field and rule-based mechanisms.",
+  "synthesizedAt": "2026-02-16T18:29:24.605106+00:00",
+  "estimatedMinutes": 70,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an adjuster trying to save a claim, but the system keeps throwing errors because critical information is missing or incorrectly formatted. Or perhaps a claim is ready for payment, but a recent data change has inadvertently invalidated its eligibility. How does ClaimCenter ensure data integrity and prevent claims from moving backward in their lifecycle?",
+      "question": "What mechanisms are in place to safeguard the quality and maturity of claim and exposure data in ClaimCenter?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the two primary ways ClaimCenter validates data.",
+        "Describe how ClaimCenter uses validation levels to manage object maturity.",
+        "Differentiate between validation errors and warnings.",
+        "Utilize `entity.reject()`, `entity.rejectField()`, and `entity.rejectSubField()` methods to implement validation rules.",
+        "Configure validation rules within ClaimCenter to enforce data integrity."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with various data fields and entities within ClaimCenter, and you've likely encountered system messages when entering incorrect data. Recall how ClaimCenter typically responds when you try to save an incomplete or improperly formatted record.",
+      "warmupQuestion": "Think about a time you've seen an error message in ClaimCenter. What triggered it, and what did you have to do to resolve it?",
+      "hint": "Consider basic data type checks versus more complex business logic."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding ClaimCenter Data Validation",
+      "narrative": "ClaimCenter employs two primary methods for validating data, each serving a distinct purpose in maintaining data integrity and managing the lifecycle of objects. First, **validation by field** ensures that individual data points adhere to specific types, ranges, and formats. This is the simpler of the two, often enforced by UI widgets or optional validation expressions tied to a field. For instance, a ZIP Code field might have a validation expression that checks if the input matches a five- or nine-digit postal code format. If the expression evaluates to `null`, the input is accepted; otherwise, a validation error is displayed directly on the screen, preventing the user from saving the incorrect data. These expressions can be quite complex, even referencing other fields.\n\nSecond, **validation by rules** manages and enforces the maturity of objects like claims and exposures. This method prevents an entity from regressing in its lifecycle. For example, if a claim is ready for payment, validation rules ensure that no data changes would invalidate its payment eligibility. Both types of validation—field and rule-based—are triggered whenever an object is updated or an attempt is made to save it. This dual approach ensures both granular data quality and overarching object lifecycle management.",
+      "keyPoints": [
+        "ClaimCenter uses two validation methods: by field and by rules.",
+        "Validation by field checks data type, range, and format, often with UI widgets or expressions.",
+        "Validation by rules enforces object maturity and prevents backward movement in the lifecycle.",
+        "Both validation types occur when an object is updated or saved."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to the concept of data validation in ClaimCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the two ways ClaimCenter validates data: by field and by rules, with examples of each."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Details validation by fields, showing how widgets enforce data types and validation expressions ensure correct format, with an example of a ZIP Code validation error."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Validation Expression",
+          "content": "A Gosu expression tied to a UI widget. If it returns `null`, validation passes. If it returns a string, that string is displayed as an error message, indicating validation failure."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Validation Rule Sets and Validatable Entities",
+      "narrative": "At the heart of rule-based validation are **Validatable entities**. Any entity that implements the `Validatable` delegate can leverage ClaimCenter's robust validation rule framework. This delegate provides two key interfaces: `ValidatableInternalMethods` and `ValidatablePublicMethods`, which expose the necessary functionality for validation. ClaimCenter's base configuration includes several such entities, each with its own set of validation rules. For instance, `ClaimValidationRules`, `ClaimClosedValidationRules`, and `ClaimReopenedValidationRules` all operate on the `Claim` entity, ensuring its integrity at different stages of its lifecycle.\n\n**Validation by rules** is particularly powerful because it's tied to the concept of an entity's **maturity level**, also known as its **validation level**. These levels are defined by the `ValidationLevel` typelist, which provides a structured sequence of maturity stages for claims and exposures. The base configuration offers five such levels, ordered by their `Priority` value: `loadsave`, `newloss`, `iso`, `external`, and `payment`. As a claim or exposure progresses through its lifecycle, it advances through these validation levels, culminating in 'Ability to pay'. This framework prevents an entity from being saved if changes would make it inappropriate for its current maturity level, such as attempting to pay a claim that no longer meets the 'payment' level criteria. The system uses 'reject' methods to provide clear warning and error messages to the user, typically appearing in a 'Validation Results' worksheet.",
+      "keyPoints": [
+        "Entities implementing the `Validatable` delegate can use validation rules.",
+        "Validation rules are based on an entity's maturity or validation level.",
+        "The `ValidationLevel` typelist defines ordered maturity stages (e.g., `loadsave`, `newloss`, `payment`).",
+        "Rules prevent saving if data is inconsistent with the entity's current maturity level.",
+        "`reject()` methods are used to display validation messages."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Lists entities that can be validated by rules due to implementing the `Validatable` delegate, showing examples of validation rule sets."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Explains validation by rules, emphasizing how rules prevent inappropriate values based on maturity level and use `reject` methods for user feedback, with an example of a liability percentage rule."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Describes the `ValidationLevel` typelist, which defines maturity levels for claims and exposures, listing the five base configuration levels and their order."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Delegate",
+          "content": "An entity type that contains methods and properties which can be used by other entity types, promoting code reuse and structured design."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "How Validation Levels Control Object Maturity",
+      "narrative": "Every `Validatable` entity in ClaimCenter has an explicit or implied reference to a `ValidationLevel`, which signifies its current maturity. This is a critical aspect of the system's data integrity. ClaimCenter rigorously validates these entities whenever a user or process attempts to save them. The core principle here is that **entities are not allowed to move 'backwards' in their maturity levels**. This means if a claim has reached a high maturity level, such as being ready for external system integration, it cannot revert to an earlier state like `newloss` or `loadsave`. Any data changes that would violate the constraints or completeness requirements of the current maturity level will be rejected, preventing the save operation.\n\nConversely, when a `Validatable` entity is saved, ClaimCenter automatically promotes it to the **highest possible maturity level** for its current state. This ensures that entities are always at their most advanced valid stage. For example, if Level 3 requires a 'County' field to be populated and Level 4 requires an 'inspection' to be done, a claim with both conditions met will skip Level 3 and be promoted directly to Level 4 upon saving. This dynamic promotion ensures efficiency, as the system constantly evaluates and advances the entity's maturity based on the available data. If a user deletes data that was required for a certain level, the system will prevent the save, as the claim cannot 'demote' itself to a lower validation level.",
+      "keyPoints": [
+        "Validatable entities have a `ValidationLevel` indicating their maturity.",
+        "Entities are validated upon saving to ensure minimum data completeness and correctness.",
+        "ClaimCenter prevents entities from moving 'backwards' in maturity levels.",
+        "Entities are automatically promoted to the highest possible validation level when saved.",
+        "Deleting required data for a current level will prevent saving."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Explains how ClaimCenter uses validation levels to ensure data integrity and prevent entities from moving backwards in their lifecycle."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Illustrates how validation can prevent saving if data changes would cause an entity to no longer meet the criteria for its current validation level."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Demonstrates how entities are promoted to the highest possible maturity level based on their current data, potentially skipping intermediate levels."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Maturity Level Design",
+          "content": "Design your validation levels to reflect logical progression points in a claim's lifecycle, ensuring that each level adds meaningful data completeness or correctness requirements."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Triggering Validation and Handling Messages",
+      "narrative": "Validation isn't always triggered by direct changes to a claim or exposure. **Related objects can also initiate validation** on their parent `Validatable` entities. This cascading effect occurs when a child object, linked via a foreign key relationship, is updated. For instance, if an `Activity` is updated, and the `Activities` array on the `Claim` entity has its `triggersValidation` property set to `true`, then the associated claim will also be re-validated. This cascade can extend further: updating an activity related to an exposure can trigger the exposure's validation, which in turn triggers the validation of its parent claim. Most arrays with `triggersValidation` set to `true` are typically linked to `Claim` and `Exposure` entities, but you might find others throughout the application.\n\nWhen validation rules are executed, they can produce two types of feedback: **errors and warnings**. An **error** is a critical message that *prevents* an object from being promoted to and saved at a given validation level. You must correct all errors before you can save the object. A **warning**, on the other hand, is a cautionary message that *permits* promotion and saving. Warnings highlight potential issues that should be addressed but do not block the workflow. It's possible for a single field to generate both a warning (at an earlier maturity level) and an error (at a later, higher maturity level). For example, an empty description field might trigger a warning at the `newloss` level but become an error at the `ISO` level, preventing the exposure from being sent to external systems until the description is added. These messages are typically displayed in a 'Validation Results' worksheet, providing users with clear guidance on necessary corrections.",
+      "keyPoints": [
+        "Updating related objects (children) can trigger validation on parent `Validatable` entities.",
+        "The `triggersValidation` property on arrays enables this cascading validation.",
+        "Validation rules can generate errors or warnings.",
+        "Errors prevent saving and promotion; warnings permit them but display cautionary messages.",
+        "Both errors and warnings appear in the 'Validation Results' worksheet."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Illustrates how updating related objects with a foreign key relationship can trigger validation on a parent `Validatable` object, due to the `triggersValidation` property."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Differentiates between validation errors (which prevent saving) and warnings (which permit saving but display a cautionary message), with examples from the Validation Results worksheet."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A transition slide indicating the upcoming section on configuring validation rules."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Investigating Validation",
+          "content": "If you're unsure why a claim isn't reaching a certain validation level, you can manually run validation rules in the UI via 'Actions > Claim Actions > Validate Claim + Exposures' to see all generated warnings and errors."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Inwhat two ways does ClaimCenter validate data?",
+      "referenceAnswer": "“ The correct answer is that validation by field ensures that data is of valid type, range,\nand so on, while validation by rules manages and enforces object maturity.\nSS eeesee seen ee ese",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "i i i?\n,— — When are claims and exposures validated?",
+      "referenceAnswer": "The correct answer is when an attempt is made to save them.\nSS eeesee seen ee ese",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of writing and implementing claim and exposure validation rules in Guidewire Studio. Pay close attention to how the `reject()` methods are used and how validation levels are specified.",
+      "transcriptSummary": "The video covers the practical steps of creating new validation rules, defining conditions, and using different `reject()` methods to enforce data integrity and object maturity for claims and exposures."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Implementing Validation with `reject()` Methods",
+      "narrative": "When configuring validation rules, you'll primarily use a family of `reject()` methods provided by the `Validatable` delegate. The most fundamental is `entity.reject()`, which allows you to issue both errors and warnings. Its syntax is `entity.reject(errorLevel, errorMessage, warnLevel, warnMessage)`. For both errors and warnings, you specify the **maturity level** at which the validation should occur and the **message** to display if validation fails. It's crucial that if you're issuing both a warning and an error for the same condition, the `errorLevel` should be a *higher* maturity level than the `warnLevel`. This ensures that the warning is processed first, giving the user a chance to correct the issue before it becomes a blocking error at a later stage.\n\nBeyond general object rejection, ClaimCenter offers more granular control. The `entity.rejectField()` method is used when a problem is specifically tied to a particular field within the object. Its syntax, `entity.rejectField(strRelativeFieldPath, errorLevel, errorMessage, warnLevel, warnMessage)`, includes a `strRelativeFieldPath` parameter. This path directs ClaimCenter to highlight the specific field in the UI that failed validation, providing immediate visual feedback to the user. For instance, `claim.rejectField(\"FaultRating\", TC_NEWLOSS, \"{ruleName}\\: The Fault Rating must be determin...\", null, null)` would highlight the 'Fault Rating' field on the claim.\n\nFor issues on related objects, such as fields within an array or a foreign key relationship, you'd use `entity.rejectSubField()`. This method, `entity.rejectSubField(relatedObject, strRelativeFieldPath, errorLevel, errorMessage, warnLevel, warnMessage)`, takes an additional `relatedObject` parameter. It highlights fields on these related sub-objects and, if necessary, provides a link in the Validation Results worksheet to navigate directly to the page where the highlighted field resides. This is incredibly useful for guiding users to corrections that might not be on the current screen. In general, the majority of your validation logic will reside in the **condition clause** of your rule, which selects the entities that should be rejected, while the **action clause** contains the `reject()` method calls.",
+      "keyPoints": [
+        "The `entity.reject()` method allows issuing errors and warnings based on validation levels.",
+        "For both error and warning, specify the maturity level and message.",
+        "`errorLevel` should be a higher maturity level than `warnLevel` if both are used.",
+        "`entity.rejectField()` highlights a specific field on the current object.",
+        "`entity.rejectSubField()` highlights fields on related sub-objects and provides navigation links.",
+        "Most validation logic is in the rule's condition clause; `reject()` calls are in the action clause."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Introduces the `entity.reject()` methods, explaining their use for warnings and errors and the importance of error level being higher than warning level."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Provides the full syntax and parameters for the `entity.reject()` method, detailing `errorLevel`, `errorMessage`, `warnLevel`, and `warnMessage`."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Explains the `entity.rejectField()` method, which highlights a specific field in the UI, including its syntax and the `strRelativeFieldPath` parameter."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Describes the `entity.rejectSubField()` method, used for highlighting fields on related objects and providing navigation links, with its syntax and the `relatedObject` parameter."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Shows an example of a validation rule, emphasizing that most logic resides in the condition clause to select entities for rejection."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "A visual placeholder for additional content or a concluding diagram related to validation rules."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Example of entity.reject()",
+          "code": "if (totalexpLiability > 100) {\n  claim.reject(TC_NEWLOSS,\n    \"(ruleNumber)\\: Total Liability Percentage for ...\", null, null)\n}",
+          "explanation": "This Gosu snippet demonstrates how to use `claim.reject()` to issue an error if the total expected liability exceeds 100%, preventing the claim from being saved at the `NEWLOSS` validation level."
+        },
+        {
+          "language": "gosu",
+          "title": "Example of entity.rejectField()",
+          "code": "claim.rejectField(\"FaultRating\", TC_NEWLOSS,\n  \"{ruleName}\\: The Fault Rating must be determin...\", null, null)",
+          "explanation": "This example shows `claim.rejectField()` being used to highlight the 'FaultRating' field and display an error message if its value is not determined at the `NEWLOSS` level."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What method would you use to reject a claim or exposure and indicate a\n: specific field in that object?",
+      "referenceAnswer": "The correct answer is entity.rejectField().\nSS eeesee seen ee ese",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this hands-on exercise, you will implement validation rules for claim fields. You will identify a specific claim field that requires validation and configure a rule to ensure its data integrity at a particular maturity level. This will involve using either `entity.reject()` or `entity.rejectField()` based on the validation requirement.",
+      "objectives": [
+        "Identify a claim field requiring validation.",
+        "Create a new validation rule in Guidewire Studio.",
+        "Implement a condition to trigger the validation.",
+        "Use `entity.reject()` or `entity.rejectField()` to issue an appropriate error or warning message."
+      ]
+    },
+    {
+      "type": "assignment",
+      "id": "assign-2",
+      "description": "Building on the previous exercise, you will now tackle a more complex validation scenario involving exposure lists. This challenge requires you to validate data across multiple related exposure objects, potentially using `entity.rejectSubField()` to highlight issues on child entities within an exposure array.",
+      "objectives": [
+        "Analyze a scenario requiring validation across multiple exposures.",
+        "Develop a validation rule that iterates through an exposure list.",
+        "Apply `entity.rejectSubField()` to highlight specific fields on related exposure objects.",
+        "Ensure the validation rule enforces a business requirement for exposure data consistency."
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter validates data through field-level checks and rule-based object maturity enforcement.",
+        "Validation levels (`ValidationLevel` typelist) define an entity's maturity, preventing backward progression.",
+        "Entities are automatically promoted to the highest possible validation level upon saving.",
+        "Related object updates can trigger validation on parent entities via `triggersValidation`.",
+        "Validation rules can issue blocking errors or cautionary warnings, displayed in the Validation Results worksheet.",
+        "The `reject()` family of methods (`entity.reject()`, `entity.rejectField()`, `entity.rejectSubField()`) are used to implement validation logic and provide user feedback."
+      ],
+      "realWorldConnection": "Mastering validation rules is crucial for any Guidewire developer or configurator. In real-world projects, these rules ensure that business processes are followed, data quality is maintained, and claims progress smoothly through their lifecycle without invalid states, ultimately leading to more efficient claims handling and accurate reporting.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced rule-writing techniques and best practices for optimizing rule performance and maintainability."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_06_01.mp4"
+    }
+  ]
+}

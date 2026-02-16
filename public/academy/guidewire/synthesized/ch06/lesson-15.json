@@ -1,0 +1,560 @@
+{
+  "lessonId": "ch06-l15",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 15,
+  "title": "Handling Policy Transactions After Issuance",
+  "subtitle": "Mastering BillingCenter's approach to policy changes, cancellations, reinstatements, renewals, and rewrites.",
+  "synthesizedAt": "2026-02-16T17:53:26.749152+00:00",
+  "estimatedMinutes": 170,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a policyholder calls, upset because a recent policy change reduced their premium, but they still received a bill for the original higher amount. Or perhaps a policy was canceled in error, and now needs to be reinstated. These real-world scenarios highlight the complexities of managing policy transactions after the initial issuance.",
+      "question": "How does BillingCenter ensure that all financial adjustments, whether positive or negative, are accurately reflected and processed for policyholders, especially when dealing with complex scenarios like cancellations and reinstatements?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe how BillingCenter invoices charges for policy change, cancellation, reinstatement, renewal, and rewrite transactions.",
+        "Explain how BillingCenter slices charges into invoice items based on charge type and payment plan settings.",
+        "Detail the process of credit allocation for negative charges, including the role of the return premium plan and different allocation methods.",
+        "Identify and explain the purpose of special handling instructions for policy changes.",
+        "Describe the steps involved in policy cancellation processing, including the creation of snapshots and the collapsing of future invoices.",
+        "Explain how BillingCenter processes policy reinstatements, including the use of cancellation snapshots and the concept of gaps in coverage.",
+        "Differentiate between policy renewals and rewrites and how BillingCenter processes their associated charges."
+      ],
+      "estimatedMinutes": 7
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've already learned about the initial policy issuance process and how BillingCenter creates accounts, policy periods, and invoice streams, slicing charges into invoice items based on payment plans. This lesson builds on that foundation, exploring how BillingCenter adapts these core processes for subsequent policy transactions.",
+      "warmupQuestion": "Think about a standard policy issuance. What are the key steps BillingCenter takes to generate the first set of invoices?",
+      "hint": "Consider how charges are broken down and assigned to invoices."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Post-Issuance Transactions and Charge Slicing",
+      "narrative": "After a policy has been initially issued, its lifecycle often involves various transactions such as changes, cancellations, reinstatements, renewals, and rewrites. Each of these transactions can generate new billing requests that BillingCenter must process accurately. A fundamental part of this processing is **charge slicing**, where a single charge is divided into one or more invoice items. This process is crucial because the method of slicing can vary significantly depending on the type of transaction and charge. For instance, an issuance charge is typically sliced according to the policy's payment plan, which dictates how premiums are distributed across installments. Similarly, rewrites, renewals, and cancellations also follow the payment plan's slicing rules by default. However, policy change charges are often handled differently; if a policy change can be matched to existing charges on the policy, its new charges are sliced to align with the planned installments of those existing charges. This ensures consistency in billing. In specific scenarios, a billing instruction might request 'special handling,' which overrides the default slicing behavior, often resulting in a single invoice item for each charge. Understanding these nuanced slicing behaviors is key to comprehending how BillingCenter manages the financial aspects of a policy's entire lifecycle.",
+      "keyPoints": [
+        "BillingCenter handles various post-issuance transactions including policy changes, cancellations, reinstatements, renewals, and rewrites.",
+        "Charge slicing divides a charge into invoice items, with the method depending on the charge type and transaction.",
+        "Issuance, rewrite, renewal, and cancellation charges typically slice according to the payment plan.",
+        "Policy change charges often match existing planned installments if a match is found.",
+        "Special handling instructions can override default slicing, usually resulting in a single invoice item per charge."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of how BillingCenter handles various policy transactions, emphasizing that all involve charges sliced into invoice items."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Details on typical charge slicing behaviors for different transaction types, highlighting the role of payment plans and special handling."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Policy Change Overview and Handling Charges",
+      "narrative": "Policy changes are common occurrences, often initiated by policyholders who wish to modify their coverage, such as adding or removing a driver, or adjusting coverage limits. These changes can result in either **positive charges** (e.g., for adding coverage) or **negative charges** (e.g., for reducing coverage). It's even possible for a single policy change billing instruction to contain both. Regardless of whether a charge is positive or negative, BillingCenter's initial step is to slice it into invoice items and assign these items to invoices. This ensures that the financial impact of the change is properly structured for billing. However, negative charges introduce an additional layer of complexity: **credit allocation**. When a policyholder's premium is reduced, the resulting negative invoice items are used to offset or 'pay for' existing unpaid positive invoice items. This process, known as credit allocation, is governed by a configurable **return premium allocation plan**, which we'll explore in more detail shortly. This mechanism is crucial for ensuring that policyholders receive appropriate credit for reductions in their premium, rather than simply being issued a refund immediately.",
+      "keyPoints": [
+        "Policy changes modify existing policies, often due to policyholder requests.",
+        "Charges can be positive (adding coverage) or negative (removing/decreasing coverage).",
+        "Both positive and negative charges are sliced into invoice items and assigned to invoices.",
+        "Negative charges trigger a credit allocation process to pay for unpaid positive invoice items.",
+        "Credit allocation is controlled by the return premium allocation plan."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "Marcus and Zhang discuss how BillingCenter handles mid-term policy changes, particularly those involving negative charges."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "An overview of policy changes, including common reasons, the nature of positive and negative charges, and the processing steps like slicing and credit allocation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Positive Policy Change Charges in Detail",
+      "narrative": "Let's walk through an example of how BillingCenter processes a positive premium charge resulting from a policy change. When BillingCenter receives a policy change billing request for a positive premium, it first 'slices' this charge into one or more invoice items. Unlike an initial issuance, which typically includes a down payment, a policy change charge usually consists only of installment items. These invoice items are then assigned to the earliest possible planned invoices based on their placement dates. For instance, if an invoice is already 'Billed,' no new items can be placed on it; they will be scheduled for subsequent 'Planned' invoices. As time progresses and invoices become due, payments are received. These payments initially pass through an 'unapplied fund' before being allocated to the outstanding invoice items on billed invoices. Once all items on a billed invoice are paid, the invoice status updates to 'Paid.' This systematic approach ensures that even mid-term policy changes are seamlessly integrated into the existing billing schedule, maintaining clarity and accuracy for the policyholder.",
+      "keyPoints": [
+        "Positive policy change charges are sliced into installment invoice items (typically no down payment).",
+        "Invoice items are assigned to the earliest planned invoices based on their placement dates.",
+        "Payments received are first routed through an unapplied fund.",
+        "Payments are then applied to outstanding invoice items on billed invoices.",
+        "Once paid, the invoice status is updated."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Illustration of a positive premium charge being sliced into three installment items and placed on planned invoices, with the first invoice already billed."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Continuation of the positive charge example, showing how a payment is received, passes through the unapplied fund, and is then applied to pay off billed invoice items."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Negative Policy Change Charges and Credit Release",
+      "narrative": "Now, let's consider the scenario of a negative premium charge, such as when a policyholder removes a driver, leading to a premium reduction. BillingCenter processes this by slicing the negative amount into negative installment items, typically distributed evenly across the remaining unpaid invoices. The crucial difference here is that these negative invoice items are immediately 'paid' in a conceptual sense. This 'payment' means that the money from the credit is released and placed into the applicable unapplied fund. Once in the unapplied fund, this money becomes available to be allocated against any unsettled positive invoice items on the policy. This credit handling mechanism is not arbitrary; it is precisely controlled by the **return premium plan**, a configurable component that dictates how and when these released credits are applied. This ensures that the policyholder's account is accurately adjusted, either by offsetting future bills or, if no outstanding positive items exist, by preparing for a potential disbursement.",
+      "keyPoints": [
+        "Negative premium charges are sliced into negative installment items, typically distributed across unpaid invoices.",
+        "Negative items are 'paid' immediately, releasing the credit amount to an unapplied fund.",
+        "Money in the unapplied fund is then available to be allocated to unsettled positive items.",
+        "The return premium plan governs the entire credit handling process."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "The starting point for a negative premium charge scenario, showing existing planned invoices."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Illustration of a negative premium charge being sliced into negative installment items and immediately 'paid,' releasing funds to the unapplied fund."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Demonstration of how money released to the unapplied fund from negative charges becomes available for allocation to unsettled positive invoice items."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Special Handling for Policy Changes",
+      "narrative": "While BillingCenter's default charge slicing and invoice scheduling work well for most policy changes, there are situations where special handling is required. For example, if a policy change involves a small, single charge, the policy administration system (PAS) might prefer to bill the entire amount on the next invoice rather than breaking it into installments. To accommodate such needs, a billing instruction can include one, and only one, **special handling instruction**. This instruction overrides the standard slicing and scheduling logic. When a special handling instruction is present, BillingCenter's default behavior is to slice each charge into a single invoice item, simplifying the billing. There are three primary types of special handling instructions relevant to policy changes: 'Bill Immediately' (where each invoice item is placed on an invoice with today's bill date), 'Bill on Next Invoice' (placing items on the earliest planned invoice), and 'Hold for Final Audit' (deferring billing). It's important to note that if a special handling instruction is used, any payment plan override values are ignored, as the special handling takes precedence.",
+      "keyPoints": [
+        "Special handling instructions override default charge slicing and invoice scheduling for policy changes.",
+        "A billing instruction can have only one special handling instruction.",
+        "With special handling, each charge is typically sliced into a single invoice item.",
+        "Relevant special handling types include 'Bill Immediately', 'Bill on Next Invoice', and 'Hold for Final Audit'.",
+        "Payment plan overrides are ignored when a special handling instruction is active."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Explanation of special handling instructions for policy changes, detailing how they override default behaviors and listing the relevant types."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Special Handling Precedence",
+          "content": "Remember that special handling instructions take precedence over payment plan overrides. If you specify both, the special handling will dictate how charges are sliced and scheduled."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Within the context of policy changes, what process does BillingCenter\ndo for both positive and negative charges?",
+      "referenceAnswer": "Both positive and negative charges are sliced into invoice items and are placed on\ninvoices.",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Within the context of policy changes, what process does BillingCenter\ndo for negative charges only?",
+      "referenceAnswer": "BillingCenter uses the negative invoice items from a negative charge to pay unsettled\npositive invoice items.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the Policy Change wizard, a tool used in development environments to create policy change billing instructions. Pay close attention to how charges are entered and how the system processes them, keeping in mind that this wizard is for testing and not typically visible to end-users in production.",
+      "transcriptSummary": "The demo showcases the Policy Change wizard, explaining its purpose for testing policy change processes. It illustrates how to create a policy change billing instruction, add charges, and observe the system's immediate slicing of charges into invoice items for testing purposes."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policyholder makes a mid-term change, adding a new coverage that results in a $500 positive premium charge. The policy has three remaining monthly installments of $200 each. The policy's payment plan specifies no down payment for changes.",
+      "question": "Describe how BillingCenter would likely slice this $500 charge and where the invoice items would be placed.",
+      "hints": [
+        "Consider how policy change charges are typically sliced (installments vs. down payment).",
+        "Think about how the new invoice items are assigned to existing planned invoices."
+      ],
+      "expectedApproach": "The learner should explain that the $500 charge would be sliced into installment items (e.g., three items of ~$166.67 each) and placed on the earliest available planned invoices, without affecting any already billed invoices."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Introducing the Return Premium Plan",
+      "narrative": "When a policy change results in a negative charge, BillingCenter needs a clear set of rules to determine how to allocate the resulting credit. This is where the **return premium plan** comes into play. The return premium plan is a powerful configuration tool that controls the entire credit allocation process. It allows you to define specific rules for different types of billing instructions, ensuring that credits are handled appropriately for various scenarios, such as cancellations versus simple premium reductions. The plan specifies which invoice items are eligible to be paid by a credit and, critically, how to prioritize these eligible items if the credit amount is insufficient to cover all of them. BillingCenter ships with a 'Default Return Premium Plan,' which provides a baseline for this functionality. This plan is automatically associated with a new policy period upon issuance and remains active throughout the policy period's life. While you can modify the settings of an existing plan, assigning a completely different plan to a policy period typically requires custom configuration. Any changes made to a plan's settings will apply to all future credits for policy periods associated with that plan.",
+      "keyPoints": [
+        "The return premium plan controls how BillingCenter allocates policy credits from negative charges.",
+        "It defines rules for eligible invoice items and their prioritization.",
+        "The 'Default Return Premium Plan' is provided out-of-the-box.",
+        "A plan is associated with a policy period upon issuance and applies for its lifetime.",
+        "Modifications to a plan's settings affect all associated policy periods for future credits."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Marcus inquires about the mechanism controlling credit allocation, leading to Zhang's introduction of the return premium plan."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Return Premium Plan Configuration and Schemes",
+      "narrative": "The return premium plan is highly flexible, allowing you to specify different rules for various billing instruction types. A key aspect of its configuration is the **Eligible Items** field, which determines which invoice items can receive credit. A fundamental rule is that eligible items must always have the same payer as the negative credits being allocated. Within the return premium plan, **Return Premium Handling Schemes** define the specific rules for credit allocation. Each scheme is tied to a 'context,' which corresponds to a particular billing instruction type (e.g., 'Cancellation,' 'Policy Change'). BillingCenter processes policy credits on a charge-by-charge basis. For each negative charge, it searches for a matching handling scheme based on the billing instruction type. The *first* scheme that matches the current context is used for allocating the policy credits, meaning only one scheme applies per negative charge. Every return premium plan *must* include an 'Other' context, which acts as a catch-all for any billing instruction types not explicitly covered by other schemes. This 'Other' scheme must always be the last in the ordered list of contexts, ensuring that a rule is always found. While the 'Excess Treatment' field defaults to 'Unapplied' (meaning excess credit goes to the unapplied fund), a configuration developer can implement other treatments, such as placing excess credits in suspense or disbursing them directly.",
+      "keyPoints": [
+        "Return premium plans allow different rules for each billing instruction type.",
+        "Eligible items for credit allocation must have the same payer as the negative credits.",
+        "Return Premium Handling Schemes define allocation rules, each with a context matching a billing instruction type.",
+        "BillingCenter uses the first matching scheme for each negative charge.",
+        "Every plan requires an 'Other' context as a catch-all, placed last in the order.",
+        "Excess credit typically goes to the unapplied fund, but can be configured for other treatments."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "An overview of the return premium plan's role in controlling credit allocation, showing its administration interface and key fields like 'Eligible Items'."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Details on Return Premium Handling Schemes, illustrating their fields (Priority, Name, When to Allocate, How to Allocate, Excess Treatment) and allowable values."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Return Premium Handling Scheme Context",
+          "content": "The 'context' of a Return Premium Handling Scheme refers to the specific billing instruction type (e.g., Policy Change, Cancellation) for which that scheme's rules apply. BillingCenter uses this context to determine which set of allocation rules to follow for a given negative charge."
+        },
+        {
+          "type": "best_practice",
+          "title": "Order of Handling Schemes",
+          "content": "The order of Return Premium Handling Schemes matters. BillingCenter uses the *first* scheme that matches the billing instruction type. Ensure your most specific rules are listed before more general ones, with 'Other' always last."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Understanding Credit Allocation Methods",
+      "narrative": "Once a return premium handling scheme is identified, it dictates the specific method for allocating credits. BillingCenter offers several allocation methods, each designed for different financial strategies. Let's consider a policy with a $1,000 charge, sliced into a $400 down payment and three $200 installments. If the premium is later reduced by $600, the allocation method determines how this credit is applied. For policy changes, the default allocation method is **Proportional**. With this method, the credit is distributed proportionally across all eligible unpaid invoice items. For example, if a $600 credit is applied to items totaling $1000, each item would be reduced by 60% of its value. It's important to note that proportional allocation is also influenced by the placement dates of both the unpaid invoice items and the credit items; a credit can only be allocated to an invoice item if its placement date is the same or later than the credit item's. In contrast, for cancellation charges, the default allocation method is **Last to First**. This method starts with the eligible item having the latest placement date and fully allocates the credit to each item until the credit is exhausted. This means the most recent outstanding balances are paid off first. While less common, a third method, **First to Last**, is also available, which would pay off the earliest outstanding balances first.",
+      "keyPoints": [
+        "Credit allocation methods dictate how negative charges are applied to positive items.",
+        "The 'Proportional' method (default for policy changes) distributes credit proportionally across eligible items.",
+        "Proportional allocation considers placement dates: credit items can only pay invoice items with same or later placement dates.",
+        "The 'Last to First' method (default for cancellations) pays off the latest eligible items first.",
+        "A 'First to Last' method also exists but is seldom used."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "A diagram illustrating an initial charge of $1,000 sliced into a down payment and three installments, setting the stage for credit allocation examples."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Examples of 'Proportional' (for policy change) and 'Last to First' (for cancellation) credit allocation methods, showing how a $600 credit is applied to the initial charge."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whats the role of the return premium plan?",
+      "referenceAnswer": "The return premium plan controls allocation of policy credits. Specifically, it specifies\nwhich unpaid items to pay with a policy credit and how to allocate the credit (for\nexample, proportional, last to first, first to last).",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the configuration of the return premium plan. Pay attention to how different handling schemes are defined for various billing instruction types and how allocation methods are selected. This will solidify your understanding of how BillingCenter prioritizes and applies policy credits.",
+      "transcriptSummary": "The demo explores the Return Premium Plan interface within BillingCenter's administration settings. It highlights how to view and modify the default plan, focusing on the 'Eligible Items' and 'Return Premium Handling Schemes' sections. The demonstration explains the purpose of different contexts (e.g., Cancellation, Other) and the various allocation methods available, such as Proportional and Last to First."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A policy has three outstanding invoice items: $100 (due Jan 1), $150 (due Feb 1), and $200 (due Mar 1). A policy cancellation occurs, generating a -$300 credit. The return premium plan for cancellations uses the 'Last to First' allocation method.",
+      "question": "How would BillingCenter allocate this -$300 credit across the outstanding invoice items?",
+      "hints": [
+        "Recall what 'Last to First' means in terms of which items are paid first.",
+        "Consider if the credit is enough to cover all items, and how partial payments are handled."
+      ],
+      "expectedApproach": "The learner should explain that the $200 (Mar 1) item would be fully paid, and then $100 of the remaining credit would pay off part of the $150 (Feb 1) item, leaving $50 unpaid on the Feb 1 item and the $100 (Jan 1) item fully unpaid."
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Policy Cancellation Fundamentals",
+      "narrative": "Policy cancellation marks the premature end of a policy, occurring before its scheduled expiration date. These cancellations can be initiated by either the policyholder (e.g., switching insurers) or the insurer (e.g., due to non-payment). It's important to understand that BillingCenter itself doesn't directly cancel a policy; instead, it typically notifies the Policy Administration System (PAS) about non-payment, and the PAS then makes the decision to cancel and calculates the final amount due. Cancellations almost always involve **negative charges**, which represent credits for coverage that will no longer be provided. However, they can also include smaller **positive charges** for things like processing fees or the removal of discounts. Generally, the net sum of all charges on a cancellation is negative. The cancellation process in BillingCenter is quite involved. It begins by creating **snapshots** of all existing invoice items on the policy period's planned invoices. These snapshots are crucial because, after slicing the cancellation charges and allocating credits, BillingCenter will **collapse all planned invoices into a single invoice**. This ensures that any outstanding balance for the canceled policy is presented on one final bill. The snapshots provide a mechanism to restore the policy's billing state as closely as possible if it is later reinstated, preserving the original invoice structure.",
+      "keyPoints": [
+        "Policy cancellation ends a policy before its expiration date, initiated by policyholder or insurer.",
+        "BillingCenter informs PAS of non-payment; PAS cancels and calculates final bill.",
+        "Cancellations typically include negative charges (credits for unprovided coverage) and may have small positive charges.",
+        "Cancellation processing involves creating snapshots of existing invoice items.",
+        "After slicing and credit allocation, all planned invoices are collapsed into a single invoice.",
+        "Snapshots are vital for potential reinstatement, allowing restoration of the original invoice state."
+      ],
+      "figures": [
+        {
+          "slideNumber": 28,
+          "caption": "Marcus asks about policy cancellations, and Zhang explains BillingCenter's indirect role and the PAS's responsibility in determining final billing."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "An overview of policy cancellation, including common reasons, the nature of charges (negative and positive), and the typical net negative sum."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "The key steps in cancellation processing: creating snapshots, slicing charges, allocating credits, and collapsing planned invoices."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Cancellation Snapshots",
+          "content": "Cancellation snapshots are records of invoice items on a policy's planned invoices taken *before* the cancellation process collapses them. They serve as a blueprint to restore the original invoice structure if the policy is later reinstated."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-10",
+      "heading": "Detailed Cancellation Processing",
+      "narrative": "Let's delve deeper into the mechanics of cancellation processing. Imagine a policy with a billed invoice and three future planned invoices, each containing positive invoice items. The first critical step, as mentioned, is for BillingCenter to take **snapshots** of these existing invoice items. This preserves their original state. Next, the cancellation charges are sliced into negative invoice items and placed on the planned invoices according to their placement dates. Following this, **policy credits from these negative invoice items are allocated** to pay for any unsettled positive invoice items. As discussed, for cancellations, the default allocation method is 'Last to First,' meaning credits are applied to the latest outstanding items first. Items paid by credit are marked as such. The final, and very significant, step is to **collapse all future planned invoices onto a single, earliest planned invoice**. This means all remaining invoice items from the future planned invoices are moved to this single invoice. This consolidation ensures that if there's any outstanding balance for the canceled policy, it's presented on one comprehensive final invoice. For policy-level billing, this earliest planned invoice typically becomes the last invoice for that canceled policy, with other future invoices being deleted. For account-level billing, this invoice will contain the canceled policy's items, but other policies might still have items on subsequent planned invoices.",
+      "keyPoints": [
+        "Cancellation processing starts with taking snapshots of existing invoice items.",
+        "Cancellation charges are sliced into negative invoice items and placed on planned invoices.",
+        "Policy credits from negative items are allocated to unsettled positive items, typically 'Last to First'.",
+        "All future planned invoices are then collapsed onto a single, earliest planned invoice.",
+        "This ensures any outstanding balance for the canceled policy is on one final invoice.",
+        "Behavior of collapsed invoices differs slightly between policy-level and account-level billing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 31,
+          "caption": "A three-step diagram illustrating cancellation processing: slicing charges, allocating credits (Last to First), and collapsing future invoices onto a single planned invoice."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What does “collapsing future invoices” during cancellation involve?",
+      "referenceAnswer": ", Invoice items from all planned invoices are moved to the earliest planned invoice. Any\npolicy credits allocated to positive invoice items are included in the move.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you the cancellation processing workflow. Observe how the system handles the creation of snapshots, the allocation of credits, and the final collapsing of invoices. This will bring the theoretical concepts of cancellation to life.",
+      "transcriptSummary": "The demo illustrates the cancellation process, starting from a policy with multiple planned invoices. It shows how a cancellation billing instruction is processed, leading to the slicing of negative charges, the 'Last to First' allocation of credits to outstanding items, and the subsequent collapsing of all future planned invoices into a single final invoice, demonstrating the impact on the policy's payment schedule."
+    },
+    {
+      "type": "concept",
+      "id": "concept-11",
+      "heading": "Policy Reinstatement Mechanics",
+      "narrative": "Occasionally, a policy that was previously canceled needs to be made effective again – a process known as **reinstatement**. This can happen if a cancellation was made in error, or if the policyholder resolves the issue that led to the cancellation. By default, BillingCenter is designed to facilitate this by utilizing the **cancellation snapshots** it took before collapsing the invoices during the initial cancellation. These snapshots are critical because they allow BillingCenter to attempt to restore the planned invoices to a state as close as possible to their original pre-cancellation condition. However, it's important to understand that a reinstatement doesn't automatically restore the policy's charges to their exact pre-cancellation state. Instead, a reinstatement typically involves one or more new charges. These charges primarily exist to re-establish the billing requirements for the portion of the policy that was canceled, and there might also be a specific reinstatement fee. When a reinstatement charge can be successfully matched to one or more of the invoice item snapshots, BillingCenter intelligently slices these new charges to align with the original invoice structure as closely as possible. If, for some reason, BillingCenter cannot find a cancellation snapshot for the policy being reinstated, it will typically slice the reinstatement charges according to the standard payment plan settings, much like a newly issued policy.",
+      "keyPoints": [
+        "Reinstatement makes a canceled policy effective again.",
+        "BillingCenter uses cancellation snapshots to restore planned invoices to their pre-cancellation state.",
+        "Reinstatement involves new charges, not an automatic restoration of old charges.",
+        "Reinstatement charges are sliced to match snapshots if a match is found.",
+        "If no snapshot is found, charges are sliced according to payment plan settings."
+      ],
+      "figures": [
+        {
+          "slideNumber": 36,
+          "caption": "Marcus asks about policy reinstatement, and Zhang confirms its possibility while noting that the reinstated policy might not be identical to the original."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "An overview of policy reinstatement, explaining its purpose, the role of cancellation snapshots, and how reinstatement charges are processed."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Snapshots are Key",
+          "content": "The existence and integrity of cancellation snapshots are paramount for a smooth reinstatement process, allowing BillingCenter to intelligently reconstruct the billing schedule."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-12",
+      "heading": "Reinstatement and Coverage Gaps",
+      "narrative": "A critical aspect of reinstatement is understanding its effective date in relation to the original cancellation. This relationship determines whether there is a **gap in coverage**. If the reinstatement effective date is the same as the effective date of the corresponding cancellation, then there is **no gap in coverage**. In this ideal scenario, coverage is provided as if the policy had never been canceled, and the policy is fully restored. However, if the reinstatement effective date is *later* than the effective date of the corresponding cancellation, then a **gap in coverage** exists. Any loss that occurs during this period of the gap would not be covered by the policy. BillingCenter is designed to support both types of reinstatements: those with no gap and those with a gap in coverage. It's worth noting a practical consideration: some policy administration systems, including PolicyCenter, do not allow a reinstatement to have an effective date later than the corresponding cancellation. In such systems, if a gap in coverage is desired, the process might need to be handled as a cancellation followed by a complete rewrite of the policy, rather than a direct reinstatement.",
+      "keyPoints": [
+        "Reinstatement effective date relative to cancellation effective date determines coverage gap.",
+        "No gap in coverage occurs if reinstatement effective date equals cancellation effective date.",
+        "A gap in coverage occurs if reinstatement effective date is later than cancellation effective date.",
+        "BillingCenter supports both types of reinstatements.",
+        "Some PAS (like PolicyCenter) may not allow reinstatements with a coverage gap, requiring a rewrite instead."
+      ],
+      "figures": [
+        {
+          "slideNumber": 38,
+          "caption": "A diagram illustrating the concepts of reinstatement with and without a gap in coverage, showing how effective dates impact continuous coverage."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What is the purpose of cancellation snapshots?",
+      "referenceAnswer": "Cancellation snapshots provide the means of restoring the policy to a state that is as\n\nclose to its original state as possible. Snapshots are needed because all planned\ninvoices were collapsed onto a single invoice during the cancellation.",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration will walk you through the reinstatement process. Pay attention to how BillingCenter uses the previously created cancellation snapshots to reconstruct the policy's billing schedule and how new charges, such as reinstatement fees, are integrated.",
+      "transcriptSummary": "The demo illustrates the reinstatement process for a previously canceled policy. It highlights how BillingCenter leverages cancellation snapshots to restore the policy's planned invoices to a state similar to its pre-cancellation status. The demonstration also shows how new charges, including potential reinstatement fees, are added and processed within the reinstated policy's billing schedule."
+    },
+    {
+      "type": "concept",
+      "id": "concept-13",
+      "heading": "Rewrites and Renewals Overview",
+      "narrative": "To round out our discussion of non-issuance policy transactions, let's briefly touch upon **rewrites** and **renewals**. While both create new policy periods, they serve distinct purposes and have different implications for policy numbering and billing. A **renewal** is a transaction that creates a new policy period for an *existing* policy. Crucially, the policy number typically remains the same, often with a term number appended to indicate the new policy term. BillingCenter distinguishes between two types of renewal billing instructions: 'Renewal' (for policies previously billed by BillingCenter) and 'New Renewal' (for policies new to BillingCenter but renewed from a legacy system). A **rewrite**, on the other hand, is a transaction that creates a *new* policy from an existing one. The key difference here is that a rewrite is associated with a previous policy period (often a canceled one), but it is assigned a *new policy number* that is unrelated to the original. This is typically done to correct significant errors or to put a canceled policy with a coverage gap back into force when a direct reinstatement isn't feasible. Understanding these distinctions is fundamental to correctly processing these transactions in BillingCenter.",
+      "keyPoints": [
+        "Renewals create a new policy period for an existing policy, retaining the original policy number (with term appended).",
+        "BillingCenter has 'Renewal' (for existing BC policies) and 'New Renewal' (for legacy system policies) billing instructions.",
+        "Rewrites create a new policy from an existing one, but with a new, unrelated policy number.",
+        "Rewrites are used to correct errors or re-inforce canceled policies with coverage gaps.",
+        "Both involve new policy periods but differ in policy numbering and purpose."
+      ],
+      "figures": [
+        {
+          "slideNumber": 43,
+          "caption": "Zhang proposes discussing rewrites and renewals to complete the overview of non-issuance policy transactions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-14",
+      "heading": "Processing Policy Renewals",
+      "narrative": "When BillingCenter processes a **Renewal** billing instruction, the approach is quite similar to how it handles newly issued policies. The system follows its normal charge invoicing process, which involves several key steps. First, BillingCenter categorizes the renewal charges based on their specific charge pattern. Then, these charges are sliced into individual invoice items, a process that is guided by the policy's established payment plan. Finally, BillingCenter creates the necessary invoices and assigns these newly sliced invoice items to them, based on their respective item event dates. This ensures that the billing for the new policy period is structured correctly according to the payment schedule. For added flexibility, you have the option to **override** how charge slicing is performed specifically for renewals. For example, if policyholders prefer to avoid a down payment for renewals, you can configure the payment plan to slice premium charges directly into a series of installments without an initial down payment, effectively implementing continuous billing. BillingCenter also natively supports renewal offer processing, allowing policies to remain unbound until sufficient payment is received, without requiring additional configuration.",
+      "keyPoints": [
+        "Renewal processing is similar to new policy issuance.",
+        "Renewal charges are categorized by charge pattern.",
+        "Charges are sliced into invoice items based on the policy's payment plan.",
+        "Invoices are created, and items are assigned based on event dates.",
+        "Payment plan overrides can be used to customize slicing for renewals (e.g., no down payment).",
+        "BillingCenter supports renewal offer processing without extra configuration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 44,
+          "caption": "An overview of policy renewal, defining it as creating a new policy period for an existing policy, detailing the two types of renewal billing instructions, and outlining the processing steps."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Continuous Billing for Renewals",
+          "content": "To implement continuous billing for renewals (avoiding a down payment), add an override to the payment plan specifically for the 'Renewal' context, instructing it to slice premium charges into installments without a down payment."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-15",
+      "heading": "Processing Policy Rewrites",
+      "narrative": "From a data and processing perspective, **rewrites** share many similarities with renewals. They involve a set of charges, are governed by a payment plan, and can optionally be linked to producers. However, as previously highlighted, a key distinction is the assignment of a *new policy number* that is entirely unrelated to the original policy period. This is often necessary when correcting significant errors in the original policy submission or when re-establishing coverage for a canceled policy that had a gap in coverage, where a direct reinstatement isn't the appropriate solution. BillingCenter processes rewrites by executing the charge invoicing process in much the same way it handles newly issued policies. This involves categorizing the rewrite charges based on their charge pattern, slicing these charges into invoice items according to the policy's payment plan, and then creating invoices and assigning the invoice items based on their event dates. Just like with renewals, you have the flexibility to **override** the default charge slicing behavior for rewrites within the payment plan. For instance, you might want to eliminate down payments for rewrites or schedule one-time charges differently than you would for a brand-new policy issuance. This customization allows for fine-tuned control over how rewrite charges are billed to best suit business needs.",
+      "keyPoints": [
+        "Rewrites create a new policy from an existing one, but with a new, unrelated policy number.",
+        "Common reasons include correcting errors or re-establishing coverage after a gap.",
+        "Rewrite processing mirrors policy issuance and renewal processing.",
+        "Charges are categorized, sliced into invoice items based on the payment plan, and assigned to invoices.",
+        "Payment plan overrides can customize charge slicing for rewrites (e.g., no down payment, different one-time charge scheduling)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 45,
+          "caption": "An overview of policy rewrite, defining it as creating a new policy from an existing one, listing common reasons, and outlining the processing steps similar to issuance and renewal."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Policyholders want to avoid being billed for a down payment when\npolicies are renewed. How would you implement this requirement?",
+      "referenceAnswer": "Add an override to the payment plan with a context of Renewal.",
+      "questionKey": "slide-46"
+    },
+    {
+      "type": "concept",
+      "id": "concept-16",
+      "heading": "Transaction Slicing Review and Lesson Wrap-up",
+      "narrative": "We've covered a lot of ground in this lesson, exploring how BillingCenter meticulously handles various policy transactions after initial issuance. A core takeaway is that BillingCenter determines how to slice charges on a charge-by-charge basis, adapting its behavior to the specific billing instruction type. For instance, initial **issuance**, **renewal**, and **rewrite** charges are typically sliced according to the payment plan settings. **Cancellations** also follow the payment plan for slicing, but then involve the unique steps of credit allocation and invoice collapsing. **Policy changes**, if they can be matched to existing charges, are sliced to align with those planned installments. However, if a policy change or cancellation includes a **special handling instruction**, each charge is simplified into a single invoice item, overriding the usual slicing logic. Finally, **reinstatements** leverage cancellation snapshots to restore the billing schedule as closely as possible, or fall back to payment plan settings if no snapshots are available. Mastering these distinctions is crucial for anyone working with BillingCenter, as it directly impacts how policyholders are billed and how financial adjustments are managed throughout a policy's life. This comprehensive understanding ensures accurate and efficient billing operations, which is fundamental to customer satisfaction and operational integrity.",
+      "keyPoints": [
+        "BillingCenter's charge slicing behavior is determined on a charge-by-charge basis, varying by transaction type.",
+        "Issuance, Renewal, and Rewrite charges typically follow payment plan settings.",
+        "Cancellation charges are sliced by payment plan, followed by credit allocation and invoice collapsing.",
+        "Policy Change charges match existing planned installments if possible.",
+        "Special handling instructions for Policy Change or Cancellation result in each charge being sliced into a single invoice item.",
+        "Reinstatement uses cancellation snapshots to restore invoices or defaults to payment plan slicing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 48,
+          "caption": "A summary table reviewing the typical charge slicing behavior for different billing instruction types, highlighting the default methods."
+        },
+        {
+          "slideNumber": 49,
+          "caption": "A review of the lesson objectives, ensuring all key learning outcomes have been addressed."
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "BillingCenter processes policy changes, cancellations, reinstatements, renewals, and rewrites, each with specific charge slicing and invoicing rules.",
+        "Negative charges trigger credit allocation, governed by the return premium plan, which uses schemes and methods like 'Proportional' or 'Last to First'.",
+        "Special handling instructions can override default slicing for policy changes, often resulting in single invoice items.",
+        "Cancellations involve creating snapshots, slicing charges, allocating credits, and collapsing all future invoices into one.",
+        "Reinstatements utilize cancellation snapshots to restore billing schedules, with or without a gap in coverage.",
+        "Renewals create new policy periods with the same policy number, while rewrites create new policies with new numbers, both processed similarly to issuance."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring and understanding these post-issuance transaction processes is vital for accurate billing, compliance, and customer satisfaction. Mismanaged policy changes or cancellations can lead to billing errors, customer complaints, and operational inefficiencies. A deep understanding of charge slicing, credit allocation, and special handling ensures that BillingCenter accurately reflects policy changes and maintains financial integrity, directly impacting an insurer's bottom line and reputation."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_15_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_15_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_15_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_15_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Billing_15_03.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_15_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Billing_15_04.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_15_04.mp4"
+    }
+  ]
+}

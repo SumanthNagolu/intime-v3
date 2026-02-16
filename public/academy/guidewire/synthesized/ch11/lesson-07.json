@@ -1,0 +1,380 @@
+{
+  "lessonId": "ch11-l07",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 7,
+  "title": "Integration Views",
+  "subtitle": "Learn to define, map, and filter Guidewire data for external systems using Integration Views.",
+  "synthesizedAt": "2026-02-16T18:54:38.658778+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a new mobile application that needs to display customer contact details from Guidewire PolicyCenter. The application only requires specific fields like name, date of birth, and primary address, and it needs the data in a clean, standardized JSON format. Directly querying the Guidewire data model might expose too much information or require complex transformations on the client side.",
+      "question": "How can you efficiently and securely provide a tailored, versioned view of Guidewire data to external systems without tightly coupling them to the internal data model?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and benefits of Integration Views.",
+        "Identify the core components of an Integration View (JSON Schema, Mapping, Filter).",
+        "Create and version JSON Schema files to define data structures.",
+        "Define supported data types and use 'x-gw-type' for Guidewire internal types.",
+        "Implement schema definitions, including object and array properties, and import other schemas.",
+        "Create and version mapping files to transform source objects to JSON/XML.",
+        "Add mappers with 'path' and 'predicate' expressions to extract data.",
+        "Utilize filters and GraphQL fragments to select specific data subsets.",
+        "Generate JSON wrapper classes for statically-typed access.",
+        "Produce JSON and XML output using Integration Views, including filtered and combined outputs.",
+        "Understand how to combine schemas and mappers for reuse and extension."
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely worked with data integration before, perhaps using XML models or custom APIs to exchange information between systems. Recall how you previously handled data transformation, versioning, and exposing specific data subsets to external consumers.",
+      "warmupQuestion": "What challenges have you encountered when trying to expose Guidewire data to external applications, especially concerning data structure, versioning, and security?",
+      "hint": "Think about the effort involved in maintaining compatibility when the internal data model changes, or the complexity of filtering data for different consumers."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Integration Views",
+      "narrative": "Integration Views in Guidewire are a powerful mechanism designed to create structured, external representations of your Guidewire domain model. They are intended to supersede and eventually replace older XML models, offering a more flexible and explicit approach to data integration. The core idea is to decouple the external data contract from the internal Guidewire data model, allowing both to evolve independently.\n\n**Why use an Integration View?** The primary benefits are clear: they produce external views of the Guidewire domain model, with schemas and mappings that are explicitly named and versioned. This versioning capability is crucial, as it allows different versions of the same schema and/or mappings to coexist, supporting diverse external systems that might require different data contracts. The output format, whether JSON or XML, is explicitly designed within the schema, simplifying the integration process. The design approach is straightforward: first, define the desired output schema, and then map the Guidewire data to that output structure.\n\nAn Integration View is comprised of several key components: **JSON** (JavaScript Object Notation), **JSON Schema**, and **Mappings**. JSON is a lightweight, human-readable data interchange format, widely used for transmitting data between servers and web applications as an alternative to XML. It's easy for machines to parse and generate, based on a subset of JavaScript. A **JSON Schema** defines the structure of the data, acting as a contract. A single JSON Schema can be targeted by multiple mappings, promoting reuse. **Mappings** describe how to transform a given source object, such as a Guidewire entity, into a JSON or XML document that conforms to the defined schema.\n\nConsider a common use case: exporting contact data (like name, date of birth, gender, contact notes, and address) in either JSON or XML format. To achieve this with Integration Views, you follow a three-step process: first, **define the schemas** by creating the necessary schema files to outline the structure of the data; second, **define the mappings** by creating mapping files that specify how domain fields should be transformed and exported; and third, **define the filters** to control which specific data elements are included in the output.",
+      "keyPoints": [
+        "Integration Views create external, versioned views of Guidewire data, replacing older XML models.",
+        "They decouple external data contracts from the internal Guidewire data model.",
+        "Key components are JSON, JSON Schema (data structure), and Mappings (data transformation).",
+        "The process involves defining schemas, then mappings, and optionally filters."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of Integration Views, highlighting their role in external data representation."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Diagram illustrating the benefits of using Integration Views for external data exposure."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Visual representation of the core components of an Integration View: Schemas and Mappings."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "A practical use case demonstrating the steps to export contact data using Integration Views."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A conceptual diagram showing the flow of data through an Integration View."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Creating and Defining JSON Schemas",
+      "narrative": "Creating a JSON Schema is the first step in defining your external data contract. You'll typically create a new package under `integration.schemas` following a convention like `config.integration.schemas.<company_code>.<product_code>`. Within this package, schema files are named using the syntax `<mechanism>-{version}.schema.json`, for example, `contact-1.0.schema.json`. Every JSON schema begins with a `$schema` declaration and contains a `definitions` section where you define your data types.\n\n**Versioning** is critical: use minor versions (e.g., 1.0 to 1.1) for backwards-compatible changes where both versions need to coexist, and major versions (e.g., 1.0 to 2.0) for breaking or significant changes. The version portion can be flexible, allowing for suffixes like 'alpha'. Guidewire's framework allows comments in JSON schemas, although standard JSON does not.\n\nGuidewire's JSON Schema implementation uses a subset of **JSON Schema (draft 4)**. This subset simplifies mapping and composition, aligning with what Swagger supports but with further limitations. For instance, it does not support nested anonymous object types, nested arrays (arrays can only contain scalars or named objects), or properties with multiple types. Additionally, the JSON schema composition models like `anyOf`, `allOf`, and `oneOf` are not currently supported, as Integration Views have their own versioned combination model.\n\nJSON natively defines primitive types like `string`, `boolean`, `numbers` (interpreted as doubles), `object`, and `array`. JSON Schema and Swagger add an `integer` type. For more complex data types, the `format` property is used (e.g., `date-time` for strings representing dates, or `gw-bigdecimal` for high-precision numeric types). Crucially, Guidewire introduces a custom `x-gw-type` property. This property is used to map Guidewire internal types in cases where a standard `type` and `format` might be ambiguous, such as differentiating between `typekey` types, `CurrencyAmount`, and `MonetaryAmount`.\n\nWhen adding schema definitions, each definition must specify its `name`, `type`, and `properties`. By default, JSON Schema properties are not nullable, and on output, null properties on a `JsonObject` are omitted. You can override this behavior using `x-gw-nullable: true` for specific properties. For example, a `ContactDetails` definition might include `Name` (type: `string`), `DateOfBirth` (type: `string`, format: `date-time`), and `Gender` (type: `string`, `x-gw-type: typekey.Gender`).\n\nFor schema reuse, you can **import** other schema files using the `x-gw-import` property. This allows you to reference types defined in other schemas, creating a shared schema for common components. For instance, a `contact` schema might import `address-1.0` and `contactnote-1.0` to define `PrimaryAddress` or `ContactNotes` using references like `address#/definitions/AddressDetails`. When A imports B, definitions with the same name in A and B remain distinct types, preserving separate logical namespaces. This differs from 'combine', which merges definitions.",
+      "keyPoints": [
+        "JSON Schemas are created in `integration.schemas` packages and named `<mechanism>-{version}.schema.json`.",
+        "Versioning uses minor for compatible changes and major for breaking changes.",
+        "Guidewire uses a subset of JSON Schema (draft 4) with specific limitations.",
+        "Supported data types include JSON primitives, `integer`, and `format` for complex types.",
+        "`x-gw-type` is a custom Guidewire property for internal types like typekeys and money amounts.",
+        "Schema definitions require name, type, and properties; properties are non-nullable by default.",
+        "Schemas can import other schemas for reuse, maintaining separate namespaces."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Example of creating a JSON Schema file, showing package structure and basic schema declaration."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Table summarizing supported JSON data types and the use of 'x-gw-type' for Guidewire-specific types."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Code example demonstrating how to add schema definitions for properties like Name, DateOfBirth, and Gender."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Illustration of schema file import, showing how to reference types from other schemas using 'x-gw-import'."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A visual break or transition slide within the lesson."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "POJO (Plain Old Java Object)",
+          "content": "A Java object not bound by any restriction other than those forced by the Java Language Specification; i.e., a POJO should not have to extend prespecified classes, implement prespecified interfaces, or contain prespecified annotations."
+        },
+        {
+          "type": "tip",
+          "title": "JSON Schema Versioning",
+          "content": "Use minor versions for backwards-compatible changes where you need both schema versions to co-exist. Use major versions for breaking changes or significant modifications. The version portion can include text suffixes like 'alpha'."
+        },
+        {
+          "type": "warning",
+          "title": "JSON Schema Subset Limitations",
+          "content": "Guidewire's JSON Schema subset does not support nested anonymous object types, nested arrays (arrays only of scalars or objects), properties with multiple types, or the 'anyOf', 'allOf', and 'oneOf' composition models."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "json",
+          "title": "Basic JSON Schema Template",
+          "code": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"definitions\": {\n    \"<name>\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"scalarProperty\": {\n          \"type\": \"<string/integer/number/boolean>\",\n          \"format\": \"<format>\",\n          \"x-gw-type\": \"typekey.Foo\"\n        },\n        \"objectProperty\": {\n          \"$ref\": \"#/definitions/<Name>\"\n        },\n        \"arrayProperty\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"<type>\",\n            \"$ref\": \"<ref>\"\n          }\n        }\n      }\n    }\n  }\n}",
+          "explanation": "This template shows the basic structure for defining scalar, object, and array properties within a JSON Schema definition."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Creating and Defining Mapping Files",
+      "narrative": "Once your JSON Schemas are defined, the next step is to create **mapping files** that specify how Guidewire entities and their properties are transformed to fit the schema. Similar to schemas, mapping files are created in a new package under `integration.mappings`, following a naming convention like `<mechanism>-{version}.mapping.json`. Each mapping file must declare the `schemaName` it targets, and can `import` other mapper files for reuse, just as schemas do.\n\nWithin a mapping file, you define individual **mappers**. Each mapper needs a `name`, a `schemaDefinition` (which references a definition in your JSON Schema), and a `root` property that specifies the fully qualified class name of the Guidewire entity from which the data will be sourced (e.g., `entity.ABContact`). The heart of the mapper lies in its `properties` section, where you define how each property in your schema is populated.\n\nFor each property, you typically specify a `path` expression, which is a Gosu expression that evaluates to the value to be used as the output. This `path` expression operates on a single symbol, named after the mapper's root type (e.g., `ABContact`), and must return a value appropriate for the schema property's type. For scalar properties, the path must evaluate to a compatible Java input type. For object properties, a `mapper` property must also be specified, referencing another mapper that handles the transformation of that nested object. For array properties, the path must evaluate to an `Iterable` or array, and a `mapper` is used if the array contains objects.\n\nAn optional but powerful feature is the `predicate` property. This is a boolean Gosu expression evaluated *before* the `path` expression. If the predicate evaluates to `false`, the path expression is skipped, and the property is treated as having a null value. This is particularly useful for guarding path expressions that involve downcasting, such as `(ABContact as ABPerson).DateOfBirth`, by ensuring `ABContact typeis ABPerson` before evaluation. The `mapper` property, used for object and array properties, defines which sub-mapper to use for transforming nested structures, referencing either a mapper within the same file (`#/mappers/<name>`) or an imported mapper (`<alias>#/mappers/<name>`).",
+      "keyPoints": [
+        "Mapping files are created in `integration.mappings` and named `<mechanism>-{version}.mapping.json`.",
+        "Each mapping file targets a `schemaName` and can import other mappers.",
+        "Mappers define how to transform a `root` Guidewire entity into the schema's structure.",
+        "`path` expressions (Gosu) extract values for schema properties.",
+        "`predicate` expressions conditionally execute `path` expressions, useful for type-specific logic.",
+        "`mapper` properties link to other mappers for nested objects and arrays."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Example of creating a mapping file, showing package structure and initial declarations like 'schemaName' and 'import'."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Code example demonstrating how to add mappers to a mapping file, defining properties with 'path' and 'predicate' expressions."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "A visual break or transition slide within the lesson."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Path Expression Coercion",
+          "content": "No automatic coercion is performed for path expressions. If a schema property is of type 'string', the Gosu expression must evaluate to a `java.lang.String`. The path can be any arbitrary Gosu expression, not just a simple property path."
+        },
+        {
+          "type": "tip",
+          "title": "Using Predicates for Downcasting",
+          "content": "The `predicate` property allows you to guard `path` expressions, making it cleaner to handle subtype-specific properties. For example, `\"predicate\": \"Contact typeis Person\"` allows the `path` to directly downcast to `(Contact as Person).FirstName`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Filtering Data with GraphQL Syntax and Fragments",
+      "narrative": "Often, different external systems require slightly different subsets of the same data. Instead of creating numerous, highly specific schemas and mappings, Integration Views allow you to define **filters**. Filters make use of a simplified version of GraphQL syntax to describe precisely which data should be fetched. They act as a whitelist, specifying which properties should be included for a given invocation of a mapping file. This approach enables the reuse of a more complete schema and mapping for various use cases that only require a subset of the data, significantly reducing implementation and maintenance costs by avoiding the fetching, processing, and serialization of unnecessary data.\n\nTo create a filter, you'll establish a new package under `integration.filters` (e.g., `config.integration.filters.<company_code>.<product_code>`) and create files with the syntax `<mechanism>-{version}.gql`. For example, `contact_details-1.0.gql` might specify `Name`, `DateOfBirth`, `Gender`, and `PrimaryAddress { AddressType }` to include only these fields. Similarly, `contactnote_details-1.0.gql` could specify `ContactNotes { ContactNoteType, Confidential, Subject, Body }`. Filters are simple, declarative whitelists – you just list the properties you want to export.\n\n**Fragments** are a powerful GraphQL feature that enhance filter reusability. They allow you to define a reusable set of fields for a given object type, which can then be applied in multiple places within your filter. This is particularly useful when the same sub-object type appears in various parts of the data you want to fetch. For instance, if a `Contact` entity has both `PrimaryAddress` and `AllAddresses` properties that map to the same `Address` type, you can define an `addressParts` fragment (e.g., `fragment addressParts on Address { AddressType, City }`) and then reference it using `...addressParts` under both `PrimaryAddress` and `AllAddresses` in your filter. This avoids duplication and ensures consistency in how address details are selected.",
+      "keyPoints": [
+        "Filters use simplified GraphQL syntax to whitelist properties for data export.",
+        "They enable reuse of comprehensive schemas/mappings for specific data subsets.",
+        "Filters are defined in `.gql` files within `integration.filters` packages.",
+        "GraphQL fragments allow defining reusable sets of fields for sub-objects, improving filter maintainability."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Explanation of filters, their purpose, and how they leverage GraphQL syntax for data selection."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Code examples demonstrating how to create filter files (.gql) to specify desired contact and contact note properties."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Illustration of GraphQL fragments, showing how to define and reuse field sets for common sub-objects like addresses."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "A visual break or transition slide within the lesson."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Differences from GraphQL Proper",
+          "content": "Guidewire's filter syntax, while leveraging GraphQL basics, differs in key ways: there's no explicit query operation, no mutations are supported, fields do not accept arguments, fields cannot be aliased, and original Unicode names for schema properties are allowed."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to create a filter for a new external system that only requires a contact's name, date of birth, and the city of their primary address. You want to ensure the filter is concise and reusable.",
+      "question": "Write the GraphQL filter (`.gql`) file content that achieves this, including a fragment for the address details.",
+      "hints": [
+        "Start by defining the main contact properties.",
+        "Think about how to define a reusable fragment for address fields.",
+        "Remember to reference the fragment within the primary address property."
+      ],
+      "expectedApproach": "Create a `.gql` file. Define the top-level contact properties. Define a fragment for the address type that includes the 'City' property. Reference this fragment within the 'PrimaryAddress' property of the contact."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Generating Wrapper Classes and Outputting Data",
+      "narrative": "To work with your Integration Views in a statically-typed manner within Gosu, you can generate **wrapper classes**. This involves adding the fully-qualified names of your schemas (e.g., `trn.ta.contact-1.0`) to the `codegen-schemas.txt` file located in your schemas package. Then, from Guidewire Studio, you select and run the `JsonSchemaCodegen` server configuration, which uses the `com.guidewire.tools.json.JsonSchemaWrapperCodegenTool` main class. The generated wrapper classes will be placed under `configuration/src/jsonschema`.\n\nThese wrapper classes provide statically-typed getters and setters that wrap a `JsonObject` (essentially a `Map<String, Object>`). The framework handles the automatic wrapping and unwrapping, allowing you to parse directly into these classes or wrap existing `JsonObject` instances. This enhances code safety and readability by providing compile-time checks for your data structures.\n\nOnce you have your schemas and mappings, you can generate JSON or XML output. The process typically involves querying for the Guidewire entity you want to transform, then creating a `JsonMapper` object using `JsonConfigAccess.getMapper()`, specifying the schema's fully qualified name and the mapper's name. This `JsonMapper` is then used to create a `TransformResult` object. The `TransformResult` is an intermediate representation that contains the results of executing your path expressions, with embedded schema information. You can directly invoke methods like `toPrettyJsonString()` for formatted JSON output or `toXmlString()` for XML output.\n\nFor **XML output**, the `JsonObject` and `TransformResult` classes support serialization to XML, applying the same serialization and validation rules as for JSON. The XML output will conform to an XSD that is produced as a transformation of your JSON Schema. This XSD translation follows rules such as defining a default namespace, translating definitions into XSD complexTypes, mapping properties to sub-elements (unless specified as attributes via `x-gw-xml`), and wrapping arrays in container elements.\n\nTo apply a **filter** during output generation, you create a `JsonMappingOptions` object and use its `withFilter()` method, providing the fully qualified path to your filter file. This `JsonMappingOptions` object is then passed to the `transformObject()` method when creating the `TransformResult`. The resulting output will only include the fields specified in your filter, demonstrating the efficiency and flexibility of this approach.",
+      "keyPoints": [
+        "Generate wrapper classes by adding schema FQNs to `codegen-schemas.txt` and running `JsonSchemaCodegen`.",
+        "Wrapper classes provide statically-typed access to `JsonObject` data.",
+        "Generate JSON/XML output by creating a `JsonMapper`, then a `TransformResult` object.",
+        "`TransformResult` can directly produce formatted JSON (`toPrettyJsonString()`) or XML (`toXmlString()`).",
+        "XML output conforms to an XSD derived from the JSON Schema.",
+        "Apply filters during output generation using `JsonMappingOptions.withFilter()`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Steps to generate JSON wrapper classes in Guidewire Studio, including modifying `codegen-schemas.txt` and running the codegen tool."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Gosu code example demonstrating how to query for a contact, create a JsonMapper, and generate pretty JSON output."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Gosu code example showing how to generate XML output from a TransformResult object."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Gosu code example illustrating how to apply a filter to an Integration View to produce filtered JSON output."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "A visual break or transition slide within the lesson."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Serialization Options",
+          "content": "The `JsonSerializationOptions` object can control aspects like ignoring null properties or empty arrays, and can include special properties like schema definition name or correlation ID for JSON output."
+        },
+        {
+          "type": "best_practice",
+          "title": "REST API Usage",
+          "content": "When returning a `TransformResult` from a REST API handler, there's no need to explicitly call serialization methods like `toJsonString()`; the REST API Framework will automatically serialize it based on the negotiated content type."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a user Integration View, from defining the schema to generating output. Pay close attention to how the different components (schema, mapping, filter) are configured and how they interact to produce the desired data payload.",
+      "transcriptSummary": "The demo covers the end-to-end creation of an Integration View for user data. It shows how to define a JSON Schema, create a mapping file, apply a filter, and then execute the Integration View to generate a JSON output, highlighting the configuration steps in Guidewire Studio."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Combining Schemas and Mappers for Reuse",
+      "narrative": "Beyond simple imports, Integration Views support a powerful **combination mechanism** for schemas and mappers, allowing for advanced reuse and extension. This mechanism enables you to create a schema or mapper that logically extends and overrides one or more other schemas or mappers, rather than just referencing them. The `x-gw-combine` property in schemas (or `combine` in mappers) specifies a list of schemas/mappers to merge.\n\nThe order of combination is crucial: if Schema A combines [B, C], the contents of B are merged on top of C, and then the contents of A are merged on top of that combined result. This means that definitions with similar names are merged together, with later definitions in the combination chain overriding earlier ones. However, combination cannot remove definitions; it only adds or modifies. The original schemas or mappers remain untouched.\n\nThis combination mechanism is highly versatile and can be used for several purposes:\n*   **Hierarchical Extension**: Customers can extend an application schema, which might in turn extend a platform schema.\n*   **Content Composition**: Combining several different content pieces, such as Line-Of-Business (LOB) specific schemas with customer extensions and a base schema.\n*   **Schema Aggregation**: Breaking down a large, complex schema into multiple files maintained by different teams, then aggregating them for publishing as a single, consistent API.\n*   **Minor Version Changes**: A new minor version can extend a previous version, minimizing duplication and ensuring backwards compatibility.\n*   **API Templates**: The API template mechanism implicitly uses combination.\n\nFor **mapper file combination**, the same rules apply. You specify a `combine` property in your mapper file, listing the mappers you wish to combine. For example, a `si.ta.contact-1.0` mapper might combine `trn.ta.contact-1.0` and then add new properties like `AssignedUser`. When you then use this combined mapper to generate JSON output, the new properties from the extending mapper will be included in the final payload, demonstrating how combination facilitates building upon existing definitions.",
+      "keyPoints": [
+        "Schema and mapper combination allows logical extension and overriding of existing definitions.",
+        "The `x-gw-combine` (schemas) or `combine` (mappers) property specifies the merge order.",
+        "Later definitions in the combination chain override earlier ones; definitions cannot be removed.",
+        "Combination supports hierarchical extension, content composition, schema aggregation, and minor version changes.",
+        "Combined mappers include properties from all merged definitions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "Explanation of schema file combination, detailing how schemas are merged and the order of precedence."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Code example demonstrating mapper file combination, showing how an existing mapper can be extended with new properties."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Gosu code example and JSON output illustrating the result of using a combined mapper, including the newly added properties."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Combination Cycles",
+          "content": "The combination mechanism allows for arbitrary chains of combination, but these combinations must not have any cycles in the graph (e.g., A combines B, B combines C, and C combines A is not allowed)."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You have an existing `base-contact-1.0.schema.json` that defines basic contact details. Your team needs to create a new `extended-contact-1.0.schema.json` that adds a new property, `PreferredCommunicationMethod` (a typekey), and also includes all definitions from the base schema. You want to achieve this using schema combination.",
+      "question": "Outline the structure of the `extended-contact-1.0.schema.json` file, including the necessary combination property and the new property definition.",
+      "hints": [
+        "Remember to use the `x-gw-combine` property.",
+        "Specify the base schema in the `x-gw-combine` array.",
+        "Define the new property within the `definitions` section of the extended schema.",
+        "Consider the `type` and `x-gw-type` for the new property."
+      ],
+      "expectedApproach": "Create a JSON schema file. Use `x-gw-combine` to include the base schema. Define a new definition (or extend an existing one) in the `definitions` section to add the `PreferredCommunicationMethod` property with appropriate type and `x-gw-type`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "inorder to generate JSON wrapper classes, you must: (Select three)\n\no A) Add anew Run/Debug configuration whose main class is defined as:\ncom. guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegen Tool.\n\nRestart the server after wrapper classes are created.\n\n~ a=",
+      "referenceAnswer": "Inorder to generate JSON wrapper classes, you must: (Select three)\n\nv7 “ A) Add anew Run/Debug configuration whose main class is defined as:\ncom.guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegenTool.\n\nRestart the server after wrapper classes are created.\n\nThe correct answers are A, D, and F.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "/- — *-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nSeo e Soe esses see see",
+      "referenceAnswer": "/- — X-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nTrue\n\nSoo eS eee soe ese ese",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Integration Views provide a structured, versioned way to expose Guidewire data to external systems.",
+        "They consist of JSON Schemas (defining data structure), Mappings (transforming Guidewire entities), and Filters (selecting data subsets).",
+        "Schemas and Mappings are explicitly named and versioned, allowing different versions to coexist.",
+        "The `x-gw-type` property is crucial for mapping Guidewire-specific internal types in JSON Schemas.",
+        "Mappers use Gosu `path` and `predicate` expressions to extract and conditionally process data.",
+        "Filters leverage simplified GraphQL syntax and fragments for efficient data selection.",
+        "Wrapper classes provide statically-typed access to generated JSON data, improving code safety.",
+        "Schemas and Mappers can be combined using `x-gw-combine` or `combine` for powerful reuse and extension."
+      ],
+      "realWorldConnection": "In real Guidewire projects, Integration Views are essential for building robust and maintainable integrations. They allow you to create stable APIs for mobile apps, third-party analytics platforms, or other external services, ensuring that changes to Guidewire's internal data model don't break your integrations. By providing tailored, versioned data contracts, you can significantly reduce the complexity and cost of maintaining your integration landscape.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced topics in Guidewire integration, including best practices for performance optimization and error handling in complex integration scenarios."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to create a complete Contact Integration View. This involves defining a JSON Schema for contact details (including name, date of birth, gender, and a nested primary address with city and state), creating a mapping file to transform an `ABContact` entity to this schema, and then generating JSON output. Additionally, create a filter that only includes the contact's name and primary address city, and demonstrate its application.",
+      "objectives": [
+        "Define a JSON Schema with scalar and nested object properties.",
+        "Create a mapping file with `path` expressions for data transformation.",
+        "Generate JSON output from a Guidewire entity using the Integration View.",
+        "Implement and apply a filter to retrieve a specific subset of data."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_07_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_07_01.mp4"
+    }
+  ]
+}

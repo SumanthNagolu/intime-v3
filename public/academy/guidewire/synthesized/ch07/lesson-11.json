@@ -1,0 +1,271 @@
+{
+  "lessonId": "ch07-l11",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 11,
+  "title": "Introduction to Code Generation and Debugging",
+  "subtitle": "Explore how Guidewire generates code and master essential debugging techniques in Studio.",
+  "synthesizedAt": "2026-02-16T18:03:43.340973+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you've just deployed a new feature in Guidewire, but users are reporting unexpected behavior. You suspect a logic error, but the code isn't behaving as you expect, and you can't quite pinpoint where things are going wrong. How do you efficiently find and fix the issue?",
+      "question": "What tools and techniques can you leverage in Guidewire Studio to quickly diagnose and resolve complex code problems?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and types of code generation in Guidewire Studio.",
+        "Identify the output files produced by Guidewire code generators.",
+        "Utilize breakpoints and the main debugging tools in Guidewire Studio to troubleshoot Gosu and Java code.",
+        "Apply UI debugging options to inspect and understand page configurations.",
+        "Debug PCF methods to resolve logic errors in user interface components."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with Guidewire Studio, navigating its interface and perhaps making minor configuration changes. You also have a basic understanding of programming concepts like variables, functions, and conditional logic.",
+      "warmupQuestion": "Think about a time you encountered an error in a program or application. What was your initial approach to figuring out what went wrong?",
+      "hint": "Consider if you've ever used 'print' statements or logs to trace execution."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Code Generation in Guidewire",
+      "narrative": "In Guidewire Studio, **code generation** is a fundamental process that transforms Guidewire resources, typically defined in XML format, into executable Gosu or Java classes. These resources can include various configuration files such as PCF (Page Configuration File) files, entity definitions, or typelists. The primary benefit of this process is that the generated classes are explicit, meaning they are actual code files that can be directly inspected and, crucially, debugged. This transparency is vital for understanding and troubleshooting application behavior.\n\nThere are two main types of code generators: **incremental** and **bulk**. Incremental code generators are designed for efficiency, processing only the resource files that have changed in isolation. This makes them faster and ideal for day-to-day development tasks, often invoked automatically when you save a file or during a project 'make' operation. However, incremental generation isn't available for all resource types. In contrast, **bulk code generators** process a complete set of resources as a whole. This comprehensive approach means they take longer to execute but are necessary for certain resource types and are typically invoked manually from the CodeGen menu or during a full project rebuild. Understanding when and how each type of generator is used is key to efficient development in Guidewire Studio.",
+      "keyPoints": [
+        "Code generation converts Guidewire XML resources into debuggable Gosu or Java classes.",
+        "Generated classes are explicit and can be debugged like any other code.",
+        "Incremental generators process changed files quickly, while bulk generators process all resources and take longer."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to code generation, emphasizing its role in creating executable code from XML resources."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Details on code generation, explaining it processes XML resources (PCF, entities, typelists) into Gosu or Java classes that are explicit and debuggable."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Further explanation of code generation, differentiating between incremental and bulk types and their respective processing scopes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Code Generation",
+          "content": "The automated process of creating source code from a higher-level specification, such as XML configuration files, to produce executable Gosu or Java classes."
+        },
+        {
+          "type": "tip",
+          "title": "Product Documentation",
+          "content": "For more in-depth information on specific file types like .eti, .etx, and .java files, consult the Guidewire product documentation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Code Generator Invocation and Output",
+      "narrative": "The choice between incremental and bulk code generation depends on the context and the resource type. **Incremental generators** are invoked automatically when you save a PCF file, entity, permission, or typelist, or during a project 'make' operation. This provides immediate feedback and speeds up development cycles. **Bulk generators**, on the other hand, are typically invoked manually from the 'CodeGen' menu in Studio, or automatically during a full project rebuild. They are essential when changes affect a broad range of resources or when incremental generation is not supported for a particular resource type, such as when generating metadata or localization classes.\n\nRegardless of the generation type, the output of code generation is consistently placed in the `configuration\\generated` folder within your Guidewire installation. For example, when a PCF file undergoes code generation, it results in several files: a `.gs` file (a Gosu class representing the PCF type), a `.pcfc` file (a binary file for the new PCF runtime), and an `Expressions.gs` file (a Gosu class containing all container and widget expressions from the PCF). Similarly, generating an entity produces a `.java` class that represents that entity. These generated files are crucial because they are the actual code that the application executes, making them the primary targets for debugging when issues arise.",
+      "keyPoints": [
+        "Incremental generation is automatic on save/make for specific resources (PCF, entities, permissions, typelists).",
+        "Bulk generation is manual via the CodeGen menu or during a full project rebuild for all resources.",
+        "All generated files are stored in the `configuration\\generated` folder.",
+        "PCF generation yields `.gs`, `.pcfc`, and `Expressions.gs` files; entity generation yields a `.java` class."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Compares incremental and bulk code generators, detailing their invocation triggers and the specific Guidewire resources they support."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Illustrates the output files produced by code generation for PCF files (e.g., .pcfe, .gs, Expressions.gs) and entities (.java files)."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "A visual transition slide, often used to bridge topics or provide a brief pause in the presentation flow."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "XML Output Rules",
+          "content": "Special rules govern the behavior of XML output for properties representing arrays of entities in the Guidewire data model. Refer to product documentation for details on 'Generating XML Using an XML Model'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Debugging with Breakpoints and Studio Tools",
+      "narrative": "When you need to investigate the runtime behavior of your Guidewire application, **breakpoints** are your most powerful tool. A breakpoint is a marker you set in your Gosu or Java code that tells Studio to suspend execution at that specific line. To activate breakpoints, you must run your application in a 'debug server' process. When a breakpoint is hit, Studio automatically opens the file, highlights the breakpoint line in blue, and brings up the Debug tool window. This allows you to inspect the application's state at that exact moment.\n\nThe Debug tool window provides several essential components for effective debugging: the **Debug toolbar** (for actions like restarting, resuming, or stopping the debug process, and managing breakpoints), the **Stepping toolbar** (for navigating code line-by-line using 'step over,' 'step into,' and 'step out' actions), the **Frames pane** (which shows the call stack, allowing you to see the sequence of function calls leading to the current breakpoint), the **Variables pane** (where you can examine the values of all variables within the current scope), and the **Watches pane** (for monitoring specific variables or expressions whose values update with each step). These tools enable you to trace execution, understand data flow, and identify the root cause of bugs in both your custom Gosu/Java code and the generated classes.",
+      "keyPoints": [
+        "Breakpoints suspend code execution at a specified line, opening the file in Studio and highlighting the line.",
+        "Debugging requires running the application in a 'debug server' process.",
+        "Key debugging tools include the Debug toolbar, Stepping toolbar, Frames, Variables, and Watches panes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Explains breakpoints as points to suspend Gosu or Java code execution, detailing Studio's behavior when a breakpoint is hit and what can be debugged."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A visual representation of the main debugging tools in Studio, including the debug toolbar, stepping toolbar, frames, variables, and watches panes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Efficient Breakpoints",
+          "content": "You typically only need one breakpoint per section of code you want to investigate. Use the stepping tools to navigate through the code from that point."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "UI Debugging Options in Guidewire Studio",
+      "narrative": "Beyond traditional code debugging, Guidewire Studio offers specialized UI debugging options that can be incredibly helpful when working with Page Configuration Files (PCFs). These settings are found under the Studio's settings menu and provide visual cues to help developers understand and troubleshoot the user interface. One such option is **'Highlight widgets with PCF widths and heights'**. In Guidewire applications, it's a best practice to design UI elements with dynamic width and height values to ensure responsiveness and adaptability across different screen sizes and devices. Hardcoding these values can lead to layout issues. This debug option visually flags any UI elements that have explicitly set width or height values in their PCF definition, allowing developers to quickly identify and refactor them for better UI flexibility.\n\nAnother valuable UI debugging feature is **'Show widget types as inline titles'**. When enabled, this option overlays the name of each UI widget directly onto the screen. This makes it much easier for developers to identify all the individual elements that compose a page, understand their hierarchy, and quickly locate the corresponding PCF definitions in Studio. For instance, seeing 'TextInput' or 'Button' directly on the UI helps in mapping the visual element to its underlying configuration. These UI debugging options streamline the process of understanding and modifying the complex structure of Guidewire's user interfaces, making it easier to ensure both functional correctness and optimal user experience.",
+      "keyPoints": [
+        "UI Debug options in Studio settings provide visual aids for PCF-related issues.",
+        "'Highlight widgets with PCF widths and heights' identifies hardcoded UI dimensions, promoting dynamic layouts.",
+        "'Show widget types as inline titles' displays widget names directly on the UI for easier identification and mapping to PCF definitions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Shows the 'UI Debug options' section within the Studio settings menu, where various UI-specific debugging features can be enabled."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Demonstrates the 'Highlight widgets with PCF widths and heights' option, which visually indicates UI elements with fixed dimensions."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Illustrates the 'Show widget types as inline titles' option, which displays the type of each UI widget directly on the screen."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Debugging PCF Methods",
+      "narrative": "Before diving into a practical demonstration, let's review **PCF methods**. A PCF method is essentially a plain old Gosu function that is defined locally within a PCF file. These methods encapsulate logic directly tied to that specific PCF file, making them private and inaccessible even to other referenced files. While they function like any other Gosu method, their debugging process has a unique consideration: you cannot set a breakpoint directly at the place of definition within the PCF file itself.\n\nTo debug a PCF method, you must first allow the code generation process to occur. After generation, you'll need to open the corresponding `<PCFFileName>Expressions.gs` file, which is located in the `configuration\\generated\\pcf\\expressions` folder. This generated Gosu class contains all the expressions and methods from your PCF file, including your PCF method. Once you've located your method within this `Expressions.gs` file, you can then set a breakpoint there and proceed with your debugging as usual. PCF methods are typically called from various widget properties within the PCF, such as `action`, `value`, `available`, or `editable`, making them critical points of interaction between the UI and underlying business logic. Understanding this specific debugging workflow for PCF methods is crucial for effectively troubleshooting UI-related issues.",
+      "keyPoints": [
+        "A PCF method is a local Gosu function defined within a PCF file, private to that file.",
+        "PCF methods cannot be debugged directly in the PCF file.",
+        "To debug, set a breakpoint in the generated `<PCFFileName>Expressions.gs` file.",
+        "PCF methods are commonly invoked from widget properties like `action` or `value`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Reviews PCF methods, defining them as local Gosu functions within a PCF file and explaining the specific steps required to debug them in the generated Expressions.gs file."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Introduces a demo scenario: fixing a high-priority bug where the 'Delete Secondary Addresses' button incorrectly removes all addresses, including the primary one."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "PCF Method Debugging",
+          "content": "Remember, you cannot debug a PCF method directly in the PCF file. Always navigate to the generated `Expressions.gs` file to set your breakpoints."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of reproducing a bug related to PCF methods, debugging the problematic code using breakpoints, and implementing a fix. Pay close attention to how the debugger is used to inspect variable values and trace execution.",
+      "transcriptSummary": "The demo starts by reproducing a bug where 'Delete Secondary Addresses' removes all addresses. It then navigates to the relevant PCF, identifies the `deleteABContactSecondaryAddresses` method, and explains that PCF methods must be debugged in their generated `Expressions.gs` file. The video sets up the context for debugging the identified bug."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've been asked to investigate why a newly added 'Save' button on a custom PCF page isn't saving data correctly. You suspect an issue within the `saveData()` PCF method associated with the button's action.",
+      "question": "Describe the step-by-step process you would follow to set a breakpoint and begin debugging the `saveData()` PCF method.",
+      "hints": [
+        "Think about where PCF methods are actually defined after code generation.",
+        "How do you find generated files in Studio?",
+        "What is the first thing you need to do to enable debugging?"
+      ],
+      "expectedApproach": "The learner should describe finding the generated `Expressions.gs` file, locating the `saveData()` method, setting a breakpoint, and running the application in debug mode."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What does a code generator do?",
+      "referenceAnswer": "PCF file, entity, etc.) and produces a Gosu or Java class.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Name atleast one difference between incremental and bulk code\nY generation.",
+      "referenceAnswer": "' rebuild\nn",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is a breakpoint?",
+      "referenceAnswer": "oO” A breakpoint indicates a place where you want to suspend the execution of Gosu or\nJava code\nSS",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What is a PCF method? How can you debug a PCF method?",
+      "referenceAnswer": "<PCFFileName>Expressions.gs file, find the function and click on the gutter area at\nthe desired line to set a breakpoint.\nSS",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Code generation transforms Guidewire XML resources into debuggable Gosu/Java classes.",
+        "Incremental generation is fast for single file changes; bulk generation is comprehensive for all resources.",
+        "All generated code resides in the `configuration\\generated` folder.",
+        "Breakpoints are essential for suspending code execution and inspecting application state.",
+        "Guidewire Studio offers robust debugging tools including the Debug/Stepping toolbars, Frames, Variables, and Watches panes.",
+        "UI Debug options help visualize PCF configurations and identify hardcoded dimensions or widget types.",
+        "PCF methods are local Gosu functions that must be debugged in their generated `Expressions.gs` file."
+      ],
+      "realWorldConnection": "Mastering code generation and debugging is fundamental for any Guidewire developer. It allows you to understand the underlying architecture, efficiently troubleshoot issues in complex applications, and ensure the stability and correctness of your custom implementations. Effective debugging skills directly translate to faster bug resolution and higher quality code in real Guidewire projects.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into advanced Gosu features and best practices for writing maintainable and performant code in Guidewire."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Apply your knowledge of code generation and debugging by performing a hands-on exercise. You will be provided with a scenario involving a bug in a Guidewire application. Your task will be to use the debugging tools in Studio to identify the root cause of the bug and implement a fix, similar to the demonstration you just watched.",
+      "objectives": [
+        "Reproduce a given bug in a Guidewire application.",
+        "Utilize breakpoints and debugging panes to trace code execution.",
+        "Identify the problematic code segment and variable values.",
+        "Implement a correct fix for the identified bug.",
+        "Verify the fix by re-testing the application."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_11.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_11.mp4"
+    }
+  ]
+}

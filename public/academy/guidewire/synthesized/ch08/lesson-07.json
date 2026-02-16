@@ -1,0 +1,214 @@
+{
+  "lessonId": "ch08-l07",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 7,
+  "title": "Approving Underwriting Issues",
+  "subtitle": "Learn to configure underwriting rules, authority profiles, and assign them to users for issue approval.",
+  "synthesizedAt": "2026-02-16T18:20:06.501594+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter reviewing a complex policy application. You notice several conditions that fall outside standard guidelines, like a high-value vehicle or a unique coverage request. These trigger 'underwriting issues' that require special approval.",
+      "question": "How do you ensure that only authorized personnel can approve these exceptions, and how is the system configured to manage this crucial process?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe and configure the underwriting rule fields related to approvals",
+        "Configure the authority profiles",
+        "Assign authority profiles to users to approve the underwriting issues"
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about the basic concept of underwriting and how policies are processed in PolicyCenter. Recall that underwriting is the process of assessing and accepting or rejecting insurance risks.",
+      "warmupQuestion": "What happens when a policy condition deviates from standard underwriting guidelines?",
+      "hint": "Think about what PolicyCenter generates to flag these deviations."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Underwriting Approval Process and Rule Fields",
+      "narrative": "In PolicyCenter, the underwriting approval process is a critical mechanism for managing risks that fall outside standard guidelines. When a policy transaction, such as a submission or policy change, triggers an underwriting issue, the system flags it for review. These issues are tied to a specific policy period and may require referral to users with higher or different authority profiles. PolicyCenter facilitates this by sending activities to notifying users that they need to approve issues on the policy. A policy might be referred to several users before it's fully approved. Once the reviewer feels the policy review is complete, they 'Release Lock,' sending an activity back to the 'Initial Referrer'—the user who initiated the referral. This 'Initial Referrer' role is transient, assigned by the job code, and helps streamline communication between agents and underwriters.\n\nUnderwriting rules define *when* and *how* these issues are raised and approved. These rules specify conditions, such as minimum or maximum amounts, and jurisdictions. For instance, a rule might require approval for any vehicle valued over $100,000. Key fields within these underwriting rules are crucial for managing the approval workflow. These include `DefaultDurationType`, which determines how long an approval remains valid (e.g., 'Next Change,' 'End of Term,' 'One Year,' 'Three Years,' or 'Rescinded'). The `AutoApprovable` field dictates if an issue can be automatically approved, useful for automated processes like renewals. `DefaultEditBeforeBind` and `DefaultApprovalBlockingPoint` define when an issue blocks policy progress (e.g., before quote, before bind, or non-blocking). These blocking points are vital; for example, a 'before bind' blocking point prevents policy issuance until the issue is resolved. The `Checking Set` specifies *when* PolicyCenter checks for the rule's conditions, such as 'All' blocking points or 'Manual' for user-added issues. Carefully configuring these fields ensures that underwriting issues are handled consistently and efficiently, aligning with the insurer's risk appetite and operational procedures.",
+      "keyPoints": [
+        "Underwriting issues are created during policy transactions and require approval from authorized users.",
+        "The 'Initial Referrer' role manages communication during the approval workflow.",
+        "Underwriting rules define when issues are raised and how they are approved.",
+        "Key rule fields like `DefaultDurationType`, `AutoApprovable`, and `DefaultApprovalBlockingPoint` control the approval process and policy progress."
+      ],
+      "figures": [
+        {
+          "slideNumber": 2,
+          "caption": "This slide outlines the learning objectives for this lesson, focusing on configuring underwriting rules and authority profiles."
+        },
+        {
+          "slideNumber": 3,
+          "caption": "This slide introduces the concept of underwriting rule fields that are specifically related to the approval process."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This diagram illustrates the comprehensive underwriting approval process, from issue creation to policy release, highlighting the roles of the underwriter and the Initial Referrer."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "This slide lists the key underwriting rule fields that are configurable for managing approvals, such as DefaultDurationType and AutoApprovable."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Initial Referrer Role",
+          "content": "The Initial Referrer is the user who initially referred the policy to underwriting. When an underwriter releases a policy, an activity is sent to this user. This is a transient role, assigned by job code, not directly in the Administration tab."
+        },
+        {
+          "type": "best_practice",
+          "title": "Rule Configuration Caution",
+          "content": "Once an underwriting rule has been deployed to production, avoid changing critical fields like Code, Value Comparator, Blocking Point, Checking Point, and AutoApprovable. Such changes can impact system metrics and issue generation. It's often better to create new rules for future occurrences if significant changes are needed."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the PolicyCenter interface to show where and how underwriting rule fields related to approvals are configured. Pay close attention to the specific fields discussed in the previous concept block.",
+      "transcriptSummary": "The demo illustrates navigating to the Underwriting Rules in PolicyCenter's Administration section. It highlights the various fields that control the approval process, such as Default Duration, AutoApprovable, and Blocking Point, demonstrating how these settings impact underwriting issue management."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Calculating Default Approval Values",
+      "narrative": "When an underwriting issue is triggered, PolicyCenter often needs to determine a 'default approval value' to guide the underwriter or for automated approvals. This value is not arbitrary; it's calculated based on specific fields defined within the underwriting rule itself. The primary fields influencing this calculation are `Value Comparator`, `DefaultValueAssignmentType`, and `DefaultValueOffsetAmount`.\n\nLet's consider an example: an underwriting issue is raised because a vehicle in a policy transaction has a stated value of $200,000. If the underwriting rule defines the `Value Comparator` as 'At most (monetary)' and the `Default Value Offset Amount` as 10% (with `DefaultValueAssignmentType` set to 'Percentage'), the system calculates the default approval value. The calculation works by taking the issue's value and adding an offset. In this case, the offset would be 10% of $200,000, which is $20,000. Therefore, the 'At most' approval value displayed to the user would be $200,000 + $20,000 = $220,000. This means an underwriter with authority to approve issues 'at most' $220,000 could approve this specific issue. These default values serve as initial settings in the user interface for approvals and are also used for auto-approvable issues and automated processes. They are crucial for determining the availability of the 'Approve' button, indicating whether a user can approve an issue to its default level.",
+      "keyPoints": [
+        "Default approval values are calculated based on underwriting rule fields.",
+        "Key fields for calculation include `Value Comparator`, `DefaultValueAssignmentType`, and `DefaultValueOffsetAmount`.",
+        "The calculation typically involves an offset percentage or amount applied to the issue's value."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "This slide provides an example of how the default approval value for an underwriting issue is calculated based on configured underwriting rule fields like Value Comparator and Default Value Offset Amount."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Value Formatter Type",
+          "content": "The `Value Formatter Type` (e.g., Currency, Integer, MonetaryAmount) determines how the value associated with an underwriting issue is displayed in the user interface. This property is linked to the `UWIssueType.ValueFormatterType` property."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuring Authority Grants and Profiles",
+      "narrative": "Beyond defining *what* triggers an issue, PolicyCenter also defines *who* can approve it through a system of authority grants and authority profiles. Think of **authority grants** as specific permissions, similar to physical letters of authority, that allow a user to approve a particular type of underwriting issue, often with specific value limits. Each grant is based on an issue type defined in the underwriting rules and can specify conditions, such as 'at least $1000' for a deductible or 'at most $200' for a total premium.\n\n**Authority profiles**, on the other hand, are collections of these individual authority grants. A user can have one or more authority profiles assigned to them, which collectively determine the full scope of underwriting issues they are authorized to approve. It's important to distinguish authority profiles from user roles; a user role defines general system access, while an authority profile specifically governs underwriting approval power. For example, a 'Job-level' profile might be 'Underwriter 1,' granting a standard set of approvals. However, profiles can also be more specialized, like an 'Expertise' profile for 'Farm Equipment' that includes grants for specific class codes, or 'Incremental' profiles that provide a bump in authority for an underwriter not yet ready for a full promotion. This allows for fine-grained control over who can approve what, enabling organizations to tailor approval hierarchies to their specific needs.\n\nConfiguring these profiles involves creating them and then adding the necessary authority grants. In PolicyCenter, you manage authority profiles under **Administration > Users & Security > Authority Profiles**. Once profiles are created and populated with grants, they must be assigned to individual users. This is done through **Administration > Users & Security > User > UW Authority**. This structured approach ensures that only users with the appropriate level of authority can approve underwriting issues, maintaining compliance and risk management standards.",
+      "keyPoints": [
+        "Authority grants are specific permissions to approve certain underwriting issues, often with value limits.",
+        "Authority profiles are collections of authority grants, assigned to users to define their overall approval power.",
+        "Authority profiles provide fine-grained control and can be based on job level, expertise, or incremental authority.",
+        "Configuration of profiles and grants is done in the Administration section of PolicyCenter."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "This slide introduces the concept of configuring authority profiles and assigning them to users to manage underwriting issue approvals."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "This slide explains authority grants and profiles, detailing how grants allow approval of specific issues and how profiles group these grants for users."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "This slide provides the navigation path within PolicyCenter for creating authority profiles with grants and assigning them to users."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Authority Grant",
+          "content": "An authority grant is a specific permission that allows a user to approve a particular underwriting issue type, potentially with value limits (e.g., 'at most $X' or 'at least $Y')."
+        },
+        {
+          "type": "definition",
+          "title": "Authority Profile",
+          "content": "An authority profile is a collection of one or more authority grants. It determines the types and limits of underwriting issues a user can approve and is assigned to individual users."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ae What is an authority grant?",
+      "referenceAnswer": "Authority grants allow users to approve a specific issue defined in UW Rule.",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "ae What is an authority profile?",
+      "referenceAnswer": "Authority profiles are collections of authority grants and can be assigned to users.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of configuring authority profiles in PolicyCenter and assigning them to users. Observe how different grants are added to a profile and how that profile is then linked to a user's account.",
+      "transcriptSummary": "The demo showcases navigating to the Authority Profiles section in PolicyCenter's Administration. It demonstrates creating a new authority profile, adding specific authority grants to it (e.g., for certain issue types or value limits), and finally assigning this newly configured profile to a user to grant them the necessary approval authority."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company has a new underwriting rule that flags any personal auto policy with more than 5 vehicles. This issue needs to be approved by an 'Underwriter Level 2' or higher. You also need to ensure that the approval is valid for 'One Year' by default.",
+      "question": "Describe the steps you would take to configure this new underwriting rule and ensure the correct approval duration. Which specific fields would you modify?",
+      "hints": [
+        "Think about where underwriting rules are defined in PolicyCenter.",
+        "Consider the fields related to blocking points and default approval duration.",
+        "Remember the 'DefaultDurationType' field."
+      ],
+      "expectedApproach": "Navigate to Administration > Business Settings > Business Rules > Underwriting Rules. Create or edit the relevant rule. Set the 'Blocking Point' (e.g., 'Before Bind') and configure the 'Default Duration' field to 'One Year'. Ensure the rule condition correctly identifies policies with more than 5 vehicles."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Underwriting issues are triggered by rules and managed through a structured approval process involving specific user roles.",
+        "Underwriting rule fields (e.g., DefaultDurationType, AutoApprovable, BlockingPoint) control the behavior and duration of approvals.",
+        "Default approval values are calculated based on rule fields like Value Comparator and DefaultValueOffsetAmount.",
+        "Authority grants define specific approval permissions, while authority profiles group these grants and are assigned to users to define their overall approval authority."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring underwriting rules and authority profiles is crucial for maintaining compliance, managing risk exposure, and streamlining policy processing. It ensures that complex or high-risk policies receive appropriate review while empowering authorized personnel to make timely decisions, preventing unnecessary bottlenecks in the underwriting workflow."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In your training environment, you will practice configuring an underwriting rule to trigger an issue for a specific condition. Then, you will create an authority profile with a grant to approve this issue and assign it to a test user. Finally, you will process a policy transaction that triggers the issue and approve it using the configured authority.",
+      "objectives": [
+        "Configure an underwriting rule with specific approval-related fields.",
+        "Create a new authority profile and add an authority grant.",
+        "Assign the authority profile to a user.",
+        "Test the approval process by raising and approving an underwriting issue."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_07_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_07_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_07_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_07_02.mp4"
+    }
+  ]
+}

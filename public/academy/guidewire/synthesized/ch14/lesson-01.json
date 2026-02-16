@@ -1,0 +1,296 @@
+{
+  "lessonId": "ch14-l01",
+  "chapterId": 14,
+  "chapterSlug": "ch14",
+  "lessonNumber": 1,
+  "title": "Configuring Costs and Transactions",
+  "subtitle": "Learn to design and configure cost structures and transaction entities in Guidewire PolicyCenter.",
+  "synthesizedAt": "2026-02-16T19:11:46.026581+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing a new insurance product in PolicyCenter, and you need to ensure that premiums, taxes, and fees are accurately calculated, stored, and tracked for billing. Without a well-defined cost and transaction structure, your financial data would be chaotic and unusable.",
+      "question": "How do PolicyCenter's core financial entities, Costs and Transactions, enable precise premium calculation and robust financial tracking throughout a policy's lifecycle?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the rating process and rating architecture so that you can design and configure rating effectively.",
+        "Configure the cost structure to store the premiums and other monetary amounts of the policy.",
+        "Access the changes in costs using the transaction entity."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your foundational understanding of PolicyCenter's product model and how different policy elements are structured. Recall how coverages and coverables relate within a policy.",
+      "warmupQuestion": "Before we dive in, consider: What are some key pieces of information you'd expect an insurance system to track regarding the financial aspects of a policy, beyond just the total premium?",
+      "hint": "Think about how premiums might change over time or how different components contribute to the total."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Rating Process and Architecture",
+      "narrative": "To effectively configure costs and transactions, it's crucial to first grasp how PolicyCenter's rating engine operates. When a user initiates a quote for a policy, PolicyCenter sends a request to the rating engine to determine the individual costs and calculate the overall premium. This process is orchestrated through the `PCRatingPlugin`, which acts as the main entry point for rating. If Guidewire Rating Management is configured for a specific Line of Business (LOB), the `PCRatingPlugin` instantiates a specialized LOB-specific rating class, such as `PARatingEngine.gs` for Personal Auto policies. This engine then calculates premiums by leveraging methods defined in `AbstractRatingEngine` and the `CostData` class. In the base application, Personal Auto and Commercial Property are the primary LOBs configured with Guidewire Rating Management, utilizing rate tables to look up rate factors.\n\nGuidewire Rating Management's architecture involves several key components. A **Rate Book** is a central repository containing data from **Rate Tables** (which store rate factors) and **Rate Routines** (algorithms for calculations). These rate routines rely on **Parameter Sets** to provide the necessary input data. The LOB-specific Rating Engine creates `CostData` objects in memory, retrieves rate factors from rate books, populates parameter sets, and executes rate routines to temporarily store calculated amounts in these `CostData` objects. Ultimately, the rating engine merges these `CostData` objects to create **Costs**, which are then persisted in the database. This lesson will focus on configuring the basic cost structure and transaction entities, while subsequent lessons will delve into `CostData` objects, rating engines, rate routines, and parameter sets at the Gosu level. The PolicyCenter Rating Introduction Course provides further details on rate books, rate tables, rate routines, and parameter sets at the IJI level.\n\nThis structured approach ensures that all monetary aspects of a policy, from individual coverage premiums to taxes and fees, are accurately determined and recorded.",
+      "keyPoints": [
+        "The rating process is initiated when a policy is quoted, calling the rating engine via `PCRatingPlugin`.",
+        "LOB-specific rating engines (e.g., `PARatingEngine`) calculate premiums using `AbstractRatingEngine` and `CostData`.",
+        "Rating architecture involves Rate Books, Rate Tables, Rate Routines, and Parameter Sets.",
+        "Calculated amounts are temporarily stored in `CostData` objects, then merged and persisted as `Cost` entities."
+      ],
+      "figures": [
+        {
+          "slideNumber": 2,
+          "caption": "Lesson Objectives: An overview of the key learning outcomes for configuring costs and transactions."
+        },
+        {
+          "slideNumber": 3,
+          "caption": "Rating Architecture and Process: An introduction to how Guidewire Rating Management handles premium calculation and cost tracking."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Rating Process Overview: A visual representation of the steps involved from user quote to premium display, highlighting the role of `PCRatingPlugin` and LOB-specific rating engines."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Rating Architecture: A diagram illustrating the major components of the Guidewire Rating Management process, including Rate Books, Rate Routines, Parameter Sets, and CostData objects."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the rating process in PolicyCenter, showing how a quote is generated and where the calculated premiums are displayed. Pay attention to how the system interacts with the rating engine and how rate books are accessed.",
+      "transcriptSummary": "The demo shows an underwriter quoting a Personal Auto policy, making it effective today. It highlights how PolicyCenter interacts with the rating engine to calculate premiums displayed on the quote page. It also demonstrates how to access and view rate books, rate tables, and rate routines for Personal Auto through the Administration tab in PolicyCenter."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Defining and Structuring Costs in PolicyCenter",
+      "narrative": "At the heart of PolicyCenter's financial system is the **Cost entity**, which stores the premium and all other monetary amounts associated with a policy, such as taxes and fees. A cost represents a discrete unit of price for a specific aspect of a policy over a defined period, meaning it cannot be broken down into smaller units. Examples include the premium for an entire coverage, specific taxes, or the total cost of the policy, which is simply the sum of all individual costs. Costs are generated during the rating process when a policy is quoted.\n\nEach Line of Business (LOB) defines its own subtypes of costs. For instance, `PACost` is the root entity for Personal Auto costs, and `BOPCost` serves the same purpose for Business Owners policies. These root entities implement the `Cost` delegate, which provides common financial columns and behaviors. Further subtypes, like `PersonalVehicleCovCost`, are then defined to include additional properties and establish links within the policy graph, connecting costs directly to the policy elements they price, such as a `PersonalVehicle` or a `PersonalAutoCov`.\n\nWhen creating a new cost entity, it's crucial to properly associate it with relevant coverables, especially when a cost is tied to both a coverage and a coverable. For example, `PersonalAutoCovCost` includes foreign keys to both `PersonalAutoCov` (a line coverage) and `PersonalVehicle` (a coverable not directly on the line) because Personal Auto rates line coverage per vehicle. Similarly, General Liability rates line coverages per exposure. When adding new columns (properties) to a cost entity, determine whether to add them to the supertype or subtype based on where the information is needed. For instance, a foreign key to `BusinessVehicle` might be on `BACost` (the supertype) rather than its subtypes if that information is needed for calculating premiums across different jurisdictions or for the line coverage itself. Using a `typekey` like `RatedOrder` to identify the premium type for each cost is a recommended best practice, as it helps in calculating subtotals like minimum premiums and is often more flexible than relying solely on inheritance hierarchies for grouping.",
+      "keyPoints": [
+        "A Cost entity is a discrete unit of price for a policy aspect over a specific period.",
+        "Each LOB defines its own cost subtypes (e.g., `PACost`, `BOPCost`) which implement the `Cost` delegate.",
+        "New cost entities must be linked to coverages and coverables, even if the coverable isn't directly on the line.",
+        "Properties should be added to supertypes or subtypes based on data usage; `typekeys` are recommended for identifying premium types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "What is a Cost?: Illustrates how costs represent units of price for policy aspects, are discrete, and sum up to the total policy cost."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Cost Entities: Explains that costs are created during rating, and LOBs define subtypes that implement the `Cost` delegate, linking to the policy graph."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Line Specific Costs: Provides examples of cost entities for the Business Owners policy line, showing how they store premiums for corresponding cost-bearing objects, taxes, and fees."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Create a New Cost Entity: Guidance on associating coverables with costs and determining where to add properties (supertype vs. subtype) for optimal structure."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Cost Structure Design",
+          "content": "When designing your cost structure, ensure that costs are tied to the most granular level of policy elements that have a price. This allows for accurate calculation and tracking. Use `typekeys` for identifying cost types rather than relying solely on inheritance for grouping, as this offers greater flexibility."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Cost Delegate Fields and Policy Period Totals",
+      "narrative": "The `Cost` delegate provides a standardized set of fields to store various monetary amounts, categorized into three major groups: **Standard**, **Override**, and **Actual**. The **Standard** fields hold values calculated directly by the rating engine. The **Override** fields are used when rating overrides are enabled, allowing users to input their own values after an initial quote. The **Actual** fields then reflect either the standard calculated values or the user-entered override values, if overrides have been applied. Each of these sets includes specific financial components:\n\n*   **Base Rate**: The initial rate derived from rate table lookups or other calculations.\n*   **Adjusted Rate**: The rate after applying any discounts, surcharges, or other adjustments to the base rate.\n*   **Term Amount**: The unprorated amount for the entire policy term.\n*   **Amount**: The current amount of money for the effective period. If the cost is prorated, this field holds the prorated amount.\n\nIt's important to note that users cannot apply overrides until a policy has been rated and a quote generated. Only after reviewing the initial quote results can they decide to apply overrides where permitted.\n\nBeyond individual cost details, the `PolicyPeriod` entity stores several total value fields that are crucial for performance and display. After rating, PolicyCenter aggregates the underlying costs or transactions to calculate these totals. This pre-calculation prevents the need to re-calculate amounts every time they are displayed, significantly improving performance. For example, these fields can be used to quickly display the total premium for a submission on the Quote screen or in the Policy Premium tab. Key `PolicyPeriod` fields for costs include `TotalCostRPT` (total value of all costs, including taxes and fees) and `TotalPremiumRPT` (total value of all premium costs). These denormalized fields provide a quick and efficient way to access policy-level financial summaries.",
+      "keyPoints": [
+        "Cost delegate fields are grouped into Standard, Override, and Actual, each containing Base Rate, Adjusted Rate, Term Amount, and Amount.",
+        "User overrides can only be applied after an initial policy quote.",
+        "`PolicyPeriod` entity stores pre-calculated total cost fields (`TotalCostRPT`, `TotalPremiumRPT`) for performance."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Cost Delegate Fields: Details the three major sets of columns (Standard, Override, Actual) and their components like Base Rate, Adjusted Rate, Term Amount, and Amount."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "PolicyPeriod Fields for Costs: Explains how PolicyCenter calculates and stores total value fields like `TotalCostRPT` and `TotalPremiumRPT` for performance."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Placeholder for additional cost configuration details."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Placeholder for additional cost configuration details."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "RPT Fields",
+          "content": "The 'RPT' suffix in fields like `TotalCostRPT` and `TotalPremiumRPT` often indicates 'Reporting' or 'Rollup' fields, signifying that they store pre-calculated, aggregated values for efficient retrieval and display, especially in reporting or UI contexts."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how costs are displayed on the quote page and then delve into Guidewire Studio to examine the configuration of cost entities. Pay close attention to how the `Cost` delegate is implemented and the different field sets (actual, standard, override) within a cost entity.",
+      "transcriptSummary": "The demo starts by showing individual coverage costs and total premiums on the quote page, noting how costs like liability are calculated per vehicle. It then transitions to Guidewire Studio to examine `PACost`, the root cost entity for Personal Auto. It highlights that all cost entities must implement the `Cost` delegate, `CostAdapter`, and `CostMethods` interfaces. The demo further explores the `PACost` data dictionary, showcasing the `actual`, `standard`, and `override` sets of columns for storing rates and monetary amounts, including `Base Rate`, `Adjusted Rate`, `Term Amount`, and `Amount`."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team is adding a new custom coverage to the Personal Auto line of business. This coverage has a unique premium calculation that depends on both the vehicle type and the driver's age. You need to ensure the cost for this new coverage is properly stored and linked within the policy structure.",
+      "question": "Describe the steps you would take to create a new cost entity for this custom coverage, ensuring it correctly captures the premium and links to both the `PersonalVehicle` and the new `CustomAutoCov`.",
+      "hints": [
+        "Consider which existing cost entity would be the most appropriate supertype for your new custom cost.",
+        "Remember the importance of foreign keys for linking costs to policy elements.",
+        "Think about what delegate interfaces your new cost entity must implement."
+      ],
+      "expectedApproach": "Create a new entity (e.g., `CustomAutoCovCost`) as a subtype of `PACost`. Ensure it implements the `Cost` delegate. Add foreign keys to `PersonalVehicle` and `CustomAutoCov` to establish the necessary links. Add any specific properties required for the custom premium calculation."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Tracking Financial Changes with Transactions",
+      "narrative": "While Cost entities capture the current monetary amounts of a policy, **Transaction entities** are designed to track the changes in these costs over the policy's entire lifecycle. These transactions provide a running log of pricing changes and are particularly useful for billing purposes, offering a detailed history that can be viewed on the Financial Transactions page in PolicyCenter. The `Transaction` delegate serves as the fundamental building block for any transaction, providing common financial columns and behaviors, while the implementing line of business determines how it integrates into the policy graph.\n\nConsider the lifecycle of a policy: when a policy is first issued (a 'Submission' job), the total transactions (which initially mirror the total premium, taxes, and fees) are sent to the billing system. Later, if a policy change is issued mid-term, resulting in adjustments to coverage costs or taxes, new transactions are generated. These new transactions represent the *difference* from the previously billed amount. For example, if a policy change increases the premium, the billing system receives a transaction for the additional amount to bill the insured. Conversely, if the premium decreases, a transaction for a refund is generated. This mechanism ensures that the billing system always has accurate, up-to-date information on what to charge or refund the insured, reflecting all financial modifications made to the policy.",
+      "keyPoints": [
+        "Transaction entities track changes in costs over a policy's lifecycle, useful for billing.",
+        "The `Transaction` delegate provides common financial columns and behaviors.",
+        "Transactions capture the difference in billed amounts due to policy changes (e.g., submissions, mid-term changes)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Transactions: An introduction to the role of Transaction entities in tracking financial changes within PolicyCenter."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "What is a Transaction?: Explains how transactions are used for billing purposes, showing examples like initial submissions and policy changes resulting in additional charges or refunds."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Configuring Transaction Entities and Their Relationships",
+      "narrative": "When configuring transaction entities for a new policy line, Guidewire recommends using the New Product Generator accelerator, as it automatically creates the necessary `<LOB>Cost` and `<LOB>Transaction` entities and handles their relationships correctly. However, if you need to configure an `<LOB>Transaction` entity manually, there are specific steps to follow:\n\n1.  **Create a new `<LOB>Transaction` entity**: This entity will represent the transactions for your specific line of business.\n2.  **Add a foreign key to `<LOB>Cost`**: This establishes the critical link between the transaction and the parent cost entity for the line, allowing the transaction to reference the cost it modifies.\n3.  **Implement the `Transaction` delegate**: This ensures your new transaction entity inherits the standard financial columns and behaviors defined by the delegate.\n4.  **Implement other necessary interfaces**: Depending on your specific business requirements, additional interfaces might be needed.\n\nCrucially, you must also configure the `<LOB>Cost` entity to include an array of type `<LOB>Transaction`. On this array field, it is **essential** to set the `getterScriptability` attribute to `\"doesNotExist\"`. This prevents unnecessary and potentially incorrect access to detailed transaction information directly from `Cost` entities. The primary way to obtain cost and associated coverage information for each transaction is through the foreign key on the `Transaction` entity itself. Setting `getterScriptability = \"doesNotExist\"` on the `transactions` array in the `Cost` entity ensures that developers are guided to access transaction details from the `Transaction` entity, maintaining data integrity and preventing misuse. You can refer to out-of-the-box transaction entities like `BATransaction.eti` or `PATransaction.eti` for examples of this configuration.\n\nThis careful configuration ensures that transactions accurately reflect changes to costs and that financial data is accessed and managed in a structured, efficient manner.",
+      "keyPoints": [
+        "Use the New Product Generator for new policy lines to automatically create `<LOB>Transaction` and `<LOB>Cost` entities.",
+        "Manual configuration requires creating `<LOB>Transaction`, adding a foreign key to `<LOB>Cost`, and implementing the `Transaction` delegate.",
+        "The `<LOB>Cost` entity must have an array of `<LOB>Transaction` with `getterScriptability = \"doesNotExist\"` to control access to transaction details."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Transaction Entity: Details the steps for manually configuring a new `<LOB>Transaction` entity and its relationship with the `<LOB>Cost` entity, emphasizing the `getterScriptability` attribute."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Placeholder for additional transaction configuration details."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Placeholder for additional transaction configuration details."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Using `getterScriptability=\"doesNotExist\"`",
+          "content": "Setting `getterScriptability=\"doesNotExist\"` on the `transactions` array in the `Cost` entity is a critical best practice. It prevents developers from inadvertently accessing transaction details directly from a `Cost` object, which can lead to incorrect data or performance issues. Always access transaction information via the `Transaction` entity itself."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration illustrates how policy changes impact costs and generate transactions. You'll see the 'Change in Cost' displayed and then examine the financial transactions generated by a policy change. Finally, we'll look at the `Transaction` entity in Studio and the crucial `getterScriptability` setting.",
+      "transcriptSummary": "The demo shows a policy change for a Personal Auto policy, highlighting how changing coverages (e.g., selecting a different package) results in a 'total change in cost' displayed on the quote page. It then demonstrates issuing the policy change and viewing the resulting financial transactions on the 'Financial Transactions' page. In Studio, it examines the `PATransaction` entity and emphasizes the `transactions` array on `PACost`, specifically pointing out the `getterScriptability=\"doesNotExist\"` attribute and its importance."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A policyholder makes a mid-term change to their Personal Auto policy, increasing their liability coverage limits. This change results in an additional premium for the remainder of the policy term. You need to explain how PolicyCenter handles this financial adjustment from a cost and transaction perspective.",
+      "question": "Describe the sequence of events and the roles of the Cost and Transaction entities in reflecting this mid-term policy change and its impact on billing.",
+      "hints": [
+        "Consider what happens to the original cost for the liability coverage.",
+        "Think about how the new premium for the increased coverage is represented.",
+        "How do transactions capture the *difference* in amounts for billing?"
+      ],
+      "expectedApproach": "The original liability `PACost` for the previous coverage limit will be offset by a transaction. A new `PACost` will be created for the increased liability coverage. A new `PATransaction` will be generated, representing the additional premium (the difference between the new and old prorated amounts), which is then sent to the billing system."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The rating process uses `PCRatingPlugin` and LOB-specific engines to calculate costs based on Rate Books, Rate Tables, and Rate Routines.",
+        "Cost entities are discrete units of price, linked to policy elements, and store premiums, taxes, and fees.",
+        "Cost delegate fields (Standard, Override, Actual) track various rate and amount values, while `PolicyPeriod` fields store aggregated totals for performance.",
+        "Transaction entities track changes in costs over time, crucial for billing and reflecting policy adjustments.",
+        "Proper configuration of `<LOB>Transaction` and its relationship with `<LOB>Cost` (especially `getterScriptability`) ensures data integrity."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a robust understanding of Costs and Transactions is fundamental for accurate premium calculation, seamless integration with billing systems, and transparent financial tracking. Misconfigurations can lead to incorrect billing, compliance issues, and significant operational challenges. By correctly structuring these entities, you ensure the financial backbone of your insurance products is solid and extensible.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the `CostData` objects and how they are used in memory during the rating process before being persisted as `Cost` entities."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Conf_01_01.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_01_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Ra_Conf_01_02.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_01_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Ra_Conf_01_03.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_01_03.mp4"
+    }
+  ]
+}

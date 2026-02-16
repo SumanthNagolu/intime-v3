@@ -1,0 +1,333 @@
+{
+  "lessonId": "ch09-l08",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 8,
+  "title": "Configuring Claim Contacts",
+  "subtitle": "Mastering contact types, roles, and UI widgets for efficient claims processing in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T18:31:54.819574+00:00",
+  "estimatedMinutes": 110,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a complex claim involving multiple parties: the insured, a claimant, several witnesses, an auto repair shop, and a doctor. Each of these individuals and entities plays a distinct role, and their accurate information is crucial for efficient claims processing. What happens if this contact data is inconsistent, poorly managed, or difficult to access?",
+      "question": "How can ClaimCenter be configured to ensure that all relevant contacts are accurately captured, categorized, and easily managed throughout the claim lifecycle?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between various contact types, roles, and their storage mechanisms (local vs. shared).",
+        "Describe the ClaimCenter data model for managing contacts and their associated roles.",
+        "Configure new contact roles and categorize them within ClaimCenter.",
+        "Implement contact role type constraints and entity role constraints to ensure data integrity.",
+        "Utilize and configure Claim Contact Widgets for efficient contact management in the ClaimCenter user interface."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your foundational understanding of ClaimCenter's data model and how claims are structured. Recall how different parties interact with a claim and the importance of accurate record-keeping.",
+      "warmupQuestion": "Think about a typical claim you've encountered. What are the different types of external individuals or organizations you would need to track?",
+      "hint": "Consider the roles beyond just the insured and claimant."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Claim Contacts: Types, Storage, and Roles",
+      "narrative": "In ClaimCenter, a **contact** is any external person, company, or place with whom you might need to communicate regarding a claim. This includes a wide array of entities such as claimants, reporters, doctors, attorneys, auto repair shops, hospitals, or even courthouses. It's important to distinguish contacts from users; users are typically internal employees of the insurance company who process claims, while contacts are external parties.\n\nContacts are categorized into subtypes like **Person**, **Company**, or **Place**, which allows for hierarchical inheritance of fields. For instance, a 'Person' subtype might have fields for first name and last name, while an 'Attorney' subtype (under 'Person') would inherit these and add specific fields like 'Law License #' and 'Specialty'. This mirrors real-world relationships and ensures relevant data is captured at the appropriate level. For example, adding a new subtype like 'Assembly Room' under 'Legal Venue' would allow for specific room details to be tracked.\n\nClaimCenter manages contacts in two primary ways: **Local Contacts** and **Shared Contacts** (also known as linked contacts). Local contacts are created and exist solely within a single claim in ClaimCenter. Changes to a local contact only affect that specific claim. Shared contacts, on the other hand, are typically vendors or frequently used entities stored in a central address book application like Guidewire ContactManager. When a shared contact is associated with a claim, a local copy is created. While changes to this local copy don't automatically update other claims, you have the option to synchronize it with the central address book, ensuring future local copies reflect the update. This synchronization can be configured to happen immediately or on a schedule, with important considerations for system performance and data consistency, especially when integrating with ContactManager.\n\nEvery contact associated with a claim is assigned one or more **roles**, which define their specific relationship to that claim. A contact's role is dynamic; the same person might be a doctor on one claim and an injured party on another. Furthermore, a single contact can hold multiple roles on the same claim, such as a driver who is also the insured and the reporter. Examples of roles include Doctor, Witness, Claimant, Adjuster, Hospital, or Repair Shop. These roles are crucial for understanding the contact's involvement and for proper claims processing.",
+      "keyPoints": [
+        "Contacts are external parties (persons, companies, places) related to a claim, distinct from internal users.",
+        "Contacts are organized by subtypes (Person, Company, Place) with hierarchical field inheritance.",
+        "Local contacts are claim-specific; shared contacts are centrally managed (e.g., in ContactManager) and can be synchronized across claims.",
+        "Contact roles define a contact's relationship to a specific claim and can vary across claims or even within a single claim."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of various contact types and their relevance to a claim."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definitions of contacts, persons, companies, and places in the context of claims."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustrates the difference between local contacts (claim-specific) and linked/shared contacts (from ContactManager)."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Explains the concept of roles, where a contact's relationship to a claim is defined."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Shows the hierarchical structure of contact subtypes and how fields are inherited."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Contact vs. User",
+          "content": "A **contact** is an external person, company, or place related to a claim. A **user** is an internal employee of the insurance company who interacts with ClaimCenter."
+        },
+        {
+          "type": "tip",
+          "title": "ContactManager Integration",
+          "content": "Integrating with Guidewire ContactManager provides a central address book for sharing and synchronizing contact information across multiple Guidewire applications, ensuring data consistency for frequently used contacts like vendors."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "ClaimCenter's Contact Role Data Model",
+      "narrative": "ClaimCenter employs a robust data model to manage the complex relationships between claims, contacts, and their roles. This model ensures that contact information is stored efficiently and that roles are accurately associated with specific aspects of a claim. The core entities involved are `Claim`, `Contact`, `ClaimContact`, `ClaimContactRole`, and `ClaimContactRoleOwner`.\n\nAt the foundation, the **`Contact`** entity stores claim-independent information about a person, place, or company, such as their name, address, and general contact details. This information can be permanently stored in an external address book like ContactManager, especially for contacts frequently involved in multiple claims, such as vendors or legal venues.\n\nThe **`Claim`** entity, as you know, stores all fundamental information about a specific claim. To link a `Contact` to a `Claim`, ClaimCenter uses the **`ClaimContact`** entity. This entity acts as a join table, pairing a key to a `Claim` with a key to a `Contact`, establishing a many-to-many relationship. A `ClaimContact` can reference either a local contact created for a single claim (like a witness) or a shared contact copied from the address book. Importantly, a `Contact` can only be associated with one `ClaimContact` on any given `Claim`.\n\nSince a contact can have one or many roles on a claim, the **`ClaimContactRole`** entity is used. This is another join table that stores pairings of `ClaimContact` and `Role` on a many-to-many basis, identifying the specific role(s) a contact holds on a claim. For example, Bo Simpson might be a 'Claimant' and a 'Driver' on the same claim.\n\nFinally, the **`ClaimContactRoleOwner`** interface is crucial for associating a role with the specific aspect of a claim that 'owns' it. This interface is implemented by entities like `Claim`, `Exposure`, `Incident`, `Matter`, `Evaluation`, `Negotiation`, or `Policy`. This means a role isn't just tied to the overall claim, but can be specifically linked to an exposure (e.g., Bo Simpson as a claimant on a bodily injury exposure) or an incident (e.g., Bo Simpson as a driver on a vehicle incident). This granular ownership ensures that roles are contextually relevant within the claim structure.",
+      "keyPoints": [
+        "The `Contact` entity holds claim-independent information.",
+        "The `ClaimContact` entity links a `Claim` to a `Contact`.",
+        "The `ClaimContactRole` entity assigns one or more roles to a `ClaimContact`.",
+        "The `ClaimContactRoleOwner` interface associates a role with a specific owning entity within the claim (e.g., claim, exposure, incident)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Visual representation of contact roles within the ClaimCenter UI, showing a contact's various roles related to different claim aspects."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Highlights the `Contact` entity in the data model, storing fundamental, claim-independent information."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Focuses on the `ClaimContact` entity, which links a contact to a specific claim and its roles."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Illustrates the `ClaimContactRole` entity, which identifies the specific role(s) a contact has on a claim."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Details the `ClaimContactRoleOwner` interface, showing how roles are associated with specific claim entities like incidents or exposures."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "A conceptual transition slide, indicating a shift in focus within the data model discussion."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuring Contact Roles and Constraints",
+      "narrative": "Configuring contact roles and their associated constraints is a critical aspect of customizing ClaimCenter to fit specific business needs, ensuring data integrity and a streamlined user experience. To introduce a new role, you must add an entry to the **`ContactRole` typelist**. This is an extendible typelist, meaning you can add new typecodes. When doing so, it's vital to note the `code` property assigned to your new role, as this code will be referenced in other configurations.\n\nBeyond just defining roles, you can categorize them to improve usability in the ClaimCenter UI. The contacts list view often includes a filter, and the values for this filter come from the **`ContactRoleCategory` typelist**. Each typecode in `ContactRoleCategory` is associated with a list of roles (identified by their `code` property from `ContactRole`). This allows users to filter the contacts list, for example, to show only 'Vendors' or 'Primary roles', which is especially useful on claims with many contacts.\n\nTo prevent illogical role assignments and maintain data quality, ClaimCenter uses **role constraints**. These constraints create relationships between roles, contact types, and entities. There are two main types:\n\n1.  **Contact Role Type Constraints**: These determine *what contact subtypes may hold what roles*. For instance, a 'Primary Physician' role can only be assigned to a contact of subtype 'Doctor', not an 'Attorney'. These are configured in `entityroleconstraints-config.xml`. You can also define `ExceptionConstraints`, allowing exceptions where a different contact subtype can hold a role under specific conditions, such as a 'Company' being a 'Claimant' on an 'Exposure' but not on the overall 'Claim'.\n\n2.  **Entity Role Constraints**: These define *which entities can own roles, how many contacts can have a specific role on that entity, and which loss types can be associated with the role*. For example, a 'Driver' role might be limited to one contact per 'Vehicle Incident' and would be prohibited on a 'Fixed Property Incident'. These are also configured in `entityroleconstraints-config.xml` and use properties like `constraintType` (Exclusive, Required, Prohibited) and `AdditionalInfo` to specify conditions based on properties of the owning entity, such as `LossType`. `EntityRefs` define the type of entity the constraint refers to, and `RoleRefs` define the relationship between a Role and an Entity that can own it.",
+      "keyPoints": [
+        "New contact roles are defined in the `ContactRole` typelist, requiring careful attention to the `code` property.",
+        "Contact role categories (from `ContactRoleCategory` typelist) enable filtering of contacts in the UI.",
+        "Contact Role Type Constraints define which contact subtypes can have specific roles.",
+        "Entity Role Constraints define which entities can own roles, the number of contacts allowed for a role, and associated loss types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Shows the `ContactRole` typelist where new contact roles are added and configured."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Illustrates the `ContactRoleCategory` typelist, used for filtering contacts in the UI."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Explains how `ContactRoleCategory` typecodes are associated with `ContactRole` typecodes to determine UI filter options."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Demonstrates Contact Role Type Constraints, showing which contact subtypes can hold a particular role."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Explains Entity Role Constraints, covering how many contacts can have a role, which entities own it, and associated loss types."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Provides an XML example of configuring Contact Role Type Constraints in `entityroleconstraints-config.xml`, including `ExceptionConstraints`."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Offers an XML example of configuring Entity Role Constraints in `entityroleconstraints-config.xml`, using `constraintType` and `AdditionalInfo`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Code Property for Roles",
+          "content": "When adding a new role to the `ContactRole` typelist, always make a note of the `code` property you assign. This code is crucial for referencing the role in other configurations, such as constraints and UI widgets."
+        },
+        {
+          "type": "definition",
+          "title": "Role Constraints",
+          "content": "Role constraints are rules that govern how contacts can be assigned roles, preventing illogical assignments and ensuring data integrity within the ClaimCenter system."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Contact Role Type Constraint Example",
+          "code": "<ContactRoleTypeConstraint contactRoleCode=\"casemgmtco\" contactSubtype=\"Company\"/>\n<ContactRoleTypeConstraint contactRoleCode=\"casemgr\" contactSubtype=\"Person\"/>\n<ContactRoleTypeConstraint contactRoleCode=\"claimant\" contactSubtype=\"Person\">\n    <ExceptionConstraint contactSubtype=\"Company\" entityRef=\"Exposure\"/>\n</ContactRoleTypeConstraint>",
+          "explanation": "This XML snippet from `entityroleconstraints-config.xml` shows how to define that 'casemgmtco' can only be a Company, 'casemgr' only a Person, and 'claimant' typically a Person, with an exception allowing a Company to be a claimant on an Exposure."
+        },
+        {
+          "language": "xml",
+          "title": "Entity Role Constraint Example",
+          "code": "<EntityRoleConstraint>\n    <RoleConstraint constraintType=\"Exclusive\"/>\n    <RoleConstraint constraintType=\"Required\">\n        <AdditionalInfo propertyName=\"LossType\" value=\"\"C\"/>\n    </RoleConstraint>\n    <RoleConstraint constraintType=\"Prohibited\">\n        <AdditionalInfo propertyName=\"LossType\" value=\"\"F\"/>\n    </RoleConstraint>\n</EntityRoleConstraint>",
+          "explanation": "This XML demonstrates an entity role constraint. It specifies that a role is 'Exclusive' (only one contact can have it), 'Required' if the `LossType` is 'C', and 'Prohibited' if the `LossType` is 'F'."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of adding a new claim contact role within ClaimCenter. Pay close attention to how the UI guides you through selecting contact types and assigning roles.",
+      "transcriptSummary": "The video demonstrates navigating to a claim's 'Parties Involved' section, selecting an existing contact, and then adding a new role to that contact. It highlights the dropdown menus and confirmation steps involved in role assignment."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing Claim Contact Widgets in the UI",
+      "narrative": "Claim Contact Widgets are specialized input widgets designed to streamline the management of `ClaimContacts` within the ClaimCenter user interface. These widgets offer a powerful and intuitive way for users to interact with contact data, combining selection, creation, and viewing functionalities.\n\nThere are two main types of Claim Contact Widgets:\n\n1.  **Claim Contact Cell**: Used in list views, providing a compact way to display and interact with contacts within a table or list.\n2.  **Claim Contact Input**: Used in detail views, offering a more comprehensive interface for managing a single contact's details.\n\nBoth widget types feature a dual-dropdown mechanism. The first dropdown allows users to select from contacts already associated with the current claim. The second, located to the right, provides a menu with three key options: 'Add a new contact to the claim', 'Search the address book for an existing contact', and 'View the details of that contact' (if a contact is already selected).\n\nWhen configuring these widgets in Guidewire Studio, several properties are essential:\n\n*   **`claim`**: This required property associates the widget with a specific `Claim` entity, linking the contact input to the relevant claim context.\n*   **`value`**: This property specifies the actual `ClaimContact` that the widget refers to, such as `Matter.plaintiffatt` for a plaintiff attorney on a legal matter.\n*   **`valueRange`**: This crucial property defines *which contacts associated with the claim can be displayed* in the widget. It must be an array, often a derived array like `Claim.RelatedAttorneyArray`, which is generated based on `entityroleconstraints-config.xml` to return contacts with specific roles (e.g., only attorneys).\n*   **`valueType`**: This property specifies *what type of entity the widget can display*, ensuring it matches the contact role constraint. For example, if the widget is for a plaintiff attorney, `valueType` would be `entity.Attorney`. If the constraint isn't specific enough, you can use the `forceContactSubtype` property for more granular control.\n*   **`newContactMenu`**: This property determines the options available in the 'Add new contact' menu. You can use predefined `MenuItemSet` PCF files like `ClaimNewPersonOnlyPickerMenuItemSet` (only allows new persons), `ClaimNewCompanyOnlyPickerMenuItemSet` (only allows new companies), or `ClaimNewContactPickerMenuItemSet` (allows all contact types, which is the default if nothing is specified). The 'Search' and 'View Contact Details' options are automatically included, though 'Search' can be suppressed by setting `showSearchInMenu` to `false`.\n\nProper configuration of these properties ensures that the Claim Contact Widgets provide a tailored and efficient experience for managing claim-related contacts.",
+      "keyPoints": [
+        "Claim Contact Widgets (`Claim Contact Cell` for lists, `Claim Contact Input` for details) simplify contact management in the UI.",
+        "Widgets offer options to select existing claim contacts, add new contacts, search the address book, or view contact details.",
+        "Key properties include `claim` (links to claim), `value` (the specific contact), `valueRange` (allowed contacts from derived arrays), `valueType` (expected contact subtype), and `newContactMenu` (options for adding new contacts).",
+        "The `showSearchInMenu` property can suppress the address book search option."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "An overview of Claim Contact Widgets, highlighting their dual dropdown functionality for selecting, adding, or searching contacts."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Distinguishes between `Claim Contact Cell` (for list views) and `Claim Contact Input` (for detail views)."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Illustrates the basic properties of a `Claim Contact Input` widget, focusing on `claim` and `value`."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Explains the `valueRange` and `valueType` properties, showing how they control which contacts can be displayed and their required entity type."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Details the `newContactMenu` property, which customizes the options for adding new contacts, and the `showSearchInMenu` property."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Matching ValueType to Constraints",
+          "content": "Always ensure the `valueType` property of a claim contact widget aligns with the contact role constraints defined for the contact being managed. This consistency helps enforce data integrity and provides a seamless user experience."
+        },
+        {
+          "type": "tip",
+          "title": "Suppressing Search",
+          "content": "If you want to prevent users from searching the central address book for contacts from a specific widget, set the `showSearchInMenu` property to `false` on the `claimcontactinput` or `claimcontactcell`."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of adding and configuring a Claim Contact Widget in ClaimCenter Studio. Pay attention to how different properties are set to control the widget's behavior and available options.",
+      "transcriptSummary": "The video illustrates how to open a PCF file in Studio, drag and drop a `ClaimContactInput` widget onto a detail view, and then configure its essential properties such as `claim`, `value`, `valueRange`, and `newContactMenu` to customize its functionality."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company has introduced a new specialized role, 'Forensic Accountant', for complex fraud claims. This role should only be assigned to contacts who are of the 'Person' subtype and specifically have a 'Forensic' specialty. You also need to ensure that only one Forensic Accountant can be assigned per claim.",
+      "question": "How would you configure ClaimCenter to support the 'Forensic Accountant' role with the specified constraints?",
+      "hints": [
+        "Start by defining the new role in the appropriate typelist.",
+        "Consider which configuration file is used for role constraints.",
+        "Think about how to enforce both contact subtype and cardinality (one per claim) for the role."
+      ],
+      "expectedApproach": "1. Add 'Forensic Accountant' to the `ContactRole` typelist. 2. Define a `ContactRoleTypeConstraint` in `entityroleconstraints-config.xml` to restrict it to the 'Person' subtype. 3. Add an `EntityRoleConstraint` for the 'Forensic Accountant' role, setting `constraintType=\"Exclusive\"` at the claim level."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You are tasked with adding a new field to a claim's detail view that allows users to select a 'Preferred Vendor' for a specific type of service. This field should display only contacts categorized as 'Vendors' and allow users to either select an existing vendor from the claim, search the address book, or add a new 'Company' type contact if needed. The search option should always be available.",
+      "question": "Describe the steps and key properties you would configure for a Claim Contact Widget to meet these requirements.",
+      "hints": [
+        "Which widget type is suitable for a detail view?",
+        "How do you filter the list of contacts displayed in the widget?",
+        "Which property controls the 'Add new contact' menu options?",
+        "Is there a property to ensure the search option is always present?"
+      ],
+      "expectedApproach": "Use a `ClaimContactInput` widget. Set `valueRange` to a derived array that returns vendors. Configure `newContactMenu` to allow adding new 'Company' contacts. Ensure `showSearchInMenu` is not set to `false` (or explicitly `true` if needed)."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is the difference between a contact type and a contact role?",
+      "referenceAnswer": "The correct answer is type and subtype are object types in the data model. Contact\nroles identify the contact’s relationship to the claim or exposure.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What is the difference between a contact role type constraint and an\n¢ entity role constraint?",
+      "referenceAnswer": "The correct answer is contract role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "!fyou need to add a claim contact to a detail view, which widget type\nY should you use?",
+      "referenceAnswer": "The correct answer is a claim contact input.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Contacts are external parties, categorized by type (Person, Company, Place) and assigned specific roles on a claim.",
+        "Contacts can be local (claim-specific) or shared (from ContactManager) with synchronization capabilities.",
+        "The ClaimCenter data model uses `ClaimContact`, `ClaimContactRole`, and `ClaimContactRoleOwner` to link contacts, roles, and specific claim entities.",
+        "Contact roles are configured via the `ContactRole` typelist and categorized using `ContactRoleCategory`.",
+        "Role constraints (`Contact Role Type Constraints` and `Entity Role Constraints`) ensure data integrity by controlling valid role assignments.",
+        "Claim Contact Widgets (`Claim Contact Cell`, `Claim Contact Input`) provide a user-friendly interface for managing contacts in the UI, configured with properties like `valueRange`, `valueType`, and `newContactMenu`."
+      ],
+      "realWorldConnection": "Effective configuration of claim contacts is foundational for accurate claims processing, regulatory compliance, and efficient communication. In real Guidewire projects, a well-defined contact structure, coupled with robust constraints and intuitive UI widgets, significantly reduces data entry errors, streamlines workflows, and enhances the overall user experience for adjusters and other claims personnel. This also ensures seamless integration with external systems like ContactManager for centralized contact management.",
+      "nextLessonPreview": "In the next lesson, we will explore how to configure and manage claim services, building upon our understanding of how contacts interact with various aspects of a claim."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this hands-on exercise, you will practice adding a new claim contact role and configuring its basic properties within ClaimCenter Studio. This will reinforce your understanding of the `ContactRole` typelist and the initial steps for role creation.",
+      "objectives": [
+        "Create a new entry in the `ContactRole` typelist.",
+        "Assign a unique code and name to the new contact role.",
+        "Verify the new role's availability in the ClaimCenter UI."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_08_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_08_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_08_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_08_02.mp4"
+    }
+  ]
+}

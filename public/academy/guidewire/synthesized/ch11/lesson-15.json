@@ -1,0 +1,435 @@
+{
+  "lessonId": "ch11-l15",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 15,
+  "title": "Sending Messages",
+  "subtitle": "Mastering Guidewire's messaging framework for reliable external system communication.",
+  "synthesizedAt": "2026-02-16T19:00:17.826577+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your Guidewire application needs to send critical financial transaction data, like bank account verifications, to an external banking system. What happens if the external system is temporarily down, or if related messages arrive out of order, causing data inconsistencies?",
+      "question": "How can we ensure messages are sent reliably, in the correct sequence, and with robust error handling in a Guidewire integration?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the role of the message transport plugin in Guidewire messaging.",
+        "Describe the transaction structure involved in Guidewire message sending.",
+        "Implement a custom message transport plugin to send messages to an external system.",
+        "Configure messaging plugins and destinations within Guidewire Studio.",
+        "Understand and apply Guidewire's safe ordering mechanism for related messages.",
+        "Configure and manage automatic and manual retry mechanisms for message send errors."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of Guidewire's plugin architecture and basic messaging concepts. Recall how plugins extend core functionality and how messages are initially generated.",
+      "warmupQuestion": "What are some common challenges when integrating Guidewire with external systems that require reliable message delivery?",
+      "hint": "Think about data consistency, order of operations, and system availability."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Core Messaging Concepts and Transactions",
+      "narrative": "When integrating Guidewire with external systems, a common use case involves sending specific data payloads, such as bank account verification details, to ensure data consistency and trigger downstream processes. This often requires careful configuration to handle potential send errors and ensure messages are processed in a specific order, especially when subsequent messages depend on the acknowledgment of previous ones.\n\nGuidewire's messaging system involves several servers and a structured transaction process to ensure reliability. Payload generation typically occurs in Event Fired rules on the UI role server, which manages the user's session. However, any payload generation that must happen immediately before sending the message can be done on the messaging role server. A single message is processed across multiple database transactions, usually between two and four, which is crucial for understanding error rollback behavior.\n\n**Transaction 1** is always present, creating the message and generating its initial payload. **Transaction 2** is optional and can transform the message payload just before sending, often to include real-time information. **Transaction 3** is dedicated to sending the message to the external system; synchronous acknowledgments are handled within this transaction. Finally, **Transaction 4** processes asynchronous acknowledgments separately. This multi-transaction approach ensures that if an error occurs at any stage, only the work within that specific transaction is rolled back, preserving the integrity of other processes.",
+      "keyPoints": [
+        "Payload generation primarily occurs in Event Fired rules on the UI role server.",
+        "Messaging involves multiple database transactions (2-4) for creation, transformation, sending, and acknowledgment.",
+        "The transaction structure dictates what work is rolled back in case of an error."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An example use case for sending messages to an external system, highlighting requirements like error handling and sequential acknowledgment."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the Guidewire servers and the multi-transaction process involved in messaging, from event triggering to acknowledgment."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Messaging Transactions",
+          "content": "Guidewire messages are processed in a series of database transactions (up to four) to manage payload creation, transformation, sending, and acknowledgment, ensuring data integrity and controlled rollback in case of errors."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Message Transport Plugin",
+      "narrative": "The core component responsible for the actual delivery of a message to an external system is the **message transport plugin**. This plugin handles various connectivity types, from file-based transfers and raw sockets to more sophisticated asynchronous message-based transports like JMS or SOAP/JMS. Its primary responsibility is to send the message, but it can also manage persisting the `SenderRefID` (if provided by the external system) and acknowledging synchronous message exchanges.\n\nTo create a message transport plugin, you implement the `MessageTransport` interface. It's a best practice to follow a clear package naming convention, such as `<company>.<app_code>.messaging.<functional_area>`, to keep your codebase organized. When implementing the `send` method, it's crucial to remember that the `Message` entity instance is within the scope of Transaction 3. This method receives the `Message` object and the `transformedPayload` as arguments.\n\nBeyond the `send` method, transport plugins can also implement the `InitializablePlugin` interface, which adds a `setParameters` property for configuration. Furthermore, they should implement `resume`, `suspend`, and `shutdown` methods. These methods are invoked by the application when the destination's state changes, allowing the plugin to acquire or release external resources like JMS or JDBC connections. While `resume` might throw a `GuidewireInitializationException` if resources fail to initialize, `suspend` and `shutdown` typically release resources. The `setDestinationID` property allows the plugin to store its own destination ID, useful for logging or programmatic control, keeping in mind that valid IDs are 0-63.",
+      "keyPoints": [
+        "The message transport plugin is responsible for sending messages and can handle SenderRefID persistence and synchronous acknowledgments.",
+        "Implement the `MessageTransport` interface for the plugin class.",
+        "The `send` method operates within Transaction 3 and receives the `Message` object and transformed payload.",
+        "Implement `resume`, `suspend`, and `shutdown` methods to manage external resources."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Diagram illustrating the role of the message transport plugin in communicating with an external system."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Code example demonstrating how to create a message transport plugin class by implementing the `MessageTransport` interface."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Code example showing the implementation of destination plugin methods like `send`, `shutdown`, `suspend`, and `resume`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Single System Per Send Method",
+          "content": "Each `send` method should send a message to only one external system. Sending to multiple systems makes tracking the post-send status of the message unclear and complicates acknowledgment handling."
+        },
+        {
+          "type": "definition",
+          "title": "Destination ID Range",
+          "content": "Valid destination IDs for custom plugins are 0 through 63. Other IDs are reserved for built-in Guidewire destinations."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "BankAccountVerificationTransport.gs (Snippet)",
+          "code": "package trainingapp.messaging.bank\n\nuses gw.plugin.messaging.MessageTransport\nuses trainingapp.webservice.bank.bankaccountverificationwsc.bankverificationapi.BankVerificationAPI\n\nclass BankAccountVerificationTransport implements MessageTransport {\n\n  var bankApi: BankVerificationAPI\n\n  @Param(\"aMessage\", \"Message object\")\n  @Param(\"transformedPayload\", \"Payload sent by request plugin\")\n  override function send(aMessage : Message, transformedPayload : String) {\n    // ... implementation ...\n  }\n  // ... other methods ...\n}",
+          "explanation": "This Gosu snippet shows the basic structure of a message transport plugin class implementing the `MessageTransport` interface."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Implementing Message Sending Logic",
+      "narrative": "The `resume` and `suspend` methods are crucial for managing the lifecycle of external connections within your transport plugin. For instance, in the `resume` method, you would typically instantiate and configure an external web service object, setting properties like authentication credentials and a `CallTimeout` to prevent indefinite waiting. Conversely, the `suspend` method would be used to release these resources, often by setting the object to `null`. While `shutdown` could also release resources, calling `suspend` from `shutdown` is a common pattern, though the Java garbage collector will eventually handle object deletion.\n\nThe core logic for sending the message resides within the `send` method. This method receives the `Message` object and the `transformedPayload`. Depending on the integration, you might send this payload to a web service or write it to a file. For a web service integration, you would invoke the appropriate API method, passing the `SenderRefID`, the `transformedPayload`, and any other necessary message details. If the external system acknowledges synchronously, the acknowledgment is part of this transaction.\n\nAlternatively, for file-based integrations, the `send` method would involve creating a file, initializing a `BufferedWriter` to handle character output, writing the `transformedPayload` to the file, and then ensuring the stream is properly flushed and closed. Regardless of the transport mechanism, the `send` method is where the actual communication with the external system takes place. It's important to note that pre-update rules and validation logic are *not* triggered by data changes made within the `send` method, as it operates in a different transaction context.",
+      "keyPoints": [
+        "The `resume` method initializes external resources (e.g., web service clients) and configures them.",
+        "The `suspend` method releases external resources.",
+        "The `send` method contains the core logic for transmitting the `transformedPayload` to the external system.",
+        "Messages can be sent via various transports, such as web services or file systems."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Code example illustrating the implementation of `resume` and `suspend` methods for managing external API connections."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Code example showing how to implement the `send` method to transmit a payload to an external web service."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Code example demonstrating how to implement the `send` method to write a payload to a local file."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Resume and Suspend Methods",
+          "code": "override function resume() {\n  _bankApi = new BankVerificationAPI()\n  _bankApi.config.Http.Authentication.Basic.Username = \"externalappuser\"\n  _bankApi.Config.Http.Authentication.Basic.Password = \"gw\"\n  _bankApi.Config.CallTimeout = 30000\n}\n\noverride function suspend() {\n  _bankApi = null\n}",
+          "explanation": "This code shows how to initialize a `BankVerificationAPI` object and configure its authentication and timeout settings in `resume`, and how to release it in `suspend`."
+        },
+        {
+          "language": "gosu",
+          "title": "Send Payload to Web Service",
+          "code": "@Param(\"aMessage\", \"Message object\")\n@Param(\"transformedPayload\", \"Payload sent by request plugin\")\noverride function send(aMessage : Message, transformedPayload : String) {\n  var accNumber = (aMessage.MessageRoot as BankAccount).AccountNumber\n  var ackCode = bankApi.verifyAccount(aMessage.SenderRefID, transformedPayload, accNumber)\n}",
+          "explanation": "This `send` method calls an external web service `verifyAccount` with the transformed payload and other message details."
+        },
+        {
+          "language": "gosu",
+          "title": "Send Payload to File",
+          "code": "override function send(aMessage: Message, transformedPayload: String) {\n  print(\"\\n*** Stage 3(b) -- Sending the message ***\")\n  print(\" Transport plugin: VendorRecommendationTransport -- send()\")\n  print(\" Sending payload to file c:/Guidewire/Vendor\" + aMessage.ABContact.PublicID + \".txt\")\n  var file = \"c:/Guidewire/Vendor\" + aMessage.ABContact.PublicID + \".txt\"\n  var output = new BufferedWriter(new FileWriter(new File(file)))\n  output.write(transformedPayload)\n  output.close()\n}",
+          "explanation": "This `send` method writes the transformed payload to a text file on the local system."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring and Deploying Messaging Components",
+      "narrative": "Once your message transport plugin class is developed, it needs to be registered and configured within Guidewire Studio. The first step is to create a plugin registry entry, typically found under `configuration.config.Plugins.registry`. This entry specifies the name of your plugin, the interface it implements (e.g., `MessageTransport`), and the Gosu class that provides the implementation. You can also register Java or OSGi plugins if your implementation uses those technologies.\n\nAfter registering the plugin, you must configure it. This involves navigating to the plugin's configuration in Studio, where you can specify its name, interface, and the Gosu class. If your plugin implements the `InitializablePlugin` interface, you can also add Java plugin parameters, allowing for dynamic configuration of your plugin's behavior without code changes. However, if your plugin does not require parameters, this section can be left blank.\n\nFinally, the configured plugin needs to be associated with a **destination**. Destinations are defined in `messaging-config.xml` and act as logical endpoints for messages. Each destination can use only *one* message transport plugin, although a single transport plugin class can be reused across multiple destinations. When configuring a destination, you link it to your registered transport plugin. Once all these configurations are complete, you must deploy the changes. This typically involves restarting the Guidewire server, which can be done from Studio in either Run or Debug mode. This ensures that the new plugin class, updated registry, and modified destination configurations are loaded and active in the application.",
+      "keyPoints": [
+        "Create a plugin registry entry for your message transport plugin.",
+        "Configure the plugin in Studio, specifying its class and optional parameters.",
+        "Associate the configured plugin with a message destination in `messaging-config.xml`.",
+        "Deploy changes by restarting the Guidewire server."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Screenshot showing the plugin registry in Guidewire Studio, where new plugins are defined."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Screenshot of the plugin configuration screen, where details like the Gosu class and optional parameters are set."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Screenshot of the `messaging-config.xml` file, showing how destinations are configured and linked to transport plugins."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Screenshot illustrating the server restart options in Guidewire Studio for deploying code changes."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Ensuring Message Order with Safe Ordering",
+      "narrative": "In complex integration scenarios, multiple messages might be generated for a single entity or a set of related entities. If these messages are sent out of order, or if an earlier message is lost or delayed, subsequent messages might become meaningless or cause errors in the external system. For example, if an 'Account Added' message is delayed, an 'Account Changed' message for the same account might arrive first, leading to confusion or processing failures in the external system.\n\nTo prevent such issues, Guidewire provides a built-in mechanism called **safe ordering**. Its primary purpose is to ensure that related messages are received by the external system one at a time, in the correct logical sequence. When safe ordering is enforced for a given destination and entity pair, only one message for that pair is sent at a time. The external system *must* acknowledge the first message before the next message for that same entity can be sent. This guarantees sequential processing and prevents out-of-order issues.\n\nSafe ordering is not a simple first-in, first-out (FIFO) queue; it prioritizes messages based on the order they *must* be received by the external system. This has significant implications for messaging performance: while messages for different entities can be sent concurrently, only one safe-ordered message for a *specific* entity/destination pair can be in flight at any given time. Guidewire waits for acknowledgment before sending the next message for that same entity. Non-safe-ordered messages, which typically relate to administrative data, are sent first and immediately, in their creation order, without waiting for acknowledgment. Safe-ordered messages follow, also in creation order, but with the entity-specific acknowledgment dependency. Destinations can also be configured with 'strict mode,' which forces non-safe-ordered messages to be sent one at a time with acknowledgment, and prevents safe-ordered messages from being sent until all non-safe-ordered messages are acknowledged. This mode should be used cautiously as it can impact throughput.",
+      "keyPoints": [
+        "Out-of-order messages for related entities can cause data inconsistencies and errors.",
+        "Safe ordering ensures related messages are sent one at a time for a given entity/destination pair.",
+        "The external system must acknowledge a safe-ordered message before the next one for that entity is sent.",
+        "Non-safe-ordered messages are sent immediately before safe-ordered messages, in creation order."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Illustrates the problem of out-of-order messages, where a 'changed' message arrives before an 'added' message for the same account."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Explains Guidewire's safe ordering mechanism, which ensures related messages are sent sequentially and acknowledged."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Diagram showing the default ordering and sending behavior for both non-safe-ordered and safe-ordered messages."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Safe Ordering",
+          "content": "A Guidewire messaging feature that ensures related messages for a specific entity and destination are sent and acknowledged sequentially, preventing out-of-order processing by external systems."
+        },
+        {
+          "type": "warning",
+          "title": "Strict Mode Caution",
+          "content": "Strict mode can significantly impact destination throughput, as a single unacknowledged non-safe-ordered message can block all subsequent messages for that destination."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Safe Ordering Across Guidewire Products",
+      "narrative": "The application of safe ordering varies slightly across different Guidewire products to best suit their respective business contexts. In **InsuranceSuite** products like ClaimCenter and PolicyCenter, safe ordering typically applies to messages related to the primary entity (Claim or Account). However, for integrations with contact management systems (like Guidewire ContactManager), you can configure safe ordering at the `Contact` level by selecting 'Contact' in the 'Alternative Primary Entity' field of the destination configuration. This allows multiple messages for a single claim/account to be in flight, as long as each pertains to a different contact.\n\n**BillingCenter** has a different approach because it lacks a single primary entity that uniquely owns most business information. By default, safe ordering is not used in BillingCenter, and it must be explicitly enabled for each destination. You can select `Account`, `Contact`, `PolicyPeriod`, or `Producer` as the 'Alternative Primary Entity' to enforce safe ordering. Enabling safe ordering is a best practice for any destination that can benefit from it, as it reduces errors and can improve performance by ensuring logical message flow.\n\nIn **ContactManager** (and TrainingApp), messages are safe-ordered based on the `ABContact` entity for every destination, and there are no alternative primary entity types. This ensures that all messages related to a specific contact are processed sequentially. TrainingApp includes a dedicated safe ordering demo, accessible from the Administration tab, which allows you to observe this behavior firsthand. You can select an `ABPerson` (a safe-ordering entity) or a `User` (a non-safe-ordering entity), change their occupation, and send messages with or without acknowledgment. This demo clearly illustrates how the second message for a safe-ordering entity is only sent after the first is acknowledged, while for non-safe-ordering entities, messages are sent regardless of acknowledgment.",
+      "keyPoints": [
+        "InsuranceSuite products default to safe ordering on primary entities (Claim, Account), but can be configured for `Contact`.",
+        "BillingCenter requires explicit enablement of safe ordering, with options for `Account`, `Contact`, `PolicyPeriod`, or `Producer`.",
+        "ContactManager enforces safe ordering based on the `ABContact` entity for all destinations.",
+        "The TrainingApp demo provides a practical way to observe safe ordering behavior for different entity types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Explains how safe ordering applies in InsuranceSuite, including the concept of an 'Alternative Primary Entity'."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Illustrates safe ordering in ContactManager, where messages are safe-ordered based on `ABContact`."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Screenshot of the Safe Ordering demo in TrainingApp, allowing users to test safe and non-safe ordering scenarios."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Enable Safe Ordering in BillingCenter",
+          "content": "For BillingCenter, it is a best practice to enable safe ordering for every destination that can utilize it, as it improves reliability and performance by preventing out-of-order processing."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Managing Message Send Errors and Retries",
+      "narrative": "Errors during message sending can be temporary (e.g., external system unavailability) or persistent. When a message transport or request plugin throws an exception from its `send` method, Guidewire's application automatically initiates a retry mechanism. It compares the number of send attempts against the `Max Retries` configured for the message destination. If the limit isn't reached, it waits for an `Initial Retry Interval` and then retries sending the message. The time between retries increases exponentially based on the `Retry Backoff Multiplier` until `Max Retries` is reached. These parameters (`Initial Retry Interval`, `Max Retries`, `Retry Backoff Multiplier`, `Shutdown Timeout`) are all defined in the message destination's configuration.\n\nIf a message exceeds its `Max Retries`, Guidewire automatically suspends the destination. This prevents further messages from being sent through that destination until an administrator manually resumes it. The message that caused the suspension will be resent upon resumption, potentially up to its maximum retries again. Administrators can manage messages through the 'Message Queues' screen on the Administration tab. Here, they can manually retry or skip specific messages. Retrying a message attempts to resend it, but if the underlying issue isn't resolved, the destination will likely suspend again. Skipping a message moves it to the `MessageHistory` table with a 'skipped' status, allowing subsequent messages to proceed, but the information carried by the skipped message is lost.\n\nIt's important to differentiate between automatic retries during the initial send attempt and manual retries. Automatic retries, triggered by exceptions in `beforeSend` or `send`, use the same `SenderRefID` because it's still the same message. If `Max Retries` is reached, the destination suspends. In contrast, if a message is sent successfully but the *external system* replies with an error, a *new* message (a copy of the old one) is generated with a new `SenderRefID` for retry. Manual retries, initiated by an administrator, have no notion of a maximum retry count and are used when an issue has been rectified or a payload needs manual modification.",
+      "keyPoints": [
+        "Exceptions in transport/request plugins trigger automatic retries based on destination parameters.",
+        "Parameters like `Max Retries`, `Initial Retry Interval`, and `Retry Backoff Multiplier` control retry behavior.",
+        "Exceeding `Max Retries` automatically suspends the destination, requiring manual resumption.",
+        "Administrators can manually retry or skip messages via the 'Message Queues' screen.",
+        "Automatic retries during send use the same `SenderRefID`; retries after external system errors create a new message with a new `SenderRefID`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Explains how Guidewire automatically handles exceptions thrown by transport or request plugins, including retries and backoff."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Describes error administration, including automatic destination suspension and the need for manual resumption."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Screenshot of the 'Message Queues' screen, showing options to retry or skip messages."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Table contrasting different retry scenarios: initial send error vs. external system error."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Skipping Messages",
+          "content": "Skipping a message means the information it was meant to carry to the external system is lost. Exercise caution to avoid inadvertently skipping large numbers of messages."
+        },
+        {
+          "type": "definition",
+          "title": "Retry Parameters",
+          "content": "`Initial Retry Interval`: Time after a retryable error to retry. `Max Retries`: Number of automatic retries before suspension. `Retry Backoff Multiplier`: Factor to increase time between retries."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "Initial send error (Automatic retry during send)",
+            "External system error (Automatic retry after send)"
+          ],
+          "rows": [
+            [
+              "What is the problem?",
+              "Exception thrown in beforeSend or send methods",
+              "Discussed in Message Acknowledgment"
+            ],
+            [
+              "What executes the retry?",
+              "Internal Guidewire behavior",
+              "*"
+            ],
+            [
+              "Should each attempt use the same SenderRefID?",
+              "Yes",
+              "*"
+            ],
+            [
+              "What specifies the max retry number?",
+              "Max Retries property for messaging destination",
+              "*"
+            ],
+            [
+              "What happens when the max number of retries is reached?",
+              "The destination suspends",
+              "*"
+            ]
+          ],
+          "caption": "Comparison of automatic retry scenarios based on the source of the error."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of sending messages and observing how Guidewire handles send errors and subsequent recovery actions. Pay close attention to the console output and the behavior of the messaging destination.",
+      "transcriptSummary": "The demonstration covers configuring a message transport plugin, triggering message sends, simulating an error condition in the external system, observing automatic retries, and finally, manually resuming the destination and retrying the failed message to ensure successful delivery."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Every destination can optionally have a request plugin, but it must have a\n¢ transport plugin. Why is the transport plugin required?",
+      "referenceAnswer": "Every destination can optionally have a request plugin, but it must have a\nY transport plugin. Why is the transport plugin required?\n¢\nThe transport plugin is required because it is used to send the message when it is\nprocessed from the Message table. Without a transport plugin, messages for a given\ndestination would have no way of being sent to the corresponding external system.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Can one destination have two transport plugins? Can one transport\n¢ plugin be used by two destinations?",
+      "referenceAnswer": "Can one destination have two transport plugins? Can one transport\nY plugin be used by two destinations?\n¢\nA destination can’t have two transport plugins, but a transport plugin class can be used\nby two (or more) similar destinations.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Why should the send method never send a message to multiple external\n\nY systems?",
+      "referenceAnswer": "Why should the send method never send a message to multiple external\nY systems?\n¢\nThe message acknowledgement architecture assumes that each message is sent to\nonly one destination. If a given send method sent a message to multiple destinations,\nthen there could be multiple acknowledgements, errors, or unprocessed messages,\nand the messaging architecture would not be able to identify the state of the message.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've implemented a new `ClaimStatusTransport` plugin that sends claim updates to an external analytics system. The external system is occasionally unavailable for short periods.",
+      "question": "How would you configure the messaging destination for this plugin to automatically retry sending messages up to 5 times, with an initial retry interval of 10 seconds, and double the interval for each subsequent retry?",
+      "hints": [
+        "Think about the specific parameters in the `messaging-config.xml` file.",
+        "Consider `Max Retries`, `Initial Retry Interval`, and `Retry Backoff Multiplier`."
+      ],
+      "expectedApproach": "Locate the destination configuration in `messaging-config.xml` and set `MaxRetries` to 5, `InitialRetryInterval` to 10000 (milliseconds), and `RetryBackoffMultiplier` to 2."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your `PolicyChangeTransport` plugin sends policy modification messages. These messages are critical and must be processed in the exact order they occurred for a given policy. However, you've noticed that sometimes a 'Policy Updated' message arrives before a 'Policy Created' message for the same policy.",
+      "question": "What Guidewire messaging feature would you enable for this destination, and how would you configure it to ensure messages for a specific policy are always processed sequentially by the external system?",
+      "hints": [
+        "Consider the feature designed to prevent out-of-order messages for related entities.",
+        "Think about the 'Alternative Primary Entity' setting if applicable."
+      ],
+      "expectedApproach": "Enable 'Safe Ordering' for the destination. Since policy changes are tied to a specific policy, the default primary entity (Account/PolicyPeriod) would likely be sufficient, ensuring that messages for a given policy are sent one at a time and acknowledged before the next."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The message transport plugin is essential for sending messages to external systems and can handle various communication protocols.",
+        "Guidewire messaging involves multiple database transactions, which is key for understanding error handling and rollbacks.",
+        "Safe ordering ensures that related messages for a specific entity are sent sequentially, preventing out-of-order processing.",
+        "Automatic retry mechanisms, configured at the destination level, handle temporary send errors with exponential backoff.",
+        "Administrators can manage message queues to manually retry or skip failed messages, and resume suspended destinations."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering message sending is crucial for building robust integrations with external systems like payment gateways, document management systems, or data analytics platforms. Proper implementation of transport plugins, safe ordering, and error handling ensures data consistency, operational efficiency, and reliable communication, directly impacting business processes and customer experience.",
+      "nextLessonPreview": "In the next lesson, we will explore how to receive messages from external systems, focusing on reply plugins and asynchronous acknowledgments."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Configure sending a message by creating a custom message transport plugin, registering it, and configuring a new messaging destination to use it. Ensure the plugin can send a simple payload to a file or a mock web service, and configure basic retry parameters for the destination.",
+      "objectives": [
+        "Implement the `MessageTransport` interface.",
+        "Create a plugin registry entry for a custom transport plugin.",
+        "Configure a new messaging destination in `messaging-config.xml`.",
+        "Set `Max Retries` and `Initial Retry Interval` for the destination.",
+        "Deploy and test the new messaging configuration."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_15_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_15_01.mp4"
+    }
+  ]
+}

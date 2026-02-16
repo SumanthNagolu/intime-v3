@@ -1,0 +1,274 @@
+{
+  "lessonId": "ch08-l13",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 13,
+  "title": "The job Lifecycle",
+  "subtitle": "Understanding how PolicyCenter manages policy transactions from start to finish.",
+  "synthesizedAt": "2026-02-16T18:24:18.404423+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance agent and a customer calls to update their policy – perhaps adding a new vehicle or increasing coverage. You navigate through PolicyCenter, make the changes, and issue the updated policy. Behind the scenes, PolicyCenter orchestrates a complex series of steps to ensure this transaction is processed correctly and efficiently.",
+      "question": "What are the fundamental components and processes that PolicyCenter uses to manage these critical policy transactions?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what a 'job' or 'policy transaction' represents in PolicyCenter.",
+        "Describe the key components involved in a job's lifecycle, such as job types, branches, job processes, and wizards.",
+        "Explain how jobs are initiated and concluded in PolicyCenter.",
+        "Identify the role of 'canXXX' methods in controlling job wizard button visibility.",
+        "Outline the basic steps for configuring job processes."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with PolicyCenter's user interface to create new policies or modify existing ones. You might also be familiar with the concept of entities and objects within a Guidewire application.",
+      "warmupQuestion": "Think about a time you processed a policy change in PolicyCenter. What were some of the steps you took, and what did you observe happening in the system?",
+      "hint": "Consider the screens you navigated, the buttons you clicked, and the information you entered."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Jobs and Policy Transactions",
+      "narrative": "In PolicyCenter, the terms 'policy transaction' and 'job' are central to managing all interactions with a policy. While 'policy transaction' is commonly used in the user interface, 'job' is the term you'll encounter in the data model, user interface configuration, and business rules. Essentially, a **job** is PolicyCenter's internal representation for executing any transaction on a policy, coordinating all the work involved in creating a new policy or modifying an existing one. Once a job completes, it becomes a transaction on the policy, retaining an associated policy transaction number.\n\nEvery job has an issue date and an effective date. For instance, you might create a submission job today, issue it tomorrow, but it won't take effect until next week. Tomorrow would be the issue date, and next week's Monday would be the effective date, also known as the 'Transaction Close Date' in the Transactions list. Policy transactions encompass a wide range of activities, including submissions, renewals for new terms, policy changes, cancellations, reinstatements, and rewrites. The only transaction not explicitly listed on the slide but still part of the lifecycle is an audit, which can occur at any point during a policy term, with a final audit often taking place at the end of a term.\n\nAt a foundational level, a job is represented by a `<Jobtype>` entity in PolicyCenter. `Job` is the parent entity, with subtypes like `Submission`, `PolicyChange`, `Cancellation`, `Renewal`, and `Audit`. When a job is initiated, a `<Jobtype>` object is instantiated. This object holds all the required data for the transaction, such as `SubmissionDate`, `RejectReason`, or `CancelReasonCode`. These job entities can be enhanced or extended to meet specific business requirements, though you cannot create a *new* custom job type directly; you can only subtype an existing one. All job types, except for Audit, attempt to bind or promote their associated branches upon completion.",
+      "keyPoints": [
+        "Jobs are PolicyCenter's internal mechanism for all policy transactions.",
+        "Policy transactions include submissions, renewals, cancellations, reinstatements, and rewrites.",
+        "Jobs are represented by `<Jobtype>` entities, which are subtypes of the parent `Job` entity.",
+        "Each job has an issue date and an effective date."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to the concept of the job lifecycle in PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the relationship between 'submission' and 'submission job' and clarifies the terminology difference between 'policy transaction' (UI) and 'job' (configuration)."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Depicts various policy transactions (jobs) such as submission, renewal, cancellation, reinstatement, and rewrite, showing how they relate to a policy's lifecycle."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Details the `<Jobtype>` entities, showing `Job` as the parent and its subtypes, along with examples of data fields they contain."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Job vs. Policy Transaction",
+          "content": "While 'policy transaction' is a user-facing term, 'job' refers to the underlying data model and configuration entity in PolicyCenter that coordinates all work related to a policy change."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Core Components: Branches, Processes, Wizards, and Workflows",
+      "narrative": "At the heart of every job is a **branch**, which is a set of objects related to a single `PolicyPeriod` object. Think of a branch as one version of the policy, encapsulating all the details for a specific period. While a job *could* involve multiple branches if multi-versioning or side-by-side comparisons are used, typically only one version is selected and accessed via `Job.SelectedVersion`.\n\nTo manage the flow and logic of a job, PolicyCenter utilizes **job processes**. These processes control the sequence of actions within a job, leveraging Gosu classes (like `SubmissionProcess.gs`), wizard actions that interact directly with job and policy revisions, and workflows. Unlike entities, `<Jobtype>Process` classes are not entities themselves but Gosu classes that contain the methods required for processing a specific job type. Examples include `SubmissionProcess`, `RenewalProcess`, and `CancellationProcess`. These classes are instantiated when their methods are needed and are maintained in cache for efficiency.\n\n**<Jobtype> wizards** provide the user interface for guiding users through a job's lifecycle. They consist of screens, tools, and buttons. The `JobWizardHelper` (a Java class with an editable Gosu enhancement) provides core functionality, managing movement between steps, button visibility based on the job's state, and helper methods for messages. Each job type has a dedicated `Job Wizard Button Set` containing relevant buttons whose visibility is dynamically controlled.\n\nFinally, **workflows** play a crucial role in integrating with users and external systems, especially when a process needs to wait for a response or for a specific time to elapse. Workflows can implement time-delayed actions, either relative (e.g., 'wait three weeks') or absolute (e.g., 'wait until effective date'), ensuring that complex, multi-step processes are executed correctly.",
+      "keyPoints": [
+        "A 'branch' represents a specific version of a policy, rooted in a `PolicyPeriod` object.",
+        "Job processes, implemented as Gosu classes, control the flow and logic of jobs.",
+        "Job wizards provide the user interface and functionality for navigating job steps.",
+        "Workflows manage integrations and time-delayed actions within a job process."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Illustrates the concept of a 'branch' as a set of objects related to a `PolicyPeriod` object, forming one version of the policy."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Shows a snippet of a submission process, explaining how job processes control job flow using Gosu classes, wizard actions, and workflows."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Describes `<Jobtype>Process` classes as Gosu classes containing methods for job processing, located in Guidewire Studio."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Explains `<Jobtype>` wizards, their components (screens, tools, buttons), and the role of the `Job Wizard Helper` in managing user interaction."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Details the function of workflows in PolicyCenter, including integration with users/external systems and handling time-delayed actions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Initiating and Executing a Job",
+      "narrative": "The journey of a job begins with its initiation, which can occur in three primary ways: users can start jobs through the Actions menu in the UI, external systems can trigger jobs via APIs, or PolicyCenter's own batch processes can initiate them (e.g., renewal or audit jobs). Once initiated, the specific `<Jobtype>` object needs to be instantiated. This typically happens on the screen that calls the job wizard, where the newly created job object is then passed as a parameter to the wizard, as seen in examples like `StartPolicyChange.pcf`.\n\nBefore any major job function is performed, PolicyCenter rigorously **checks job conditions** using 'canXXX' methods found in job process classes. These methods, such as `JobProcess.canEdit()`, evaluate preconditions and potential error conditions. If an error is detected, a message is appended to a `_messages` string builder within a `JobConditions` object. If `_messages` is not empty, the `JobConditions.Okay()` property returns `false`, which directly impacts the visibility of buttons in the job wizard. For example, the 'Edit Policy Transaction' button's visibility might depend on `JobProcess.canEdit().Okay()`. These 'can' methods are crucial not just for UI button visibility but also for API and batch processes, ensuring that functions like `requestQuote()` or `bind()` are only called if their preconditions are met. While the `JobConditions` object is read-only, you can create enhancements to add custom methods and properties.\n\nOnce conditions are met, the system proceeds to **execute business logic**. This involves job wizard buttons calling methods on various objects available in the current context, such as `<Jobtype>Process`, `<Jobtype>Wizard`, `JobWizardHelper`, or `PolicyPeriod`. These methods, in turn, can call other methods, forming a complex web of operations. For instance, `RenewalProcess.start()` might trigger a cascade of other methods. Workflows also play a role here, with job process methods initiating workflows (e.g., `CancellationProcess.finish().endNotices()` starting the `Complete Cancellation WF`), and workflows subsequently calling back into job process methods (e.g., `Complete CancellationWF` calling `CancellationProcess.issueCancellationFromWorkflow()`). This intricate interaction ensures that all necessary steps, including those requiring external waits or user input, are properly coordinated.",
+      "keyPoints": [
+        "Jobs can be started by users, external systems, or PolicyCenter batch processes.",
+        "The `<Jobtype>` object is instantiated and passed to the job wizard.",
+        "Preconditions are checked using 'canXXX' methods, which determine button visibility and API call validity.",
+        "Business logic execution involves methods called by wizard buttons, job processes, and workflows, often in a complex, interconnected manner."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "A transitional slide, setting the stage for the detailed explanation of how jobs are started and executed."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Outlines the three main ways jobs can be initiated: by users, external systems, or batch processes."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Demonstrates how a `<Jobtype>` object is instantiated and passed as a parameter, using `StartPolicyChange.pcf` as an example."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Explains the process of checking job conditions using 'canXXX' methods and the `JobConditions` object, which influences button visibility."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Describes how business logic is executed, involving method calls from job wizard buttons to various process and helper objects, and the interaction with workflows."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "JobConditions Enhancement",
+          "content": "While the `JobConditions` object is read-only, you can create an enhancement to add custom methods and properties, allowing for tailored precondition checks without modifying core functionality."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the lifecycle of a typical job in PolicyCenter, highlighting the key interactions and system responses as a transaction progresses.",
+      "transcriptSummary": "The demonstration illustrates the job lifecycle within PolicyCenter, showing how a job is initiated, progresses through various stages, and ultimately concludes. It provides a visual overview of the concepts discussed, such as wizard navigation and button interactions."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Concluding and Configuring Job Processes",
+      "narrative": "A job's lifecycle concludes when its associated branch is either **promoted (bound)**, **withdrawn**, or **discarded**. Once a job ends, the job object itself remains in the database for reference but can no longer be edited. The job process object, however, is discarded. It's important to note that Audit jobs are an exception to this rule; they don't promote, withdraw, or discard a branch, but rather conclude when the audit process is completed. This distinction highlights the unique nature of audit transactions compared to other policy modifications.\n\nFor developers and configurators, understanding how to **configure job processes** is key to adapting PolicyCenter to specific business needs. This primarily involves two steps: first, extending the `<Jobtype>` related classes and PCF files, and second, configuring the business logic. For example, you might extend `JobEnhancement.gs`, `SubmissionEnhancement.gs`, or `SubmissionProcess.gs` to add custom behavior. Similarly, you would modify `SubmissionWizard.pcf` and its related screens to adjust the user interface. When configuring business logic, you can either edit existing functions to align with your specific business process or create entirely new functions as needed. This flexibility allows for significant customization, from handling out-of-sequence jobs (where a change's effective date is earlier than a previous change) to managing preempted jobs (where multiple jobs run concurrently on the same branch, and one finishes before another, requiring merging of changes). The reference guide excerpts provide detailed scenarios for handling such complex situations, emphasizing that PolicyCenter provides mechanisms to resolve conflicts and maintain policy consistency.",
+      "keyPoints": [
+        "A job ends when its branch is promoted, withdrawn, or discarded (with Audit jobs being an exception).",
+        "The job object persists for reference, but the job process object is discarded.",
+        "Configuring job processes involves extending relevant classes and PCF files.",
+        "Business logic can be customized by editing existing functions or creating new ones."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Explains the conditions under which a job ends: when its branch is promoted, withdrawn, or discarded, noting the exception for Audit jobs."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Outlines the two main steps for configuring job processes: extending related classes/PCF files and configuring business logic."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "A transitional slide, indicating the shift from understanding the job lifecycle to practical configuration aspects."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Audit Job Exception",
+          "content": "Unlike other jobs, Audit jobs do not promote, withdraw, or discard a branch; they simply conclude upon completion of the audit, reflecting their distinct operational nature."
+        },
+        {
+          "type": "best_practice",
+          "title": "Handling Complex Job Scenarios",
+          "content": "PolicyCenter provides robust mechanisms for handling complex scenarios like out-of-sequence jobs (changes with earlier effective dates) and preempted jobs (concurrent changes on the same branch). Always refer to the application guide for best practices in resolving conflicts and merging changes."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An underwriter needs to create a new policy for a customer. They start the 'Submission' process in PolicyCenter. As they progress through the wizard, they notice certain buttons become active or inactive based on the data they enter.",
+      "question": "Explain how PolicyCenter determines the visibility of buttons in the submission wizard. What underlying mechanism is at play, and what object is central to this mechanism?",
+      "hints": [
+        "Think about the 'canXXX' methods mentioned in the lesson.",
+        "Consider the object that collects and reports on error conditions.",
+        "How do these methods and objects relate to the job process classes?"
+      ],
+      "expectedApproach": "The learner should identify 'canXXX' methods on the job process class and the `JobConditions` object as the mechanism controlling button visibility, explaining how error conditions lead to `JobConditions.Okay()` returning `false`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ae What two classes exist for every job type?",
+      "referenceAnswer": "The job class and the job process class.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis a branch?\nih\nr",
+      "referenceAnswer": "The set of objects associated with one PolicyPeriod object.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Inwhat three ways can jobs be started?\n¢\n4\n¢",
+      "referenceAnswer": "By users through the UI; by external systems through the APIs; and by PolicyCenter\nbatch processes.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "When does a job end?\nih\n¢",
+      "referenceAnswer": "When does a job end?\n\nWhen the job’s branch is promoted, withdrawn, or discarded.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What determines the visibility of buttons in a job’s button set?\n¢\n4\n¢",
+      "referenceAnswer": "What determines the visibility of buttons in a job’s button set?\n\nCan methods on the job process class.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Jobs are PolicyCenter's core mechanism for managing all policy transactions.",
+        "Key components of a job's lifecycle include `<Jobtype>` entities, branches, job processes, wizards, and workflows.",
+        "Jobs can be initiated by users, external systems, or batch processes.",
+        "Job conditions are checked using 'canXXX' methods, influencing UI button visibility and process execution.",
+        "Business logic is executed through method calls orchestrated by wizards, job processes, and workflows.",
+        "A job concludes when its branch is promoted, withdrawn, or discarded, with Audit jobs being a special case.",
+        "Job processes are highly configurable through extensions to Gosu classes and PCF files."
+      ],
+      "realWorldConnection": "Understanding the job lifecycle is fundamental for anyone working with PolicyCenter, whether you're an underwriter, an agent, or a developer. It explains the 'why' behind the user interface's behavior and provides the roadmap for customizing PolicyCenter to meet unique business requirements, from automating renewals to handling complex out-of-sequence policy changes.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into specific job types, exploring their unique characteristics and configuration options."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Explore the PolicyCenter Studio to identify the `SubmissionProcess.gs` and `SubmissionWizard.pcf` files. Analyze the `canXXX` methods within `SubmissionProcess.gs` and observe how they are referenced in the `SubmissionWizard.pcf` to control button visibility. Consider how you might extend these to add a custom validation or button.",
+      "objectives": [
+        "Locate and examine job process classes and wizard PCF files in PolicyCenter Studio.",
+        "Identify the relationship between 'canXXX' methods and UI element visibility.",
+        "Propose a scenario for customizing job process logic or wizard behavior."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_13_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_13_01.mp4"
+    }
+  ]
+}

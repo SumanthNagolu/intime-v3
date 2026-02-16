@@ -1,0 +1,461 @@
+{
+  "lessonId": "ch09-l13",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 13,
+  "title": "Configuring Search",
+  "subtitle": "Mastering ClaimCenter's search capabilities, from internal database queries to external contact searches.",
+  "synthesizedAt": "2026-02-16T18:37:45.450144+00:00",
+  "estimatedMinutes": 75,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a claims adjuster trying to quickly locate a specific claim, an activity, or even a service provider from a vast database. Without efficient search tools, this could be a time-consuming and frustrating task, impacting productivity and customer satisfaction. ClaimCenter offers robust search functionalities to streamline these processes.",
+      "question": "How do you ensure that ClaimCenter's search capabilities are precisely tailored to your organization's unique needs, allowing users to find exactly what they're looking for, every time?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between ClaimCenter's internal search and vendor/contact search mechanisms.",
+        "Explain the role of the SearchCriteria object and the search-config.xml file in defining search behavior.",
+        "Configure search criteria using Criterion, CriterionChoice, and ArrayCriterion elements.",
+        "Understand the implications of configuring search fields within the ClaimCenter user interface.",
+        "Identify the necessary post-configuration steps, including API regeneration, to implement search changes.",
+        "Outline the process for extending contact search functionality to an external address book application like ContactManager."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with search functions in various applications, both within and outside Guidewire. You also have a foundational understanding of ClaimCenter's data model and how UI elements typically map to underlying entities.",
+      "warmupQuestion": "Think about a time you used a search feature in an application. What made it effective or ineffective?",
+      "hint": "Consider factors like search speed, relevance of results, and the flexibility of search criteria."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding ClaimCenter's Search Landscape",
+      "narrative": "ClaimCenter provides powerful search capabilities for many of the most critical entities within the application. This includes searching for claims, activities, checks, recoveries, bulk invoices, users, groups, and even vendors and other contacts. These search functions are vital for efficient operations, allowing users to quickly locate necessary information. Fundamentally, ClaimCenter supports two primary types of search: **search within ClaimCenter** itself and **vendor/contact search**, which typically involves integration with an external address book application like Guidewire ContactManager. The mechanism behind these capabilities, while seemingly straightforward from a user's perspective, involves a sophisticated interplay of UI configuration, server-side logic, and database queries. Understanding this underlying structure is key to effectively customizing and extending ClaimCenter's search functionality. The internal search focuses on entities directly managed by ClaimCenter, while vendor/contact search extends to external systems, particularly for service providers related to service requests.",
+      "keyPoints": [
+        "ClaimCenter supports two main types of search: internal and vendor/contact.",
+        "Internal search covers entities like claims, activities, and users within ClaimCenter's database.",
+        "Vendor/contact search integrates with external address book applications (e.g., ContactManager) via Web Services."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of ClaimCenter's search capabilities, highlighting the various entities that can be searched."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the two distinct types of search available in ClaimCenter: internal application search and external vendor/contact search."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the basic process of searching for entities within ClaimCenter, giving you a practical understanding of the user experience before we dive into the underlying configuration.",
+      "transcriptSummary": "The demo shows how to navigate to the search screen, input various criteria for different entities like claims or activities, and interpret the search results. It highlights the ease of use for end-users."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Mechanics of ClaimCenter Search",
+      "narrative": "Let's break down the process of how ClaimCenter executes a search. For a search performed *within* ClaimCenter, there are three core steps. First, the user inputs their desired criteria on a search screen. Every field on this screen acts as a potential search criterion. Next, the ClaimCenter server takes these criteria and consolidates them into a special object called a **SearchCriteria object**. It's crucial to understand that this is a *virtual* object; it's not stored in the database. Instead, it's used programmatically to construct a SQL query. This SQL query is then submitted to the ClaimCenter database, which returns results based *only* on the criteria the user entered. Finally, these results are sent back to the ClaimCenter server and displayed in a formatted list on the UI.\n\nWhen it comes to a **vendor or contact search**, the process is largely similar but includes an additional, critical step. After the ClaimCenter server forms the `SearchCriteria` object, it extracts the relevant search terms. Instead of querying its own database directly, ClaimCenter then uses **Web Services** to pass these search terms to an external Address Book application, such as ContactManager. The Address Book application, in turn, forms its own SQL query against its database. The results are then transmitted back to ClaimCenter via Web Services, and ClaimCenter formats them for display to the user. This integration via Web Services is key to maintaining a unified search experience while leveraging specialized external systems.",
+      "keyPoints": [
+        "Internal ClaimCenter search involves UI input, SearchCriteria object creation, SQL query to ClaimCenter DB, and result display.",
+        "The SearchCriteria object is virtual and not persisted in the database.",
+        "Vendor/contact search extends this by using Web Services to query an external Address Book application (e.g., ContactManager)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Diagram illustrating the three main steps of an internal search within ClaimCenter, from UI input to database query and result display."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Flowchart depicting the vendor or contact search process, highlighting the interaction with an external Address Book application via Web Services."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "The SearchCriteria Object and search-config.xml",
+      "narrative": "The **SearchCriteria object** is a cornerstone of ClaimCenter's search functionality. As we've discussed, it's a virtual, non-persistent entity, meaning it has no underlying database table and cannot be stored. It's dynamically created for each search, which also implies that users cannot save 'favorite' searches. This virtual nature allows for flexible, on-the-fly query construction. The definition of these search criteria is primarily managed through an XML file named `search-config.xml`.\n\nThis `search-config.xml` file is critical because it defines *all* the searches that can be performed within ClaimCenter. You'll find it located at `configuration/config/search/`. Structurally, it consists of a single `SearchConfig` element, which acts as the root, and numerous sub-elements that specify individual search criteria. It's paramount to remember a critical Guidewire guideline: **do not create additional `SearchConfig` elements**. Doing so is unsupported and will lead to unpredictable and likely undesirable application behavior. The `SearchConfig` element defines the overall search criteria available, while its sub-elements, such as `CriteriaDef`, `Criterion`, `CriterionChoice`, and `ArrayCriterion`, provide granular control over how specific properties are searched and mapped to target entities. We will explore these sub-elements in detail next.",
+      "keyPoints": [
+        "The SearchCriteria object is a virtual, non-persistent entity, created dynamically for each search.",
+        "All search criteria are defined in the `search-config.xml` file, located at `configuration/config/search/`.",
+        "The `search-config.xml` file must contain only one `SearchConfig` element; creating more is unsupported."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Explains the virtual nature of the SearchCriteria object and its definition through the `search-config.xml` file."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Details the `search-config.xml` file, its structure, and the critical warning about creating only one `SearchConfig` element."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Lists the key elements within `search-config.xml`: SearchConfig, CriteriaDef, Criterion, and CriterionChoice, outlining their general purpose."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example search-config.xml structure",
+          "code": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<SearchConfig\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xsi:noNamespaceSchemaLocation=\"search-config.xsd\"\n  version=\"1\">\n  <!-- Sub-elements like CriteriaDef, Criterion, etc. go here -->\n</SearchConfig>",
+          "explanation": "This snippet shows the basic structure of the `search-config.xml` file, emphasizing the single `SearchConfig` root element."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Single SearchConfig Element",
+          "content": "Creating additional `SearchConfig` elements in `search-config.xml` is NOT supported by Guidewire and will lead to unexpected application behavior. Ensure there is only one."
+        },
+        {
+          "type": "definition",
+          "title": "Virtual Object",
+          "content": "A virtual object, like the SearchCriteria object, is created on the fly and does not have an underlying database table for persistent storage. It exists only for the duration of its use."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Defining Search Mappings with CriteriaDef and Criterion",
+      "narrative": "The `CriteriaDef` sub-element, nested within `SearchConfig`, is responsible for defining a mapping between a search criteria entity and the target entity you wish to search. It has two essential properties: `entity` (the name of the search criteria entity) and `targetEntity` (the name of the actual entity in the database to be searched). For example, a `CriteriaDef` might map `ClaimInfoCriteria` to `ClaimInfo`. Guidewire provides a fixed set of `CriteriaDef` elements, and it's important to note that **adding new `CriteriaDef` elements is not supported** and can cause issues. While removing existing ones is possible, it's generally not recommended. However, you *can* freely edit, add, and delete its sub-elements: `Criterion`, `CriterionChoice`, and `ArrayCriterion`.\n\nNow, let's look at the `Criterion` sub-element. If `CriteriaDef` specifies *what* entities can be searched, `Criterion` defines *which properties* of that entity can be used in the search. It establishes a simple one-to-one relationship between an attribute on the search criteria entity and an attribute on the target entity. Its basic syntax includes a `property` attribute (the name on the criteria entity) and an optional `targetProperty` attribute. You only use `targetProperty` if the name of the property on the target entity differs from the `property` name on the criteria entity. For instance, you might have a `Criterion` for `ClaimNumber` on the criteria entity that maps directly to `ClaimNumber` on the target entity.\n\nA crucial part of the `Criterion` element is the **`matchType` tag**, which is required. This tag dictates how the target property is matched against the criteria property. There are seven main choices: `eq` (equals), `contains`, `startsWith`, `ge` (greater than or equal to), `gt` (greater than), `le` (less than or equal to), and `lt` (less than). `eq` is versatile and works for all property types, including typelists. The numeric `matchType` options (`ge`, `gt`, `le`, `lt`) are exclusively for numeric values, while `contains` and `startsWith` are for string types. A word of caution: `contains` is the most 'expensive' in terms of search time and should be avoided whenever possible to optimize performance.",
+      "keyPoints": [
+        "CriteriaDef maps a search criteria entity to a target entity; adding new CriteriaDefs is unsupported.",
+        "Criterion defines a one-to-one search on a property, using `property` and `targetProperty` attributes.",
+        "The `matchType` tag determines the comparison logic (e.g., `eq`, `contains`, `startsWith`, numeric comparisons).",
+        "`contains` matchType should be used sparingly due to performance implications."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Explains the `CriteriaDef` sub-element, its purpose in mapping entities, and warnings about modifying it."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Details the `Criterion` sub-element, defining simple one-to-one property matching and its basic syntax."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Focuses on the `matchType` tag within `Criterion`, listing the available options and their specific use cases for different data types."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example CriteriaDef and Criterion",
+          "code": "<CriteriaDef entity=\"ClaimInfoCriteria\" targetEntity=\"ClaimInfo\">\n  <Criterion property=\"ClaimNumber\" matchType=\"eq\"/>\n  <Criterion property=\"Amount\" matchType=\"ge\"/>\n</CriteriaDef>",
+          "explanation": "This example shows a `CriteriaDef` for `ClaimInfo` and two `Criterion` elements: one for an exact `ClaimNumber` match and another for an amount greater than or equal to a specified value."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "CriteriaDef Modifications",
+          "content": "Guidewire does not support the creation of new `CriteriaDef` elements and strongly recommends against removing existing ones. Focus your customizations on `Criterion`, `CriterionChoice`, and `ArrayCriterion` sub-elements."
+        },
+        {
+          "type": "best_practice",
+          "title": "Optimize `matchType` Usage",
+          "content": "Avoid using `contains` matchType whenever possible, especially on large datasets, as it is the most performance-intensive search operation. Prefer `eq` or `startsWith` when appropriate."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Flexible Search with CriterionChoice",
+      "narrative": "The `CriterionChoice` sub-element offers a powerful way to provide users with flexible search options within a single UI component. Its main purpose is to allow a single criterion on the search screen to match against one of several columns in the target entity, as chosen by the user. A common example is on the Advanced Claim Search screen, where a single 'Date' criterion can be configured to search by Loss date, Reported date, Closed date, or Creation date. This means that while the user sees one date input, they can select *which* date field in the database that input should apply to. A key point to remember is that you can only search by *one* of these chosen criteria at a time. So, if you configure `CriterionChoice` for both Loss date and Closed date, the user can pick one, but not both simultaneously.\n\nThe basic syntax for `CriterionChoice` includes a `property` attribute and an optional `init` attribute. Within `CriterionChoice`, you define multiple `<Option>` sub-elements. Each `Option` has a `label` (typically a display key for the UI dropdown) and a `targetProperty` that specifies the actual field on the search entity to be queried when that option is selected. For instance, an `Option` with `label=\"Java.Criterion.Option.Claim.LossDate\"` would have `targetProperty=\"LossDate\"`.\n\nThe optional `init` attribute of `CriterionChoice` is used to define the initial state or default values for the criteria when the search screen loads. This can include setting the `SearchType` (e.g., `TC_CLAIM` for claims), `DateSearchType` (e.g., `TC_FROMLIST` for a 'Since' option), `DateRangeChoice` (e.g., `TC_N365` for 'Last 365 days'), and `ChosenOption` (e.g., `Java.Criterion.Option.Claim.LossDate` to default to Loss Date). These `init` values are typically set using typelist constants and display keys, ensuring the UI presents a sensible default search configuration to the user.",
+      "keyPoints": [
+        "CriterionChoice allows a single UI criterion to map to multiple target entity columns, chosen by the user.",
+        "Users can only search by one of the options defined within a CriterionChoice at a time.",
+        "Option sub-elements define the display label and the target property for each choice.",
+        "The `init` attribute sets the default display and selected options for the CriterionChoice in the UI."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Introduces the `CriterionChoice` sub-element, explaining its purpose in allowing flexible, user-selected search criteria."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Provides a concrete example of `CriterionChoice` for date-based searches, showing how `Option` sub-elements define choices."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Explains the optional `init` attribute of `CriterionChoice`, detailing how it configures the initial display and default selections for the search criteria."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example DateCriterionChoice",
+          "code": "<CriterionChoice property=\"DateCriterionChoice\"\n  init=\"DateCriterionChoice.SearchType = TC_CLAIM; DateCriterionChoice.DateSearchType = TC_FROMLIST; DateCriterionChoice.DateRangeChoice = TC_N365; DateCriterionChoice.ChosenOption = &quot;Java.Criterion.Option.Claim.LossDate&quot;\">\n  <Option label=\"Java.Criterion.Option.Claim.LossDate\" targetProperty=\"LossDate\"/>\n  <Option label=\"Java.Criterion.Option.Claim.ReportedDate\" targetProperty=\"ReportedDate\"/>\n</CriterionChoice>",
+          "explanation": "This XML snippet demonstrates a `CriterionChoice` for date searches, showing how `init` sets defaults and `Option` elements define the selectable date fields."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Searching Array Entities with ArrayCriterion",
+      "narrative": "For more complex search scenarios, particularly when dealing with nested data or related entities stored as arrays, ClaimCenter provides the `ArrayCriterion` sub-element. This element instructs ClaimCenter to perform a simple join against an array entity associated with the main search object. A practical example could be searching for a claim that has an official of a specific type, leveraging the `Officials` array on the `Claim` entity.\n\nWhen defining an `ArrayCriterion`, you must specify three required attributes: `property` (a name you assign to this `ArrayCriterion`), `targetProperty` (the name of the array on the main search object, e.g., `Officials` on `Claim`), and `arrayMemberProperty` (the name of the property *within* the array entity that you want to search on, e.g., `OfficialType` on the `Officials` entity). Unlike `Criterion`, `ArrayCriterion` does not support optional tags, and it **only supports equality matching**; you cannot specify a `matchType` attribute. This means you can only search for exact matches within the array member property.\n\nIt's worth noting that `ArrayCriterion` is not typically used in the base configuration of ClaimCenter. Its primary use case arises when an insurer creates custom entities with array relationships and needs to enable search functionality based on these custom structures. A critical constraint for `ArrayCriterion` is that the `arrayMemberProperty` must be unique for each instance of the main search object. If duplicate values are allowed, the same target instance might appear multiple times in the search results, leading to confusion. Finally, to ensure optimal performance and correct functionality, you **must create two specific indexes** on the array table. The first index should be on the foreign key back to the main table and your chosen `arrayMemberProperty`. The second index must be on the same two properties but in reverse order (i.e., `arrayMemberProperty` first). Failing to create these indexes can severely impact search performance and potentially cause application issues.",
+      "keyPoints": [
+        "ArrayCriterion enables searching on array entities of the main search object by performing a join.",
+        "It requires `property`, `targetProperty` (the array name), and `arrayMemberProperty` (the property within the array to search).",
+        "ArrayCriterion supports only equality matching; no `matchType` can be specified.",
+        "The `arrayMemberProperty` must be unique to avoid duplicate results.",
+        "Two specific database indexes are required on the array table for ArrayCriterion to function correctly and efficiently."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Explains the `ArrayCriterion` sub-element, its purpose in joining array entities, and its basic syntax with required attributes."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Details the constraints of `ArrayCriterion`, including the requirement for all attributes, equality-only matching, and the uniqueness of `arrayMemberProperty`."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Emphasizes the critical requirement for creating two specific database indexes on the array table to support `ArrayCriterion`."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example ArrayCriterion",
+          "code": "<ArrayCriterion\n  property=\"Officials\"\n  targetProperty=\"Officials\"\n  arrayMemberProperty=\"OfficialType\" />",
+          "explanation": "This example shows an `ArrayCriterion` configured to search for `OfficialType` within the `Officials` array of a claim."
+        },
+        {
+          "language": "sql",
+          "title": "Required Indexes for ArrayCriterion",
+          "code": "<index name=\"ind1\" unique=\"true\">\n  <indexCol name =\"Claim\" keyposition=\"1\"/>\n  <indexCol name=\"OfficialType\" keyposition=\"2\"/>\n</index>\n<index name=\"ind2\" unique=\"true\">\n  <indexCol name=\"OfficialType\" keyposition=\"1\"/>\n  <indexCol name=\"Claim\" keyposition=\"2\"/>\n</index>",
+          "explanation": "These XML snippets define the two required indexes on the array table, ensuring efficient lookup based on the foreign key to the main entity (`Claim`) and the `arrayMemberProperty` (`OfficialType`) in both directions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Indexing is Crucial",
+          "content": "Failure to create the two required indexes on the array table for `ArrayCriterion` will severely impact search performance and may lead to application instability or incorrect results."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "SearchCriteria Entities and UI Configuration Basics",
+      "narrative": "Just as with `CriteriaDef` elements, Guidewire strongly advises against adding new **SearchCriteria entities** to ClaimCenter. These entities maintain a one-to-one relationship with the `CriteriaDef` sub-elements and are fundamental to defining what can be searched for within the main search entity. They are created by Guidewire, and modifying their core structure can lead to unexpected behavior. However, if you add a new column to `search-config.xml` that you wish to search on, you *must* add a corresponding column to the relevant `SearchCriteria` entity. This ensures that the virtual `SearchCriteria` object can properly hold the value for your new search criterion.\n\nTransitioning to the user interface, configuring search screens in ClaimCenter is largely similar to configuring other UI elements, but with a few key distinctions. The most significant difference is the reliance on a specialized UI element called a **SearchPanel**. A `SearchPanel` typically comprises a search detail view (where criteria are entered) and a results list view (where search outcomes are displayed). It's important to understand that creating a new `SearchPanel` from scratch is a highly complex task, often beyond the scope of typical configuration. Guidewire strongly recommends using and modifying existing `SearchPanel`s and their associated pages. If a new `SearchPanel` is absolutely necessary, consulting Guidewire Services is advised due to the intricate properties and dependencies involved.",
+      "keyPoints": [
+        "Do not create new SearchCriteria entities; they have a 1:1 relationship with CriteriaDef.",
+        "If adding a new search column in `search-config.xml`, you must add it to the corresponding SearchCriteria entity.",
+        "Search in the UI requires a special `SearchPanel` element, which includes detail and results views.",
+        "Creating new `SearchPanel`s is complex; it's recommended to modify existing ones or consult Guidewire Services."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "Explains the relationship between `SearchCriteria` entities and `CriteriaDef` elements, emphasizing the restriction on creating new `SearchCriteria` entities."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Introduces the concept that configuring search in the UI has unique considerations compared to other UI configurations."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Highlights the necessity of using a `SearchPanel` for search functionality in the UI and warns about the complexity of creating new ones."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "SearchPanel Complexity",
+          "content": "Creating new `SearchPanel`s is a highly complex task. Guidewire recommends leveraging existing panels or consulting Guidewire Services if a new one is absolutely required."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to configure search criteria within the ClaimCenter application, focusing on modifying existing configurations to add new search capabilities.",
+      "transcriptSummary": "The demo illustrates the process of navigating to the `search-config.xml` file, identifying `CriteriaDef` elements, and adding or modifying `Criterion` or `CriterionChoice` elements to introduce new search fields. It emphasizes the XML structure and attribute usage."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is the underlying table for a search criteria entity?\n\nsSesoeooce SSeS Seee5b505",
+      "referenceAnswer": "What is the underlying table for a search criteria entity?\n\n74\n¢ The correct answer is there is none; it is a virtual, non-persistent entity\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Configuring Search Fields and Post-Configuration Steps",
+      "narrative": "When you're configuring the UI for search, the input widgets (like text fields or dropdowns) that appear in search panels are crucial. A key distinction here is that the `value` properties of these widgets do not reference the *target entity* (e.g., `Claim`) directly, but rather the **`SearchCriteria` entity** (e.g., `ClaimSearchCriteria`). This means if you're adding a new search property, you must ensure that this property exists on the relevant `SearchCriteria` entity. For example, if you're searching for a claim number, the widget's `value` property would be `ClaimSearchCriteria.ClaimNumber`, not `Claim.ClaimNumber`.\n\nRegarding **required search fields**, Guidewire sets these up in the base configuration, and the coding to create these sections is highly complex. It's a strict guideline that you **cannot add new required search fields**, nor should you attempt to add or remove widgets from existing required detail views. Doing so is unsupported and can lead to unexpected results or application instability. You should only modify optional search fields.\n\nFinally, after you've completed all your search configuration changes in `search-config.xml` and potentially in the UI, there's a critical post-configuration step: you **must regenerate the SOAP and Java APIs**. Failure to do so means that while your new search terms might appear in the UI, they won't be recognized by the underlying search engine, which can prevent the server from starting or cause runtime errors. To do this, open a command window, navigate to your ClaimCenter directory, and run `gwb genJavaApi`. If you've added any new fields to entities (beyond the virtual `SearchCriteria` entities), you should also regenerate the Data Dictionary by running `gwb genDataDict`. After these steps, always restart the ClaimCenter server and thoroughly test your changes to ensure everything functions as expected.",
+      "keyPoints": [
+        "Search field input widgets' `value` properties must reference the `SearchCriteria` entity, not the target entity.",
+        "Adding or removing required search fields is unsupported and should be avoided.",
+        "After configuration, regenerate SOAP and Java APIs (`gwb genJavaApi`) and potentially the Data Dictionary (`gwb genDataDict`).",
+        "Always restart the ClaimCenter server and test changes thoroughly after API regeneration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 28,
+          "caption": "Illustrates how search fields in the UI map to properties of the `SearchCriteria` entity, not the target entity."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Emphasizes that required search fields are Guidewire-configured and should not be added or removed by implementers."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Outlines the crucial post-configuration steps, including regenerating SOAP/Java APIs and restarting the ClaimCenter server."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "text",
+          "title": "API Regeneration Commands",
+          "code": "gwb genJavaApi\ngwb genDataDict (if new fields added to persistent entities)",
+          "explanation": "These commands are executed from the ClaimCenter directory to regenerate the necessary APIs and Data Dictionary after configuration changes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "API Regeneration is Mandatory",
+          "content": "Neglecting to regenerate the SOAP and Java APIs after modifying search configurations will lead to runtime errors and prevent your changes from taking effect, potentially causing the server to fail to start."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will guide you through the process of modifying existing search screens in ClaimCenter, showing how to add new search fields to the UI and connect them to your `search-config.xml` definitions.",
+      "transcriptSummary": "The demo covers identifying the relevant PCF files for a search screen, adding an input widget, setting its `value` property to reference the appropriate `SearchCriteria` entity, and then compiling and testing the changes in the application."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What sub-elements can a CriteriaDef element have?\n\nsSesoeooce SSeS Seee5b505",
+      "referenceAnswer": "74\n¢ The correct answers are:\n* Criterion\n* CriterionChoice\n¢ ArrayCriterion\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is special about the input widgets on a search page?\n\nsSesoeooce SSeS Seee5b505",
+      "referenceAnswer": "74\n¢ The correct answer is they represent properties, not of the target entity, but of its\nrelated Search Criteria entity.\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Configuring Contact Search with External Address Books",
+      "narrative": "Configuring search for contacts, especially when integrating with an external address book application like Guidewire ContactManager, involves a multi-application configuration effort. You must make changes in both ClaimCenter and the address book application itself. This ensures that the search criteria can be passed correctly, and results can be returned and displayed seamlessly.\n\nFor an integration with ContactManager, the process typically involves several key steps. First, within ContactManager, you would add any new fields you wish to search on, similar to how you would add fields to any other entity. Next, you extend the `ABContactSearchCriteria` entity in ContactManager to accommodate these new search fields. Then, in ContactManager's `search-config.xml`, you map these `ABContactSearchCriteria` extensions to the `ABContact` entity, defining how the search should be performed. You'll also need to modify the contact search criteria detail view in ContactManager to allow users to specify these new criteria, and optionally, modify the contact search results list view to display information about your new field. Finally, within ContactManager, you must regenerate the Java and SOAP APIs and restart the ContactManager server.\n\nOn the ClaimCenter side, after the ContactManager configuration, you need to add the ContactManager search capability. This involves configuring ClaimCenter's `ContactSearchCriteria.etx`, `ContactSearchMapper.gs`, and `ContactSearchResultMapper.gs` files to correctly interact with the updated ContactManager. After all these steps, you must thoroughly test your changes to ensure the integrated contact search functions as expected. For more detailed guidance, always refer to the Contact Management Guide.",
+      "keyPoints": [
+        "Configuring contact search requires changes in both ClaimCenter and the external address book application (e.g., ContactManager).",
+        "In ContactManager, extend `ABContactSearchCriteria`, map in `search-config.xml`, and modify UI views.",
+        "ContactManager changes require API regeneration and server restart for ContactManager.",
+        "In ClaimCenter, configure `ContactSearchCriteria.etx`, `ContactSearchMapper.gs`, and `ContactSearchResultMapper.gs` to integrate."
+      ],
+      "figures": [
+        {
+          "slideNumber": 37,
+          "caption": "Outlines the high-level steps involved in configuring contact search, requiring modifications in both ClaimCenter and the address book application."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Details the specific steps for adding new search capability within ContactManager, including entity extensions, XML mapping, UI modifications, and API regeneration."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "After adding a new search criterion to an existing search page, what\noo must be done?\n\nsSesoeooce SSeS Seee5b505",
+      "referenceAnswer": "The correct answer is:\nRegenerate the SOAP and Java APIs.\nRedeploy and restart the ClaimCenter server.\n\nse sSeSo SSeS SSeS e ee sSHeS",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your organization wants to add a new search criterion to the 'Activity Search' screen in ClaimCenter. Specifically, they want to allow users to search for activities based on their 'Percent Complete' field, with options to find activities that are 'Less than 50%', 'Exactly 50%', or 'Greater than 50%'.",
+      "question": "How would you configure the `search-config.xml` file to implement this new search criterion, allowing users to select one of these three options for 'Percent Complete'?",
+      "hints": [
+        "Consider which `search-config.xml` element is best suited for providing multiple, mutually exclusive search options for a single criterion.",
+        "Remember to specify the `targetProperty` correctly, assuming 'PercentComplete' is a field on the Activity entity.",
+        "Think about how to represent the 'Less than', 'Exactly', and 'Greater than' conditions using `matchType` or other mechanisms within the chosen element."
+      ],
+      "expectedApproach": "You would use a `CriterionChoice` element within the `CriteriaDef` for Activity. Each `Option` within the `CriterionChoice` would represent one of the 'Percent Complete' conditions (Less than 50%, Exactly 50%, Greater than 50%). You would need to define the `targetProperty` as 'PercentComplete' and potentially use `init` to set a default. The actual comparison logic for 'Less than'/'Greater than' would likely be handled by a custom `matchType` or a more advanced configuration not explicitly covered but implied by the options."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to implement the 'Percent Complete' search criterion for activities in ClaimCenter. This involves modifying the `search-config.xml` file to add the `CriterionChoice` element, updating the relevant `ActivitySearchCriteria` entity (if necessary), and then modifying the Activity Search UI to include the new dropdown for 'Percent Complete'. Finally, you must regenerate APIs and test your changes.",
+      "objectives": [
+        "Modify `search-config.xml` to include a `CriterionChoice` for 'Percent Complete' on the Activity entity.",
+        "Ensure the `ActivitySearchCriteria` entity has a corresponding property for the new search criterion.",
+        "Update the Activity Search PCF to display the new 'Percent Complete' dropdown.",
+        "Regenerate necessary APIs and restart the ClaimCenter server.",
+        "Verify that the new 'Percent Complete' search functionality works as expected in the UI."
+      ],
+      "figures": [
+        {
+          "slideNumber": 42,
+          "caption": "A visual representation of the student exercise, prompting the learner to add a 'percent complete' field to the search functionality."
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter supports internal searches and external vendor/contact searches, with distinct underlying mechanisms.",
+        "The `SearchCriteria` object is a virtual entity, dynamically created for each search, and defined by `search-config.xml`.",
+        "`search-config.xml` uses `CriteriaDef`, `Criterion`, `CriterionChoice`, and `ArrayCriterion` to define search mappings and logic.",
+        "`matchType` is crucial for defining comparison logic, with performance implications for `contains`.",
+        "UI search fields map to properties of the `SearchCriteria` entity, not the target entity.",
+        "API regeneration (`gwb genJavaApi`) and server restart are mandatory after search configuration changes.",
+        "Configuring external contact search requires coordinated changes in both ClaimCenter and the address book application."
+      ],
+      "realWorldConnection": "In real Guidewire projects, customizing search functionality is a frequent requirement to meet specific business needs, such as adding new custom fields to search criteria or integrating with specialized external systems. A solid understanding of `search-config.xml`, `SearchCriteria` entities, and the critical post-configuration steps ensures that these customizations are implemented efficiently, perform optimally, and avoid common pitfalls, ultimately enhancing user productivity and data accessibility for adjusters and other users.",
+      "nextLessonPreview": "In our next lesson, we'll delve deeper into advanced UI customization techniques, exploring how to create and modify complex PCF pages and widgets to build truly tailored user experiences."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_13_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_13_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_13_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_13_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "CC_13_03.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_13_03.mp4"
+    }
+  ]
+}

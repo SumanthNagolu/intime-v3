@@ -1,0 +1,244 @@
+{
+  "lessonId": "ch07-l13",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 13,
+  "title": "Introduction to List Views",
+  "subtitle": "Explore the fundamentals of List View Panels, their structure, and how to implement them in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T18:05:28.689116+00:00",
+  "estimatedMinutes": 55,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a Guidewire application and need to display a collection of related records, like all policies associated with a contact, or a list of recent activities. How would you efficiently present this summary information in a structured, user-friendly way?",
+      "question": "What UI component is specifically designed to handle the display of multiple object instances, allowing users to quickly grasp key details?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the purpose and typical structure of List View Panels.",
+        "Explain the function and required properties of a Row Iterator.",
+        "Differentiate between inline List View widgets and List View Panels defined as PCF files.",
+        "Determine when to use PanelRef versus ListViewInput for embedding List Views.",
+        "Recognize the role of toolbars and pagination in List View Panels.",
+        "Create a new List View Panel in Guidewire Studio."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with Detail View Panels, which are designed to show detailed information for a single object. List Views extend this concept to collections of objects.",
+      "warmupQuestion": "Think about any application you use daily. Where do you see lists of items, and what information is typically shown for each item in that list?",
+      "hint": "Consider your email inbox, a shopping cart, or a social media feed."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding List View Panels and Their Structure",
+      "narrative": "Just as a Detail View Panel provides a detailed look at a single object, a **List View Panel** is specifically designed to present summary information for a *collection* of objects. Think of it as a table where each row represents an instance of an object, and each column displays a specific field from that object. This allows users to quickly scan and understand key data points across multiple records.\n\nA typical List View Panel takes a single **root object** as its input. This root object usually contains an array of entities that the List View will display. For instance, if you want to show all contact notes for an `ABContact`, the `ABContact` itself would be the root object, and it would contain the `ContactNotes` array. This parent-child relationship is crucial because the parent entity often provides convenient functions, like `addTo<ArrayName>` and `removeFrom<ArrayName>`, which are essential for making the List View editable later on. In scenarios where the List View displays results from a database query, the root object might directly be the set of elements to be displayed, as there's no parent object providing `addTo` or `removeFrom` functions.\n\nWithin the List View Panel, the layout of the cells for each object instance is organized by **Row widgets**. These widgets are responsible for arranging the data fields horizontally. It's important to note that adding multiple Row widgets within a List View doesn't display different objects; rather, it arranges the cells for a *single* object instance across multiple rows. The underlying HTML markup for a Row widget is typically a `<TR>` tag, representing a table row. Each individual field of an entity is then displayed within a **Cell widget**, which acts as a container for that specific piece of data.",
+      "keyPoints": [
+        "List View Panels display summary information for collections of objects.",
+        "A List View Panel typically uses a single root object that contains an array of entities.",
+        "Row widgets organize the layout of cells for an object instance, mapping to HTML `<tr>` tags.",
+        "Cell widgets display individual fields of an entity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An example of a List View Panel displaying a collection of items."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of List View Panels showing bank account information, highlighting the tabular structure."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram illustrating the typical structure of a List View Panel, including the root object, row iterator, and cell widgets."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Row Iterator: Processing Collections",
+      "narrative": "At the heart of a List View Panel's ability to display multiple objects is the **Row Iterator**. An iterator is a powerful widget that takes a set of items—such as an array or the results of a query—and performs the same set of actions for each member. Specifically, a Row Iterator processes this collection and renders each object as a single row of cells within the List View.\n\nGuidewire's PCF (Page Configuration File) architecture includes several types of iterators, each tailored for different display needs. For example, Menu Item Iterators generate menu items from a set of objects, Panel Iterators create individual panels (often detail views) for each object, and PolicyCenter Coverage Iterators generate coverage inputs for each coverage associated with an item. The Row Iterator is designed specifically for tabular data display.\n\nTo configure a Row Iterator, four properties are typically required: \n*   `value`: This property specifies the actual set of elements to be processed, such as `anABContact.HistoryEntries`.\n*   `valueType`: This defines the data type of the set of elements, for example, `HistoryEntry[]` for an array of history entries.\n*   `elementName`: This is a crucial property that defines a variable name. During iteration, this variable points to the *current* object in the array that is being processed. This `elementName` is then used by child widgets, like cells, to reference properties of the current object.\n*   `editable`: A boolean property indicating whether the cells within the row can be edited. Setting this to `false` makes the row read-only.\n\nThe `elementName` property is particularly important because it provides a direct reference to the object associated with the current row. This allows you to easily configure cell properties, such as `value` or `action`, by referencing `elementName.propertyName`.",
+      "keyPoints": [
+        "A Row Iterator processes a collection of objects, rendering each as a row.",
+        "Guidewire uses various iterators for different UI components.",
+        "Key Row Iterator properties include `value`, `valueType`, `elementName`, and `editable`.",
+        "The `elementName` variable points to the current object being processed in a row."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Illustration of a Row Iterator taking a set of objects and rendering each as a row of cells."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Depiction of a Row Iterator before processing any objects, highlighting its required properties."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Row Iterator in Action: Element Name Progression",
+      "narrative": "Let's observe how the `elementName` property of a Row Iterator dynamically changes as it processes a collection of objects. Imagine our `value` property is set to `anABContact.HistoryEntries`, which is an array of `HistoryEntry` objects, and our `elementName` is `currentHistoryEntry`.\n\nWhen the Row Iterator begins, it starts with the first object in the `HistoryEntries` array. At this point, `currentHistoryEntry` will point to this *first* object. Any cell widgets within that row that reference `currentHistoryEntry` will display data from this first object. For example, a cell displaying the subject of the history entry might have its value set to `currentHistoryEntry.Subject`. This mechanism is crucial for dynamically populating each cell with the correct data from the corresponding object instance.\n\nAs the iterator moves to the next item in the collection, `currentHistoryEntry` is updated to point to the *second* object in the array. Consequently, the cells in the second row will now display data corresponding to this second object. This process continues for every object in the array. When the iterator reaches the *final* object, `currentHistoryEntry` will point to that last object, and the corresponding row will display its data.\n\nThis dynamic assignment of `elementName` allows for efficient and consistent rendering of data across all rows in the List View, ensuring that each row accurately reflects the properties of its associated object instance. It's a fundamental concept for understanding how data flows from your application's backend to the user interface in a List View.",
+      "keyPoints": [
+        "The `elementName` property dynamically points to the current object in the array during iteration.",
+        "As the Row Iterator processes each object, the `elementName` updates.",
+        "Child widgets within a row use `elementName` to access properties of the current object."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Visualizing the Row Iterator processing the first object, with `elementName` pointing to it."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Demonstration of the Row Iterator processing the second object, showing `elementName` updated."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Final stage of Row Iterator processing, with `elementName` pointing to the last object in the array."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing List Views: Inline vs. PCF Files",
+      "narrative": "When implementing List Views, you have two primary approaches: defining them as **inline widgets** or as separate **PCF files**. The choice depends largely on reusability and how the List View interacts with its parent container.\n\nA **List View Panel defined as a PCF file** is a top-level container, making it reusable across multiple parts of your application. These files typically have names ending with `LV.pcf` (e.g., `ABContactHistoryLV.pcf`). A key characteristic is that they take their own `root object` as an input parameter. This allows the List View to be self-contained and flexible, as it can be passed different data contexts when referenced. To include such a reusable List View in another PCF file, you use a **PanelRef widget**. The `PanelRef` specifies the filename of the reusable container and passes any necessary arguments to its root object.\n\nConversely, an **inline List View widget** is declared directly as a child container within another PCF file, such as a Screen, Card View Panel, or List Detail Panel. The main drawback of this approach is that inline containers are *not reusable* by other PCF files. Instead of taking its own root object, an inline List View *inherits* the root object of its parent container. While it's possible to define a variable for an inline `ListViewPanel` widget object, it's less common. Everything defined within the same PCF file, including an inline List View, has direct access to the parent's root object.\n\nConsider an `ABContactHistoryScreen.pcf`. If you define the List View inline, all its components (Row Iterator, Rows, Cells) are part of the `Screen`'s PCF and inherit its `anABContact` root object. If you create a separate `ABContactHistoryLV.pcf` for the List View, it will also define `anABContact` as its root object, and the `Screen` will then use a `PanelRef` to include and pass the `ABContact` to the `ABContactHistoryLV.pcf`.",
+      "keyPoints": [
+        "List Views can be defined as reusable PCF files or as inline widgets.",
+        "PCF file List Views are reusable, take their own root object, and are referenced by `PanelRef`.",
+        "Inline List Views are not reusable, inherit their parent's root object, and are defined directly within a parent container.",
+        "The choice depends on the need for reusability and data context."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Comparison table highlighting the differences and similarities between inline List View widgets and List View PCF files."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Example showing how `ABContactHistoryScreen` can be implemented using an inline List View versus a reusable List View with a `PanelRef`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Reusability",
+          "content": "If a container is likely to be needed in multiple places, always create it as a reusable PCF file. This promotes modularity and maintainability."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Embedding List Views: ListViewInput vs. PanelRef",
+      "narrative": "The method for embedding a List View Panel into a parent container depends on the type of the parent. We've already seen that a `PanelRef` widget is used to include a reusable List View PCF file within a `Screen` container. This works because a `Screen` is a top-level container that can directly contain or reference other primary or secondary containers.\n\nHowever, a different approach is required when embedding a List View Panel within a `Detail View Panel`. Both `Detail View` and `List View` are considered *primary containers*. A fundamental rule in Guidewire's PCF architecture is that a primary container can only contain atomic widgets (like text cells, date cells, etc.) and *cannot* directly contain other primary containers. This means you cannot use a `PanelRef` to embed a List View directly into a Detail View.\n\nTo overcome this, you use the **ListViewInput widget**. The `ListViewInput` widget acts as an exception to the rule, forcing the List View to behave as an atomic widget. This allows the List View to be placed anywhere within the Detail View's Input Column. Because it behaves like an atomic widget, it can also have a label associated with it, just like other input fields. In essence, `ListViewInput` is a specialized widget that enables the embedding of a List View Panel within another primary container like a Detail View, where a `PanelRef` would not be permitted.\n\nEvery List View Panel, regardless of how it's embedded, must have an associated **toolbar**. A toolbar is a horizontal bar that typically contains buttons and other widgets, allowing users to perform actions on the data within the associated container. While toolbars often feature buttons for editing or adding items, a List View Panel's toolbar might be configured without such buttons, especially if it's read-only. Crucially, toolbars also provide support for **pagination**. If the number of rows in the List View exceeds what can be displayed at one time, the application automatically displays paging controls within the toolbar, allowing users to navigate through different pages of data.",
+      "keyPoints": [
+        "Use `PanelRef` to embed a reusable List View PCF file into a `Screen`.",
+        "Use `ListViewInput` to embed a reusable List View PCF file into a `Detail View Panel`.",
+        "`ListViewInput` makes a List View behave as an atomic widget, allowing it to be placed in a Detail View's Input Column.",
+        "Toolbars are mandatory for List Views, even if read-only, for actions and pagination controls."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Comparison of using `ListViewInput` to embed a List View in a Detail View versus `PanelRef` in a Screen."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Example of a List View with an associated toolbar and pagination controls."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "List View Panel Visual Elements",
+      "narrative": "This slide serves as a visual placeholder or a general representation of a List View Panel, reinforcing the concepts discussed regarding its structure and components. It reminds us that a List View, at its core, is a structured display of data, often featuring columns for different fields and rows for individual records. The clean, organized layout is essential for user experience, allowing for quick scanning and comprehension of large datasets. While specific elements like toolbars and pagination are functional, the overall visual presentation is critical for usability. This visual helps to solidify the abstract concepts of root objects, iterators, rows, and cells into a concrete UI element. It encapsulates the idea that a well-designed List View provides an intuitive and efficient way for users to interact with collections of information, making complex data accessible and manageable within the Guidewire application.",
+      "keyPoints": [
+        "List View Panels provide a structured and organized display of data.",
+        "The visual layout is crucial for user experience and data comprehension."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "A general visual representation of a List View Panel, emphasizing its structured data display."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a new List View Panel in Guidewire Studio. Pay close attention to how the PCF file is created, how the root object is defined, and how the Row Iterator is added and configured.",
+      "transcriptSummary": "The demo shows how to create a new List View in Guidewire Studio. It covers creating a new PCF folder and a ListView PCF file (e.g., `policy_summaries_ext.lv`). The demonstration then focuses on setting the List View's root object (e.g., `ABContact`) as a required variable and subsequently adding a Row Iterator to process the collection of objects."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "InaList View:\n\nOo A) What type of widget displays individual fields of data?\n\nB) What type of widget organizes the individual fields of data?",
+      "referenceAnswer": "A) Cell widgets\nB) Rowwidgets",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n\nA) What would the row iterator's \"value\" property be set to?\nB) What would the row iterator's \"element name\" be set to?\nC) What other widgets would make use of the element name?",
+      "referenceAnswer": "Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n\nA\nB\n\nC) What other widgets would make use of the element name?\n\nA) anABContact.Addresses (assuming that the name of the addresses array is\n\"Addresses\")\n\nB) The value is arbitrary, but it would probably be set to something like\n\"currentAddress\".\n\nCc) The cell widgets inside the row iterator's row. For example, a cell displaying the\nstreet would have a value of \"currentAddress. Street\".",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Alist view typically needs a toolbar, even if it is read-only. Why?",
+      "referenceAnswer": "The toolbar is needed for the paging controls. These controls are used to view each\npage of rows if the number of rows is greater than what can be displayed at one time.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Inwhat way is embedding a List View Panel in a detail view panel\n¢ different from embedding a list view panel in a screen?",
+      "referenceAnswer": "To embed a list view panel in a detail view panel , use a List View Input widget. To\nembed a list view panel in a screen (or card view panel or List Detail Panel , you use a\nPanel Ref widget.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "List View Panels are essential for displaying collections of objects in a structured, summary format.",
+        "The Row Iterator is key to processing object arrays, with `elementName` dynamically referencing the current object.",
+        "List Views can be implemented as reusable PCF files (using `PanelRef`) or as inline widgets (inheriting parent's root object).",
+        "`ListViewInput` is used to embed List Views into Detail View Panels, bypassing primary container restrictions.",
+        "Toolbars are mandatory for List Views, providing actions and pagination for large datasets."
+      ],
+      "realWorldConnection": "In Guidewire projects, List Views are ubiquitous, from displaying claims on a policy to showing activities on an account. Mastering their creation and configuration is fundamental for building effective and user-friendly interfaces that efficiently manage and present complex data relationships.",
+      "nextLessonPreview": "In the next lesson, we'll delve deeper into customizing List View behavior, including adding editable cells and implementing advanced filtering and sorting options."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the 'List Views' student exercise to practice creating and configuring List View Panels in Guidewire Studio. This will involve defining root objects, setting up row iterators, and adding cell widgets to display data from a collection.",
+      "objectives": [
+        "Create a new List View Panel PCF file.",
+        "Define the root object and required variables for the List View.",
+        "Implement a Row Iterator to display a collection of related entities.",
+        "Add and configure Cell widgets within the List View rows."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_13.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_13.mp4"
+    }
+  ]
+}

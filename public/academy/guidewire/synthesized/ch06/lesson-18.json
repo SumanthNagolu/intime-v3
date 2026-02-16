@@ -1,0 +1,325 @@
+{
+  "lessonId": "ch06-l18",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 18,
+  "title": "Designating an Alternate Payer",
+  "subtitle": "Learn how to manage policy payments when the policyholder isn't the payer.",
+  "synthesizedAt": "2026-02-16T17:55:14.097297+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a large corporation that wants to pay for all its employees' personal car insurance policies, or a mortgage bank that covers homeowner's insurance for its clients. In these situations, the policyholder isn't the one directly paying the insurer.",
+      "question": "How does BillingCenter handle these complex payment relationships, ensuring the right party is billed and payments are correctly processed?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between the two types of alternate payers",
+        "Create and test a list bill account",
+        "Describe performance considerations for alternate payer accounts"
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about standard billing processes where the policyholder is typically the payer. This lesson builds on that foundation by introducing scenarios where a third party assumes payment responsibility.",
+      "warmupQuestion": "Think about a time you paid for someone else's bill. What challenges did that create for the billing entity?",
+      "hint": "Consider how the billing entity would know who to send the invoice to, and how to track payments."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Alternate Payers and Overriding Payers",
+      "narrative": "In BillingCenter, there are often situations where someone other than the policyholder is responsible for paying for a policy. We refer to these as 'alternate payers.' A common example might be a parent paying for a child's car insurance. BillingCenter supports these scenarios through two primary mechanisms: **overriding payers** and **list bill accounts**.\n\nAn **overriding payer** is an account that takes responsibility for paying one or more specific charges on policies it doesn't own. The key here is that the payment responsibility is reassigned at the *charge level*. This means that for a single policy, some charges could be paid by the policy owner, while others are paid by an overriding payer. Any type of account can function as an overriding payer. For instance, a company with multiple regional offices might have each office pay its own policy premiums, but the central HQ account could pay all the taxes for every policy. This allows for granular control over who pays for what, even within a single policy's billing instruction. Another scenario could involve a central office paying *all* charges for policies owned by its regional offices, ensuring the regional offices are never directly invoiced by BillingCenter.",
+      "keyPoints": [
+        "Alternate payers are accounts that pay for policies they do not own.",
+        "Overriding payers assume responsibility for specific charges on a policy.",
+        "Payment responsibility for overriding payers is assigned at the charge level.",
+        "Any account type can be an overriding payer."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Introduction to alternate payers and their real-world relevance."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Differentiates between overriding payers and list bill payers."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustrates an overriding payer example where HQ pays taxes for regional policies."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Shows an overriding payer example where a central office pays all charges for regional policies."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Alternate Payer",
+          "content": "An account that pays for policies it does not own."
+        },
+        {
+          "type": "definition",
+          "title": "Overriding Payer",
+          "content": "An account responsible for paying one or more charges on policies it does not own, with responsibility reassigned at the charge level."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of designating an overriding payer within BillingCenter. Pay close attention to how charges are assigned to a different account.",
+      "transcriptSummary": "The video demonstrates how to create a policy issuance billing instruction and assign specific charges to an overriding payer account, showing the steps within the BillingCenter UI."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Payroll Deduct Scenarios and the Role of List Bill Accounts",
+      "narrative": "Alternate payers are incredibly useful for implementing scenarios like employer-sponsored insurance, often referred to as 'payroll deduct.' In such a setup, a large employer might pay the premiums for its employees' personal line insurance policies. The insurer benefits from more predictable cash flow, reduced operational costs, and earlier premium collection, while employees enjoy discounted insurance and the convenience of no extra bills. The employer automatically deducts premium payments from employee paychecks and sends a single, consolidated payment to the insurer.\n\nThis payroll deduct model involves three key parties: the insurer, the insured employee, and the employer (the payer). BillingCenter can implement this using either an overriding payer or a **list bill account**. In both cases, the single payer (the 'Big Employer' in our example) is billed for all charges across multiple policies, and the individual policyholders (the 'owner' accounts) are never directly invoiced by BillingCenter. This streamlines the billing process significantly for both the insurer and the policyholders. The choice between an overriding payer and a list bill account for such a scenario depends on several factors, which we'll explore further after understanding list bill accounts in more detail.",
+      "keyPoints": [
+        "Payroll deduct scenarios involve an employer paying premiums for multiple employees' policies.",
+        "Both employees (discount, convenience) and insurers (cash flow, reduced costs) benefit from payroll deduct.",
+        "Payroll deduct can be implemented using either overriding payers or list bill accounts.",
+        "In these scenarios, policyholders are not directly invoiced by BillingCenter."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Discusses how alternate payers facilitate payroll deduct scenarios."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Details the benefits of a payroll deduct example for both employees and insurers."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Illustrates the flow of payments in a payroll deduct system."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Shows how payroll deduct can be implemented using either alternate payer type."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Introduces the need to learn more about list bill accounts before making a decision."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Characteristics and Restrictions of List Bill Accounts",
+      "narrative": "List bill accounts are specifically designed for situations where a non-producer is responsible for paying for a large number of insureds' policies. They have several unique behaviors and restrictions that differentiate them from overriding payers.\n\nFirst, a list bill account is primarily identified by its **Account Type**, which *must* be 'List Bill'. This account type is crucial because it dictates many of its special behaviors. Unlike other accounts, a list bill account is restricted to using a predefined list of payment plans, which are specified during its creation. It also has a predefined set of invoice streams with periodicities that align with these payment plans. BillingCenter does not dynamically create invoice streams for list bill policies; however, you can add more payment plans and invoice streams to an existing list bill account if needed.\n\nCrucially, list bill accounts *cannot own policies* themselves, nor can they hold collateral, as their purpose is solely to pay for policies owned by others. They are blocked from these actions in both the UI and API. Furthermore, list bill accounts *must* use **account-level billing**; you cannot configure a list bill account for policy-level billing. Once an account is designated as a list bill account, its type cannot be changed. This means you cannot convert a non-list bill account into a list bill account, or vice-versa. These characteristics make list bill accounts highly specialized for consolidated billing scenarios.",
+      "keyPoints": [
+        "List bill accounts must have an 'List Bill' account type.",
+        "They have a predefined set of supported payment plans and invoice streams.",
+        "List bill accounts cannot own policies or hold collateral.",
+        "They always use account-level billing.",
+        "An account's type cannot be changed to or from 'List Bill' after creation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Outlines the special behaviors and restrictions of list bill accounts (part 1)."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Further explains the special behaviors of list bill accounts, including payment plan and invoice stream flexibility (part 2)."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "List Bill Account",
+          "content": "An account responsible for paying all charges on one or more policies it does not own, with responsibility reassigned at the policy level. It has specific restrictions on account type, payment plans, and policy ownership."
+        },
+        {
+          "type": "gotcha",
+          "title": "Account Type Immutability",
+          "content": "Once an account is created as a 'List Bill' type, it cannot be changed to another type, nor can a non-list bill account be converted to a list bill account."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the three main characteristics of a list bill account?",
+      "referenceAnswer": "A list bill account must be type List Bill. It must have at least one associated payment plan and one associated invoice stream that supports the payment interval on the payment plan.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What are the restrictions for list bill accounts?",
+      "referenceAnswer": "A list bill account:\n* Cannot own policies or hold collateral\n* Always uses accountlevel billing\n* Cannot be changed to a different account type",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Creating and Testing List Bill Policies",
+      "narrative": "To effectively test a list bill account and ensure it functions as expected, you'll need to create some associated list bill policies. When setting up a new policy that will be paid by a list bill account, there are a few critical configurations to remember. First, the policy's **billing method** must be set to 'List Bill'. This is a fundamental requirement for the policy to be associated with a list bill payer.\n\nSecond, you must designate a list bill account as the **Overriding Payer Account** for this policy. During the policy issuance process, specifically in the New Policy wizard, BillingCenter will restrict your choices for payment plans and invoice streams. You will only be able to select from the payment plans and invoice streams that are already associated with the chosen list bill payer account. This ensures consistency and adherence to the list bill account's predefined payment structure. It's important to note that while you can add many policies to a list bill account, there are performance limits. For large numbers of policies, it's always best to consult the BillingCenter Application Guide or Guidewire Customer Support for optimal configuration strategies.",
+      "keyPoints": [
+        "New policies for a list bill account must have 'List Bill' as their billing method.",
+        "A list bill account must be selected as the Overriding Payer Account for the policy.",
+        "Payment plan and invoice stream selections are restricted to those associated with the chosen list bill payer.",
+        "Performance considerations exist for list bill accounts with a very high number of policies."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Shows the key settings for creating a new list bill policy for testing purposes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Performance Limits",
+          "content": "There is a limit to how many policies you can put on a single list bill account without compromising performance. Always refer to the BillingCenter Application Guide for details or consult Guidewire Customer Support for large-scale implementations."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the steps of creating a new list bill account and then associating a policy with it, allowing you to test the list bill functionality.",
+      "transcriptSummary": "The video illustrates how to create a list bill account, define its payment plans and invoice streams, and then create a new policy, setting its billing method to 'List Bill' and assigning the newly created list bill account as its overriding payer."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Managing List Bill Payments and Credit Distribution",
+      "narrative": "Once list bill policies are in place, managing payments efficiently becomes crucial. For list bill policies, where a single payment covers numerous individual policies, billing clerks typically use the **Multiple Payment Entry wizard** to record payments. This wizard is highly recommended because it allows for a large payment to be split into smaller, more manageable payments, which can then be allocated at the account, policy, or even invoice level. This granular allocation significantly simplifies reconciliation, especially when mistakes occur in large, consolidated payments. If a list bill payment is recorded as a single lump sum, BillingCenter's batch processes (such as Invoice, Invoice Due, and New Payment) will handle the allocation.\n\nRegarding credit distribution, BillingCenter uses the **return premium plan** associated with a policy period to allocate any credits. For list bill accounts specifically, the return premium plan includes a field called 'List Bill Account Excess.' This setting determines whether any remaining unallocated credit funds should be placed into the policyholder's unapplied fund or the list bill payer's unapplied fund. This ensures that credits are routed to the correct party, maintaining financial accuracy within the complex alternate payer structure.",
+      "keyPoints": [
+        "The Multiple Payment Entry wizard is used to record list bill payments.",
+        "Splitting large payments and allocating them at granular levels (account, policy, invoice) is recommended for easier reconciliation.",
+        "BillingCenter's batch processes handle single-sum list bill payment allocations.",
+        "The 'List Bill Account Excess' setting in the return premium plan dictates where unallocated credits go (policyholder or list bill payer)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "Introduces the method for handling payments for list bill policies."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Explains how to record list bill and overriding payer payments using the Multiple Payment Entry wizard."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Details how BillingCenter handles credit distribution for list bill accounts."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Payment Reconciliation",
+          "content": "For large list bill payments, it's a best practice to split them into smaller, allocable payments using the Multiple Payment Entry wizard to simplify reconciliation and error handling."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Delinquency and Performance Considerations for Alternate Payers",
+      "narrative": "All accounts in BillingCenter, including list bill accounts, must have an associated delinquency plan. However, the way delinquency is handled for alternate payers is unique. When a list bill policy becomes past due, BillingCenter initiates a 'Past Due' delinquency for *both* the policy itself and the account that *owns* the policy. This delinquency alert will appear on the Policy Summary and Policy Details screens, as well as on the owner's Account Summary and Account Details screens. Importantly, it *does not* appear on the list bill account's screens, nor does an overriding payer account become delinquent if a policy it pays for is past due. This is because the list bill payer is typically responsible for managing the relationship and any delinquencies with the policy owners.\n\nWhen deciding between an overriding payer and a list bill account, several factors come into play. Guidewire generally recommends using **list bill accounts** due to their performance enhancements. However, a list bill account cannot own its own policies. If the paying account needs to own policies *and* pay for others, an overriding payer must be used. Also, if a single policy requires multiple payers (e.g., different charges paid by different alternate payers), overriding payers are necessary, as list bill assigns the *entire* policy to one alternate payer. For fewer than 50 policies, either can work, but the billing method must be 'List Bill' for list bill payers and 'Direct Bill' for overriding payers.\n\n**Performance is a critical consideration** for alternate payers, especially 'mega payer accounts' that pay for thousands of policies. Such accounts can severely impact performance, causing batch processes to fail and screens to load slowly. Guidewire strongly recommends distributing work over multiple payer accounts (e.g., regional accounts) and over time (e.g., invoicing policies throughout the month) to optimize performance. Consult Guidewire Customer Support before implementing large-scale list bill solutions.",
+      "keyPoints": [
+        "Delinquency for list bill policies is triggered on the policy and the policy owner's account, not the list bill payer's account.",
+        "Guidewire generally recommends list bill accounts for performance, but they cannot own policies.",
+        "Overriding payers are necessary if the payer account owns policies or if a single policy has multiple payers.",
+        "Mega payer accounts (thousands of policies) can severely impact BillingCenter performance.",
+        "Distributing work across multiple payer accounts and over time is crucial for performance optimization."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "Explains how delinquency is handled for alternate payers, focusing on policy and owner accounts."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Sets the stage for discussing considerations when choosing an alternate payer type."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Provides guidelines for determining whether to use an overriding payer or a list bill account."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Highlights critical performance considerations for alternate payer accounts, especially mega payers."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Choosing Alternate Payer Type",
+          "content": "For optimal performance, Guidewire generally recommends list bill accounts unless the paying account needs to own its own policies or a single policy requires multiple payers at the charge level."
+        },
+        {
+          "type": "warning",
+          "title": "Mega Payer Account Performance",
+          "content": "Avoid creating single payer accounts responsible for thousands of policies without consulting Guidewire Customer Support. Distribute policies across multiple accounts and invoice over time to prevent performance degradation."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company, 'Global Corp,' has regional offices. Each regional office has its own commercial property policy. Global Corp's HQ wants to pay for all the *taxes* on these policies, while each regional office pays its own premiums. Additionally, Global Corp wants to offer a payroll deduct program for its employees' personal auto insurance, where HQ pays all premiums for participating employees.",
+      "question": "For the commercial property policies, which type of alternate payer would you recommend for Global Corp HQ to pay only the taxes? For the employee personal auto insurance program, which alternate payer type would you recommend, assuming HQ does not own any policies itself?",
+      "hints": [
+        "Consider whether payment responsibility is at the charge level or policy level.",
+        "Think about whether the alternate payer needs to own its own policies.",
+        "Recall the performance recommendations for large numbers of policies."
+      ],
+      "expectedApproach": "Identify the scope of payment responsibility (charge vs. policy) and the need for policy ownership for each scenario to determine the appropriate alternate payer type."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Alternate payers allow accounts to pay for policies they do not own.",
+        "Overriding payers handle payment at the charge level and can be any account type.",
+        "List bill accounts handle payment at the policy level, must be of type 'List Bill', cannot own policies, and use account-level billing.",
+        "List bill accounts have predefined payment plans and invoice streams.",
+        "The Multiple Payment Entry wizard is recommended for recording large list bill payments.",
+        "Delinquency for list bill policies impacts the policy and owner, not the list bill payer.",
+        "Performance is a critical factor; distribute policies across multiple payer accounts for large volumes."
+      ],
+      "realWorldConnection": "Understanding alternate payers is crucial for implementing complex billing scenarios in Guidewire BillingCenter, such as employer-sponsored insurance, mortgage bank payments, or large corporate structures with centralized billing. Proper configuration ensures accurate invoicing, payment processing, and maintains system performance in real-world deployments.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced configuration options for customizing invoice generation and payment allocation rules."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Using your BillingCenter development environment, create a new list bill account. Configure it with at least one payment plan and one invoice stream. Then, create a new personal auto policy, ensuring its billing method is 'List Bill' and assigning your newly created list bill account as its overriding payer. Verify that the policy's payment plan and invoice stream selections are restricted to those defined on the list bill account.",
+      "objectives": [
+        "Create a list bill account with specified payment plans and invoice streams.",
+        "Create a new policy and associate it with the list bill account.",
+        "Validate the restricted payment plan and invoice stream selections during policy creation."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_18_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_18_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_18_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_18_02.mp4"
+    }
+  ]
+}

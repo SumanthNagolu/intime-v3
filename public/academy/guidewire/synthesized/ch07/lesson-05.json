@@ -1,0 +1,348 @@
+{
+  "lessonId": "ch07-l05",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 5,
+  "title": "Introduction to Atomic widgets",
+  "subtitle": "Explore how atomic widgets and dot notation enable dynamic data display and interaction in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T17:59:49.117921+00:00",
+  "estimatedMinutes": 120,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a complex application interface where data needs to be pulled from various sources and displayed in a user-friendly way, while also supporting multiple languages. How do you ensure that every button, text box, and label dynamically reflects the correct information and language settings?",
+      "question": "What are the fundamental building blocks that allow a Guidewire application to display and interact with data on the screen?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define atomic widgets and their role in the Guidewire UI.",
+        "Explain the purpose and benefits of using Display Keys for UI text.",
+        "Describe the process of how Guidewire applications display data from the database using root objects.",
+        "Apply Gosu dot notation to access data fields, related objects, and subtype-specific properties.",
+        "Implement UI changes by configuring atomic widgets to display data model fields."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored the Guidewire data model and how entities store information. Recall how these entities are represented in the application server. This lesson builds on that foundation by showing how that stored data is brought to life in the user interface.",
+      "warmupQuestion": "Think about any web application you use daily. What are some common interactive elements you see, and how do you think they get their information?",
+      "hint": "Consider elements like buttons, text fields, and dropdowns."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Atomic Widgets and Display Keys: The Building Blocks of UI",
+      "narrative": "At the heart of the Guidewire user interface are **atomic widgets**. These are the fundamental, non-divisible graphical user interface elements that a Guidewire application renders into HTML objects. Think of them as the basic components you interact with: buttons, menus, text boxes, and dropdown lists are all common examples. Even elements that aren't visually presented, like a hidden input, are considered widgets because they are rendered as HTML objects. Each atomic widget is designed to display individual data values or execute individual actions, making them crucial for interacting with your application's data.\n\nWhen working with widgets, you'll often encounter **Display Keys**. A display key is a powerful Guidewire mechanism that allows for dynamic, locale-specific text rendering in the browser. Instead of hard-coding text directly into your UI, you reference a display key. This key has one or more localized text values, and the application automatically converts it to the appropriate value based on the user's internationalization language settings. This not only supports easy text reusability across your application but also significantly simplifies the process of internationalization and localization. It's a recommended best practice to use Display Keys for all static text in the UI, ensuring maintainability and global readiness.",
+      "keyPoints": [
+        "Atomic widgets are non-divisible UI elements that display data or execute actions.",
+        "Widgets like inputs and cells bind directly to data values.",
+        "Display Keys provide locale-specific text for UI labels, enhancing reusability and internationalization."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "This slide visually introduces atomic widgets as non-divisible UI elements that display individual data values or execute actions."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This figure provides a definition of atomic widgets and illustrates examples of how they display data, such as addresses in a table."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "This slide explains the role of Display Keys in providing labels for widgets, emphasizing their importance for reusability and localization."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Atomic Widget",
+          "content": "A graphical user interface element that is non-divisible, displays individual data values, and/or executes individual actions. Examples include buttons, text boxes, and dropdown lists."
+        },
+        {
+          "type": "definition",
+          "title": "Display Key",
+          "content": "A Guidewire application mechanism that allows locale-specific texts to be dynamically rendered in the browser depending on the user's internationalization language settings. Every key has one or more localized text values."
+        },
+        {
+          "type": "best_practice",
+          "title": "Use Display Keys",
+          "content": "It's a recommended practice to use Display Keys to display static text in the UI. This supports easy text reusability and simplifies internationalization."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Displaying Data from the Database: The Root Object Journey",
+      "narrative": "To truly understand how widgets display information, we must trace the journey of data from the database to the user interface. This process relies heavily on the concept of **entities** and **root objects**. Recall that for every data model entity, Guidewire automatically generates a corresponding Java class. Each field in the data model entity has a matching field in this generated Java class. When the application needs to work with an instance of a data model entity (which is a row in a database table), it creates an instance of the corresponding Java class and populates it with data from that row.\n\nLet's walk through an example of how data, such as 'Express Auto' contact details, is displayed in the UI:\n1.  **User Interaction**: The process begins when a user clicks a UI element, like a button, to view details for 'Express Auto'.\n2.  **Object Instantiation**: The system identifies the relevant database table (e.g., `ab_abcontact`) and creates an instance of the appropriate generated Java class (e.g., `ABContact`).\n3.  **Data Loading**: Data from the specific row in the database table (e.g., 'Express Auto' details) is loaded into the newly created object instance. Every column in the database row maps to a field in this Java object.\n4.  **Root Object Assignment**: Once initialized, this object is passed as an input parameter to the relevant PCF (Page Configuration File), such as `ABContactSummaryDV.pcf`. This object is typically stored in a variable, often referred to as a **root object**. Most container widgets require at least one root object to provide the data fields they will display.\n5.  **Data Access via Dot Notation**: Within the PCF, different UI elements (widgets) can access the data within the root object using **dot notation** (e.g., `anABContact.DisplayName`). This syntax allows you to navigate through the object's properties to retrieve specific values.\n6.  **HTML Generation**: Finally, the application generates the HTML page, which is then rendered in the browser, displaying the retrieved data. This data can come directly from the database or be the result of a Gosu function call, offering flexibility in how information is presented.",
+      "keyPoints": [
+        "Guidewire generates Java classes for data model entities.",
+        "Data from database rows is loaded into instances of these Java classes.",
+        "A 'root object' is an object passed to a PCF, containing data for UI display.",
+        "Widgets use dot notation to access data fields within the root object.",
+        "The application generates HTML to render the data in the browser."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "This slide introduces the concept of displaying values from the database, setting the stage for the detailed process."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "This figure reviews how data model entities correspond to generated Java classes, illustrating the mapping between database tables and application objects."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Step 1 of 6: Shows the initial user interaction triggering the display of data, with the UI, Application Server, and Database components."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Step 2 of 6: Illustrates the system creating an instance of the appropriate generated Java class based on the database table."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Step 3 of 6: Depicts data from a database row being loaded into the object instance, populating its fields."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Step 4 of 6: Explains how the initialized object is passed as an input parameter to the PCF, becoming the 'root object' for the UI."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Step 5 of 6: Demonstrates how PCF elements use dot notation to access data fields within the root object."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Step 6 of 6: Shows the final step where the application generates the HTML page, rendering the retrieved data in the browser."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Root Object",
+          "content": "An object passed as an input parameter to a PCF file, typically containing the primary data fields that a container widget will display."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Mastering Dot Notation for Data Access",
+      "narrative": "**Dot notation** is a fundamental Gosu language syntax used to identify and access data objects and their properties. It starts with an object and ends with a field, a related object, or a related array, relying heavily on the underlying data model. This powerful syntax is not used to configure the data model itself, but it is essential for User Interface configuration and within Gosu classes to retrieve and manipulate data. Guidewire Studio offers smart suggestions to help you construct correct dot notation expressions, making development more efficient.\n\nThe syntax for dot notation is straightforward:\n*   To reference a data field on a given object, you use `object.field` (e.g., `anABContact.FaxPhone`).\n*   To reference a field on a related object, you chain the notation: `object.foreignKey.field` (e.g., `anABContact.AssignedUser.JobTitle`).\n\nDot notation also extends to referencing arrays on a given object, such as `anABContact.BankAccounts`. A more advanced use case involves **subtypes**. When an object is subtyped (e.g., `ABPerson` is a subtype of `ABContact`), and you need to access a field specific to that subtype, you use **casting**. This is done with the `(object as subtype).field` syntax. For example, `(anABContact as ABPerson).DateOfBirth` explicitly tells the server to treat `anABContact` as an `ABPerson` to access its `DateOfBirth` field. This is crucial when a reference uses a 'high-level' datatype (like `ABContact`) but you need to access fields at a more specific subtype level.\n\nWhile dot notation is convenient, it's important to be mindful of performance, especially when accessing instance arrays on object access paths. Inefficient use can lead to slow runtime performance. For example, `PersonalAutoLine.Vehicles.AdditionalInterests.Addresses` could fetch a vast amount of data unnecessarily. As a best practice, always determine the most efficient means of acquiring only the data you need, often by using query builder expressions to fetch a more focused set of data from the database.",
+      "keyPoints": [
+        "Dot notation is Gosu syntax for accessing data fields, related objects, and arrays.",
+        "It relies on the data model and is used in UI configuration and Gosu classes.",
+        "Casting (`as <datatype>`) is used to access fields specific to an object's subtype.",
+        "Be aware of performance implications when using dot notation, especially with large arrays."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "This slide defines dot notation as a Gosu syntax for identifying data objects and properties, highlighting its reliance on the data model and use in UI configuration."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "This figure illustrates the basic syntax of dot notation for referencing data fields on an object and fields on a related object."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "This slide provides advanced examples of dot notation, including referencing arrays and accessing fields at a subtype level using casting."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Dot Notation",
+          "content": "A Gosu language syntax used to identify data elements such as text fields, related objects, or collections of objects, starting with an object and ending with a field, related object, or related array."
+        },
+        {
+          "type": "best_practice",
+          "title": "Performance Awareness",
+          "content": "When using dot notation, especially with instance arrays, be aware of potential performance impacts. Fetch only the data you need, possibly using query builder expressions, to avoid slow runtime performance."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Referencing a Data Field",
+          "code": "anABContact.FaxPhone",
+          "explanation": "Accesses the 'FaxPhone' field directly on the 'anABContact' object."
+        },
+        {
+          "language": "gosu",
+          "title": "Referencing a Field on a Related Object",
+          "code": "anABContact.AssignedUser.JobTitle",
+          "explanation": "Accesses the 'JobTitle' field of the 'AssignedUser' object, which is related to 'anABContact'."
+        },
+        {
+          "language": "gosu",
+          "title": "Referencing an Array",
+          "code": "anABContact.BankAccounts",
+          "explanation": "Accesses the collection (array) of 'BankAccount' objects associated with 'anABContact'."
+        },
+        {
+          "language": "gosu",
+          "title": "Referencing a Field at Subtype Level (Casting)",
+          "code": "(anABContact as ABPerson).DateOfBirth",
+          "explanation": "Casts 'anABContact' to 'ABPerson' to access the 'DateOfBirth' field, which is specific to the ABPerson subtype."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "User Story: Implementing Social Media Functionality (Part B)",
+      "narrative": "Let's apply our understanding of atomic widgets and data display to a real-world scenario. Consider a user story from an insurance company that wants to enhance customer experience by implementing social media functionality. The requirement is to allow customers to opt-in or opt-out of this service, with a default 'declined' status if no response is given. If a customer accepts, additional social media information needs to be stored and, crucially, displayed and easily updatable within the TrainingApp UI.\n\nWe'll assume that the integration developers are handling the external system integrations. Our focus, as UI developers, is on configuring the Data Model and the User Interface. You might recall that we've already made the necessary data model changes in a previous lesson, 'Extending The Data Model'. Now, in 'Part B' of this user story, our task is to implement the user interface changes required to display these new social media fields. This involves selecting the appropriate atomic widgets, binding them to the correct data model fields, and ensuring they are presented clearly and functionally in the UI.",
+      "keyPoints": [
+        "User story requires displaying and updating social media information for contacts.",
+        "Focus is on UI configuration, assuming data model changes are already complete.",
+        "The goal is to implement necessary UI changes to display new fields using atomic widgets."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "This slide presents the user story for implementing social media functionality, showing a wireframe of the desired UI with new fields."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "This figure clarifies that the data model changes for the social media functionality have already been implemented, and the current focus is on the user interface changes."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration analyzes the existing PCF configuration to understand where and how to implement the social media functionality, focusing on identifying the correct UI elements to modify.",
+      "transcriptSummary": "The demo walks through analyzing a user story for social media functionality, navigating the TrainingApp UI to the Social Media tab, and using Alt+Shift+E to find the corresponding PCF in Studio. It identifies the card view, detail view, and input column as key components, and examines the XML definition to understand the schema and structure for adding atomic widgets."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "Watch this demonstration to see how to create and bind atomic widgets to data model fields, and how to define user-friendly labels using display keys.",
+      "transcriptSummary": "This demo illustrates how to create atomic widgets, bind them to data model fields, and use display keys for labels. It shows deleting a placeholder, adding a new label widget, defining a display key (e.g., `ext.lastSocialActivity`) with dynamic parameters, and configuring various input widgets (date, text, radio buttons) to display and update contact information, emphasizing the use of dot notation and the 'value' property."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've just seen how to add new fields to the Social Media tab. Now, imagine your business analyst wants to add a new field called 'PreferredContactMethod' to the ABContact entity, which should be a dropdown list with options like 'Email', 'Phone', 'SMS'.",
+      "question": "Describe the steps you would take to add this 'PreferredContactMethod' field to an existing PCF, ensuring it uses a display key for its label and binds correctly to the data model. What type of atomic widget would you use?",
+      "hints": [
+        "Consider the type of widget best suited for a dropdown list.",
+        "Remember the process for creating and applying a display key.",
+        "How would you bind the widget to the new 'PreferredContactMethod' field in the ABContact entity?"
+      ],
+      "expectedApproach": "The learner should identify using a `TypeKeyInput` widget, creating a display key for its label, and binding its `value` property using dot notation (e.g., `anABContact.PreferredContactMethod`)."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration highlights Studio's 'Change Element Type' functionality, allowing you to easily switch between different widget types while preserving common properties.",
+      "transcriptSummary": "The demo addresses a business analyst's request to change the 'Enrolled in Social Media' field from radio buttons to a checkbox. It demonstrates using Studio's 'Change Element Type' functionality to convert an existing widget, noting that widget-specific configurations might be lost but common properties like ID and Value are retained. The process concludes with saving the configuration and reloading PCFs in TrainingApp to see the updated UI."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "After implementing the 'PreferredContactMethod' as a dropdown, your team decides that for certain users, this field should be a simple text input for free-form entry, rather than a constrained dropdown. You want to quickly prototype this change without re-creating the widget from scratch.",
+      "question": "Using the 'Change Element Type' functionality, how would you convert the 'PreferredContactMethod' dropdown widget to a text input widget? What properties would you expect to be retained, and what might you need to reconfigure?",
+      "hints": [
+        "Locate the existing 'PreferredContactMethod' widget in Studio.",
+        "Think about the common properties shared between a dropdown and a text input.",
+        "Consider what properties are unique to a dropdown (like choices) that wouldn't apply to a text input."
+      ],
+      "expectedApproach": "The learner should describe right-clicking the existing `TypeKeyInput` widget, selecting 'Change Element Type', choosing 'TextInput', and then verifying that the `ID`, `Value`, and `Label` properties are retained, while any `TypeKey` specific properties would be lost and might need to be reconfigured if the text input requires different validation or display logic."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What must you specify in a widget's \"value\" property?",
+      "referenceAnswer": "SS SSS SHS se FH",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When would you see the keyword \"as\" in the value property?",
+      "referenceAnswer": "which the widget must be bound is at one of the subtype levels.\nSS SSS SHS se FH",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "n What is a display key?",
+      "referenceAnswer": "It can have one or more language-specific values, and when the UI is rendered, the\nvalue matching the user’s language is used.\nSS SSS SHS se FH",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "—— Ifyou create a widget and specify only the ID, name, and label, is the\nA widget visible? Editable? Required?",
+      "referenceAnswer": "SS SSS SHS se FH",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "The screenshot shows a standard input widget. The customer requires\nA a\"long\" date format. How could you implement this requirement?",
+      "referenceAnswer": "SS SSS SHS se FH",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "For the object \"myContact\" of type ABContact,\n¢ A)\nB)\nCc)\nD)\nPreferred currency?\nNotes?\n2 what is the dot notation for the object's:\nLevel of experience of myContact's assigned user?\nMobile phone (if it is a person)\nUser (ab_user)\n> Description\nFields\nBackupUser\nRetums the backup user for this user\nExperienceLevel\nExperience level of the user.\nJobTitle 255) cexpenabi\nUsers job title.\nGi\nABContact (ab_abcontact) (delegates to}\n> Description\nFields\nAssignedUser foreign ke (eoonabie” (oasabe\nAssigned user\nFaxPhone (exponable)” (loadabie)’ — (wrtabie)\nFax number associated with the contact\nPreferredCurrency typ (ese\nThe contact’ preferred currency\nArrays\nContactNotes array key (exsonabe)”\nNotes\nABPerson (subtype of ABContact)\n> Description\nCellPhone ) _(exoorabiey” oadabie)” (writable)\nMobile phone number associated with the contact\nDateOfBirth Me (experabe)” Goadabie)” (wrtabie\nDate of birth",
+      "referenceAnswer": "For the object \"myContact\" of type ABContact,\n2 what is the dot notation for the object's:\nA) Preferred currency?\nB) Notes?\nC) Level of experience of myContact's assigned user?\nD) Mobile phone (if it is a person)\nThe correct responses are:\nA) myContact.PreferredCurrency\nB) myContact.ContactNotes\nc) myContact.AssignedUser.ExperienceLevel\nSS SSS SHS se FH\nD) (myContact as ABPerson).CellPhone",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Atomic widgets are the fundamental UI elements in Guidewire applications, displaying data or executing actions.",
+        "Display Keys are crucial for providing reusable, locale-specific text for UI labels, supporting internationalization.",
+        "Data from the database is displayed in the UI by loading it into generated Java objects, which are then passed as 'root objects' to PCF files.",
+        "Gosu's dot notation is used to access fields, related objects, and arrays within these objects, including casting for subtype-specific properties.",
+        "Guidewire Studio provides tools like 'Change Element Type' to efficiently modify widget configurations."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering atomic widgets and dot notation is essential for building dynamic, data-driven user interfaces. Properly using display keys ensures your application is ready for global deployment, while understanding the data flow from database to UI enables you to efficiently troubleshoot and enhance user experiences. Efficient use of dot notation and Studio's features significantly speeds up UI development and maintenance.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into container widgets and how they organize and structure atomic widgets within the UI, allowing for more complex layouts and data presentations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the Social Media user story, your task is to implement additional atomic widgets to display and allow editing of the 'Friendbook' and 'Chirp' URL fields for an ABPerson contact. Ensure that these fields are bound to the correct data model properties and use appropriate display keys for their labels. Experiment with different input widget types (e.g., TextInput, URLInput if available) to find the most suitable presentation.",
+      "objectives": [
+        "Practice adding and configuring atomic widgets in a PCF.",
+        "Apply knowledge of display keys for static text.",
+        "Utilize dot notation to bind widgets to specific data model fields.",
+        "Gain hands-on experience with UI configuration in Guidewire Studio."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_05_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Fund_05_02.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_05_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Fund_05_03.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_05_03.mp4"
+    }
+  ]
+}

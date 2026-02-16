@@ -1,0 +1,415 @@
+{
+  "lessonId": "ch05-l14",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 14,
+  "title": "Introduction to Permissions and Access Control Lists",
+  "subtitle": "Mastering user access and data security in ClaimCenter with permissions and ACLs.",
+  "synthesizedAt": "2026-02-16T17:42:58.645963+00:00",
+  "estimatedMinutes": 135,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an agency manager, Karun, and you've just realized that a Customer Service Representative (CSR) in your team was able to issue a payment, a task they are not approved to perform. This raises serious concerns about security and compliance. How can you ensure that employees can only perform tasks they are authorized for?",
+      "question": "How does ClaimCenter manage granular authorization and security to prevent unauthorized actions?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the purpose and function of system permissions in ClaimCenter.",
+        "Describe how user permissions are determined during the login process.",
+        "Explain the role of roles in simplifying permission assignment to users.",
+        "Navigate and interpret the ClaimCenter security dictionary.",
+        "Understand the purpose and function of Access Control Lists (ACLs) for object-level security.",
+        "Differentiate between system permissions and Access Control Lists.",
+        "Explain how ACLs are created based on security types, ownership, groups, and security zones.",
+        "Describe the elements of an access profile and how they grant specific access levels."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Before diving into ClaimCenter's security mechanisms, recall any experiences you've had with user accounts and permissions in other software systems. Think about how different users might have different levels of access to features or data.",
+      "warmupQuestion": "What are some common ways software applications control who can see or do what?",
+      "hint": "Consider concepts like 'administrator access' versus 'standard user access'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding System Permissions in ClaimCenter",
+      "narrative": "In ClaimCenter, controlling who can do what is paramount for data integrity and operational efficiency. As Karun, our agency manager, highlighted, it's crucial that employees are restricted to tasks they are approved for, such as preventing a CSR from issuing payments. This level of control is managed through **system permissions**, which form the foundation of ClaimCenter's access control. \n\n**Access** in ClaimCenter refers to a user's ability to see and interact with various elements based on their unique user identity. This encompasses a broad range of actions, including the creation, modification, or deletion of objects, managing ownership, controlling visibility (what a user can view or navigate to), and even specific actions like closing a claim. At its core, system permissions are granular settings that explicitly determine what a user is allowed to do and what they are not. They are the 'keys' that unlock specific functionalities within the application, ensuring that each user's interaction aligns with their job responsibilities and security requirements.",
+      "keyPoints": [
+        "Access in ClaimCenter is based on user identity and controls various actions.",
+        "System permissions are the fundamental mechanism for granting or denying capabilities.",
+        "Permissions govern creation, modification, deletion, ownership, visibility, and specific object actions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Karun, the Agency Manager, expresses the need for granular control over employee tasks, such as preventing CSRs from issuing payments."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This slide defines 'Access' in ClaimCenter and introduces system permissions as the core mechanism for managing user capabilities."
+        }
+      ],
+      "estimatedMinutes": 8
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "How Permissions are Determined During Login",
+      "narrative": "The determination of a user's permissions in ClaimCenter is a critical process that occurs primarily during login. When a user attempts to log in, they provide their username and password to the system. ClaimCenter then queries its internal database to perform two key functions: first, it authenticates the user's credentials to verify their identity. Second, it retrieves all the permissions assigned to that user, along with their designated start page or default view. \n\nOnce authenticated, the user is granted access to ClaimCenter, and their permissions immediately dictate which screens they can navigate to and what actions they can perform on claims and other objects. The system then renders the user's startup view, applying these permissions to define their interface and capabilities. It's important to note that while permissions are initially determined at login, ClaimCenter is dynamic. If an administrator modifies a user's permissions while they are actively logged in, those new permissions are applied instantaneously, ensuring real-time security enforcement. This immediate application of changes is a crucial aspect of maintaining a secure and responsive environment.",
+      "keyPoints": [
+        "User permissions are determined during the login process.",
+        "ClaimCenter authenticates users and retrieves assigned permissions and start page from its database.",
+        "Permissions dictate accessible screens and actions within ClaimCenter.",
+        "Permission changes made by an administrator are applied immediately, even if the user is logged in."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "The initial step of the login process where a user provides credentials to ClaimCenter."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "ClaimCenter queries its database to authenticate the user and retrieve their assigned permissions and start page."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Upon successful authentication, the user is granted access based on their permissions, determining what they can view and do."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "ClaimCenter renders the user's startup view with all assigned permissions applied, with real-time updates for any administrative changes."
+        }
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Simplifying Permission Management with Roles",
+      "narrative": "Managing individual permissions for every user in a large organization would be an incredibly complex and time-consuming task, given the sheer number of system permissions available in ClaimCenter. To streamline this, ClaimCenter introduces the concept of **roles**. A role is essentially a named collection of system permissions designed to simplify the assignment process. Instead of assigning dozens of individual permissions to each user, administrators assign one or more roles, and the user inherits all permissions associated with those roles.\n\nConsider an example: a Customer Service Representative (CSR) role might include permissions like 'view claims,' 'create claims,' and 'edit exposures.' However, a CSR typically wouldn't need to 'edit matters' or 'own claims,' so those permissions would be excluded from the CSR role. An Adjuster role, on the other hand, would likely encompass all CSR permissions plus additional ones, such as 'view confidential notes,' 'own claims,' and 'edit matters.' This hierarchical or additive approach allows for flexible role design. You could either create an Adjuster role that includes all CSR permissions directly, or create an Adjuster role with only the *additional* permissions, requiring Adjusters to be assigned both the CSR and Adjuster roles. ClaimCenter's permission model is additive; it only grants abilities. To prevent a user from having a permission, you simply ensure none of their assigned roles contain that permission. Roles are managed through the Administration section of ClaimCenter, typically by users with the 'Manage Roles' permission.",
+      "keyPoints": [
+        "Roles are named collections of permissions that simplify user access management.",
+        "Users inherit all permissions from their assigned roles.",
+        "Roles can be structured to build upon each other (e.g., Adjuster role includes CSR permissions).",
+        "ClaimCenter permissions are additive; they only grant abilities, never explicitly deny.",
+        "Roles are managed in the Administration section by authorized users."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "An illustration of how different users (Manager, Adjuster, CSR) have varying permissions based on their roles."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "This slide explains how permissions are assigned to roles, using CSR and Adjuster roles as examples of permission collections."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Demonstrates how multiple roles can be assigned to a single user, combining their permissions, and how roles are assigned in ClaimCenter."
+        }
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Navigating the Security Dictionary",
+      "narrative": "For anyone working with ClaimCenter's security model, the **security dictionary** is an invaluable resource. It's a series of HTML pages that meticulously document the initial relationships between permissions, roles, and user interface elements within your application. You can find this crucial documentation in the `security/index.html` file.\n\nThe security dictionary is organized into four main sections: **Application Permission Keys**, **Pages**, **System Permissions**, and **Roles**. \n\n**System Permissions** are the lowest level of permission, defining specific actions like 'claimview' or 'createexposure.' The dictionary lists each system permission, indicating which roles contain it, which application permission keys use it, and which pages or UI elements reference it. \n\n**Application Permission Keys** are internal ClaimCenter constructs used to group multiple system permissions for performance optimization and simplified configuration. For instance, the 'claimedit' application permission key might encompass both 'claimedit' (for open claims) and 'claimeditclsd' (for closed claims) system permissions. These keys are frequently used in configuration to restrict access to user interface elements, such as entire screens or individual buttons. They simplify the process of securing UI components by allowing developers to reference a single key rather than a list of individual permissions. Understanding the security dictionary is key to comprehending the out-of-the-box security configuration and how permissions flow through the system.",
+      "keyPoints": [
+        "The security dictionary documents the initial relationships between permissions, roles, and UI elements.",
+        "It is an HTML page located at `security/index.html`.",
+        "Key sections include Application Permission Keys, Pages, System Permissions, and Roles.",
+        "System permissions are the lowest level, defining specific actions.",
+        "Application Permission Keys group system permissions for simplified configuration and UI restriction."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "An overview of the security dictionary, highlighting its purpose and main sections."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Details the relationship between system permissions and application permission keys, and their use in configuration and UI restriction."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Security Dictionary Caveat",
+          "content": "The security dictionary reflects the *base product* configuration. Any changes made by a project team or security administrator to roles or permissions will *not* automatically update the generated HTML dictionary. Always cross-reference with your live ClaimCenter configuration for the most accurate information."
+        }
+      ],
+      "estimatedMinutes": 7
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the ClaimCenter user interface to show how roles are created, how permissions are assigned to roles, and how these roles are then assigned to individual users. Pay close attention to the navigation paths within the Administration tab.",
+      "transcriptSummary": "The video demonstrates navigating to the Administration section, creating a new role, adding specific system permissions to that role, and then assigning the newly configured role to a user. It highlights the practical steps involved in managing ClaimCenter's role-based security."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your organization has a new 'Fraud Investigator' role. This role needs to be able to view all claim details, but only edit specific fraud-related fields. They also need to be able to access the 'Special Investigation Details' screen.",
+      "question": "Based on what you've learned about permissions and roles, which system permissions would you likely assign to the 'Fraud Investigator' role, and where would you go in ClaimCenter to configure this?",
+      "hints": [
+        "Think about general viewing permissions versus specific editing permissions.",
+        "Recall the slide that mentioned a specific permission for editing SIU details.",
+        "Remember where roles and permissions are managed in the ClaimCenter UI."
+      ],
+      "expectedApproach": "Identify 'claimview' for general viewing. Identify 'editSensSIUdetails' for special investigation details (from reference guide). Explain that these would be added to the 'Fraud Investigator' role via the Administration > Roles screen."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Introducing Access Control Lists (ACLs) for Object-Level Security",
+      "narrative": "While system permissions provide broad, application-wide control over what a user *can do*, they don't address the need for granular, object-specific security. Karun's next challenge highlights this: 'Assigning roles to users is good, but there are claims that should only be seen by particular users. I need to be able to control which users can access special types of claims.' This is where **Access Control Lists (ACLs)** come into play.\n\nACLs add a crucial layer of object-level security. An ACL is a list associated with a specific claim (or its sub-objects like exposures or documents), identifying precisely which users can access that particular claim. The primary purpose of ACLs is to enforce business requirements that demand access to claim objects be controlled beyond just general permissions. For example, an auto adjuster might have permissions to create exposures, but an ACL ensures they can *only* create exposures on auto claims, not on workers' compensation claims, even if their role grants the 'create exposure' permission. ACLs determine who can own, edit, or even view a given type of claim, ensuring that users only interact with the claims relevant to their specific responsibilities and expertise. This combined approach of system permissions and ACLs significantly enhances ClaimCenter's security posture, providing both broad functional control and fine-grained data access control.",
+      "keyPoints": [
+        "ACLs provide object-level permissions, controlling access to specific claims and their sub-objects.",
+        "They ensure users can only view or edit objects they are authorized for, regardless of general system permissions.",
+        "ACLs work in conjunction with system permissions to provide comprehensive access security.",
+        "ACLs are crucial for enforcing business rules around claim visibility and editing based on claim type or other attributes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Karun identifies the need for object-level access control, where specific claims should only be visible to particular users."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "This slide introduces Access Control Lists (ACLs) as a mechanism to add object-level permissions, ensuring users access only necessary claims."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Compares system permissions (application-wide) with ACLs (object-based), explaining how they work together for full access security."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Illustrates that a user needs both the correct system permission AND to be on the claim's ACL to view or act on a claim."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Access Control List (ACL)",
+          "content": "A list associated with a claim (or sub-object) that identifies which specific users or groups can access that particular object, overriding or refining general system permissions."
+        }
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "How ACLs are Created and Configured",
+      "narrative": "Access Control Lists in ClaimCenter are dynamic and 'virtual,' meaning there's no direct user interface to view or edit them. Instead, they are created and maintained by ClaimCenter at runtime, based on predefined rules and configurations. You primarily observe the *behavior* of these lists through who can access what.\n\nACLs are generated based on several attributes of a claim or claim object, most notably its **security type** and **ownership**. ClaimCenter comes with several base security types, such as 'Employee Claim' (for claims filed by co-workers), 'Fraud Risk,' 'Sensitive' (for claims requiring high confidentiality), 'Under Litigation,' and 'Unsecured' (no special restrictions). When a claim owner sets the 'Special Claim Permission' to a specific security type, ClaimCenter applies a corresponding **access profile** to generate the ACL for that claim.\n\nThese access profiles are defined in the `security-config.xml` file. Each security type has a matching access profile that specifies: \n1.  **What type of access** a user should get (e.g., 'own,' 'view,' 'edit').\n2.  **Which users** should get access, determined by criteria such as individual user, group, security zone, or 'anyone.'\n\nFor example, an access profile for an 'unsecuredclaim' might grant view and edit permissions to anyone in the same group as the claim owner, and view-only permissions to anyone in the same security zone. This configuration ensures that access is tailored to the specific nature of the claim and the organizational structure.",
+      "keyPoints": [
+        "ACLs are virtual, created at runtime by ClaimCenter based on claim attributes.",
+        "Key attributes for ACL creation include the claim's security type and ownership.",
+        "ClaimCenter provides several base security types (e.g., Employee Claim, Fraud Risk, Sensitive).",
+        "Access profiles, defined in `security-config.xml`, dictate ACL creation for each security type.",
+        "Access profiles specify access levels (own, view, edit) and user criteria (user, group, security zone, anyone)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Explains that ACLs are virtual and created based on security types, ownership, and group/security zone of the owner."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Details how ACLs are determined by access profiles defined in `security-config.xml`, linked to claim security types."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "An example of an access profile from `security-config.xml` for an 'unsecuredclaim', showing how it grants view/edit permissions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Configuring Access Control",
+          "content": "To configure access control, you typically add new typecodes to the `ClaimSecurityType.ttx` typelist for new claim security types. The access profiles are then defined or modified in `security-config.xml`. Remember that mapping permissions to claim access types also occurs in `security-config.xml`."
+        },
+        {
+          "type": "warning",
+          "title": "Access Profile Caution",
+          "content": "Be careful when adding a `ClaimUserAccessLevel` element (a user role) to an access profile. Later assignment of this user role to one user can inadvertently grant access to large groups and security zones, potentially broadening access more than intended."
+        }
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "ACLs in Action: Owner, Group, and Security Zone Access",
+      "narrative": "Let's see how an access profile translates into actual access for users. Based on the 'unsecuredclaim' access profile we discussed, which grants view and edit permissions to the claim owner's group and view-only access to the claim owner's security zone, we can observe distinct access patterns.\n\nFirst, **owner access**: Any user who owns the claim or any of its sub-objects (like an exposure or an activity) will automatically have view and edit access to that claim and its sub-objects. For instance, if Dana Evans owns a claim and an exposure within it, and Peter Beebe owns an activity on that same claim, both Dana and Peter will have view and edit access to the claim. Jason Tran, who owns neither the claim nor any of its sub-objects and is not in the relevant security zone, would not have access.\n\nNext, **group access**: If a user is in the same group as the claim owner, they will be granted the permissions specified for 'group' in the access profile. In our 'unsecuredclaim' example, Ellen Bishop, being in the same group as Dana (the claim owner), would receive view and edit access to the claim and its sub-objects.\n\nFinally, **security zone access**: Users who are not in the same group as the claim owner but are in the same security zone will receive the permissions specified for 'securityzone' in the access profile. Amit, for example, might be in a different group but within the same 'Workers' Comp Security Zone' as Dana. According to the 'unsecuredclaim' profile, he would be granted view-only permissions to the claim and its sub-objects, but not edit access. This layered approach ensures that access is granted appropriately based on a user's direct involvement, team affiliation, and broader organizational security boundaries.",
+      "keyPoints": [
+        "Object owners (claim, exposure, activity) typically have view and edit access to the claim.",
+        "Users in the same group as the claim owner receive permissions defined for 'group' in the access profile.",
+        "Users in the same security zone as the claim owner receive permissions defined for 'securityzone' in the access profile.",
+        "Access levels (view, edit, own) are determined by the specific access profile applied to the claim."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "Illustrates how object owners (claim, exposure, activity) gain access to a claim and its sub-objects."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Demonstrates how users in the same group as the claim owner are granted access based on the access profile."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Shows how users in the same security zone as the claim owner receive view-only access, as defined by the access profile."
+        }
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Managing Multiple Access Profiles and Claim Security Types",
+      "narrative": "In a robust ClaimCenter implementation, it's common to utilize **multiple access profiles** to address various business scenarios and security requirements. While the number of security profiles is typically small, each one is meticulously designed to contain the specific criteria for a particular type of business situation. The base application, for instance, includes five distinct security types, each with its own corresponding access profile:\n\n*   **Unsecured Claim:** This is the default, requiring no special restrictions.\n*   **Employee Claim:** For claims filed by an employee of the carrier, often requiring restricted access.\n*   **Fraud Risk Claim:** For claims identified with a high risk of fraud, demanding heightened security.\n*   **Sensitive Claim:** For claims that are considered sensitive and need to be kept out of the public eye.\n*   **Under Litigation Claim:** For claims currently involved in legal proceedings, which may have specific access requirements.\n\nEach of these security types, when applied to a claim, triggers its unique access profile, which then generates a tailored Access Control List (ACL) for that specific claim. This allows ClaimCenter to dynamically adjust access based on the nature and sensitivity of the claim, ensuring that the right people have the right level of access at all times. This flexibility is key to maintaining a secure and compliant claims environment. The `ClaimSecurityType.ttx` typelist defines these subsets of claims, and it can be extended to meet specific organizational needs.",
+      "keyPoints": [
+        "ClaimCenter implementations often use multiple access profiles for different business scenarios.",
+        "Each security type (e.g., Employee Claim, Fraud Risk) has a matching access profile.",
+        "These profiles dictate how ACLs are generated for claims of that specific type.",
+        "The `ClaimSecurityType.ttx` typelist defines the available claim security types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "Illustrates how different claim security types (e.g., Unsecured, Employee) map to different access profiles, generating unique ACLs."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "A blank slide, often used as a transition or placeholder in presentations, here serving as a visual break before knowledge checks."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Rebuilding ACLs",
+          "content": "Once access is granted through an ACL, it's permanent. If a user's group or region changes, their access might no longer be appropriate. To remove access, you must rebuild the ACL. This can be done manually by changing the claim's access type, saving it, then restoring the original access type and saving again, or by using the `rebuildClaimACL` method to write rules for automated removal."
+        }
+      ],
+      "estimatedMinutes": 7
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how Access Control Lists (ACLs) function in practice within ClaimCenter. Pay attention to how changing a claim's security type affects user access, even for users with general permissions.",
+      "transcriptSummary": "The video illustrates setting a claim's security type, demonstrating how different users, based on their roles, groups, and security zones, gain or lose access to that specific claim. It highlights the interplay between system permissions and object-level ACLs."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "An adjuster, Sarah, has the 'claimview' permission. She can normally view all auto claims. However, a specific auto claim (Claim ID: 555-44-33321) has been marked as 'Sensitive' due to high-profile individuals involved. Sarah is not part of the 'Sensitive Claims' security zone, nor is she in the same group as the claim owner for this specific claim.",
+      "question": "Will Sarah be able to view Claim ID: 555-44-33321? Explain why or why not, referencing both permissions and ACLs.",
+      "hints": [
+        "Remember the rule: a user needs *both* the correct permission *and* to be on the ACL.",
+        "Consider how the 'Sensitive' security type likely configures its access profile.",
+        "Think about the criteria for gaining access via ACLs (owner, group, security zone, role)."
+      ],
+      "expectedApproach": "Sarah will likely *not* be able to view the claim. Even though she has 'claimview' permission, the 'Sensitive' security type's access profile would restrict access to specific users, groups, or security zones (e.g., 'Sensitive Claims' security zone). Since Sarah is not in that zone or the claim owner's group, she won't be on the ACL for that specific claim, thus denying her access."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "When does ClaimCenter determine which permissions a given user has?",
+      "referenceAnswer": "ClaimCenter determines the permissions for a given user when that user logs in.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "How many permissions can a given role have?",
+      "referenceAnswer": "Arole can have any number of permissions, from zero (which would serve no business purpose but is theoretically possible) to all the permissions in the system.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "How many roles can a given user have?",
+      "referenceAnswer": "Auser can theoretically have any number of roles from Zero to all the roles in the system. A user must have at least one role in order to be able to do anything in ClaimCenter. A user who has broader responsibility than another user can be given additional roles so that they are able to accomplish these responsibilities.",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "How could you easily determine the number of roles that enable users to\now create matters?",
+      "referenceAnswer": "You could view the create matter permission in the security dictionary to see which\nroles contain that permission. Note that this only works for the base product, because\nthe security dictionary will not update based on any changes that a project team or\nsecurity administrator makes to the roles.",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Agiven user appears on the access control list for claim 234-22-147282,\now but that user cannot view or edit the claim. How could this happen?",
+      "referenceAnswer": "The user probably lacks the system permission to view and/or edit claims. In order to\nview or edit a claim, the user must have the system permission and appear on the\nACL.",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Asecurity profile can specify criteria for three types of access. What are\now the three types of access?",
+      "referenceAnswer": "Own access, view access, edit access.",
+      "questionKey": "slide-41"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-7",
+      "question": "Iwo different claims that use the same security profile can have two\n¢ completely different access control lists. Why?",
+      "referenceAnswer": "The security profile generates a list of users based on the criteria. The users who meet\nthe criteria vary from claim to claim. For example, if a profile says only the claim owner\nand members of his group can view and edit the claim, then two claims will have\ndifferent access control lists if they are owned by users in different groups.",
+      "questionKey": "slide-43"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "System permissions define what a user can do across the ClaimCenter application.",
+        "Permissions are determined at login and can be updated dynamically.",
+        "Roles are collections of permissions, simplifying user access management.",
+        "The security dictionary documents base permissions, roles, and UI mappings.",
+        "Access Control Lists (ACLs) provide object-level security, restricting access to specific claims and sub-objects.",
+        "A user needs both appropriate system permissions and to be on a claim's ACL to access it.",
+        "ACLs are generated at runtime based on claim security types and access profiles defined in `security-config.xml`.",
+        "Access profiles specify who gets what level of access (own, view, edit) based on ownership, group, and security zone."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of permissions and ACLs is crucial for implementing robust security models that meet complex business and regulatory requirements. This ensures data confidentiality, prevents unauthorized actions, and streamlines workflows by granting users precisely the access they need, and nothing more. Misconfigurations can lead to security vulnerabilities or hinder legitimate operations, making careful design and testing of these mechanisms paramount.",
+      "nextLessonPreview": "In our next lesson, we will explore advanced security topics, including authority limits for financial transactions and how to customize security configurations to meet unique business needs."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the 'Permissions and Access Control Lists Activity' in your lab environment. This activity will involve configuring a new role with specific permissions and then testing how those permissions, combined with a claim's security type, affect a user's ability to view and edit a claim. You will also practice using the security dictionary to look up permission details.",
+      "objectives": [
+        "Create and assign a new role with specified system permissions.",
+        "Modify a user's roles and observe the immediate impact on their access.",
+        "Change a claim's security type and verify how ACLs restrict or grant access.",
+        "Utilize the security dictionary to research system permissions and their associated roles."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_14_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_14_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_14_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_14_02.mp4"
+    }
+  ]
+}

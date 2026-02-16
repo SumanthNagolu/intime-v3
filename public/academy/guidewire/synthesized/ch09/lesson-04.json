@@ -1,0 +1,254 @@
+{
+  "lessonId": "ch09-l04",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 4,
+  "title": "Writing Gosu Rules",
+  "subtitle": "Mastering Gosu rules for customizing business logic and automating processes in Guidewire ClaimCenter.",
+  "synthesizedAt": "2026-02-16T18:27:55.118021+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a critical business scenario: a high-priority claim has been sitting untouched for days, leading to potential compliance issues and customer dissatisfaction. Manually tracking every claim is impossible and inefficient.",
+      "question": "How can Guidewire ClaimCenter be configured to automatically detect such situations and trigger immediate corrective actions, ensuring no critical claim falls through the cracks?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and structure of Gosu rules within the Guidewire Platform.",
+        "Describe how Gosu rules are organized into rule sets and categories, including hierarchical relationships.",
+        "Identify the three main components of a Gosu rule: uses clause, condition, and action.",
+        "Differentiate between various triggering events for Gosu rules, focusing on Exception and Preupdate rules.",
+        "Outline the typical actions performed by Activity Escalation, Claim Exception, Group Exception, User Exception, and Preupdate rules."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about the Guidewire Platform's capabilities and how it supports various InsuranceSuite applications. You also have a foundational understanding of business logic and the need for customization in enterprise systems.",
+      "warmupQuestion": "Think about a time you encountered a system that needed to perform a specific action based on a particular condition. How do you think such logic is typically implemented in a software application?",
+      "hint": "Consider programming languages or configuration tools you might have used."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introducing Gosu Rules and Their Organization",
+      "narrative": "Gosu rules are a fundamental part of the Guidewire Platform, providing a powerful mechanism for customizing and executing the business logic essential for claims processing. Written in Gosu, an open-source programming language developed by Guidewire, these rules allow for deep configuration of the ClaimCenter application to meet specific business requirements. For comprehensive details, the Rules Guide in the ClaimCenter documentation is an invaluable resource.\n\nTo manage this customization effectively, Gosu rules are organized into **rule sets**. These rule sets are logical groupings, typically categorized by the specific event that triggers the rules within them. For instance, the 'Claim Closed' rule set is activated when a claim entity is closed. Rule sets themselves are further grouped into **Rule Set Categories**, providing a higher level of organization.\n\nWithin a rule set, Gosu rules can be arranged hierarchically. A parent rule's condition acts as a 'guardian' for its child rules: if the parent's condition evaluates to `True`, then its child rules will proceed to be processed. This hierarchy is crucial for avoiding unnecessary processing and simplifying complex logic by breaking it down into manageable, related parts. For example, a parent rule might check a broad claim characteristic, and only if that's true, its children check more specific details. Best practices suggest using a consistent naming scheme (e.g., 3-4 characters for the rule set prefix and 5 for hierarchical numbering) as this greatly aids in logging and traceability.",
+      "keyPoints": [
+        "Gosu rules customize and execute business logic in ClaimCenter.",
+        "Rules are written in Gosu, an open-source programming language.",
+        "Rule sets logically group Gosu rules, often by triggering event.",
+        "Rule sets are organized into Rule Set Categories.",
+        "Hierarchical rules allow parent conditions to control child rule processing, optimizing execution."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to Gosu rules, highlighting their role in Guidewire."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Gosu rules are a core part of the Guidewire Platform for customizing business logic."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Rule sets logically group Gosu rules, often by triggering event, and follow hierarchical naming conventions."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Rule sets can have a hierarchy where child rules only process if the parent's condition is true, optimizing execution."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Gosu rule sets are triggered by specific events, such as a claim being closed or an object being updated."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Rule Naming Conventions",
+          "content": "Adopt a logical schema for naming Gosu rules, such as a 3-4 character prefix for the rule set and 5 characters for hierarchical numbering (e.g., AER01000). This consistency is invaluable for easily traceable logging and maintenance."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Structure of a Gosu Rule",
+      "narrative": "Every Gosu rule is composed of three distinct parts, allowing for flexible and powerful business logic implementation. The first part is an optional **`uses` clause**, which is used to import external functionality or libraries that the rule might need to call. If your rule attempts to call a function without its path included in a `uses` clause, Guidewire Studio will typically highlight this in red and often suggest the correct path to add, simplifying development.\n\nThe second crucial component is the **condition**. This part of the rule is an expression that must evaluate to a Boolean value (`true` or `false`). The condition can be arbitrarily complex, leveraging any property or function of the rule set's base entity. A well-designed condition is key to determining when a rule should fire. As mentioned earlier, using parent/child rules can significantly simplify complex conditions, making them more readable and easier to maintain by breaking down the logic.\n\nFinally, the third part is the **action**. This block of code is executed *only if* the rule's condition evaluates to `true`. Like the condition, the action can be arbitrarily complex, but all operations within it must relate in some way to the rule set's base entity or `gw-rules.Action`. This is where the actual business logic—like sending an email, assigning an activity, or updating a field—is performed. Both the condition and the action are written entirely in Gosu, giving developers full programmatic control over the rule's behavior. Slide 10 serves as a visual break, perhaps indicating a transition or a moment for reflection on the rule structure.",
+      "keyPoints": [
+        "Gosu rules have an optional `uses` clause to import external functionality.",
+        "The `condition` must evaluate to `true` or `false` to determine execution.",
+        "The `action` is executed only if the `condition` is `true`.",
+        "Both `condition` and `action` are written in Gosu."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "The first two parts of a Gosu rule: an optional 'uses' clause and a condition that evaluates to true or false."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The third part of a Gosu rule: an action that executes only if the condition is true, both written in Gosu."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Studio Assistance",
+          "content": "Guidewire Studio often provides helpful suggestions for `uses` clauses and can assist in identifying syntax errors in Gosu code, streamlining rule development."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Understanding Exception Rules: Overview and Activity Escalation",
+      "narrative": "Exception rules are a unique category of Gosu rules that define actions to be taken when an object is in a specified state. Unlike most rule sets that trigger on a 'something just happened' event, Exception rule sets are typically run on a regular schedule. They check for objects that need attention, such as those with significant recent activity or those that have been idle for too long (defined by parameters like `IdleClaimThresholdDays`). Common actions performed by Exception rules include sending emails to supervisors, assigning activities, or setting flag fields to highlight issues.\n\nOne specific type of exception rule is **Activity Escalation rules**. These rules are designed to ensure that overdue activities are addressed promptly. The `activityesc` batch process, which runs every 30 minutes by default, detects activities where the escalation date has passed but the activity has not yet been escalated. Once detected, ClaimCenter runs the activity escalation rules for these activities. In the base configuration of ClaimCenter 10, there are two primary Activity Escalation rules:\n*   **AER01000**: Sets a flag on high-priority activities that have been escalated.\n*   **AER02000**: Sets a flag on urgent-priority activities that have been escalated.\nA typical customization might involve adding a rule to create an activity assigned to a supervisor, notifying them when a high-priority activity has not been completed by its escalation date, thereby ensuring accountability and timely resolution.",
+      "keyPoints": [
+        "Exception rules define actions for objects in a specified state.",
+        "They are typically run on a regular schedule by batch processes.",
+        "Activity Escalation rules address overdue activities.",
+        "The `activityesc` batch process triggers activity escalation rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Exception rules define actions based on an object's state or recent activity, often run on a schedule."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Activity escalation rules specify actions for overdue activities, triggered by a batch process."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Claim, Group, and User Exception Rules",
+      "narrative": "Beyond activity escalations, ClaimCenter leverages exception rules for claims, groups, and users to maintain operational efficiency and oversight. **Claim Exception rules** serve two critical functions: they ensure appropriate actions are performed on claims that have been recently updated, and they prevent claims from getting 'lost in the shuffle' by identifying those that have been untouched for too long. Batch processes like `claimexception` (running daily at 2 AM by default) look for recently updated claims, while `idleclaimexception` (running Sundays at noon by default) identifies claims untouched for a configurable period (e.g., 7 days). These processes add claims needing attention to a `ClaimException` table, triggering the Claim Exception rules. In ClaimCenter 10, `CER01000` sets the Special Investigation Unit (SIU) life cycle state, and `CER05000` runs business rules, while other inactive rules (like `CER02000` for open activities) are frequently implemented in practice. Common applications include creating Medicare follow-up activities, setting reserves for exposures, or reassigning activities from 'Default Owner'.\n\nSimilarly, **Group Exception rules** identify groups that require attention, such as those that have changed or haven't been inspected for a defined period. The `groupexception` batch process runs daily at 4 AM by default, tagging these groups and then executing the corresponding rules. In the base configuration of ClaimCenter 10, there are no active Group Exception rules, but they can be customized to fit specific organizational needs.\n\nFinally, **User Exception rules** operate on the same principle but apply to individual users. The `userexception` batch process runs daily at 3 AM by default, identifying users whose status has changed or who haven't logged in recently. While there are no User Exception rules in the base configuration, a potential use case could be to detect users who are not 'On Vacation' but haven't logged in during the last weekday, prompting an action. It's often recommended to process user exceptions shortly before group exceptions, as user changes might impact groups they belong to.",
+      "keyPoints": [
+        "Claim Exception rules manage actions for recently updated or idle claims.",
+        "Batch processes (`claimexception`, `idleclaimexception`) trigger Claim Exception rules.",
+        "Group Exception rules identify and act on groups needing attention.",
+        "User Exception rules identify and act on users needing attention.",
+        "Base configuration includes Claim Exception rules but no Group or User Exception rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Claim exception rules ensure appropriate actions for claims that are recently updated or idle, driven by scheduled batch processes."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Group exception rules identify and act on groups that have changed or need attention, run by a daily batch process."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "User exception rules perform actions on users needing attention, similar to group exceptions but applied to individual users."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Common Customizations",
+          "content": "While some Claim Exception rules are inactive in the base configuration, they are frequently activated and customized in real-world implementations to address specific business needs like ensuring open activities or recalculating metrics."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of configuring exception rules within Guidewire ClaimCenter Studio. Pay close attention to how rule sets are navigated and how conditions and actions are defined for these scheduled rules.",
+      "transcriptSummary": "The video demonstrates how to access and modify existing exception rules in Guidewire Studio. It highlights the steps to configure conditions that trigger specific actions, such as escalating an activity or setting a flag on a claim, based on predefined criteria and batch process schedules."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Preupdate Rules: Logic Before Save",
+      "narrative": "Preupdate rules are another critical type of Gosu rule, designed to handle any actions or domain logic that must be completed *prior* to an object being saved to the database. These rules fire whenever an object (of certain types, such as a Contact, Exposure, or Policy) is ready for submission. Their primary purpose is to ensure that all necessary processing and data adjustments are performed before the object is committed, maintaining data integrity and enforcing business logic at the point of save.\n\nConsider a practical example: a Contact preupdate rule, such as `COPO1000`. This rule, when a contact is being saved, detects if the contact's primary address has changed. If it has, the rule then appropriately updates the address on any outstanding checks associated with that contact. This prevents discrepancies and ensures that financial documents reflect the most current information. Preupdate rules are essential for enforcing complex business rules that depend on the state of an object just before it is persisted, ensuring that the data being saved is always consistent and compliant with business requirements. Slide 20 serves as a visual break, perhaps indicating a transition or a moment for reflection on the rule structure.",
+      "keyPoints": [
+        "Preupdate rules execute before an object is saved to the database.",
+        "They perform domain logic or processing required prior to commitment.",
+        "Example: updating associated records when a primary entity changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Preupdate rules execute critical domain logic just before an object is committed to the database."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is the parent of a rule set called?",
+      "referenceAnswer": "What is the parent of a rule set called?\n\n; The correct answer is a rule set category.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Which component of a Gosu rule determines whether the rule will be\n\nY executed?",
+      "referenceAnswer": "Which component of a Gosu rule determines whether the rule will be\nY executed?\nThe correct answer is the Condition, which must evaluate to true or false. If it\nevaluates to true, the rule is executed.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What triggers exception rules?",
+      "referenceAnswer": "¢ The correct answer is when an object is in a specified state, such as an activity being\nescalated.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What triggers preupdate rules?",
+      "referenceAnswer": "g The correct answer is when an attempt is made to update an entity, that is, to save it to\nthe database.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu rules are Guidewire's primary tool for customizing business logic.",
+        "Rules are organized into hierarchical rule sets and categories, triggered by specific events.",
+        "Every rule has an optional `uses` clause, a `condition` (Boolean), and an `action` (Gosu code).",
+        "Exception rules are scheduled to act on objects in specific states (e.g., escalated activities, idle claims).",
+        "Preupdate rules execute critical logic just before an object is saved to the database."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering Gosu rules is essential for adapting ClaimCenter to unique business processes, ensuring compliance, automating routine tasks, and maintaining data integrity. These rules are the backbone of a highly configurable and responsive claims management system, directly impacting efficiency and customer satisfaction."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "You will now apply your knowledge of Gosu rules by completing a hands-on lab. This exercise will guide you through the process of creating a custom claim exception rule in Guidewire Studio.",
+      "objectives": [
+        "Navigate to the appropriate rule set in Guidewire Studio.",
+        "Define a condition for a new claim exception rule.",
+        "Implement an action to be performed when the condition is met.",
+        "Test the newly created claim exception rule."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_04_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_04_01.mp4"
+    }
+  ]
+}

@@ -1,0 +1,408 @@
+{
+  "lessonId": "ch05-l05",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 5,
+  "title": "Introduction to Claim Setup",
+  "subtitle": "Learn the automated processes for classifying, assigning, and validating claims in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:36:37.125229+00:00",
+  "estimatedMinutes": 80,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance adjuster faced with hundreds of new claims daily. Some are simple fender-benders, others are complex multi-party lawsuits. Each requires different expertise and a unique set of tasks.",
+      "question": "How can an insurance system efficiently classify these diverse claims, assign them to the right specialists, and ensure all necessary steps are taken without extensive manual intervention?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the purpose and components of automated claim setup.",
+        "Explain the process and importance of claim segmentation.",
+        "Describe how claims and exposures are assigned to groups and users.",
+        "Identify the role of workplans and activities in managing claim tasks.",
+        "Understand claim validation and the different maturity levels."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your experience creating a new claim using the New Claim Wizard. You entered initial information, but what happens behind the scenes immediately after submission to prepare that claim for processing?",
+      "warmupQuestion": "What are some immediate actions or classifications you think an insurance system might perform on a newly reported claim?",
+      "hint": "Think about how claims might differ in complexity or required expertise."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Automated Claim Setup: The Foundation of Claim Management",
+      "narrative": "When an insurance business is established, a critical need arises: a structured method to classify and manage claims effectively. As illustrated in **Figure 1**, complex claims demand more effort and specialized skills, requiring assignment to experienced adjusters. This is where **Automated Claim Setup** comes into play. Once a claim is created via the New Claim Wizard or imported through a portal, it enters a series of automated actions designed to streamline its processing, as shown in **Figure 2**. This automated process ensures that claims are handled efficiently from the outset.\n\nThe automated claim setup involves three primary steps: **segmentation**, **assignment**, and **workplan creation**. First, the claim undergoes **segmentation**, which determines the strategy for processing it. This involves classifying the claim, for example, identifying whether it's straightforward or complex, and if it requires adjusters with specific expertise, as depicted in **Figure 3**. Following segmentation, the claim proceeds to **assignment**, where responsibility for handling the claim is determined. This can be specified by the user creating the claim or automated through predefined rules, as seen in **Figure 4**.\n\nThe final step in the automated setup is the creation and assignment of a **workplan**, a series of activities that outline the necessary tasks to process the claim and who is responsible for them, as detailed in **Figure 5**. After these automated actions are completed, **validation rules** are executed. These rules verify that the claim meets the minimum requirements to exist in the system. Successful validation marks the completion of the claim intake process, making the claim ready for adjudication, as highlighted in **Figure 6**. This entire automated process is crucial for ensuring compliance with corporate policies and claims best practices, as noted in the reference guide.",
+      "keyPoints": [
+        "Automated Claim Setup classifies, assigns, and plans tasks for new claims.",
+        "The three core steps are Segmentation, Assignment, and Workplan creation.",
+        "Validation rules ensure the claim meets minimum system requirements before adjudication."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "The need for classifying claims to manage them effectively."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of the Automated Claim Setup process."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Step 1: Segmentation determines claim classification."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Step 2: Assignment determines who handles the claim."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Step 3: Workplan creates and assigns necessary activities."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Validation ensures the claim is ready for adjudication after automated setup."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Automated Claim Setup",
+          "content": "A series of actions that occur after a claim is created or imported, designed to segment, assign, and create a workplan for the claim, followed by validation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Claim Segmentation: Categorizing for Strategy",
+      "narrative": "The primary purpose of **segmentation** is to categorize a claim or exposure to determine the most appropriate processing strategy. As shown in **Figure 7**, segmentation is performed only once for claims and exposures, setting a single field on the object to a value from a predefined list. This categorization acts as a 'typekey' and is crucial for identifying the high-level strategy for processing the object. For instance, it helps determine if a claim is straightforward or complex, influencing subsequent assignment and activity creation.\n\nThink of a claim's segment as a label that classifies it, much like affixing a color-coded sticker to a physical file, where each color denotes a category (e.g., green for liability, blue for lost time, red for medical only). **Figure 8** provides examples of how segmentation rules work: an injury accident with no lost time might be segmented as 'wc_med_only', while a claim where a lawsuit is expected could be 'wc_liability'. This segment type directly influences how the claim is assigned, how reserves are created, and the types of activities generated.\n\nThe base configuration of the system includes two primary segments for Workers’ Compensation: `med_only` (for medical-only claims) and `indemnity` (for claims involving lost wages). **Figure 9** illustrates this logic: if a worker will lose paid wages, the claim is segmented as `indemnity`; otherwise, it's `med_only`. While a 'liability' segment also exists technically, it's not utilized in the base configuration during claim setup because there's no mechanism in the New Claim Wizard to set this variable at that stage. Segmentation is a foundational step that ensures the claim is routed and managed according to its inherent characteristics and required processing strategy.",
+      "keyPoints": [
+        "Segmentation categorizes claims/exposures to define processing strategy.",
+        "It sets a single, predefined value on the object and is performed once.",
+        "Examples include 'med_only' and 'indemnity' for Workers' Compensation claims.",
+        "Segmentation influences assignment, reserves, and activity creation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Definition and characteristics of claim segmentation."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Examples of segmentation rules and their purpose."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Segmentation logic in the base configuration for Workers' Compensation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Segmentation",
+          "content": "The process of categorizing a claim or exposure to determine its processing strategy, setting a single field to a value from a defined list."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the segmentation process within the system, showing how claims are categorized based on predefined rules.",
+      "transcriptSummary": "The video illustrates how a new claim is segmented automatically based on its characteristics, such as injury type or expected lost time, and how this segmentation influences the claim's initial classification."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Claim Assignment: Determining Ownership and Responsibility",
+      "narrative": "Following segmentation, the next critical step in automated claim setup is **assignment**. As highlighted in **Figure 10**, assignment is used to determine the owner of various assignable objects, including the claim itself, any associated exposures, activities, and matters. The owner consists of both a group and a specific user, ensuring clear responsibility for handling the claim.\n\nThe purpose of assignment is to assign the claim and its exposures to the most appropriate group and user. This process typically begins with **group assignment**, as shown in **Figure 11**. Objects are assigned to a group first, based on attributes like the group's type (e.g., 'medical payments' group) and the region it serves. Once a group is determined, the object is then assigned to a specific user within that group. User assignment considers various criteria, such as specific user attributes (e.g., Spanish-speaking adjusters), a round-robin approach, or a weighted workload system.\n\n**Group attributes** play a significant role in assignment rules. As seen in **Figure 12**, groups have 'Type' and 'Region(s)' attributes. The group type identifies the kind of work the group is responsible for (e.g., WC Lost Time, WC Medical, WC Liability), while the region defines its geographical responsibilities. If multiple groups meet the criteria, the most geographically specific group 'wins' the assignment. For example, a claim in Atlanta, Georgia, would go to an Atlanta-specific group over a broader Southeast group.\n\nFor **user assignment**, users within a group are assumed to be capable of handling that group's work. **Figure 13** illustrates how claims are assigned to individual adjusters within groups. There are several methods for assigning an object to a user: **Round Robin**, which assigns objects cyclically without regard to current workload, and **Weighted Workload**, which assigns based on the complexity of a user's existing workload. **Figure 14** contrasts these two methods. Round robin aims for an equal *number* of objects, while weighted workload aims for equal *complexity* of workload. Weighted workload assigns to the user with the 'lightest' workload, considering each object's assigned 'weight' or complexity. It's important to note that weighted workload might not be ideal if objects don't vary greatly in complexity, as it could inadvertently penalize efficient workers by assigning them more work.",
+      "keyPoints": [
+        "Assignment determines the owner (group and user) for claims, exposures, and activities.",
+        "Group assignment is based on group type and region, with geographical specificity taking precedence.",
+        "User assignment methods include Round Robin (equal number of objects) and Weighted Workload (equal complexity of workload).",
+        "Weighted workload assigns objects based on their complexity and the user's current workload 'weight'."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "The purpose of assignment in automated claim setup."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Assignment process: first to a group, then to a user."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Attributes of groups used in assignment rules."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Examples of user assignment within groups."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Two methods of workload assignment: Round Robin and Weighted Workload."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Assignment",
+          "content": "The process of determining the owner (group and user) responsible for handling a claim, exposure, or activity."
+        },
+        {
+          "type": "tip",
+          "title": "Geographical Specificity",
+          "content": "When multiple groups could handle a claim, the system prioritizes the most geographically specific group to ensure local expertise and efficiency."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Contrasting Segmentation and Assignment",
+      "narrative": "While both **segmentation** and **assignment** are crucial steps in automated claim setup, they serve distinct purposes and occur in a specific order. As summarized in **Figure 15**, segmentation is about *determining the strategy* for processing a claim. It's done only once for claims and exposures, setting a single field to categorize the object. This categorization is based on the claim's characteristics, such as its type and severity, and helps define the high-level approach to handling it. Because groups often have varying core competencies and specializations, the claim must first be segmented to understand its nature before it can be assigned.\n\nIn contrast, **assignment** is about *determining the owner* of the object. It's performed for claims, exposures, and any other assignable objects, and can occur multiple times (e.g., if a claim needs to be reassigned). Assignment allocates the claim to a specific group and user based on the strategy identified during segmentation and the capabilities of available groups and users. For example, a 'complex' segment might lead to assignment to a 'special investigations unit' group, while a 'medical only' segment might go to a 'medical payments' group. Understanding this distinction is key: segmentation classifies *what* the claim is, and assignment determines *who* handles it based on that classification.",
+      "keyPoints": [
+        "Segmentation defines the processing strategy for a claim.",
+        "Assignment determines the group and user responsible for the claim.",
+        "Segmentation occurs first to inform the assignment process based on claim characteristics."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "A comparison of segmentation and assignment processes."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration illustrates how claims are assigned to appropriate groups and users based on predefined rules and claim characteristics.",
+      "transcriptSummary": "The video shows the assignment process in action, highlighting how a claim moves from segmentation to being assigned to a specific adjuster within a specialized group, considering factors like group type and user workload."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Workplan: Structuring Claim Activities",
+      "narrative": "After a claim is segmented and assigned, the next crucial step in the automated claim setup is the creation of a **workplan**. As depicted in **Figure 16**, the workplan involves creating and assigning a series of activities. A workplan is essentially a list of activities associated with a claim that outlines specific tasks that must be performed. These activities serve as reminders of the work or actions that need to be addressed to process the claim effectively.\n\nActivities can be generated in two ways: manually by a user or automatically during the Automated Claim Setup process. **Figure 17** explains that workplan rules are used to create initial activities for both the claim and its exposures. For example, a claim might automatically generate activities like 'Investigate accident scene' or 'Contact insured, employer, and doctor' at the claim level. At the exposure level, activities such as 'Get medical report' or 'Get cost estimates for hospitalization' might be created. These activities are ultimately assigned to a user responsible for completing the task, specifying when the task is due and whether it has been completed.\n\nTo standardize and streamline activity creation, the system utilizes **Activity Patterns**. As shown in **Figure 18**, an activity pattern acts as a template, containing basic information about what is expected for an activity. This includes boilerplate subjects, default due dates (e.g., 5 days until due), priority levels (e.g., medium), and other details. Administrators have the ability to create and modify these activity patterns. When a user manually creates an activity, they select an Activity Pattern as its base, ensuring consistency and efficiency in task management. This structured approach to activities ensures that all necessary steps for claim processing are identified, tracked, and assigned.",
+      "keyPoints": [
+        "A workplan is a list of activities outlining tasks for a claim.",
+        "Activities can be created manually or automatically based on business rules.",
+        "Workplan rules generate initial activities for claims and exposures.",
+        "Activity Patterns serve as templates for consistent activity creation, defining subject, priority, and due dates."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Workplan creation as part of automated claim setup."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Examples of activities within a workplan and their purpose."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Activity Patterns as templates for workplan creation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Workplan",
+          "content": "A list of activities associated with a claim that outlines specific tasks to be performed, created manually or automatically based on business rules."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you how workplans are automatically generated and populated with activities during the claim setup process.",
+      "transcriptSummary": "The video illustrates the creation of a workplan, detailing how initial activities are automatically added to a claim based on its segment and assignment, and how these activities are then assigned to specific users."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Claim Validation and Maturity Levels",
+      "narrative": "After the automated claim setup actions (segmentation, assignment, and workplan creation), ClaimCenter performs a crucial step: **validation**. As shown in **Figure 19**, validation is based on a set of configurable rules and data requirements that check the condition of the claim. This process ensures that the claim meets all necessary criteria, both general and specific to its type, before it can be fully processed. The outcome of validation is a **validation level** assigned to the claim. If a claim fails to reach the lowest required validation level, it cannot be saved as a fully processable claim; it might be saved as a 'draft' but cannot proceed to adjudication until all conditions are met.\n\nClaimCenter uses these validation levels to measure the **maturity** of claims and exposures. **Figure 20** explains that each validation level has a series of conditions that must be met. These levels are configurable, allowing insurers to define their own progression. The lowest level of maturity, common to nearly every insurer, is **New Loss Completion**, which means a claim has enough information to be entered and processed. The highest level is **Ability to Pay**, signifying that all criteria for payment have been met.\n\nIn the base application, there are five levels of maturity. **Load Save**, as detailed in **Figure 21**, is the initial level for claims imported from external systems or portals that lack sufficient information for immediate processing. These are considered 'draft' claims and require further data to advance. **New Loss Completion**, shown in **Figure 22**, is the minimum level required for a claim created with the New Claim Wizard to be successfully saved within ClaimCenter. The wizard enforces these minimum data requirements as part of its validation process.\n\nClaimCenter also provides **intermediate maturity levels**, which are configurable and can be modified, added, or deleted to fit specific business needs. **Figure 23** lists examples from the base configuration: 'Valid for ISO' ensures minimal information for ISO filing, and 'Send to External' validates data needed for other internal systems. The ultimate goal is **Ability to Pay**, the highest maturity level, as explained in **Figure 24**. To reach this level, the claim data must meet all defined validation criteria (e.g., requiring a driver's license number or tax ID). Crucially, payment cannot be issued for a claim or against an exposure unless both have reached the Ability to Pay maturity level.",
+      "keyPoints": [
+        "Validation checks claim conditions against configurable rules and data requirements.",
+        "Validation results in a 'validation level' that measures claim maturity.",
+        "Key maturity levels include Load Save (draft), New Loss Completion (minimum for processing), intermediate levels (e.g., Valid for ISO), and Ability to Pay (highest, required for payments).",
+        "A claim cannot be processed or paid if it doesn't meet the required validation levels."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Claim validation process after automated setup."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Claim and exposure maturity levels overview."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "The 'Load Save' maturity level for draft claims."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "The 'New Loss Completion' maturity level."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Intermediate maturity levels in ClaimCenter."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "The 'Ability to Pay' maturity level."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Validation Level",
+          "content": "A measure of a claim's or exposure's maturity, based on a series of conditions that must be met."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "The Maturing Claim: Progression and Prevention of Backsliding",
+      "narrative": "The journey of a claim or exposure through ClaimCenter is one of continuous maturation. As illustrated in **Figure 25**, when a claim is initially entered via the New Claim Wizard, it must satisfy all validation conditions for **New Loss Completion** to be successfully saved. If these conditions are not met, the save operation fails, and the user is informed of the unmet requirements. This ensures that only claims with essential data can enter the system for processing.\n\nAs claims processing progresses, the claim or exposure satisfies more conditions, allowing it to become more mature. **Figure 26** explains that ClaimCenter automatically promotes the object to the highest maturity level it currently satisfies. For example, an auto insurer might not require metropolitan police reports initially, but these reports become mandatory before the claim can reach a higher maturity level, such as 'Ability to Pay'. A critical feature of ClaimCenter is its ability to prevent any changes that would force an object to move to a lower validation level. Once a maturity level is achieved, the claim or exposure is not permitted to 'backslide' in maturity, ensuring data integrity and process adherence.\n\nUltimately, the goal for claims and exposures is to reach the **Ability to Pay** validation level, as emphasized in **Figure 27**. Payment cannot be issued for a claim if it has not reached this highest level. Furthermore, even if the claim is at 'Ability to Pay', individual exposures must also reach this level before any payments can be issued against them. This dual requirement ensures that all necessary data and validations are complete before financial transactions occur.\n\nUsers can also manually **validate maturity levels** at any time. As shown in **Figure 28**, the Claim Actions menu provides validation options, allowing users to validate a claim or exposure for any desired maturity level (e.g., 'Validate Claim + Exposures for Ability to Pay'). Upon completion, the validation results screen lists all conditions that are currently preventing the object from reaching the specified level, providing clear guidance on what needs to be addressed.",
+      "keyPoints": [
+        "Claims must meet New Loss Completion conditions to be saved initially.",
+        "ClaimCenter automatically promotes claims to higher maturity levels as conditions are met.",
+        "The system prevents claims from 'backsliding' to lower maturity levels.",
+        "The ultimate goal is 'Ability to Pay', required for issuing any payments.",
+        "Users can manually validate claims for specific maturity levels to identify unmet conditions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 33,
+          "caption": "Initial validation for saving a new claim or exposure."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Automatic promotion and prevention of backsliding in claim maturity."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "The ultimate goal: reaching the 'Ability to Pay' level."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Options for manually validating claim maturity levels."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Preventing Backsliding",
+          "content": "ClaimCenter's feature to prevent backsliding in maturity levels is crucial for maintaining data quality and ensuring that claims adhere to a defined processing workflow."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration will show you how to manually validate a claim's maturity level and interpret the validation results.",
+      "transcriptSummary": "The video guides you through using the 'Validate Claim' option from the Actions menu, demonstrating how to select a maturity level for validation and reviewing the list of conditions that prevent the claim from reaching that level."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "independent",
+      "scenario": "You are an adjuster who has just received a new Workers' Compensation claim. The initial report indicates a minor injury with no lost time, but there's a possibility of future complications. You need to ensure the claim is correctly set up for processing.",
+      "question": "Describe the steps the automated claim setup process will take for this new claim, from its initial entry to being ready for adjudication. Specifically, explain how segmentation, assignment, workplan, and validation would apply to this scenario.",
+      "hints": [
+        "Consider the initial classification based on 'no lost time'.",
+        "Think about which type of group and user would typically handle such a claim.",
+        "What initial activities would likely be generated for a medical-only Workers' Compensation claim?",
+        "What is the minimum maturity level this claim must achieve to be processed?"
+      ],
+      "expectedApproach": "The learner should outline the flow: New Claim Wizard -> Automated Claim Setup (Segmentation to 'med_only', Assignment to 'WC Medical' group and an adjuster, Workplan creating 'get medical report' activities) -> Validation to 'New Loss Completion'."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ae What is the purpose or use of Segmentation?",
+      "referenceAnswer": "Segmentation is used to identify a high-level strategy for processing a claim or\nexposure.",
+      "questionKey": "slide-43"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What is the purpose of Assignment in the Automated Claim Setup?",
+      "referenceAnswer": "To determine the owner(s) of both claims and exposures.",
+      "questionKey": "slide-45"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What are two attributes of a Group that are used in determining\nx assignment?",
+      "referenceAnswer": "x assignment?\nGroup Type\nGroup Region",
+      "questionKey": "slide-47"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What are the lowest and the highest levels of maturity of a claim and\nx exposure?",
+      "referenceAnswer": "x exposure?\nNew Loss Completion\nAbility to Pay",
+      "questionKey": "slide-49"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Automated Claim Setup streamlines claim processing through segmentation, assignment, and workplan creation.",
+        "Segmentation categorizes claims to define processing strategy (e.g., 'med_only', 'indemnity').",
+        "Assignment determines claim ownership, first by group (type, region) then by user (round robin, weighted workload).",
+        "Workplans generate and assign activities, often using Activity Patterns as templates.",
+        "Claim validation ensures data integrity and measures maturity through levels like 'New Loss Completion' and 'Ability to Pay'.",
+        "Claims automatically advance in maturity, and backsliding is prevented."
+      ],
+      "realWorldConnection": "In real Guidewire projects, configuring these automated claim setup rules is fundamental. Proper segmentation ensures claims are routed to the correct specialized teams, efficient assignment optimizes adjuster workloads, and robust validation prevents incomplete or non-compliant claims from progressing. This automation significantly reduces manual effort, speeds up claim resolution, and improves overall operational efficiency for insurers."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access your training environment and create a new Workers' Compensation claim using the New Claim Wizard. Observe the automated setup process, specifically noting the initial segmentation, the assigned group and user, and the activities generated in the workplan. Then, attempt to modify a critical piece of information that would lower the claim's maturity level and observe the system's response.",
+      "objectives": [
+        "Practice creating a new claim and observing automated setup.",
+        "Identify the segmentation, assignment, and workplan components.",
+        "Understand how claim validation prevents maturity level backsliding."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_05_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_05_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_05_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Claim_05_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_05_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "IS_Claim_05_04.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_05_04.mp4"
+    }
+  ]
+}

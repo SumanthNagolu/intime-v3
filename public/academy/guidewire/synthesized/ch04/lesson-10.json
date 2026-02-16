@@ -1,0 +1,226 @@
+{
+  "lessonId": "ch04-l10",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 10,
+  "title": "Out-of-Sequence Transactions",
+  "subtitle": "Mastering policy changes that alter the historical timeline in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T17:21:26.329179+00:00",
+  "estimatedMinutes": 110,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a customer calls to update their auto policy. They first increase their liability coverage effective March 1st. A day later, they call back to report that they had their car painted a different color, but this change actually happened on February 1st.",
+      "question": "How does an insurance system accurately reflect these changes when they don't happen in the order they're reported?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the role of effective dates in policy transactions and their impact on policy periods.",
+        "Interpret policy transaction graphs to understand the sequence and impact of policy changes.",
+        "Define out-of-sequence (OOS) transactions and identify scenarios where they occur.",
+        "Differentiate between preemptions and out-of-sequence transactions.",
+        "Describe how PolicyCenter handles OOS transactions, including data merging and conflict resolution.",
+        "Apply best practices for managing OOS transactions in Guidewire PolicyCenter."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall how standard policy changes, like adding coverage or cancelling, are applied with a specific effective date within a policy term. Think about how these changes typically flow chronologically.",
+      "warmupQuestion": "What happens if a policy change is initiated but not yet bound, and then another change is started for the same policy?",
+      "hint": "Consider the concept of 'preemption' you might have encountered previously."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Foundations of Policy Sequencing: Effective Dates and Transaction Graphs",
+      "narrative": "Effective dates are the fundamental building blocks of any policy transaction, dictating precisely when a change becomes active within a policy period. Whether you're increasing coverage, adding a new vehicle, or even canceling a policy, the effective date determines the duration and overall impact of that specific change. This foundational understanding is absolutely vital when we delve into **out-of-sequence transactions**, as these can significantly alter a policy's historical timeline by introducing changes that retrospectively affect past events. The application needs to know which change takes precedence, and effective dates are the key.\n\nTo help visualize these complex interactions, PolicyCenter utilizes **policy transaction graphs**. These graphs are powerful tools that articulate how policy jobs with later effective dates affect existing bound revisions within a contractual period. Think of the horizontal axis as representing the policy term, or 'real-time,' and the vertical axis as representing the policy as modeled in PolicyCenter, or 'model time.' For example, if a customer increases their coverage partway through the term, this change will implicitly apply from its effective date until the end of the contractual policy period. Similarly, canceling a policy is effective for the rest of the policy period. These visual representations are crucial for understanding the chronological flow and impact of all policy changes, setting the stage for understanding when that flow is disrupted and how PolicyCenter manages the resulting complexities.",
+      "keyPoints": [
+        "Effective dates determine when policy changes become active and influence policy periods.",
+        "Policy transaction graphs visually represent the impact and sequence of changes over time.",
+        "Changes typically apply from their effective date until the end of the contractual period."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Effective dates are critical for determining when a policy change becomes active and how it impacts the policy period."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Policy transaction graphs visually articulate how policy jobs with later effective dates affect existing bound revisions, showing 'real-time' vs. 'model time'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Out-of-Sequence Transactions and Their Distinctions",
+      "narrative": "**Out-of-sequence transactions**, often abbreviated as OOS, introduce a significant layer of complexity by altering the historical sequence of changes within a policy. Imagine a scenario where a transaction with an earlier effective date modifies the policy in a way that impacts subsequent transactions that were already bound. This can lead to intricate policy histories that require careful management to ensure accuracy and consistency across all policy revisions. PolicyCenter specifically warns you when a transaction is out-of-sequence, prompting you to address any resulting conflicts.\n\nIt's important to understand that not all transactions can be out-of-sequence. For instance, **submissions** inherently create a new policy, so they cannot be OOS because a policy must exist before any OOS transaction can occur. Similarly, **renewals** extend a policy for a new term and cannot be OOS. **Audits** also don't typically modify the policy's structure in a way that would necessitate an OOS transaction, and they don't have an edit effective date in the same sense. Understanding these nuances helps developers correctly handle policy changes and maintain data consistency.\n\nWhile both **preemptions** and out-of-sequence transactions involve non-serial processing, they differ significantly. A preemption occurs when a second transaction is initiated *before* the first is bound, often from the same base period. Only one can be bound, and the 'winner' forces additional work for the 'loser.' The effective date of the second transaction isn't the primary concern here; it's the concurrent, unbound nature. Conversely, an OOS transaction occurs when a transaction is created *after* another is bound, but with an *earlier effective date*. The critical issue with OOS is that the second transaction retrospectively changes the nature of the policy at a point prior to the effective date of the first transaction, requiring it to account for the policy's state at that earlier point and the impact on later jobs.",
+      "keyPoints": [
+        "OOS transactions are bound changes with an effective date earlier than previously bound changes.",
+        "Submissions, renewals, and audits cannot be out-of-sequence due to their nature.",
+        "Preemptions involve concurrent *unbound* transactions, while OOS involves a new transaction with an earlier effective date than an *already bound* one."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "An out-of-sequence transaction occurs when a change is created after a bound transaction but becomes effective before it, altering the historical timeline."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Not all transactions can be out-of-sequence; submissions, renewals, and audits are typically sequential."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Preemptions involve concurrent unbound transactions, while OOS transactions rewrite the past by applying an earlier effective date to an already bound policy."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Out-of-Sequence (OOS) Transaction",
+          "content": "A policy transaction whose effective date is earlier than the effective date of another policy transaction that is already bound on the policy for that contractual period."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Handling Out-of-Sequence Transactions and Conflict Resolution in PolicyCenter",
+      "narrative": "Out-of-sequence transactions can significantly impact a policy's history and overall data integrity. By inserting changes into an earlier point in the timeline, they necessitate a thorough understanding of how these alterations affect subsequent, already bound transactions. Developers must carefully manage these changes to ensure seamless integration into the existing policy framework and maintain accuracy.\n\nHandling out-of-sequence transactions in PolicyCenter requires a strategic approach, leveraging Guidewire's capabilities to ensure these transactions integrate smoothly into the policy's history. A key aspect is understanding the data model's entity relationships and utilizing effective date management to maintain policy integrity. PolicyCenter is designed to assist in this process.\n\nWhen dealing with out-of-sequence transactions, PolicyCenter is smart: if there are no conflicts, it automatically merges changes from earlier transactions into later ones. This seamless integration ensures that the policy remains consistent and accurate. Developers should focus on identifying potential conflicts early to streamline this merging process. A **conflict** specifically occurs when both transactions modify the *same field*, but each transaction attempts to set that field to a *different value*. For example, if one transaction sets a liability deductible to $500 and an OOS transaction tries to set it to $250 for an overlapping period, that's a conflict. Creating new objects, like coverables or coverages, usually does not cause a conflict.\n\nIf a conflict exists, PolicyCenter cannot automatically merge the data. Instead, the user is prompted to decide how to proceed. This requires a deep understanding of the PolicyCenter data model and the ability to prioritize changes based on business rules. The user must identify whether the earlier effective-dated value should override the future effective-dated value in the future slice of the policy. By implementing effective conflict resolution strategies, developers and users can maintain policy accuracy and consistency, even with complex OOS scenarios.",
+      "keyPoints": [
+        "OOS transactions can significantly impact policy history and data integrity.",
+        "PolicyCenter automatically merges data from OOS transactions if no conflicts are present.",
+        "A conflict arises when multiple transactions modify the same field to different values.",
+        "Users must manually resolve conflicts by deciding which change takes precedence."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "OOS transactions can impact policy history and data integrity, potentially leading to conflicts if not managed carefully."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "PolicyCenter defines a conflict as when both transactions modify the same field to different values."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "If no conflicts are present, PolicyCenter automatically merges data from earlier effective-dated transactions into later ones."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "When a conflict exists, PolicyCenter requires user intervention to decide how to proceed, typically by overriding future conflicts."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will illustrate how to identify an out-of-sequence transaction and then how PolicyCenter guides you through resolving conflicts that arise when multiple changes affect the same policy field at different effective dates.",
+      "transcriptSummary": "The demo shows creating a base policy, then a first change (e.g., increasing coverage), followed by a second change with an earlier effective date (e.g., changing car color or medical limit). It highlights the 'out-of-sequence' warning and then walks through the conflict resolution process on the Policy Review screen, demonstrating how to override or merge changes."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are an agent managing a commercial auto policy. On June 1st, a client increased their vehicle's cargo coverage limit. On June 15th, they call to report that they actually changed their business address, effective May 15th.",
+      "question": "How would you initiate this address change in PolicyCenter, and what immediate system response would you expect regarding the transaction's sequence?",
+      "hints": [
+        "Consider the effective dates of the two changes.",
+        "What message does PolicyCenter typically display when an OOS transaction is started?"
+      ],
+      "expectedApproach": "The user should identify that the address change is OOS due to its earlier effective date. They should expect a warning dialog from PolicyCenter when attempting to start the transaction, indicating it is out-of-sequence."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Continuing from the previous scenario, assume the address change (effective May 15th) also involved updating the vehicle's garaging location, which impacts the premium. The cargo coverage increase (effective June 1st) also had a premium impact. PolicyCenter now flags a conflict on the premium calculation for the period between May 15th and June 1st.",
+      "question": "Describe the steps you would take in PolicyCenter to resolve this conflict, ensuring the correct premium is applied for the affected period.",
+      "hints": [
+        "Where does PolicyCenter direct you to resolve conflicts?",
+        "What options are typically available for resolving individual conflicts?"
+      ],
+      "expectedApproach": "The user should navigate to the Policy Review screen, specifically the Change Conflicts tab. They would then review the conflicting premium values and decide whether to override the future (June 1st) premium change with the earlier (May 15th) change for the overlapping period, based on business rules and the desired outcome for the policy."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What makes a transaction out-of-sequence?",
+      "referenceAnswer": "has an effective date earlier than the effective date of the first bound transaction.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": ",7~ — Cana submission be out-of-sequence? Why or why not?",
+      "referenceAnswer": "therefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Can a change be out-of-sequence? When you start an out-of-sequence\n,’ transaction, how do you know that it is an out-of-sequence transaction?",
+      "referenceAnswer": "dialog box before starting the wizard and displays a warning label at the top of the\nwizard screens.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "_ _ What criteria does PolicyCenter use to determine if an out-of-sequence\n,’ __ transaction conflicts with a \"later effective\" transaction?",
+      "referenceAnswer": "If each transaction changes a single given field to a different value, then the two\ntransactions are in conflict.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "'fthere are no conflicts, what additional work must the end user do?",
+      "referenceAnswer": "merges the data from the two transactions.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "_ _ If there is at least one conflict, what additional work must the end user\nra do?",
+      "referenceAnswer": "value overrides the future effective-dated value in the future slice of the policy.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Effective dates are crucial for policy changes and understanding OOS transactions.",
+        "Policy transaction graphs visually represent policy evolution over time.",
+        "Out-of-sequence transactions alter historical timelines and require careful management.",
+        "PolicyCenter automatically merges non-conflicting OOS changes and prompts for conflict resolution.",
+        "Understanding the data model and business rules is vital for effective OOS management."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly handling out-of-sequence transactions is critical for maintaining accurate policy history, ensuring correct premium calculations, and complying with regulatory requirements, especially when dealing with backdated endorsements or corrections. Mastery of OOS ensures data integrity and operational efficiency.",
+      "nextLessonPreview": "Our next lesson will delve into managing users and groups within PolicyCenter, exploring how different roles and permissions impact policy administration and system access, which is fundamental to controlling who can perform these complex transactions."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through creating an out-of-sequence transaction in PolicyCenter and resolving any resulting conflicts. You will practice initiating a policy change with an earlier effective date than an existing bound transaction, observing PolicyCenter's warnings, and making decisions on how to merge or override conflicting data.",
+      "objectives": [
+        "Initiate an out-of-sequence policy change in PolicyCenter.",
+        "Identify out-of-sequence warnings and dialogs within the system.",
+        "Navigate to the Change Conflicts tab on the Policy Review screen.",
+        "Resolve conflicts by choosing to override or merge changes based on a given scenario.",
+        "Successfully bind a policy with resolved out-of-sequence conflicts."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_11_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_11_01.mp4"
+    }
+  ]
+}

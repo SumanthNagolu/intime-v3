@@ -1,0 +1,290 @@
+{
+  "lessonId": "ch04-l05",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 5,
+  "title": "Full Application Submission",
+  "subtitle": "Master the comprehensive process of creating and managing insurance applications in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T17:18:20.082543+00:00",
+  "estimatedMinutes": 70,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance agent trying to secure a complex commercial policy for a new client. The application involves multiple properties, drivers, and unique coverages, and your client needs a quick, accurate quote. How do you ensure all details are captured efficiently and the quote is generated without delays?",
+      "question": "What critical steps and system functionalities are essential for transforming a detailed application into a binding insurance contract?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the full application submission workflow in PolicyCenter.",
+        "Differentiate between Quick Quote and Full Application submissions.",
+        "Identify key stages in the submission process, including product selection, policy information, and underwriting.",
+        "Explain the purpose and benefits of asynchronous quoting for complex policies.",
+        "Understand how two-step quoting streamlines the premium calculation and post-rating tasks."
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your foundational understanding of PolicyCenter navigation and account creation. Recall how you would typically initiate a new customer interaction or search for an existing account.",
+      "warmupQuestion": "What is the very first piece of information you need before you can start any new policy submission in PolicyCenter?",
+      "hint": "Think about who the policy is for."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Initiating a Full Application Submission",
+      "narrative": "Let's begin by understanding the core process of creating a full application submission in PolicyCenter. From the perspective of an Agent, Customer Service Representative (CSR), Underwriter, or Manager, the goal is to efficiently create new submissions or quotes from an existing account. This user journey is central to how PolicyCenter is designed and configured, ensuring it meets real-world operational needs.\n\nTo kickstart any submission, the fundamental requirement is an existing account. Once an account is established, the submission wizard guides you through entering all necessary details. It's crucial to distinguish between two types of submissions: a **Quick Quote** and a **Full Application**. A Quick Quote gathers minimal information, primarily to generate a preliminary, non-bindable quote, useful for a rapid assessment of pricing. In contrast, a **Full Application**, which is our focus, requires a complete set of information to generate a bindable quote and ultimately issue a policy.\n\nThe full application workflow is a structured journey, moving from product selection through to policy issuance. Each step is vital: you'll select a product, define specific offerings, enter basic policy information, detail coverables and coverages, apply modifiers, and navigate through underwriting processes related to risk analysis. Before a quote is generated, you have the flexibility to modify and refine policy details. Once the full information is entered, a quote can be generated. If the quote is acceptable to the policyholder, the policy can then be issued and bound, forming a legal contract. PolicyCenter is designed to handle multiple submissions per line of business, accommodating scenarios such as insuring multiple properties for a single client, with the default application allowing up to five submissions per LOB. This flexibility is deeply embedded in the system's data model and workflow orchestration.\n\nIn the upcoming demonstrations, we'll walk through practical examples of completing a full application, observing how data inputs flow through the system and how key elements like offerings and underwriting influence the final outcome.",
+      "keyPoints": [
+        "Full application submissions require an existing account in PolicyCenter.",
+        "The submission wizard guides users through comprehensive data entry for bindable policies.",
+        "The workflow includes product selection, policy info, coverables, coverages, modifiers, and underwriting.",
+        "Multiple submissions per line of business are supported, offering flexibility for complex client needs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "The learner story highlights the user's goal to create new submissions or quotes in PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of the submission process, emphasizing the distinction between Quick Quote and Full Application."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A diagram illustrating the detailed workflow for a full application submission, from risk analysis to policy contract."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "An introductory slide setting the stage for the upcoming full application submission demonstrations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Quick Quote vs. Full Application",
+          "content": "A **Quick Quote** gathers minimal information to generate a non-bindable quote, useful for rapid pricing assessment. A **Full Application** gathers a complete set of information needed to apply for a bindable quote, leading to a legal contract."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how a full application unfolds in the Personal Auto line of business. Pay close attention to how offerings are defined, how pre-qualification questions streamline underwriting, and how various policy components (info, coverages, modifiers) interconnect.",
+      "transcriptSummary": "This demo showcases the Personal Auto submission process using Ray Newton's account. It covers adding drivers and vehicles, defining offerings, answering pre-qualification questions, entering policy information, understanding underwriting, selecting coverages and modifiers, reviewing risk analysis, generating a quote, and finally, binding and issuing the policy."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "Observe the Businessowners submission process with Wright Construction. Focus on how new buildings and locations are added, and how these details are crucial for determining the premium basis and accurate premium calculations.",
+      "transcriptSummary": "This demo illustrates a Businessowners full application using Wright Construction's account. It highlights the steps for adding new buildings and locations, explaining how the premium basis amount is determined, and demonstrating the flow through offerings, pre-qualification, policy info, underwriting, coverages, modifiers, risk analysis, policy review, and quoting."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new client, 'Green Gardens Landscaping,' needs a commercial auto policy. You've already created their account. You're now in the submission wizard. The client has 5 vehicles and 8 drivers, some with minor accident history. You need to provide a bindable quote.",
+      "question": "Based on the full application workflow, what are the next three critical steps you would take after selecting the Commercial Auto product to ensure you gather all necessary information for a bindable quote?",
+      "hints": [
+        "Think about the initial information gathering steps immediately following product selection.",
+        "Consider what determines eligibility and initial risk assessment.",
+        "What specific details about the 'things being insured' come next?"
+      ],
+      "expectedApproach": "The learner should identify selecting an offering, answering pre-qualification questions, and entering detailed policy information, including coverables (drivers and vehicles) and coverages."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Optimizing Quoting Performance with Asynchronous Quoting",
+      "narrative": "For complex policies, especially those with a large number of coverables, generating quotes can be time-consuming. PolicyCenter offers performance enhancements to address this, including parallel rating (which processes coverables using multiple threads, typically enabled by default for Commercial Property with Guidewire Rating Management) and, more significantly for user experience, **asynchronous quoting**.\n\nAsynchronous quoting is a game-changer for managing complex policies. When enabled, it allows PolicyCenter to process quotes in the background, freeing up the user interface so you can continue with other tasks. This significantly enhances user experience, preventing the system from locking up during lengthy calculations. Asynchronous quoting is triggered under specific conditions:\n\n1.  The `AsynchronousQuotingEnabled` parameter must be set to `true` in the configuration (it's disabled by default but enabled for training purposes).\n2.  The number of coverables in the policy exceeds a configurable threshold. In the base configuration, this threshold is 30, but for training, it's often reduced to 3 for Commercial Auto and Businessowners. The system tracks specific coverables for different lines of business, such as Vehicles for Commercial Auto, Buildings for Businessowners and Commercial Property, Exposures for General Liability, Signs for Inland Marine, and Covered employees for Workers’ Compensation.\n3.  The specific line of business must support asynchronous quoting (available in commercial lines of business and all policy transactions in the base configuration).\n\nThe flow of asynchronous quoting is designed for transparency and efficiency. When you initiate a quote, PolicyCenter displays an alert informing you that the process will run in the background. It then creates a work item and places it in a queue for processing. During this time, the policy transaction is locked, preventing edits, but you can navigate to other screens and continue working. Once quoting completes, PolicyCenter unlocks the transaction and generates an activity. This activity, viewable on your Desktop's 'My Activities' tab, indicates whether the quote succeeded, completed with warnings, or encountered errors. Clicking the activity subject will display the quote page or validation results, ensuring you're always informed of the outcome. As Tanya, a Customer Service Representative, noted, 'With asynchronous quoting, I can navigate to other screens and work while PolicyCenter is generating the quote, and I can be notified when the quote process is complete,' highlighting its practical benefit.",
+      "keyPoints": [
+        "Asynchronous quoting processes quotes in the background, improving user experience for complex policies.",
+        "It is triggered when enabled, the LOB supports it, and coverables exceed a threshold.",
+        "The process involves an alert, background processing, a locked transaction, and an activity notification upon completion.",
+        "Users can continue other work while a quote is being processed asynchronously."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Tanya's perspective on the benefits of asynchronous quoting for multitasking."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Conditions that trigger asynchronous quoting, including enablement, coverable thresholds, and LOB support."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "A visual representation of the asynchronous quoting workflow, from user initiation to activity completion."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Asynchronous Quoting",
+          "content": "A PolicyCenter feature that allows the quote generation process to run in the background, freeing up the user interface for other tasks, especially beneficial for policies with a large number of coverables."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demo explains the concept of asynchronous quoting. Pay attention to how the system notifies the user that quoting is happening in the background and how it manages the user interface during this process.",
+      "transcriptSummary": "This video provides an overview of asynchronous quoting, detailing its purpose and how it enhances performance by processing quotes in the background. It explains the conditions under which it triggers and the user experience during the asynchronous process."
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "Observe asynchronous quoting in action within a Commercial Auto submission. Notice how the system behaves when a quote is initiated for a policy with many vehicles, demonstrating the background processing and user notification.",
+      "transcriptSummary": "This demo illustrates a Commercial Auto submission where asynchronous quoting is triggered. It shows the user workflow, including the initial alert, the ability to navigate away while the quote processes, and the activity generated upon completion, highlighting the practical benefits of background quoting."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Streamlining Quoting with Two-Step Quoting",
+      "narrative": "Beyond asynchronous processing, PolicyCenter offers another powerful optimization for complex policies: **two-step quoting**. This feature is particularly valuable for lines of business where generating a full quote can be very time-intensive, such as a commercial property policy with a large number of buildings. Two-step quoting improves efficiency by splitting the quote process into two distinct parts.\n\nWhen two-step quoting is enabled, instead of a single 'Quote' button, you'll initially see a 'Rate' button when the policy period is in 'Draft' status. The first step involves clicking this 'Rate' button. This action calculates the premium and performs initial validations, elevating the policy to a 'Rated' status. This separation allows you to quickly determine the premium and share it with clients without waiting for all post-rating tasks to complete. Once the policy is rated, the second step is to click the 'Quote' button. This action completes all post-rating tasks, such as inferring forms, checking reinsurance, and raising final underwriting issues (based on the 'Quote release checking set'), bringing the policy to a 'Quoted' status.\n\nThis approach provides more granular control over the quoting process. As Simone, an Agent, articulated, 'With two-step quoting, I can generate the quote and let the clients know the premium first and then complete the post-rating tasks if they are satisfied with the quote.' This flexibility ensures accuracy and efficiency, allowing for a more detailed analysis of each stage and a better client experience by providing a preliminary premium quickly.",
+      "keyPoints": [
+        "Two-step quoting splits the quote process into 'Rate' and 'Quote' steps.",
+        "The 'Rate' step calculates the premium and validates data, moving the policy to 'Rated' status.",
+        "The 'Quote' step completes post-rating tasks like forms and final underwriting checks, moving the policy to 'Quoted' status.",
+        "This method is ideal for complex policies, allowing agents to provide premiums to clients faster."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Marci and Vas discuss how PolicyCenter optimizes quoting performance for long-running processes."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "An overview of rating and quoting performance improvements, highlighting parallel, asynchronous, and two-step quoting."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Simone's perspective on the benefits of two-step quoting for client communication and workflow."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "A diagram illustrating the two-step quoting process, showing the separation of rating and post-rating tasks."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Two-Step Quoting",
+          "content": "A PolicyCenter feature that separates the premium calculation ('Rate') from post-rating tasks ('Quote'), allowing for faster initial premium generation and more controlled workflow for complex policies."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-5",
+      "videoIndex": 4,
+      "context": "This demo will show two-step quoting in action for a Commercial Property submission. Observe the distinct 'Rate' and 'Quote' buttons and how the process unfolds, particularly for adding new buildings and locations.",
+      "transcriptSummary": "This demo showcases a Commercial Property submission utilizing two-step quoting. It demonstrates how the 'Rate' button is used for initial premium calculation and validation, followed by the 'Quote' button for completing post-rating tasks. The demo highlights adding buildings and locations and how these details contribute to the two-step process."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your underwriting team has identified that commercial property policies with more than 50 buildings are causing significant delays during the quoting process, sometimes locking up the system for several minutes. They want a solution that allows agents to continue working while these large quotes are processed, and also provides a preliminary premium quickly before all final forms are generated.",
+      "question": "Which two PolicyCenter quoting performance features would you recommend to address these specific pain points, and why?",
+      "hints": [
+        "Consider the feature that allows background processing.",
+        "Think about the feature that separates premium calculation from other post-rating tasks.",
+        "How do these features improve user experience and efficiency for large, complex policies?"
+      ],
+      "expectedApproach": "The learner should recommend asynchronous quoting to allow agents to continue working while quotes process in the background, and two-step quoting to provide a preliminary premium quickly before all post-rating tasks are completed."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Based only on the submission wizard, what is the main screen which will\ni likely trigger an underwriting issue first?",
+      "referenceAnswer": "Pre-Qualification is the screen that will likely trigger an underwriting issue first. Other\nissues may be triggered later. (All underwriting issues appear on the Risk Analysis\nScreen - UW Issues tab.)",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Where do users specify modifiers?",
+      "referenceAnswer": "In the LOB-specific section. For example, the Commercial Auto line has a dedicated\nmodifier page.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "In which screen does an underwriter review issues raised during the\nsubmission process?",
+      "referenceAnswer": "Underwriters review the issues in the Risk Analysis screen, Underwriting Issues tab.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What conditions trigger asynchronous quoting?\n\nAsynchronous quoting must be enabled in the PolicyCenter installation\nWhen the number of coverables exceeds the threshold\nIf the current line of business supports asynchronous quoting\nA, B, and C\nA and C\n\nmoo 8 >",
+      "referenceAnswer": "Correct answer: D",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "In the base configuration, for which line of business is two-step quoting\nenabled?\n\nA. Commercial property\nB. Commercial auto\nC. Businessowners\nD. General liability\nE. All of them\n\nmoom >",
+      "referenceAnswer": "Correct answer: A",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The full application submission process involves selecting a product, entering detailed policy information, navigating underwriting, and ultimately binding and issuing a policy.",
+        "Key steps include defining offerings, answering pre-qualification questions, specifying coverages and modifiers, and reviewing risk analysis.",
+        "Asynchronous quoting improves user experience by processing complex quotes in the background, allowing users to continue working.",
+        "Two-step quoting streamlines the process by separating premium calculation ('Rate') from post-rating tasks ('Quote'), providing faster preliminary premiums."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering the full application submission process is fundamental for agents, CSRs, and underwriters to efficiently process new business. Understanding performance enhancements like asynchronous and two-step quoting is crucial for optimizing workflows, especially for large commercial policies, leading to faster quotes and improved client satisfaction.",
+      "nextLessonPreview": "Next, we'll explore 'Policy Tools,' where you'll learn how to leverage various utilities within PolicyCenter to enhance your policy management experience and streamline daily operations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In your PolicyCenter training environment, create a full application submission for a new Personal Auto policy. Ensure you add at least two drivers and two vehicles, and navigate through all the wizard steps up to generating a bindable quote. Pay attention to how coverages and modifiers are applied.",
+      "objectives": [
+        "Practice creating a new account and initiating a full application.",
+        "Apply knowledge of adding coverables (drivers, vehicles) and selecting coverages.",
+        "Experience the full submission workflow, including pre-qualification and policy review.",
+        "Successfully generate a bindable quote for a Personal Auto policy."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_policy_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_06_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_policy_06_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_06_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "In_policy_06_03.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_06_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "In_policy_06_04.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_06_04.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "In_policy_06_05.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_policy_06_05.mp4"
+    }
+  ]
+}

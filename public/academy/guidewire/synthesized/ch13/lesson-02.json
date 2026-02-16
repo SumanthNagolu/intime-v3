@@ -1,0 +1,360 @@
+{
+  "lessonId": "ch13-l02",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 2,
+  "title": "Costs and Financial Transactions",
+  "subtitle": "Understand how PolicyCenter calculates and manages policy costs and financial changes.",
+  "synthesizedAt": "2026-02-16T19:08:17.941493+00:00",
+  "estimatedMinutes": 100,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance agent quoting a new policy for a customer. You enter all the details, and PolicyCenter instantly provides a premium. But how is that total calculated? What happens when the customer makes a change mid-term, like adding a new vehicle or coverage?",
+      "question": "How does PolicyCenter determine the individual costs that make up a policy's premium and track every financial adjustment?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what a 'cost' is in the context of an insurance policy and PolicyCenter.",
+        "Explain how costs are determined through the rating process and stored in PolicyCenter.",
+        "Differentiate between 'rate scalable' and 'basis scalable' costs with examples.",
+        "Describe how costs are displayed in the PolicyCenter user interface.",
+        "Explain the relationship between costs and financial transactions.",
+        "Illustrate how financial transactions are generated and used, including integration with downstream systems like billing."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored the basics of policy creation and underwriting, including how policy details are entered and how a quote is generated. You've seen the final premium, but not the underlying calculations.",
+      "warmupQuestion": "What do you think are the primary components that contribute to the overall price of an insurance policy, beyond just the total premium?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Costs in PolicyCenter",
+      "narrative": "When a policy transaction is quoted in PolicyCenter, the system's **rating engine** springs into action. This engine, which can be Guidewire Rating Management or a third-party system, takes all the policy details—such as coverages, coverage terms, and additional policy data like modifiers or underwriting company—and determines the specific costs for that transaction. The output of this process is a comprehensive list of costs, which are generated whenever a policy is rated and a quote is produced. For example, in a workers' compensation policy, employee costs are rated using class code and payroll information. Essentially, any data that influences a policy's premium is used in rating.\n\nSo, what exactly *is* a cost? In PolicyCenter, a **cost** is defined as a discrete unit of price for a specific item over a specific period of time. It's a fundamental building block that cannot be broken down further. The total cost of a policy is simply the sum of all these individual costs. Costs attach directly to anything that has a price on the policy. These can be categorized into two main types:\n\n*   **Premium costs**: These are the charges for the actual insurance items on the policy, such as the cost of a specific line coverage (e.g., commercial vehicle coverage, business owner line coverage, or personal auto line coverage).\n*   **Non-premium costs**: These are charges applied to the policyholder that are not directly for coverages. Common examples include taxes, surcharges, or processing fees for multi-installment payment plans, which are typically applied based on the premium amount.",
+      "keyPoints": [
+        "Rating determines policy costs based on detailed inputs.",
+        "A cost is a discrete unit of price for a specific policy item and period.",
+        "Total policy cost is the sum of individual costs.",
+        "Costs are categorized as premium (for coverages) or non-premium (for taxes, fees)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of how rating determines costs in PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A review of the rating process, showing inputs and outputs for cost determination."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A question about the definition of a cost in PolicyCenter."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The definition of a cost and examples of items it attaches to."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Rating Engine",
+          "content": "The system (Guidewire Rating Management or third-party) that calculates policy costs based on policy details."
+        },
+        {
+          "type": "definition",
+          "title": "Cost",
+          "content": "A discrete unit of price for a specific policy element over a specific period, forming the basis of a policy's total price."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Handling and Storing Cost Details in PolicyCenter",
+      "narrative": "PolicyCenter handles costs by representing each one as an entity within its data model. This allows the system to store several crucial details related to rating a policy directly within the cost entity itself. These stored values are essential for understanding how the final premium is derived and for any subsequent financial analysis or adjustments. Key details stored in a cost entity include:\n\n*   **Base Rate (BaseRate)**: The initial rate for a particular coverage or coverable, typically found through a lookup table.\n*   **Adjusted Rate (AdjRate)**: The base rate after adjustments based on specific risk details and policy terms.\n*   **Basis (Basis)**: The value upon which the rate is applied (e.g., number of vehicles, sales amount).\n*   **Pro rata Factor (ProrataFactor)**: A factor representing the proportion of the policy term for which the cost is effective.\n*   **Term Amount (TermAmount)**: The full premium or cost calculated for the basis amount for the entire policy term.\n*   **Amount (Amount)**: The final cost after applying the pro rata factor, representing the actual charge for the effective period.\n\nConsider a personal auto policy with two vehicles. Each coverage, such as collision, comprehensive, and liability, will have its own individual cost. For instance, the collision coverage for auto 1, comprehensive for auto 2, and liability for both auto 1 and auto 2 would each generate a separate cost. Even taxes are treated as their own distinct costs. The sum of all these individual costs makes up the total cost of the policy. This granular breakdown allows PolicyCenter to precisely track and manage every component of the policy's price.",
+      "keyPoints": [
+        "Costs are entities in PolicyCenter, storing detailed rating information.",
+        "Key stored details include Base Rate, Adjusted Rate, Basis, Pro rata Factor, Term Amount, and Amount.",
+        "Each coverage and even taxes generate individual costs.",
+        "The total policy cost is the sum of all these granular costs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "A question about how costs are managed within PolicyCenter."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The specific details and values stored within a cost entity in PolicyCenter."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "An example illustrating multiple individual costs contributing to the total cost of a two-car personal auto policy."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Rate Scalable vs. Basis Scalable Costs",
+      "narrative": "Costs in PolicyCenter can be determined using different scaling methods, primarily **rate scalable** and **basis scalable**. Understanding the distinction is crucial for accurate premium calculation.\n\n**Rate scalable objects** are those priced by first determining a full-term amount from base and adjusted rates, and then prorating that amount based on the actual duration the cost applies to the policy. Most insured objects, like vehicles or homes, fall into this category. For example, if a personal auto policy effective July 1 with a six-month term has its deductible increased midterm, the system will split and prorate the cost for each coverage slice or effective date. The calculation involves multiplying the term amount by a pro rata factor, which is the number of effective days divided by the total days in the rating period (e.g., 180 days).\n\nLet's look at a personal auto coverage submission example. The `Coverage term` is 6 months, from 7/1/2019 to 12/31/2019. The `Prorata` factor is 1, meaning the coverage is effective for the entire period. The `Basis` is 1 (for one vehicle). The `Base rate` is 30, looked up from a rate table. `Rate factor 1` (1.93) and `Rate factor 2` (0.85) are applied to adjust the rate. The `Adjusted rate` becomes $49.215 (Base rate * Factor 1 * Factor 2). The `Term amount` is $49, and since the pro rata factor is 1, the `Amount` is also $49.\n\nIn contrast, a **basis scalable** object is priced according to a term amount derived from the rating basis, which represents the value being insured over the policy term, such as dollars of sales. The basis itself is prorated to the policy term. For example, if a general liability policy's exposure is based on yearly sales of $500,000 but the policy term is only 6 months, the `Basis` would be scaled to $250,000 to reflect the value at risk for that term. The `Term amount` for basis scalable costs is the adjusted rate multiplied by the basis. While material objects like cars typically have a default basis value of '1', exposure-based coverages (like general liability or workers' compensation) often use amounts like payroll or sales. The rating engine automatically determines whether an exposure is rate scalable or basis scalable.\n\nMost costs are prorated, meaning if a cost applies for only a portion of the policy term, the `ProRataFactor` will adjust the `TermAmount` to calculate the final `Amount`. If all costs are effective for the entire term, the pro rata factor is 100% or 1.0. The `BaseRate` is looked up, and `AdjustedRate` is calculated by applying various factors to the base rate. The `Basis` is then applied, and finally, the `ProRataFactor` determines the `Amount`.",
+      "keyPoints": [
+        "Rate scalable costs are prorated based on the time coverage is effective.",
+        "Basis scalable costs are priced based on the value at risk (basis) over the policy term.",
+        "The `ProrataFactor` adjusts the `TermAmount` to the final `Amount` for partial terms.",
+        "The rating engine determines whether an exposure is rate or basis scalable."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Explanation and example of rate scalable objects and their pricing mechanism."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A detailed example of a personal auto coverage submission, illustrating rate scalable components and calculations."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Explanation of basis scalable objects, including Base Rate, Adjusted Rate, Basis, and Term Amount."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "An example comparing two general liability policies, demonstrating basis scalable calculations based on sales."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "An actual PolicyCenter example of General Liability exposure premium, showing subline splits and prorated amounts."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "The formula for cost calculation, emphasizing the role of the pro rata factor."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A flowchart illustrating how Base Rate, Adjusted Rate, Basis, and Pro rata Factor determine the final Amount."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Rate Scalable",
+          "content": "An object priced by determining a term amount from base/adjusted rates, then prorating that amount based on the time the cost applies."
+        },
+        {
+          "type": "definition",
+          "title": "Basis Scalable",
+          "content": "An object priced according to a term amount of the value being insured (the basis), which is prorated to the policy term."
+        },
+        {
+          "type": "tip",
+          "title": "Hybrid Calculations",
+          "content": "Some premium calculations may require a hybrid approach. For instance, a basis like 'square feet of building' might not be scaled for the term but still requires pro rata adjustment."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through a policy change transaction in PolicyCenter, specifically adding an additional vehicle to a personal auto policy. Pay close attention to how the system calculates and displays the increased costs and how you can view the Cost Change Detail.",
+      "transcriptSummary": "The demo shows how to initiate a policy change, add a vehicle, and then quote the policy to see the increased cost. It highlights the 'Cost Change Detail' tab, which provides a granular breakdown of what costs changed during the transaction, such as additional premium and taxes. Finally, it shows how to issue the policy."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Costs in the PolicyCenter User Interface",
+      "narrative": "To recap our understanding of cost terminology, remember that the **Base rate** is the initial rate from a lookup table, and the **Adjusted rate** is this base rate modified by selected coverage terms like deductibles or limits. **Rate scalable** refers to pricing based on a prorated term amount, while **basis scalable** means pricing based on the value at risk (the basis) over the policy term. The **Term amount** is the full premium for a full rate term, and the **Pro rata factor** is the ratio of effective coverage time to the standard rating period. The **Actual Amount** is the final cost after applying the pro rata factor.\n\nIn PolicyCenter, costs are primarily calculated by the **rating engine**. Once calculated, these costs are prominently displayed to the user. For new policies, you will find the detailed cost breakdown on the **Quote screen**. This screen provides a clear summary of all charges. If a policy includes costs that do not apply to the entire term (e.g., due to midterm changes), the PolicyCenter display will explicitly show the prorated amounts and their corresponding pro rata factors, ensuring transparency in how the final charges are derived. The Quote screen typically aggregates these individual costs into a 'Total Premium' and 'Taxes & Surcharges' to present a 'Total Cost' for the policy.",
+      "keyPoints": [
+        "Costs are calculated by the rating engine.",
+        "The Quote screen displays costs for new policies.",
+        "Prorated amounts and factors are shown for costs not applying to the entire term.",
+        "The Quote screen summarizes costs into Total Premium, Taxes & Surcharges, and Total Cost."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "A review of key cost terminology, including definitions for Base rate, Adjusted rate, basis scalable, rate scalable, Term amount, Pro rata factor, and Actual Amount."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "A dialogue explaining where costs are calculated and displayed within PolicyCenter."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Details on where costs are calculated and how they appear in the PolicyCenter UI, particularly on the Quote screen."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "An example of the PolicyCenter Quote screen, highlighting the total premium, taxes & surcharges, and total cost."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Costs and Financial Transactions: The Connection",
+      "narrative": "While costs represent the price of specific policy elements, **financial transactions** track the *changes* in these costs over time. A financial transaction is essentially a line item in a running log of pricing changes, representing the cost difference between the current and previous policy versions. The simplest scenario for a financial transaction is a new policy submission, where there's no prior version, and the initial cost for each policy portion becomes a transaction.\n\nHowever, financial transactions become particularly important when changes occur to a policy. For instance, if a policy change results in an increase in collision coverage costs by $16, while comprehensive costs remain unchanged, PolicyCenter records a financial transaction of +$16 for collision and $0 for comprehensive. These transactions are crucial for internal tracking and for communicating financial impacts to external systems. PolicyCenter provides a dedicated **Financial Transactions screen** (accessible with `internaltool` permission) that displays these changes, including details that can be sent to downstream systems like billing or the insurer's accounting system. This screen also provides information for calculating earned premium on the Summary page.",
+      "keyPoints": [
+        "Financial transactions track changes in costs over time.",
+        "A transaction represents the difference in costs between policy versions.",
+        "New policy submissions also initiate financial transactions.",
+        "The Financial Transactions screen displays these changes and feeds downstream systems."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "A dialogue introducing the relationship between costs and financial transactions."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "An example illustrating how a policy change leads to financial transactions reflecting cost differences."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "The PolicyCenter Financial Transactions user interface, showing how transactions are displayed and their role in downstream systems."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Financial Transaction",
+          "content": "A record of a pricing change, representing the difference in costs between current and previous policy versions, or the initial cost of a new policy element."
+        },
+        {
+          "type": "tip",
+          "title": "Internal Tool Permission",
+          "content": "The Financial Transactions screen is typically an internal tool for developers and configurators, requiring specific permissions (`internaltool`) to access."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Financial Transaction Details and Downstream Systems",
+      "narrative": "Let's examine a detailed example of a personal auto coverage change to understand financial transactions better. If an auto policy is changed three months into its six-month term, PolicyCenter will split the original cost and prorate it to price each coverage slice's effective dates. For instance, if the original `Amount` was $49 for a 6-month term, a change at the 3-month mark would result in an `Amount` of ($24.50) for the first half (a negative transaction to reverse the original charge for the remaining period) and a new `Amount` for the second half, reflecting the new coverage terms. The `Prorata` factor for each 3-month slice would be 0.5 (90 days coverage / 180 days term).\n\nThese financial transactions are critical for **downstream systems**, particularly the billing system. A **billing instruction (BI)** is a set of directions from PolicyCenter to a billing system, specifying transaction aggregations that must be acted upon. This instruction contains information about financial transactions that the billing system needs to bill or refund. It doesn't encompass the whole policy but provides necessary data like account, policy, producer, and financial transactions to create invoices or statements and collect new premiums.\n\nFinancial transactions also contain fields vital for **earned premium calculation**. The `Earned premium` is the portion of the premium that applies to the expired part of the policy period. While premiums are paid in advance, the insurer only fully 'earns' them as the policy period expires. Key transaction fields like `Amount`, `Eff Date`, `Exp Date`, `Posted Date`, `Written`, `Charged`, and `To Be Accrued` are used to track and calculate earned, written, and unearned premiums. The `Written premium` is the total premium charged for the entire policy period, and `Unearned premium` is the remaining amount after deducting earned premium from written premium.",
+      "keyPoints": [
+        "Policy changes result in cost splits and prorated transactions.",
+        "Financial transactions are sent to downstream systems like billing via billing instructions.",
+        "Billing instructions contain necessary financial transaction data for invoicing.",
+        "Transaction fields are used to calculate earned, written, and unearned premiums."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "A detailed example of a personal auto coverage change, showing original values and how they split and prorate for a midterm change."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "An illustration of how PolicyCenter sends billing instructions to a downstream billing system based on policy transactions."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "The 'All Financial Transactions' screen, showing various transaction fields used for earned premium calculation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Billing Instruction (BI)",
+          "content": "A set of directions from PolicyCenter to a billing system, detailing financial transactions that require billing or refund actions."
+        },
+        {
+          "type": "definition",
+          "title": "Earned Premium",
+          "content": "The portion of the premium that applies to the expired part of the policy period, earned by the insurer as coverage is provided."
+        },
+        {
+          "type": "definition",
+          "title": "Written Premium",
+          "content": "The total premium charged by an insurance company for the entire period and coverage provided by an insurance contract."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to access and interpret financial transactions within PolicyCenter. You'll see how to view transactions sorted by job, period, and cost, providing different perspectives on the financial history of a policy.",
+      "transcriptSummary": "The demo navigates to the Financial Transactions screen in PolicyCenter, demonstrating how to view transactions in different ways: all transactions, by job, by period, and by cost. It highlights the details available for each cost, including those from the initial submission and subsequent changes, providing a comprehensive financial overview."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Define a cost and how it relates to a policy’s total cost.",
+      "referenceAnswer": "The Cost is the discrete unit of price for any specific period of time. The total cost of a policy is the sum of the individual costs.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Describe the difference between the terms: rate scalable and basis scalable.",
+      "referenceAnswer": "Rate scalable means that premium is calculated by determining a standard term\namount from base and adjusted rates and then prorating that amount based on the\namount of time the cost applies to the policy.\n\nBasis scalable means the premium is calculated from the value at risk — the basis —\nover the policy term. An example is dollars of sales between February 15 and October\n1.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "When would a financial transaction have an amount identical to the cost amount?",
+      "referenceAnswer": "If a cost has no prior policy period, such as a submission or a renewal, then there is no\ndifference in the cost. The financial transaction amount is identical to the cost amount.",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are reviewing a commercial property policy where the insured added a new building mid-term. The original policy had a premium of $1,200 for a 12-month term. The new building adds $300 in premium for the remaining 6 months of the policy term.",
+      "question": "Describe how PolicyCenter would likely handle the costs and financial transactions for this midterm addition, specifically mentioning the concepts of pro rata and financial transactions.",
+      "hints": [
+        "Consider how the original cost for the new building would be calculated for the full term versus the actual remaining term.",
+        "Think about what kind of financial transaction would be generated for the new building's premium.",
+        "How would the 'Amount' differ from the 'Term Amount' for the new building's cost?"
+      ],
+      "expectedApproach": "The learner should explain that the new building's cost would be calculated as a 'rate scalable' item. The full-term premium for the new building ($300) would be prorated for the remaining 6 months (e.g., $150). A financial transaction of +$150 would be created, representing the additional premium for the new building for the remainder of the policy term. The pro rata factor would be 0.5 (6 months / 12 months)."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Costs are discrete units of price for policy elements, determined by the rating engine.",
+        "PolicyCenter stores detailed cost information, including base rate, adjusted rate, basis, and pro rata factor.",
+        "Costs can be 'rate scalable' (prorated by time) or 'basis scalable' (prorated by value at risk).",
+        "The Quote screen displays aggregated and detailed costs in the UI.",
+        "Financial transactions track changes in costs, representing the difference between policy versions.",
+        "Financial transactions are crucial for internal tracking and integration with downstream systems like billing, and for calculating earned premium."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of costs and financial transactions is fundamental for configuring accurate rating, ensuring correct billing, and providing transparent financial reporting to both insurers and policyholders. Misconfigurations in cost calculation or transaction handling can lead to significant financial discrepancies and operational issues.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the configuration aspects of the rating engine and how to customize cost calculations for specific lines of business."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through working with costs and financial transactions in a PolicyCenter environment. You will practice creating a policy, making a midterm change, and then examining the resulting costs and financial transactions in the PolicyCenter user interface.",
+      "objectives": [
+        "Create a new personal auto policy and observe its initial costs.",
+        "Perform a midterm policy change (e.g., add a coverage or vehicle).",
+        "Analyze the cost changes on the Quote screen and Cost Change Detail tab.",
+        "Navigate to the Financial Transactions screen and interpret the generated transactions."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_02_02.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_02_02.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Ra_intro_02_01 .mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_intro_02_01 .mp4"
+    }
+  ]
+}

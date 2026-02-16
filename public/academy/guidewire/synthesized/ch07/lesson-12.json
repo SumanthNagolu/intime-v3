@@ -1,0 +1,319 @@
+{
+  "lessonId": "ch07-l12",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 12,
+  "title": "Introduction to Creating New Entities",
+  "subtitle": "Learn to define custom entities, fields, and relationships in the Guidewire data model.",
+  "synthesizedAt": "2026-02-16T18:04:34.526300+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine an insurance company needs to display policy summaries for each contact, but the existing data model doesn't have a suitable place to store this information. How would you extend the application to accommodate this new requirement without modifying core system files?",
+      "question": "What steps would you take to introduce entirely new data structures into the Guidewire application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe what a custom entity is and how to create a custom entity",
+        "Create entity elements and sub-elements that define fields, foreign keys, and arrays on entities",
+        "Identify entity related data elements associated with data model design"
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with existing Guidewire entities and understand the basic structure of the data model. Recall how application objects like Policy or User are represented in the system.",
+      "warmupQuestion": "Think about a scenario where an out-of-the-box entity doesn't quite fit your business needs. What are your initial thoughts on how you might handle such a situation?",
+      "hint": "Consider the difference between extending an existing entity and creating a completely new one."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Custom Entities and Their Purpose",
+      "narrative": "In Guidewire applications, business objects like policies, users, or contacts are represented as *entities* within the data model. These are fundamental structures that the application uses. Sometimes, however, the out-of-the-box (OOTB) entities don't perfectly align with a specific business requirement, such as needing to store new, unique data. \n\nConsider a user story where an insurance company wants to display policy summaries for a contact. The policy details are managed by an external policy administration system, and while integration developers are working on retrieving this data, we, as configuration developers, need to prepare the data model and user interface to display it. After reviewing the existing data model, we find no appropriate OOTB entity to house this 'Policy Summary' information. This is a classic scenario where defining a *new custom entity* becomes necessary. \n\nCustom entities allow us to extend the application's data model to support unique business requirements without altering the core application code. They are defined in ETI files, much like base application entities. However, custom entities are always located in the `modules\\configuration\\config\\extensions\\` folder, specifically within the `entity` subfolder. This separation is crucial for managing upgrades and ensuring that your custom configurations are preserved. Unlike base entities, custom entities consist solely of an ETI file and do not have associated EIX or ETX files. This means all fields for a custom entity are defined directly within its ETI file. This approach ensures that your application can evolve to meet specific business needs while maintaining a clean separation from the core product.",
+      "keyPoints": [
+        "Entities are business objects in the Guidewire data model.",
+        "Custom entities are created when OOTB entities don't meet specific business requirements.",
+        "Custom entities are defined in ETI files located in the `extensions\\entity` folder.",
+        "Custom entities only have ETI files, no EIX or ETX files."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "User Story: The starting point for understanding the need for new entities."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "User Story - Policy Summaries: A detailed scenario illustrating a gap in the OOTB data model."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Defining New Entities: An overview of the process to create new data structures."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Review: Entities in the data model (1 of 2): Explains what entities are and where they are defined."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Review: Entities in the data model (2 of 2): Differentiates between base and custom entities and their location."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Custom Entity",
+          "content": "An entity created by a customer to extend the Guidewire data model, typically to support unique business requirements not met by out-of-the-box entities. They are local to the application and defined in ETI files within the `extensions` directory."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Entity Structure, Java Classes, and Database Tables",
+      "narrative": "When you define a custom entity using an ETI file, this definition serves as the blueprint for several critical components within the Guidewire application. During deployment, Guidewire's code generators automatically create a corresponding Java class and a database table based on your ETI file. All the fields you define in the custom entity's ETI file become properties in the generated Java class and columns in the database table. \n\nFor custom entities, Guidewire strongly recommends a specific naming convention: the entity name should end with `_Ext`, for example, `BankAccount_Ext`. This suffix helps prevent naming conflicts during future application upgrades. While the entity name requires this suffix, the names of the fields within the custom entity do not. The database table name is automatically generated to match the ETI file name, converted to all lowercase, and prefixed with `abx_` (where `ab` is the two-letter product code, and `x` denotes a custom extension). For instance, `BankAccount_Ext.eti` would result in a table named `abx_bankaccount_ext`. It's important to note that the table name attribute of the entity XML element must be 25 characters or less. If your entity name is too long, you can modify the table name in the Entity dialog, potentially by removing the `_Ext` suffix from the table name itself, to meet this length constraint. \n\nThere are a couple of exceptions to how entities interact with the database. *Virtual entities* are non-persistent; they are constructed entirely in code, exist only during runtime, and their data is not saved to the database. Guidewire generally advises against creating them. *Subtype entities*, on the other hand, inherit all fields from a top-level supertype (parent) entity and share the same database table as their parent and siblings. This approach allows for efficient storage of related, but distinct, entities.",
+      "keyPoints": [
+        "ETI files define fields that become Java class properties and database table columns.",
+        "Custom entity names should end with `_Ext` (e.g., `BankAccount_Ext`).",
+        "Database table names are auto-generated, lowercase, and prefixed with `abx_` (e.g., `abx_bankaccount_ext`).",
+        "Table names must be 25 characters or less.",
+        "Virtual entities are non-persistent and exist only at runtime.",
+        "Subtype entities inherit from a supertype and share the same database table."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Entities, Java classes and database tables: Illustrates the relationship between ETI files, generated Java classes, and database tables."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Entities in the database: Shows how entity data is stored and retrieved from the database, including examples of virtual and subtype entities."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Entities in the object model: Explains how code generators create Java classes from entities and the role of enhancements."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Custom Entity Naming",
+          "content": "Guidewire recommends that custom entity names end with `_Ext` (e.g., `Policy_Ext`) to prevent conflicts during upgrades. Field names within the custom entity do not require this suffix."
+        },
+        {
+          "type": "warning",
+          "title": "Virtual Entities",
+          "content": "Guidewire generally recommends against creating non-persistent (virtual) entities, as they are constructed entirely with code and their data is not saved to the database upon application shutdown."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Defining Data Relationships: Foreign Keys and Arrays",
+      "narrative": "Beyond simply defining fields, entities often need to relate to one another to represent complex business data accurately. Guidewire applications support various types of data relationships, which are crucial for building a robust data model. \n\nOne of the most common relationships is a **foreign key**. A foreign key acts as a pointer from one entity to a single instance of another entity. For example, if each `ABContact` can have one assigned `User`, the `ABContact` entity would contain a foreign key pointing to the `User` entity. When adding a foreign key field to an existing base application entity, it's a best practice to append `_Ext` to the foreign key's name to signify it as a customer extension. The `<foreignkey>` element in the ETI file defines this relationship, specifying the target entity. \n\nAnother important relationship type is an **array**. An array represents a collection of pointers to multiple instances of another entity. Unlike foreign keys, which point to a single record, arrays allow an entity to be associated with zero or many instances of another entity. For example, an `ABContact` might have zero to many `ContactNote` entities associated with it. To implement an array, a *reverse foreign key* is required. This means if entity A has an array of entity B, then entity B must have a foreign key pointing back to entity A. The application maintains these arrays in code by executing queries against the database, ensuring that all members of a given array can be queried by referencing their parent through this foreign key. The `arrayentity` attribute within the ETI file must precisely match the name of the entity it references.",
+      "keyPoints": [
+        "Data relationships define how entities connect to each other.",
+        "A foreign key points to a single instance of another entity.",
+        "Foreign key fields added to base entities should use the `_Ext` suffix.",
+        "An array is a collection of pointers to multiple instances of another entity.",
+        "Arrays require a reverse foreign key from the child entity back to the parent entity.",
+        "The `arrayentity` attribute must exactly match the referenced entity name."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Data relationships: Introduces the concept of how entities connect within the data model."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Foreign key: Explains how a foreign key points to a single instance of another entity."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Array: Illustrates how arrays manage collections of related entities using reverse foreign keys."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Foreign Key",
+          "content": "A field in one entity that refers to the primary key of another entity, establishing a link between them. It ensures referential integrity between two database tables."
+        },
+        {
+          "type": "definition",
+          "title": "Array",
+          "content": "A collection of related entity instances associated with a parent entity. It is maintained in code and requires a reverse foreign key from the child entity to its parent."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Advanced Data Relationships: One-to-One, Many-to-Many, and Circular",
+      "narrative": "Beyond basic foreign keys and arrays, Guidewire supports more complex relationship types to model intricate business scenarios. \n\n**One-to-one relationships** are used when a logical entity is split across multiple physical entities, often to avoid null columns in a large table. For instance, an `ABContact` might have financial summary information that is only relevant to certain types of contacts. Instead of adding many nullable columns to the `ABContact` table, a separate `FinancialSummary` entity can be created. The `<onetoone>` element defines this single-valued association, providing a reverse pointer to the entity that points to it via a foreign key. Every `ABContact` has at most one `FinancialSummary`, and every `FinancialSummary` applies to at most one `ABContact`. \n\n**Many-to-many relationships** occur when multiple instances of one entity can relate to multiple instances of another entity (e.g., a `User` can have many `Roles`, and a `Role` can be assigned to many `Users`). To implement this, you must create a separate *versionable* entity (often called a 'join' or 'junction' entity) that represents the relationship itself. This join entity will contain two or more non-nullable foreign keys, each pointing to one of the entities in the many-to-many relationship. Additionally, a unique index consisting of these foreign keys is required to prevent duplicate entries. To access these relationships, an array element is typically added to one or both of the original entities, specifying the join entity. While `joinarray` is an internal entity type, Guidewire advises against its direct use. \n\nFinally, **circular relationships** arise when an entity needs to refer to itself (e.g., a `Group` having a parent `Group`) or when two or more entities reference each other in a cycle. Direct foreign keys cannot safely handle these cycles due to difficulties in determining the correct order for data insertion. Guidewire's solution is the `<edgeForeignKey>`, which creates a hidden 'edge table' that links the entities without creating a direct cyclical foreign key. This allows individual rows to be written first, followed by the relationships, ensuring safe data insertion and deletion.",
+      "keyPoints": [
+        "One-to-one relationships split logical entities across physical entities using `<onetoone>`.",
+        "Many-to-many relationships require a separate versionable join entity with foreign keys and a unique index.",
+        "Arrays are used to access many-to-many relationships.",
+        "Circular relationships are resolved using `<edgeForeignKey>` to create an edge table, ensuring safe data ordering."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "One-to-one relationships: Explains how to model a single-valued association between entities."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Many-to-many relationships (1 of 2): Details the requirement for a versionable join entity."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Many-to-many relationships (2 of 2): Shows how arrays are used to access many-to-many relationships."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Circular relationships: Introduces `<edgeForeignKey>` to handle self-referencing or cyclical entity relationships."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Versionable Entity",
+          "content": "An entity type that includes a version and ID field, allowing it to be deleted from the database, unlike retireable entities."
+        },
+        {
+          "type": "definition",
+          "title": "Edge Foreign Key",
+          "content": "A special type of foreign key (`<edgeForeignKey>`) used to resolve circular dependencies between entities by creating an intermediary 'edge table', ensuring safe data insertion and deletion."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a new custom entity, `Policy_Ext`, in Guidewire Studio. Pay close attention to how fields like `PolicyNumber` (VARCHAR) and `Premium` (MonetaryAmount) are defined, and how foreign key (`Location`) and array (`ABContact`) relationships are established.",
+      "transcriptSummary": "The demo illustrates creating a `Policy_Ext` entity with `PolicyNumber` (VARCHAR10) and `Premium` (MonetaryAmount) fields. It then shows how to set up a one-to-one foreign key relationship to `Location` and a one-to-many array relationship to `ABContact`, highlighting the use of `_Ext` suffix for custom entity names and the process within Guidewire Studio's Entity Editor."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've just watched the demonstration on creating the `Policy_Ext` entity. Now, imagine you need to add a new field to this entity to store the 'Policy Type' (e.g., 'Auto', 'Home', 'Life') as a string with a maximum length of 20 characters.",
+      "question": "Based on the demo, what specific steps would you take in Guidewire Studio to add a new 'PolicyType' field to the `Policy_Ext` entity, ensuring it's a string of appropriate length?",
+      "hints": [
+        "Recall where custom entities are located in the Studio project pane.",
+        "Think about the type of element you'd add for a simple string field.",
+        "Remember to specify the `type` and `length` attributes for the new field."
+      ],
+      "expectedApproach": "Open the `Policy_Ext.eti` file in Guidewire Studio, right-click within the entity definition, select to add a new 'column' element, name it 'PolicyType', set its type to 'varchar', and specify a length of 20."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is the difference between an ETX file and an ETI file?",
+      "referenceAnswer": "An ETX file extends a base application entity e.g. adding new columns. An ETI file\ndefines a new custom entity from scratch.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Does the base application have ETI files? Can developers create new ETI\nfiles? Where and how?",
+      "referenceAnswer": "Yes, ETI files are in the base application. Developers can create new ETI files in the\n...\\extensions\\entity\\ folder using Guidewire Studio and the Entity Editor.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?",
+      "referenceAnswer": "The Case entity requires a foreign key field in the ETI definition that specifies the\nfkentity attribute as the ABLawyer entity.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "lodeploy data model changes, are you required to\n\nA) Regenerate the Data Dictionary?\n\nB) Restart the application server?\nC) Restart Studio?",
+      "referenceAnswer": "a To deploy data model changes, are you required to:\nx A) No, you are not required to regenerate the data dictionary. Regenerating the data\ndictionary will identify any errors in the data model. If successful, the process will\n\nadd new and modified entities to the data dictionary.\n\nB) Yes, you must restart the application server to deploy the new and modified\nentities. The process creates new database tables and/or upgrades the database.\n\nC) No, Studio is immediately aware of the data model changes. It is not necessary to\nrestart Guidewire Studio.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Custom entities are essential for extending the Guidewire data model to meet specific business needs.",
+        "They are defined in ETI files within the `extensions\\entity` folder and generate corresponding Java classes and database tables.",
+        "Naming conventions, like the `_Ext` suffix for custom entities, are crucial for upgrade compatibility.",
+        "Entities can have various relationships: foreign keys (one-to-one), arrays (one-to-many requiring reverse foreign keys), one-to-one associations, many-to-many (requiring join entities), and circular relationships (resolved with edge foreign keys).",
+        "Deploying data model changes requires restarting the application server to update the database schema."
+      ],
+      "realWorldConnection": "In real Guidewire projects, the ability to create and manage custom entities is fundamental for tailoring the application to unique client requirements. Whether it's integrating with external systems, capturing specialized data, or optimizing data storage, understanding how to define entities and their relationships ensures your solutions are robust, scalable, and maintainable during upgrades. This knowledge directly translates to building effective and compliant insurance applications.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into configuring the User Interface (UI) to display the information stored in these newly created entities, bringing our data model changes to life for end-users."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the concepts and demonstration from this lesson, you will now undertake a hands-on exercise to create a new custom entity and define its core elements. This exercise will solidify your understanding of ETI file structure, field definitions, and basic entity relationships. You will be tasked with creating a new custom entity, adding specific data fields, and establishing a foreign key relationship to an existing entity.",
+      "objectives": [
+        "Create a new custom entity using Guidewire Studio's Entity Editor.",
+        "Define `column` elements for various data types (e.g., varchar, monetaryamount).",
+        "Establish a `foreignkey` relationship between your new custom entity and an existing base entity.",
+        "Understand the impact of data model changes on the application server."
+      ],
+      "figures": [
+        {
+          "slideNumber": 29,
+          "caption": "Lesson Objectives Review: A reminder of the learning goals achieved."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Student Exercise: Creating new entities: The starting point for your hands-on assignment."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Exercise Step 1: Planning your new entity."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Exercise Step 2: Creating the ETI file in Studio."
+        },
+        {
+          "slideNumber": 33,
+          "caption": "Exercise Step 3: Defining fields for your entity."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Exercise Step 4: Adding a foreign key relationship."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "Exercise Step 5: Reviewing your entity definition."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Exercise Step 6: Deploying data model changes."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "Exercise Step 7: Verifying the new entity in the database."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Exercise Complete: Reflecting on the created entity and its relationships."
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_12.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_12.mp4"
+    }
+  ]
+}

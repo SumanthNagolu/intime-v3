@@ -1,0 +1,234 @@
+{
+  "lessonId": "ch07-l10",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 10,
+  "title": "Introduction to Enhancements",
+  "subtitle": "Augmenting Gosu types and Guidewire entities with new methods and properties.",
+  "synthesizedAt": "2026-02-16T18:03:12.131163+00:00",
+  "estimatedMinutes": 110,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're working on a Guidewire application, and the business team requests new functionality for an existing entity, like calculating a person's age or suggesting an insight score. However, you can't directly modify the generated entity code. How would you add this new behavior without altering the core system?",
+      "question": "What tools or techniques would allow you to extend existing types with new properties and methods without direct modification?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define Gosu enhancements and their primary use cases.",
+        "Differentiate between getter properties, setter properties, and functions within enhancements.",
+        "Identify appropriate scenarios for using each type of enhancement component.",
+        "Explain how enhancements can be applied to Guidewire entities and Java types.",
+        "Implement a basic enhancement to fulfill a given user story."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of Gosu fundamentals, including classes, properties, methods, and Guidewire entities. Recall how entities are defined and how their code is typically generated.",
+      "warmupQuestion": "Think about a time you wanted to add a small piece of logic or a derived value to an existing object type. How did you approach it, and what challenges did you face?",
+      "hint": "Consider the limitations of direct modification or subclassing for generated code."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Gosu Enhancements",
+      "narrative": "Gosu enhancements are a powerful feature that allows you to extend the functionality of existing classes and other types without directly modifying their source code. This is particularly valuable in Guidewire applications, where many core types, such as entities, are defined in XML files and have their source code automatically generated. Direct modification of these generated files is not recommended, as changes would be overwritten during subsequent generation processes. Enhancements provide a clean and maintainable way to 'augment' these types with additional concrete methods and properties.\n\nThe most common and beneficial applications of enhancements include adding new properties and methods to Guidewire Entities, which are often generated from XML definitions, and defining utility methods on Java classes or interfaces whose source code you cannot directly alter (e.g., third-party libraries or `final` classes). This capability is crucial for customizing and extending Guidewire applications while adhering to best practices for maintainability and upgradeability. Enhancements can contain various components to achieve this extended functionality, including getters, setters, and general methods, each serving a specific purpose in how they interact with and modify the enhanced type.",
+      "keyPoints": [
+        "Gosu enhancements augment existing types with new methods and properties.",
+        "They are essential for extending Guidewire Entities and Java classes that cannot be directly modified.",
+        "Enhancements can include getters, setters, and methods to add functionality."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to Gosu enhancements, highlighting their role in extending existing types."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This slide explains the core concept of Gosu enhancements and their most valuable use cases, particularly for Guidewire entities and Java classes."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An overview of the different components that can be included within an enhancement: getters, setters, and methods."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Why Use Enhancements?",
+          "content": "Enhancements are preferred over direct code modification for generated Guidewire entities because they ensure your customizations are preserved during upgrades and code generation cycles. They promote a modular approach to extending functionality."
+        },
+        {
+          "type": "definition",
+          "title": "Gosu Enhancements",
+          "content": "A Gosu language feature that allows you to add new concrete methods and properties to existing classes or types (including Guidewire entities and Java classes) without altering their original source code."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Deep Dive into Enhancement Components: Getters, Setters, and Functions",
+      "narrative": "Enhancements provide three primary ways to extend functionality: getter properties, setter properties, and functions (also known as methods). Each serves a distinct purpose. **Getter properties** are used to calculate and return derived values that do not need to be stored in the database. These are 'virtual' properties, meaning they are not declared in the data model. A getter cannot receive input parameters and should not alter any data; its sole purpose is to return a calculated value. A common example is calculating a person's `Age` based on their `DateOfBirth`, returning 'Unknown' if the birth date is null, as shown in `ABPerson.Age`.\n\n**Setter properties**, on the other hand, take a single input value and use it to modify one or more associated fields on the object. Like getters, setters are not declared at the data model level. The value manipulated by the setter is typically stored in the database, but the setter itself provides the logic for *how* that value is set. Setters are appropriate when you need to set fields based on a single input value, especially if that input requires conversion or distribution across multiple fields. For instance, `ABPolicyPerson.HeightInInches(arg)` could convert an input in inches to meters for storage. Use cases include adding a value to one of several possible fields, making an added object primary in an array, or converting units.\n\nFinally, **functions** (or methods) are the most flexible. They execute a logical unit of work, can receive any number of parameters, and can optionally return a value. Functions are ideal when your logic requires multiple input parameters, modifies multiple unrelated fields on the given object, creates or modifies other objects, or simply doesn't 'feel like' a simple field setting operation. An example is `ABPerson.assignDefaultOccupation()`, which might use existing object information to determine and set an occupation. While setters make changes that 'feel like' setting a field, methods are for more complex actions that might involve broader data manipulation or interaction with other objects.",
+      "keyPoints": [
+        "Getters calculate and return derived values without storing them or taking parameters.",
+        "Setters take a single input to modify associated fields, often involving conversion or complex logic.",
+        "Functions (methods) are flexible, handling multiple parameters, complex data changes, and interactions with other objects."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "This slide introduces derived (virtual) properties, using the `ABPerson.Age` example to illustrate how age is calculated from the date of birth without being stored in the database."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A detailed explanation of getter properties, their characteristics, and an example of `ABPerson.Age`."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "This slide describes setter properties, their criteria for use, and provides `ABPolicyPerson.HeightInInches` as an example."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "An explanation of functions (methods) within enhancements, outlining when to use them and providing `ABPerson.assignDefaultOccupation()` as an example."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Getter vs. Stored Property",
+          "content": "Only store values in the database if they are fundamental data points. Derived values, like Age, should typically be calculated using getters to avoid data redundancy and potential inconsistencies."
+        },
+        {
+          "type": "warning",
+          "title": "Setter Limitations",
+          "content": "Setters are specific: they must take exactly one input parameter and should primarily modify fields on the associated object, not alter other unrelated objects. For broader changes, use a method."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Applying Enhancements: User Stories and Java Types",
+      "narrative": "To truly understand the power of enhancements, let's look at how they address real-world business requirements. Consider a user story: 'For each person, if the Age is not Unknown, we want to see how many years the person has remaining until retirement. This value should be calculated from the Age and be displayed as a read-only field in the UI right under the Date of Birth field on the Person Info card.' This clearly calls for a getter property within an enhancement, as it's a derived, read-only value. Another user story might involve a toolbar button that suggests an 'insight score' based on various conditions, which would likely require a function due to its conditional logic and potential to modify data.\n\nThe visual representation of such a user story, like adding 'Years until retirement' to the Person Info card, demonstrates how seamlessly enhanced properties integrate into the user interface. Enhancements aren't limited to Guidewire entities; they can also be written for Java types. This is incredibly useful for creating generic utility methods that extend the functionality of base data types without relating to a specific entity. Examples include enhancing `java.lang.Integer`, `java.util.Date`, or `java.util.List` to add common operations. These Java enhancements typically contain static functions and are deployed and debugged in the same way as other enhancements. They allow you to overcome language shortcomings or add convenient methods to types whose source code you cannot modify, making your Gosu code more concise and powerful. Remember, even if a slide is blank, it's part of the lesson flow, often serving as a transition or a placeholder for discussion.",
+      "keyPoints": [
+        "User stories often drive the need for specific enhancement types (getters for derived values, functions for complex logic).",
+        "Enhancements integrate directly into the UI, making new properties and methods visible.",
+        "Gosu enhancements can extend Java types, providing generic utility methods for base data types.",
+        "Java enhancements commonly use static functions and are deployed like other enhancements."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Two example user stories illustrating business requirements that can be met using Gosu enhancements."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A wireframe example showing how an enhancement-derived property ('Years until retirement') would appear in the user interface."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "This slide explains how Gosu enhancements can be written for Java types, providing examples like `GWBaseIntegerEnhancement`."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "This slide serves as a transition or placeholder, reinforcing the concept of enhancements."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A reiteration of User Story #1, focusing on enhancing the `ABPerson` entity to display 'Years until retirement'."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Code Completion for Enhancements",
+          "content": "When you create an enhancement for an entity (e.g., Activity), typing `Activity.` in Gosu Studio will automatically display your enhancement methods alongside native entity methods, aiding development."
+        },
+        {
+          "type": "gotcha",
+          "title": "Static Dispatch",
+          "content": "Gosu enhancements are statically dispatched. This means their availability is determined at compile time based on the declared type, not the runtime type. Be mindful of this when working with supertypes and subtypes, as downcasting might be necessary (with caution)."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of enhancing the `ABPerson` entity to implement the first user story: calculating and displaying 'Years until retirement'. Pay close attention to how the enhancement file is created, how the getter property is defined, and how it integrates into the UI.",
+      "transcriptSummary": "The demo addresses two user stories for person entities, focusing on calculating 'Years until retirement' and suggesting an 'Insight Score'. It then proceeds to demonstrate how to create a new Gosu enhancement in Studio, specifically for the `ABPerson` entity, within a new company-specific package, to implement the first user story."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What type of logic does a getter implement? A setter? A method?",
+      "referenceAnswer": "The correct responses are:\n\nGetter: Logic that returns a derived value and does not take parameters or change\nother data.\n\nSetter: Logic that takes a single input value and uses that to modify some other field or\nset of fields on the given object.\n\nMethod: Logic that requires parameters, changes data, or otherwise does more than\nsimply deriving or setting a value.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When you create a new enhancement, what code does Studio add for\nx you automatically?",
+      "referenceAnswer": "The correct response is:\nStudio automatically creates the package statement and the enhancement declaration\nstatement and the type reference.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?",
+      "referenceAnswer": "Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?\n\nThe correct response is: this.AssignedUser",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Howdo you create an enhancement method that returns no value?",
+      "referenceAnswer": "Howdo you create an enhancement method that returns no value?\n\nThe correct response is:\nYou would create the method and optionally specify a return type of void.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Howdo you reference enhancement properties and methods?",
+      "referenceAnswer": "Howdo you reference enhancement properties and methods?\n¢\n¢\n¢\nThe correct response is:\nYou reference enhancement properties and methods using the same syntax as base\napplication entity properties and methods: object.propertyOrMethodName",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu enhancements allow you to extend existing types (Guidewire entities, Java classes) without modifying their original source code.",
+        "Enhancements can define getter properties (for derived, non-stored values), setter properties (for controlled field modification with a single input), and functions/methods (for complex logic with multiple parameters or object interactions).",
+        "Each enhancement component has specific use cases and constraints.",
+        "Enhancements are crucial for customizing Guidewire applications in a maintainable and upgrade-safe manner.",
+        "They seamlessly integrate into the UI and can also extend generic Java types for broader utility."
+      ],
+      "realWorldConnection": "In real Guidewire projects, enhancements are fundamental for implementing custom business logic and UI requirements that extend core entities. Whether it's calculating a custom score, formatting an address, or adding a new validation method, enhancements provide the flexibility to adapt the application to specific business needs without compromising the integrity of the base product. This ensures that your customizations are robust and compatible with future Guidewire upgrades.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into advanced enhancement techniques and explore how to debug and test your custom enhancement implementations effectively."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the concepts and demonstration, your task is to implement the second user story presented in the lesson: 'We also need a Toolbar button on the Person Info card with the label: ‘Suggest insight score’. This button should be available only if the location is in edit mode, and the contact score field is null. When the user clicks the button, the following logic should execute: 1. If the Employment Info section is filled out completely, the score should be set to 10. 2. If the Employment Info and License Info sections are both filled out completely, the score should be set to 20. 3. Otherwise, nothing happens.'",
+      "objectives": [
+        "Create a new function within an existing or new `ABPerson` enhancement.",
+        "Implement conditional logic to determine the 'insight score'.",
+        "Configure the UI to display a toolbar button with appropriate visibility rules.",
+        "Connect the button's action to your new enhancement function."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_10.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_10.mp4"
+    }
+  ]
+}

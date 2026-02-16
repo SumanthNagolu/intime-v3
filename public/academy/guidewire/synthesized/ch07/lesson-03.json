@@ -1,0 +1,294 @@
+{
+  "lessonId": "ch07-l03",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 3,
+  "title": "Introduction to Extending the Data Model",
+  "subtitle": "Learn to safely extend Guidewire's data model with custom entities, typelists, and fields.",
+  "synthesizedAt": "2026-02-16T17:58:27.049713+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance company wants to offer a new social media integration service to customers, requiring new data fields like 'Friendbook_Ext' and 'LastSocialActivity_Ext'. How would you add these new fields to an existing customer record in Guidewire without risking future upgrades or conflicts with the base application?",
+      "question": "How can we safely modify and extend Guidewire's core data structures to meet evolving business needs?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between base application and custom entities and typelists.",
+        "Explain the purpose and structure of entity extensions (ETX, EIX) and typelist extensions (TTX, TIX).",
+        "Describe how entity extensions relate to generated Java classes and the database.",
+        "Identify appropriate data types for new fields in the Guidewire data model.",
+        "Understand the process and implications of regenerating the Data Dictionary.",
+        "Configure new fields on a base application entity using Guidewire Studio."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored the foundational architecture of Guidewire applications and the role of configuration. Recall how Guidewire applications interact with underlying databases and the importance of maintaining upgrade compatibility.",
+      "warmupQuestion": "What are some potential challenges you might encounter when trying to add new data fields to an existing, complex software system like Guidewire?",
+      "hint": "Think about system upgrades, data integrity, and development best practices."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Guidewire Entities: Base vs. Custom",
+      "narrative": "At its core, the Guidewire data model is a collection of XML-formatted metadata definitions for **entities** and **typelists**. An **entity** serves as the blueprint for a business object within the application, defining a specific set of fields to store information. Think of entities as the fundamental building blocks for data, such as a Policy, User, or ABContact. These definitions are meticulously crafted within entity definition files, known as ETI files, which describe the entity's structure in an XML format.\n\nGuidewire distinguishes between two primary categories of entities: **Base application entities** and **Custom entities**. Base application entities are those pre-built and shipped by Guidewire as part of the out-of-the-box configuration. These can be either platform entities, which are common across all Guidewire applications and typically reside in the `modules\\configuration\\config\\metadata\\entity` folder, or application-specific entities. It's crucial to understand that all ETI files in the `metadata` folder are read-only; direct modification in Guidewire Studio or any other application is strictly prohibited to ensure system stability and upgrade compatibility. Many platform entities are marked with `final=\"true\"` (cannot be subtyped) or `extendable=\"false\"` (cannot have new elements added) attributes, restricting how they can be altered.\n\nIn contrast, **Custom entities** are those you create as a customer to fulfill unique business requirements. These are always found in the `modules\\configuration\\config\\extensions\\entity` folder and are exclusively created at the application level, making them local to your specific application. This clear separation ensures that your custom data structures do not interfere with Guidewire's core application logic during upgrades. Understanding this distinction is fundamental to safely and effectively extending the Guidewire data model.",
+      "keyPoints": [
+        "Guidewire data model uses XML-formatted entities and typelists.",
+        "Entities define business objects like Policy or User, described in ETI files.",
+        "Base application entities are Guidewire-provided, read-only, and found in the `metadata` folder.",
+        "Custom entities are customer-created, editable, and found in the `extensions` folder."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to the concept of entities in Guidewire's data model."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This figure defines what an entity is within Guidewire, highlighting its role as a business object and its definition in ETI files."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustrates base application entities, distinguishing between application-specific and platform entities, and noting their read-only nature."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Explains custom entities, emphasizing that they are customer-created, local to the application, and reside in the 'extensions' folder."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Entity",
+          "content": "A definition of a business object used by the application, such as Policy, User, or ABContact, defining a set of fields for information."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Extending Base Entities: ETX and EIX Files",
+      "narrative": "Since base application entities are read-only to prevent conflicts during upgrades, Guidewire provides a mechanism called **Entity Extension** to safely add new fields or override certain attributes of existing base entity fields. This is achieved through an **ETX file**. An ETX file defines these extensions, and crucially, a base application entity can have at most one ETX file to maintain simplicity and manageability. When adding new fields to base entities, Guidewire recommends appending the suffix `_Ext` to both entity names (if creating a new extension entity) and new field names to avoid future naming conflicts and improve clarity in Studio and the Data Dictionary. For example, `CreditHistory_Ext` or `WebAddress_Ext`.\n\nCustomers have the flexibility to create or edit these entity extensions, which are always located in the `modules\\configuration\\config\\extensions\\entity` folder. While you can create your own, Guidewire also ships certain entity extensions as part of the base configuration, often addressing performance issues or providing specific data model configurations. It's vital to understand the full implications before modifying any Guidewire-provided extensions.\n\nBeyond customer-editable ETX files, there are also **Internal Entity Extensions**, defined in **EIX files**. These EIX files contain extensions to platform-level entities that are essential for the base application and are strictly read-only. Created by Guidewire development, EIX files meet the specific data model needs of a given application. They are found in the `modules\\configuration\\config\\metadata\\entity` folder and, like base ETI files, cannot be edited directly. For configuration developers, the focus remains on ETX files for custom extensions, ensuring all extensions for a single entity are consolidated into one ETX file.",
+      "keyPoints": [
+        "Entity extensions (ETX files) allow safe addition of fields to read-only base entities.",
+        "A base entity can have only one ETX file.",
+        "Use `_Ext` suffix for new field names to prevent naming conflicts.",
+        "ETX files are customer-editable and located in the `extensions` folder.",
+        "Internal Entity Extensions (EIX files) are Guidewire-created, read-only extensions to platform entities, found in the `metadata` folder."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Introduces the concept of an Entity extension (ETX file) as a safe way to modify base application entities without direct editing."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustrates where ETX files are created and stored, emphasizing their application-level scope and local nature."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Explains Internal Entity Extensions (EIX files), their purpose, and their read-only status within the Guidewire application."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Naming Conventions for Extensions",
+          "content": "To avoid future naming conflicts and improve clarity, Guidewire recommends adding the suffix `_Ext` to your entity names and new field names on base entities. For new custom entities, the fields within them do not need the `_Ext` suffix if the entity name itself already has it."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Entity Extensions, Java Classes, and Typelists",
+      "narrative": "When you extend a base application entity, the final definition of that entity is a combination of its original ETI file, any existing ETX file, and in some cases, an EIX file. Regardless of where a field is declared, all fields from all these files are consolidated to form the **generated Java class** for that entity. This means that from a programming perspective, the extended fields become part of the same Java object, accessible like any other field. It's important to note that in Guidewire data model configuration, the term 'extend' primarily refers to adding new fields to an existing entity, rather than creating a new subclass as it might in traditional Object-Oriented Programming (OOP).\n\nMoving beyond entities, **Typelists** are another critical component of the Guidewire data model. A typelist is a fixed, predefined list of values, often referred to as Typecodes. These values cannot be dynamically added or removed during runtime, making them ideal for constraining user input and ensuring data consistency. When rendered in the User Interface (UI), typelists typically appear as dropdown menus or radio buttons. You can programmatically access typekeys within a typelist, choosing to retrieve all typekeys (including retired ones) or only non-retired ones using methods like `getTypeKeys(eRetiredTypekeys)`.\n\nJust like entities, base application typelists are read-only to safeguard against upgrade conflicts. To safely add new Typecodes to these base typelists, you use a **Typelist extension**, defined in a **TTX file**. Similar to ETX files, a base application typelist can have at most one TTX file for simplified maintenance. For Typecodes added via a TTX file, Guidewire also recommends using the `_Ext` suffix for consistency and clarity.",
+      "keyPoints": [
+        "All fields from ETI, ETX, and EIX files are combined into a single generated Java class for an entity.",
+        "In Guidewire, 'extending' an entity means adding fields, not creating a subclass.",
+        "Typelists are fixed, predefined lists of Typecodes used to constrain user input.",
+        "Typelist extensions (TTX files) allow safe addition of new Typecodes to base typelists.",
+        "A base typelist can have only one TTX file."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Illustrates how entity extensions (ETX files) contribute to the generated Java class and database schema, clarifying the 'extend' concept in Guidewire."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Defines a Typelist, explaining its purpose as a fixed list of values (Typecodes) and its role in constraining user input."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Introduces the Typelist extension (TTX file) as the mechanism for safely adding new Typecodes to read-only base application typelists."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Guidewire 'Extend' vs. OOP 'Extend'",
+          "content": "Be aware that in Guidewire data model configuration, 'extend' typically means adding new fields to an existing entity, not creating a new subclass as in Object-Oriented Programming (OOP)."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Typelists in the Data Model: TTI, TIX, and TTX Files",
+      "narrative": "Typelists in the Guidewire data model follow principles similar to entities, being defined as XML files. There are three main file types associated with typelists: **TTI** (Typelist Type Info) for single Guidewire or custom typelist declarations, **TIX** (Typelist Internal Extension) for Guidewire's internal extensions to platform-level typelists, and **TTX** (Typelist Type Extension) for customer-specific extensions. The `modules\\configuration\\config\\metadata\\typelist` folder contains read-only platform and base application typelists (TTI and TIX files), while the `modules\\configuration\\config\\extensions\\typelist` folder is where all customer-specific typelist extensions (TTX files) reside.\n\nGuidewire categorizes typelists into three kinds: **Internal typelists** are base application typelists marked as `final`, meaning they cannot be subtyped or extended because internal base application logic depends on them. **Extendable typelists** are base application typelists that customers *can* modify or extend. Finally, **Custom typelists** are created entirely by customers to meet specific needs. It's important to note the existence of **Virtual Typelists**. These do not have physical `.tti` files exposed in Guidewire Studio but are generated as Java classes, often representing typelists of subtypes for a given supertype. While you won't find their `.tti` files, their generated Java code and database tables behave just like other typelists.\n\nConsider a scenario where an insurance company wants to implement social media functionality for customers. This requires storing new information like 'EnrolledinSocialMedia_Ext', 'Friendbook_Ext', 'Chirp_Ext', 'AverageActivity_Ext', and 'LastSocialActivity_Ext' on the `ABContact` entity. The 'EnrolledinSocialMedia_Ext' field needs to be mandatory with a default value of 'false' and displayed in the UI. This real-world requirement directly translates into extending the `ABContact` entity with new fields, which we will achieve by modifying its `ABContact.etx` file.",
+      "keyPoints": [
+        "Typelists are defined in TTI, TIX, and TTX XML files.",
+        "Metadata folder contains read-only TTI and TIX files; Extensions folder contains customer-editable TTX files.",
+        "Typelists can be Internal (final, not extendable), Extendable (modifiable by customers), or Custom (customer-created).",
+        "Virtual Typelists exist as generated Java code and database tables, even without physical `.tti` files.",
+        "Extending the `ABContact` entity with social media fields is a practical application of data model extension."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Explains the file types (TTI, TIX, TTX) and folder structure for typelists in the Guidewire data model."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Further elaborates on typelist types (internal, extendable, custom) and introduces the concept of virtual typelists."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "A blank slide, often used as a transition or visual break before introducing a new section or scenario."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Presents a scenario for implementing social media functionality, outlining the required new fields for the ABContact entity and their display requirements."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration provides an initial analysis of the social media functionality requirement, focusing on identifying which files and folders are relevant for extending the data model. Pay close attention to the distinction between read-only Guidewire files and customer-editable extension files.",
+      "transcriptSummary": "The demo explains the social media requirement, then navigates through Guidewire Studio's file structure, differentiating between read-only ETI/EIX files in the `metadata` folder and editable ETI/ETX files in the `extensions` folder. It highlights that custom modifications should be made within existing ETX files if they already exist for a base entity, like `abcontact.etx`."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration walks through using the Entity Editor in Guidewire Studio to begin adding new columns to an existing entity's extension file. Observe how to add new elements and filter to view only custom elements.",
+      "transcriptSummary": "The demo shows how to open `ABContact.etx` in Studio and add new columns using the drop-down menu or right-click context menu. It demonstrates filtering to view only custom elements and navigating between an entity's sub and super types."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration focuses on the detailed implementation of adding the social media fields to `ABContact.etx`. Pay attention to the specific data types chosen, the `nullok` property, default values, and the use of `columnParam` subelements for `varchar` and `decimal` types.",
+      "transcriptSummary": "The demo meticulously adds 'EnrolledinSocialMedia_Ext' (bit, not null, default false) and 'Friendbook_Ext' (varchar, null ok, with a `columnParam` for size) to `ABContact.etx`. It emphasizes naming conventions, data type selection, and the necessity of `columnParam` for certain data types like `varchar` and `decimal`."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Following the social media scenario, you now need to add two more fields to the `ABContact` entity: 'Chirp_Ext' to store a user's Chirp handle (a string up to 50 characters, optional) and 'LastSocialActivity_Ext' to record the date and time of their last social media interaction (a date/time field, optional).",
+      "question": "Using Guidewire Studio and the `ABContact.etx` file, add the 'Chirp_Ext' and 'LastSocialActivity_Ext' fields. Ensure 'Chirp_Ext' is a `varchar` with appropriate size and 'LastSocialActivity_Ext' is a `datetime` type.",
+      "hints": [
+        "Remember to use the `_Ext` suffix for new field names.",
+        "For string fields, consider the `varchar` data type and its required `columnParam` for size.",
+        "For date and time fields, use the `datetime` data type. These typically do not require `columnParam` for size/precision.",
+        "Review the `nullok` property based on whether the field is optional."
+      ],
+      "expectedApproach": "Open `ABContact.etx` in Guidewire Studio. Add a new column named 'Chirp_Ext' with type `varchar`, `nullok='true'`, and a `columnParam` for `size='50'`. Add another column named 'LastSocialActivity_Ext' with type `datetime` and `nullok='true'`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "How many ETX files can a given entity have?",
+      "referenceAnswer": "One ETX file per entity in most cases.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What datatype do you enter for fields that will store....\n\no A) String values?\n\nB) Boolean values?\n\nC) Numbers with decimal values?",
+      "referenceAnswer": "The correct responses are:\nA) varchar\nB) Bit\nc) decimal",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Which datatypes require columnParam subelements?",
+      "referenceAnswer": "varchar requires size and decimal which requires precision and scale",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Under what circumstances would you want to regenerate the Data\nPa Dictionary?",
+      "referenceAnswer": "You would want to regenerate the Data Dictionary whenever you extend the data\nmodel and are concerned with data model validation beyond schema validation in the\nEntity Editor. Regenerating the Data Dictionary also updates the dictionary files to\ninclude the new fields (or entities) that you have created.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "When does a Guidewire application actually modify the physical\nPa structure of the database?",
+      "referenceAnswer": "The physical structure of the database is modified only during start-up.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Describe some of the differences between the files in the\n\nKA ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders.\n7",
+      "referenceAnswer": "Files under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directo",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Guidewire's data model is built on entities and typelists, defined in XML files (ETI, TTI).",
+        "Base application entities and typelists are read-only to ensure upgrade compatibility.",
+        "Entity extensions (ETX files) and typelist extensions (TTX files) allow safe, customer-specific modifications.",
+        "Internal extensions (EIX, TIX files) are Guidewire-provided and read-only.",
+        "New fields added via extensions are integrated into the entity's generated Java class.",
+        "Proper data type selection and `columnParam` usage are crucial for field definition.",
+        "The Data Dictionary must be regenerated after data model changes to reflect updates and perform validation.",
+        "Database physical structure changes only occur during application startup."
+      ],
+      "realWorldConnection": "In real Guidewire projects, extending the data model is a common task for adapting the application to specific business requirements. By understanding and correctly applying entity and typelist extensions, you can implement custom functionalities, like the social media integration, without compromising the integrity or upgrade path of the core Guidewire application. This knowledge is fundamental for any Guidewire configuration developer.",
+      "nextLessonPreview": "In the next lesson, we will explore how to integrate these newly configured data model fields into the User Interface (UI) using PCF files, making them visible and editable for end-users."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Continue with the 'Extending the Data Model' exercise. Your task is to complete the data model configuration for the social media functionality by adding the remaining fields as outlined in the scenario, ensuring all data types and properties (e.g., `nullok`, `default`, `columnParam`) are correctly set. After making the changes, regenerate the Data Dictionary and verify your configuration.",
+      "objectives": [
+        "Apply knowledge of data types and `columnParam` to define new fields.",
+        "Practice extending a base application entity with multiple custom fields.",
+        "Perform Data Dictionary regeneration to validate and update the data model."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_03_01.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_03_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Fund_03_02.mkv",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_03_02.mkv"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Fund_03_03.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_03_03.mp4"
+    }
+  ]
+}

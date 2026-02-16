@@ -1,0 +1,231 @@
+{
+  "lessonId": "ch04-l18",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 18,
+  "title": "Coverage Terms",
+  "subtitle": "Understand how coverage terms define policy specifics and integrate with PolicyCenter's data model.",
+  "synthesizedAt": "2026-02-16T17:26:15.108023+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing a new insurance product. How do you ensure that customers can customize their policies with specific limits, deductibles, or unique conditions? Without a robust system for defining these details, every policy would be a generic, one-size-to-all offering.",
+      "question": "How do insurance systems allow for such granular customization of policies, and what role do 'coverage terms' play in this flexibility?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and structure of coverage terms and coverage term patterns in PolicyCenter.",
+        "Identify key attributes of coverage terms, including term type and model type.",
+        "Describe how coverage terms are stored and managed within PolicyCenter's data model.",
+        "Understand the role of generic schedules in managing detailed coverable information.",
+        "Configure coverage terms and generic schedules using Product Designer."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about coverages as the core protection offered by an insurance policy. Now, we'll delve deeper into how these coverages are made specific and customizable.",
+      "warmupQuestion": "Think about a car insurance policy. What are some specific values or conditions that define the extent of your coverage?",
+      "hint": "Consider things like how much the insurer will pay or how much you pay out-of-pocket."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Coverage Term Patterns and Attributes",
+      "narrative": "At the heart of customizing insurance products in PolicyCenter are **coverage term patterns**. These patterns act as templates, guiding the structure of individual coverage terms. Each `CoveragePattern`—which defines a specific type of insurance protection—is linked to a `CoverageTermPattern`. This linkage is crucial because it dictates how PolicyCenter creates `CoverageTerm` instances for actual policy coverages, allowing for tailored insurance products that meet diverse market needs. For example, while a basic 'Loss of Use' coverage might not have any terms, a 'Hired Auto Collision' coverage could have a single deductible term, and 'Employee Dishonesty' might involve multiple terms like limits, number of covered employees, and locations. This flexibility is essential for creating granular and adaptable policies.\n\nCoverage terms themselves possess important **attributes** that govern their behavior and appearance. Key among these are **term type** and **model type**. The *term type* dictates the user interface convention for selecting a term's value, such as a direct numeric input, a selection from a drop-down list (Option or Typekey), or a predefined package of values. The *model type*, on the other hand, defines what the term value actually measures—is it a limit, a deductible, coinsurance, an exclusion, or something else? While the model type doesn't affect the UI, it's vital for how the value is interpreted by the rating engine and during policy imports. These attributes are configured within Product Designer, ensuring that terms behave consistently and correctly throughout the policy lifecycle.",
+      "keyPoints": [
+        "Coverage term patterns are templates linked to coverage patterns, defining how coverage terms are structured.",
+        "A coverage can have zero, one, or many terms, allowing for flexible product customization.",
+        "Term type controls the UI presentation (e.g., Direct, Option, Package, Typekey, Generic).",
+        "Model type defines what the term measures (e.g., Limit, Deductible, Coinsurance, Exclusion, Other) and impacts rating engine integration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Coverage term patterns serve as templates for structuring coverage terms, linking to coverage patterns to customize insurance products."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Examples illustrate how coverages can have zero (Loss of Use), one (Hired Auto Collision), or multiple (Employee Dishonesty) terms attached."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Coverage term attributes like 'Term type' (UI convention) and 'Model type' (what the value measures) are configured in Product Designer."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Coverage Term",
+          "content": "A value that specifies the extent, degree, or attribute of coverage, commonly used for limits or deductibles, but also for coverage elections or scope."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Data Model for Coverage Terms and Column Management",
+      "narrative": "To optimize performance and maintain data integrity, coverage terms are not stored as separate entities but rather as **columns directly within coverage tables**. Each coverage table defines the data entity that contains the coverages, and each type of coverage is applied to a specific coverable entity. This design ensures that coverage terms are tightly integrated with the overall policy structure, improving efficiency in data retrieval and processing. For instance, a `Dwelling` coverage table would have columns for its associated terms.\n\nDevelopers must be mindful of how these **coverage term columns are managed**. PolicyCenter provides a set number of columns for each type of coverage term within every coverage table. For example, a `CPBuildingCov` table might have three columns specifically for direct coverage terms. Direct coverage terms are typically stored as decimal values, while choice-based terms (Option, Package, Typekey) are stored as pattern codes. Generic terms can be strings, dates, or Booleans. When configuring a coverage term pattern, you specify which column in the coverage table will store the term's value. If a single coverage requires more terms of a specific type than available columns, you'll need to **extend the coverage table** by adding new columns. This is a common customization to accommodate complex policy requirements. While generic terms can store numeric values, Guidewire recommends using direct coverage terms for better consistency and functionality.\n\nThe process of **mapping coverage terms to data columns** is performed in Product Designer. This critical step involves selecting the appropriate column within the coverage table where the term's value will be stored. Accurate mapping ensures that term values are correctly persisted in the PolicyCenter database and retrieved when needed, which is fundamental for consistent data, accurate policy processing, and reliable reporting.",
+      "keyPoints": [
+        "Coverage terms are stored as columns within coverage tables for performance and relational integrity.",
+        "Each coverage table has a predefined number of columns for different term types (e.g., Direct, Choice, Generic).",
+        "Developers may need to extend coverage tables by adding new columns if more terms are required than available.",
+        "Mapping terms to specific data columns is done in Product Designer to ensure correct data storage and retrieval."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Coverage terms are stored as columns directly within coverage tables, linking them to coverable entities for improved performance."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Coverage tables have a set number of columns for each term type; developers can extend tables if more terms are needed."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Mapping coverage terms to specific data columns is configured in Product Designer, ensuring accurate storage in the PolicyCenter database."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Numeric Values",
+          "content": "Guidewire recommends using direct coverage terms for numeric values, even though generic terms can also store them, for better consistency and functionality."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show how the configuration of coverage terms in the product model directly impacts the user interface and user experience in PolicyCenter. Pay close attention to how different term types are presented.",
+      "transcriptSummary": "The demo illustrates how selecting various term types and attributes in the product model streamlines the UI, making policy details intuitive for users. It highlights the alignment between backend configuration and frontend presentation for user satisfaction."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Advanced Configuration: Generic Schedules for Detailed Information",
+      "narrative": "Beyond basic coverage terms, PolicyCenter offers **generic schedules** for managing more detailed, itemized information about an insured's coverables. Imagine needing to list every piece of jewelry in a homeowner's policy or all authorized workers in a workers' compensation policy; generic schedules provide this flexibility. These schedules are built upon a robust data model and leverage common Gosu classes and PCF pages. While an older generic schedule class is now deprecated, understanding its structure is helpful for migration or new implementations.\n\nGeneric schedules are essentially lists of detailed information about an insured's coverables. They use a generic schedule data model that stores information in a flexible way, allowing for easy creation and editing through Product Designer or declarative definition in product model XML files. This adaptability makes them powerful for handling complex policy requirements. For instance, in the base configuration, the Homeowners line utilizes generic schedules for items like Scheduled Personal Property, often including both schedules and schedules with coverage terms. This comprehensive model allows for capturing information per scheduled item, where each item can have its own coverages and associated coverage terms (like limits and deductibles) that can affect rating. In contrast, the General Liability line also uses schedules but without product model XML, showcasing the varied implementation approaches. These examples highlight the versatility of generic schedules in catering to line-specific needs, whether for capturing simple lists or detailed items with their own coverages and terms.",
+      "keyPoints": [
+        "Generic schedules manage detailed, itemized information about coverables (e.g., jewelry lists, authorized workers).",
+        "They use a flexible data model with common Gosu classes and PCF pages.",
+        "Schedules can be configured with or without associated coverage terms.",
+        "Different lines of business (e.g., Homeowners, General Liability) implement generic schedules in varied ways."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Advanced scenarios often require customizing coverage terms or creating new patterns to meet unique business needs, such as listing detailed coverable information."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Generic schedules provide a flexible way to manage lists of detailed information about an insured's coverables using a generic data model."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Different lines of business, like Homeowners and General Liability, implement generic schedules with or without coverage terms, demonstrating their adaptability."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Scheduled Item",
+          "content": "An individual row within a generic schedule, representing a specific item or entity being detailed."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring Generic Schedules in Product Designer",
+      "narrative": "Adding generic schedules to a line of business involves a structured process, primarily using Product Designer. The initial step is to **incorporate schedules into clauses** such as coverages, conditions, and exclusions. This ensures that the schedules are properly integrated into the policy structure. While the data model for generic schedules is created first, the configuration in Product Designer is where the business logic and UI presentation are defined.\n\nWhen configuring **schedules without coverage terms**, the process is straightforward: you add the schedule as a coverage and then define the properties for the scheduled items. This involves selecting the covered object and the scheduled covered object type, and then defining 'Schedule Properties' to capture the necessary information for each item. This ensures data integrity and operational efficiency for simple lists. The same steps apply if you're adding schedules to conditions or exclusions.\n\nFor **schedules that include coverage terms**, additional configurations are necessary. A prime example is the 'Scheduled Personal Property' in Homeowners policies. Here, a 'schedule coverage' (like `HOPScheduledPersonalProperty`) defines the overall schedule and its properties, while also linking to a 'scheduled item coverage' (like `HOPScheduledPersonalPropertyItem`). This item coverage is where individual limits, deductibles, and other coverage terms for each scheduled item are captured. This setup requires careful configuration to ensure that all financial aspects and policy details are accurately reflected. The flexibility to link item-specific coverages and terms allows for highly detailed and customizable policies, crucial for scenarios where each scheduled item might have unique insurance requirements.",
+      "keyPoints": [
+        "Adding generic schedules involves incorporating them into clauses (coverages, conditions, exclusions) via Product Designer.",
+        "For schedules without coverage terms, define schedule properties for scheduled items.",
+        "For schedules with coverage terms, link a 'schedule coverage' to a 'scheduled item coverage' to define item-specific terms.",
+        "Careful configuration ensures accurate capture of limits and deductibles for each scheduled item."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Steps for adding generic schedules include creating the data model, configuring clauses and properties in Product Designer, and optionally customizing the UI."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Configuring schedules without coverage terms involves adding the scheduled coverage and defining schedule properties for the items."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "For schedules with coverage terms, an optional step is to add scheduled item coverages to define item-specific terms like limits and deductibles."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demo will guide you through the process of configuring coverage terms using Product Designer. Pay close attention to how term patterns are assigned and mapped to specific data columns, and how this impacts the overall policy administration.",
+      "transcriptSummary": "The demonstration provides a hands-on walkthrough of configuring coverage terms in Product Designer. It highlights the assignment of term patterns and their mapping to data columns, reinforcing the practical aspects of the configuration process and its implications for policy administration."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your business analyst wants to introduce a new 'Cyber Liability' coverage. This coverage needs a 'Data Breach Limit' (a direct numeric input) and a 'Notification Period' (a choice from a predefined list: '30 Days', '60 Days', '90 Days').",
+      "question": "Outline the steps you would take in Product Designer to define these two coverage terms for the new Cyber Liability coverage, including how you would handle their term types and column mapping.",
+      "hints": [
+        "Recall the different 'Term types' and 'Model types' discussed earlier.",
+        "Think about how coverage terms are stored in the data model and what happens if you need more columns.",
+        "Consider the steps for adding a new coverage term pattern in Product Designer."
+      ],
+      "expectedApproach": "1. In Product Designer, navigate to the Cyber Liability coverage pattern. 2. Add a new term for 'Data Breach Limit', selecting 'Direct' as the Term Type and 'Limit' as the Model Type. Map it to an available DirectTerm column. 3. Add another term for 'Notification Period', selecting 'Option' or 'Typekey' as the Term Type (depending on whether the choices are fixed or dynamic typelist values) and 'Other' as the Model Type. Define the options (30, 60, 90 days) and map it to an available ChoiceTerm column. 4. If no columns are available, note that the underlying coverage table would need to be extended."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a coverage term?",
+      "referenceAnswer": "What is a coverage term?\n\nA coverage term is a value that measures or further defines a specific coverage.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Coverage terms, defined by patterns, are essential for customizing policy specifics like limits and deductibles.",
+        "Term types (e.g., Direct, Option, Package, Typekey, Generic) control UI behavior, while model types (e.g., Limit, Deductible) define measurement.",
+        "Coverage terms are stored as columns within coverage tables, requiring careful mapping and potential table extension.",
+        "Generic schedules provide a flexible mechanism for managing detailed, itemized information about coverables, with or without associated coverage terms.",
+        "Product Designer is the primary tool for configuring both coverage terms and generic schedules."
+      ],
+      "realWorldConnection": "In real Guidewire projects, accurately configuring coverage terms and schedules directly impacts policy accuracy, rating calculations, and user experience. A well-designed product model with correctly defined terms ensures that insurers can offer competitive, customizable products and maintain compliance.",
+      "nextLessonPreview": "Building on our understanding of policy configuration, our next lesson will explore Product Model Availability, delving into how products are configured and made available to users based on various criteria."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Review the 'Student exercise' on coverage terms. This exercise encourages you to apply your knowledge by exploring existing coverage term configurations in a PolicyCenter environment or by sketching out a design for a new coverage term based on a given scenario. Focus on identifying the term type, model type, and potential column mapping.",
+      "objectives": [
+        "Analyze existing coverage term configurations in PolicyCenter.",
+        "Design a new coverage term, specifying its type, model, and data storage.",
+        "Understand the implications of coverage term choices on policy administration."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_19_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_19_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_19_02 .mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_19_02 .mp4"
+    }
+  ]
+}

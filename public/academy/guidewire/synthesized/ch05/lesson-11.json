@@ -1,0 +1,278 @@
+{
+  "lessonId": "ch05-l11",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 11,
+  "title": "Introduction to Constraining payments - approvals",
+  "subtitle": "Learn how ClaimCenter uses authority limits and approval rules to manage financial transactions.",
+  "synthesizedAt": "2026-02-16T17:41:03.218245+00:00",
+  "estimatedMinutes": 65,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a claims supervisor. Incorrect payments can severely impact your company's finances. Adjusters need to pay claims efficiently within their authorized limits, but anything outside that range requires your review and approval.",
+      "question": "How can an insurance company ensure claims are paid correctly, preventing overpayment, while still empowering adjusters?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the importance of financial approvals in ClaimCenter.",
+        "Differentiate between authority limits and transaction approval rules.",
+        "Describe how authority limits are configured and applied to users.",
+        "Understand the function and application of transaction approval rules.",
+        "Outline the ClaimCenter workflow for transactions requiring approval.",
+        "Identify the supervisor's role in approving or rejecting pending transactions."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored ClaimCenter's financial processes, from setting reserves to issuing payments. Recall that financials encompass everything involved in managing claim payments.",
+      "warmupQuestion": "What are the key steps involved in a typical financial transaction process within ClaimCenter?",
+      "hint": "Think about exposures, reserves, and payments."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Financial Approvals and Constraints",
+      "narrative": "As a claims supervisor, you understand that **incorrect payments can have a large effect on the finances of an insurance company**. Adjusters need to easily pay claims within a range of costs that align with their skill and experience. If payments are out of that range, you, as a supervisor, need to review those payments and either approve or reject them. This ensures financial integrity and prevents overpayment.\n\nIn ClaimCenter, financials encompass the entire process of managing claim payments, from initially setting aside money (reserves) to issuing payments to payees. This general process involves creating exposures, creating reserve transactions, creating payment transactions, and finally issuing those payments. Every transaction created in ClaimCenter, whether it's a reserve or a payment, is automatically reviewed to determine if it requires approval. This automatic review flags transactions that are 'out of the norm' and forwards them to a supervisor for acceptance or rejection.\n\nInsurance companies aim to pay claimants the exact amount required to make them whole, but they must also prevent overpaying claims, which can lead to serious financial losses. To safeguard against this, ClaimCenter provides two primary methods for managing and routing transactions that seem unreasonable or exceed certain thresholds:\n\n*   **Authority limits:** These are constraints defined for each role or user, specifying the maximum amount a user can create for a transaction without requiring approval.\n*   **Transaction approval rules:** These are configuration-level rules used for more complex scenarios that go beyond what authority limits can address.\n\nWhen a transaction requires approval, it is flagged as 'pending approval'. If no additional approval is needed, it's flagged as 'submitted'.",
+      "keyPoints": [
+        "Incorrect payments significantly impact insurance company finances.",
+        "ClaimCenter automatically reviews all financial transactions for approval.",
+        "Overpayment prevention is a critical goal for insurance carriers.",
+        "Authority limits and transaction approval rules are the two main mechanisms for constraining payments.",
+        "Transactions requiring approval are flagged as 'pending approval'."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A claims supervisor discusses the importance of reviewing payments outside an adjuster's authorized range."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "ClaimCenter's financial process involves setting reserves and issuing payments."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "ClaimCenter automatically reviews every transaction to determine if approval is required."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Constraining payments prevents overpayment using authority limits and transaction approval rules."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Deep Dive into Authority Limits",
+      "narrative": "Authority limits are a fundamental mechanism in ClaimCenter that restrict the amounts a user can enter on a transaction without requiring additional approval. These limits are highly customizable and are defined by a specific 'limit type' (e.g., payment amount, claim total reserves, payments exceed). Once the limit type is established, the authority limit test can be further refined by including criteria such as the policy type, coverage type, and cost type, and finally, the specific amount of the limit.\n\nConsider an example where a **Claim Total Reserves** limit is set at $15,000. This means any reserve transaction that causes the total claim reserves to exceed $15,000 will automatically require approval. It's not about the size of the individual reserve transaction, but its cumulative effect on the total claim reserves. If an initial reserve transaction is $9,000, it falls below the $15,000 limit, so no approval is needed. However, if a subsequent transaction of $23,000 is added, pushing the claim's total reserves above $15,000, then this second transaction will require approval.\n\nAuthority limits restrict transactions in two key ways:\n\n1.  **Limiting amounts:** If a limit exists for a specific transaction type (e.g., a payment amount limit of $10,000), any transaction exceeding that amount will require approval.\n2.  **Limiting access:** Without an appropriate authority limit, a user may be entirely prevented from creating certain types of transactions. For instance, if a user lacks any authority limit related to reserves (like 'claim total reserves' or 'claim available reserves'), they simply won't be able to create *any* reserve transaction. Similarly, if a user only has an authority limit for a Workers’ Comp policy type, they can only create transactions for that specific policy type. In many cases, the menu options to create forbidden transactions will be missing from the user interface.",
+      "keyPoints": [
+        "Authority limits restrict transaction amounts requiring approval.",
+        "Limits are defined by type, criteria (policy, coverage, cost), and amount.",
+        "The cumulative effect on total reserves can trigger approval.",
+        "Authority limits can prevent users from creating certain transactions if no relevant limit is assigned.",
+        "Menu options for forbidden transactions may be hidden."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Visual representation of authority limits (placeholder slide)."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Authority limits define transaction thresholds, like a $15,000 limit for Claim Total Reserves."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "A $9,000 transaction does not exceed the $15,000 Claim Total Reserves limit, so no approval is needed."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A $23,000 transaction pushes Claim Total Reserves above $15,000, requiring approval."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Authority limits restrict both transaction amounts and user access to create certain transactions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Authority Limit Criteria and Profiles",
+      "narrative": "ClaimCenter offers a variety of **limit types** to define which financial category is being tested. Examples include 'Claim total reserves' (total reserves for the claim cannot exceed the limit), 'Claim payments to date' (total claim payments cannot exceed the limit), and 'Exposure total reserves' (total reserves for any exposure cannot exceed the limit). These limit types are crucial for tailoring approval requirements to specific financial aspects of a claim.\n\nBeyond the limit type, several optional properties can further restrict when an authority limit applies. These include:\n\n*   **Policy type:** Restricts the limit to a specific type of policy (e.g., Auto, Workers' Comp). If no policy type is specified, the limit applies to all policy types.\n*   **Coverage:** Restricts the limit to a specific coverage type (e.g., Collision, Bodily Injury).\n*   **Cost type:** Restricts the limit to a specific cost type (e.g., Claim Cost, LAE).\n\nThese optional criteria allow for highly granular control over when an authority limit is triggered.\n\nTo manage these limits efficiently, ClaimCenter uses **authority limit profiles**. A profile is a collection of one or more authority limits designed for a specific type of user, such as an 'Adjuster Profile' or a 'Supervisor Profile'. These profiles are created once and can be assigned to multiple users, ensuring consistency across roles. For example, an adjuster's profile might limit payment transactions to $15,000, while a supervisor's might be $50,000. Administrators assign these profiles to users via the Administration > Users screen, specifically on the 'Authority Limits' tab. Each user can have only one profile assigned, but once assigned, the profile can be customized for that individual user. If a user's profile is customized, they are no longer linked to the original profile, and their limits become unique.",
+      "keyPoints": [
+        "Limit types define the financial category being tested (e.g., claim total reserves, claim payments to date).",
+        "Optional criteria like policy type, coverage, and cost type provide granular control over limits.",
+        "Authority limit profiles bundle limits for specific user roles.",
+        "Profiles are assigned by administrators and can be customized per user.",
+        "Customizing a user's profile unlinks them from the original profile."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Authority limit criteria include limit types, policy type, coverage, and cost type for precise control."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Authority limit profiles are collections of limits assigned to users, such as an 'Adjuster Profile'."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Administrators assign and customize authority limit profiles for individual users on the 'Authority Limits' tab."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show you how authority limits are applied in ClaimCenter and how they trigger approval workflows when thresholds are exceeded.",
+      "transcriptSummary": "The video illustrates creating a transaction that falls within an adjuster's authority limit, and then creating another that exceeds it, demonstrating how ClaimCenter flags the latter for approval."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Transaction Approval Rules",
+      "narrative": "While authority limits provide a robust framework for role-based financial control, there are scenarios where more intricate logic is required. This is where **Transaction Approval Rules** come into play. These rules are a **configuration-level solution** that leverage GOSU code, offering a much wider range of conditions and flexibility than authority limits.\n\nBecause they are code-based, transaction approval rules can test virtually any attribute or condition within ClaimCenter. They are particularly useful when:\n\n*   The approval logic is more complex than what can be defined by simple limit types.\n*   The logic needs to be tied to attributes beyond just policy type, coverage type, and cost type (e.g., claim segmentation, specific claim characteristics).\n*   The approval condition applies universally to all users, rather than being specific to a group of users like adjusters or supervisors.\n\nFor example, an insurer might implement a rule stating: 'If the segmentation of an exposure or claim is 'low complexity' AND the total reserves for that claim exceed $30,000, then require approval.' This rule prevents seemingly minor claims from having unusually high reserves without supervisory review, acting as a critical safeguard against potential errors or fraud. If these conditions are met, the transaction will be flagged for approval.",
+      "keyPoints": [
+        "Transaction approval rules are configuration-level and use GOSU code.",
+        "They offer greater flexibility for complex approval logic.",
+        "Rules can be based on attributes beyond policy, coverage, and cost types.",
+        "They apply universally, regardless of user type.",
+        "An example is requiring approval for low-complexity claims with high total reserves."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Transaction approval rules use GOSU code for complex, configuration-level approval logic."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "ClaimCenter's Approval Workflow",
+      "narrative": "In ClaimCenter, various objects may require attention, and activities are created to notify users of work that needs to be done. While claims might need attention for reasons like an unset fault rating, and activities for being overdue, **transactions** specifically require attention when they exceed a given threshold (authority limits) or meet conditions defined in an approval rule.\n\nThe process for determining if a transaction needs approval is sequential:\n\n1.  **Transaction Approval Rules Check:** First, any new transaction is checked against existing transaction approval rules. If a rule determines that the transaction requires approval, it is immediately flagged as 'pending approval', and no further checks are performed.\n2.  **Authority Limits Check:** If the transaction passes the transaction approval rules (or if no such rules exist), it is then checked against the user's assigned authority limits. If the transaction exceeds any of these limits, it is also flagged as 'pending approval'.\n\nEssentially, if *either* mechanism (rules or limits) flags the transaction, it requires approval.\n\nWhen a transaction is flagged as requiring additional approval, ClaimCenter takes two crucial steps:\n\n*   The status of the transaction is set to **'Pending approval'**.\n*   An **approval activity** is created and routed to the appropriate user, typically the supervisor of the user who initiated the transaction. All transactions created together are included in a single approval activity.\n\nSupervisors interact with these approval activities differently from standard activities. Instead of 'Complete' or 'Skip' buttons, they see **'Approve'** and **'Reject'** buttons. Approving the activity advances the transaction to the 'Approved' status, while rejecting it moves the transaction to the 'Rejected' status. It's important to note that a transaction may require multiple levels of approval. For example, a supervisor might approve a transaction, but if it exceeds *their* authority limits, it could then be routed to *their* supervisor for further approval.",
+      "keyPoints": [
+        "Transactions require attention when exceeding limits or meeting rule conditions.",
+        "Transaction approval rules are checked first, followed by authority limits.",
+        "If either mechanism flags a transaction, it requires approval.",
+        "ClaimCenter sets transaction status to 'Pending approval' and creates an approval activity.",
+        "Supervisors use 'Approve' or 'Reject' buttons on approval activities.",
+        "Transactions may require multi-level approvals."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Various ClaimCenter objects, including transactions, may require attention and trigger activities."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "New transactions are first checked against transaction approval rules."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "If transactions pass approval rules, they are then checked against the user's authority limits."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "When approval is required, ClaimCenter sets the transaction status to 'Pending approval' and creates an activity."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Supervisors approve or reject transaction sets, which closes the activity and may trigger further approvals."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "Watch this demonstration to see the full approval workflow in action, from a transaction being flagged for approval to a supervisor reviewing and acting on the approval activity.",
+      "transcriptSummary": "The demo showcases how a transaction triggers an approval activity, how a supervisor accesses and reviews the activity, and the options to approve or reject the transaction, impacting its status."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An adjuster needs to make a payment on a claim. Their authority limit for 'Payment Amount' is $10,000. The claim also has a transaction approval rule that states: 'If the claim's segmentation is 'High Complexity' AND the payment amount is greater than $5,000, then require approval.'",
+      "question": "If the adjuster attempts to make a payment of $12,000 on a 'High Complexity' claim, will it require approval? If so, why?",
+      "hints": [
+        "Consider both approval mechanisms: transaction approval rules and authority limits.",
+        "Which approval mechanism is checked first in ClaimCenter's workflow?",
+        "Evaluate if the payment amount and claim complexity meet the conditions for *either* mechanism."
+      ],
+      "expectedApproach": "The learner should identify that both conditions (transaction approval rule and authority limit) would trigger approval in this scenario, and that the transaction approval rule is checked first."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ae Does a transaction require approval when:\no A) tis not flagged by transaction approval rules but exceeds the user's authority\n\nlimits?\n\nB) Itdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\n\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?\n\nen",
+      "referenceAnswer": "The answer for all three is the same. The transaction requires approval in all three\ncases.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": ",~ — Anauthority limit consists of criteria and an amount. What three values\n\nx can optionally be specified to create the condition?\n\n¢\n\nen",
+      "referenceAnswer": "Policy type, coverage type, and cost type.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": ",~ — What two things does ClaimCenter do when it determines that a\n\nx transaction requires approval?\n\nen",
+      "referenceAnswer": "It sets the transaction status to pending approval and it creates an approval activity\n(which is typically routed to a supervisor).",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Summary of Approval Mechanisms",
+      "narrative": "As we've learned, ClaimCenter employs two powerful mechanisms to ensure financial integrity and prevent overpayment: **Authority Limits** and **Transaction Approval Rules**. Authority limits provide role-based thresholds for transaction amounts, allowing adjusters to operate within defined boundaries while ensuring that higher-value or sensitive transactions receive supervisory review. These limits can be highly customized using criteria like policy type, coverage, and cost type, and are efficiently managed through authority limit profiles.\n\nTransaction approval rules, on the other hand, offer a flexible, code-based solution for more complex, claim-specific conditions that go beyond simple monetary thresholds. They can evaluate a wide array of claim attributes and apply universally, providing an additional layer of control. Together, these two mechanisms form a robust system for managing and approving financial transactions, ensuring that all payments and reserves align with company policies and financial best practices. This layered approach is critical for maintaining sound financial management within a Guidewire ClaimCenter environment.",
+      "keyPoints": [
+        "Authority limits provide role-based, threshold-based control over transaction amounts.",
+        "Transaction approval rules offer flexible, code-based logic for complex conditions.",
+        "Both mechanisms work together to ensure financial integrity and prevent overpayment.",
+        "This layered approach is vital for sound financial management in ClaimCenter."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "A summary illustrating how transaction approval rules and authority limits work together to constrain payments."
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter uses authority limits and transaction approval rules to constrain payments and reserves.",
+        "Authority limits define maximum amounts a user can transact without approval, based on criteria like policy, coverage, and cost type.",
+        "Authority limit profiles streamline the assignment of limits to user roles.",
+        "Transaction approval rules use GOSU code for more complex, configuration-level approval logic.",
+        "Transactions are first checked against approval rules, then against user authority limits.",
+        "When approval is needed, ClaimCenter sets the transaction status to 'Pending approval' and creates an approval activity for a supervisor.",
+        "Supervisors review and either approve or reject these activities, potentially triggering further approvals."
+      ],
+      "realWorldConnection": "Implementing these approval mechanisms is crucial for insurance companies to prevent financial losses from overpayments, maintain regulatory compliance, and ensure that claims are handled by adjusters within their appropriate skill and experience levels. It creates a robust system of checks and balances vital for sound financial management in a Guidewire ClaimCenter environment."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_11_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_11_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_11_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_11_02.mp4"
+    }
+  ]
+}

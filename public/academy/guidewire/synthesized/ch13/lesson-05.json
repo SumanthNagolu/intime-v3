@@ -1,0 +1,191 @@
+{
+  "lessonId": "ch13-l05",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 5,
+  "title": "Rate Routines and Parameter Sets",
+  "subtitle": "Understand how rate routines define rating algorithms and parameter sets provide contextual data in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T19:09:50.485415+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an actuary tasked with implementing a new insurance product. This product has complex pricing rules that depend on various policy details, customer demographics, and even external factors. How would you structure these calculations within PolicyCenter to ensure accuracy, flexibility, and easy maintenance?",
+      "question": "What core components in PolicyCenter allow you to define and execute these intricate rating algorithms?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what a rate routine is and explain its purpose in PolicyCenter.",
+        "Describe the key structural components and capabilities of a rate routine.",
+        "Explain the function of parameter sets and their relationship to rate routines.",
+        "Identify how parameter sets determine the contextual information available to a rate routine."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered various policy components and data points in PolicyCenter, such as coverages, policy lines, and underwriting companies. Recall how these elements contribute to the overall policy structure and how data flows through the system.",
+      "warmupQuestion": "How do you think PolicyCenter determines the final premium for a policy, considering all its variables?",
+      "hint": "Think about the 'brains' behind the pricing."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Rate Routines: The Core of Rating Algorithms",
+      "narrative": "At the heart of PolicyCenter's rating engine are **rate routines**. As a rating analyst or actuary, you'll use these powerful tools to define the precise steps for calculating costs associated with coverages, taxes, and other policy-related expenses. Think of a rate routine as the blueprint for your rating algorithm, breaking down complex calculations into manageable, discreet units, often by coverage.\n\nEach rate routine is comprised of one or more instructions, which in turn are made up of individual steps. These steps are highly flexible, allowing you to incorporate a variety of operations. You can use standard mathematical operators, implement conditional logic (like 'if-then' statements), and assign values to variables. Crucially, rate routine steps can interact with rate table lookups, Gosu function calls, and directly access policy data, making them incredibly versatile for implementing sophisticated pricing logic.\n\nRate routines are integral to a rate book, but they can also be created and edited independently. While many rate routines calculate properties like base rates, adjusted rates, and term amounts, it's also possible to design routines that don't directly calculate these cost properties. Instead, these specialized routines might set up preliminary rating information that other rate routines then utilize. When designing rate routines, it's a best practice to limit them to calculations that will be versioned within a rate book and to keep them focused on what the business user needs to see in the rating worksheet, treating the routine as a document of the calculation rather than a general programming language. For complex calculations, like polynomials, it's often better to use a utility function and pass in parameters, as business users typically only need to know that the calculation is performed, not its intricate steps. Rate routines also support versioning, allowing you to create new versions when modifications are needed, and can have jurisdiction variants to handle differences across regions.",
+      "keyPoints": [
+        "Rate routines define the algorithm for calculating policy costs (coverages, taxes, etc.).",
+        "They consist of instructions and steps, using mathematical operators, conditionals, assignments, rate table lookups, Gosu functions, and policy data.",
+        "Rate routines are part of rate books but can be managed independently.",
+        "Some rate routines prepare data for others rather than calculating final costs.",
+        "Best practices include focusing on rating worksheet output and using utility functions for complex logic."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of what a rate routine is and its primary function within PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the user story for setting up rate routines and their role in the rating engine."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Details the structural components of a rate routine, including instructions and steps."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Rate Routine",
+          "content": "A rate routine defines the algorithm used for calculating the rate for coverages, taxes, and other costs on a policy, using discreet units, usually by coverage."
+        },
+        {
+          "type": "best_practice",
+          "title": "Design for Clarity",
+          "content": "Limit rate routines to calculations versioned within a rate book. Focus on making the rating worksheet reveal the premium calculation, rather than using the routine as a general programming language. For complex math, use utility functions."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of navigating and understanding rate routines within PolicyCenter. Pay close attention to how the steps and instructions are structured.",
+      "transcriptSummary": "The video demonstrates how to access and view existing rate routines in PolicyCenter. It highlights the different components of a rate routine, such as instructions and steps, and shows how they contribute to the overall rating algorithm."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis the purpose of a rate routine?",
+      "referenceAnswer": "Whatis the purpose of a rate routine?\n\noe The rate routine provides a way to define the rating algorithm for the rating engine.",
+      "questionKey": "slide-8"
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Parameter Sets: Providing Context to Rate Routines",
+      "narrative": "While rate routines define *how* calculations are performed, **parameter sets** determine *what information* is available for those calculations. Essentially, a parameter set acts as a container, enabling users to define the specific data points and objects that a rate routine can access and utilize at runtime. This is a crucial connection: every single rate routine in PolicyCenter is associated with exactly one parameter set.\n\nParameter sets are responsible for passing contextual information to a rate routine when it executes. This context can include details about the policy line, specific coverages, or other relevant policy data. Parameter sets can be defined to be generic, meaning they apply broadly, or they can be tailored to a specific policy line, providing more granular control over the data. These sets are pre-defined, ensuring consistency and structure in the data passed to routines.\n\nWhen designing parameter sets, it's vital to consider performance. A common pitfall is to use a root entity, such as `PolicyPeriod`, as a parameter. While this might seem convenient, it can expose an extremely large number of fields (potentially hundreds of thousands), leading to significant memory usage and degraded system performance, especially during operations like compiling field lists or displaying options in the UI. Instead, design parameter sets to include only the fields explicitly needed by the rate routines that use them. For situations where similar parameter sets are needed for lines of business with differently typed parameters, wrappers implemented in Gosu code can be used to combine them efficiently, allowing a single parameter set to select coverage based on policy characteristics.",
+      "keyPoints": [
+        "Parameter sets define the information available for use within a rate routine.",
+        "Each rate routine uses exactly one parameter set.",
+        "They determine the contextual information passed to a rate routine at runtime.",
+        "Parameter sets can be generic or policy-line specific and are pre-defined.",
+        "Avoid using root entities like `PolicyPeriod` as parameters due to performance implications; use only necessary fields."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Introduces parameter sets and their connection to rate routines."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explains the function of parameter sets and their relationship with rate routines."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Parameter Set",
+          "content": "A parameter set defines the contextual information (data points and objects) that is passed to a rate routine at run-time, enabling the routine to perform its calculations."
+        },
+        {
+          "type": "warning",
+          "title": "Performance Gotcha: Root Entities",
+          "content": "Do not use root entities like `PolicyPeriod` as parameters in a parameter set. This can expose an excessive number of fields (e.g., 180,000+), leading to severe performance degradation and increased memory usage. Always select only the specific fields required by the rate routine."
+        },
+        {
+          "type": "tip",
+          "title": "Combining Parameter Sets with Wrappers",
+          "content": "For similar parameter sets or rate routines where parameters are typed differently across lines of business, consider using Gosu-implemented wrappers. This allows a single parameter set to select data (like coverage) based on policy characteristics, reducing component count."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how parameter sets are configured and linked to rate routines. Observe how the parameters define the data context for the routine.",
+      "transcriptSummary": "The video illustrates how to view and manage parameter sets in PolicyCenter. It highlights the fields within a parameter set that define the data types and objects available to a rate routine, emphasizing the one-to-one relationship between a rate routine and its parameter set."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Howmany parameter sets are associated with a rate routine?",
+      "referenceAnswer": ",- — Howmany parameter sets are associated with a rate routine?\n\nyy One.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new commercial property policy needs to calculate a premium based on the building's construction type, its square footage, and a specific 'fire protection' coverage modifier. You are tasked with setting up the rating components.",
+      "question": "Describe how you would use a rate routine and a parameter set to achieve this. What specific information would go into each component?",
+      "hints": [
+        "Think about what defines the 'how' (the calculation steps) and what defines the 'what' (the data inputs).",
+        "Consider which component would hold the actual mathematical operations for the premium calculation.",
+        "Which component would ensure the construction type, square footage, and modifier are available for the calculation?"
+      ],
+      "expectedApproach": "The rate routine would contain the steps for the premium calculation, including mathematical operations and conditionals based on construction type, square footage, and the fire protection modifier. The parameter set would define and make available the 'Building Construction Type', 'Square Footage', and 'Fire Protection Coverage Modifier' as parameters to the rate routine."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Rate routines are the core of PolicyCenter's rating engine, defining the step-by-step algorithms for calculating policy costs.",
+        "They are highly configurable, supporting mathematical operations, conditionals, Gosu calls, and policy data access.",
+        "Parameter sets define the contextual data available to a rate routine, with each routine linked to exactly one parameter set.",
+        "Careful design of parameter sets is crucial for performance, avoiding the use of overly broad root entities."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering rate routines and parameter sets is fundamental for actuaries and rating analysts. It allows them to translate complex actuarial tables and business rules into executable logic within PolicyCenter, directly impacting how premiums are calculated and how new insurance products are brought to market. Efficiently designed routines and parameter sets ensure accurate pricing, faster quoting, and easier maintenance of rating logic over time.",
+      "nextLessonPreview": "Next, we will explore how rate routines and parameter sets are integrated into larger rating structures like rate books and how they interact with rate tables to retrieve specific rating factors."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access the PolicyCenter training environment and locate an existing rate routine. Examine its steps and identify the types of operations it performs (e.g., mathematical, conditional, data lookup). Then, identify the parameter set associated with that rate routine and list the parameters it makes available. Consider how these parameters are used within the routine's steps.",
+      "objectives": [
+        "Navigate to and inspect rate routines in PolicyCenter.",
+        "Analyze the structure and logic of a rate routine's steps.",
+        "Identify and understand the purpose of an associated parameter set.",
+        "Connect the parameters defined in the set to their usage within the rate routine."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_05_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Ra_Intro_05_02.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_05_02.mp4"
+    }
+  ]
+}

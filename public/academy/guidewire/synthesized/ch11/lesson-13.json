@@ -1,0 +1,241 @@
+{
+  "lessonId": "ch11-l13",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 13,
+  "title": "Creating Messages",
+  "subtitle": "Learn to design and implement Guidewire Event Fired rules for robust message generation and external system integration.",
+  "synthesizedAt": "2026-02-16T18:58:49.321895+00:00",
+  "estimatedMinutes": 50,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a new customer opens a bank account with your financial institution. This simple action needs to trigger a cascade of updates across various internal and external systems – from fraud detection to marketing, and even a welcome email. How do you ensure all these systems get the right information, at the right time, and in the correct format?",
+      "question": "What mechanisms would you design to reliably generate and transmit these critical messages across disparate systems?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the architecture and transaction flow for Guidewire messaging.",
+        "Explain the role and execution of Event Fired rules in message generation.",
+        "Identify common methods for creating message payloads, including late binding.",
+        "Implement and deploy Event Fired rules to create messages from a MessageContext."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored how Guidewire entities and events drive business processes. Recall how changes to an entity can trigger various actions within the system.",
+      "warmupQuestion": "Think about a time you've seen an automated message or notification from a system. What kind of information do you think was needed to generate that message?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Message Creation Use Cases and Architectural Context",
+      "narrative": "When a significant event occurs in Guidewire, such as a bank account being added or modified, it often necessitates creating and sending messages to external systems. This process is initiated by **Event Fired rules**, which are central to Guidewire's integration framework. As illustrated in **Slide 3**, a common use case involves generating a message when a bank account changes. For instance, if the account is a savings type, the message payload might require a dynamically calculated `ageOfMessagelnSeconds` placeholder. For other account types, an XML payload might be generated. The overall design approach involves creating these Event Fired rules, defining the payload mechanism, and then deploying the changes.\n\nUnderstanding the underlying architecture is crucial for effective message generation. As depicted in **Slide 4**, Guidewire messaging transactions involve several servers and distinct phases. The majority of payload generation, especially within Event Fired rules, typically occurs on the **UI role server** that manages the user's session. However, if certain payload elements can only be determined immediately before sending, that portion of the payload can be generated on the **messaging role server**. A message's journey involves at least two, and up to four, transactions:\n1.  **Transaction 1**: Creates the message and generates the initial payload. This always happens.\n2.  **Transaction 2 (Optional)**: Prior to sending the message, an optional transaction may transform the message payload. This is usually done when the message must include information that can only be known immediately before sending the message.\n3.  **Transaction 3**: The sending of the message to the external system occurs in its own transaction. Synchronous acknowledgments are part of this.\n4.  **Transaction 4 (Optional)**: If the external system acknowledges the message asynchronously, then a separate transaction processes the acknowledgment.\n\nThis transaction structure is vital because it dictates what work is rolled back in case of an error. **Slide 5** serves as a conceptual bridge, reminding us of the intricate flow between application and integration contexts, where event triggering, message generation, transformation, and sending all play a part.\n\nAt the heart of this process are **Guidewire business rules**, which are Gosu-based scripts designed to accomplish specific tasks for a given entity. As shown in **Slide 6**, these rules are organized into **rule sets**, which are collections of rules sharing a common root entity and triggers. The `Event Fired` rule set is a prime example, with `MessageContext` as its root entity. Rules within this set execute whenever an integration event is triggered, making them the perfect place to initiate message creation.",
+      "keyPoints": [
+        "Event Fired rules initiate message creation based on entity events.",
+        "Guidewire messaging involves UI and messaging role servers, and up to four transaction phases.",
+        "Business rules, organized in rule sets, are the foundation for message generation logic."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A use case for creating messages when a bank account is added or modified, outlining the design approach."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "The Guidewire server architecture and transaction flow for messaging, from event triggering to acknowledgment."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A conceptual overview of the messaging process flow, reinforcing the interaction between application and integration contexts."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "An introduction to Guidewire business rules and rule sets, specifically highlighting the Event Fired rule set."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Event Fired Rules",
+          "content": "Gosu-based business rules that execute when an entity event triggers a message for which a destination has registered interest. They are responsible for creating the message and its payload."
+        },
+        {
+          "type": "definition",
+          "title": "MessageContext",
+          "content": "An entity created for every message destination of interest when an event is triggered, serving as the root entity for Event Fired rules."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Event Fired Rule Execution and Structure",
+      "narrative": "The execution of rules within a rule set follows a specific, hierarchical order, as detailed in **Slide 7**. Guidewire applications evaluate individual rules recursively, starting from the first direct child of the root and proceeding through all children and siblings. All rules in a set are processed unless an explicit exit action is encountered. A critical point is that if a parent rule's condition evaluates to `false`, neither its action nor its child rules will execute. This hierarchical structure is not just for organization; it's fundamental to controlling the flow of logic.\n\nManaging these rules is done through the **Rule Set Editor** in Guidewire Studio, as illustrated in **Slide 8**. This editor allows you to visualize the rule hierarchy, activate or deactivate individual rules using checkboxes (inactive rules appear gray), and even reorder them with drag-and-drop functionality. Each rule file, with a `.gr` extension, contains both a condition and an action. If the condition is true, the action and any child rules are executed.\n\nThe **Event Fired rule set**, highlighted in **Slide 9**, is specifically invoked when an entity involved in a bundle commit triggers an event for which a message destination has registered interest. For every such event and interested destination, the application runs the Event Fired rules, creating a `MessageContext` entity for each. This means the rule set can run multiple times for a single event, once for each listening destination. For example, if seven destinations listen to an event and there are 20 top-level Event Fired rules, up to 140 checks might occur. Therefore, efficient organization of these rules is paramount to avoid unnecessary or duplicate processing. The Event Fired rule set is responsible for creating the message and its payload, which typically contains static and/or dynamically generated data formatted for the external system. However, it's crucial to remember that this rule set is *not* responsible for sending messages (that's the transport plugin's job) or acknowledging them (transport or reply plugins).",
+      "keyPoints": [
+        "Rules execute hierarchically; a false parent condition prevents child rule execution.",
+        "The Rule Set Editor in Studio allows for hierarchical organization, activation, and deactivation of rules.",
+        "Event Fired rules create messages and payloads for each interested destination but do not handle sending or acknowledgment."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "An illustration of how rules are executed recursively within a rule set hierarchy."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The Guidewire Studio Rule Set Editor, showing rule hierarchy, context menu options, and activation controls."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "A diagram explaining the Event Fired rule set's role in creating messages and payloads, and its interaction with entities and destinations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Rule Naming and Organization",
+          "content": "Implement a hierarchical rule-naming scheme that reflects the logical structure of your rules. This improves readability and maintainability, though be mindful of file path length limitations on Windows operating systems."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Payload Generation Techniques and Late Binding",
+      "narrative": "When it comes to generating the actual content of your messages, known as the payload, Guidewire offers several common and flexible options, as shown in **Slide 10**.\n*   **Gosu templates** are excellent for creating formatted strings with entity data, offering fine-grained control over logic flow and allowing the use of shared Gosu classes. This method provides more control over the logic flow for messages and shared logic in Gosu classes.\n*   **XML modelers** are ideal for generating strongly typed XML payloads, often with XSD validation, and can support complex object graphs.\n*   **Integration Views** are particularly useful for generating JSON or strongly typed XML with XSD validation, providing a structured way to expose data to external systems.\nBeyond these, you can also manually create untyped XML using `XmlElement` or strongly typed XML from an XSD type, or any logic that produces a suitable string.\n\nA powerful technique for message payloads is **late binding**, which addresses situations where certain message values cannot be determined until just before the message is sent. As illustrated in **Slide 11**, a late binding value might be a send timestamp, a message ID, or an identifier from an external system received in a reply to a previous message. For instance, if a second message depends on an ID from the reply to a first message, and the second message is created before that reply is received, late binding is essential. Typically, placeholders (tokens like `<@@ageOfMessageInSeconds@@>`) are embedded in the payload during generation. These tokens are then replaced with the actual data by the message request plugin's `beforeSend()` method. While powerful, be cautious: late binding should primarily be used for values that truly cannot be known at message creation time, not for capturing entity data changes that occur *after* the Event Fired rule executes, as the payload should generally reflect a consistent snapshot at creation.\n\nTo ensure efficiency and maintainability, the **Event Fired rule set hierarchy structure** is a critical best practice, as emphasized in **Slide 12**. While every `MessageContext` is processed by the entire rule set, each is usually only relevant to a small subset of rules. By creating a hierarchy, you can effectively filter `MessageContext` objects. For example, a parent rule might check `messageContext.DestID` or `messageContext.EventName` to quickly narrow down which child rules need to be evaluated. This prevents unnecessary execution of rules, significantly improving performance, especially in systems with many destinations and rules.",
+      "keyPoints": [
+        "Gosu templates, XML modelers, and Integration Views are common methods for payload generation.",
+        "Late binding uses placeholders for values determined just before sending, handled by the request plugin.",
+        "A hierarchical Event Fired rule structure is a best practice for filtering `MessageContext` objects and optimizing performance."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Common options for generating message payloads, including Gosu templates, XML modelers, and Integration Views."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "An example of late binding in a message payload, where a placeholder token is replaced by the request plugin."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "The recommended hierarchical structure for an Event Fired rule set, demonstrating how conditions filter MessageContext objects."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Late Binding Caution",
+          "content": "Use late binding only for values that cannot be determined at message creation time. Do not use it to capture entity data changes that occur after the Event Fired rule has executed, as the payload should reflect a consistent snapshot at creation."
+        },
+        {
+          "type": "best_practice",
+          "title": "Optimize Rule Hierarchy",
+          "content": "Create a hierarchy in your Event Fired rule set to filter MessageContext objects. This ensures that only relevant rules are processed for each event/destination pair, significantly improving performance."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing Message Creation and Deployment",
+      "narrative": "Once your Event Fired rules have determined that a message needs to be created and its payload generated, the next step is to instantiate the message itself. **Slide 13** provides a clear code example of how to create a message from a `MessageContext`. A crucial first step, seen on line 25, is to cast `messageContext.Root`. The `Root` field is of type `Object`, but to access specific entity information (like `AccountType` or `PublicID`), it must be cast to the appropriate entity type, such as `BankAccount` in this example.\n\nWith the entity correctly typed, you can then proceed to generate the payload. Line 29 demonstrates creating a string payload using a Gosu template, `BankAccountDataTemplate.renderToString()`, specifically for a savings account. This template would dynamically pull data from the `aBankAccount` object. For other account types, or if different formats are required, XML Modeler or Integration Views could be used to generate XML or JSON string payloads. Finally, on line 30, the `messageContext.createMessage(payload)` method is called, which creates the message object. It's important to be extremely careful about modifying entity data directly within Event Fired rules or messaging plugins, as this can lead to unexpected side effects or transaction issues.\n\nAfter you've created and modified your Event Fired rules, these changes need to be deployed to take effect. As shown in **Slide 14**, the simplest way to deploy code changes in a development environment is to restart the Guidewire server from Studio. This typically involves stopping the currently running server and then starting it again, preferably in Debug mode for training or development purposes. This action ensures that your newly created or modified event fired rules are loaded and active within the application, ready to process events and generate messages as designed.",
+      "keyPoints": [
+        "The `MessageContext.Root` object must be cast to the correct entity type to access specific data.",
+        "Gosu templates are effective for dynamically generating string payloads.",
+        "The `messageContext.createMessage()` method is used to instantiate the message.",
+        "Deploying rule changes typically requires a server restart in Guidewire Studio."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "A Gosu code example demonstrating how to cast `MessageContext.Root` and create a message with a dynamically generated payload."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Instructions on how to deploy code changes by restarting the Guidewire server from Studio."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Creating a Message from MessageContext",
+          "code": "ACTION (messageContext : entity.MessageContext, actions : gw.rules.Action):\n  var aBankAccount = messageContext.Root as BankAccount\n  var msg : Message\n\n  if (aBankAccount.AccountType == BankAccountType.TC_SAVINGS) {\n    var payload = BankAccountDataTemplate.renderToString(aBankAccount.ABContact.PublicID, aBankAccount)\n    msg = messageContext.createMessage(payload)\n  }",
+          "explanation": "This Gosu code snippet demonstrates casting the `MessageContext.Root` to a `BankAccount` entity. It then checks the account type and, if it's a savings account, generates a payload using a Gosu template (`BankAccountDataTemplate`) and creates a new message with that payload."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Modifying Entity Data",
+          "content": "Be extremely careful about modifying entity data directly within Event Fired rules or messaging plugins. Such modifications can lead to unexpected behavior, data inconsistencies, or transaction rollback issues."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through Guidewire Studio, showing you how to navigate and examine existing Event Fired rules. Pay close attention to the hierarchical structure and how conditions are defined.",
+      "transcriptSummary": "The video demonstrates locating and reviewing the Event Fired rule set in Guidewire Studio. It highlights the rule hierarchy, condition definitions, and the overall organization of message generation rules."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Why must an Event Fired rule cast the MessageContext Root object?",
+      "referenceAnswer": "Why must an Event Fired rule cast the MessageContext Root object?\n\nMessageContext.Root is of type Object, but message payloads typically need to work\nwith the MessageContext.Root as the type of entity that triggered the message event.\nTherefore, the MessageContext.Root entity must be cast to be of that type.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team needs to implement a new integration for policy endorsements. When a policy endorsement is approved, an XML message must be sent to an external document generation system. This message needs to include the policy number, the effective date of the endorsement, and a placeholder for a document ID that will be provided by the external system after processing.",
+      "question": "Design the Event Fired rule structure and outline the payload generation approach to meet these requirements. Specifically, how would you ensure the message is only generated for approved endorsements and includes the necessary dynamic data and placeholder?",
+      "hints": [
+        "Consider creating a parent rule to filter for the 'PolicyEndorsementApproved' event.",
+        "Within the child rule, how would you access the policy and endorsement details from the `MessageContext.Root`?",
+        "Which payload generation method would be suitable for XML, and how would you embed a placeholder for the document ID?"
+      ],
+      "expectedApproach": "Create a parent Event Fired rule that checks for the 'PolicyEndorsementApproved' event. Within a child rule, cast `MessageContext.Root` to the appropriate entity (e.g., `PolicyPeriod` or `Endorsement`). Use an XML modeler or Gosu template to construct the XML payload, dynamically inserting the policy number and effective date. Include a placeholder token (e.g., `<@@DocumentID@@>`) for the late-bound document ID."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Event Fired rules are the primary mechanism for generating messages in response to system events.",
+        "Guidewire messaging involves multiple server roles and a multi-transactional process.",
+        "Rule sets are organized hierarchically, and their efficient design is crucial for performance.",
+        "Message payloads can be generated using Gosu templates, XML modelers, or Integration Views.",
+        "Late binding allows for dynamic payload values to be inserted just before message transmission using placeholders.",
+        "Messages are created from the `MessageContext.Root` object, which requires casting to the correct entity type.",
+        "Deployment of new or modified rules typically requires a server restart."
+      ],
+      "realWorldConnection": "Mastering message creation in Guidewire is fundamental for building robust integrations that ensure data consistency and enable seamless communication with external systems, from financial institutions to document management platforms. Proper design and implementation of Event Fired rules are key to reliable data synchronization and automated workflows in real-world Guidewire projects."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Using Guidewire Studio, configure a new Event Fired rule set or modify an existing one to create a message when a specific entity event occurs (e.g., a new claim is created or an account is updated). Ensure your rule includes a condition, generates a simple string payload with at least two dynamic fields from the entity, and creates the message using `messageContext.createMessage()`.",
+      "objectives": [
+        "Create a new Event Fired rule or modify an existing one.",
+        "Implement a rule condition to trigger message creation based on an entity event.",
+        "Generate a message payload dynamically using entity data.",
+        "Successfully create a `Message` object within the rule."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_13_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_13_01.mp4"
+    }
+  ]
+}

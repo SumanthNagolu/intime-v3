@@ -10,14 +10,14 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
-import type { ExtractedLesson, SlideContent } from '@/lib/academy/types'
+import type { ExtractedLesson, SlideContent, KnowledgeCheckItem, VideoRef } from '@/lib/academy/types'
 import {
   getChapterBySlug,
   getLessonsForChapter,
   getNextLesson,
   getPrevLesson,
 } from '@/lib/academy/curriculum'
-import { loadLessonContent } from '@/lib/academy/content-loader'
+import { loadLessonContent, loadKnowledgeChecks } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
 
 import { MentorshipSlide } from './MentorshipSlide'
@@ -28,47 +28,61 @@ import { AssignmentBlock } from './AssignmentBlock'
 import './mentorship.css'
 
 // --- Slide categorization ---
-// Simple rules (Guidewire training PPT structure):
-//  1. Slide 1 (index 0) → title slide (skip)
-//  2. Slide 2 (index 1) → objectives slide (skip — always objectives in GW PPTs)
-//  3. Title contains "objectives" → objectives (catch-all for any position)
-//  4. Title starts with "Demo:" or contains "demonstration" → demo (skip)
-//  5. Title starts with "Summary/Conclusion/Recap/Review:/Key Takeaway/Next Steps" → review
-//  6. slideType=question OR questionData OR title "Knowledge Check" → question (KC cards)
-//  7. slideType=exercise OR title contains "exercise"/"lab environment" → exercise (skip)
-//  8. Empty (no title, no notes, no body) → empty (skip)
-//  9. Everything else → content (shown)
+// Primary: trust slideType from JSON (set by extraction script).
+// Fallback: title heuristics for slides without slideType.
+//
+// JSON slideType → SlideCategory mapping:
+//   title              → title   (skip)
+//   objectives         → objectives (skip — extract inline)
+//   objectives_review  → review  (skip)
+//   demo_instruction   → demo    (DemoVideo or skip)
+//   demo_video         → demo    (DemoVideo or skip)
+//   question           → question (KC cards)
+//   answer             → answer  (skip)
+//   exercise           → exercise (AssignmentBlock or skip)
+//   content            → content (MentorshipSlide)
 
-type SlideCategory = 'title' | 'objectives' | 'demo' | 'review' | 'question' | 'empty' | 'exercise' | 'content'
+type SlideCategory = 'title' | 'objectives' | 'demo' | 'review' | 'question' | 'answer' | 'empty' | 'exercise' | 'content'
 
 function categorizeSlide(slide: SlideContent, index: number): SlideCategory {
+  const st = slide.slideType
   const title = (slide.title || '').toLowerCase().trim()
 
-  // 1. First slide is always the title/intro slide — skip
+  // --- Primary: trust slideType from extraction ---
+  if (st) {
+    switch (st) {
+      case 'title':              return 'title'
+      case 'objectives':         return 'objectives'
+      case 'objectives_review':  return 'review'
+      case 'demo_instruction':   return 'demo'
+      case 'demo_video':         return 'demo'
+      case 'question':           return 'question'
+      case 'answer':             return 'answer'
+      case 'exercise':           return 'exercise'
+      case 'vm_instructions':    return 'exercise'
+      // 'content' falls through to heuristics below
+    }
+  }
+
+  // --- Secondary: heuristics for slides without a specific slideType ---
+
+  // First slide is always title
   if (index === 0) return 'title'
 
-  // 6. Knowledge Check — has questionData or explicit question type
-  if (slide.questionData || slide.slideType === 'question' || title === 'knowledge check') {
-    return 'question'
-  }
+  // Knowledge check — has questionData
+  if (slide.questionData || title === 'knowledge check') return 'question'
 
-  // 8. Empty — no title, no notes, no body text
-  if (!title && !slide.notes && slide.bodyParagraphs.length === 0) {
-    return 'empty'
-  }
+  // Empty — no title, no notes, no body
+  if (!title && !slide.notes && slide.bodyParagraphs.length === 0) return 'empty'
 
-  // 2. Second slide is always objectives in Guidewire PPTs
-  //    (AI extraction may have rewritten the title, but it's still objectives)
+  // Second slide is always objectives in GW PPTs
   if (index === 1) return 'objectives'
 
-  // 3. Objectives — title contains the word "objectives" (any position)
-  if (title.includes('objectives') || title.includes('objective')) {
-    return 'objectives'
-  }
+  // Objectives by title
+  if (title.includes('objectives') || title.includes('objective')) return 'objectives'
 
-  // 4. Demo — title starts with "Demo:"/"Interactive Demo:" or contains "demonstration"
+  // Demo by title
   if (
-    slide.slideType === 'demo' ||
     title.startsWith('demo:') ||
     title.startsWith('demo ') ||
     title.startsWith('interactive demo:') ||
@@ -78,9 +92,8 @@ function categorizeSlide(slide: SlideContent, index: number): SlideCategory {
     return 'demo'
   }
 
-  // 7. Exercise / Lab
+  // Exercise by title
   if (
-    slide.slideType === 'exercise' ||
     title.includes('student exercise') ||
     title.includes('lab environment') ||
     title.includes('hands-on exercise') ||
@@ -89,7 +102,7 @@ function categorizeSlide(slide: SlideContent, index: number): SlideCategory {
     return 'exercise'
   }
 
-  // 5. Review / Summary / Conclusion — match beginning of title to avoid false positives
+  // Review by title
   if (
     title.startsWith('summary') ||
     title.startsWith('conclusion') ||
@@ -237,6 +250,7 @@ export function LessonPresentationView() {
 
   // State
   const [lessonContent, setLessonContent] = useState<ExtractedLesson | null>(null)
+  const [centralKCs, setCentralKCs] = useState<KnowledgeCheckItem[]>([])
   const [loading, setLoading] = useState(true)
   const [showCompletion, setShowCompletion] = useState(false)
   const [activeSection, setActiveSection] = useState(0)
@@ -261,22 +275,25 @@ export function LessonPresentationView() {
     initializeProgress()
   }, [initializeProgress])
 
-  // Load content
+  // Load content + centralized knowledge checks
   useEffect(() => {
     let cancelled = false
 
     async function load() {
       setLoading(true)
       try {
-        const content = await loadLessonContent(chapterSlug, lessonNumber)
+        const [content, kcs] = await Promise.all([
+          loadLessonContent(chapterSlug, lessonNumber),
+          loadKnowledgeChecks(lessonId),
+        ])
         if (cancelled) return
-        if (content) {
-          setLessonContent(content)
-        } else {
-          setLessonContent(null)
-        }
+        setLessonContent(content ?? null)
+        setCentralKCs(kcs)
       } catch {
-        if (!cancelled) setLessonContent(null)
+        if (!cancelled) {
+          setLessonContent(null)
+          setCentralKCs([])
+        }
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -284,7 +301,7 @@ export function LessonPresentationView() {
 
     load()
     return () => { cancelled = true }
-  }, [chapterSlug, lessonNumber])
+  }, [chapterSlug, lessonNumber, lessonId])
 
   // Reset scroll + active section when lesson changes
   useEffect(() => {
@@ -398,9 +415,23 @@ export function LessonPresentationView() {
     [categorizedSlides]
   )
 
-  /** Review slides shown at the end */
-  const reviewSlides = useMemo(
-    () => categorizedSlides.filter((s) => s.category === 'review').map((s) => s.slide),
+  /** Demo slides — may anchor videos */
+  const demoSlides = useMemo(
+    () => categorizedSlides.filter((s) => s.category === 'demo').map((s) => s.slide),
+    [categorizedSlides]
+  )
+
+  /** Exercise slides — may anchor assignment */
+  const exerciseSlides = useMemo(
+    () => categorizedSlides.filter((s) => s.category === 'exercise').map((s) => s.slide),
+    [categorizedSlides]
+  )
+
+  /** All categorized slides in deck order — used to iterate and render by type */
+  const allSlidesInOrder = useMemo(
+    () => categorizedSlides.filter((s) =>
+      s.category === 'content' || s.category === 'demo' || s.category === 'review' || s.category === 'exercise'
+    ),
     [categorizedSlides]
   )
 
@@ -411,21 +442,59 @@ export function LessonPresentationView() {
   )
 
   const videos = lessonContent?.videos ?? []
+
+  /** Map demo slides to videos by index; leftover videos distribute among content slides */
+  const { anchoredVideos, unanchoredVideos } = useMemo(() => {
+    const anchored = new Map<number, VideoRef>() // slideNumber → video
+    const leftover: VideoRef[] = []
+
+    for (let i = 0; i < videos.length; i++) {
+      if (i < demoSlides.length) {
+        anchored.set(demoSlides[i].slideNumber, videos[i])
+      } else {
+        leftover.push(videos[i])
+      }
+    }
+
+    return { anchoredVideos: anchored, unanchoredVideos: leftover }
+  }, [videos, demoSlides])
   const keyConcepts = useMemo(() => extractKeyConcepts(contentSlides), [contentSlides])
   const journeySections = useMemo(() => buildJourneySections(contentSlides), [contentSlides])
 
-  // Build knowledge check items from question slides (PPT Q&A)
-  const questionItems = useMemo(() =>
-    questionSlides
-      .filter((qs) => qs.questionData)
-      .map((qs) => ({
-        question: qs.questionData!.question,
-        referenceAnswer: qs.questionData!.answer,
-        questionKey: `slide-${qs.slideNumber}`,
-        afterSlide: qs.slideNumber, // position hint — place after nearby content
-      })),
-    [questionSlides]
-  )
+  // Build knowledge check items — centralized file is the source of truth,
+  // falling back to inline questionData for any slides not in the central file
+  const questionItems = useMemo(() => {
+    // Central knowledge checks (keyed by slide number for dedup)
+    const centralBySlide = new Map(centralKCs.map((kc) => [kc.questionSlide, kc]))
+
+    const items: { question: string; referenceAnswer: string; questionKey: string; afterSlide: number }[] = []
+
+    // Add all central KCs for this lesson
+    for (const kc of centralKCs) {
+      items.push({
+        question: kc.question,
+        referenceAnswer: kc.answer,
+        questionKey: `slide-${kc.questionSlide}`,
+        afterSlide: kc.questionSlide,
+      })
+    }
+
+    // Fallback: add any inline questionData not already covered by central
+    for (const qs of questionSlides) {
+      if (qs.questionData && !centralBySlide.has(qs.slideNumber)) {
+        items.push({
+          question: qs.questionData.question,
+          referenceAnswer: qs.questionData.answer,
+          questionKey: `slide-${qs.slideNumber}`,
+          afterSlide: qs.slideNumber,
+        })
+      }
+    }
+
+    // Sort by slide number to maintain presentation order
+    items.sort((a, b) => a.afterSlide - b.afterSlide)
+    return items
+  }, [centralKCs, questionSlides])
 
   // Knowledge check keys — from PPT question slides only
   const allKcKeys = useMemo(
@@ -444,140 +513,171 @@ export function LessonPresentationView() {
     return true
   }, [progress, allKcKeys, lessonMeta])
 
-  // Build the narrative content with interleaved videos and knowledge checks
+  // Build the narrative content with interleaved videos and knowledge checks.
+  // Iterates ALL slides in deck order so demo/exercise blocks appear at their
+  // original position, but only content slides render as MentorshipSlide.
+  // Demo → DemoVideo (if anchored video), else skip.
+  // Review → skip (not useful as raw slide images).
+  // Exercise → AssignmentBlock (first only, if has assignment), else skip.
   const contentSections = useMemo(() => {
     const sections: React.ReactNode[] = []
-    let videoIndex = 0
+    let unanchoredVideoIdx = 0
     let kcIndex = 0
+    let contentSlideCount = 0
+    let exerciseAssignmentPlaced = false
+
+    // Count total content slides for distributing unanchored videos
+    const totalContentSlides = allSlidesInOrder.filter((s) => s.category === 'content').length
 
     // Determine where to place each knowledge check (after the nearest preceding content slide)
     const kcPlacement = new Map<number, typeof questionItems>()
     for (const qi of questionItems) {
-      // Find the content slide just before this question's original position
-      let bestIdx = contentSlides.length - 1
-      for (let i = 0; i < contentSlides.length; i++) {
-        if (contentSlides[i].slideNumber < qi.afterSlide) {
-          bestIdx = i
+      let bestSlideNum = -1
+      for (const rs of allSlidesInOrder) {
+        if (rs.category === 'content' && rs.slide.slideNumber < qi.afterSlide) {
+          bestSlideNum = rs.slide.slideNumber
         }
       }
-      const existing = kcPlacement.get(bestIdx) ?? []
-      existing.push(qi)
-      kcPlacement.set(bestIdx, existing)
-    }
-
-    for (let i = 0; i < contentSlides.length; i++) {
-      const slide = contentSlides[i]
-
-      // Add slide as narrative block
-      sections.push(
-        <MentorshipSlide
-          key={`slide-${slide.slideNumber}`}
-          slide={slide}
-          chapterSlug={chapterSlug}
-          lessonNumber={lessonNumber}
-          slideIndex={i}
-        />
-      )
-
-      // Interleave videos after content slides
-      if (videos.length > 0 && videoIndex < videos.length) {
-        const videoEvery = Math.max(3, Math.floor(contentSlides.length / videos.length))
-        if ((i + 1) % videoEvery === 0 || i === contentSlides.length - 1) {
-          sections.push(
-            <div key={`video-${videos[videoIndex].index}`} className="m-video-block">
-              <DemoVideo
-                video={videos[videoIndex]}
-                chapterSlug={chapterSlug}
-                onWatched={handleVideoWatched}
-                isWatched={progress.videosWatched.includes(videos[videoIndex].filename)}
-              />
-            </div>
-          )
-          videoIndex++
-        }
-      }
-
-      // Place knowledge checks that belong after this content slide
-      const checksHere = kcPlacement.get(i)
-      if (checksHere) {
-        for (const kc of checksHere) {
-          kcIndex++
-          sections.push(
-            <div key={`kc-${kc.questionKey}`} className="m-knowledge-block">
-              <KnowledgeCheckCard
-                question={kc.question}
-                referenceAnswer={kc.referenceAnswer}
-                lessonId={lessonId}
-                questionKey={kc.questionKey}
-                label={`Knowledge Check ${kcIndex} of ${questionItems.length}`}
-              />
-            </div>
-          )
-        }
+      if (bestSlideNum >= 0) {
+        const existing = kcPlacement.get(bestSlideNum) ?? []
+        existing.push(qi)
+        kcPlacement.set(bestSlideNum, existing)
       }
     }
 
-    // Add remaining videos that weren't placed
-    while (videoIndex < videos.length) {
+    // Distribute unanchored videos evenly among content slides
+    const videoEvery = unanchoredVideos.length > 0
+      ? Math.max(3, Math.floor(totalContentSlides / unanchoredVideos.length))
+      : Infinity
+
+    for (let i = 0; i < allSlidesInOrder.length; i++) {
+      const { slide, category } = allSlidesInOrder[i]
+
+      switch (category) {
+        case 'content': {
+          contentSlideCount++
+          sections.push(
+            <MentorshipSlide
+              key={`slide-${slide.slideNumber}`}
+              slide={slide}
+              chapterSlug={chapterSlug}
+              lessonNumber={lessonNumber}
+              slideIndex={contentSlideCount - 1}
+            />
+          )
+          // Distribute unanchored videos among content slides
+          if (unanchoredVideos.length > 0 && unanchoredVideoIdx < unanchoredVideos.length) {
+            if (contentSlideCount % videoEvery === 0 || contentSlideCount === totalContentSlides) {
+              const video = unanchoredVideos[unanchoredVideoIdx]
+              sections.push(
+                <div key={`video-${video.index}`} className="m-video-block">
+                  <DemoVideo
+                    video={video}
+                    chapterSlug={chapterSlug}
+                    onWatched={handleVideoWatched}
+                    isWatched={progress.videosWatched.includes(video.filename)}
+                  />
+                </div>
+              )
+              unanchoredVideoIdx++
+            }
+          }
+
+          // Place knowledge checks after the appropriate content slide
+          const checksHere = kcPlacement.get(slide.slideNumber)
+          if (checksHere) {
+            for (const kc of checksHere) {
+              kcIndex++
+              sections.push(
+                <div key={`kc-${kc.questionKey}`} className="m-knowledge-block">
+                  <KnowledgeCheckCard
+                    question={kc.question}
+                    referenceAnswer={kc.referenceAnswer}
+                    lessonId={lessonId}
+                    questionKey={kc.questionKey}
+                    label={`Knowledge Check ${kcIndex} of ${questionItems.length}`}
+                  />
+                </div>
+              )
+            }
+          }
+          break
+        }
+
+        case 'demo': {
+          // Only render if there's an anchored video — otherwise skip
+          const anchoredVideo = anchoredVideos.get(slide.slideNumber)
+          if (anchoredVideo) {
+            sections.push(
+              <div key={`demo-video-${slide.slideNumber}`} id={`slide-${slide.slideNumber}`} className="m-video-block">
+                <DemoVideo
+                  video={anchoredVideo}
+                  chapterSlug={chapterSlug}
+                  onWatched={handleVideoWatched}
+                  isWatched={progress.videosWatched.includes(anchoredVideo.filename)}
+                />
+              </div>
+            )
+          }
+          // No video → skip entirely (don't render raw PPT slide)
+          break
+        }
+
+        case 'review':
+          // Skip — review/recap slides are not useful as raw content
+          break
+
+        case 'exercise': {
+          // First exercise slide with assignment → AssignmentBlock, rest → skip
+          if (!exerciseAssignmentPlaced && lessonMeta?.hasAssignment) {
+            exerciseAssignmentPlaced = true
+            sections.push(
+              <div key={`exercise-${slide.slideNumber}`} id={`slide-${slide.slideNumber}`}>
+                <div id="assignment-section">
+                  <div className="m-divider" />
+                  <div className="m-practice-card">
+                    <div className="m-practice-label">Assignment</div>
+                    <div className="m-practice-title">Apply What You&#39;ve Learned</div>
+                    <div className="m-practice-text">
+                      Put your knowledge into practice. Complete the assignment below to demonstrate your understanding.
+                    </div>
+                  </div>
+                  <AssignmentBlock
+                    lessonId={lessonId}
+                    assignmentPdf={lessonMeta.assignmentPdf}
+                    solutionPdf={lessonMeta.solutionPdf}
+                    onSubmit={handleAssignmentSubmit}
+                    isSubmitted={progress.assignmentSubmitted}
+                    previousResponse={progress.assignmentResponse}
+                  />
+                </div>
+              </div>
+            )
+          }
+          // No assignment or already placed → skip
+          break
+        }
+      }
+    }
+
+    // Add remaining unanchored videos that weren't placed
+    while (unanchoredVideoIdx < unanchoredVideos.length) {
+      const video = unanchoredVideos[unanchoredVideoIdx]
       sections.push(
-        <div key={`video-${videos[videoIndex].index}`} className="m-video-block">
+        <div key={`video-${video.index}`} className="m-video-block">
           <DemoVideo
-            video={videos[videoIndex]}
+            video={video}
             chapterSlug={chapterSlug}
             onWatched={handleVideoWatched}
-            isWatched={progress.videosWatched.includes(videos[videoIndex].filename)}
+            isWatched={progress.videosWatched.includes(video.filename)}
           />
         </div>
       )
-      videoIndex++
-    }
-
-    // Review / Key Takeaways — text only, no slide image
-    if (reviewSlides.length > 0) {
-      const takeaways: string[] = []
-      for (const rs of reviewSlides) {
-        // Extract key points from notes
-        if (rs.notes) {
-          const cleaned = rs.notes
-            .replace(/^[^:]+:\s*/i, '') // strip preamble before first colon
-            .replace(/\.\s*$/, '')
-          const items = cleaned
-            .split(/,\s*(?:and\s+)?/)
-            .map((s) => s.trim())
-            .filter((s) => s.length > 8)
-          takeaways.push(...items)
-        }
-        // Also pull from body paragraphs
-        for (const para of rs.bodyParagraphs) {
-          if (para.text.trim().length > 8) {
-            takeaways.push(para.text.trim())
-          }
-        }
-      }
-
-      sections.push(
-        <div key="review-takeaways" className="m-takeaways m-animate">
-          <div className="m-takeaways-header">
-            <Trophy size={16} />
-            <span>Key Takeaways</span>
-          </div>
-          {takeaways.length > 0 ? (
-            <ul className="m-takeaways-list">
-              {takeaways.slice(0, 10).map((t, i) => (
-                <li key={i}>{t.charAt(0).toUpperCase() + t.slice(1)}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="m-takeaways-fallback">
-              {reviewSlides[0].notes || 'Review the key concepts covered in this lesson.'}
-            </p>
-          )}
-        </div>
-      )
+      unanchoredVideoIdx++
     }
 
     return sections
-  }, [contentSlides, reviewSlides, questionItems, videos, chapterSlug, lessonNumber, lessonId, handleVideoWatched, progress.videosWatched])
+  }, [allSlidesInOrder, anchoredVideos, unanchoredVideos, questionItems, contentSlides, chapterSlug, lessonNumber, lessonId, lessonMeta, handleVideoWatched, handleAssignmentSubmit, progress.videosWatched, progress.assignmentSubmitted, progress.assignmentResponse])
 
   // --- Progress stats for sidebar ---
   const totalItems = useMemo(() => {
@@ -702,21 +802,8 @@ export function LessonPresentationView() {
             </div>
           )}
 
-          {/* Review section */}
-          {reviewSlides.length > 0 && (
-            <div className="m-nav-item-wrapper">
-              <div
-                className={`m-nav-item ${activeSection >= journeySections.length ? 'active' : ''}`}
-                onClick={() => scrollToSlide(reviewSlides[0].slideNumber)}
-              >
-                <div className="m-nav-dot"><Trophy size={10} /></div>
-                <div className="m-nav-title">Review & Takeaways</div>
-              </div>
-            </div>
-          )}
-
-          {/* Assignment section */}
-          {lessonMeta.hasAssignment && (
+          {/* Assignment section — only when no exercise slide anchors it */}
+          {lessonMeta.hasAssignment && exerciseSlides.length === 0 && (
             <div className="m-nav-item-wrapper">
               <div
                 className={`m-nav-item ${progress.assignmentSubmitted ? 'completed' : ''}`}
@@ -828,8 +915,8 @@ export function LessonPresentationView() {
           {/* Content sections — the narrative flow */}
           {contentSections}
 
-          {/* Assignment */}
-          {lessonMeta.hasAssignment && (
+          {/* Assignment — fallback when no exercise slide anchors it */}
+          {lessonMeta.hasAssignment && exerciseSlides.length === 0 && (
             <div id="assignment-section">
               <div className="m-divider" />
               <div className="m-practice-card">

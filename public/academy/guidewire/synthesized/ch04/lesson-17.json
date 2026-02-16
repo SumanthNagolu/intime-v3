@@ -1,0 +1,281 @@
+{
+  "lessonId": "ch04-l17",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 17,
+  "title": "Coverages",
+  "subtitle": "Understanding how PolicyCenter defines and manages insured entities and their protections.",
+  "synthesizedAt": "2026-02-16T17:25:34.759520+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a new insurance product launch. Your team needs to ensure that customers can easily select the right protection for their unique assets, whether it's a classic car, a new home, or a complex business operation. This involves correctly identifying what is being insured and linking it to the specific protections offered.",
+      "question": "How does PolicyCenter ensure that every item or person being insured is correctly identified and linked to the specific protections a policy offers?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between coverables and coverages and their roles in PolicyCenter.",
+        "Explain how coverables are implemented in the PolicyCenter data model, including the use of CoverableDelegate.",
+        "Describe how coverages are defined using CoveragePattern and their key attributes.",
+        "Identify the purpose and application of coverage categories and availability lookup tables.",
+        "Understand how subclause relationships are managed in the Advanced Product Designer and PolicyCenter."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored the fundamental structure of policies and policy lines. We learned how different components contribute to a complete insurance product.",
+      "warmupQuestion": "How do you think PolicyCenter connects a specific insured item (like a car) to the actual protection (like collision coverage) it provides?",
+      "hint": "Consider the relationship between a physical object and the insurance terms that apply to it."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Coverables and Their Implementation",
+      "narrative": "In PolicyCenter, it's crucial to distinguish between **coverables** and **coverages**. A **coverable** is essentially any entity that can be insured, representing an exposure to risk. It's not explicitly defined in the product model but rather represents the object or entity being protected. Examples include a dwelling, an auto, or even the policy line itself, which Guidewire designates as a coverable to represent the named insureds, especially for liability insurance. For location-based coverages, it's a best practice to create a specific coverable entity rather than directly using `PolicyLocation`.\n\nFrom a developer's perspective, each coverable is represented by its own entity within the data model. The `Coverable` entity implements the `CoverableDelegate` interface, which encapsulates the common behavior and properties of a coverable. This abstraction ensures consistent handling across PolicyCenter. While coverables define *what* can be insured, **coverages** define *how* it's insured. A coverage is protection from a specific risk, and it *must* be attached to a coverable. All configuration related to coverables, such as their specific behaviors and attributes, happens at the coverage level, giving developers significant flexibility in managing and extending coverage functionalities.",
+      "keyPoints": [
+        "A coverable is an entity or object that can be insured, representing an exposure to risk.",
+        "PolicyCenter uses the policy line as a coverable for named insureds in liability policies.",
+        "Each coverable is represented by its own entity and implements the `CoverableDelegate` interface.",
+        "A coverage is protection from a specific risk and must always be attached to a coverable."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Illustrates coverables as exposures to risk, with examples like dwellings and policy lines."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Shows that coverages are attached to coverables and defined as patterns in the product model."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Coverable vs. Coverage",
+          "content": "A **coverable** is the *object or entity* being insured (e.g., a house), while a **coverage** is the *protection* offered against a specific risk for that object (e.g., fire coverage)."
+        },
+        {
+          "type": "best_practice",
+          "title": "Location-Based Coverables",
+          "content": "For coverages that attach at a location, create a separate coverable entity instead of directly using `PolicyLocation` to maintain data model clarity and flexibility."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Defining Coverage Patterns and Their Core Attributes",
+      "narrative": "Coverages are formally defined through **Coverage Patterns** within the product model. Each `CoveragePattern` is a blueprint that specifies crucial details about a coverage, including where it attaches (its associated coverable), its display name, category for UI grouping, and its availability and requiredness on a policy. These patterns are synchronized with the product model to ensure consistency across the system, making it vital for developers to configure them accurately to reflect the insurer's offerings and business rules.\n\nThe attributes within a `CoveragePattern` are pivotal. They dictate whether a coverage is offered on a policy and how users can interact with it. The **Existence** option, for instance, determines how a coverage appears to the user:\n*   **Suggested**: The coverage is offered, but the user can decline it.\n*   **Electable**: The user can choose to include or exclude the coverage.\n*   **Required**: The coverage is automatically included and cannot be removed.\n\nBusiness analysts typically gather these requirements, and as developers, we implement these patterns to align the system with business needs. While it's possible to associate multiple coverage tables with a single coverable for unique patterns, Guidewire generally recommends using **one coverage table per coverable**. This approach simplifies management and ensures consistency, making the system easier to maintain and extend unless there's a compelling reason for a second table.",
+      "keyPoints": [
+        "Coverages are defined via `CoveragePattern` in the product model, specifying attachment, name, category, availability, and requiredness.",
+        "Key attributes determine if a coverage is offered and how users interact with it (Suggested, Electable, Required).",
+        "Developers implement `CoveragePattern` based on business requirements.",
+        "Guidewire recommends one coverage table per coverable for simplicity and consistency."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "Highlights that the product model is where coverages and their terms are defined, using a cyber attack coverage example."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Details the key attributes of a coverage pattern, such as covered object, category, availability, and existence."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Explains how 'Availability' determines if a coverage appears, and 'Existence' (Suggested, Electable, Required) specifies how it appears to the user."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Coverage Pattern",
+          "content": "A blueprint in the product model defining a specific coverage, including its properties, attachment point, and behavior."
+        },
+        {
+          "type": "best_practice",
+          "title": "Coverage Table Association",
+          "content": "In general, use one coverage table for each coverable. Only create a second table if specific coverage patterns have unusually different characteristics."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Grouping and Controlling Coverage Availability",
+      "narrative": "To manage and present coverages effectively, PolicyCenter utilizes **coverage categories**. These are logical groupings of one or more related `CoveragePattern`s, typically added to a policy as a group. For instance, in Personal Auto, the 'Physical Damage Group' category might encompass several related coverage patterns like Collision and Comprehensive. By grouping them, PolicyCenter ensures that policies are comprehensive and consistent, reflecting the insurer's offerings. This grouping is also critical for developers when configuring the user interface and backend logic, as it influences how coverages are displayed and processed.\n\nBeyond categories, the **availability** of coverages is dynamically determined using **lookup tables**. These tables store availability criteria based on various factors such as state, underwriting company, start/end dates, and job type. Multiple coverages can reference the same lookup table, ensuring consistent application of availability rules. As a developer, you'll frequently interact with these tables to ensure that the correct availability logic is applied, aligning with business requirements. PolicyCenter records the selection of coverages in the database, creating one database row for each coverage that exists on a policy. However, it's important to note that PolicyCenter does *not* store information on electable or suggested coverages that a user has declined.",
+      "keyPoints": [
+        "Coverage categories group logically related coverage patterns (e.g., Personal Auto Physical Damage Group).",
+        "Availability of coverages is determined by lookup tables based on criteria like state, underwriting company, and dates.",
+        "PolicyCenter records selected coverages in the database but not declined electable/suggested ones."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Illustrates how each coverable has its own coverage table, and new coverables require new tables."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Explains that PolicyCenter records selected coverages in the database, with one row per existing coverage."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Shows an example of coverage categories in Personal Auto, specifically the Physical Damage Group."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Demonstrates a coverage lookup table for availability, showing criteria like state, underwriting company, and effective dates."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "UI Configuration",
+          "content": "When configuring the UI, consider using coverage categories to group related coverages, making the policy selection process more intuitive for users."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of viewing and managing coverages within PolicyCenter. Pay close attention to how coverages are presented and how their attributes influence user interaction.",
+      "transcriptSummary": "The video demonstrates navigating through PolicyCenter to view different coverages, showing how they are attached to coverables and how their availability and existence settings manifest in the user interface. It highlights the practical application of coverage patterns and categories."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Advanced Subclause Relationships and Management",
+      "narrative": "For more complex product configurations, PolicyCenter's Advanced Product Designer (APD) offers robust tools for managing **subclause relationships**. This feature allows clauses, which include coverages, conditions, and exclusions, to form intricate hierarchies. These relationships are essential for reflecting real-world policy structures where certain protections or limitations might be nested under a primary coverage. For example, you might have a main property coverage with subclauses for specific perils or deductible options.\n\nWhen defining subclause relationships in a mind map within APD, remember these key rules:\n*   A clause can have zero or one parent clause.\n*   A clause can have multiple subclauses.\n*   You can create multiple levels of subclauses, allowing for deep nesting.\n*   Crucially, the subclause and its parent must be of the same clause type (e.g., an exclusion cannot be a subclause of a coverage, and vice-versa).\n\nOnce these subclauses are created and defined in APD, they can be imported into PolicyCenter. This integration allows for visualization and ongoing management of the product's structure directly within PolicyCenter. Developers can add new or existing clauses as subclauses, unassign subclauses from their parents, or remove them entirely, maintaining the integrity of the product's structure while adapting to evolving business needs. Understanding and implementing these relationships is key to building flexible and scalable insurance products.",
+      "keyPoints": [
+        "Subclause relationships in Advanced Product Designer allow for complex hierarchies of coverages, conditions, and exclusions.",
+        "A clause can have one parent and multiple subclauses, supporting multiple levels of nesting.",
+        "Subclauses and their parents must be of the same clause type.",
+        "Subclauses defined in APD can be imported, visualized, and managed within PolicyCenter."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Illustrates coverage categories in Homeowners, showing logically related coverage patterns grouped together."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Introduces the concept of subclause relationships as a way to create groups or families of coverages within PolicyCenter, using Advanced Product Designer."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Details how subclause relationships are defined in Advanced Product Designer mind maps and how they are visualized and managed in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Subclause Type Consistency",
+          "content": "Always ensure that a subclause and its parent are of the same clause type (e.g., coverage under coverage, condition under condition) to maintain a valid product model."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Recommended Practices for Coverage Patterns",
+      "narrative": "When working with coverage patterns and categories, following Guidewire's recommended practices can significantly improve usability and maintainability. For instance, when mapping coverage patterns to categories, it's best to group coverages that will logically appear together into the same category. Additionally, use categories to separate coverages that appear automatically from those that require user selection or searching. This helps streamline the user experience.\n\nWhen it comes to rendering coverages on the user interface, a common practice is to place the most commonly accepted coverages on an 'Included Coverages' tab. Less commonly accepted or additional coverages can then be placed on an 'Additional Coverages' tab. This intuitive separation helps users quickly find and configure the coverages they need, while also keeping the primary interface clean and uncluttered. These practices, while seemingly minor, contribute to a more efficient and user-friendly PolicyCenter experience for both internal users and policyholders.",
+      "keyPoints": [
+        "Group logically related coverages into the same category.",
+        "Separate automatically appearing coverages from searchable ones using categories.",
+        "Display commonly accepted coverages on an 'Included Coverages' tab.",
+        "Place less commonly accepted coverages on an 'Additional Coverages' tab."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Outlines recommended practices for mapping coverage patterns to categories and rendering coverages on the user interface."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a coverable?",
+      "referenceAnswer": "A coverable is an exposure to risk and is not a pattern in product model.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What is a coverage?",
+      "referenceAnswer": "Coverages are patterns in the product model where each coverage pattern is associated with a relevant entity.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Define and give an example of a coverage category.",
+      "referenceAnswer": "A coverage category is a group of one or more logically related coverage patterns.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your insurance company is launching a new 'Pet Insurance' product. You need to define how a pet (the coverable) will be linked to its medical coverage (the coverage).",
+      "question": "Describe how you would model the pet as a coverable and its medical coverage as a coverage in PolicyCenter, considering the implementation details discussed. What interface would the pet entity implement, and where would the medical coverage be defined?",
+      "hints": [
+        "Recall the core definition of a coverable and how it's represented in the data model.",
+        "Think about the interface that encapsulates coverable behavior.",
+        "Remember where coverages are defined and what they attach to."
+      ],
+      "expectedApproach": "The learner should identify the pet as a coverable, state that it would be its own entity implementing `CoverableDelegate`. The medical coverage would be defined as a `CoveragePattern` in the product model, attached to the pet coverable."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A business analyst requests a new 'Roadside Assistance' coverage for your auto insurance product. This coverage should be optional for customers but suggested by default, and its availability should depend on the customer's state of residence.",
+      "question": "Outline the steps you would take to configure this new 'Roadside Assistance' coverage. Specifically, how would you ensure it's optional but suggested, and how would you manage its state-based availability?",
+      "hints": [
+        "Consider the `Existence` attribute of a `CoveragePattern`.",
+        "Think about how availability criteria are typically stored and referenced.",
+        "Recall the role of lookup tables in determining availability."
+      ],
+      "expectedApproach": "The learner should describe creating a `CoveragePattern` for 'Roadside Assistance'. They would set its `Existence` attribute to 'Suggested'. For state-based availability, they would associate the coverage with a coverage lookup table that defines availability criteria based on the 'State' field."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Coverables are entities representing insured objects/risks, implemented as separate entities with the `CoverableDelegate` interface.",
+        "Coverages are protections against specific risks, defined by `CoveragePattern`s in the product model and attached to coverables.",
+        "`CoveragePattern` attributes like 'Existence' (Suggested, Electable, Required) and 'Availability' control how coverages are offered.",
+        "Coverage categories group related coverages, and lookup tables manage dynamic availability based on various criteria.",
+        "Advanced Product Designer enables complex subclause hierarchies for coverages, conditions, and exclusions, which are then managed in PolicyCenter."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of coverables and coverages is fundamental to accurately modeling insurance products. Correctly configuring these elements ensures that policies reflect business rules, are easy for agents to quote, and provide the precise protection customers expect, directly impacting policy accuracy and customer satisfaction.",
+      "nextLessonPreview": "Building on our understanding of coverages, our next lesson will delve into **Coverage Terms**. We'll explore how specific terms and conditions, such as limits, deductibles, and other parameters, are applied and managed within policies to define the exact scope of coverage."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through configuring a new coverage pattern in PolicyCenter, associating it with a coverable, and setting its availability and existence attributes. You will also practice creating a new coverage category and assigning your new coverage to it.",
+      "objectives": [
+        "Create a new coverable entity and a corresponding coverage table.",
+        "Define a new `CoveragePattern` with specific existence and availability settings.",
+        "Assign the new coverage to a relevant coverage category.",
+        "Test the new coverage's behavior in the PolicyCenter UI."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_18_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_18_01.mp4"
+    }
+  ]
+}

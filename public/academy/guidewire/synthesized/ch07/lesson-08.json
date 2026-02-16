@@ -1,0 +1,265 @@
+{
+  "lessonId": "ch07-l08",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 8,
+  "title": "Introduction to Gosu",
+  "subtitle": "Explore Gosu, Guidewire's powerful programming language for application configuration and extension.",
+  "synthesizedAt": "2026-02-16T18:01:53.898836+00:00",
+  "estimatedMinutes": 95,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're tasked with customizing a complex insurance application. You need a language that can handle everything from simple data validation to intricate business processes, all while integrating seamlessly with existing Java systems and providing excellent developer tools.",
+      "question": "How can a single programming language be versatile enough to manage all these diverse requirements within a specialized application environment?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and key characteristics of Gosu as Guidewire's programming language.",
+        "Identify various ways Gosu is used to configure and extend Guidewire applications.",
+        "Utilize the Gosu Scratchpad for writing, executing, and debugging Gosu code.",
+        "Apply Gosu array methods and block expressions to manipulate data collections.",
+        "Understand the use of gw.util.Rational for precise numerical calculations."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon the configuration capabilities of Guidewire applications. You might be familiar with how certain behaviors are defined or how data models are structured.",
+      "warmupQuestion": "What are some challenges you've encountered when trying to customize or extend application logic using traditional programming approaches?",
+      "hint": "Think about type safety, integration with existing frameworks, and developer productivity."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Gosu: Guidewire's Core Programming Language",
+      "narrative": "Gosu is Guidewire's proprietary, open-source programming language, specifically designed to configure and extend the Guidewire Application Tier. It's a general-purpose language built on the Java Virtual Machine (JVM), making it highly compatible with Java. This means you can seamlessly use Java types, extend them, and implement Java interfaces directly within your Gosu code. Gosu combines elements of both procedural and object-oriented programming, offering a familiar syntax for developers experienced with languages like JavaScript and Java.\n\nGuidewire developed Gosu to address several key needs. Firstly, there was a strong desire for a single, unified syntax capable of interacting with all relevant Guidewire product elements, such as entities, display keys, classes, class enhancements, Java classes, permissions, and script parameters. No existing language offered this comprehensive capability. Secondly, Guidewire Studio required robust code auto-completion features, which are only possible with a statically typed language. Unlike many dynamically typed scripting languages (like JavaScript, Perl, Python, or Ruby), Gosu's static typing allows for compile-time error detection, significantly improving code quality and developer efficiency. Historically, in very early releases of InsuranceSuite, Gosu was known as Gscript.",
+      "keyPoints": [
+        "Gosu is Guidewire's open-source, JVM-based programming language.",
+        "It combines procedural and object-oriented paradigms, similar to Java and JavaScript.",
+        "Gosu provides a single syntax for all Guidewire elements and supports static typing for auto-completion.",
+        "It is used to configure fundamental application behavior and manage complex business processes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "This slide highlights Gosu's primary role in configuring the Guidewire Application Tier."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "An overview of Gosu's characteristics, its similarities to Java, and the strategic reasons behind its development by Guidewire."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Static vs. Dynamic Typing",
+          "content": "In a statically typed language like Gosu, variable types are known at compile time, allowing for early error detection and robust auto-completion. Dynamically typed languages determine types at runtime, offering more flexibility but potentially leading to runtime errors."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Gosu's Diverse Applications in Guidewire",
+      "narrative": "Gosu is integral to various aspects of Guidewire applications, enabling deep customization and powerful business logic. One of its primary uses is in defining **rules**. A rule represents a single decision, structured as an 'if-then' statement (e.g., `if {some conditions} then {take some action}`). These individual rules are often combined into rule sets, which are crucial for managing complex business logic such as Event Fired Rules, Pre-update Rules, and Validation Rules.\n\nBeyond rules, Gosu allows for **entity enhancements**, which extend the functionality of Guidewire entities by adding new methods (functions) and properties. For instance, you could create an enhancement to the `ABContact` entity, adding a method like `ABCompany.maskTaxId()` to return a masked tax ID. These enhancements are not limited to entities; any Gosu or Java class can be enhanced, providing immense flexibility.\n\nGosu also plays a role in defining **display names** for entity instances, such as populating drop-down lists of contacts or specifying the `DisplayName` property. Furthermore, it's used to create **Gosu classes** that encapsulate data and code for specific purposes. These can be utility helper classes for common tasks like logging or string manipulation, or plugins for integrating with external applications.\n\nFinally, Gosu powers **workflows**, which execute custom business processes asynchronously. These workflows can be time-based or triggered by external events, often transitioning through multiple states over time. Examples include renewal and cancellation workflows in PolicyCenter, or account delinquency and agency bill cycles in BillingCenter. While available in ClaimCenter, workflows are not part of its base configuration.",
+      "keyPoints": [
+        "Gosu defines application rules for conditional logic and actions.",
+        "It extends entity functionality through enhancements, adding methods and properties.",
+        "Gosu specifies dynamic UI behavior, like display names, and creates utility classes and plugins.",
+        "It runs custom business processes asynchronously via workflows in Guidewire applications."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "This slide illustrates how Gosu is used for applying programming logic in rules and extending entity functionality."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "A comparison showing Gosu's use in defining display names and encapsulating logic within Gosu classes."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "This slide details Gosu's role in running custom business processes asynchronously through workflows."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "The Gosu Scratchpad and Working with Arrays",
+      "narrative": "The **Gosu Scratchpad** is an invaluable tool within Guidewire Studio, allowing developers to write, execute, and debug Gosu code snippets directly. You can access it by navigating to `Tools` and then `Gosu Scratchpad`. It supports common editor features like a gutter area, smart completion, a validation bar, and debugging capabilities. When executing code, it's recommended to use the 'Run in Debug Server process' button, which utilizes the Platform compiler, as all Guidewire applications are written using it. Ensure your server is running in debug mode before using this feature.\n\nIn Guidewire applications, much of the configuration involves working with **arrays**. An array defines a set of additional entities of the same type associated with a main entity. For example, an `ABContact` entity might define an `AddressFlagEntries` array. Related to this is the **associative array**, which maps keys to values, much like a dictionary or a telephone book. In Gosu, you typically represent an array using angle brackets after the type name, such as `String[]` for an array of String objects.\n\nArrays are zero-based indexed, meaning the first element is at index 0. When creating an array, you must either explicitly define its size or implicitly define it by simultaneously providing its elements. To access array members, you use an index expression. Gosu's type inference often simplifies array declarations, allowing you to omit explicit type declarations in many cases.",
+      "keyPoints": [
+        "The Gosu Scratchpad is an interactive environment for testing Gosu code.",
+        "Arrays in Gosu represent collections of same-type data, often linked to entities.",
+        "Associative arrays map keys to values, providing flexible data structures.",
+        "Gosu arrays are zero-based indexed and can be declared with explicit or implicit sizing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "A screenshot of the Gosu Scratchpad, highlighting its interface and execution options."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "This slide explains Gosu arrays, their relationship to entities, and basic declaration syntax."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Declaring Arrays in Gosu",
+          "code": "var a = new int[3] // Explicitly sized array\nvar b = new int[] {1,2,3} // Implicitly sized array with elements\nvar c: int[] = {1,2,3} // Explicit type declaration with elements",
+          "explanation": "These examples demonstrate different ways to declare integer arrays in Gosu, either by specifying size or by initializing with elements."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Advanced Array Methods and Block Expressions",
+      "narrative": "Gosu provides a rich set of array methods that allow you to efficiently query and manipulate data collections. These methods often require an argument in the form of a **Gosu block expression**, which defines a condition or logic to be applied to each element of the array. A block is essentially an expression of logic passed to a method as an argument, similar to closures or lambda expressions in other languages.\n\nCommon array methods include:\n*   `hasMatch(condition)`: Determines if *any* element in the array satisfies the given condition. It returns `true` if at least one match is found.\n*   `countWhere(condition)`: Returns the *number* of elements in the array that match the specified condition.\n*   `firstWhere(condition)`: Retrieves the *first* element in the array that satisfies the condition.\n*   `where(condition)`: Creates a *new target array* consisting of all members from the source array that match the condition.\n\nA Gosu block expression has a specific four-part structure: it starts with a backslash (`\\`), followed by an `element name` (representing each element of the array), then an arrow (`->`), and finally the `condition` itself. For example, `\\ note -> note.ContactNoteType == typekey.ContactNoteType.TC_GENERAL` is a block that checks if a note's type is 'General'. This powerful syntax allows for concise and readable data filtering and manipulation.",
+      "keyPoints": [
+        "Gosu array methods allow for querying and manipulating data collections.",
+        "Methods like `hasMatch`, `countWhere`, `firstWhere`, and `where` filter array elements based on conditions.",
+        "Block expressions are inline functions passed as arguments to array methods.",
+        "A block consists of `\\`, an element name, `->`, and a condition."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "This slide introduces array methods that require logical arguments, often in the form of conditions."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Details on two common array methods: `hasMatch(condition)` and `countWhere(condition)`."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Further common array methods: `firstWhere(condition)` and `where(condition)` for retrieving specific elements or filtered arrays."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "An explanation of Gosu block argument expressions, showing their syntax and components."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "This slide serves as a visual break or transition."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Using a Block Expression with `where`",
+          "code": "var notes = someNotes.where( \\ note -> \n  note.ContactNoteType == typekey.ContactNoteType.TC_GENERAL\n)",
+          "explanation": "This example demonstrates using a block expression with the `where` method to filter an array of notes, returning only those of type 'General'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Precision with Rational Numbers in Gosu",
+      "narrative": "When dealing with decimal numbers, especially in financial or scientific calculations, standard floating-point types (like `float` or `double`) can introduce rounding errors. This happens because many decimal numbers, like 1/3 (0.333...), cannot be perfectly represented in binary, leading to data loss over time as numbers are used in subsequent calculations. To combat this, Gosu provides `gw.util.Rational`.\n\n`gw.util.Rational` is a powerful class that represents numbers with an infinite scale, preserving their exact value without rounding. This is crucial for maintaining accuracy in applications where precision is paramount. Guidewire's `gw.util.money` and `gw.util.science` libraries, for instance, store numbers as Rationals, making data usage and testing both easier and more accurate. You can apply standard arithmetic operators to rational numbers using specific Gosu syntax, where `i` can be an `integer`, `float`, `long`, or `double`.\n\nTo explore the full range of mathematical operations available for rational numbers, you can inspect the `Rational.class` in Studio by pressing `Ctrl+Shift+N` and searching for it. This will show you all the public methods, such as `invert()`, `abs()`, and `pow(int exponent)`. Rational numbers are also sequenceable, allowing for iterative operations, just like other number types.",
+      "keyPoints": [
+        "Floating-point numbers can lead to rounding errors in calculations.",
+        "`gw.util.Rational` provides infinite scale for precise numerical representation.",
+        "Guidewire's money and science libraries utilize Rational numbers for accuracy.",
+        "Rational numbers support various mathematical operations and are sequenceable."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "This slide explains the problem of rounding large decimal numbers and how `gw.util.Rational` provides an infinite scale solution."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A view of the `Rational.class` in Studio, showing some of its available public methods."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Examples demonstrating how to declare and use Rational literals, including fractions and sequenceable operations."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "No new content is introduced on this slide; it serves as a visual transition."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk through using the Gosu Scratchpad to write and execute Gosu code snippets. Pay close attention to how variables are declared, how `QueryUtil` is used to load contact data, and how conditional logic is applied to process and validate information like age, driver's license, and attorney status.",
+      "transcriptSummary": "The demo begins by ensuring the server is in debug mode, then opens the Gosu Scratchpad. It demonstrates defining variables, using `QueryUtil` to load contact data, and applying conditional logic to check for an AB person's age, driver's license number, and attorney status. The code prints various messages based on the data, showcasing basic Gosu syntax and conditional execution."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to retrieve and analyze a list of claims in Guidewire. Specifically, you want to find out how many claims are currently open and identify the first claim that was created in the current year.",
+      "question": "Using the Gosu Scratchpad, write Gosu code to:\n1.  Load a collection of `Claim` objects (assume `QueryUtil.findAllClaims()` exists).\n2.  Determine the total number of open claims.\n3.  Find the first claim created in the current year.\n4.  Print the count of open claims and the claim number of the first claim created this year.",
+      "hints": [
+        "Remember to use Gosu array methods like `countWhere()` and `firstWhere()`.",
+        "For the 'current year' condition, you might need to compare `CreateTime` with the start of the current year. Consider using `Date.Now.Year`.",
+        "A block expression will be necessary for your conditions."
+      ],
+      "expectedApproach": "The learner should use `QueryUtil.findAllClaims()` to get a collection of claims. Then, `claims.countWhere(\\c -> c.Status == typekey.ClaimStatus.TC_OPEN)` for open claims. For the current year's first claim, `claims.firstWhere(\\c -> c.CreateTime.Year == Date.Now.Year)` would be appropriate. Finally, `print()` statements should display the results."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Inthe screenshot shown here, what is the array method to return the\n¢ number of objects in the ContactNotes array? What is the value?\n\nGt F Search | ntact | ¥\n\nActions, Person: William Andy\n\nSummary Notes\n\nDetails Contact Note Contact Note Type > Subject a\n\n2018-06-19: William Andy has many general qu..\n\n‘Addresses (3)\n\n2018-06-19: william Andy has a new phone number\n\nMS SS",
+      "referenceAnswer": "Se\n\n~ ~ Inthe screenshot shown here, what is the array method to return the\n\nnumber of objects in the ContactNotes array? What is the value?\n\nEi TriningApp Search ¥\n\nsummary\n\nDetails\n\n‘Addresses (3)\n\nNotes (5)\n\nSocial Media\n\nContact | ¥\n\nNotes\n\nContact Note Contact Note Type > Subject FI\n\nWilliam Andy\n\nhas many general qu.\n\nin his new lic...\n\ncovered ase...\n\nvar count = array.length or array.Count.\n\nThe total number of elements in the ContactNotes array is 5.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "~ ~ Inthe screenshot shown here, what is the expression to return the count\nof notes that are regarding a problem? What is the count value?\n\n<\n\nG Ar Search +\nActions Person: William Andy\n\nsummary Notes\n\nDetails Contact Note Contact Note Type > Subject [=]\n\nliam Andy has many general qu...\n\n‘Addresses (3)\n\n: William Andy has a new phone number\nNotes (5) liam Andy has more questions...\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...",
+      "referenceAnswer": "Inthe screenshot shown here, what is the expression to return the count\n¢ of notes that are regarding a problem? What is the count value?\n\n“ Gi TriningApp Search |¥ Contact |\n\n‘Actions Per\n\nsummary Notes\n\nDetails\n\nContact Note Contact Note Type > Subject Fe]\n\n1s many general QU...\n\nphone number\n\nNotes (5) questions...\n\nSocial Media 2018-06-19: William Andy has discovered ase...\n\nvar countNotes = notes.countWhere( \\ note ->\nnote.ContactNoteType == typekey.ContactNoteType.TC_ PROBLEM)\n\nig\n1 Addresses (3)\n' The total number of elements in the ContactNotes array is 1.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Inthe screenshot shown here, what is an expression to retum an array of\nContactNotes where the note was created after January 31, 2014?\n\nG rs Search |v ntact |~\nsummary Notes\n\nContact Note Contact Note Type S Subject B\n2018-06-19: William Andy has many general qu...\n\n2018-06-19: william Andy has a new phone number\n\nNotes (5) 2018-06-19: William Andy has more questions...\n\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...\n\nMS SS",
+      "referenceAnswer": "\"02/01/2014™.toDate() )\nSe\n\n_— — Inthe screenshot shown here, what is an expression to retum an array of\n¢ ContactNotes where the note was created after January 31, 2014?\n\nGi TrainingApp Search |¥ Contact |\n\nPerson: William Andy\n\nsummary Notes\n\nDetails Contact Note Type ‘Subject a\n\nny general qu...\n\n‘Addresses (3)\n\n‘ew phone number\nNotes (5) Fe questions ..\nhis new lc...\n\n‘Social Media s discovered a se...\n\nvar filteredNotes = notes.where( \\ note -> note.CreateTime >=\n\"02/01/2014™.toDate() )",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu is Guidewire's open-source, JVM-based programming language, offering Java compatibility and static typing for robust development.",
+        "Gosu is used extensively in Guidewire applications for defining rules, enhancing entities, creating custom classes, and managing asynchronous workflows.",
+        "The Gosu Scratchpad in Studio is a vital tool for writing, executing, and debugging Gosu code snippets.",
+        "Gosu provides powerful array methods (e.g., `hasMatch`, `countWhere`, `where`) that leverage block expressions for conditional logic and data manipulation.",
+        "`gw.util.Rational` ensures high precision in numerical calculations by representing numbers with an infinite scale, preventing common floating-point errors."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering Gosu is essential for customizing application behavior, integrating with external systems, and ensuring the accuracy of critical business logic, especially in financial calculations. Its static typing and powerful features enable developers to build robust, maintainable, and high-performing solutions that meet complex business requirements.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into Gosu's object-oriented features, exploring how to define custom classes and interfaces to structure your application logic more effectively."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the 'Introduction to Gosu' student exercise. This hands-on task will reinforce your understanding of Gosu syntax, array manipulation, and the use of the Gosu Scratchpad.",
+      "objectives": [
+        "Practice writing basic Gosu code using variables and conditional statements.",
+        "Apply Gosu array methods to filter and count elements in collections.",
+        "Utilize the Gosu Scratchpad for testing and debugging your code."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_08.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_08.mp4"
+    }
+  ]
+}

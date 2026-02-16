@@ -1,0 +1,364 @@
+{
+  "lessonId": "ch08-l08",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 8,
+  "title": "Validation Classes",
+  "subtitle": "Mastering class-based validation for robust data integrity in Guidewire PolicyCenter.",
+  "synthesizedAt": "2026-02-16T18:20:45.015747+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing a new insurance product in PolicyCenter. You need to ensure that before a policy can even be quoted, all critical data – from vehicle details to coverage selections – meets complex business rules that change based on various factors. Rule-based validation might not be flexible enough for these intricate, dynamic checks.",
+      "question": "How can you implement highly customizable and complex validation logic that adapts to specific policy transaction stages and business objects?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and use cases of class-based validation in PolicyCenter.",
+        "Identify policy-related objects that can be validated using class-based validation.",
+        "Explain the concept of validation levels and their priority.",
+        "Describe the key interfaces and classes involved in class-based validation (PCValidation, PCValidationBase, PCValidationContext, PCValidationResult).",
+        "Illustrate how to implement validation logic, including defining single-issue methods and using PCValidationContext and PCValidationResult.",
+        "Explain validation chaining and its flow within the policy graph.",
+        "Identify methods for invoking class-based validation in PolicyCenter.",
+        "Outline the steps to create new validation classes and add validation checks."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of PolicyCenter's data model, particularly the policy graph, and basic Gosu programming concepts. Recall how rule-based validation works and its limitations for highly dynamic or complex scenarios.",
+      "warmupQuestion": "When might rule-based validation fall short for ensuring data quality in a complex insurance policy?",
+      "hint": "Consider scenarios requiring checks across multiple related entities or specific timing."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Class-Based Validation",
+      "narrative": "When the standard rule-based validation isn't sufficient for the intricate data checks required in a policy transaction, PolicyCenter offers **class-based validation**. This powerful approach allows you to implement highly customized and complex validation logic using Gosu classes. Unlike rule-based validation, which is often triggered automatically, class-based validation is **on-demand**, giving you precise control over *when* and *how* data objects are validated.\n\nClass-based validation is incredibly versatile, capable of performing checks on virtually any business object within the policy graph. This includes core entities like `PolicyContactRole`, `PolicyLocation`, and `PolicyPeriod`, as well as line of business (LOB) specific entities such as `PALine` or `BusinessVehicle`. The flexibility stems from the fact that these entities aren't inherently 'validatable' in a special way; rather, Guidewire provides a framework that allows you to write your own Gosu validation classes to perform any number of checks against any policy-related entity. This means everything connected to the policy graph is fair game for validation.\n\nPolicyCenter's base configuration includes various validation classes. These can be designed to validate a **specific policy graph entity**, like a `BALine` (Business Auto Line of Business) or a `BusinessVehicle`. Alternatively, they can be used to validate **all objects on a page within a job wizard step**, such as the 'Policy Info' page in a BOP (Business Owners Policy) submission wizard. This dual approach allows for granular entity-level checks or broader, step-level data integrity verification.",
+      "keyPoints": [
+        "Class-based validation is used for complex, on-demand data checks.",
+        "It allows custom validation logic written in Gosu classes.",
+        "Any entity on the policy graph can be validated using this method.",
+        "Validation classes can target specific entities or entire wizard steps."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to class-based validation."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key characteristics of class-based validation, emphasizing its on-demand nature and flexibility."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Examples of policy-related objects that can be validated using class-based validation, highlighting the broad scope."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Illustrations of PolicyCenter validation classes, showing examples for specific entities and wizard steps."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A visual representation of the policy graph, indicating the scope of class-based validation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Validation Levels",
+      "narrative": "PolicyCenter employs a system of **validation levels** to categorize and manage the rigor of data checks. These levels are defined in the `ValidationLevel` typelist, which can be customized in Studio to add, modify, or remove levels as needed. Each validation level has a `priority` attribute, which PolicyCenter uses to order them. A **higher priority value indicates a less restrictive validation level**, meaning smaller numbers represent tighter, more stringent checks.\n\nFor instance, 'bindable' (priority 6000) is more restrictive than 'quotable' (priority 7000). The base configuration provides levels like `loadsave`, `default`, `quotable`, `bindable`, `quickquotable`, and `readyforissue`. These levels allow you to specify the minimum validity required at different stages of a policy transaction.\n\nUnlike ClaimCenter, entities in PolicyCenter do not have a fixed validation level associated with them. Instead, class-based validation is *run at a certain level* on an entity or wizard step. This means you might validate an entity at the `default` level, then later at the `quotable` or `bindable` level, and potentially even re-validate at the `default` level. The choice of validation level depends entirely on when and how the user wants to validate the entity. The `PCValidationBase` class provides methods to help determine the current validation level being tested, allowing your validation logic to adapt accordingly and add errors or warnings as necessary.",
+      "keyPoints": [
+        "Validation levels are defined in the `ValidationLevel` typelist.",
+        "Priority values determine restrictiveness: lower number = tighter validation.",
+        "Entities are validated *at* a level, not *have* a level.",
+        "PolicyCenter provides methods to check the current validation level."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Explanation of validation levels defined in the `ValidationLevel` typelist."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Visualizing validation level priority: higher priority means less restrictive validation."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "How validation levels interact with class-based validation in PolicyCenter."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Name three policy-related objects in PolicyCenter on which class-based\no validation is performed.",
+      "referenceAnswer": "Class-based validation can be performed on PolicyContactRole, PolicyLocation,\nPolicyPeriod, or any LOB entities, or any other policy-specific entities.",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Validation Class Architecture and Implementations",
+      "narrative": "To effectively configure class-based validation, it's crucial to understand the underlying interfaces and classes. PolicyCenter provides a robust framework in the `gw.validation` package. At its core is the `PCValidation` interface, which all validation classes must implement. For convenience, Guidewire offers `PCValidationBase`, an abstract class that implements `PCValidation` and takes a `PCValidationContext` instance.\n\nThe `PCValidationContext` class is vital; it's initialized with a `ValidationLevel` and creates a `PCValidationResult` object to store any errors or warnings. The `PCValidationResult` class then provides the methods for generating these warnings and errors. A common abstract class extending `PCValidationBase` is `PolicyLineValidation`, which provides default logic for line-specific validations. Many LOB-specific validation classes in the base configuration, such as `PALineValidation` or `BOPLineValidation`, are subclasses of `PolicyLineValidation`.\n\nIn the base configuration, you'll find numerous validation classes for various LOBs and shared entities. For example, under `configuration > gsrc > gw > policy`, you'll see `PolicyPeriodValidation`, `PolicyLineValidation`, `PolicyLocationValidation`, and `PolicyContactRoleValidation`. LOB-specific classes, like `BALineValidation` and `BusinessVehicleValidation` for Commercial Auto, reside under `configuration > gsrc > gw > lob > [LOBName]`. Each validation class, whether it extends `PCValidationBase` (like `PersonalVehicleValidation`) or `PolicyLineValidation` (like `PALineValidation`), will have a primary entry point method: `validatelmpl()` for `PCValidationBase` subclasses or `doValidate()` for `PolicyLineValidation` subclasses. These methods orchestrate the validation logic by calling other, more narrowly focused methods that check for single issues.",
+      "keyPoints": [
+        "All validation classes implement `PCValidation` or extend `PCValidationBase`.",
+        "`PCValidationContext` manages validation level and results.",
+        "`PCValidationResult` collects errors and warnings.",
+        "Base configuration includes shared and LOB-specific validation classes.",
+        "Validation logic starts with `validatelmpl()` or `doValidate()` methods."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "An objective slide introducing validation class implementations and methods."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Key validation-related interfaces and classes in PolicyCenter's `gw.validation` package."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Examples of validation classes found in the base configuration, categorized by LOB and shared entities."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Overview of `PCValidation` implementations, distinguishing between `validatelmpl()` and `doValidate()` entry points."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Interface vs. Abstract Class",
+          "content": "In Object-Oriented Programming, an **interface** defines a contract (a set of methods) that implementing classes must fulfill. An **abstract class** can provide some default implementation while also defining abstract methods that subclasses must implement. `PCValidation` is an interface, and `PCValidationBase` is an abstract class providing convenience implementations."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing Validation Logic with Context and Results",
+      "narrative": "A best practice in class-based validation is to define methods that each test for a **single, specific issue**. These focused methods are then called from the main `validatelmpl()` or `doValidate()` method. For example, the `PALineValidation` class might call `VehiclesValidator.doValidate()`, which in turn defines and calls methods like `atLeastOneVehicle()` or `allGaragesInSameState()`. This modular approach makes your validation logic clear, maintainable, and easier to debug.\n\nThe `PCValidationContext` class plays a central role in managing the validation process. Its constructor defines the validation context, taking a `ValidationLevel` and creating a `PCValidationResult` object. This context object provides several important methods:\n\n*   `isAtLeast(valLevel)`: This method tests if the validation level specified in the `PCValidationContext` is at least as restrictive as the `valLevel` argument. It uses the priority of the validation levels; for example, if `valLevel` is `quotable`, it returns true for `quotable`, `bindable`, or `readyforissue`.\n*   `addToVisited(validation, methodName)`: This method helps trace validation logic by recording which validation methods have been invoked. Each method should explicitly call this to be effective.\n*   `hasVisited(className, methodName)`: Checks if a specific combination of validation object and method has already been visited, preventing redundant checks.\n*   `showVisited()`: Returns a string list of all visited validation methods, which is invaluable for debugging.\n\nAny issues discovered during validation are reported using the `PCValidationResult` object. This class provides methods to add errors and warnings:\n\n*   `addError(object, valLevel, errorMessage, wizardStepId)`\n*   `addFieldError(object, strRelativeFieldPath, valLevel, errorMessage, wizardStepId)`\n*   `addWarning(object, valLevel, warningMessage, wizardStepId)`\n*   `addFieldWarning(object, strRelativeFieldPath, valLevel, warningMessage, wizardStepId)`\n\nWhen adding an error or warning, you specify the `object` being validated, the `valLevel` at which the issue should appear (e.g., an error at `quotable` will also appear at `bindable` and `readyforissue`), an `errorMessage` (ideally using display keys), and an optional `wizardStepId` to create a link to the relevant UI step. `addFieldError` and `addFieldWarning` also take `strRelativeFieldPath` to pinpoint a specific field.",
+      "keyPoints": [
+        "Validation methods should test for a single issue.",
+        "`PCValidationContext` manages validation level, results, and visited methods.",
+        "`isAtLeast()` checks if the current context meets a specified validation level.",
+        "`PCValidationResult` methods (`addError`, `addWarning`) report validation issues.",
+        "Errors/warnings are associated with an object, validation level, message, and optional wizard step."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Example of defining and calling single-issue validation methods within `doValidate()`."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "The role of `PCValidationContext` in defining context and creating `PCValidationResult`."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Key methods of the `PCValidationContext` class for managing validation flow and tracing."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Methods provided by `PCValidationResult` to record and report validation warnings and errors."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Example of `doValidate()` calling single-issue methods",
+          "code": "override function doValidate() {\n  atLeastOneVehicle()\n  allGaragesInSameState()\n  vinIsUniqueInPeriod()\n  validateEachVehicle()\n}",
+          "explanation": "This `doValidate()` method from `PALineVehiclesValidator.gs` demonstrates how to call multiple, focused validation methods to check different aspects of personal auto vehicles."
+        },
+        {
+          "language": "gosu",
+          "title": "Using `PCValidationContext` and `PCValidationResult`",
+          "code": "if (Context.isAtLeast(ValidationLevel.TC_QUICKQUOTABLE)) {\n  Result.addError(paLine, ValidationLevel.TC_QUICKQUOTABLE, msg, VEHICLES_WIZARD_STEP)\n} else {\n  Result.addWarning(paLine, ValidationLevel.TC_QUICKQUOTABLE, msg, VEHICLES_WIZARD_STEP)\n}",
+          "explanation": "This snippet shows how `Context.isAtLeast()` is used to conditionally add an error or warning based on the current validation level, utilizing `Result.addError()` and `Result.addWarning()`."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the basics of validation classes, showing how they are structured and how simple validation checks are implemented.",
+      "transcriptSummary": "The video covers the fundamental components of a validation class, including the `doValidate` method and how it calls individual validation checks. It illustrates how to add a basic error message using `PCValidationResult`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": ", 7 — State true or false:\n¢\noo a) All entities in PolicyCenter can be validated.\n\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.",
+      "referenceAnswer": "a) True\nb) True\nc) False",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": ",~ — Name the validation context method that produces a string of methods\no that were visited as validation was performed.",
+      "referenceAnswer": "The showVisited() method shows a list of methods as a string that were visited as\nvalidation was performed.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Validation Chaining: Orchestrating Complex Checks",
+      "narrative": "**Validation chaining** is a powerful mechanism where one validation class explicitly calls another validation class to perform additional, specialized validation checks. This allows for a hierarchical and modular approach to validating complex data structures, such as the policy graph. It's important to note that validation chaining is **not automatic**; each class must be specifically constructed to invoke other validation classes.\n\nA prime example of validation chaining in the base configuration is the `PolicyPeriodValidation` class. When you validate a `PolicyPeriod`, its `validate()` method executes its own set of checks and then strategically calls other validation classes. For instance, it might call `PolicyLineValidation` to validate individual lines on the policy. The `PolicyLineValidation` class, in turn, can chain to even more specific validation classes, such as `PALineVehiclesValidator` for personal auto vehicles or `BOPBuildingValidation` for buildings on a Business Owners Policy.\n\nThe flow of a validation chain often starts with a high-level object like `PolicyPeriod`. The `PolicyPeriodValidation`'s `validate()` method might first perform its own checks, then loop through collections of related objects (like `PolicyContactRoles` or `PolicyLocations`). For each object in the collection, it creates an instance of the corresponding validation class (e.g., `PolicyContactRoleValidation` or `PolicyLocationValidation`) and invokes its `validate()` method. This process can continue, with `PolicyLocationValidation` potentially calling `AnswerValidation.doValidate()` for answers associated with a location, creating multiple levels of chaining. This structured approach ensures comprehensive data integrity across the entire policy graph.",
+      "keyPoints": [
+        "Validation chaining is when one validation class calls another.",
+        "It enables hierarchical and modular validation across the policy graph.",
+        "Chaining is explicit and must be configured, not automatic.",
+        "`PolicyPeriodValidation` is a key example of a chaining class in the base configuration.",
+        "The chain can extend through multiple levels, validating related entities."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "An introductory slide to validation chaining."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Diagram illustrating the concept of validation chaining, where validation flows from period to line to specific entities."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Detailed flow of a validation chain, starting from `PolicyPeriodValidation` and extending to related entities."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how validation chaining works in practice, illustrating how one validation class can invoke another to perform a series of checks.",
+      "transcriptSummary": "The video demonstrates a scenario where `PolicyPeriodValidation` triggers `PolicyLineValidation`, which then calls entity-specific validation classes. It highlights the explicit nature of these calls within the Gosu code."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Define validation chaining.",
+      "referenceAnswer": "Validation chaining is the process of one validation class calling another validation\nclass to perform additional validation checks.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Invoking and Configuring Validation Classes",
+      "narrative": "Class-based validation, by its nature, must be **explicitly invoked**. It doesn't run automatically like some system-level checks. You can trigger validation from various points within PolicyCenter, including custom Gosu code, job processes, wizard steps, workflow steps, or integration plug-ins. For user interface interactions, PolicyCenter provides specific attributes in PCF (PolicyCenter Frontend) files to invoke validation:\n\n*   For **wizard steps**, use the `beforeSave` attribute.\n*   For **pop-ups**, use the `beforeCommit` attribute.\n\nThese attributes ensure that validation runs before data is saved or committed, preventing invalid data from persisting. The PolicyCenter UI framework automatically handles the rendering of any errors or warnings raised through these validation invocations.\n\nWhen it comes to **configuring validation classes**, your approach depends on whether you're dealing with new or existing entities. For entirely new entities or when creating a new Line of Business, you'll need to **create a new validation class** for that entity. This new class should always extend `PCValidationBase` to leverage the existing framework. If a validation class already exists for an entity, you should **add new validation check methods** to that existing class rather than creating a new one. If a class doesn't exist for an existing entity, then you would create a new one. A good practice is to use an existing validation class as a reference when creating new ones.\n\nAdding a new validation check involves a clear, five-step process:\n\n1.  **Edit/add the appropriate validation class**: Locate the existing class or create a new one.\n2.  **Add the validation check method**: Write a new method within the class that tests for a single issue.\n3.  **Call the method from `validatelmpl()` or `doValidate()`**: Integrate your new check into the main validation flow.\n4.  **Invoke the method**: Ensure the validation class is called at the appropriate point (e.g., via `beforeSave` or `beforeCommit`).\n5.  **Verify the result in the UI**: Test your changes to confirm the validation works as expected and displays messages correctly.",
+      "keyPoints": [
+        "Class-based validation must be explicitly invoked.",
+        "Use `beforeSave` for wizard steps and `beforeCommit` for pop-ups to invoke validation.",
+        "Create new validation classes for new entities or LOBs, extending `PCValidationBase`.",
+        "Add new validation checks as single methods to existing validation classes.",
+        "The process involves adding a method, calling it from `doValidate`/`validatelmpl`, invoking the validation, and verifying in the UI."
+      ],
+      "figures": [
+        {
+          "slideNumber": 29,
+          "caption": "Methods for explicitly invoking class-based validation in PolicyCenter."
+        },
+        {
+          "slideNumber": 41,
+          "caption": "An objective slide for creating new validation classes and adding validation checks."
+        },
+        {
+          "slideNumber": 42,
+          "caption": "Guidelines for creating new validation classes for new or existing entities."
+        },
+        {
+          "slideNumber": 43,
+          "caption": "The five-step process for adding a new validation check to a validation class."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration illustrates how to explicitly invoke class-based validation from different points within the PolicyCenter user interface.",
+      "transcriptSummary": "The video shows examples of using PCF attributes like `beforeSave` on a wizard step and `beforeCommit` on a pop-up to trigger validation checks before data is saved or committed."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": ",- — Name the PCF attributes used to invoke class-based validation in a\n¢ popup and in a job wizard.",
+      "referenceAnswer": "BeforeSave attribute for a job wizard step and beforeCommit attribute on a popup.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are working on a Personal Auto policy and need to ensure that all drivers listed on the policy have a valid driver's license state before the policy can be quoted. You suspect that the existing `PALineValidation` class might already be part of a validation chain.",
+      "question": "How would you determine if `PALineValidation` is part of a validation chain, and what would be the first step to add a new check for driver's license state?",
+      "hints": [
+        "Think about the `PolicyPeriodValidation` class and its role in initiating validation.",
+        "Consider the methods within `PCValidationContext` that help trace validation flow.",
+        "Remember the best practice for defining new validation checks."
+      ],
+      "expectedApproach": "Investigate the `PolicyPeriodValidation` class to see if it calls `PALineValidation`. Use `PCValidationContext.showVisited()` during debugging to trace the validation chain. The first step to add a new check would be to create a new method in `PALineValidation` (or a related validator class) that specifically checks the driver's license state."
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration focuses on the practical steps of configuring validation classes, including creating new ones and adding custom validation checks.",
+      "transcriptSummary": "The video guides you through modifying an existing validation class or creating a new one, adding a specific validation method, and integrating it into the `doValidate()` or `validatelmpl()` method. It concludes by showing how to test the new validation in the UI."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this exercise, you will implement a new class-based validation check within an existing PolicyCenter validation class. You will add a validation rule to ensure that a specific condition is met for a policy entity before it can proceed to a certain stage. This will involve identifying the correct validation class, adding a new method for your check, calling it from the main validation entry point, and verifying its behavior in the UI.",
+      "objectives": [
+        "Identify the appropriate validation class for a given policy entity.",
+        "Create a new method to implement a specific validation check.",
+        "Integrate the new validation method into the class's `doValidate()` or `validatelmpl()` method.",
+        "Test and verify the new validation check in the PolicyCenter user interface."
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Class-based validation provides highly flexible and complex data validation using Gosu classes on any policy graph entity.",
+        "Validation levels (`ValidationLevel` typelist) define the restrictiveness of checks, with lower priority values indicating tighter validation.",
+        "Key classes include `PCValidation`, `PCValidationBase`, `PCValidationContext` (for managing state), and `PCValidationResult` (for reporting errors/warnings).",
+        "Validation logic should be modular, with `doValidate()` or `validatelmpl()` calling single-issue methods.",
+        "Validation chaining allows one validation class to explicitly call others, enabling comprehensive checks across related entities.",
+        "Class-based validation is explicitly invoked, often via PCF attributes like `beforeSave` (wizard steps) or `beforeCommit` (pop-ups).",
+        "Configuring involves creating new classes (extending `PCValidationBase`) or adding methods to existing ones, then testing in the UI."
+      ],
+      "realWorldConnection": "In real Guidewire projects, class-based validation is indispensable for enforcing complex business rules that evolve with product offerings. It ensures data quality at critical junctures like quoting or binding, preventing downstream issues and maintaining compliance. Mastering this allows you to build robust, adaptable policy administration systems that meet dynamic business requirements."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_08_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_08_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_08_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_08_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "PP_08_03.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_08_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "PP_08_04.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_08_04.mp4"
+    }
+  ]
+}

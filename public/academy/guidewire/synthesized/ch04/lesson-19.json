@@ -1,0 +1,242 @@
+{
+  "lessonId": "ch04-l19",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 19,
+  "title": "Product Model Availability",
+  "subtitle": "Control product offerings in PolicyCenter using availability tables, scripts, and grandfathering.",
+  "synthesizedAt": "2026-02-16T17:26:54.232209+00:00",
+  "estimatedMinutes": 72,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance company wants to launch a new coverage option, but only in specific states and only after a certain date. Or perhaps you need to discontinue an old coverage, but existing policyholders should still retain it. How do you manage these complex rules without manually updating every policy?",
+      "question": "How can PolicyCenter dynamically control which product components are visible and usable to different users at different times?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what 'availability' means in PolicyCenter's product model.",
+        "Identify the mechanisms used to configure product model availability.",
+        "Explain the purpose and function of availability tables and scripts.",
+        "Describe the concept of 'grandfathering' and its application.",
+        "Understand how to reload availability data in PolicyCenter."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall how product offerings and policy lines are structured in PolicyCenter. Think about how different policy types might have varying coverages or terms based on business rules or regulatory requirements.",
+      "warmupQuestion": "What factors do you think might influence whether a specific insurance coverage is offered to a customer?",
+      "hint": "Consider geographical location, policy effective dates, or even the type of customer."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Product Model Availability Mechanisms",
+      "narrative": "In PolicyCenter, **availability** is all about controlling which specific product model patterns—like coverages, modifiers, or conditions—appear in the user interface. If a pattern is marked as unavailable, users simply won't be able to create new instances of it. This ensures that the application remains streamlined, relevant, and compliant with your business rules and regulatory requirements. \n\nTo manage this, PolicyCenter employs three primary mechanisms: **availability tables**, **availability scripts**, and **grandfathering**. These tools provide immense flexibility, allowing you to tailor product offerings based on various factors such as start and end effective dates, industry code, underwriting company, or even the policy transaction type. For instance, you might want a specific coverage option, like a $1M building limit, to be available only in certain jurisdictions starting on a particular date. \n\nAmong these options, the **Availability Table** is generally the preferred method for configuring availability. Its key advantages include its extendibility, allowing you to incorporate more factors like class codes, and its superior performance compared to scripts. While availability scripts offer powerful customization, large or complex scripts can degrade application performance. It's also important to note that **policy line patterns** are unique in that they *do not* have their own availability logic. This is because policy lines are so closely tied to the product itself; if a product is available, its associated policy line pattern is automatically available as well, with availability logic typically managed at the product level.",
+      "keyPoints": [
+        "Availability controls which product model patterns are visible and usable in the UI.",
+        "Primary mechanisms are Availability Tables, Availability Scripts, and Grandfathering.",
+        "Availability Tables are preferred for their extendibility and performance.",
+        "Policy line patterns do not have individual availability logic; it's determined at the product level."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An underwriter's question about how to specify product offerings based on various factors like jurisdiction and effective dates."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of availability in the product model, highlighting factors influencing pattern availability and the impact of an unavailable pattern."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The three main options for configuring availability: Lookup Tables (preferred), Availability Scripts, and Grandfathering, along with Offerings."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is Availability?",
+          "content": "In PolicyCenter, availability determines whether a coverage, modifier, or other product model pattern appears in the user interface, allowing users to create instances of it."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Availability Logic: Scripts and Determination Process",
+      "narrative": "Determining whether a product model entity is available is a multi-step process within PolicyCenter. First, the system consults the appropriate **availability lookup table** to establish an initial set of potentially available entities. This table provides a foundational filter based on defined dimensions such as start/end effective dates, state, or underwriting company. \n\nAfter this initial filtering, PolicyCenter applies any existing **availability scripts** to further refine the list. These scripts, written in Gosu, are powerful tools that must return a `true` or `false` value. They allow for more complex, conditional logic that might not be possible with simple equality comparisons in a lookup table. For example, a script could make a coverage available only for vehicles manufactured after a specific year. It's crucial to understand that an availability script can only *further restrict* the availability determined by the lookup table; it cannot make an entity available if the lookup table has already marked it as unavailable. While scripts offer great flexibility, it's vital to keep them efficient, as overly complex scripts can significantly degrade performance. A key point to remember is that Product Designer *does not* validate or compile these scripts, so you must use Guidewire Studio to ensure they are syntactically correct and compile without errors.",
+      "keyPoints": [
+        "Entity availability is determined first by lookup tables, then refined by availability scripts.",
+        "Availability scripts are Gosu expressions returning a boolean, used for complex conditions.",
+        "Scripts can only restrict, not expand, availability determined by lookup tables.",
+        "Complex scripts can impact performance and must be validated in Studio."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "A table listing various product model patterns and whether they include availability logic, noting that PolicyLine patterns are an exception."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A configuration developer asks how availability lookup tables and scripts interact to determine availability."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Script Performance & Validation",
+          "content": "Availability scripts, while powerful, can degrade performance if overly complex. Product Designer does not validate them; always use Studio to ensure correct compilation and efficiency."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Grandfathering: Managing Discontinued Offerings",
+      "narrative": "When an insurer needs to discontinue a product model pattern, such as a specific coverage, **grandfathering** provides a crucial mechanism to manage its lifecycle without disrupting existing policies. Grandfathering allows a pattern to remain available on policies where it already exists, even if it's marked as unavailable for new business or new additions. This approach strikes a balance: it ensures continuity for existing customers who rely on that coverage, while allowing the insurer to retire obsolete or non-compliant offerings for new policies. \n\nFor example, consider a medical payments coverage that is generally made unavailable after January 1st, 2016. Through grandfathering rules, this same coverage might remain accessible in a specific state, like California, until a later date, such as January 31st, 2019. This demonstrates how grandfathering can accommodate regional differences and specific regulatory requirements. \n\nGrandfathering also plays a significant role in **renewal scenarios**. Even if a policy's effective date is after the general unavailability date, a grandfathered coverage can still be renewed for existing policies. This ensures that renewals align with both regulatory mandates and existing customer agreements, preventing unexpected policy changes. The criteria for grandfathering are typically determined by factors such as the state, an end effective date for grandfathered status, and the underwriting company. Once a grandfathered entity is removed from a policy, however, it cannot be added back, reinforcing its role in managing the graceful deprecation of product offerings.",
+      "keyPoints": [
+        "Grandfathering allows discontinued patterns to remain on existing policies.",
+        "It balances continuity for existing customers with retiring obsolete offerings.",
+        "Grandfathering can be configured for specific states and effective dates.",
+        "Renewals for grandfathered coverages are permitted under defined rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "A flowchart illustrating the multi-step process of determining entity availability, including checks for offerings, lookup tables, scripts, and grandfathering."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "An example showing medical payments coverage made unavailable generally but grandfathered in California until a later date."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A business analyst asks about the definition of grandfathering."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explanation of grandfathering when discontinuing a coverage, detailing its purpose and the factors that determine it."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will showcase the practical advantages of using availability tables over scripts. Pay close attention to how the table's dimensions (like state, date, and product type) allow for complex, multi-dimensional availability logic to be managed efficiently and extendably.",
+      "transcriptSummary": "The video highlights how availability tables are more extendable and offer better performance than scripts. It demonstrates how to define criteria based on multiple dimensions such as date, state, industry, and product, and how these criteria determine whether a pattern is available. It also shows how state and jurisdiction lists are configurable."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Managing Availability Data and Configuration",
+      "narrative": "After making changes to availability configurations in Product Designer, such as updating lookup tables or scripts, it's essential to **reload the availability data** to ensure these changes are reflected in your running PolicyCenter application. This process synchronizes the XML configuration files (where Product Designer stores the availability data) with the database. Reloading ensures that new lookups are added, existing ones are updated, and removed lookups are deleted from the database, maintaining data integrity and consistent application of availability rules. It's important that the external lookup directory contains a complete set of lookups for the entire product model, as you cannot update lookups for a single coverage by including just one XML file. \n\nFurthermore, PolicyCenter allows for detailed **state and jurisdiction configurations**, which add another layer of granularity to availability settings. These lists are fully configurable, enabling you to tailor product offerings to meet specific regional regulatory requirements. Understanding how to manipulate these settings is crucial for compliance and optimizing your product portfolio. As you configure availability using lookup tables and scripts, focus on the interplay between these components—how the table's dimensions establish a baseline and how scripts can further refine these selections. This hands-on approach will solidify your understanding of PolicyCenter's powerful and flexible product configuration capabilities.",
+      "keyPoints": [
+        "Reloading availability data syncs XML configurations with the database.",
+        "The external lookup directory must contain a complete set of lookups for the product model.",
+        "State and jurisdiction lists are configurable for tailored availability.",
+        "Hands-on practice helps understand the interaction between tables and scripts."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Steps for dynamically reloading availability tables, scripts, and grandfathering criteria in PolicyCenter."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "A configuration developer asks about the steps to reload availability data after making changes in Product Designer."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "An example of configuring availability for a Personal Auto Line, showing the interface for managing availability settings."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "An example of a renewed policy in California with grandfathered medical payments coverage, demonstrating how availability rules are applied."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Data Integrity",
+          "content": "Always ensure the external lookup directory contains a complete set of lookups when reloading availability data to prevent database corruption from incomplete updates."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company is launching a new 'Eco-Friendly Vehicle Discount' modifier. This modifier should only be available for Personal Auto policies in California and Oregon, and only for vehicles manufactured after 2018. Additionally, it should not be available for 'New Business' transactions, only for 'Renewal' and 'Policy Change'.",
+      "question": "How would you configure the availability for this new 'Eco-Friendly Vehicle Discount' modifier using both an availability table and, if necessary, an availability script?",
+      "hints": [
+        "Start by defining the basic criteria (states, transaction types) in the availability lookup table.",
+        "Consider which criteria might require a Gosu script for more complex logic.",
+        "Remember that scripts can only *further restrict* availability, not expand it."
+      ],
+      "expectedApproach": "Define rows in the availability table for California and Oregon, specifying 'Renewal' and 'Policy Change' job types. Then, create an availability script that checks the vehicle's manufacturing year (e.g., `vehicle.Year > 2018`)."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis availability?",
+      "referenceAnswer": "What is availability?\n\nAvailability in the user interface means that a coverage (or any other pattern on which\nthe availability is set), either shows up or does not show up in the application.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "List at least two factors that influences the availability of a coverage\n¢ pattern.",
+      "referenceAnswer": "In PolicyCenter, the availability of a coverage pattern or any other pattern is based on\ndifferent factors including:\nStart and end effective dates\nIndustry code\nUnderwriting company\nPolicy transaction type",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "All of the product model patterns have availability logic, except for?",
+      "referenceAnswer": "Policy line patterns.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "e What is grandfathering?",
+      "referenceAnswer": "What is grandfathering?\n\nGrandfathering lets insurers continue to offer coverage patterns (or other patterns)\neven though they may not be available to new customers.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Which patterns have grandfathering availability?\n\n¢ “ A) Coverage\n\nB) Product\nC) PolicyLine\nD) Condition\n\nE) Coverage term",
+      "referenceAnswer": "The correct answers are A), D), and E).",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Product model availability controls UI visibility and usability of patterns.",
+        "Availability is managed through lookup tables, scripts, and grandfathering.",
+        "Lookup tables are preferred for their extendibility and performance.",
+        "Availability scripts provide complex conditional logic but require careful management.",
+        "Grandfathering allows discontinued patterns to remain on existing policies.",
+        "Reloading availability data is crucial for syncing configuration changes."
+      ],
+      "realWorldConnection": "Mastering product model availability is fundamental for any Guidewire PolicyCenter implementation. It ensures that your insurance products are offered correctly, comply with regulations, and adapt to evolving business needs, directly impacting underwriting efficiency and customer satisfaction. By strategically using tables, scripts, and grandfathering, you can maintain a dynamic and accurate product catalog.",
+      "nextLessonPreview": "In our next lesson, we'll explore **question sets and offerings**, diving deeper into how these features enable further customization and personalization of the PolicyCenter experience for different customer segments and product variations."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_20_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_20_01.mp4"
+    }
+  ]
+}

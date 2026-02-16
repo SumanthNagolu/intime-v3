@@ -1,0 +1,285 @@
+{
+  "lessonId": "ch06-l07",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 7,
+  "title": "Sending Invoices",
+  "subtitle": "Master the lifecycle of invoices, from creation to payment, in BillingCenter.",
+  "synthesizedAt": "2026-02-16T17:48:48.534857+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're managing billing for a large insurance company. Every day, thousands of policies need to be billed, and payments need to be collected. How do you ensure that customers receive their invoices on time, that fees are correctly applied, and that small balances are handled efficiently without manual intervention?",
+      "question": "What automated processes and configurations are essential to manage this complex invoicing workflow seamlessly?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the basic lifecycle of a responsive invoice in BillingCenter.",
+        "Identify the tools available for testing the invoice lifecycle in a development environment.",
+        "Explain how invoice processing fees are configured and applied in BillingCenter.",
+        "Differentiate between 'carry forward' and 'write off' methods for handling low balance invoices.",
+        "Outline the process of automated (non-responsive) billing and payment requests.",
+        "Recognize the various statuses and date calculations within the payment request cycle."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored how charges are sliced into invoice items. Now, we'll build on that foundation to understand how these invoice items are assembled into invoices and sent to customers, or processed automatically.",
+      "warmupQuestion": "Think about a bill you recently received. What were the key stages it went through from creation to payment?",
+      "hint": "Consider the initial generation, when it became due, and when it was considered paid."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Responsive Invoice Lifecycle",
+      "narrative": "In BillingCenter, the invoicing process can be broadly categorized into two types: **automatic** and **responsive**. Automatic billing involves BillingCenter sending payment requests directly to financial institutions, like banks or automatic clearing houses (ACH). In contrast, **responsive billing**, the primary focus of this lesson, is when BillingCenter directly bills the insured by sending an invoice via mail or email, requiring a response from them. The `Payment Instrument` field on an account determines whether it will be billed automatically or responsively, with common values including Responsive, EFT/ACH, and Credit Card, among others depending on context.\n\nThe basic lifecycle of a responsive invoice begins with a status of **Planned**. This is the initial state for any newly created invoice. On the designated **bill date** (also known as the invoice date or statement date), a crucial background process called the `Invoice batch process` runs. This batch process is responsible for advancing the invoice's status from Planned to **Billed**. At this point, the invoice has been 'sent' to the customer.\n\nThe lifecycle continues one day after the invoice's **due date**. At this juncture, another batch process, the `Invoice Due batch process`, takes over. It changes the invoice's status from Billed to **Due**. If the invoice has not been paid in full by this time, it is officially considered overdue. Understanding these status transitions—Planned, Billed, and Due—is fundamental to grasping how BillingCenter manages the flow of invoices and tracks their payment status.",
+      "keyPoints": [
+        "BillingCenter supports both automatic and responsive billing.",
+        "Responsive billing involves direct invoicing to the insured.",
+        "The `Payment Instrument` field dictates the billing type for an account.",
+        "Invoices start with a 'Planned' status.",
+        "The `Invoice batch process` changes an invoice's status from 'Planned' to 'Billed' on the bill date.",
+        "The `Invoice Due batch process` changes an invoice's status from 'Billed' to 'Due' one day after the due date."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide setting the stage for understanding invoice processing."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A dialogue between a Business Analyst and a Configuration Developer, setting the context for exploring the invoicing lifecycle and testing tools."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustrates the two main types of billing in BillingCenter: automatic (to a bank) and responsive (direct to insured), highlighting the 'Payment Instrument' field."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The first part of the basic invoice lifecycle, showing an invoice transitioning from 'Planned' to 'Billed' on its bill date via the Invoice batch process."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The second part of the basic invoice lifecycle, demonstrating an invoice moving from 'Billed' to 'Due' one day after its due date, managed by the Invoice Due batch process."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Tools for Invoice Lifecycle Testing",
+      "narrative": "For developers and testers working in a development environment, BillingCenter provides specialized tools to simulate and test the invoice lifecycle efficiently. These tools are crucial for verifying configurations and understanding how invoices behave over time without waiting for actual calendar days to pass. The primary method for testing involves advancing the system clock and manually running batch processes.\n\nIf you have the necessary authorization (e.g., as a Super User), you can advance the testing clock directly from the `QuickJump` field using `Run` commands like `Run Clock withDayls 30` to jump forward by 30 days. Alternatively, you can access these clock manipulation features through the `Internal Tools` tab, typically found by pressing `Alt + Shift + T`. This interface offers more granular control, allowing you to add days, weeks, or months, or set the clock to specific days of the month.\n\nBeyond advancing time, you also need to trigger the batch processes that drive the invoice lifecycle. The `Server Tools` tab, also accessible via `Alt + Shift + T`, provides a facility to run specific batch processes on demand. This is where you would manually execute the `Invoice` batch process to change invoices from Planned to Billed, and the `Invoice Due` batch process to move them from Billed to Due. These tools collectively enable comprehensive testing of the entire invoice lifecycle in a controlled, accelerated environment.",
+      "keyPoints": [
+        "BillingCenter offers tools for testing the invoice lifecycle in development mode.",
+        "The testing clock can be advanced using `Run` commands in `QuickJump` or through `Internal Tools`.",
+        "Batch processes (e.g., Invoice, Invoice Due) can be manually run from the `Server Tools` tab.",
+        "These tools allow for accelerated testing of invoice status changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Details the various tools available in BillingCenter for testing the invoice lifecycle, including commands for advancing the system clock and running batch processes."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through using BillingCenter's testing tools to advance the system clock and run batch processes, allowing you to observe the invoice lifecycle in action.",
+      "transcriptSummary": "The demo shows how to use QuickJump commands and the Internal/Server Tools to simulate the passage of time and trigger the Invoice and Invoice Due batch processes, demonstrating how an invoice's status changes from Planned to Billed and then to Due."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whats the status of every invoice initially after it is created?",
+      "referenceAnswer": "A new invoice has a status of Planned.",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When and how does BillingCenter make an invoice billed?",
+      "referenceAnswer": "On the invoice bill date, the Invoice batch process changes the invoice status to\nBilled.",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "When and how does BillingCenter make an invoice due?",
+      "referenceAnswer": "One day after the invoice due date, the Invoice Due batch process changes the\ninvoice status to Due.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Handling Invoice Processing Fees",
+      "narrative": "Many insurers charge an additional fee for processing invoices, and BillingCenter provides a straightforward way to manage these. Invoice processing fees are specified directly within the **billing plan** associated with an account. This allows for flexible configuration, as different billing plans can have different fee structures.\n\nWhen an invoice fee is defined in the billing plan, it is automatically applied during a specific stage of the invoice lifecycle. Specifically, on the invoice's bill date, when the `Invoice batch process` runs and changes the invoice's status from Planned to Billed, BillingCenter adds the invoice fee. This fee is recorded as a `One-Time charge` on the invoice, and a corresponding invoice item is created for the fee amount. BillingCenter categorizes these invoice fees as **account charges**. It's important to note that a `One-Time charge` type always maps to a single invoice item, and a new `One-Time charge` will be added for the invoice fee every time an invoice becomes billed.\n\nWhile this lesson focuses on invoice fees, it's worth mentioning that BillingCenter also supports **installment fees**, which can be specified on the payment plan. For more comprehensive details on various fee types and their configurations, you can refer to the BillingCenter Application Guide. The ability to automatically apply these fees ensures that all relevant charges are accurately reflected on the customer's invoice without manual intervention.",
+      "keyPoints": [
+        "Invoice processing fees are defined in the billing plan.",
+        "Fees are added as `One-Time charges` when an invoice transitions from 'Planned' to 'Billed' by the `Invoice batch process`.",
+        "An invoice item is created for the fee amount, categorized as an account charge.",
+        "BillingCenter also supports installment fees, configured on the payment plan."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "A dialogue illustrating the business need to add processing fees and Marci's explanation of how BillingCenter handles them via the billing plan."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Demonstrates how an invoice processing fee, specified in the billing plan, is added as a One-Time charge when the invoice becomes billed, showing the fee reflected in the invoice details."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to configure an invoice processing fee within a billing plan and observe its automatic application to an invoice.",
+      "transcriptSummary": "The demo illustrates navigating to a billing plan, specifying an invoice fee amount, and then advancing the clock and running the Invoice batch process to see the fee added to a newly billed invoice."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "When does BillingCenter add an invoice fee to an invoice?",
+      "referenceAnswer": "The invoice fee is added when an invoice is billed.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Where do you specify the amount of an invoice fee?",
+      "referenceAnswer": "The billing plan",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Managing Low Balance Invoices",
+      "narrative": "Sending an invoice for a very small amount can sometimes cost more in administrative overhead than the actual amount collected. To address this, insurers typically have policies for handling low balance invoices, either by writing off the trivial amount or carrying it forward to a subsequent invoice. BillingCenter provides robust functionality to manage these scenarios through settings on the billing plan.\n\nThe `Low Balance Invoices` section of the billing plan allows you to define a `Low Balance Threshold` and specify `Low Balance Handling` as either `Carry Forward` or `Write Off`. When the `Invoice batch process` runs on the invoice bill date, it checks the invoice's total amount against this threshold. If the total is below the `Low Balance Threshold`, BillingCenter applies the configured handling method.\n\nWith `Carry Forward` handling, if the invoice amount is below the threshold, the batch process moves all invoice items from the current (low balance) invoice to the next planned invoice. The original (now empty) invoice's status is then changed to `Carried Forward`. An important exception is if the low balance invoice is the final invoice in a series; in this case, it will still become billed on its bill date because there's no subsequent planned invoice to carry the items forward to. BillingCenter does not automatically delete these empty, carried-forward invoices, but they can be manually deleted from the Invoices screen.\n\nAlternatively, with `Write Off` handling, if the invoice amount is below the threshold, the `Invoice batch process` directly writes off the due amount. The invoice's status is then changed to `Written Off`. This effectively cancels the small outstanding balance. The invoice lifecycle diagram is updated to reflect these additional possible outcomes: an invoice can now transition from Planned to Billed, Carried Forward, or Written Off, providing a comprehensive view of how BillingCenter handles various invoicing scenarios.",
+      "keyPoints": [
+        "Low balance invoices can be handled by carrying forward the amount or writing it off.",
+        "The `Low Balance Threshold` and `Low Balance Handling` are configured in the billing plan.",
+        "If 'Carry Forward' is selected, invoice items are moved to the next planned invoice, and the original invoice status becomes 'Carried Forward'.",
+        "If 'Write Off' is selected, the due amount is written off, and the invoice status becomes 'Written Off'.",
+        "The invoice lifecycle now includes 'Carried Forward' and 'Written Off' as possible outcomes from the 'Planned' status."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "A discussion highlighting the challenge of low balance invoices and BillingCenter's solutions: carry forward or write off."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Illustrates the 'Carry Forward' mechanism for low balance invoices, showing how charges are moved to the next planned invoice and the original invoice's status changes."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Demonstrates the 'Write Off' mechanism for low balance invoices, where the amount is written off and the invoice status changes to 'Written Off'."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "A revisited invoice lifecycle diagram, incorporating the 'Carry Forward' and 'Written Off' outcomes alongside the standard 'Billed' status."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An account has a billing plan with a 'Low Balance Threshold' of $10 and 'Low Balance Handling' set to 'Carry Forward'. An invoice is generated with a total amount due of $7. It is not the final invoice for the policy.",
+      "question": "Describe the expected outcome for this invoice when the Invoice batch process runs on its bill date. What will be the status of the original invoice, and what happens to its invoice items?",
+      "hints": [
+        "Recall the definition of 'Carry Forward' handling.",
+        "Consider the role of the 'Invoice batch process' and the 'Low Balance Threshold'."
+      ],
+      "expectedApproach": "The learner should explain that the invoice items will be moved to the next planned invoice, and the original invoice's status will change to 'Carried Forward'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Automated Billing and Payment Requests",
+      "narrative": "Beyond responsive billing, BillingCenter also excels at **automated (non-responsive) billing**, where customers typically don't receive a direct bill. Instead, payments are automatically requested from financial institutions, such as credit card companies or banks, based on pre-arranged payment instruments like EFT/ACH or credit cards. This method significantly streamlines the payment collection process for both the insurer and the insured.\n\nThe core of automated billing revolves around **payment requests**. When an invoice is ready for billing, the `Invoice batch process` not only sets the invoice status but also initiates a payment request. This request is then managed by the `Payment Request batch process`, which advances its status and triggers the necessary external processing. Payment requests are scheduled based on the invoice's due date and specific settings within the account's billing plan, particularly the `Payment Request Status` configurations.\n\nThe **payment request cycle** mirrors the invoice lifecycle, defining stages for electronic payment requests to remote systems. Key statuses include:\n*   **Created**: The initial status of the request.\n*   **Requested**: (Optional) Indicates the request has been sent to a payment gateway or intermediary, potentially triggering the creation of an EFT request record sent to an external EFT system.\n*   **Fixed**: The amount and payment instrument are locked and cannot be changed, though the request could be canceled and a new one created.\n*   **Drafted**: The date the request is sent to the bank, and where, through configuration, the payment can be automatically created (assuming debit requests are honored).\n*   **Closed**: The payment request is no longer an active work item for BillingCenter.\n\nThese statuses are driven by dates calculated from the invoice's due date and the billing plan's `Payment Request Status` settings (e.g., `Requested: # of Days After`, `Fixed: # of Days Before`, `Drafted: # of Days Before`). For example, a payment request might be 'Fixed' a certain number of days before the 'Draft Date', which is when the payment is actually initiated. The `Account` tab under `Payments` provides a view of these payment requests, showing their statuses and the dates when they advance through their lifecycle. It's important to note that payment requests themselves do not directly affect BillingCenter's T-accounts; rather, any automatically created payments are subject to their own accounting and billing cycle, requiring further configuration and integration work to implement fully.",
+      "keyPoints": [
+        "Automated billing uses payment requests for non-responsive payment instruments.",
+        "The `Invoice batch process` initiates payment requests, and the `Payment Request batch process` advances their status.",
+        "Payment requests are scheduled based on invoice due dates and billing plan settings.",
+        "Key payment request statuses include Created, Requested, Fixed, Drafted, and Closed.",
+        "Dates for status transitions are calculated from the invoice due date and billing plan settings.",
+        "Payment requests do not directly impact BillingCenter's T-accounts; associated payments have their own accounting."
+      ],
+      "figures": [
+        {
+          "slideNumber": 29,
+          "caption": "A dialogue introducing the concept of automated billing, where payments are processed without direct customer interaction."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Explains the role of payment requests in automated billing, detailing how the Invoice and Payment Request batch processes manage them."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Illustrates the payment request cycle with an example, showing how statuses like Created, Requested, Fixed, and Drafted are determined by dates relative to the invoice due date and billing plan settings."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Provides a summary of payment request statuses and their associated dates, as seen on the Account tab under Payments, emphasizing the 'Fixed' status's deadline for changes."
+        },
+        {
+          "slideNumber": 33,
+          "caption": "Further details on the automated billing process and payment request management."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Consider the following invoice details and billing plan settings. What is\nY the deadline for changing the payment request?\n\n| 02/0/2020 02/11/2020 1000000345 No Planned $1,232.40",
+      "referenceAnswer": "3/07/2018 because the Draft Date is three days before the Due Date and the\npayment request is fixed one day before the Draft Date.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "BillingCenter supports both responsive (direct to insured) and automatic (to financial institution) billing.",
+        "The basic invoice lifecycle progresses from Planned to Billed (via Invoice batch process) and then to Due (via Invoice Due batch process).",
+        "Development tools allow advancing the system clock and manually running batch processes for testing.",
+        "Invoice processing fees are configured in the billing plan and added as One-Time charges when an invoice is billed.",
+        "Low balance invoices can be 'Carried Forward' to the next invoice or 'Written Off', based on billing plan settings.",
+        "Automated billing utilizes payment requests with a distinct lifecycle (Created, Requested, Fixed, Drafted, Closed) driven by batch processes and billing plan configurations."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of these invoicing lifecycles and configuration options is critical for ensuring accurate billing, efficient payment collection, and compliance with financial regulations. Properly configured billing plans and automated processes reduce manual effort, improve customer satisfaction, and maintain healthy cash flow for insurers."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In a BillingCenter development environment, create a new account and policy. Configure a billing plan with an invoice processing fee and a low balance handling rule (e.g., 'Carry Forward'). Then, use the testing tools to advance the system clock and run the necessary batch processes to observe the invoice lifecycle, the application of the invoice fee, and the handling of a low balance invoice.",
+      "objectives": [
+        "Create and configure a billing plan with specific fee and low balance settings.",
+        "Simulate the invoice lifecycle using BillingCenter's testing clock and batch processes.",
+        "Verify the correct application of invoice processing fees.",
+        "Observe how low balance invoices are handled according to the billing plan."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_07-02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_07-02.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_07_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_07_01.mp4"
+    }
+  ]
+}

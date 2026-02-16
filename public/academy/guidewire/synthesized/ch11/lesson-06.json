@@ -1,0 +1,404 @@
+{
+  "lessonId": "ch11-l06",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 6,
+  "title": "XML Modeler and Strongly Typed XML",
+  "subtitle": "Mastering XML structure, schema, and model-driven generation in Guidewire.",
+  "synthesizedAt": "2026-02-16T18:52:46.188264+00:00",
+  "estimatedMinutes": 73,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building an integration with an external system that requires data in a very specific XML format. Manually constructing complex XML strings in your code can be tedious, error-prone, and difficult to maintain as requirements change. How can you ensure your XML output is always correct, validated, and easily adaptable?",
+      "question": "What tools and techniques can help you generate robust and maintainable XML payloads in a Guidewire application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Review the fundamentals of Extensible Markup Language (XML) and its structure.",
+        "Understand the concept of XML elements and their various content types.",
+        "Explain the purpose and benefits of the XmlElement class for object-oriented XML interaction.",
+        "Define XML Schema Definition (XSD) and its role in structuring XML documents.",
+        "Differentiate between untyped and strongly typed XML and the advantages of using strongly typed XML.",
+        "Describe how to make an XSD file available within the Guidewire environment.",
+        "Demonstrate how to parse and generate strongly typed XML files using Gosu.",
+        "Understand the purpose, benefits, and components of Guidewire XML Models (GX Models).",
+        "Learn to create and add fields to an XML model using the XML Modeler editor in Guidewire Studio.",
+        "Generate XML output from an entity instance using an XML model.",
+        "Customize XML model output behavior using GXOptions, including `Incremental`, `Verbose`, and `SuppressExceptions`.",
+        "Optimize XML model output performance by configuring serialization options like sorting and validation.",
+        "Utilize XML model labels to filter properties and generate context-specific XML payloads.",
+        "Understand and apply XML model properties such as `$ShouldSend` and `$HasExceptions`.",
+        "Perform necessary deployment steps for new or modified XML models."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Before diving into advanced XML modeling, it's helpful to recall your basic understanding of XML as a data format and how it's used for data exchange.",
+      "warmupQuestion": "What are the core components of an XML document, and why is a consistent structure important for integrations?",
+      "hint": "Think about tags, attributes, and nesting."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "XML Fundamentals and Structure",
+      "narrative": "Extensible Markup Language, or XML, is a hierarchical data structure primarily designed for transporting and storing data. Unlike HTML, XML focuses on describing data rather than displaying it. A fundamental rule in XML is that all elements must have a closing tag, except for the XML declaration itself, ensuring a well-formed document. XML tags are case-sensitive, meaning `<tag>` and `<Tag>` are treated as different elements. These tags, also known as elements, must be properly nested within each other, and every XML document must contain a single root element that acts as the parent for all other elements. Elements can also possess attributes, which are name/value pairs providing additional metadata, and their values must always be quoted. Special characters like `\"`, `&`, `'`, `<`, and `>` must be replaced with predefined entities to maintain XML validity. \n\nXML elements can contain various types of content. A simple element might hold a plain text value, like `<greeting>Hello</greeting>`. More complex elements can contain one or more child elements, forming a nested structure, or even mixed content, where text and child elements coexist. An element can also be empty, serving as a placeholder or carrying information solely through its attributes. Understanding these basic rules is crucial for working with any XML data, whether it's for configuration files or integration messages.",
+      "keyPoints": [
+        "XML is a hierarchical data structure for data transport and storage.",
+        "XML elements (tags) are case-sensitive, must be properly nested, and require closing tags.",
+        "XML documents must have a single root element.",
+        "Elements can have optional attributes (name/value pairs, values must be quoted).",
+        "XML elements can contain text, child elements, mixed content, or be empty."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An example of an XML document structure, showing nested elements and attributes."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A review of core XML rules, including case sensitivity, nesting, and special characters."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustrates different types of XML element content: simple value, child elements, mixed content, and empty."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Object-Oriented XML Interaction and Serialization",
+      "narrative": "Interacting with XML data in an object-oriented way significantly simplifies development. The `XmlElement` class in Gosu allows developers to manipulate XML data as objects rather than raw text. Instead of parsing and modifying strings, you can work with a graph of `XmlElement` objects, making it easier to read, create, modify, and export XML. This class can import XML from various sources, including files, input streams, strings, byte arrays, and URLs, and conversely, export a graph of `XmlElement` objects back into standard XML format.\n\nCentral to data exchange is the concept of **serialization**, which is the process of converting a data structure or object into a sequence of bits. This allows the data to be stored, transmitted, and later reconstructed into an identical clone of the original object. The reverse process is called **deserialization**. While serialization for simple types like integers and strings is straightforward, it can become complex for data types such as dates, hexadecimal values, or images. Guidewire simplifies this by using *simple value objects* in Gosu, which encapsulate both the value and the necessary serialization logic, making complex data types easier to manage. This object-oriented approach, combined with robust serialization, forms the backbone of efficient XML handling in Guidewire.",
+      "keyPoints": [
+        "The `XmlElement` class enables object-oriented interaction with XML data.",
+        "`XmlElement` objects can be imported from various sources and exported as standard XML.",
+        "Serialization converts data structures into a bit sequence for storage or transmission.",
+        "Deserialization reconstructs the original object from the serialized bit sequence.",
+        "Guidewire uses simple value objects to handle complex serialization logic for various data types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Depicts the `XmlElement` class's role in representing, importing, and exporting XML data."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Visualizes the serialization process, converting XML elements into a sequence of bits."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "A blank slide serving as a visual separator or transition."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Serialization",
+          "content": "The process of converting a data structure or object into a format that can be stored or transmitted and reconstructed later. In XML, this means converting `XmlElement` objects into a string or byte stream."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "XSD and Strongly Typed XML",
+      "narrative": "While XML defines the syntax for data, it doesn't inherently define the *structure* or *content rules* for specific XML documents. This is where **XML Schema Definition (XSD)** comes in. An XSD is itself an XML-like file format that precisely describes the legal structure, content, and data types for elements and attributes within one or more XML documents. It acts as a blueprint, informing how an XML document should be constructed.\n\nWhen working with XML in Guidewire, you'll encounter two main approaches: **untyped XML** and **strongly typed XML**. If an XML document is imported without an accompanying XSD, it's considered untyped. In this scenario, the system has no predefined rules to validate against, and you interact with the XML in a more generic, flexible, but potentially error-prone manner. Conversely, if an XML document is imported *through* an XSD, it becomes **strongly typed**. This means the XML is validated against the XSD during both import and export, significantly reducing errors related to incorrect data types or structural inconsistencies. Strongly typed XML is highly recommended because it leverages the XSD to provide static typing, making your code more robust and easier to maintain. The XSD must be known to the application during startup, as there's no way to inject it into the type system at runtime. It's the responsibility of your import code to ensure the correct XSD is used for a given XML document.",
+      "keyPoints": [
+        "XSD (XML Schema Definition) defines the legal structure and content for XML documents.",
+        "Untyped XML is imported without an XSD, offering flexibility but increasing error potential.",
+        "Strongly typed XML is imported with an XSD, providing validation and static typing.",
+        "Strongly typed XML is highly recommended for reducing errors.",
+        "XSDs must be known to the Guidewire application at startup."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "An example of an XSD file, illustrating how it defines the structure of an XML document."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Compares untyped XML (no XSD) with strongly typed XML (validated by XSD)."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Highlights the benefits of strongly typed XML, emphasizing validation and error reduction."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "XSD (XML Schema Definition)",
+          "content": "An XML-based language used to define the structure, content, and data types of XML documents. It acts as a grammar for XML."
+        },
+        {
+          "type": "best_practice",
+          "title": "Prefer Strongly Typed XML",
+          "content": "Always use an XSD to define and validate your XML when possible. This dramatically reduces runtime errors and improves code maintainability by providing compile-time checks and static typing."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Making XSD Available, Parsing, and Generating Strongly Typed XML",
+      "narrative": "To leverage strongly typed XML in Guidewire, you must make your XSD files available to the application. This is achieved by placing the XSD file in any subdirectory of your `gsrc` folder within your project. The subdirectory structure then becomes part of the package name, allowing Gosu to automatically recognize and incorporate the types defined in the XSD. For instance, if your XSD is in `gsrc/acme/xml/config.xsd`, its types will be available under `acme.xml.config`. This integration allows Gosu to create native types from your XSD definitions, including element types and attributes, which appear naturally in the Gosu class hierarchy.\n\nOnce an XSD is available, you can easily parse and generate XML documents using Gosu. When parsing a strongly typed XML file, Gosu performs structural validation against the XSD. If the XML is not well-formed or valid according to the schema, Gosu will throw an `XmlException`. The primary class for representing an XML element is `XmlElement`. For XSD-based elements, Gosu uses special properties prefixed with a dollar sign (e.g., `$Children`, `$AttributeNames`) to avoid ambiguity with custom child elements or attributes that might share the same name as intrinsic `XmlElement` properties. This ensures you can access both the intrinsic properties of the `XmlElement` object and the custom elements defined by your XSD using dot notation.\n\nGenerating XML using an XSD is equally straightforward. You instantiate the root element type defined by your XSD, populate its properties, and then use serialization methods to convert it into an XML string or byte array. This process ensures that the generated XML conforms to the specified schema, maintaining data integrity and consistency for integrations.",
+      "keyPoints": [
+        "Place XSD files in `gsrc` subdirectories to make them available to Guidewire.",
+        "Gosu automatically creates native types from XSD definitions.",
+        "Parsing strongly typed XML validates against the XSD, throwing `XmlException` on errors.",
+        "`XmlElement` properties for XSD-based elements use a `$` prefix (e.g., `$Children`).",
+        "Generate XML by instantiating XSD root elements and populating their properties."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Illustrates how to make an XSD file available to Guidewire by placing it in the `gsrc` directory."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Shows a code example for parsing a strongly typed XML file and explains `XmlElement` properties."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Provides a code example for generating XML using an XSD and highlights key syntax."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Parsing Strongly Typed XML",
+          "code": "uses java.io.File\n\nvar xmlFile = new File(\"path/to/my.xml\")\nvar xsdType = trainingapp.demo.xsd.config.Config // Assuming config.xsd is in gsrc/trainingapp/demo/xsd\n\nvar configElement = xsdType.parse(xmlFile.asUTFString())\n\n// Accessing properties\nprint(configElement.Database.name)\nprint(configElement.$Children.Count)",
+          "explanation": "This code snippet demonstrates how to parse an XML file using its associated XSD type. It then shows how to access elements and their properties, distinguishing between XSD-defined elements (like `Database.name`) and intrinsic `XmlElement` properties (like `$Children`)."
+        },
+        {
+          "language": "gosu",
+          "title": "Generating XML using an XSD",
+          "code": "uses gw.xml.XmlSerializationOptions\nuses trainingapp.demo.xsd.policyholder.PolicyHolder\n\nvar policyHolder = new trainingapp.demo.xsd.policyholder.PolicyHolder()\npolicyHolder.Name = \"John Doe\"\npolicyHolder.Address.Street = \"123 Main St\"\npolicyHolder.Address.City = \"Anytown\"\n\nvar serializationOptions = new XmlSerializationOptions() { :Sort = false, :Validation = false }\nvar xmlString = policyHolder.asUTFString(serializationOptions)\nprint(xmlString)",
+          "explanation": "This example shows how to create an XML object based on an XSD type, populate its fields, and then serialize it into an XML string. It also demonstrates how to configure serialization options for performance."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Introduction to XML Models (GX Models)",
+      "narrative": "Beyond direct XSD parsing and generation, Guidewire offers **XML Models**, often referred to as GX Models, as a powerful and configurable way to serialize data model entity instances, Gosu classes, or Java objects into XML documents. GX Models are particularly valuable for messaging integrations because they automate XML generation, reducing manual effort and potential for errors. They are efficient, easy to configure, and perform well, making them an excellent choice for creating message payloads.\n\nAn XML model accepts a single input object, typically a Guidewire entity, and generates XML output with values derived from that object and its related entities. This approach offers several significant benefits: it eliminates the need for manual XML construction, minimizes errors, and simplifies adapting to changing XSD requirements. GX Models also formalize definitions, produce concrete artifacts beyond mere documentation, and facilitate parallel development with a shared understanding of the data structure. Crucially, they automatically publish their generated XSDs under a URL, allowing external applications to import and validate any XML generated by the model. This ensures consistency and adherence to the defined schema.\n\nEach XML model is built upon a **base type**, which dictates the type of object you must pass to the model and, consequently, the data (properties, virtual properties, related entities) that can be included in the generated XML. The XML Modeler editor in Guidewire Studio provides a visual interface for creating and managing these models, with files typically having a `.gx` extension.",
+      "keyPoints": [
+        "XML Models (GX Models) serialize data model entities, Gosu, or Java objects into XML.",
+        "They are ideal for messaging integrations, automating XML generation and reducing errors.",
+        "GX Models accept a single input object and derive XML values from it and related entities.",
+        "Benefits include no manual XML, easy XSD changes, published XSDs, and formalized definitions.",
+        "Each model has a base type that determines the input object and available data.",
+        "The XML Modeler editor (`.gx` files) is used to create and manage models."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "A blank slide serving as a visual separator or transition."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Illustrates the input (an object) and output (XML) of an XML model, highlighting its dynamic generation capability."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Explains that each XML model has a base type, which determines the input object and available properties."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Shows the XML Modeler editor in Guidewire Studio and how it automatically publishes the generated XSD."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Use GX Models for Integrations",
+          "content": "For generating XML payloads for integrations, GX Models are the preferred Guidewire approach due to their automation, validation, and maintainability benefits over manual XML construction."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Creating and Populating XML Models",
+      "narrative": "Creating an XML model in Guidewire Studio is a straightforward process. You start by right-clicking the desired parent package in your project and selecting `New > GX Model`. During this step, you'll specify the entity or Gosu class that will serve as the model's base type. It's crucial to select the correct type, especially when multiple types with identical names exist across different packages. Initially, the newly created model will be empty, without any fields defined.\n\nThe next step is to add fields to your XML model. In the XML Modeler editor, you'll see a list of available fields from your base type. Fields that can be added are typically bolded; green fields represent database-backed properties, while black fields are virtual properties. Unbolded fields usually indicate complex types (like other entities) that cannot be directly added but whose subfields can be. You can add fields as either 'Key' or 'Normal' properties. A **key property** defines a unique identifier for an entity within the XML and is always exported if the type itself is exported. **Normal properties**, by default, are exported when their containing instance is exported, and null values are typically omitted unless configured otherwise. You can also include other XML models within your current model, allowing for modular and reusable XML structures. After adding all necessary properties, you must generate the code for the XML model, which enables its use in Gosu to convert an entity into its XML representation.\n\nGenerating XML output from your model is done by creating an instance of the XML model, passing in the entity object, and then calling a method like `asUTFString()` to get the XML payload. By default, fields with null values are not exported, which helps keep the XML concise.",
+      "keyPoints": [
+        "Create an XML model by selecting `New > GX Model` and specifying a base entity/class.",
+        "Add fields to the model from the base type; bolded fields are addable (green for database-backed, black for virtual).",
+        "Fields can be 'Key' (unique identifier, always exported) or 'Normal' (exported by default, nulls typically omitted).",
+        "XML models can include other XML models for complex data structures.",
+        "Generate XML output by instantiating the model with an entity and calling `asUTFString()`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Steps to create a new XML model in Guidewire Studio, including selecting the base entity."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Demonstrates how to add fields to an XML model, distinguishing between key and normal properties."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Shows a code example for generating XML output using an XML model instance."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Generating XML from an XML Model",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\nuses trainingapp.xmlmodels.bankaccountmodel.BankAccountModel\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare(ABPerson#PublicID, Relop.Equals, \"ab:98\")\nvar targetPerson = queryObj.select().AtMostOneRow\n\nvar bankAccount = targetPerson.BankAccounts.first()\nvar xml = new BankAccountModel(bankAccount)\nvar payload = xml.asUTFString()\nprint(payload)",
+          "explanation": "This code retrieves a `BankAccount` entity and then uses the `BankAccountModel` to generate an XML string payload. Note that by default, null fields like `EmailAddress1` would not be included in the output."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Customizing and Optimizing XML Model Output",
+      "narrative": "XML model output can be customized using `GXOptions` (Guidewire XML model options), which are passed to an alternate constructor of your XML model. These options provide fine-grained control over how XML is generated:\n\n*   **`Incremental`**: When set to `true`, this option ensures that for normal properties backed by database columns, only properties that have changed within the current database bundle are exported. Key properties on the root entity, however, are always exported regardless of changes. This is particularly useful for optimizing message payloads by sending only the delta. Note that `Incremental` is ignored for virtual or enhancement properties, as their changes cannot be tracked in the database.\n*   **`Verbose`**: Setting `Verbose` to `true` will export an XML element for a property even if its value is `null`. By default, null values are omitted, but `Verbose` allows you to explicitly include them, which might be required by certain integration schemas.\n*   **`SuppressExceptions`**: If `true`, this option prevents exceptions from being thrown during XML generation, especially for properties backed by Gosu enhancement property `get` methods or internal Java code. You can later check for suppressed exceptions using the `$HasExceptions` property on the root XML object and retrieve details with the `eachException` method.\n\nBeyond customization, optimizing performance is crucial for large XML objects. You can achieve significant performance gains by using an `XmlSerializationOptions` object to turn off sorting and validation during serialization. By default, Guidewire sorts child elements to match the XSD order and validates the XML against the associated XSD. While important for correctness, these processes consume considerable resources. If you are confident that your XML objects are already created in the correct order and are valid, disabling `Sort` and `Validation` can make serialization noticeably faster, especially for deeply nested or very large XML structures.",
+      "keyPoints": [
+        "`GXOptions` customize XML model output via an alternate constructor.",
+        "`Incremental` exports only changed database-backed properties (except root key properties).",
+        "`Verbose` exports XML elements for null properties.",
+        "`SuppressExceptions` prevents exceptions during XML generation; check with `$HasExceptions`.",
+        "Optimize performance by disabling `Sort` and `Validation` in `XmlSerializationOptions`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Demonstrates customizing XML model output using `GXOptions`, showing how `Verbose` includes null fields."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Explains how to optimize XML model output performance by disabling sorting and validation during serialization."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Customizing Output with GXOptions",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\nuses gw.api.gx.GxOptions\nuses trainingapp.xmlmodels.bankaccountmodel.BankAccountModel\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare(ABPerson#PublicID, Relop.Equals, \"ab:98\")\nvar targetPerson = queryObj.select().AtMostOneRow\n\nvar bankAccount = targetPerson.BankAccounts.first()\nvar gxOpts = new GxOptions() { :Verbose = true, :Incremental = false }\nvar xml = new BankAccountModel(bankAccount, gxOpts)\nvar payload = xml.asUTFString()\nprint(payload)",
+          "explanation": "This example shows how to use `GXOptions` to include null fields in the XML output by setting `Verbose = true`. This would ensure fields like `EmailAddress1` are present even if their value is null."
+        },
+        {
+          "language": "gosu",
+          "title": "Optimizing Output Performance",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\nuses gw.api.gx.GxOptions\nuses gw.xml.XmlSerializationOptions\nuses trainingapp.xmlmodels.bankaccountmodel.BankAccountModel\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare(ABPerson#PublicID, Relop.Equals, \"ab:98\")\nvar targetPerson = queryObj.select().AtMostOneRow\n\nvar bankAccount = targetPerson.BankAccounts.first()\nvar gxOpts = new GxOptions() { :Incremental = true }\nvar xml = new BankAccountModel(bankAccount, gxOpts)\n\nvar sOpts = new XmlSerializationOptions() { :Sort = false, :Validation = false }\nvar payload = xml.asUTFString(sOpts)\nprint(payload)",
+          "explanation": "This code demonstrates how to apply both `GXOptions` (here, `Incremental = true`) and `XmlSerializationOptions` to optimize the XML generation. By setting `Sort = false` and `Validation = false`, serialization speed can be improved, especially for large XML structures."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Advanced XML Model Features and Deployment",
+      "narrative": "XML models offer advanced features like **labels** to filter properties, allowing a single XML model to generate different XML payloads based on context. You can add labels to properties within the XML Modeler editor. When an instance of the model is created, you pass a label parameter to the constructor, and only the properties associated with that label (and any key properties) are included in the XML. This is incredibly useful for scenarios where different external systems require varying subsets of data from the same entity, eliminating the need for multiple, redundant XML models. Multiple labels can also be combined in a single instance.\n\nEvery XML model also exposes specific **boolean properties** that provide insight into its state and behavior:\n\n*   **`$ShouldSend`**: This property returns `true` if at least one mapped data model field in the model has changed within the local database bundle. It's often used in conjunction with `Incremental` `GXOptions` to determine if a message payload needs to be sent. However, it's important to note that `$ShouldSend` is only evaluated within the context of a transaction and will always be `false` if the model includes any virtual properties.\n*   **`$HasExceptions`**: After generating XML, this property indicates whether any exceptions occurred during the generation process, even if `GXOption.SuppressExceptions` was set to `true`. You can then use the `eachException` method to iterate through and inspect the details of these exceptions.\n\nFinally, after creating or modifying an XML model, you must **deploy your code changes** for them to take effect. This typically involves restarting the Guidewire server from Studio, either in Run or Debug mode. This action ensures that the application reloads the updated XML model definitions and generated classes, making them available for use in your Gosu code and integrations.",
+      "keyPoints": [
+        "XML model labels filter properties, allowing context-specific XML generation from a single model.",
+        "Multiple labels can be combined for flexible output.",
+        "`$ShouldSend` indicates if any mapped data model field has changed within a transaction.",
+        "`$HasExceptions` reports if exceptions occurred during XML generation, even if suppressed.",
+        "Deploy new or modified XML models by restarting the Guidewire server from Studio."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Introduces XML model labels as a mechanism to filter properties and generate context-specific XML."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Shows a code example of using XML model labels to generate different XML outputs for different systems."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Explains XML model boolean properties like `$ShouldSend` and `$HasExceptions`."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Outlines the process of deploying code changes for XML models by restarting the server."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Using XML Model Labels",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\nuses gw.api.gx.GxOptions\nuses gw.xml.XmlSerializationOptions\nuses trainingapp.xmlmodels.bankaccountmodel.BankAccountModel\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare(ABPerson#PublicID, Relop.Equals, \"ab:98\")\nvar targetPerson = queryObj.select().AtMostOneRow\nvar bankAccount = targetPerson.BankAccounts.first()\n\nvar gxOpts = new GxOptions() { :Incremental = false, :Verbose = true, :SuppressExceptions = false }\nvar sOpts = new XmlSerializationOptions() { :Sort = false, :Validation = false }\n\n// Define labels for System A and System B\nvar sysALabels = BankAccountModel.Label.SysA\nvar sysBLabels = BankAccountModel.Label.SysB\n\n// Create model instances with specific labels\nvar modelSysA = new BankAccountModel(bankAccount, gxOpts, {sysALabels})\nvar modelSysB = new BankAccountModel(bankAccount, gxOpts, {sysBLabels})\n\n// Generate payloads\nvar payloadSysA = modelSysA.asUTFString(sOpts)\nvar payloadSysB = modelSysB.asUTFString(sOpts)\n\nprint(\"System A Payload:\\n\" + payloadSysA)\nprint(\"System B Payload:\\n\" + payloadSysB)",
+          "explanation": "This example demonstrates how to use labels to generate different XML payloads from the same `BankAccountModel` for two different systems (SysA and SysB). Each system receives only the properties associated with its specific label, plus any key properties."
+        },
+        {
+          "language": "gosu",
+          "title": "Using XML Model Properties",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\nuses gw.api.gx.GxOptions\nuses gw.transaction.Transaction\nuses trainingapp.xmlmodels.bankaccountmodel.BankAccountModel\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare(ABPerson#PublicID, Relop.Equals, \"ab:98\")\nvar targetPerson = queryObj.select().AtMostOneRow\nvar bankAccount = targetPerson.BankAccounts.first()\n\nTransaction.run(() -> {\n  bankAccount.AccountType = typekey.BankAccountType.TC_CHECKING // Change a field\n  var gxOpts = new GxOptions() { :Incremental = true }\n  var xml = new BankAccountModel(bankAccount, gxOpts)\n  \n  print(\"Should Send: \" + xml.$ShouldSend) // Will be true if AccountType changed\n  print(\"Payload:\\n\" + xml.asUTFString())\n})\n\n// Example for $HasExceptions (conceptual, as actual exceptions depend on model logic)\nvar xmlWithPotentialError = new BankAccountModel(bankAccount, new GxOptions() { :SuppressExceptions = true })\nif (xmlWithPotentialError.$HasExceptions) {\n  print(\"Exceptions occurred during XML generation:\")\n  xmlWithPotentialError.eachException(\\ e -> print(\"  \" + e.Message))\n}",
+          "explanation": "This code snippet illustrates the use of `$ShouldSend` within a transaction context. When `AccountType` is changed and `Incremental` is `true`, `$ShouldSend` will return `true`. It also conceptually shows how `$HasExceptions` and `eachException` can be used to check for and log errors during XML generation, even when exceptions are suppressed."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating an XML model in Guidewire Studio. Pay close attention to how the base type is selected and how fields are added to the model.",
+      "transcriptSummary": "The demo guides you through creating a new GX Model, selecting the base entity (e.g., BankAccount), and then adding various fields to the model, categorizing them as key or normal properties. It shows how the sample XML output updates as fields are added."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to create a new XML model for a `Policy` entity that will be used to send basic policy information to an external reporting system. This system only needs the policy number, effective date, and expiration date.",
+      "question": "Create a new XML model named `ReportingPolicyModel` based on the `Policy` entity. Add the `PolicyNumber`, `EffectiveDate`, and `ExpirationDate` fields as normal properties. What does the generated XML look like for a sample policy?",
+      "hints": [
+        "Start by right-clicking the appropriate package in Studio and selecting `New > GX Model`.",
+        "Ensure you select the correct `Policy` entity as the base type.",
+        "Use the 'Add' button in the XML Modeler editor to select and add the required fields."
+      ],
+      "expectedApproach": "Create a new GX Model, select `Policy` as the base type, add the specified fields, and then inspect the sample XML output in the editor."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Identify if each statement about an XML model is True or False.\n\n“ A)\nB)\n©)\nD)\n\nE)\n\nIt can take any number of input values.\nIt has a published XSD.\nIt can make use of conditional statements and for loops.\n\nIt can include values from both the object that triggered the message event and objects\nrelated to the triggering object.\n\nIt can be used only for payload generation",
+      "referenceAnswer": "aa Identify if each statement about an XML model is True or False.\n\nc A) Itcan take any number of input values. False — XML models always have a single input,\nwhich is the object upon which to base the XML to be generated.\n\nB) Ithasapublished XSD. True\nC) Itcan make use of conditional statements and forloops. False\n\nD)_ Itcan include values from both the object that triggered the message event and objects\nrelated to the triggering object. True — XML models can do this by including fields from the\nrelated objects in the XML model.\n\nE) Itcan be used only for payload generation False — XML models can be used anywhere.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "XML is a hierarchical, case-sensitive data format with strict nesting rules.",
+        "The `XmlElement` class provides an object-oriented way to interact with XML.",
+        "XSDs define XML structure and enable strongly typed XML, which is validated and reduces errors.",
+        "Guidewire XML Models (GX Models) automate XML generation from entities, simplifying integrations.",
+        "GX Models publish their XSDs and can be customized with `GXOptions` (Incremental, Verbose, SuppressExceptions).",
+        "Performance can be optimized by disabling sorting and validation during XML serialization.",
+        "Labels allow a single GX Model to generate context-specific XML payloads.",
+        "Model properties like `$ShouldSend` and `$HasExceptions` provide runtime insights."
+      ],
+      "realWorldConnection": "In real Guidewire projects, XML models are indispensable for building robust and maintainable integrations. They ensure that data exchanged with external systems adheres to strict schemas, reducing integration failures and simplifying future modifications. By leveraging strongly typed XML and GX Models, developers can create reliable and efficient messaging solutions, which are critical for seamless business operations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise involves two main tasks:\n1.  **Generate an XML message payload using an XSD:** You will write Gosu code to create an XML document based on a predefined XSD, populating it with sample data and then serializing it to a string.\n2.  **Use an XML model to generate an XML message payload:** You will create a new XML model in Guidewire Studio, add fields from an existing entity, and then write Gosu code to instantiate this model with an entity instance to generate an XML payload. You will also experiment with `GXOptions` to customize the output (e.g., including null fields).",
+      "objectives": [
+        "Practice parsing and generating strongly typed XML using Gosu and XSDs.",
+        "Gain hands-on experience creating and configuring XML models in Guidewire Studio.",
+        "Learn to generate XML payloads from entities using XML models.",
+        "Experiment with `GXOptions` to control XML model output."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_06_01.mp4"
+    }
+  ]
+}

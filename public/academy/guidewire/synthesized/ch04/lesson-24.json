@@ -1,0 +1,246 @@
+{
+  "lessonId": "ch04-l24",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 24,
+  "title": "Documents",
+  "subtitle": "Explore how PolicyCenter manages electronic files, from creation and storage to production and distribution.",
+  "synthesizedAt": "2026-02-16T17:29:15.813958+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter, and you need to quickly access a photograph of a property, an inspection report, and an email exchange with an insured party for a policy review. These aren't part of the official policy contract, but they're critical for making informed decisions.",
+      "question": "How does PolicyCenter ensure all these diverse, non-contractual files are organized, accessible, and secure?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between documents and contractual forms in PolicyCenter.",
+        "Identify the various storage locations for electronic documents.",
+        "Describe the two primary methods for creating documents within PolicyCenter.",
+        "Explain the document production process, including external and internal system capabilities.",
+        "Understand the architecture of document storage and management, including security and mailing processes."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely worked with digital files like PDFs, Word documents, and emails in other business applications. Think about how those systems handle file storage, versioning, and access.",
+      "warmupQuestion": "What are some challenges you've encountered when trying to find or manage important non-contractual files related to a client or project?",
+      "hint": "Consider issues like inconsistent naming, multiple storage locations, or difficulty tracking changes."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Documents vs. Forms and Their Uses",
+      "narrative": "Before we dive deeper, it's crucial to understand what we mean by 'documents' in PolicyCenter and how they differ from 'forms.' While both are electronic files, **forms** are specific, contractual components of a policy, like declarations pages or endorsements. **Documents**, on the other hand, are electronic files such as PDFs, Word documents, or emails that are *not* part of the contractual policy itself. They serve a crucial role in tracking supplementary information, aiding in policy rating, and recording communications.\n\nFor instance, documents can be used to track detailed information about policy coverage, such as photographs of jewelry or diagrams of a workplace floor plan. They are also vital for recording information used to rate a policy, like assessments from property inspectors, providing valuable context for underwriting decisions. Furthermore, documents are essential for maintaining a comprehensive record of all correspondence with insured parties, ensuring transparency and a clear audit trail. This distinction is fundamental for correctly managing and configuring these elements within the PolicyCenter system, ensuring that contractual obligations are met while supporting business processes with rich, contextual data.",
+      "keyPoints": [
+        "Documents are non-contractual electronic files (PDFs, Word docs, emails).",
+        "Forms are contractual components of a policy.",
+        "Documents track policy coverage details, rating information, and insured correspondence."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Darren, an Insurance Product Manager, highlights the need for creating standard documents like emails and faxes in the new system, prompting the distinction between documents and forms."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This slide defines documents as electronic files containing information pertaining to an account, policy, or job, explicitly stating they are not part of the contractual policy."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Where Documents Reside: The Four Storage Locations",
+      "narrative": "Documents don't just exist in one place; they can reside in several interconnected systems, each playing a specific role in their lifecycle. Understanding these locations is key to grasping PolicyCenter's document management capabilities. The journey often begins on the **user's computer**, where documents are initially created, received, or downloaded. This is the local workspace before files are integrated into broader systems.\n\nFrom there, documents can exist within **PolicyCenter itself**. Here, they are linked to specific accounts, policies, or transactions, allowing for centralized access and management directly within the application. However, PolicyCenter typically stores only metadata about the document, not the document content itself, unless it's a locally produced open-source format.\n\nAnother critical location is the **document production system**. This external system stores templates used to generate standardized documents. When a document is needed, PolicyCenter sends relevant business data and the template name to this system, which then merges the information to produce a draft. Examples include systems like ImageRight, which are specifically designed for robust document generation in the insurance industry.\n\nFinally, the **document management system** acts as the central repository for electronic documents. This system ensures documents are organized, secure, and accessible for various business processes. It stores the 'master' copies of documents, supporting version control and retrieval. PolicyCenter integrates with this system to send new or edited document versions and retrieve stored documents upon request. This multi-layered storage approach ensures both local flexibility and enterprise-wide consistency and security.",
+      "keyPoints": [
+        "Documents can originate or be stored on a user's local computer.",
+        "PolicyCenter links documents to accounts/policies, often storing metadata.",
+        "A document production system stores templates and merges data to create documents.",
+        "A document management system is the central repository for master document copies."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "The first storage location for documents is the user's computer, where files are often created or received."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Documents also exist within PolicyCenter, linked to specific accounts, policies, or transactions for centralized access."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The document production system stores templates used to generate standardized documents with consistent formatting and content."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The document management system serves as the central repository for electronic documents, ensuring organization, security, and accessibility."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Creating Documents: Uploading and Templating",
+      "narrative": "When it comes to bringing documents into PolicyCenter's ecosystem, there are two primary methods, each suited for different scenarios. The first method involves **uploading an existing electronic file** from your computer directly to the document management system. This is a straightforward process, ideal for documents that are already finalized, such as scanned images, external reports, or pre-written correspondence. PolicyCenter provides an 'Upload documents' option, allowing you to drag and drop files or browse your file system. When uploading, you'll typically specify metadata properties for the document, and the uploaded file becomes its content. This process is also used for specific document types like loss runs, which can be uploaded from the Prior Losses tab of the Risk Analysis screen.\n\nThe second method is to **create a new document using a PolicyCenter template**. This approach is powerful for generating standardized documents that require consistent formatting and content derived from PolicyCenter data. When you select a template, PolicyCenter pulls in relevant data from the account, policy, or job to create a draft. This draft is initially a local copy on the document production system (or PolicyCenter server, depending on configuration) and can be reviewed and modified before being finalized and uploaded to the document management system. This ensures consistency, accuracy, and compliance, as the document's structure and much of its content are predefined, allowing underwriters or other users to focus on specific customizations.",
+      "keyPoints": [
+        "Documents can be added by uploading existing files from a user's computer.",
+        "Documents can be generated from templates, merging PolicyCenter data with predefined layouts.",
+        "Uploading is suitable for existing, finalized files; templating is for standardized, data-driven documents."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "One way to create documents is by uploading an existing electronic file from the user's computer to the document management system."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The second method involves creating a new document using a PolicyCenter template, which generates a local copy before uploading to the document management system."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "The Document Production Process: External vs. Internal",
+      "narrative": "Document production is a core process where templates are merged with business data to generate draft documents. This allows users, such as underwriters, to review and modify documents before they are finalized and sent out. The process ensures accuracy and compliance with policy details, as information from the account, transaction, or policy is dynamically inserted into the template.\n\nOften, document production occurs on **external document production systems**, like ImageRight. In this scenario, PolicyCenter sends the template name and relevant field values (such as the current date, recipient's name, and claim number) to the external system. The external system then merges this information with its stored templates and returns a draft document to the PolicyCenter user. This integration allows PolicyCenter to leverage robust, specialized document generation capabilities without performing the merging on its own server. These integrations are typically well-defined and do not require extensive configuration efforts.\n\nIn some cases, document production can occur directly on the **PolicyCenter server**. This approach is more common for open-source formats, such as PDFs, where PolicyCenter can merge the data and template internally to create a draft for the user. While less typical for proprietary formats like Microsoft Word documents, local processing on the PolicyCenter server can streamline the creation of certain document types directly within the application environment, offering flexibility depending on the document's nature and format.",
+      "keyPoints": [
+        "Document production merges templates with business data to create draft documents.",
+        "External systems (e.g., ImageRight) often handle document production, receiving data from PolicyCenter.",
+        "PolicyCenter server can produce documents directly, especially for open-source formats like PDFs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "This diagram illustrates the document production process, where a document template is merged with account data to generate a draft document."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Document production on external systems: PolicyCenter sends data to a document production system (like ImageRight), which merges it with a template and returns a draft."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Document production on the PolicyCenter server: For certain formats, PolicyCenter can merge data and templates internally to create a draft document."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Document Storage Architecture and Mailing Processes",
+      "narrative": "PolicyCenter's document management architecture is designed for robust storage, security, and distribution. Every electronic document is identified by its **MIME type** (e.g., `application/pdf`, `application/msword`), which helps the user's local computer determine the correct application to open and view the document. Beyond the document content itself, the document management system stores a **meta-file** containing crucial information about the document, such as its author, creation date, and security type. This metadata is separate from the document content and is vital for organization and searchability. Documents also have a **security type** (e.g., Internal Only, Sensitive, Unrestricted) to control access, ensuring sensitive information is only visible to authorized personnel. PolicyCenter allows for the configuration of additional custom attributes to extend functionality and meet specific organizational needs.\n\nPolicyCenter includes robust integration with document storage applications, ensuring that master document versions are properly managed. This integration supports version control and retrieval, crucial for maintaining document integrity and accessibility. PolicyCenter can send new or edited document versions to be stored and receives the 'master' version of stored documents upon request. This integration is typically significant in effort but ensures a single source of truth for all documents.\n\nFinally, when it comes to **mailing documents**, PolicyCenter offers flexibility. Users can manually print documents from their office network and mail them via postal services. Alternatively, systems can automate the process: a flag (e.g., a 'Mail copy to recipient' checkbox) can be set on the document, triggering an integration between the document management system and an external printing/mailing system. This ensures that critical documents reach recipients efficiently, adhering to legal requirements, especially given that most important insurance documents are still delivered via postal mail.",
+      "keyPoints": [
+        "Documents are identified by MIME types for application compatibility.",
+        "Document management systems store both the document and a meta-file with metadata (author, security type).",
+        "Security types (Internal Only, Sensitive, Unrestricted) control document access.",
+        "PolicyCenter integrates with document storage for version control and master copy management.",
+        "Documents can be mailed manually by users or automatically via integration with printing/mailing systems."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "PolicyCenter integrates with document storage applications to manage master document versions, sending documents to store and receiving documents to view/edit."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "The document management architecture shows how PolicyCenter stores metadata separately from the document content, which is managed by the document management system."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Document mailing processes can be manual (user prints and mails) or automated (document management system integrates with a printing/mailing system)."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "MIME Type",
+          "content": "Multipurpose Internet Mail Extensions (MIME) type is a standard that indicates the nature and format of a document, file, or assortment of bytes. It helps applications determine how to handle the file (e.g., 'application/pdf' for PDF files)."
+        },
+        {
+          "type": "best_practice",
+          "title": "Metadata Importance",
+          "content": "Always ensure comprehensive and accurate metadata is captured for each document. This significantly improves searchability, organization, and compliance, making documents easier to find and manage in the long run."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical aspects of document management in PolicyCenter. Pay close attention to how documents are created, linked, and how local copies are managed during editing.",
+      "transcriptSummary": "The demo covers determining document relation (Account/Policy), creating new documents by linking existing files, and generating documents from templates. It also highlights the 'Documents Screen' actions like 'Edit Local Copy,' 'Upload,' and 'Discard,' explaining how to modify and update documents in PolicyCenter."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An underwriter needs to add a scanned property inspection report (PDF) to an existing policy and then generate a standard 'Welcome Letter' for a new insured using a template.",
+      "question": "Outline the steps the underwriter would take to perform both actions, identifying the primary method for each and where the documents would initially reside.",
+      "hints": [
+        "Think about the two main ways to 'create' a document we discussed.",
+        "Consider if the document already exists or needs to be generated.",
+        "Remember the initial storage location for uploaded files versus template-generated drafts."
+      ],
+      "expectedApproach": "For the inspection report, the underwriter would use the 'Upload existing file' method, browsing their computer and linking it to the policy. For the welcome letter, they would use the 'Create from template' method, selecting the template and generating a draft that would initially be a local copy before being finalized."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "e ie at least two examples of how documents might be used in a policy",
+      "referenceAnswer": "inspectors). Record correspondences with the insured",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What are the two ways that electronic documents can be added to\nYo PolicyCenter?",
+      "referenceAnswer": "+ Uploading (linking) to an existing document\n+ Creating a new document from a template",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "When a document already exists in PolicyCenter and you choose to edit\nYo it, where is the edited copy stored while it is being edited? What must you\ndo to have the edited copy replace the master copy?",
+      "referenceAnswer": "When a document already exists in PolicyCenter and you choose to edit\nYo it, where is the edited copy stored while it is being edited? What must you\n: do to have the edited copy replace the master copy?\n\nThe edited copy is stored on your computer. To have it replace the master copy, you\nmust click the Upload button on the Documents screen.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Documents are non-contractual files crucial for policy context and communication.",
+        "Documents reside across user computers, PolicyCenter, production systems, and document management systems.",
+        "Documents can be created by uploading existing files or generating from templates.",
+        "Document production can occur on external systems or directly on the PolicyCenter server.",
+        "Document architecture includes MIME types, metadata, and security settings.",
+        "Documents can be mailed manually or through automated integrations."
+      ],
+      "realWorldConnection": "Effective document management in PolicyCenter ensures that all relevant information, contractual or not, is organized, secure, and accessible. This is vital for underwriters to make informed decisions, for customer service to provide accurate support, and for legal compliance, ultimately streamlining operations and improving client satisfaction in real Guidewire projects.",
+      "nextLessonPreview": "Next, we'll explore 'Notes,' another critical feature in PolicyCenter that complements document management by allowing users to capture essential, unstructured business information directly within the system."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Practice creating and managing documents in a PolicyCenter sandbox environment. Your task is to upload an existing document (e.g., a mock inspection report) to an account, then create a new document using a provided template (e.g., a 'Policy Change Confirmation' letter). Experiment with editing the template-generated document locally and then uploading the changes to replace the master copy.",
+      "objectives": [
+        "Successfully upload an existing electronic file to an account in PolicyCenter.",
+        "Generate a new document using a PolicyCenter template and populate it with relevant data.",
+        "Edit a document locally and update the master copy in PolicyCenter.",
+        "Understand the workflow for document creation, modification, and storage."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_25_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_25_01.mp4"
+    }
+  ]
+}

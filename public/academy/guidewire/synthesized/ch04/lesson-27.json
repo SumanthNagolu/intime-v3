@@ -1,0 +1,333 @@
+{
+  "lessonId": "ch04-l27",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 27,
+  "title": "Roles and Permissions",
+  "subtitle": "Mastering access control in PolicyCenter for secure and efficient operations.",
+  "synthesizedAt": "2026-02-16T17:31:21.171143+00:00",
+  "estimatedMinutes": 70,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a product manager at an insurance company, and you've just been told that customer service representatives can see the same sensitive policy details as your underwriters. This poses a significant security risk and could lead to errors. How do you ensure that only the right people see the right information?",
+      "question": "How can PolicyCenter be configured to precisely control who sees what and performs which actions within the application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand how PolicyCenter's access control system uses permissions to define user capabilities.",
+        "Learn to customize roles and permissions to align with unique business needs.",
+        "Identify the impact of roles and permissions on UI visibility and task execution.",
+        "Utilize the Security Dictionary to manage and troubleshoot access control configurations."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered user accounts and permissions in other software systems, where different users have varying levels of access to features and data. PolicyCenter builds upon these fundamental concepts to create a robust security framework.",
+      "warmupQuestion": "Think about a system you use daily. How does it differentiate between a regular user and an administrator?",
+      "hint": "Consider what actions each user type can perform and what parts of the system they can see."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "PolicyCenter Security Fundamentals",
+      "narrative": "PolicyCenter's security framework is engineered for both flexibility and robustness, ensuring that your critical policy data remains protected. The application comes equipped with a default set of roles designed to handle common policy-related tasks. However, its true strength lies in the ability to customize or create entirely new roles with specific permissions, precisely tailored to your organization's unique requirements. This allows for a granular control over who can access and modify what, directly addressing concerns like those raised by a product manager who doesn't want customer service representatives to see the same information as underwriters.\n\nAt its core, PolicyCenter's access functionality is rich and versatile, managed through a comprehensive set of **permissions**. These permissions are the fundamental building blocks of security within the system, empowering developers to finely tune what each user can access and modify. This meticulous setup is crucial for maintaining data integrity and ensuring that users can only perform tasks pertinent to their assigned roles. For instance, the base configuration includes a 'Superuser' role, which is granted all permissions. This role is typically responsible for initially granting permissions to other roles, though its capabilities can be customized if a customer adds custom permissions. Understanding how to manage these roles and permissions is paramount for maintaining an efficient and secure PolicyCenter environment.",
+      "keyPoints": [
+        "PolicyCenter's security framework is flexible and robust, protecting policy data.",
+        "Default roles exist, but customization of roles and permissions is a key feature.",
+        "Permissions are the building blocks of security, controlling user access and modification rights.",
+        "The Superuser role in base configuration has all permissions and manages initial assignments."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the PolicyCenter security framework, highlighting the need for differentiated access."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of PolicyCenter's access functionality, showing different user views based on permissions."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Key aspects of security in PolicyCenter, including roles, permissions, and producer codes."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding System Permissions and Their Influence",
+      "narrative": "A **system permission** in PolicyCenter represents a granular ability to see or do something within the application. These permissions are categorized based on their abilities, directly influencing how users interact with the application. For example, some permissions dictate which UI elements are visible to a user, while others determine whether a user can successfully complete a specific task. The entire list of system permissions can be found in the **Security Dictionary**, an essential resource for effective access control management.\n\nPermissions influence user access in two primary ways: by controlling UI visibility and by determining task success. Without the appropriate permissions, a user might not even see certain tabs or menu items, or they might be prevented from completing a specific action. This mechanism ensures that users only interact with elements relevant to their roles, thereby maintaining workflow integrity and enhancing security. Consider Alice Applegate, an underwriter without the 'View Team' permission; she simply won't see the 'Team' tab. In contrast, a Supervisor with this permission will see it, demonstrating how permissions directly impact what users can see and do. Similarly, 'Create object permissions' dictate a user's ability to perform actions like creating documents or new submissions. Alice, with the necessary permissions, can generate documents and submissions seamlessly, while Adam, lacking these permissions, won't even see the relevant menu items. Furthermore, 'Own object permissions', such as 'Own Activity', control who can be assigned specific tasks, ensuring that tasks are directed only to those with the necessary authority and capabilities.",
+      "keyPoints": [
+        "System permissions are granular abilities to see or do things in PolicyCenter.",
+        "Permissions are categorized by ability and listed in the Security Dictionary.",
+        "Permissions control UI visibility (e.g., tabs, buttons) and task success/failure.",
+        "Examples include 'View/navigate to', 'Create', and 'Own' permissions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "A breakdown of system permissions, categorized by their abilities within PolicyCenter."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "How permissions influence user access, affecting what they can view, create, own, or act on."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "An example illustrating how 'View/navigate to' permissions affect UI visibility for different users."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Demonstration of 'Create object permissions' and how they enable or restrict actions like creating documents or submissions."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An example of 'Own object permissions', showing how 'Own Activity' controls task assignment."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Roles: Grouping Permissions and User Assignment",
+      "narrative": "A user's permissions in PolicyCenter are dynamically determined at login. When a user provides their username and password, PolicyCenter authenticates them, queries its database to identify assigned permissions, and then renders a tailored startup view. This ensures that users are presented with an interface and capabilities that precisely align with their roles from the moment they log in. It's important to note that the 'Superuser' login (typically 'csu') is exempt from these permission checks, functioning as a power user for development purposes, though it should never be used in a production environment. If an administrator changes a user's permissions while they are logged in, the new permissions are applied immediately, ensuring real-time security adjustments.\n\n**Roles** in PolicyCenter are essentially named collections of permissions, designed to simplify the assignment of these permissions to users. They typically map directly to a job title or function, such as 'Underwriter' or 'Producer'. For instance, an Underwriter role might encompass all the permissions of an Underwriter Assistant, plus additional underwriting-specific capabilities. This flexibility allows organizations to define roles that accurately reflect job functions and evolve with business needs. When mapping roles to users, it's crucial to remember that PolicyCenter's roles are **cumulative**. This means a user gains all the permissions associated with *every* role they are assigned. Unlike some other systems, PolicyCenter does not have permissions that explicitly deny access; the only way to prevent someone from having a given permission is to simply not assign them any roles that contain that permission. This cumulative approach ensures comprehensive access for users to perform all tasks associated with their various responsibilities, as seen with Dennis Right (Underwriter Assistant), Bruce Baker (Underwriter), and Rick Ralston (Underwriting Supervisor, holding both Underwriter and Supervisor roles).",
+      "keyPoints": [
+        "User permissions are determined at login and updated immediately upon change.",
+        "Roles are named collections of permissions, simplifying user assignment.",
+        "Roles typically map to job titles or functions (e.g., Underwriter, Producer).",
+        "Roles are cumulative: users inherit all permissions from all assigned roles.",
+        "PolicyCenter uses a 'grant-only' permission model; denial is by omission."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Flowchart illustrating how a user's permissions are determined during the login process."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "An example showing how roles (Underwriter Assistant, Underwriter) are structured with different sets of permissions."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Illustration of mapping roles to users, demonstrating how users can have one or more roles and their cumulative permissions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Advanced Role Types and Producer Code Security",
+      "narrative": "Beyond basic user roles, PolicyCenter introduces different **role types** to further refine access control. Adding a type to a role indicates which entities that role can be assigned to. For example, a role that can be assigned to a producer code is designated as a 'Producer Code Role'. A 'User Producer Code Role' can be assigned to either users or producer codes, offering greater flexibility. This distinction is vital for creating roles that align with specific organizational structures and external partnerships, such as those involving agents or brokers. This dynamic adjustment capability ensures that PolicyCenter can adapt to evolving business needs without compromising security or functionality.\n\nCreating producer code roles involves defining roles with the 'Producer Code Role' or 'User Producer Code Role' type, attaching them to specific producer codes, and then assigning these producer codes to users, policies, or accounts. This multi-layered approach allows for highly granular control. **Producer Code Security** adds another critical layer of access control. When 'Producer Code Security' is enabled for a user, they can only utilize their role permissions against policies that have a matching producer code. This means that even if a user has broader permissions through their user roles, they can only apply those permissions to relevant policies where the producer codes align. Authorization is controlled by the intersection of permissions in both the producer code role and the user role. For instance, if a user has 'Edit Policy Term' permission in their user role but not in the matching producer code's role, they will be unable to edit the policy term on that specific policy. This mechanism effectively enforces organizational boundaries and ensures that users operate strictly within their designated areas of responsibility, enhancing both security and compliance.",
+      "keyPoints": [
+        "Role types (e.g., Producer Code Role, User Producer Code Role) define where roles can be assigned.",
+        "Creating producer code roles involves attaching them to producer codes, then assigning to users/policies/accounts.",
+        "Producer Code Security restricts users to actions on policies with matching producer codes.",
+        "Authorization with Producer Code Security requires an intersection of permissions from both user and producer code roles."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "An overview of different role types in PolicyCenter and their assignment capabilities."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Diagram illustrating the process of creating and assigning producer code roles to users, policies, or accounts."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Example demonstrating how Producer Code Security limits user access based on matching producer codes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Producer Code Security",
+          "content": "A feature that restricts a user's access to accounts, policies, or jobs only if they have matching producer codes. Authorization is determined by the intersection of permissions from both the user's role and the producer code's role."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Managing Roles in PolicyCenter",
+      "narrative": "Effective role management in PolicyCenter is crucial for maintaining a streamlined and secure operational environment. As a business analyst, you might wonder where to set up and assign roles. The answer lies within the PolicyCenter administration interface. Roles can be managed by navigating to **Administration > Users & Security > Roles**. This section provides a user-friendly list view where roles can be filtered by type (all roles, producer code roles, or user roles), created, modified, or deleted.\n\nAccessing and managing roles requires specific permissions. Typically, users with the 'Manage Roles' permission are authorized to perform these tasks, ensuring that role management is in the hands of those responsible for access control within the organization. While the Superuser inherently has these capabilities in the base configuration, the 'Manage Roles' permission can be configured independently using Guidewire Studio.\n\n**Creating a new role** is a structured process. You'll need to enter a name, choose the role type (e.g., User Role, Producer Code Role), and specify whether it's an internal-only role. This internal/external distinction is important as it impacts which permissions and producer codes are applicable, tailoring the role to the user's organizational context. Once the role is created, you can proceed to **modifying role permissions**. This involves adding or removing permissions to align with changing job functions. The interface is intuitive: when adding permissions, only those not already assigned to the role are available for selection, ensuring roles remain streamlined and relevant. Similarly, **modifying user roles** involves granting or rescinding roles for a specific user. This straightforward process ensures that each user has access to the functionalities necessary for their role, without overextending their access beyond what's required. This action typically requires the 'Grant roles to users' permission, often assigned to managers.",
+      "keyPoints": [
+        "Roles are managed via Administration > Users & Security > Roles.",
+        "The 'Manage Roles' permission is required to create, modify, or delete roles.",
+        "Creating a new role involves defining its name, type, and internal/external status.",
+        "Modifying role permissions means adding or removing specific abilities.",
+        "User roles can be granted or rescinded, requiring the 'Grant roles to users' permission."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "A business analyst's question on where to set up and assign roles in PolicyCenter."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Screenshot of the 'Roles' list view in PolicyCenter's Administration section, showing filtering options."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Steps for creating a new role, including naming, choosing a type, and specifying internal-only status."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Interface for modifying permissions within an existing role, showing how to add or remove permissions."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Screenshot demonstrating how to modify roles for a specific user, assigning or rescinding roles from a dropdown list."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through an overview of roles and permissions in PolicyCenter. Pay close attention to how roles are defined and how permissions are associated with them, as this forms the foundation of access control.",
+      "transcriptSummary": "The demo provides a high-level overview of PolicyCenter's roles and permissions, explaining their structure and purpose. It highlights the relationship between roles and the specific actions users can perform within the application."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your organization has a new 'Claims Reviewer' position that needs to view claims, but not edit them, and also needs to see policy details but not modify them. You also need to ensure they can create new activities for follow-up.",
+      "question": "Walk through the steps to create a new 'Claims Reviewer' role and assign the necessary 'View Claims', 'View Policy', and 'Create Activity' permissions. How would you then assign this role to a new user?",
+      "hints": [
+        "Start by navigating to Administration > Users & Security > Roles.",
+        "Remember to select the appropriate role type when creating the new role.",
+        "When adding permissions, look for 'View' permissions for claims and policies, and 'Create' for activities.",
+        "To assign to a user, you'll need to navigate to the user's profile and modify their roles."
+      ],
+      "expectedApproach": "Create a new role named 'Claims Reviewer' as a 'User Role'. Add 'View Claims', 'View Policy', and 'Create Activity' permissions. Then, navigate to a test user's profile and add the 'Claims Reviewer' role to their assigned roles."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Exploring the Security Dictionary",
+      "narrative": "For both technical developers and business analysts like Marcus, who needs a quick view of all roles and associated permissions, the **Security Dictionary** in PolicyCenter is an indispensable tool. It serves as a comprehensive reference, providing detailed information about permissions, roles, and the specific UI elements they affect throughout the system. This knowledge is absolutely vital for effective role and permission management, troubleshooting access issues, and ensuring compliance.\n\nThe Security Dictionary is a series of HTML pages typically located at `<server directory>\\build\\dictionary\\security\\index.html`. It documents the permissions and roles configured in your application. Whenever permissions or roles are added or edited, it's crucial to regenerate this information to reflect the latest changes. The dictionary is organized into four main sections: **Application Permission Keys**, **Pages (in the user interface)**, **System Permissions**, and **Roles**. This comprehensive overview helps you ensure that permissions are applied correctly and consistently across the application. By exploring the Security Dictionary, you can quickly verify which roles contain specific permissions, which UI pages are affected by certain permissions, and how different elements are secured. This resource is invaluable for understanding the intricate web of access control within PolicyCenter and for making informed decisions about security configurations.",
+      "keyPoints": [
+        "The Security Dictionary is a vital tool for understanding permissions, roles, and UI elements.",
+        "It's located at `<server directory>\\build\\dictionary\\security\\index.html`.",
+        "The dictionary must be regenerated after any changes to permissions or roles.",
+        "It contains four main sections: Application Permission Keys, Pages, System Permissions, and Roles.",
+        "It helps verify permission application and troubleshoot access issues."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "A business analyst's question about quickly viewing all roles and associated permissions."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "An overview of the Security Dictionary, its location, contents, and importance."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Regenerate Dictionary",
+          "content": "Always remember to regenerate the Security Dictionary after making any changes to roles or permissions to ensure the documentation reflects the most current configuration."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through navigating the Security Dictionary. Observe how different sections are organized and how to find specific permissions, roles, and their associated UI elements. This will be key for your future troubleshooting and configuration tasks.",
+      "transcriptSummary": "The demo illustrates how to access and navigate the PolicyCenter Security Dictionary. It shows how to locate information on application permissions, system permissions, roles, and the UI pages affected by these configurations, emphasizing its utility for both business and technical users."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A user reports that they cannot see the 'Reinsurance' tab in PolicyCenter. You suspect it's a permission issue.",
+      "question": "Using the Security Dictionary, identify which permission controls the visibility of the 'Reinsurance' tab. Then, determine which standard PolicyCenter role (if any) includes this permission. What steps would you take to grant this user access to the 'Reinsurance' tab?",
+      "hints": [
+        "Start by looking for 'Pages' or 'System Permissions' related to 'Reinsurance' in the Security Dictionary.",
+        "Once you find the relevant permission, check which 'Roles' include it.",
+        "Remember how roles are assigned to users.",
+        "Consider if creating a new role or modifying an existing one is more appropriate."
+      ],
+      "expectedApproach": "Navigate the Security Dictionary to find the permission controlling 'Reinsurance' tab visibility (e.g., 'View Reinsurance'). Then, check which roles have this permission. To grant access, either assign an existing role with this permission to the user, or add the permission to an existing role the user already has, or create a new role with this permission and assign it to the user."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Name some of the user roles in PolicyCenter.",
+      "referenceAnswer": "Underwriter, Producer, Auditor, Underwriter assistant...",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When does PolicyCenter determine which permissions a given user\nhas?",
+      "referenceAnswer": "PolicyCenter determines the permissions for a given user when that user logs in and\nevery time when the user queries the server.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "How many permissions can a given role have?",
+      "referenceAnswer": "Arole can have any number of permissions. PolicyCenter has certain zero-permission\nroles in the base product to act as placeholders.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "How many roles can a given user have?",
+      "referenceAnswer": "Auser can have any number of roles. A user must have at least one role in order to be\nable to work in PolicyCenter. A user with broader responsibility can be given additional\nroles so that they are able to accomplish these responsibilities.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "How could you easily determine which roles enable users to create\naccounts?",
+      "referenceAnswer": "View the create accounts permissions in the security dictionary to see which roles the\npermission has been added to.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyCenter's security framework is built on granular permissions grouped into roles.",
+        "Permissions control UI visibility and task execution, ensuring users operate within their scope.",
+        "Roles are cumulative and assigned to users, with special types like Producer Code Roles for advanced control.",
+        "Role management involves creating, modifying, and assigning roles via the Administration interface.",
+        "The Security Dictionary is a critical resource for understanding and troubleshooting permissions."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering roles and permissions is fundamental to implementing robust security policies, ensuring data integrity, and streamlining workflows. Properly configured access control prevents unauthorized actions, supports compliance, and enhances overall operational efficiency by giving users exactly what they need, and nothing more.",
+      "nextLessonPreview": "In our next lesson, we'll delve into Validation in PolicyCenter. Building on your understanding of roles and permissions, we'll explore how validation rules ensure data integrity and compliance with business requirements, further securing your application."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Review the standard roles provided in PolicyCenter's base configuration using the Security Dictionary. Identify at least three roles and list the top five permissions associated with each. Consider how these roles might be customized or combined to meet specific business needs in a hypothetical insurance company.",
+      "objectives": [
+        "Navigate and extract information from the Security Dictionary.",
+        "Analyze existing role-permission relationships.",
+        "Propose potential customizations for roles based on business requirements."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_28_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_28_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_28_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_28_02.mp4"
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "lessonId": "ch11-l02",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 2,
+  "title": "Gosu for Integration",
+  "subtitle": "Mastering Gosu's core features and utilities for seamless Guidewire integrations.",
+  "synthesizedAt": "2026-02-16T18:46:33.681705+00:00",
+  "estimatedMinutes": 150,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're tasked with connecting Guidewire PolicyCenter to an external billing system. This integration requires custom logic to process policy data, generate unique transaction IDs, and ensure all operations are logged and gracefully handle errors. How would you approach building this robust integration layer?",
+      "question": "What foundational Gosu programming concepts and utilities are essential for developing reliable and maintainable integration code within the Guidewire platform?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the organization and structure of Gosu code using packages and classes.",
+        "Apply access and other modifier keywords to control the visibility and behavior of Gosu types and members.",
+        "Implement object-oriented programming principles in Gosu, including inheritance, methods, properties, and block arguments.",
+        "Utilize Gosu's property initialization and feature literals for efficient and type-safe code.",
+        "Implement robust error handling, logging, and annotations in Gosu applications for better diagnostics and metadata.",
+        "Leverage the Sequence Utility to generate unique, sequential identifiers in Gosu."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered object-oriented programming (OOP) concepts in other languages, such as classes, objects, methods, and properties. Gosu builds upon these familiar principles, providing a powerful environment for customizing and extending Guidewire applications.",
+      "warmupQuestion": "Think about a time you organized code into modules or libraries. What were the benefits of doing so?",
+      "hint": "Consider how code organization impacts reusability, maintainability, and collaboration."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Organizing Gosu Code: Packages, Access, and Modifiers",
+      "narrative": "Just like in other object-oriented languages, **packages** in Gosu are fundamental for organizing related classes, enhancements, and other files into a logical hierarchy. This structure improves code maintainability, prevents naming conflicts, and controls access to specific components. All Gosu packages reside under the `.../configuration/gsrc` folder in your Guidewire installation. Guidewire recommends a specific naming convention for packages: `<company_code>.<product_code>.<mechanism>.<functional_area>`. For example, `si.ta.classes.entity` indicates a class within the Succeed Insurance (si) TrainingApp (ta) for entity-related classes.\n\nControlling the visibility and behavior of your code is crucial for building robust applications. **Access modifier keywords** like `public`, `protected`, `internal`, and `private` allow you to set the level of access to top-level types (classes, interfaces, enumerations) or type members (methods, variables, properties). For instance, `public` makes a member fully accessible, while `private` restricts access to only within the defining class. Gosu's defaults differ from Java; for example, a Gosu method is `public` by default, while a variable is `private`.\n\nBeyond access, **other modifier keywords** define special characteristics. The `override` keyword is used when a subtype provides its own implementation for an inherited method or property. An `abstract` type is intended only as a base for other types and cannot be instantiated directly. The `final` keyword specifies that a property, local variable, or class cannot be changed or extended. The `static` keyword is particularly important: a `static` method or property belongs to the class itself, not an instance of the class, meaning you can call it directly on the class type without creating an object instance. For example, `MyClass.methodName()` calls a static method.",
+      "keyPoints": [
+        "Packages organize related Gosu artifacts, following Guidewire's naming conventions.",
+        "Access modifier keywords (public, protected, internal, private) control visibility of types and members.",
+        "Other modifier keywords (override, abstract, final, static) define specific behaviors for classes, methods, and properties.",
+        "Static members belong to the class type and do not require an object instance to be called."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of Gosu packages and their role in organizing code."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Details on Gosu package structure, naming conventions, and examples within the Guidewire configuration."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A table summarizing Gosu's access modifier keywords and their scope of visibility."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "A table outlining other important Gosu modifier keywords like override, abstract, and final."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Guidewire Naming Convention",
+          "content": "Always adhere to the Guidewire recommended naming convention for packages: `<company_code>.<product_code>.<mechanism>.<functional_area>`. This ensures consistency and clarity across your application."
+        },
+        {
+          "type": "definition",
+          "title": "Static Members",
+          "content": "A static method or property exists on the type itself, not on an instance of the type. You call it using the class name, e.g., `MyClass.staticMethod()`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Building with Gosu: Classes, Methods, and Properties",
+      "narrative": "At the heart of Gosu programming are **classes**, which act as blueprints for creating objects. A Gosu class (.gs file) describes an object's properties (data) and behaviors (methods), much like classes in other object-oriented languages. When creating a class, you use the `class` keyword, followed by a meaningful name in Pascal Case (e.g., `MyCustomClass`), and then define its constructor, variables, properties, and methods. Gosu fully supports the four core principles of Object-Oriented Programming (OOP): **Encapsulation**, **Abstraction**, **Polymorphism**, and **Inheritance**.\n\n**Inheritance** allows a class to extend another class (its superclass) and automatically gain access to all non-private properties and methods. You use the `extends` keyword in the class declaration, and the `super` keyword to reference the parent class's constructor or methods. When a subclass provides a specialized implementation for a method inherited from its superclass or an interface, it uses the `override` keyword. This is a powerful mechanism for customizing behavior while maintaining a common structure.\n\n**Methods** define the behaviors of an object. You declare a method using the `function` keyword, followed by its name (in Camel Case, e.g., `calculateArea`), optional parameters, and a return type (explicitly `void` if no value is returned). By default, Gosu methods are public. The `this` keyword refers to the current instance of the class from which the method is called. Gosu also supports **block argument expressions**, which allow you to pass a block of logic as an input parameter to a method, useful for scenarios like filtering arrays or defining criteria dynamically.\n\n**Properties** encapsulate an object's data. In Gosu, you can define properties using explicit getter and setter methods for fine-grained control, or use a shorthand syntax with the `as` keyword, which automatically generates getters and setters. Best practice for private variables is to prefix them with an underscore (e.g., `_heightInMeters`). Gosu also provides a compact syntax for **property initialization** during object creation, allowing you to set multiple properties immediately after using the `new` keyword. For type-safe references to properties or methods, **feature literals** use the `#` symbol (e.g., `ABContact#Address`), which is invaluable for data-binding, mapping, and query layers.",
+      "keyPoints": [
+        "Gosu classes are blueprints for objects, supporting full OOP principles.",
+        "The `extends` keyword enables inheritance, allowing subclasses to inherit and `override` superclass methods.",
+        "Methods define object behaviors, declared with `function`, and can accept block arguments for dynamic logic.",
+        "Properties encapsulate data, with options for explicit getters/setters or shorthand syntax.",
+        "Property initialization offers a compact way to set values during object creation.",
+        "Feature literals provide type-safe references to properties and methods using the `#` symbol."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "An overview of Gosu classes, their structure, and how they relate to object-oriented programming."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Code example demonstrating how to extend a class in Gosu, including the use of `extends`, `super`, and `override` keywords."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Details on declaring Gosu methods, including syntax, naming conventions, and the `this` keyword."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An explanation of block argument expressions, showing how logic can be passed as a method argument."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Two approaches to declaring Gosu properties: explicit getter/setter methods and shorthand syntax."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Demonstration of Gosu's compact syntax for property initialization during object creation."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "An explanation of feature literals for type-safe property and method references in Gosu."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Encapsulation with Properties",
+          "content": "Always use properties (with private backing variables) rather than public fields to encapsulate data. This allows you to control how data is accessed and modified, adhering to OOP principles."
+        },
+        {
+          "type": "definition",
+          "title": "Object-Oriented Programming (OOP)",
+          "content": "OOP is a programming paradigm based on the concept of 'objects', which can contain data and code. Its four principles are Encapsulation (hiding implementation details), Abstraction (showing only essential features), Polymorphism (one interface, multiple forms), and Inheritance (reusing code from parent classes)."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a custom Gosu class in Guidewire Studio. Pay close attention to how the class is structured, how properties and methods are defined, and how access modifiers are applied.",
+      "transcriptSummary": "The video demonstrates creating a new Gosu class, defining its properties and methods, and applying access modifiers. It shows how to instantiate the class and interact with its members, reinforcing the concepts of class definition and object behavior."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Robust Gosu Integration: Logging, Exceptions, and Utilities",
+      "narrative": "Building reliable integration solutions requires robust mechanisms for diagnostics and error handling. **Logging** is paramount for recording system behavior, aiding in troubleshooting and failure recovery. Guidewire applications use the `slf4j` API in conjunction with Apache `log4j-2` libraries. You should always use a logger (e.g., `PLLoggerCategory.COMMUNICATION`) instead of print statements in production code. Log messages are categorized by severity levels: `Trace`, `Debug`, `Info`, `Warn`, and `Error`, each indicating increasing severity. You can control logging levels through the `logging-properties` file, allowing administrators to adjust verbosity without code changes.\n\n**Exception handling** is critical for managing runtime errors gracefully. Gosu supports Java's full `try...catch...finally` block feature set. The `try` block encloses code where an error might occur, the `catch` block handles specific errors, and the `finally` block executes unconditionally, ensuring cleanup operations. If an error cannot be handled locally, the `throw` statement re-raises the exception to a higher-level handler. Gosu exceptions are unchecked, meaning the compiler doesn't force you to declare or catch them, but it's a best practice to add handling where necessary for stability.\n\n**Annotations** provide a simple syntax to attach metadata or define behavior for classes, constructors, methods, or properties. They begin with the `@` symbol, followed by the annotation name and often an argument list. Common annotations include `@Param`, `@Returns`, and `@Throws` for documentation, and `@Deprecated` to mark elements for removal. Guidewire also uses internal annotations like `@Export` and `@ReadOnly` for Studio visibility. Annotations are inherited by subtypes and can even be custom-created.\n\nFinally, the **Sequence Utility** (`gw.api.system.database.SequenceUtil`) is a Guidewire class designed to generate unique, sequential numbers. This is invaluable for business cases requiring unique identifiers, such as transaction IDs or policy numbers. The utility interacts with the Guidewire database to maintain the last number provided for each sequence key. The `next(minVal, seqKey)` method requests the next number, returning `minVal` for the first request and then incrementing by one for subsequent calls. When testing `SequenceUtil` code in Studio, ensure the application is running and Studio is connected to avoid null-pointer exceptions, as it relies on database interaction.",
+      "keyPoints": [
+        "Logging with `slf4j` and `log4j-2` is essential for diagnostics, using severity levels (Trace, Debug, Info, Warn, Error).",
+        "Gosu supports `try...catch...finally` for robust exception handling, similar to Java.",
+        "Annotations provide metadata and behavior to code elements, aiding documentation and system integration.",
+        "The `SequenceUtil` generates unique, sequential numbers, storing the last value in the Guidewire database.",
+        "Testing `SequenceUtil` requires a running Guidewire application and Studio connection."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "A visual placeholder, likely indicating a transition or a general concept related to integration utilities."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Code example and explanation of logging in Gosu using `slf4j` and `PLLoggerCategory`."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Demonstration of Gosu's exception handling using `try...catch...finally` blocks."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "An overview of Gosu annotation support, showing syntax and examples like `@Param` and `@Returns`."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Explanation of the Sequence Utility's purpose: generating unique, sequential numbers for business needs."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Syntax for using the `SequenceUtil.next()` method, including `minVal` and `seqKey` parameters."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Code example illustrating the `SequenceUtil` in action, demonstrating how it generates numbers across multiple calls."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Use Loggers, Not Print Statements",
+          "content": "In production environments, always use a logger (e.g., `org.slf4j.Logger`) instead of `print` statements. Loggers provide configurable output, severity levels, and better performance, which are crucial for diagnostics and system stability."
+        },
+        {
+          "type": "warning",
+          "title": "SequenceUtil and Database Connection",
+          "content": "The `SequenceUtil` interacts with the Guidewire database. When testing in Studio, ensure the application server is running and Studio is connected, otherwise, calls to `SequenceUtil.next` will throw a null-pointer exception."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to create a Gosu class to represent a 'Product' in your system. This product should have a name and a price. The name should be accessible by any other class, but the price should only be modifiable within the Product class itself, though its value can be read by other classes.",
+      "question": "Create a Gosu class named `si.ta.classes.Product` with a `public` property for `Name` (String) and a `protected` property for `Price` (BigDecimal). Ensure the `Price` property can be read externally but only set internally within the class or its subclasses. Include a constructor that initializes both properties.",
+      "hints": [
+        "Remember the Guidewire package naming convention.",
+        "Consider using the shorthand property syntax for `Name` and explicit getter/setter for `Price` to control access.",
+        "The `protected` access modifier allows access within the same package and by subclasses."
+      ],
+      "expectedApproach": "Create a new Gosu class file. Define a public property for `Name` using shorthand. Define a private backing variable for `Price` and implement a public getter and a protected setter method for it. Implement a constructor to initialize these values."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Building on the `Product` class, you now need a specialized `DiscountedProduct` class that extends `Product`. This class should have an additional `DiscountPercentage` property (decimal) and override the `Price` property's getter to return the discounted price.",
+      "question": "Create a `DiscountedProduct` class that extends `si.ta.classes.Product`. Add a `public` property `DiscountPercentage` (BigDecimal). Override the `Price` property's getter method to calculate and return the original price minus the discount. Ensure the constructor for `DiscountedProduct` calls the superclass constructor and initializes `DiscountPercentage`.",
+      "hints": [
+        "Use the `extends` keyword in your class declaration.",
+        "Remember to call `super()` in your constructor.",
+        "Use the `override` keyword for the `Price` getter.",
+        "The original price can be accessed via the superclass's `Price` property before overriding its getter logic."
+      ],
+      "expectedApproach": "Create a new Gosu class, extend `Product`. Define the `DiscountPercentage` property. Override the `Price` getter to apply the discount calculation. Implement a constructor that calls `super()` and initializes the new property."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "n What is a package?\n\nSS eee eee ee eee estes",
+      "referenceAnswer": "A package is a group of classes gathered together either because they execute a\ncommon business task, or because access to the classes must be limited only to the\nclasses in the package, or both.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "AGosu class is named Circle. Each instance must have a property for\nthe circle's radius. This value can be accessed and conditionally\nmodified by methods in the Circle class and by methods in other classes.\nHow many elements must you create to implement this?\n\nSS eee eee ee eee estes",
+      "referenceAnswer": "Three.\n1. Aprivate variable named _ radius.\n2. Aget method that retrieves the value of _radius.\n3. Aset method that sets the value of _radius.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "The Circle class extends the Oval class and implements the ICurveLine\naan interface.\nv7 1. Can Circle override methods from Oval?\n\n2. Can Circle override methods from |CurveLine?\n\nSS eee eee ee eee estes",
+      "referenceAnswer": "1. Yes\n\nFrom a keyword standpoint, yes. If Circle implements the ICurveLine interface,\nthen Circle must implement all the methods of the ICurveLine interface using the\nkeyword \"override\". However, because |CurveLine is an interface, the Circle class\nis actually just declaring the implementations of the methods",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Whatis the purpose of an annotation?\n\n¢\n¢\n4\n\nSS eee eee ee eee estes",
+      "referenceAnswer": "An annotation provides metadata about the element being annotated.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Howdoyou calla static method from a class?\n\n¢\n¢\n4\n\nSS eee eee ee eee estes",
+      "referenceAnswer": "You call a static method by referencing the method name from the class. You must\neither reference the fully qualified name of the class or import the class using the uses\nkeyword followed by the reference to the package path.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Why put logic in a Gosu class as opposed to an entity enhancement?\n\n¢\n¢\n4\n\nSS eee eee ee eee estes",
+      "referenceAnswer": "Logic that is reusable and generic must be in a Gosu class.\n\nLogic that is intrinsically connected with an entity must be inserted into an\nEnhancement.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu packages provide a structured way to organize code, following Guidewire's naming conventions.",
+        "Access modifiers (public, protected, internal, private) and other modifiers (static, override, abstract, final) control code visibility and behavior.",
+        "Gosu classes are the foundation of object-oriented programming, supporting inheritance, methods, and properties.",
+        "Properties can be defined with explicit getters/setters or shorthand syntax, and initialized compactly.",
+        "Block arguments allow passing logic dynamically, and feature literals provide type-safe references.",
+        "Robust applications use `slf4j` for logging, `try...catch...finally` for exception handling, and annotations for metadata.",
+        "The `SequenceUtil` is a critical Guidewire utility for generating unique, sequential numbers, essential for many integration scenarios."
+      ],
+      "realWorldConnection": "In real Guidewire integration projects, these Gosu fundamentals are indispensable. You'll use packages to organize your custom integration logic, classes to model data transfer objects (DTOs) or custom service implementations, and methods/properties to define their behavior and data. Logging and exception handling ensure your integrations are auditable and resilient, while the Sequence Utility is often used to generate unique identifiers for external systems. Mastering these concepts allows you to build scalable, maintainable, and robust integrations that seamlessly connect Guidewire applications with external systems.",
+      "nextLessonPreview": "In the next lesson, we'll delve deeper into specific integration patterns and how to leverage Gosu to interact with external systems via web services and plugins."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to create a custom Gosu class that simulates a simple external service call and utilizes several of the concepts learned in this lesson. This class will generate a unique transaction ID, log its operations, and include basic error handling.",
+      "objectives": [
+        "Create a new Gosu class with a custom package structure.",
+        "Define static methods and properties within the class.",
+        "Implement logging using `PLLoggerCategory` at different severity levels.",
+        "Utilize the `SequenceUtil` to generate unique, sequential numbers for transaction IDs.",
+        "Implement `try...catch...finally` blocks for basic error handling.",
+        "Apply annotations to document your class and methods."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_02_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_02_01.mp4"
+    }
+  ]
+}

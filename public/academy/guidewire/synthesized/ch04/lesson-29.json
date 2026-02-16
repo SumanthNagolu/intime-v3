@@ -1,0 +1,270 @@
+{
+  "lessonId": "ch04-l29",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 29,
+  "title": "Premium Audits",
+  "subtitle": "Understand audit types, methods, and processes in PolicyCenter for accurate premium management.",
+  "synthesizedAt": "2026-02-16T17:32:19.324801+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurer managing policies where premiums are based on estimates, like payroll. How do you ensure that what your policyholders pay truly reflects their actual exposure, not just initial guesses? This reconciliation is critical for fairness, compliance, and your bottom line.",
+      "question": "How can PolicyCenter help us bridge the gap between estimated and actual policy premiums?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Distinguish between final audits and premium reports in PolicyCenter.",
+        "Identify the various methods for conducting premium audits.",
+        "Understand the roles involved in the premium audit process.",
+        "Describe the steps for scheduling, executing, and revising final audits.",
+        "Explain the purpose and process of premium reports for interim adjustments."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of policy lifecycle stages and how initial premiums are often estimated. Think about how policy changes or renewals might impact these estimates.",
+      "warmupQuestion": "What challenges might arise if an insurer never verified estimated policy data against actual figures?",
+      "hint": "Consider financial accuracy, regulatory compliance, and customer satisfaction."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Audit Fundamentals: Methods, Characteristics, and Types",
+      "narrative": "When managing insurance policies, especially those with variable premiums like workers' compensation, accurately reconciling estimated data with actual figures is paramount. PolicyCenter offers robust capabilities for this through **premium audits**. Insurers can choose from various methods to conduct these audits, including **physical, phone, estimated, or voluntary audits**. Each method offers flexibility, allowing insurers to tailor their approach based on the complexity of the policyholder's business and available resources. For instance, a physical audit provides thorough verification but is resource-intensive, while a voluntary audit relies on policyholder input and is more efficient for simpler cases.\n\nAudits in PolicyCenter are unique transactions. Unlike other policy jobs, they are tied to specific policy periods but **do not alter the policy contract itself**. This means they don't have an associated edit effective date and are not 'issued' in the same way a policy submission or change is. They can be executed at any time within the policy term, making them distinct from recurring renewals. Their primary purpose is to convert estimated amounts, such as payroll in workers' compensation, into actual data, ensuring accurate premium calculation and regulatory compliance. PolicyCenter supports two main types of premium audits: **final audits** and **premium reports**.\n\n**Final audits** are conducted at the end of a policy term to verify the ultimate cost for variable basis policies. They are crucial for ensuring the final premium reflects true exposure and are available for lines of business like workers' compensation and general liability in the base configuration. In contrast, **premium reports** are created for interim periods within a policy term. They adjust estimated data periodically, helping to keep premiums aligned with actual figures throughout the term. While a final audit closes out the policy term, premium reports provide ongoing adjustments, particularly useful for businesses with seasonal or fluctuating exposures. Understanding these distinctions is key to configuring audits that meet both business and regulatory needs.",
+      "keyPoints": [
+        "Premium audits reconcile estimated policy data with actual figures.",
+        "PolicyCenter supports physical, phone, estimated, and voluntary audit methods.",
+        "Audits are tied to policy periods but do not alter the policy contract or have an edit effective date.",
+        "Final audits occur at term end to determine ultimate cost; premium reports provide interim adjustments."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the different methods available for conducting premium audits, highlighting the flexibility in approach."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key characteristics of audits in PolicyCenter, emphasizing their role in reconciling estimated data and their distinction from other policy transactions."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A comparison of final audits and premium reports, detailing their purpose and applicability across lines of business."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Visual representation of the four primary methods for conducting premium audits: physical, phone, estimated, and voluntary."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Variable Basis Policy",
+          "content": "A policy where the premium is based on a fluctuating factor, such as payroll or revenue, requiring audits to determine the actual premium."
+        },
+        {
+          "type": "tip",
+          "title": "Tailored Audit Methods",
+          "content": "Choosing the right audit method (physical, phone, estimated, voluntary) depends on the policy's complexity and the insurer's resources, ensuring cost-effectiveness and accuracy."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Roles and Workflow in the Audit Process",
+      "narrative": "The premium audit process in PolicyCenter involves distinct roles, each with specific responsibilities to ensure accuracy and compliance. Key roles include the **Premium Auditor**, **Audit Examiner**, and **Audit Supervisor**. The Premium Auditor typically travels to the policyholder's location for physical audits, gathering and editing audit information. The Audit Examiner, an in-office employee, verifies the accuracy of audits (physical, phone, or voluntary), calculates premiums, and completes the audit. They ensure adherence to manual rules and guidelines, checking for completeness and correct exposure splits. The Audit Supervisor oversees the entire department, having access to all audit permissions and team screens to track outstanding audits and activities. This separation of duties provides essential checks and balances, maintaining data integrity throughout the process.\n\nOnce a policy is issued, PolicyCenter automatically schedules audit items based on predefined parameters, which can be viewed via the 'Audit Schedule' link in the policy file. These scheduled items are not yet active audit jobs but rather a list of anticipated audits, each with a process start date, due date, and audit method. Their initial status is 'Scheduled.' Users with appropriate permissions can adjust these fields before the audit job is initialized. For instance, a physical audit might be scheduled to start approximately a month before the period end, while a cancellation audit might start as soon as the policy is canceled.\n\nExecuting an audit begins on its scheduled process start date, often triggered by an 'Audit Task' batch process. At this point, the audit status changes from 'Scheduled' to 'In Progress,' and it becomes a draft policy transaction. Users can then enter audit details into the Audit Summary and Audit Details screens. Premiums are calculated by clicking the 'Calculate Premiums' button, and the process is finalized by clicking 'Submit.' This action makes the audit non-editable, changes its status to 'Completed,' and updates the audit schedule with the resulting premiums. This structured workflow ensures comprehensive and accurate audits, providing a clear audit trail and maintaining data integrity.",
+      "keyPoints": [
+        "Distinct roles (Premium Auditor, Audit Examiner, Audit Supervisor) ensure checks and balances in the audit process.",
+        "PolicyCenter automatically schedules audits upon policy issuance, with adjustable parameters.",
+        "Audits transition from 'Scheduled' to 'In Progress' via a batch process or manual initiation.",
+        "The audit execution involves data entry, premium calculation, and submission, leading to a 'Completed' status."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "The distinct roles involved in the premium audit process, outlining their responsibilities and permissions within PolicyCenter."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The initial steps of the premium audit process, showing how audits are scheduled automatically upon policy issuance."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The workflow for executing an audit, from initiation to data entry, premium calculation, and final submission."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Permission Management",
+          "content": "Properly configure user permissions for each audit role to ensure data accuracy and maintain the integrity of the audit process."
+        },
+        {
+          "type": "definition",
+          "title": "Process Start Date",
+          "content": "The date on which an audit job is initiated, either automatically by a batch process or manually by a user, changing its status from 'Scheduled' to 'In Progress'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Deep Dive into Final Audits",
+      "narrative": "Final audits are a cornerstone of accurate premium management, especially for policies with variable bases. They play a critical role in reconciling estimated premiums with actual figures at the conclusion of a policy term. This ensures that the ultimate cost of the policy truly reflects the insured's exposure, which is essential for accurate billing and maintaining regulatory compliance. In PolicyCenter's base configuration, final audits are supported for workers' compensation and general liability lines of business, but the system is flexible enough to be customized for other LOBs as needed.\n\nAt its core, a final audit verifies the ultimate cost for a variable basis policy. It ensures that the premiums reflect actual, rather than estimated, figures. These audits are typically conducted at the policy's expiration or cancellation. For example, in workers' compensation, the estimated annual premium (EAP) is based on projected payroll. The final audit reviews actual payroll amounts, recalculates the policy cost, and then bills or refunds the difference to the policyholder. Beyond billing, final audits are crucial for regulatory reporting, such as generating unit statistical reports (unit stat reports) for state bureaus or councils like NCCI. While PolicyCenter doesn't directly create or send these reports, it can be configured to export the necessary final audit data for integration with other statistical reporting systems.\n\nThe general steps for conducting a final audit begin with its initial scheduling when a submission, rewrite, or renewal job is issued. The line of business and choices made on the Payment page determine if a final audit is required and which audit schedule to use. Other policy jobs, such as changes or cancellations, can also affect the audit schedule. An 'Audit Task' batch process uses the audit's process start date to determine when it begins. If an audit is initially waived, its status changes to 'Completed,' but it can be manually restored to the schedule if needed. If the policy requires an audit, the user enters the audit basis, calculates the premium, and completes the audit using one of the available methods (physical, phone, voluntary, or estimated). Upon completion, the billing system is notified to make any necessary premium adjustments, ensuring financial accuracy.",
+      "keyPoints": [
+        "Final audits reconcile estimated premiums with actual figures at policy term end.",
+        "They are crucial for accurate billing and regulatory reporting, including unit statistical reports.",
+        "PolicyCenter can export final audit data for integration with statistical reporting systems.",
+        "Final audits are scheduled during policy issuance and can be waived or manually restored."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "A question prompting a deeper dive into how final audits are scheduled and managed within PolicyCenter."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Detailed explanation of final audits, their purpose, and their role in determining actual policy premiums and supporting regulatory compliance."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A flow diagram illustrating the general steps involved in conducting a final audit, from scheduling to premium adjustments."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Unit Statistical Reports",
+          "content": "Reports sent to state bureaus or councils (e.g., NCCI) that use final audit information to calculate policyholder experience modifications and suggested rates."
+        },
+        {
+          "type": "best_practice",
+          "title": "Data Export for Compliance",
+          "content": "Configure PolicyCenter to export final audit data for seamless integration with external systems used for regulatory statistical reporting."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of scheduling a final audit, viewing its schedule, and understanding how to edit or waive an audit within PolicyCenter. Pay close attention to how the system facilitates these actions to align with billing requirements.",
+      "transcriptSummary": "The demo covers how a submission's payment page includes options for scheduling a final audit, how to view these schedules, and the process for editing or waiving a final audit. It also touches on adding new final audit questions and initiating a scheduled audit. All report plans in the base application require a final audit, which notifies the billing system to release the deposit."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policyholder's business experienced unexpected growth, leading to a significant increase in payroll that was not captured in the initial estimated premium. A final audit was completed, but now new, more accurate payroll data has emerged.",
+      "question": "As an Audit Examiner, how would you ensure the policy's final premium accurately reflects this new information in PolicyCenter, and what system implications would this have?",
+      "hints": [
+        "Consider the process for revising a completed audit.",
+        "Think about how PolicyCenter communicates changes to the billing system.",
+        "What is the status of the original audit after a revision?"
+      ],
+      "expectedApproach": "The learner should describe initiating a 'revise final audit' transaction, which withdraws the original audit and allows for the entry of new data. They should also mention that PolicyCenter notifies the billing system of the reversal and the new audit."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Revising Audits and Managing Premium Reports",
+      "narrative": "Even after an audit is completed, new information may necessitate revisions. In PolicyCenter, revising a completed final audit involves a specific process: the original audit is effectively **withdrawn or reversed**, and a new audit is created to incorporate the changes. This ensures that all updates are accurately reflected in the policy's financials. When a revision occurs, PolicyCenter automatically notifies the billing system that the first audit is reversed, setting the reversal date to the current date, and that it will be replaced by a new, revised audit. This seamless handling of revisions is critical for maintaining consistency across systems and minimizing billing errors, especially in dynamic business environments where policy changes, reinstatements, or cancellations can occur after an audit has been finalized.\n\nBeyond final audits, **premium reports** serve as crucial interim audits within a policy period, particularly for workers' compensation policies with variable bases like seasonal payrolls. These reports help adjust premiums more accurately throughout the policy term, ensuring that the amounts billed align closely with actual exposures. This proactive adjustment reduces the likelihood of large discrepancies at the policy term's end, facilitating smoother financial operations for both insurers and insureds. Premium reports are typically sent by the insurer's premium audit department, and by default, the audit method is 'Voluntary,' where the policyholder provides the data.\n\nScheduling premium reports is similar to final audits, but they occur more frequently within the policy term. When a workers' compensation submission, rewrite, or renewal is issued with a premium reporting payment plan, PolicyCenter schedules these reports. The process involves scheduling, executing, and potentially waiving reports based on business needs. This flexibility allows insurers to maintain accurate premium records throughout the policy lifecycle. **Adding a new premium report** can be necessary for any unreported portion of a policy period, for instance, if an underwriter wants to add an extra monthly report instead of waiting for the final audit, or if a policy change requires reversing and re-adding reports. While a reversed premium report does not automatically create a new one (unlike a final audit revision), users can explicitly add a new report for the waived or reversed period. This capability ensures that premiums consistently reflect current exposures, maintaining financial accuracy and minimizing surprises at term end.",
+      "keyPoints": [
+        "Revising a completed final audit involves reversing the original and creating a new one, with billing system notification.",
+        "Premium reports are interim audits, adjusting premiums periodically for variable basis policies.",
+        "Premium reports are typically voluntary and help align billed amounts with actual exposures throughout the policy term.",
+        "New premium reports can be added for unreported periods or after reversals/waivers to maintain financial accuracy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "The process for revising a completed final audit, showing how the original audit is reversed and a new one is created to incorporate changes."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "A question prompting a deeper dive into how premium reports are scheduled and managed within PolicyCenter."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Explanation of premium reports for workers' compensation policies, detailing their purpose and how they differ from final audits."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "The process for adding a new premium report, including scenarios where it might be necessary and its interaction with reversals and waivers."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Premium Report Reversal",
+          "content": "Unlike final audit revisions, reversing a premium report does not automatically create a new one. A user must explicitly add and process a new premium report for the period."
+        },
+        {
+          "type": "tip",
+          "title": "Proactive Adjustments",
+          "content": "Utilize premium reports to make proactive adjustments to estimated premiums throughout the policy term, reducing large discrepancies at term end and improving cash flow management."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the two types of premium audit?",
+      "referenceAnswer": "The two types of premium audit are: final audits and premium reports.\nA final audit contains the verified, ultimate cost for a variable basis policy and usually\noccurs at the end of the policy term.\nApremium report is a premium bill issued at regular intervals throughout policy term\nbased on reported values.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What are the different audit roles available in PolicyCenter?",
+      "referenceAnswer": "The different roles in PolicyCenter are premium auditor, audit examiner, and audit\nsupervisor.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whatare the different premium audit methods?",
+      "referenceAnswer": "The different audit methods are physically, by phone, voluntary or estimated.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyCenter supports final audits and premium reports for reconciling estimated premiums.",
+        "Audit methods include physical, phone, estimated, and voluntary, offering flexibility.",
+        "Distinct roles (Auditor, Examiner, Supervisor) ensure accuracy and oversight.",
+        "Audits are scheduled automatically, executed through a defined workflow, and can be revised.",
+        "Premium reports provide interim adjustments, crucial for policies with variable exposures."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering premium audits is crucial for financial accuracy, regulatory compliance, and maintaining strong client relationships. Properly configured audits ensure that policyholders pay fair premiums based on actual risk, preventing disputes and supporting the insurer's profitability. This directly impacts billing system integrations and accurate financial reporting.",
+      "nextLessonPreview": "Next, we'll transition from understanding audit processes to the fundamental principles of rating. We'll explore how premiums are calculated and adjusted based on various risk factors and underwriting rules in PolicyCenter."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment will challenge you to apply your knowledge of premium audits in PolicyCenter. You will be tasked with configuring and managing both final audits and premium reports for a sample workers' compensation policy. This includes setting up audit schedules, initiating audits, entering data, and handling a scenario where a completed audit needs revision.",
+      "objectives": [
+        "Configure audit schedules for a new policy.",
+        "Initiate and complete a final audit.",
+        "Revise a completed final audit with new data.",
+        "Schedule and process interim premium reports.",
+        "Identify the impact of audit adjustments on policy premiums and the billing system."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_30_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_30_01.mp4"
+    }
+  ]
+}

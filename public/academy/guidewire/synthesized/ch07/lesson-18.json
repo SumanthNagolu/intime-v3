@@ -1,0 +1,202 @@
+{
+  "lessonId": "ch07-l18",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 18,
+  "title": "IS_Fund -18 introduction to Input sets",
+  "subtitle": "Learn how Input Sets streamline UI development through reusability and shared logic.",
+  "synthesizedAt": "2026-02-16T18:11:44.208443+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a user interface for an insurance application. You have critical pieces of information, like a 'Public ID' and 'Created On' date, that need to appear in exactly the same way on multiple screens – for instance, on a 'Summary' screen and a 'Details' screen. If you update the display of these fields in one place, you want that change to automatically reflect everywhere else, without manual duplication of effort.",
+      "question": "How can you ensure consistency and reduce maintenance overhead when displaying the same set of UI widgets across different parts of your application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and benefits of Input Sets in UI development.",
+        "Differentiate between inline Input Set widgets and reusable Input Set PCF files, including the use of InputSetRef.",
+        "Identify the primary use cases for Input Sets, such as reusability, shared logic, and partial page updates.",
+        "List the types of widgets that can and cannot be included in Input Sets."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with basic UI development concepts in Guidewire, including screens, cards, panels, and individual widgets, as well as the role of PCF files in defining UI components.",
+      "warmupQuestion": "Think about a time you had to display similar information in multiple places in an application. What challenges did you face in keeping them consistent?",
+      "hint": "Consider the effort involved in making changes or ensuring uniform styling."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Streamlining UI with Input Sets",
+      "narrative": "When developing user interfaces, you often encounter situations where the same set of information needs to be displayed consistently across different parts of your application. For example, as illustrated in the user story on slide 3, an insurance company's business analysts require the 'Public ID' and 'Created On' fields to appear identically on both the 'Summary' screen's 'Basics' card and the 'Details' screen's 'Person Info' card. This isn't just about initial placement; if the order of widgets changes or a new widget is inserted, these changes must be reflected on both cards automatically.\n\nThis is where **Input Sets** become incredibly valuable. As reviewed on slide 5, an Input Set is essentially a set of atomic widgets grouped together. They are designed to be reused, allowing you to define a common display pattern once and apply it in multiple locations. A key benefit is the ability to apply common visibility or editability conditions across multiple widgets within the set, simplifying complex UI logic. It's important to note that Input Sets have specific constraints: they should not be referenced by secondary views, do not have a toolbar directly associated with them, and must be embedded into a Detail View Panel.\n\nWhen it comes to what you can include, Input Sets are quite flexible, but with a crucial limitation. As shown on slide 6, Input Sets can contain input widgets, input dividers, labels, list view panels, and even other input sets. However, unlike detail view panels, **Input Sets cannot contain input columns**. This distinction is vital for understanding their structure and how they fit into the overall UI hierarchy.",
+      "keyPoints": [
+        "Input Sets group atomic widgets for consistent display and behavior.",
+        "They enable reuse and the application of shared visibility/editability conditions.",
+        "Input Sets must be embedded within Detail View Panels and cannot contain input columns.",
+        "They are ideal for maintaining consistency across similar UI components."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "This user story highlights the business requirement for consistent display of 'Public ID' and 'Created On' fields across different UI cards."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A visual representation of the 'Summary' screen's 'Basics' card, showing the fields that need to be replicated consistently."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Defines Input Sets as reusable groups of atomic widgets with shared logic capabilities."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Lists the types of widgets that can and cannot be included within an Input Set, notably excluding input columns."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Atomic Widgets",
+          "content": "Atomic widgets are the smallest, most fundamental UI components, such as text input fields, labels, or date pickers, that typically display or capture a single piece of data."
+        },
+        {
+          "type": "gotcha",
+          "title": "No Input Columns",
+          "content": "Remember that Input Sets cannot directly contain input columns. This is a key structural difference from detail view panels."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Inline vs. Reusable Input Sets: Choosing the Right Approach",
+      "narrative": "Input Sets offer two primary ways of implementation: as an inline widget or as a reusable PCF file. Understanding the differences, as outlined on slide 7, is crucial for effective UI design.\n\nAn **inline Input Set widget** is declared as a child container within another PCF file (like a Detail View Panel or another Input Set). It is not reusable by other containers and inherits the root object associated with its parent. While you can define a variable object for an inline InputSet widget, it's uncommon, as it typically operates within the context of its parent's data. This approach is suitable when the group of widgets is unique to a specific location and doesn't need to be shared.\n\nIn contrast, a **reusable Input Set** is created as a separate PCF file, typically with a filename ending in `InputSet.pcf`. This makes it a top-level container, meaning it can be referenced and reused across multiple parts of your application. Unlike inline Input Sets, a reusable Input Set takes its own root object, allowing it to operate independently of the referencing container's data context. To include a reusable Input Set PCF file in another container, you use an `InputSetRef` widget. This widget specifies the filename of the reusable Input Set and passes any necessary arguments to its root object.\n\nSlide 8 provides a clear example of this comparison. On the left, an `ABCompanyDetailsScreen.pcf` uses an inline Input Set, where all components are defined within the same PCF and inherit the screen's root object. On the right, the same screen references a separate `ContactInsightsInputSet.pcf` using an `InputSetRef` widget. This `ContactInsightsInputSet.pcf` defines its own root object and contains the atomic widgets, making it reusable. Both inline and reusable Input Sets share similarities: they can exercise control over all their elements to implement shared logic and can be targeted by partial page updates, which we'll discuss next.",
+      "keyPoints": [
+        "Inline Input Sets are defined within a parent PCF, are not reusable, and inherit the parent's root object.",
+        "Reusable Input Sets are separate PCF files (`.InputSet.pcf`), take their own root object, and are reusable.",
+        "The `InputSetRef` widget is used to reference and include reusable Input Set PCF files, passing arguments as needed."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Compares the key differences and similarities between inline Input Set widgets and reusable Input Set PCF files."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustrates the structural difference between implementing an Input Set inline versus referencing a reusable Input Set PCF file."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "When to Use Reusable PCFs",
+          "content": "If a container (like an Input Set) is likely to be needed in multiple places, create a PCF file for it. This promotes modularity and reduces duplication."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Practical Applications of Input Sets",
+      "narrative": "Input Sets are not just about grouping widgets; they serve several critical practical applications that enhance UI development efficiency and performance. The two most prominent use cases are **reusability** and **shared logic**, with **partial page updates** being a significant performance benefit.\n\n**Reusability** is a core strength. As demonstrated on slide 9, Input Sets often define a collection of widgets that are consistently reused across multiple detail view panels. For instance, a `GlobalAddressInputSet` can encapsulate all the fields for an address (Country, Address 1, City, State, ZIP Code) and be referenced on both a 'Summary' page and an 'Addresses' page. This approach significantly reduces and simplifies development, configuration, and ongoing administration efforts, as changes to the address layout only need to be made in one place.\n\n**Shared logic** is another powerful feature. Slide 10 illustrates how you can set an `editable` or `visible` property directly on the Input Set widget itself. This property then applies to all the contained widgets within that Input Set. For example, if the root object is of type `ABCompanyVendor`, a `FinancialPersonnelInputSet` could be made visible. This eliminates the need to configure individual visibility or editability properties for each widget in the group, streamlining complex conditional logic and reducing potential errors.\n\nFinally, Input Sets play a crucial role in optimizing **Partial Page Updates**, as highlighted on slide 11. When a set of widgets needs to be dynamically shown or hidden based on a user action (e.g., a 'Date Input Cell' widget becoming visible only when the user selects 'Yes'), putting these widgets into an Input Set allows for targeted updates. Instead of updating the entire HTML page, only that specific Input Set's HTML code is refreshed. This significantly improves application performance and responsiveness, providing a smoother user experience.",
+      "keyPoints": [
+        "Input Sets promote reusability of widget groups across UI components, simplifying development and maintenance.",
+        "They enable shared visibility and editability logic for multiple widgets, reducing configuration complexity.",
+        "Input Sets facilitate efficient partial page updates for dynamic content, enhancing application performance."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Illustrates how a `GlobalAddressInputSet` can be reused across different pages, such as a contact summary and addresses page."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Demonstrates applying shared logic, like visibility or editability, at the Input Set level to control multiple contained widgets."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explains how Input Sets improve performance by enabling targeted partial page updates for dynamically displayed content."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a reusable Input Set to display basic person information consistently across different UI cards. Pay close attention to how the Input Set PCF file is created and then referenced.",
+      "transcriptSummary": "The demo begins by analyzing the existing UI for 'Public ID' and 'Created On' widgets on a summary page, noting their current non-reusable configuration. It then guides you through creating a new reusable Input Set PCF file, moving the desired widgets into it, and finally referencing this new Input Set from multiple detail views to achieve the required consistency and reusability."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've just seen how to create a reusable Input Set for basic person information. Now, imagine your team needs to ensure that a specific set of contact details (e.g., 'Email Address' and 'Primary Phone') always appear together and are editable only if the contact is marked as 'Active'.",
+      "question": "Outline the steps you would take to create a reusable Input Set for 'Email Address' and 'Primary Phone' and apply a shared editability condition based on an 'Active' status.",
+      "hints": [
+        "Consider where the Input Set PCF file would be created within the Guidewire Studio project structure.",
+        "Think about how the shared editability condition would be applied to the entire group of widgets.",
+        "Remember how reusable Input Sets are integrated into other PCF files using a specific widget."
+      ],
+      "expectedApproach": "1. Create a new Input Set PCF file (e.g., `ContactDetailsInputSet.pcf`) in the appropriate folder. 2. Define a root object for this new Input Set (e.g., `anABContact : ABContact`). 3. Add the 'Email Address' and 'Primary Phone' input widgets to this new Input Set PCF. 4. Set the `editable` property on the Input Set itself to a condition like `anABContact.Active`, ensuring all contained widgets inherit this logic. 5. In any detail view panel where these contact details are needed, use an `InputSetRef` widget to reference `ContactDetailsInputSet.pcf` and pass the relevant `ABContact` object as an argument."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatare the primary use cases for input sets?",
+      "referenceAnswer": "Possible answers: (1) Reuse of widgets across detail view panels, (2) or logic shared\nfor a group of widgets such as editability and/or visibility (3) or targeted page update.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Which of the following can be included in input sets:\n\n“ a) Embedded list views\n\nb) Inputs\nce) Input columns\nd) Input dividers\ne) Labels",
+      "referenceAnswer": "Which of the following can be included in input sets:\n\n“ a) Embedded list views\n\nb) Inputs\nce) Input columns\nd) Input dividers\ne) Labels\n\nThe correct answers are:\n\nEmbedded list views, Inputs, Input dividers, and Labels.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whatis the difference between the \"input set\" widget and the \"input set\no ref\" widget?",
+      "referenceAnswer": "fa\n\nWhatis the difference between the \"input set\" widget and the \"input set\no ref\" widget?\n\nThe InputSet widget groups widgets together and is placed within an input column\nwithin a detail view panel. You use an InputSetRef widget to reference an Input Set\nPCF file. An Input Set PCF can be referenced by one or more InputSetRef widgets.\nInput Set PCFs are reusable input sets.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Input Sets are powerful UI components for grouping related widgets.",
+        "They offer significant benefits in terms of reusability, reducing redundant code and configuration.",
+        "Input Sets simplify the application of shared logic (visibility, editability) across multiple widgets.",
+        "They improve performance by enabling partial page updates for dynamic content.",
+        "You can create Input Sets as inline components or as reusable PCF files referenced by InputSetRef widgets."
+      ],
+      "realWorldConnection": "In Guidewire projects, Input Sets are crucial for building maintainable and scalable user interfaces. They ensure a consistent user experience across different screens and significantly reduce the effort required to implement and update common UI patterns, especially in complex applications with many data entry forms. Mastering Input Sets will make your UI development more efficient and robust.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the practical implementation of creating and configuring Input Set PCF files and using InputSetRef widgets in your application."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the student exercise on Input Sets. This hands-on task will guide you through creating and implementing an Input Set in a Guidewire application.",
+      "objectives": [
+        "Practice creating a reusable Input Set PCF file.",
+        "Implement shared logic (e.g., visibility or editability) for a group of widgets.",
+        "Integrate an InputSetRef widget into an existing detail view panel."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_18.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_18.mp4"
+    }
+  ]
+}

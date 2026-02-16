@@ -1,0 +1,280 @@
+{
+  "lessonId": "ch11-l10",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 10,
+  "title": "Plugins",
+  "subtitle": "Learn how to extend Guidewire applications using Gosu or Java plugins for custom behavior and integrations.",
+  "synthesizedAt": "2026-02-16T18:56:50.665478+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your Guidewire application needs to connect to an external currency exchange service to get real-time rates, or perhaps you need to implement a unique business logic for generating policy numbers. How do you integrate these custom functionalities without altering the core Guidewire product code?",
+      "question": "What mechanisms does Guidewire provide to extend its capabilities and integrate with external systems seamlessly?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what Guidewire plugins are and their purpose.",
+        "Differentiate between predefined, messaging, and startable plugin types.",
+        "Understand recommended source code options and best practices for plugin development.",
+        "Describe the steps involved in creating and configuring a Gosu plugin.",
+        "Explain how to use plugin parameters to customize plugin behavior.",
+        "Understand the deployment considerations for plugin changes."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should have a basic understanding of Guidewire's architecture and familiarity with Gosu or Java programming concepts.",
+      "warmupQuestion": "Think about a time you needed to integrate a system or customize an application's behavior. What challenges did you face, and how might a structured extension point have helped?",
+      "hint": "Consider how tightly coupled your solution was to the core application."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Guidewire Plugins and Their Types",
+      "narrative": "At its core, a **Guidewire plugin** is a powerful mechanism for extending and customizing your Guidewire application. It's essentially a Gosu, OSGi Java, or Java class that contains a specific set of methods. These methods are invoked by Guidewire's internal code to execute application functionality, allowing you to inject custom logic or integrate with external systems without modifying the base application code. A key characteristic is that Guidewire plugins run within the same Java Virtual Machine (JVM) process as the Guidewire application itself, ensuring tight integration and performance.\n\nPlugins can either perform the required work independently or interact with external systems. When interacting with external systems, it's crucial that the integration point is **synchronous**. This means the Guidewire application waits for a response from the plugin before proceeding. Developers must carefully consider response times, including network latency, to ensure plugins perform quickly. In many scenarios, calls to a plugin will block the end-user from further work until the operation is complete, so responsiveness is paramount to a good user experience.\n\nGuidewire categorizes plugins into three main types, each serving a distinct purpose:\n\n*   **Predefined plugins:** These are used to implement customizable behavior for specific, predefined points within the application's logic. Calls to these plugins typically block the user from further work.\n*   **Messaging plugins:** Designed for sending messages to external systems and processing any resulting replies. These operate outside of a user context and do not block user interaction.\n*   **Startable plugins:** Used to listen for incoming messages from external systems and process them asynchronously, also operating outside a user context.",
+      "keyPoints": [
+        "Plugins extend Guidewire functionality using Gosu, OSGi Java, or Java classes.",
+        "Plugins run in the same JVM as the Guidewire application.",
+        "Synchronous integration points require careful consideration of response times.",
+        "Predefined, Messaging, and Startable plugins serve different integration needs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide highlighting the core concept of plugins in Guidewire."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This slide defines a Guidewire plugin, emphasizing its role in executing application functionality and interaction with external systems."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An overview of the three main types of plugins: Predefined, Messaging, and Startable, with their respective use cases."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Performance Consideration",
+          "content": "For plugins interacting with external systems, ensure the integration is synchronous and optimize for quick response times. Long-running synchronous calls can block the user interface and degrade user experience."
+        },
+        {
+          "type": "definition",
+          "title": "Synchronous vs. Asynchronous",
+          "content": "A synchronous call means the application waits for the plugin to complete its task before continuing. An asynchronous call allows the application to continue processing while the plugin runs in the background."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Plugin Development: Choosing Your Language and Defining Requirements",
+      "narrative": "When it comes to developing plugins, Guidewire offers flexibility in your choice of programming language, but with clear recommendations. The **best practice** is to write all new plugins in **Gosu**. This recommendation stems from several advantages: faster development cycles, more concise code, and superior debugging capabilities directly within Guidewire Studio. Gosu allows you to leverage its powerful language features, such as blocks, collection enhancement methods, native access to data model types, intelligent code completion, and type inference, all of which contribute to writing efficient and maintainable code.\n\nWhile Gosu is preferred, you can also implement plugins using **OSGi Java** or traditional **Java**. For OSGi plugins, Guidewire recommends IntelliJ IDEA with OSGi Editor for modularization. For standard Java plugins, specific rules govern class placement in plugin directories, and you'll need to copy all necessary JAR files from the `java-api\\lib\\` directory to your Java IDE. Note that Java plugins might require special deployment steps and lack native debugging within Guidewire Studio.\n\nEvery predefined plugin addresses a specific business need, and understanding these requirements is the first critical step. For instance, consider a use case where you need to create an exchange rate set that includes one exchange rate for every typekey currency. The process involves determining plugin requirements, writing the plugin class, registering it, and deploying the changes.\n\nTo determine the specific requirements for a Gosu plugin, you'll typically consult the product's Integration Guide, which details available plugins and their interfaces. For our exchange rate example, you'd identify the `IExchangeRateSetPlugin` interface. This interface defines methods like `createExchangeRateSet`, and you'd need to understand when these methods are called (e.g., by clicking an 'Invoke ExchangeRateSet Plugin' button in the UI). It's also vital to consider any specific issues or constraints related to the plugin's functionality.",
+      "keyPoints": [
+        "Gosu is the recommended language for new plugin development due to speed, conciseness, and debugging.",
+        "OSGi Java and Java are alternative options, each with specific development and deployment considerations.",
+        "Plugin development starts with identifying a business need and determining the required interfaces and methods.",
+        "The Integration Guide is a primary resource for understanding plugin requirements."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "A comparison of recommended source code options for plugins, highlighting the advantages of Gosu."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "An example use case for a plugin: creating an exchange rate set, outlining the four main steps of plugin development."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "This slide serves as a visual break or transition in the lesson flow."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Details on how to determine Gosu plugin requirements, including identifying interfaces, methods, and call triggers."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Gosu for New Plugins",
+          "content": "Always prioritize Gosu for new plugin development to leverage its integrated features, development speed, and ease of maintenance within Guidewire Studio."
+        },
+        {
+          "type": "warning",
+          "title": "Java Plugin Complexity",
+          "content": "Java plugin development requires a separate IDE, manual JAR management, and special deployment, making it generally more complex than Gosu."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Implementing the Plugin Class and Interface",
+      "narrative": "Once you've determined the requirements, the next step is to create the actual plugin class. This involves establishing a proper package structure and naming convention for your Gosu class. A recommended package naming convention is `gsrc.<company_code>.<app_code>.plugin.<functional_area>`, which helps organize your codebase. For the plugin class itself, Guidewire suggests specific naming conventions based on the plugin type:\n\n*   **Predefined plugins:** `<meaningful_name><interface_implemented>` (e.g., `TrnlExchangeRateSetPlugin`)\n*   **Messaging plugins:** `<meaningful_name><type_of_message_interface_implemented>` (e.g., `BankAccountVerificationTransport`)\n*   **Startable plugins:** `<meaningful_name><interface_implemented>` (e.g., `InboundJMSIntegrationStartablePlugin`)\n\nThe core of your plugin class is its implementation of one or more required interfaces. You'll use the `implements` keyword in your Gosu class definition, followed by the interface name (or a comma-separated list for multiple interfaces). Guidewire Studio provides a helpful shortcut: after typing the interface name, press `ALT+ENTER` to automatically add stubs for all methods that need to be declared from that interface. While every public method from the interface must exist in your class, some methods can be left as empty stubs if they don't require specific custom logic for your use case.\n\nIt's also possible to create and call additional non-public methods within your plugin class. For instance, an exchange rate plugin might include a private `extractRate` method to handle communication with an external SOAP web service for retrieving and submitting values. This modular approach keeps your code clean and focused.",
+      "keyPoints": [
+        "Follow recommended package and class naming conventions for clarity and organization.",
+        "Implement the required interface(s) in your plugin class.",
+        "Use `ALT+ENTER` in Studio to generate method stubs for implemented interfaces.",
+        "You can add private helper methods to your plugin class for modularity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Guidance on creating the plugin package and Gosu class, including recommended naming conventions for different plugin types."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Illustrates how to implement required interfaces in a Gosu plugin class and use Studio's `ALT+ENTER` shortcut."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Implementing IExchangeRateSetPlugin",
+          "code": "package trn.ta.plugin.exchangerate\n\nclass TrnlExchangeRateSetPlugin implements gw.plugin.exchangerate.IExchangeRateSetPlugin {\n\n  override function createExchangeRateSet(): gw.plugin.exchangerate.IExchangeRateSet {\n    // Your custom logic to create and return an exchange rate set\n    return null // Placeholder, actual implementation would return a valid object\n  }\n\n  // Other methods from IExchangeRateSetPlugin would also be implemented here\n}",
+          "explanation": "This example shows the basic structure of a Gosu plugin class implementing the `IExchangeRateSetPlugin` interface, with a placeholder for the `createExchangeRateSet` method."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring the Plugin Registry",
+      "narrative": "After creating your plugin class, the Guidewire application needs to know about it. This is where the **plugin registry** comes in. The registry is a collection of `.gwp` files, which are XML documents located in `config/Plugins/registry` within your project. Each `.gwp` file defines a plugin entry.\n\nIf a definition for your plugin interface doesn't already exist, you'll need to create a new plugin registry file. For **predefined plugins**, a crucial rule is that the plugin name and the plugin interface name must be identical. For example, if you're implementing `IExchangeRateSetPlugin`, your registry file should also be named `IExchangeRateSetPlugin.gwp` and the 'Name' field within it should match. This strict naming ensures PolicyCenter correctly recognizes and uses your plugin.\n\nOnce the registry file exists, you'll configure it using the Plugin editor in Guidewire Studio. This editor allows you to specify the plugin's class. In cases where the plugin definition already exists, you might just need to modify it. The editor provides options to:\n\n1.  **Add plugin type:** If you need to change the plugin's implementation language (e.g., from Java to Gosu), you'd remove the existing reference and add a new one.\n2.  **Specify the plugin class:** This is where you link your Gosu, OSGi, or Java class to the plugin interface.\n3.  **Disable the plugin:** Temporarily deactivate a plugin without removing its configuration.\n4.  **Define plugin parameters:** Add optional name-value pairs that can be passed to your plugin during initialization, which we'll discuss next.\n\nIt's important to remember that for predefined plugins, a single registry file can only point to one class implementation at a time. However, messaging and startable plugins can have multiple entries, allowing for more flexible configurations.",
+      "keyPoints": [
+        "Plugin registry files (`.gwp`) link plugin interfaces to their implementation classes.",
+        "Predefined plugins require the registry file name, plugin name, and interface name to be identical.",
+        "The Plugin editor in Studio is used to configure plugin types, classes, and parameters.",
+        "Predefined plugins support only one active implementation per registry entry."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Instructions on creating a new plugin registry file, emphasizing the naming convention for predefined plugins."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "A view of the Plugin editor in Studio, showing options for configuring plugin types, classes, and parameters."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "This slide serves as a visual break or transition in the lesson flow."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Utilizing Plugin Parameters and Deployment",
+      "narrative": "Plugin parameters offer a powerful way to make your plugin implementations more flexible and reusable without altering the underlying code. These parameters are specified as name-value pairs within the plugin registry editor and can be passed to your plugin class during initialization. They are particularly useful for:\n\n*   **Varying behavior over time:** Changing credentials for an external system without code changes.\n*   **Environment-specific behavior:** Using different settings for development, QA, or production environments.\n*   **Clustered environments:** Allowing different servers in a cluster to have unique plugin behaviors.\n\nIn the Studio Plugins Registry editor, you can add multiple optional parameters, such as server names, port numbers, or timeout values. These are simple String name/value pairs, with optional Environment and Server fields for conditional application. It's worth noting that these are distinct from script parameters, which are application-wide global variables managed on the Administration tab for business values that change over time.\n\nTo make use of these parameters within your Gosu plugin class, your plugin must implement the `InitializablePlugin` interface. This interface requires the implementation of the `setParameters` property. The `setParameters` property receives a `Map<String, String>` object containing all the name-value pairs defined in the plugin registry's Parameters table. This property is called only once, before the plugin is first used, making it ideal for initializing static variables within your class. A best practice is to create `private static` variables for each parameter to store their values securely and efficiently.\n\nFinally, after making changes to your plugin, whether it's a new Gosu plugin class or a modified plugin registry file, you'll need to deploy these changes. For new or modified plugin registry entries, a **server restart is required** because these entries are initialized only during application startup. However, for changes to an existing Gosu plugin class, you typically do not need a full server restart; instead, you can execute 'Reload Changed Classes' in Studio, which is much faster and preferred during development.",
+      "keyPoints": [
+        "Plugin parameters allow dynamic configuration of plugin behavior without code changes.",
+        "Parameters are defined as name-value pairs in the plugin registry.",
+        "The `InitializablePlugin` interface and `setParameters` property are used to access parameters in code.",
+        "Server restart is needed for plugin registry changes; 'Reload Changed Classes' suffices for Gosu code changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "An illustration of plugin parameters in the registry editor, showing how they can be used to vary plugin behavior."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Code example demonstrating how to reference and use plugin parameters within a Gosu class by implementing `InitializablePlugin`."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Instructions for deploying code changes, including when a server restart is necessary versus reloading changed classes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Using Static Variables for Parameters",
+          "content": "For plugin parameters, declare them as `private static var` within your plugin class. This ensures they are initialized once and accessible across all instances without being tied to a specific instance."
+        },
+        {
+          "type": "gotcha",
+          "title": "Registry Changes Require Restart",
+          "content": "Always remember that modifying a plugin registry entry (e.g., changing the plugin class or parameters) necessitates a full server restart for the changes to take effect."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Accessing Plugin Parameters in Gosu",
+          "code": "package trn.ta.plugin.exchangerate\n\nuses gw.plugin.InitializablePlugin\nuses gw.plugin.exchangerate.IExchangeRateSetPlugin\n\nclass TrnlExchangeRateSetPlugin implements IExchangeRateSetPlugin, InitializablePlugin {\n\n  private static var USERNAME: String\n  private static var PASSWORD: String\n\n  override function setParameters(parameters: java.util.Map<String, String>) {\n    USERNAME = parameters.get(\"username\")\n    PASSWORD = parameters.get(\"password\")\n    // Further initialization using these parameters\n  }\n\n  override function createExchangeRateSet(): gw.plugin.exchangerate.IExchangeRateSet {\n    // Use USERNAME and PASSWORD here for external calls\n    return null\n  }\n}",
+          "explanation": "This code snippet shows how a plugin class implements `InitializablePlugin` to receive and store parameters from the registry. The `setParameters` method is called once to initialize static variables like `USERNAME` and `PASSWORD`."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of configuring a plugin with parameters in Guidewire Studio. Pay close attention to how parameters are added and how they are referenced in the plugin's Gosu code.",
+      "transcriptSummary": "The demonstration illustrates adding parameters to a plugin registry entry, then modifying the associated Gosu plugin class to implement `InitializablePlugin` and access these parameters via the `setParameters` method. It highlights the practical application of dynamic configuration."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Identify if each statements true or false.\n\now A) Plugins implement methods that are called by internal code.\n\nB) Plugins must be written in Gosu.\n\nC) Aplugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nD) Plugins are used exclusively for external application integration.",
+      "referenceAnswer": "Identify if each statements true or false.\n\nY\n, A\nB\nCc\n\nwere\n\nD\n\nz=\n\ng\n\nCc)\nD\n\nz=\n\n&\n\nPlugins implement methods that are called by internal code.\nPlugins must be written in Gosu.\n\nA plugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nPlugins are used exclusively for external application integration.\nTrue\n\nFalse — Guidewire recommends that they be written in Gosu, but they can be\nwritten in OSGi or Java.\n\nTrue\n\nFalse — They are also used to",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "n What is the purpose of a plugin registry entry?",
+      "referenceAnswer": "ae What is the purpose of a plugin registry entry?\n\n¢\n4\n\nThe plugin registry entry identifies the plugin class to use for a given set of internally\ncalled methods and initialization parameters that may be used to affect the plugin's\nbehavior.\n\nSoo eS oe ese Sse ese",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Doyou need to restart the server when you:\n¢\n\now A) Modify code in an existing Gosu plugin?\n\nB) Modify a plugin registry entry?",
+      "referenceAnswer": "_- — Doyou need to restart the server when you:\n\n¢\n“ A\nB\n\nModify code in an existing Gosu plugin?\n\nModify a plugin registry entry?\n\nA) No, you do not to restart the server when you make changes to a Gosu plugin\nclass. However, you need to execute Reload Changed Classes.\n\nB) Yes, you need to restart the server when modifying a plugin registry entry because\nplugin registry entries are initialized only during the server application start-up.\n\nSoo eS oe ese Sse ese",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Guidewire plugins are core components for extending application functionality and integrating with external systems.",
+        "Plugins can be Predefined (blocking user), Messaging (outbound, non-blocking), or Startable (inbound, non-blocking).",
+        "Gosu is the recommended language for new plugin development due to its efficiency and integration with Studio.",
+        "Developing a plugin involves defining requirements, implementing interfaces in a Gosu class, and configuring its entry in the plugin registry.",
+        "Plugin parameters provide a flexible way to customize plugin behavior without code changes, especially for different environments.",
+        "Changes to plugin registry entries require a server restart, while Gosu code changes can often be deployed with 'Reload Changed Classes'."
+      ],
+      "realWorldConnection": "In real Guidewire projects, plugins are indispensable for tailoring the application to specific business needs, such as integrating with third-party payment gateways, custom document management systems, or unique rating engines. Mastering plugins allows developers to build robust, maintainable, and scalable solutions that extend Guidewire's powerful platform.",
+      "nextLessonPreview": "In the next lesson, we'll delve deeper into specific types of integrations, exploring how to leverage web services and messaging for complex external system interactions."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to create a new exchange rate plugin. This will involve defining the plugin class, implementing the necessary interface, and configuring its entry in the Guidewire Studio plugin registry. You will also add a simple parameter to the plugin registry and demonstrate how to access it within your plugin code.",
+      "objectives": [
+        "Create a Gosu plugin class that implements `IExchangeRateSetPlugin`.",
+        "Configure a new plugin registry entry for your exchange rate plugin.",
+        "Add a custom parameter to the plugin registry entry.",
+        "Modify your plugin class to implement `InitializablePlugin` and retrieve the custom parameter."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_10_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_10_01.mp4"
+    }
+  ]
+}

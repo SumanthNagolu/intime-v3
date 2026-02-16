@@ -1,0 +1,308 @@
+{
+  "lessonId": "ch08-l02",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 2,
+  "title": "Configuring Location groups and Pages",
+  "subtitle": "Learn to structure application navigation using Guidewire Location Groups and Pages.",
+  "synthesizedAt": "2026-02-16T18:16:53.165154+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing a new feature in PolicyCenter that requires a dedicated section in the application for managing complex reinsurance treaties, or perhaps a specialized view for high-risk commercial properties that are geographically close. How do you integrate this new functionality seamlessly into the existing user interface, ensuring intuitive navigation and consistent branding across related screens?",
+      "question": "What core UI components in Guidewire PolicyCenter allow you to define structured navigation and group related screens for specific business contexts?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define location groups and pages and their purpose in the application.",
+        "Describe the architectural components of a location group, including tabs, info bars, menu actions, and location references.",
+        "Explain how to configure location groups, including entry points, navigation, and permissions.",
+        "Outline the steps for creating a new location group.",
+        "Explain how to configure pages, including their content, properties, and editability.",
+        "Outline the steps for creating a new page."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with various applications, noticing how they organize different sections and screens. Think about how tabs, sidebars, and information banners help you understand where you are and what actions are available.",
+      "warmupQuestion": "Before diving into Guidewire specifics, consider how a well-structured application interface enhances user experience and efficiency. What elements contribute most to this?",
+      "hint": "Consider elements like consistent navigation, clear labels, and contextual information."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Location Groups and Pages",
+      "narrative": "In Guidewire PolicyCenter, **Location Groups** and **Pages** are fundamental building blocks for structuring the application's user interface and navigation. They provide a logical way to organize related information and functionality, ensuring a consistent and intuitive user experience. \n\nA **Location Group** acts as a container, bringing together a collection of locations (which can be pages or other child location groups) to provide structure and navigation. When you navigate within a location group, certain elements of the UI remain constant, such as the tab bar, the info bar, and the menu actions. The tab bar is the set of tabs running across the top of the application, while the info bar consists of widgets appearing below the tabs but above the main screen area. Menu actions are typically collapsed within an 'Actions' menu. This consistency helps users maintain context as they move between different views related to a single entity, like an Account. For instance, the 'Account File' location group might contain various pages like 'Summary', 'Contacts', and 'Policies', all while keeping the account-specific info bar and actions visible.\n\nConversely, a **Page** is a more granular location, designed to contain a single screen within the main application frame. Pages are almost exclusively used within location groups. They represent the actual content display areas. When a menu link (often referred to as a 'second-level navigation') points to a page, clicking that link renders the associated screen directly in the main frame. This modular approach allows developers to create focused screens that display specific data or allow for particular interactions, which are then organized into broader logical groups for easy access.",
+      "keyPoints": [
+        "Location Groups organize related pages and child location groups, providing consistent navigation elements.",
+        "Pages contain single screens and are the most common type of location within location groups.",
+        "Key UI elements like the tab bar, info bar, and menu actions remain consistent within a location group."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the application interface, highlighting the role of location groups in structuring content."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A visual representation of a Location Group, showing its components like the tab bar, info bar, and menu links."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An example of a Page within a Location Group, demonstrating how a menu link renders a single screen."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location Group",
+          "content": "A collection of locations (pages or child location groups) used to provide structure and navigation for a group of related pages through menus or other interface elements."
+        },
+        {
+          "type": "definition",
+          "title": "Page",
+          "content": "A location that contains a single screen in the main application frame, typically used within location groups."
+        },
+        {
+          "type": "definition",
+          "title": "Info Bar",
+          "content": "A set of widgets that appear below the tabs but above the screen area, providing contextual information or actions for the current location group."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Architecture and Configuration Levels",
+      "narrative": "The architecture of a location group is hierarchical, designed to support both primary and secondary navigation. In the base application, location groups are typically accessed via tabs in the tab bar, representing **first-level navigations**. These 'parent-level' groups can display their own info bars and menu actions. Within these, **second-level navigation location groups** can exist, often containing pages or other child location groups. These child-level groups usually do not have their own info bars or menu actions, inheriting them from their parent. Each location group contains **location references (location refs)**, which are pointers to either a page or another location group. When a user clicks a menu link associated with a location ref, the application renders the corresponding page or location group.\n\nConfiguring these elements involves two primary levels: **LocationGroup-level** and **Page-level**. At the LocationGroup-level, you define how users enter and navigate within the group, specify the `MenuActions`, `TabBar`, and `InfoBar` files, and set permissions to control who can access the group. This level also manages the `location refs` that point to the contained pages or child groups. For example, the 'Account File' location group might have an `infoBar` that always displays the account number and name, regardless of which page within the group is currently active.\n\nAt the **Page-level**, configuration focuses on the specific screen that a page renders. This includes defining the page's logic, such as its visibility and editability, and setting its display labels. This separation of concerns allows for flexible and maintainable UI development, where the overall navigation structure is managed at the group level, and the specific content and behavior are managed at the page level.",
+      "keyPoints": [
+        "Location groups support first-level (tabs) and second-level (menu links) navigation.",
+        "Location references within a group point to either pages or other location groups.",
+        "Configuration is split into LocationGroup-level (entry points, navigation, permissions) and Page-level (screen content, logic, labels)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Diagram illustrating the hierarchical architecture of a location group, showing how it contains location references that point to pages or other groups."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "An overview of the two levels of configuration: LocationGroup-level and Page-level, detailing what each level controls."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "A blank slide, serving as a visual break or transition point in the lesson."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location Reference (Location Ref)",
+          "content": "A pointer within a location group that specifies a destination, which can be either a page or another location group."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the key configuration elements of a Location Group PCF file in Guidewire Studio, highlighting where to define entry points, variables, and references to UI components.",
+      "transcriptSummary": "The video demonstrates navigating a Location Group PCF, showing the Entry Points tab for defining how to access the group, the Variables tab for object definitions, and how `menuActions`, `infoBar`, and `tabBar` properties link to separate PCF files for their content. It also shows how location refs point to child pages or groups."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuring Location Groups in PCF Files",
+      "narrative": "When configuring a location group in a PCF (Page Configuration File), several key properties define its behavior and appearance. The `menuActions`, `infoBar`, and `tabBar` properties are crucial, as they specify separate PCF files to be used for the contents of the Actions menu, the information bar, and the tab bar, respectively. These properties are optional, allowing for flexibility in design. You can easily navigate to these linked files by using 'Ctrl + Click' on their values in Studio.\n\n**Entry points** are vital for defining how users navigate to a location group. Each entry point is defined with a name and specifies any required objects and their types. For example, `AccountFile(account:Account)` indicates an entry point named `AccountFile` that expects an `Account` object. Location groups can have multiple entry points, which is useful when the same location needs to be accessed from different parts of the application with varying contextual information. For instance, the Admin location group might have entry points for `Admin()`, `Admin(group:GroupBase)`, or `Admin(org:OrganizationBase)`.\n\nTo navigate to a location group from a UI widget (like a tab or a button), you use an `action` attribute with a specific syntax: `pcfLocationEntryPointmethod(objectList)`. Here, `LocationEntryPoint` is the defined entry point, `method` is typically 'go' for location groups, and `objectList` is a comma-delimited list of objects matching the entry point's requirements. For example, a Desktop tab's action might be `Desktop.go()`.\n\nAnother critical property is `canVisit`, which controls user access. If `canVisit` evaluates to `false`, the tab or link to the location group is not rendered in the user interface, effectively hiding it from the user. This is permission-based; for example, `perm-User.viewteam` might control access to a 'Team' tab, ensuring only authorized users see it. Unlike pages, location groups do not have a `canEdit` property; editability is managed at the page level within the group. When creating a new location group, it's a best practice to add a suffix like 'Group' to the filename for clarity, though it's not strictly required.",
+      "keyPoints": [
+        "Location group PCFs define menu actions, info bar, and tab bar content through separate PCF file references.",
+        "Entry points specify how to navigate to a location group and what objects are required.",
+        "The `canVisit` property controls the visibility and accessibility of the location group based on user permissions.",
+        "Creating a location group involves defining its title, entry points, variables, UI component references, and calling it from a navigation widget."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A screenshot of a location group PCF (AccountFile.pcf) showing entry points, location refs, and attributes for UI components."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Details on defining entry points for a location group and the syntax for navigating to it from a widget."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explanation of the `canVisit` property for location groups, which controls visibility based on permissions."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A step-by-step guide for creating a new location group in Guidewire Studio."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Naming Convention",
+          "content": "When creating a new location group, it is a good practice to add a suffix like 'Group' to the filename (e.g., `MyNewGroup.pcf`) for better organization and readability."
+        },
+        {
+          "type": "tip",
+          "title": "Quick Navigation in Studio",
+          "content": "Use 'Ctrl + Click' on the values for `menuActions`, `infoBar`, or `tabBar` properties in a location group PCF to quickly open the linked PCF file in Studio."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "text",
+          "title": "Location Group Entry Point Syntax",
+          "code": "EntryPointName(ObjectName: ObjectType)\nExample: AccountFile(account:Account)",
+          "explanation": "This defines an entry point named 'EntryPointName' that expects an object named 'ObjectName' of type 'ObjectType'."
+        },
+        {
+          "language": "text",
+          "title": "Navigation Widget Action Syntax",
+          "code": "EntryPointOfLocation.go(objectsToPass)\nExample: Desktop.go()",
+          "explanation": "This syntax is used in a navigation widget's 'action' attribute to navigate to a specific location group via its entry point."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team needs to create a new top-level navigation tab for 'Reinsurance Management' that will group several related screens. This tab should only be visible to users with 'reinsuranceAdmin' permissions and should display a custom info bar with treaty-related details.",
+      "question": "Outline the key steps you would take to configure this new 'Reinsurance Management' location group, including how you would ensure proper permissions and a custom info bar.",
+      "hints": [
+        "Think about the file type you need to create first.",
+        "How do you define what objects the location group expects when it's opened?",
+        "Which property controls visibility based on permissions?",
+        "How do you link to a custom info bar?"
+      ],
+      "expectedApproach": "Create a new PCF of type Location Group. Define an entry point (e.g., ReinsuranceManagement()). Set the `canVisit` property to check for 'reinsuranceAdmin' permission. Specify the `infoBar` property to point to a custom info bar PCF file. Add location references for the pages it will contain. Finally, call this new location group from the `TabBar.pcf`."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring Pages in PCF Files",
+      "narrative": "Pages are the primary display units within location groups, typically containing a single screen. While a page PCF itself might appear simple, often just referencing a screen, the Studio rendering can look complex due to all embedded elements being visible. Page content is built using various UI widgets like `Screens`, `Toolbars`, `PanelRefs`, `DetailsViews`, and `ListViews`. It's important to remember that elements like menu links and tab bars, while visible in the Page in Studio, are part of the containing Location Group's configuration, not the page's physical PCF.\n\nPages are referenced by `location refs` within location groups. The `location` attribute of a `location ref` specifies the target page and any objects it requires. For example, `AccountSummary(account)` would pass an `account` object to the `AccountSummary` page's entry point.\n\nSimilar to location groups, pages have a `canVisit` property that determines if a user can see and navigate to the page. If `canVisit` evaluates to `false`, the link to the page will not be visible. Pages also have properties related to editability: `canEdit` and `startInEditMode`. If `canEdit` evaluates to `false`, the page will always appear in read-only mode, even if `startInEditMode` is set to `true`. If `canEdit` is `true`, the page will display 'Edit/Update' buttons, allowing user interaction. The `title` property of a page defines the label displayed in the user interface.\n\nWhen creating a new page, you start by creating a PCF of type Page. You then set essential properties like the `title`, define an entry point with matching variables, and add a screen. Crucially, you must include at least one `ListView` or `DetailView` widget to display content, either inline or by reference. For editable pages, you'll need to set the `canEdit` property and add appropriate 'Edit' buttons to the page's screen. Finally, to make the page accessible, you add a `locationref` widget in the containing location group that points to your new page.",
+      "keyPoints": [
+        "Page PCFs primarily contain screens and references to UI widgets like `PanelRefs`, `DetailsViews`, and `ListViews`.",
+        "Pages are referenced by `location refs` in location groups, passing required objects via entry points.",
+        "The `canVisit` property controls page visibility, while `canEdit` and `startInEditMode` manage editability.",
+        "Creating a page involves defining its title, entry points, adding a screen with content panels, and configuring editability if needed."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "A blank slide, serving as a visual break or transition point in the lesson."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "An explanation of Page PCF files, their content, and how they are referenced by location groups."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Details on key page properties, including `title`, `canVisit`, `canEdit`, and `startInEditMode`."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "The initial steps for creating a new page in Guidewire Studio, focusing on essential properties and screen content."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Continued steps for creating a page, specifically addressing editable pages and integrating them into a location group."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Screen",
+          "content": "The primary container within a page that holds the actual UI widgets and content displayed to the user."
+        },
+        {
+          "type": "best_practice",
+          "title": "Page Content",
+          "content": "When creating a page, ensure you include at least one `ListView` or `DetailView` widget to display viewable and/or editable content. These can be embedded directly or referenced."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the configuration of a Page PCF file, showing how to define its properties, embed screens, and manage editability.",
+      "transcriptSummary": "The video illustrates how to configure a Page PCF, focusing on setting the page title, defining entry points and variables, adding a screen, and including content panels. It also covers configuring `canEdit` and adding 'Edit' buttons for editable pages."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "When you navigate between locations in a location group:\na) What changes?\nb) What remains the same?",
+      "referenceAnswer": "When you navigate between locations in a location group:\na) What changes?\nb) What remains the same?\na) The contents of the screen area changes.\nb) The menu links, menu actions, and info bar remain the same.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What two things can a location ref point to?",
+      "referenceAnswer": "Acchild location group or a page.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What happens if a location group's canVisit attribute evaluates to false?",
+      "referenceAnswer": "When a location group's canVisit attribute is false, the location group is not rendered in\nthe user interface. For example, if the location group appears on a tab, the tab is not\nrendered at all.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": ",7~ — When viewing a location group PCF file in Studio, which Studio tab\n¢ specifies how to navigate to a particular location group?",
+      "referenceAnswer": "The Entry Points tab. This identifies the \"navigation name\" of the location group as\nwell as any objects needed when navigating to it.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Location groups provide structural navigation, grouping related pages and maintaining consistent UI elements like the tab bar, info bar, and menu actions.",
+        "Pages are single-screen locations within location groups, displaying specific content via screens and UI widgets.",
+        "Configuration occurs at two levels: LocationGroup-level (entry points, navigation, permissions, UI component references) and Page-level (screen content, visibility, editability).",
+        "The `canVisit` property controls visibility for both location groups and pages, while `canEdit` and `startInEditMode` manage page editability.",
+        "Creating these components involves defining PCF files, setting properties, and linking them through location references and navigation widgets."
+      ],
+      "realWorldConnection": "Mastering location groups and pages is crucial for any Guidewire developer. These concepts are the foundation for building intuitive and efficient user interfaces in PolicyCenter, enabling users to easily navigate complex workflows, access relevant information, and perform their tasks effectively. Proper configuration ensures that the application adapts to business needs and user roles, providing a tailored experience for different stakeholders."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In your Guidewire development environment, create a new location group and a new page. The location group should be accessible via a new tab and contain your new page. The page should display a simple 'Hello World' message and be editable. Ensure the location group is only visible to 'superuser' roles and the page is editable by default.",
+      "objectives": [
+        "Create a new Location Group PCF.",
+        "Define an entry point and `canVisit` property for the location group.",
+        "Create a new Page PCF.",
+        "Define an entry point, `canVisit`, `canEdit`, and `startInEditMode` properties for the page.",
+        "Add a simple screen with content to the page.",
+        "Integrate the new page into the new location group using a `locationref`.",
+        "Call the new location group from the `TabBar.pcf` to make it accessible."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_02_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_02_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_02_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_02_02.mp4"
+    }
+  ]
+}

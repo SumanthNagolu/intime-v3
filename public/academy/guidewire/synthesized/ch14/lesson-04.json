@@ -1,0 +1,210 @@
+{
+  "lessonId": "ch14-l04",
+  "chapterId": 14,
+  "chapterSlug": "ch14",
+  "lessonNumber": 4,
+  "title": "Rating maintenance Configuration",
+  "subtitle": "Optimize Guidewire PolicyCenter's rating engine for accuracy and performance across environments.",
+  "synthesizedAt": "2026-02-16T19:13:25.557904+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance company is launching a new product or updating existing rates. If the underlying rating system isn't configured precisely, premiums could be inaccurate, leading to significant financial losses or customer dissatisfaction. Furthermore, development and testing environments have different needs than production.",
+      "question": "How can we ensure our Guidewire PolicyCenter rating system is both accurate and performs optimally across diverse environments, from development to live production?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain how to configure the IRatingPlugin, including the RatingLevel parameter.",
+        "Describe the use of default and custom physical tables for storing rate data.",
+        "Analyze rate table lookup strategies (memory vs. database) for performance optimization.",
+        "Understand the concept and configuration of rate table normalization to enhance lookup speed."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of general PolicyCenter configuration principles, especially how plugins are configured and how the data model can be extended. Think about the importance of environment-specific settings.",
+      "warmupQuestion": "Why is it crucial to differentiate between development/test and production environments when configuring system behavior, especially for critical functions like rating?",
+      "hint": "Consider the trade-offs between flexibility for development and stability for production."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Core Rating Plugin Configuration and Physical Rate Tables",
+      "narrative": "To ensure your PolicyCenter instance correctly interacts with Guidewire Rating Management, a foundational step involves configuring the `IRatingPlugin`. This plugin acts as the bridge, allowing PolicyCenter to leverage the powerful rating capabilities. A critical parameter within this configuration is `RatingLevel`. This parameter dictates the minimum rate book status that the rating query will consider as a valid candidate. In a production environment, it's a best practice to set the `RatingLevel` to `Active`. This ensures that only fully approved and active rate books are used for rating policies, maintaining the integrity and accuracy of your premiums. However, during development or testing, you'll often need to make changes to rate books. Since active rate books cannot be edited directly, it's far more convenient to work with rate books in a `Stage` status. For these non-production environments, you can set the `RatingLevel` to `Stage` or a lower level, allowing your development and test queries to consider these editable rate books. This flexibility is key for efficient iteration and testing without constantly creating new rate book versions.\n\nBeyond the plugin, the actual rate data is stored in physical tables. PolicyCenter's base configuration provides two primary physical tables: `DefaultRateFactorRow.eti` and `CoverageRateFactor.eti`. `DefaultRateFactorRow.eti` is a highly generic and very large table, designed to store a wide variety of rate tables across many lines of business. While versatile, its size can impact performance, especially with indexing. For more specific needs, such as simple coverage-based rate tables, `CoverageRateFactor.eti` serves as a good example of a custom physical table. You might choose to create your own custom physical table when neither of the default options is perfectly suited for a particular group of similar rate table definitions. Custom tables offer the advantage of tailored indexing and potentially better performance for specific data sets. When designing these, remember that factor columns can accommodate `String`, `Integer`, or `Decimal` data types, providing flexibility for your rating factors.",
+      "keyPoints": [
+        "Configure IRatingPlugin to integrate with Guidewire Rating Management.",
+        "The RatingLevel parameter controls the minimum rate book status considered for rating.",
+        "Set RatingLevel to 'Active' for production and 'Stage' for development/test environments.",
+        "Default physical tables like DefaultRateFactorRow.eti are generic but can be large.",
+        "Custom physical tables can be created for specific rate table definitions to optimize performance."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Configuring the IRatingPlugin, showing the RatingLevel parameter setting."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of default and custom physical tables used for storing rate data."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Production RatingLevel",
+          "content": "Always set the `RatingLevel` parameter to `Active` in production environments to ensure only approved rate books are used."
+        },
+        {
+          "type": "tip",
+          "title": "Development Flexibility",
+          "content": "For development and testing, setting `RatingLevel` to `Stage` allows you to modify and test rate books without needing to activate them."
+        },
+        {
+          "type": "definition",
+          "title": "IRatingPlugin",
+          "content": "The `IRatingPlugin` is a core component in PolicyCenter that facilitates integration with Guidewire Rating Management, enabling the system to query and apply rates."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Optimizing Rate Table Performance with Lookup Strategies",
+      "narrative": "Once your rating plugin and physical tables are set up, the next crucial step is to optimize the performance of your rate tables. Two primary strategies can significantly improve how quickly PolicyCenter retrieves rate factors: the rate table lookup strategy and rate table normalization. Let's first delve into the lookup strategy.\n\nWhen you add a rate table to a rate book, PolicyCenter defaults to a `Memory` lookup strategy. This means the rate table is loaded directly into the system's memory, providing extremely quick access for queries. This approach is ideal for smaller rate tables or those that are referenced frequently during policy quoting, as it minimizes database calls and latency. However, loading very large rate tables into memory can consume significant system resources and potentially slow down overall performance if your server has inadequate memory. For such scenarios, a `Database` lookup strategy is more appropriate. If a rate table contains thousands of rows and is referenced infrequently (e.g., only for a small percentage of quotes), accessing it directly from the database can prevent memory overload. It's important to note that frequent database lookups on large, generic tables like `DefaultRateFactorRow` can introduce their own performance bottlenecks. To mitigate this, consider creating a **covering index** on the underlying database table. A covering index includes all the columns required by a query, allowing the database to fulfill the query directly from the index without accessing the actual table data, thus significantly speeding up retrieval.\n\nPolicyCenter consults the lookup setting when a rate book is promoted from `Draft` to `Stage` status. This means you can only change the lookup setting when the rate book is in `Draft` status. If a rate table is included in multiple rate books, it can only have one lookup setting, and this setting can only be changed in the rate book that 'owns' the rate table, again, when it's in `Draft` status. The actual performance of a lookup isn't solely dependent on row count; the content itself plays a big role. For instance, a database-queried table with few null values (meaning queries hit the correct row on the first try) will often outperform a table with many nulls, which requires more 'relaxation' attempts to find a match.",
+      "keyPoints": [
+        "Rate table lookup strategies include 'Memory' and 'Database'.",
+        "'Memory' lookup is default, fast for small/frequent tables, but can consume memory for large tables.",
+        "'Database' lookup is suitable for large, infrequently referenced tables.",
+        "Create a covering index for database-queried tables to improve performance.",
+        "Lookup settings can only be changed when a rate book is in 'Draft' status."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "Introduction to ways to improve rate table performance, including lookup strategy and normalization."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Details on rate table lookup strategies (Memory vs. Database) and the importance of indexing."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Information on when and how to edit rate table lookup settings, emphasizing the 'Draft' status."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Large Tables in Memory",
+          "content": "Loading very large rate tables into memory can lead to significant system performance degradation due to inadequate memory."
+        },
+        {
+          "type": "best_practice",
+          "title": "Covering Indexes",
+          "content": "For database lookup, configure the underlying physical table with a custom row entity and a covering index to drastically improve query performance."
+        },
+        {
+          "type": "gotcha",
+          "title": "Editing Lookup Settings",
+          "content": "Remember that rate table lookup settings can only be changed when the rate book is in 'Draft' status. This change is applied when promoting to 'Stage'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Enhancing Performance with Rate Table Normalization",
+      "narrative": "The second key strategy for improving rate table performance is **rate table normalization**. This technique is particularly effective for speeding up rate factor lookups when you're matching against more than one parameter, especially when one of those parameters is a range with overlapping values. Normalization works by removing these overlapping ranges, effectively expanding the number of table rows in memory to create a non-overlapping, optimized structure for faster lookups. It's important to understand that this normalization happens *in memory only*; it does not alter the rate table content that users see on screen. The goal is purely to create an internal, optimized representation for the rating engine.\n\nConsider an example where a rate table has parameters for 'Age' (a range parameter) and 'Jurisdiction'. If you have rows like 'Age 1-5, California' and 'Age 3-6, Oregon', there's an overlap for ages 3-5. Normalization would expand these into distinct, non-overlapping ranges in memory, such as 'Age 1-3, California', 'Age 3-5, California', 'Age 3-5, Oregon', and 'Age 5-6, Oregon', and so on. This expansion ensures that each specific age and jurisdiction combination maps to a unique row, eliminating ambiguity and speeding up the lookup process. While this speeds up lookups, it does require more memory due to the increased number of rows.\n\nPolicyCenter's behavior regarding normalization is controlled by specific configuration parameters in `config.xml`: `RateTableManagementNormalizationRowThreshold` and `RateTableManagementNormalizationRowLimit`. The `NormalizationRowThreshold` defines a limit; if the number of rows in a normalized table exceeds this threshold, the user is presented with a 'Reduce Memory Usage' option. This option allows them to choose *not* to normalize the table, loading a non-normalized version instead, which can be useful for very large tables where the memory overhead of normalization is too high. The `NormalizationRowLimit` is a hard limit: if the normalized table's row count exceeds this, PolicyCenter automatically marks the table as non-normalizable and stores the non-normalized version. A rate table is normalized only if it contains overlapping ranges or multi-value columns, the 'Reduce Memory Usage' option is not checked, and the number of rows after normalization does not exceed the `NormalizationRowLimit`.",
+      "keyPoints": [
+        "Rate table normalization speeds up lookups, especially with overlapping range parameters.",
+        "Normalization expands table rows in memory to remove overlaps, not changing visible content.",
+        "Configuration parameters (NormalizationRowThreshold, NormalizationRowLimit) control normalization behavior.",
+        "Users can choose 'Reduce Memory Usage' to prevent normalization for large tables.",
+        "Normalization occurs if overlapping ranges exist, 'Reduce Memory Usage' is off, and row limits are not exceeded."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Explanation of rate table normalization and its benefits for lookup performance."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "An example demonstrating how a rate table is normalized in memory to remove overlapping ranges."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Details on the configuration parameters that control rate table normalization in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Rate Table Normalization",
+          "content": "An in-memory process that removes overlapping ranges in rate tables by expanding rows, speeding up lookups, particularly for multi-parameter queries."
+        },
+        {
+          "type": "tip",
+          "title": "Reduce Memory Usage",
+          "content": "For very large tables that exceed the `NormalizationRowThreshold`, consider using the 'Reduce Memory Usage' option to prevent normalization and save memory, accepting potentially slower lookups."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of configuring rating maintenance, including setting the RatingLevel and managing rate table lookup strategies within PolicyCenter. Pay close attention to how changes are applied and their implications.",
+      "transcriptSummary": "The demo illustrates how to access the IRatingPlugin configuration, adjust the RatingLevel for different environments (e.g., from Active to Stage), and modify rate table lookup settings between memory and database. It highlights the user interface elements involved in these configurations and the importance of considering performance implications."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are managing a new product line with a very large rate table (thousands of rows) that is only referenced for a small percentage of quotes. The table is critical but not frequently accessed. You need to ensure optimal system performance without consuming excessive memory.",
+      "question": "What rate table lookup strategy would you recommend for this large, infrequently accessed table, and what additional database configuration might be necessary to support this choice effectively?",
+      "hints": [
+        "Consider the trade-offs between memory consumption and database access speed.",
+        "Think about how databases optimize queries for specific data sets."
+      ],
+      "expectedApproach": "The learner should identify 'Database' lookup strategy and the need for a covering index on the underlying physical table to optimize performance for infrequent, large table lookups."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "When should you create a custom physical table?",
+      "referenceAnswer": "In the base configuration there are two physical tables that can be used as-is and as models for other custom tables that may be required for a particular implementation. New custom physical table can be configured for one or a group of similar rate table definitions if neither table is appropriate.",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Arate table is normalized for what type of parameters in it?",
+      "referenceAnswer": "Arate table is normalized for what type of parameters in it?\nor Arate table is normalized for range parameters with overlapping ranges.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The IRatingPlugin and its RatingLevel parameter are crucial for controlling rate book selection based on status (Active for production, Stage for development).",
+        "PolicyCenter offers default and custom physical tables for rate data storage, with custom tables providing tailored performance benefits.",
+        "Rate table lookup strategies (Memory vs. Database) must be chosen based on table size and access frequency, with covering indexes optimizing database lookups.",
+        "Rate table normalization speeds up lookups for tables with overlapping range parameters by expanding rows in memory, controlled by `NormalizationRowThreshold` and `NormalizationRowLimit` parameters."
+      ],
+      "realWorldConnection": "Proper rating configuration is vital for an insurance system's accuracy and performance. By understanding how to configure the rating plugin, choose appropriate physical tables, and optimize rate table lookups and normalization, developers can ensure that PolicyCenter delivers correct premiums efficiently, adapting to both development and production demands. This directly impacts policy pricing, customer satisfaction, and the insurer's bottom line."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Conf_04_01.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_04_01.mp4"
+    }
+  ]
+}

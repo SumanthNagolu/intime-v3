@@ -1,0 +1,184 @@
+{
+  "lessonId": "ch07-l14",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 14,
+  "title": "Introduction to Editable List Views",
+  "subtitle": "Learn to implement dynamic, editable list views for enhanced user interaction in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T18:06:12.538501+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a business analyst at an insurance company. Your users frequently need to add or remove policy summaries directly within the application, creating new rows and editing details on the fly. The current system requires navigating to separate screens, which is inefficient.",
+      "question": "How can we empower users to manage list data directly within a single view, making their workflow smoother and more intuitive?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the business need for editable list views in applications.",
+        "Identify and configure the Iterator Buttons widget for adding and removing list view rows.",
+        "Determine the appropriate placement of toolbars for screen-level and list-view-specific actions.",
+        "Explain how Row Iterator properties (`toCreateAndAdd`, `toRemove`) govern the functionality of Iterator Buttons.",
+        "Differentiate between typical configurations for adding new rows (in-line editing vs. pop-up).",
+        "Understand the hierarchical `editable` property and its impact on making list view cells editable.",
+        "Troubleshoot common configuration issues related to editable list views and Iterator Buttons."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with List Views to display data. Recall how you configured basic List View properties and how data is typically presented in a read-only format.",
+      "warmupQuestion": "What are some common scenarios where users might need to modify data directly within a list, rather than navigating to a separate detail screen?",
+      "hint": "Think about data entry, record management, or quick updates."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Enabling Dynamic List Management with Iterator Buttons",
+      "narrative": "In many business applications, users require the flexibility to directly manipulate data displayed in lists. Consider a scenario where users need to manually add or remove policy summaries, creating new empty rows for data entry and only seeing checkboxes for selection when the list is in an active edit mode. This is precisely where **Editable List Views** become invaluable, transforming static displays into dynamic data management tools.\n\nTo achieve this, we leverage the **Iterator Buttons widget**. This powerful widget, when dragged onto a toolbar, automatically provides two essential buttons: **Add** and **Remove**. These buttons are pre-configured with smart visibility and availability logic: they only appear when the screen is in edit mode, and they are only enabled if their corresponding actions are properly defined. Specifically, the 'Remove' button also requires at least one row to be selected in the List View before it becomes active. This intelligent design ensures a streamlined and context-aware user experience, allowing users to efficiently manage list data without unnecessary clutter or confusion.",
+      "keyPoints": [
+        "Editable List Views allow direct user manipulation of list data.",
+        "The Iterator Buttons widget provides 'Add' and 'Remove' functionality.",
+        "Buttons have built-in visibility and availability logic based on edit mode and defined actions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A user story highlighting the need for editable list views to add and remove policy summaries."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of configuring 'Add' and 'Remove' buttons."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The Iterator Buttons widget, showing its core functionality and default logic."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Strategic Toolbar Placement and Row Iterator Configuration",
+      "narrative": "The placement of your Iterator Buttons is crucial for an intuitive user interface. While toolbars can exist at various levels within the PCF architecture, a best practice is to place **Edit Buttons** (which control the overall screen transaction) at the screen level. For **Iterator Buttons**, the ideal location is the toolbar closest to the List View they control, often the same toolbar that displays the paginator. In simpler screens, a single toolbar might house both sets of buttons. This hierarchical approach ensures that actions are logically grouped and easily discoverable by the user.\n\nThe functionality of these 'Add' and 'Remove' buttons is directly governed by the **Row Iterator's properties**. Specifically, the `toCreateAndAdd` property defines the action taken when the 'Add' button is clicked, and `toRemove` specifies the action for the 'Remove' button. When configuring the 'Add' button, there are two common approaches: either a new empty row is inserted directly into the List View for in-line editing (ideal when all necessary fields are visible), or a pop-up window opens to allow the user to initialize the object's fields before it's added as a row. The choice depends on the complexity and number of fields requiring initialization. For instance, if a List View only shows a few key fields but the underlying object has many, a pop-up provides a better user experience for initial creation.",
+      "keyPoints": [
+        "Screen-level toolbars are best for 'Edit' buttons controlling screen transactions.",
+        "Iterator Buttons should be on the toolbar closest to their associated List View.",
+        "Row Iterator properties (`toCreateAndAdd`, `toRemove`) define button actions.",
+        "New rows can be added via in-line editing or a pop-up, depending on field complexity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Guidance on optimal toolbar placement for Edit and Iterator Buttons."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Row Iterator properties, specifically `toCreateAndAdd` and `toRemove`, which govern Iterator Button functionality."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustrates the typical configuration for the 'Add' button, allowing in-line editing of a newly inserted row."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Toolbar Placement",
+          "content": "Place toolbars at the highest level in the hierarchy of containers that you want the toolbar to affect. For List View specific actions, this means the toolbar associated with the List View itself."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how to add the Iterator Buttons widget to a List View's toolbar, configure its required properties, and expose the Row Iterator to enable dynamic row management.",
+      "transcriptSummary": "The demo walks through adding the Iterator Buttons widget, addressing the 'required property not completed' error by exposing the Row Iterator from the List View. It shows how to use Smart Help to correctly link the Iterator Buttons to the exposed Row Iterator, compile changes, and reload the PCF file to see the buttons in action."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Understanding the Editable Hierarchy for List View Cells",
+      "narrative": "For a cell within a List View to be editable, it's not enough to simply set the cell's `editable` property to `true`. There's a crucial **editable hierarchy** that must be understood and correctly configured. The `editable` property cascades down from parent elements to their children, but with specific default behaviors at each level.\n\nBy default, a **List View panel's** `editable` property is blank, meaning it is editable. Similarly, a **row's** `editable` property is also blank and thus editable. However, the **Row Iterator's** `editable` property, while often blank, is *required* to be explicitly set to `true` (or a condition that evaluates to `true`) for any cells within its rows to become editable. Most importantly, a **cell's** `editable` property defaults to `false`. Therefore, to make a specific cell editable, you *must* explicitly set both the **Row Iterator's** `editable` property to `true` and the **cell's** `editable` property to `true` (or a condition). The List View Panel and individual rows can inherit their editable state, but the Row Iterator and the specific cells are the key elements you must configure directly. This granular control allows developers to precisely define which parts of a List View are interactive and modifiable by the user.",
+      "keyPoints": [
+        "The `editable` property follows a hierarchy: List View Panel > Row Iterator > Row > Cell.",
+        "List View Panel and Row are editable by default if not specified.",
+        "The Row Iterator's `editable` property *must* be explicitly set to `true` for cells to be editable.",
+        "Individual cells' `editable` property defaults to `false` and *must* be explicitly set to `true`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Visualizing the editable hierarchy from List View panel down to individual cells."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A screenshot likely demonstrating an editable list view in action, confirming the hierarchy's effect."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Common Editable Mistake",
+          "content": "For a cell to be editable, you must explicitly set the `editable` property to `true` on *both* the Row Iterator and the specific cell. Forgetting the Row Iterator is a common oversight."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?",
+      "referenceAnswer": "Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?\n\nThe List View Panel’s Row Iterator Editable property must be set to true.\n\nen",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?",
+      "referenceAnswer": "When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?\n\nTwo: Add and Remove\nen",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.",
+      "referenceAnswer": "Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.\n\nThere are four errors:\n1. The object is anABContact, not ABContact.\n2. The method name starts with \"addTo...\", not \"toAdd...\".\n\n3. The name of the array is missing from the end of the method name. (The method should\nbe addToAddresses.)\n\n4. The argument must reference the row iterator's element name, which is currentAddress.\n\nen",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Editable List Views empower users to directly add, remove, and modify data within a list.",
+        "The Iterator Buttons widget simplifies the implementation of Add/Remove functionality.",
+        "Proper toolbar placement enhances UI intuitiveness, with Iterator Buttons typically near the List View.",
+        "Row Iterator properties (`toCreateAndAdd`, `toRemove`) are critical for defining button actions.",
+        "The `editable` property hierarchy requires explicit configuration on both the Row Iterator and individual cells for in-line editing."
+      ],
+      "realWorldConnection": "In Guidewire projects, implementing editable list views is crucial for modules like policy management, claims processing, or contact management, where agents and adjusters need to quickly update multiple related records (e.g., policy coverages, claim exposures, contact addresses) without navigating through multiple screens, significantly improving operational efficiency and user satisfaction."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the concepts of editable list views, you will now implement an editable list view for a specific entity within the TrainingApp. This will involve configuring the Iterator Buttons widget, defining the `toCreateAndAdd` and `toRemove` actions on the Row Iterator, and ensuring the correct `editable` properties are set across the hierarchy to allow users to add new items and modify existing ones directly within the list.",
+      "objectives": [
+        "Add an Iterator Buttons widget to a List View toolbar.",
+        "Configure the `toCreateAndAdd` and `toRemove` properties of the Row Iterator.",
+        "Set the `editable` property on the Row Iterator and specific cells to enable in-line editing.",
+        "Test the Add and Remove functionality in the user interface."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_14.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_14.mp4"
+    }
+  ]
+}

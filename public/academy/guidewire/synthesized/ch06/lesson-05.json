@@ -1,0 +1,327 @@
+{
+  "lessonId": "ch06-l05",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 5,
+  "title": "Billing a Pro Rata Charge",
+  "subtitle": "Master how BillingCenter processes premium charges, payment plans, and special invoicing scenarios.",
+  "synthesizedAt": "2026-02-16T17:47:58.420304+00:00",
+  "estimatedMinutes": 120,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a new business analyst at an insurance company, and a customer asks why their premium bill has a different initial payment than the subsequent ones. You realize that understanding how complex charges like premiums are billed is crucial for customer satisfaction and accurate financial reporting.",
+      "question": "How does an insurance billing system intelligently break down a single premium charge into a series of manageable payments, and what factors influence this intricate process?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the function of charge patterns in defining how BillingCenter processes charges.",
+        "Describe how BillingCenter slices pro rata charges into down payments and installments.",
+        "Identify how payment plan settings determine the scheduling and placement dates for pro rata invoice items.",
+        "Understand the impact of blackout windows on the final invoice scheduling for a policy term.",
+        "Differentiate between down payments and out-of-sequence first installments in a payment plan.",
+        "Explain the purpose and handling of charge breakdowns for itemizing costs within a single charge."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon basic billing concepts and perhaps how one-time charges are handled. You might also be familiar with the idea of payment plans in other contexts.",
+      "warmupQuestion": "Think about a time you've paid for a service or product in installments. What determined the initial payment versus the regular payments?",
+      "hint": "Consider factors like down payments, payment frequency, and the total cost."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Pro Rata Charges and Charge Patterns",
+      "narrative": "When a business analyst like Marcus at Succeed Insurance wants to understand how premium charges are handled, the first place to look is **charge patterns**. As Zhang, a billing clerk, suggests, charge patterns act as templates for charges, defining their fundamental characteristics.\n\nAs shown in **Figure 5**, charge patterns categorize charges and dictate how BillingCenter processes them. Every charge in BillingCenter is associated with a single charge pattern. This pattern identifies the *charge type* and the *invoicing approach*. For instance, a **Pro-Rata** charge, like a premium, means earnings are recognized proportionally over time. In contrast, an Immediate charge is recognized at once, and a Pass-Through charge isn't recognized as revenue at all. The invoicing approach determines how BillingCenter slices the charge. A 'One-Time Charge' approach means a charge cannot be split, while 'Down Payment and Installments' allows a charge to be broken into multiple invoice items.\n\n**Figure 6** illustrates this crucial distinction. A 'Taxes' charge pattern, with a 'One-time Charge' invoicing approach, results in a single invoice item. However, a 'Premium' charge pattern, with a 'Down Payment and Installments' approach, directs BillingCenter to slice the charge into multiple invoice items according to the policy's payment plan. This is key to handling typical premium charges, as detailed in **Figure 7**. The total charge amount is divided into an optional down payment and a series of installments. The down payment is calculated as a percentage of the pro rata charge and can have a placement date out of sequence. Installments, on the other hand, are always for equal amounts and occur at regular, equal time periods.\n\nUltimately, when BillingCenter receives a premium charge, it uses the associated charge pattern and the policy's payment plan to create an invoice stream, as depicted in **Figure 8**. This stream contains the set of invoices for the policy, with the charge split into a down payment invoice item and subsequent installment invoice items. This structured approach ensures that complex premium charges are billed accurately and predictably.",
+      "keyPoints": [
+        "Charge patterns are templates that define a charge's type and invoicing approach.",
+        "Pro-Rata charges recognize earnings proportionally over time.",
+        "The invoicing approach determines if a charge is a single item or split into down payments and installments.",
+        "Down payments are a percentage of the charge; installments are equal amounts at regular intervals.",
+        "BillingCenter uses charge patterns and payment plans to slice charges into invoice items and assign them to an invoice stream."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of how charges are processed in BillingCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marcus and Zhang discuss how BillingCenter handles premium charges and introduces charge patterns."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Charge patterns define the type and invoicing approach for every charge."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Each charge is linked to a single charge pattern, which dictates its slicing behavior."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A typical Premium (pro rata) charge is divided into a down payment and equal installments."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Billing a pro rata charge involves slicing it into invoice items based on the charge pattern and payment plan, then assigning them to an invoice stream."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Pro-Rata Charge",
+          "content": "A charge type where earnings are recognized proportionally over time, common for premiums."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of billing a pro rata charge in BillingCenter, illustrating how the system applies charge patterns and payment plan settings to generate invoice items.",
+      "transcriptSummary": "The demo shows how to initiate a billing request for a policy, how BillingCenter automatically slices a premium charge into a down payment and installments based on the configured payment plan, and how these invoice items are then placed on invoices within an invoice stream."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Payment Plan's Influence on Pro Rata Scheduling",
+      "narrative": "Marcus's next logical question, as seen in **Figure 12**, concerns the profound influence of the payment plan on how BillingCenter handles premium charges. Zhang confirms its importance, highlighting that the payment plan is the primary guide for the charge invoicing process.\n\nFor pro rata charges, the 'Pro Rata Charges' section of the payment plan is critical, as shown in **Figure 13**. It specifies whether a down payment is created, its percentage, the maximum number of installments, and the scheduling for both the down payment and the first installment. It's important to note that the payment plan specifies the *maximum* number of installments; the actual number is determined by factors like term length and payment interval. For example, a 6-month policy with monthly invoicing would only generate 5 installments, even if the maximum is set higher.\n\n**Figure 14** delves into how placement dates are precisely determined. The payment plan uses **reference dates** (like 'Policy Effective Date') and **offsets** (like '25 days Before') to calculate these dates. For instance, a down payment might be scheduled '25 days Before the Policy Effective Date,' while the first installment could be '0 days After One Interval After Policy Effective Date.' The 'Interval' refers to the payment interval defined in the payment plan (e.g., Monthly). Subsequent installments are then scheduled at regular intervals following the first.\n\nThese settings directly impact the invoice dates. As illustrated in **Figure 15**, given a policy effective date and payment plan settings, BillingCenter determines an 'Overriding Invoice Day' (e.g., the 25th of the month). This means all invoices in the stream will be dated on that day. Invoice items are then placed on the earliest potential invoice on or after their calculated placement date. For example, a down payment with a placement date of January 31st might land on a February 25th invoice if that's the first available invoice on or after that date.\n\nFinally, **Figure 16** explains invoice stream periodicities. BillingCenter supports various payment intervals (Monthly, Twice Per Month, Every Other Week, Weekly) and creates invoice streams *lazily*—only when there's a charge to be invoiced in that stream. Accounts using account-level billing can have up to four invoice streams to accommodate different payment intervals, while policy-level billing creates a separate stream for each policy. This ensures flexibility in how charges are grouped and billed.",
+      "keyPoints": [
+        "Payment plans are central to scheduling pro rata charges, defining down payment and installment details.",
+        "Placement dates are calculated using reference dates (e.g., Policy Effective Date) and offsets (e.g., '25 days Before').",
+        "The payment plan's first installment settings often determine the 'Overriding Invoice Day' for the invoice stream.",
+        "Invoice streams are created lazily by BillingCenter based on the payment interval of the policy's payment plan.",
+        "Different payment intervals map to specific invoice stream periodicities (e.g., Monthly, Twice Per Month)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Marcus inquires about the payment plan's role in pro rata billing."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Payment plan settings for pro rata charges determine down payment, maximum installments, and scheduling."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Placement dates for down payment and first installment are set using offsets and reference dates."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "How payment plan settings and policy effective date determine invoice dates and the Overriding Invoice Day."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Invoice stream periodicities available in BillingCenter to support various payment intervals."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Reference Dates and Offsets",
+          "content": "Reference dates (e.g., Policy Effective Date) combined with offsets (e.g., '30 days before') are used by BillingCenter to calculate precise placement dates for invoice items."
+        },
+        {
+          "type": "tip",
+          "title": "Lazy Invoice Stream Creation",
+          "content": "BillingCenter creates invoice streams only when there is a charge to be invoiced in that stream, optimizing resource usage."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "How does BillingCenter determine the placement date of the first\nof installment invoice item?",
+      "referenceAnswer": "Howdoes BillingCenter determine the placement date of the first\ninstallment invoice item?\nBillingCenter determines the placement date using the invoiced and days fields in the\n\nFirst Installment section on the payment plan.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Howdoes BillingCenter determine the placement date of the second\nof installment invoice item when there is a down payment?",
+      "referenceAnswer": "Howdoes BillingCenter determine the placement date of the second\ninstallment invoice item when there is a down payment?\n\nBillingCenter adds one payment interval (for example, a month) to the placement date\nfor the first installment.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "The down payment and installment 1 have different placement dates.\nof Why are they on the same invoice?",
+      "referenceAnswer": "BillingCenter places each invoice item on the earliest available invoice that has the\nsame or later date than the invoice item’s placement date. The first available invoice\nfor both invoice items was dated 10/15/2018.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Blackout Windows and Final Invoice Scheduling",
+      "narrative": "Sometimes, specific business requirements dictate when invoices *cannot* be billed. For instance, as Marcus explains in **Figure 24**, Succeed Insurance wants to avoid billing a customer during the last 40 days of a policy term. Zhang introduces the concept of a **blackout window** as the solution to this requirement.\n\nAs detailed in **Figure 25**, a blackout window is an optional period at the end of a policy term during which no invoices can be billed or become due. The 'Final Installment' settings on the payment plan, along with the policy expiration date, define this window. BillingCenter calculates the blackout window by counting backward from the day before the policy expiration date. If necessary, BillingCenter will reduce the number of invoices to accommodate this window, ensuring no billing occurs during the restricted period. It's even possible to define a *negative* blackout window, which allows billing or due dates to occur *after* the policy expiration date, though this is less common.\n\n**Figure 26** summarizes the comprehensive charge invoicing steps BillingCenter follows for a pro rata charge. First, it creates and schedules the down payment item, assigning it a placement date. Next, it calculates the number of installments, considering both the maximum number specified in the payment plan and the number that can fit within the period *outside* any blackout window. BillingCenter selects the lesser of these two numbers. Then, it creates and schedules the individual installment items, assigning them their respective placement dates. Finally, all these invoice items are placed onto invoices according to their placement dates and the available invoice streams. This systematic process ensures that all billing rules, including blackout periods, are strictly adhered to.",
+      "keyPoints": [
+        "Blackout windows define periods at the end of a policy term when no invoices can be billed or become due.",
+        "BillingCenter adjusts the number of invoices to accommodate blackout windows.",
+        "The charge invoicing process for pro rata charges involves scheduling down payments, calculating installments (considering blackout windows), and placing invoice items on invoices."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "A visual representation of a policy period and its associated invoices."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Marcus asks about enforcing billing restrictions, leading to the introduction of blackout windows."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Payment plan settings define a blackout window, preventing billing during a specified period at the end of a policy term."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Summary of BillingCenter's steps for invoicing a pro rata charge, including blackout window considerations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Negative Blackout Windows",
+          "content": "A negative blackout window allows billing or due dates to occur after the policy expiration date, which might be necessary for specific business scenarios but requires careful consideration."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Advanced Installment Scheduling and Charge Invoicing Objects",
+      "narrative": "Beyond standard down payments and installments, insurers often have specific billing requirements, especially for renewals. Marcus raises a scenario in **Figure 30** where a customer might skip a down payment and instead be billed for the first two installments upfront. Zhang confirms that BillingCenter's payment plans support this 'installments only' requirement through separate scheduling for first and second invoices.\n\nAs explained in **Figure 31**, a payment plan can define the scheduling for both a first and a second installment. If a second installment is specified, subsequent installments are scheduled at regular intervals based on the date of this second installment, which is considered the 'first periodic installment.' A key distinction here is that a payment plan can specify *either* a down payment *or* a second installment, but not both. Unlike a down payment, which is a percentage of the premium, all installments (including a separately scheduled 'out-of-sequence' first installment) must be for equal amounts. This flexibility allows insurers to bill the first installment as early as needed, providing greater control over initial billing.\n\n**Figure 32** provides a crucial 'big picture' overview, summarizing all the objects involved in the charge invoicing process that we've discussed. At the heart of it are the **charge pattern** and the **payment plan**. The charge pattern identifies the charge type and its invoicing approach (e.g., single item vs. down payment and installments). Every charge has one charge pattern. The payment plan, on the other hand, is the primary guide for the entire charge invoicing process for a policy, influencing the scheduling of both one-time and pro rata charges. Every policy has one payment plan. These two objects, working in conjunction with the billing instruction, ultimately determine how charges are converted into invoice items, grouped into invoices, and managed within an invoice stream.",
+      "keyPoints": [
+        "Payment plans can support 'installments only' scenarios by separately scheduling first and second installments.",
+        "An 'out-of-sequence' first installment is for the same amount as other installments, unlike a down payment.",
+        "A payment plan can specify either a down payment OR a second installment, but not both.",
+        "Charge patterns and payment plans are the two primary objects controlling the charge invoicing process.",
+        "The charge pattern defines charge type and invoicing approach; the payment plan guides scheduling and installment details."
+      ],
+      "figures": [
+        {
+          "slideNumber": 30,
+          "caption": "Marcus asks about 'installments only' billing for renewals, leading to discussion of separate scheduling."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Payment plan settings allow for separate scheduling of first and second installments, and define the start of periodic installments."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "A comprehensive diagram illustrating all objects involved in the charge invoicing process."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Out-of-Sequence Installment",
+          "content": "A first installment that is scheduled independently of other installments, allowing for early billing, but still for the same amount as other installments."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Suppose you have a policy period that uses a payment plan with\nof monthly payment interval. A pro rata charge for the policy period has\nbeen converted into invoice items.\nIn this situation, which one of the statements below will always be true?\n\nA) Ifthe down payment is scheduled for January ‘st, the first installment must\nbe scheduled for February 1st.\n\nB)_ Ifthe first installment is scheduled for February 1st, the second installment\nmust be scheduled for March 1st.\n\nC) Ifthe second installment is scheduled for March 1st, the third installment\nmust be scheduled for April 1st.",
+      "referenceAnswer": "Suppose you have a policy period that uses a payment plan with\nmonthly payment interval. A pro rata charge for the policy period has\n: been converted into invoice items.\nIn this situation, which one of the statements below will always be true?\n\nA. If the down payment is scheduled for January ‘st, the first installment\nmust be scheduled for February ‘st.\n\n' B. If the first installment is scheduled for February 1st, the second\n1 installment must be scheduled for March ‘st.\nJ\nc. If the second installment is scheduled for March ‘st, the third\ninstallment must be scheduled for April 1st.\n\nC. With a monthly payment plan, all installments after the second installment occur at\nmonthly intervals. If the first installment is on sequence, all installments after the\nfirst installment occur at monthly intervals.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Which of these invoice treatments does BillingCenter support for a pro\nof rata charge?\n\ndown payment installments (of equal value)\noN\n\nDP IN IN IN IN IN\n\nDP IN IN IN IN IN\n\nON = regular interval of time",
+      "referenceAnswer": "~ — Which of these invoice treatments does BillingCenter support for a pro\n’ a rata charge?\n\nThese invoice treatments are supported for a pro rata change:\n#1 a down payment and sequence of installments\n#3 no down payment and an out-of-sequence first installment\n\n#4 no down payment and a sequence of installments\n\nNote: #2 is not supported (a down payment and an out-of-sequence first installment)",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "What is the difference between a down payment and an out-of-sequence\na first installment?",
+      "referenceAnswer": "The down payment amount is calculated as a percentage of the premium amount\nwhereas an out-of-sequence first installment is for the same amount as the other\ninstallments for the same premium charge.",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Itemizing Costs with Charge Breakdowns",
+      "narrative": "Sometimes, a single charge from a policy administration system like PolicyCenter needs to represent multiple underlying costs, such as a combined premium and tax. Marcus, in **Figure 40**, asks how BillingCenter handles such scenarios. Zhang introduces the **charge breakdown** feature as the solution for itemizing different costs within the same charge.\n\nAs illustrated in **Figure 41**, the charge breakdown feature is an optional capability that allows a charge to be broken down into an itemized list of amounts by category. For example, a premium charge might be itemized by vehicle, location, or even individual coverage level costs. This feature addresses two common use cases: first, the ability to bill premium and taxes together as a single entity, which is a requirement in many regions (e.g., European Union); and second, the ability to provide detailed cost breakdowns on policyholder invoices, enhancing transparency for multi-location policies or to meet regulatory requirements. PolicyCenter's personal auto line, for instance, is preconfigured to demonstrate this functionality.\n\nWhen BillingCenter receives a charge with a breakdown, it processes these details carefully. As shown in **Figure 42**, BillingCenter slices the charge breakdowns into corresponding **invoice item breakdowns** based on the payment plan. Each invoice item breakdown includes a category, a commissionable flag, an amount, and an optional description. The primary goal is to pass these granular charge details to the downstream document management system responsible for producing the actual policyholder invoice. BillingCenter users can view these charge breakdowns on the 'Charges' screen for the policy or account, where an additional 'Charge Breakdown' tab appears. For charges that include both premium and taxes, the `PremiumIncludingTaxes` charge pattern is typically used, which, like the standard `Premium` charge pattern, has a category of 'Premium' and a type of 'Pro-Rata Charge'. This ensures that even complex, multi-component charges are accurately represented and communicated.",
+      "keyPoints": [
+        "Charge breakdowns allow a single charge to be itemized into multiple costs by category.",
+        "This feature supports billing combined premium and taxes, and providing detailed cost breakdowns on invoices.",
+        "BillingCenter slices charge breakdowns into corresponding invoice item breakdowns.",
+        "Invoice item breakdowns include category, commissionable flag, amount, and description.",
+        "The `PremiumIncludingTaxes` charge pattern is used for charges with breakdowns."
+      ],
+      "figures": [
+        {
+          "slideNumber": 39,
+          "caption": "A visual concept of breaking a single charge into multiple costs."
+        },
+        {
+          "slideNumber": 40,
+          "caption": "Marcus asks how BillingCenter handles charges combining multiple costs, leading to charge breakdowns."
+        },
+        {
+          "slideNumber": 41,
+          "caption": "The charge breakdown feature allows PolicyCenter to send itemized lists of amounts by category within a single charge."
+        },
+        {
+          "slideNumber": 42,
+          "caption": "BillingCenter processes charge breakdowns by slicing them into invoice item breakdowns for detailed invoicing."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Invoice Transparency",
+          "content": "Using charge breakdowns enhances transparency on policyholder invoices by providing detailed itemization of costs, which can improve customer understanding and satisfaction."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-7",
+      "question": "What is the main purpose of the charge breakdown feature?\n\no A) Charge breakdowns provide charge details for policyholder invoices.\n\nB) Charge breakdowns facilitate efficient charge slicing.\nC) Charge breakdowns allow for more granular accounting.",
+      "referenceAnswer": "What is the main purpose of the charge breakdown feature?\nA) Charge breakdowns provide charge details for policyholder invoices.\n\nB) Charge breakdowns facilitate efficient charge slicing.\nC) Charge breakdowns allow for more granular accounting.\n\nA. Charge breakdowns provide charge details for policyholder invoices.",
+      "questionKey": "slide-43"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Charge patterns are templates defining how charges are categorized and invoiced, especially for pro rata premiums.",
+        "Pro rata charges are typically sliced into an optional down payment and equal installments, guided by the payment plan.",
+        "Payment plans dictate the scheduling of invoice items using reference dates, offsets, and define maximum installments.",
+        "Blackout windows allow insurers to prevent billing during specific periods at the end of a policy term.",
+        "Payment plans can support 'installments only' scenarios with separately scheduled first and second installments, distinct from down payments.",
+        "Charge breakdowns enable itemization of multiple costs within a single charge, enhancing invoice detail and supporting combined billing requirements."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of pro rata billing is essential for configuring accurate premium invoicing, managing customer expectations regarding payment schedules, and ensuring compliance with regional billing regulations. Properly configured charge patterns, payment plans, and blackout windows directly impact financial accuracy and customer satisfaction.",
+      "nextLessonPreview": "In the next lesson, we'll explore how BillingCenter handles sending invoices to policyholders and the various options available for document generation and delivery."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this hands-on exercise, you will apply your knowledge of pro rata charges and payment plans to bill a Premium charge within BillingCenter. You will configure a policy with a specific payment plan, observe how BillingCenter slices the premium into a down payment and installments, and verify the generated invoice items and their placement dates.",
+      "objectives": [
+        "Configure a payment plan with specific down payment and installment settings.",
+        "Create a policy and associate it with the configured payment plan.",
+        "Generate a premium charge and observe its slicing into invoice items.",
+        "Verify the placement dates and amounts of the down payment and installment invoice items."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_05_01.mp4"
+    }
+  ]
+}

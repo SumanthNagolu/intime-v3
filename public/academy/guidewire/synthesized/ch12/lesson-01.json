@@ -1,0 +1,248 @@
+{
+  "lessonId": "ch12-l01",
+  "chapterId": 12,
+  "chapterSlug": "ch12",
+  "lessonNumber": 1,
+  "title": "Advanced Product Designer Introduction",
+  "subtitle": "Discover how Advanced Product Designer streamlines new insurance product development and launch.",
+  "synthesizedAt": "2026-02-16T19:05:08.086752+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance company needs to launch a new product line in a rapidly changing market. Traditional methods involve lengthy proof-of-concept phases, complex coding, and slow collaboration between business and IT teams, often taking months or even years. This delay means missed market opportunities and increased costs.",
+      "question": "How can insurers rapidly design, simulate, and launch innovative new products without extensive coding or prolonged development cycles?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the business value and common pain points addressed by Advanced Product Designer (APD).",
+        "Describe the key features and benefits of using APD, including its externalization from PolicyCenter.",
+        "Outline the three phases of product design when using APD.",
+        "Differentiate between Advanced Product Designer and the existing Product Designer in PolicyCenter."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You may be familiar with the challenges of configuring insurance products in Guidewire PolicyCenter, or perhaps you've used the existing Product Designer for managing offerings, question sets, or modifiers. This lesson builds on that understanding by introducing a tool designed to accelerate the initial creation of entirely new products.",
+      "warmupQuestion": "Think about a time you needed to quickly implement a new feature or product. What were the biggest hurdles you faced?",
+      "hint": "Consider the time, resources, and communication involved between different teams."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Revolutionizing Product Design with Advanced Product Designer",
+      "narrative": "In today's dynamic insurance landscape, consumer demands are constantly evolving, pushing insurers to innovate and launch new products at an unprecedented pace. However, this agility is often hampered by several common pain points in traditional product design. These include lengthy proof-of-concept cycles, a lack of suitable base configurations, confusing terminology, unclear best practices, and time-consuming, expensive collaboration between business and technical teams.\n\nTo directly address these challenges, Guidewire has developed the **Advanced Product Designer (APD)** application. APD delivers significant business value in three key areas:\n\n*   **Empowering Business:** It provides non-technical design tools that capture product requirements in a structured, business-friendly format, allowing business users to take a more active role in product definition.\n*   **Providing Instant Feedback:** APD enables the simulation of the newly designed product directly within PolicyCenter. This means customers can instantly visualize how policy transactions would look, eliminating the need for manual prototyping and accelerating feedback loops.\n*   **Simplifying IT Processes:** APD automatically generates code for common artifacts, such as the data model and user interface (UI) components. This automation drastically reduces product launch times and standardizes configuration, freeing up IT resources.\n\nMoving APD to a standalone, independent application on Guidewire Cloud offers several additional benefits. This externalization improves the configuration and design experience by allowing you to manage all insurance products in one place on Guidewire Cloud Home, with a more business-friendly UI and without requiring a PolicyCenter deployment. It also introduces **Product Metadata APIs** for programmatic access to product data, enables **Product Editions and Variations** for jurisdiction-based offerings, and provides **Improved Lifecycle Management** with automated versioning, easy promotion across environments, and clear audit trails.\n\nAt its core, Advanced Product Designer is a powerful business tool that helps insurers gather business requirements to define and model an insurance product using a mind map tool like XMind. It then allows for the simulation of policy transactions in Guidewire PolicyCenter and the auto-generation of essential insurance product artifacts, including the Entity Model, Product Model, and User Interface components (Page Configuration Files or PCFs). APD is specifically designed for creating *new* insurance products, enabling rapid build-out and launch while facilitating early, business-level discussions with all stakeholders.\n\nThe process of creating a new insurance product with APD follows three distinct phases:\n\n1.  **Conceptualization:** Team members document concepts and business requirements in a product map using the XMind tool. This map is shared for review, and its elements are annotated with Guidewire markers.\n2.  **Visualization:** The annotated mind map is imported into APD. Here, users can enhance the visualized product by adding rules, conditions, and default/minimum/maximum values. Crucially, policy transactions can be simulated to visualize the product's behavior, eliminating the need for manual prototypes. Saved visualization templates can be reviewed, shared, and further enhanced.\n3.  **Finalization:** In this phase, metadata is added to generate the product code. The product generation process creates all necessary artifacts for PolicyCenter, including the Entity Model, Product Model, and User Interface components. A successful project team for APD will require individuals with diverse skills to navigate these phases effectively.\n\nIt's important to understand the distinction between **Advanced Product Designer** and the existing **Product Designer** in PolicyCenter. APD is not just a modeling tool; it's a comprehensive solution for defining and modeling *new* insurance products from the ground up. This includes specifying coverages, exclusions, conditions, risk details, product model properties, availability of clauses and fields, and conditional existence. Most importantly, APD *auto-generates* the core insurance product artifacts for PolicyCenter, such as the Entity Model, Product Model, and a full set of PCFs to support policy transactions. Once a new product is generated by APD, it then appears in the traditional Product Designer. The existing Product Designer is then used to *further implement* that product by defining offerings, question sets, and modifiers, which are configurations built upon the foundational product structure created by APD. Essentially, APD lays the groundwork, and Product Designer refines it.",
+      "keyPoints": [
+        "Advanced Product Designer (APD) addresses common pain points in product design by empowering business users, providing instant feedback through simulation, and simplifying IT processes via code generation.",
+        "APD's externalization on Guidewire Cloud offers benefits like improved UI, APIs, product variations, and enhanced lifecycle management.",
+        "APD is a business tool for defining, modeling, simulating, and auto-generating artifacts for *new* insurance products.",
+        "The APD product design process involves Conceptualization (XMind), Visualization (APD import, enhancement, simulation), and Finalization (code generation).",
+        "APD creates the foundational product model and UI, while the existing Product Designer is used for subsequent configuration of offerings, question sets, and modifiers."
+      ],
+      "figures": [
+        {
+          "slideNumber": 1,
+          "caption": "This slide provides an overview of Advanced Product Designer's business value, its features, and how it differs from the existing Product Designer."
+        }
+      ],
+      "tables": [],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Advanced Product Designer (APD)",
+          "content": "A Guidewire application designed to accelerate the creation and launch of *new* insurance products by empowering business users, providing simulation capabilities, and automating code generation for core PolicyCenter artifacts."
+        },
+        {
+          "type": "best_practice",
+          "title": "Early Stakeholder Engagement",
+          "content": "APD facilitates business-level discussions with all stakeholders early in the project, ensuring alignment and reducing rework later in the development cycle."
+        },
+        {
+          "type": "gotcha",
+          "title": "APD vs. Product Designer",
+          "content": "Remember that APD is for *creating new* product foundations and core artifacts, while the existing Product Designer is for *configuring* offerings, question sets, and modifiers on top of an already defined product structure."
+        }
+      ],
+      "codeExamples": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This video provides a high-level overview of the business value and capabilities of the Advanced Product Designer, illustrating how it addresses common challenges in insurance product development.",
+      "transcriptSummary": "The video highlights how APD helps insurers overcome pain points like slow product launches and complex configurations. It demonstrates APD's ability to empower business users, provide instant feedback through simulation, and simplify IT processes by automating artifact generation, ultimately accelerating time-to-market for new insurance products."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration guides you through the practical steps of accessing Advanced Product Designer and the XMind tool within a Guidewire virtual machine environment, preparing you for hands-on exercises.",
+      "transcriptSummary": "The video walks through the process of starting the PolicyCenter application and the XMind tool in a Guidewire VM. It shows how to navigate to the necessary directories and execute the startup scripts, ensuring you can successfully launch the tools required for using Advanced Product Designer."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your business team has identified a need for a new, niche insurance product. They've outlined the basic coverages and exclusions in a preliminary document, but the process of translating this into a functional product in PolicyCenter seems daunting and slow.",
+      "question": "Based on what you've learned about Advanced Product Designer, what would be the very first step you'd recommend to the business team to kickstart the product design process using APD, and which phase of APD's workflow does this fall into?",
+      "hints": [
+        "Think about how APD helps gather initial requirements.",
+        "Recall the tool mentioned for initial documentation.",
+        "Consider the first phase of product design with APD."
+      ],
+      "expectedApproach": "The learner should identify that the first step is to document the concepts and business requirements in a product map using the XMind tool, which falls under the Conceptualization phase."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A junior developer asks you to clarify the difference between Advanced Product Designer and the traditional Product Designer. They are confused about when to use each tool, especially since both deal with 'products'.",
+      "question": "Explain the primary function of Advanced Product Designer versus the traditional Product Designer, and provide an example of a task best suited for each tool.",
+      "hints": [
+        "Consider what each tool *creates* or *modifies*.",
+        "Think about the 'lifecycle' of a product from initial idea to market.",
+        "Refer to the auto-generation capabilities of one tool and the configuration capabilities of the other."
+      ],
+      "expectedApproach": "The learner should explain that APD is for defining and generating *new* insurance products and their core artifacts (Entity Model, Product Model, PCFs), while Product Designer is for *further configuring* existing products by adding offerings, question sets, and modifiers. An example for APD would be creating a brand new 'Cyber Liability' product from scratch. An example for Product Designer would be adding a new 'Premium Discount' modifier to an existing 'Commercial Auto' product."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Advanced Product Designer (APD) is a powerful tool for rapidly designing, simulating, and launching *new* insurance products by streamlining business and IT collaboration.",
+        "APD addresses common pain points like slow PoC, jargon, and high IT costs by empowering business users and automating code generation for core PolicyCenter artifacts.",
+        "The three phases of APD product design are Conceptualization (XMind), Visualization (APD import/simulation), and Finalization (code generation).",
+        "APD creates the foundational product model and UI, while the existing Product Designer is used for subsequent configuration of offerings, question sets, and modifiers on an existing product."
+      ],
+      "realWorldConnection": "In real Guidewire projects, APD significantly reduces the time and resources required to bring innovative insurance products to market. By enabling business teams to directly shape product requirements and instantly visualize outcomes, it fosters agility and ensures that Guidewire implementations remain responsive to evolving customer needs and competitive pressures."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "To prepare for upcoming hands-on labs, ensure you have access to a Guidewire virtual machine (VM) and successfully launch both the PolicyCenter application and the XMind tool. Familiarize yourself with the basic navigation of each application.",
+      "objectives": [
+        "Gain access to a Guidewire VM.",
+        "Successfully start the PolicyCenter application.",
+        "Successfully start the XMind tool.",
+        "Confirm basic functionality and navigation within both applications."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Accessing Advanced.mp4",
+      "path": "/academy/guidewire/videos/ch12/Accessing Advanced.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Adding pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Adding pricing.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Advance product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Advance product.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Creating Editions.mp4",
+      "path": "/academy/guidewire/videos/ch12/Creating Editions.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "Demonstration Modeling Clauses and Clause Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Demonstration Modeling Clauses and Clause Terms.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "Documenting General Information about the Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting General Information about the Product.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "Documenting Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Pricing.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "Documenting Risk Assessment Details.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Risk Assessment Details.mp4"
+    },
+    {
+      "index": 9,
+      "filename": "Enhancing Drop-down .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Drop-down .mp4"
+    },
+    {
+      "index": 10,
+      "filename": "Enhancing Product Model .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model .mp4"
+    },
+    {
+      "index": 11,
+      "filename": "Enhancing Product Model Properties .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model Properties .mp4"
+    },
+    {
+      "index": 12,
+      "filename": "Installed product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Installed product.mp4"
+    },
+    {
+      "index": 13,
+      "filename": "Modeling Attributes.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Attributes.mp4"
+    },
+    {
+      "index": 14,
+      "filename": "Modeling Clauses and Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Clauses and Terms.mp4"
+    },
+    {
+      "index": 15,
+      "filename": "Modeling Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Pricing.mp4"
+    },
+    {
+      "index": 16,
+      "filename": "Modeling Product, Product Line, and General Information Demo.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Product, Product Line, and General Information Demo.mp4"
+    },
+    {
+      "index": 17,
+      "filename": "Modeling Risk Objects and Exposures.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Risk Objects and Exposures.mp4"
+    },
+    {
+      "index": 18,
+      "filename": "Modeling Schedules.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Schedules.mp4"
+    },
+    {
+      "index": 19,
+      "filename": "Product Metadata Short Name.mp4",
+      "path": "/academy/guidewire/videos/ch12/Product Metadata Short Name.mp4"
+    },
+    {
+      "index": 20,
+      "filename": "Validate and Generate Product 2.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product 2.mp4"
+    },
+    {
+      "index": 21,
+      "filename": "Validate and Generate Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product.mp4"
+    },
+    {
+      "index": 22,
+      "filename": "Visualized Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Visualized Product.mp4"
+    }
+  ]
+}

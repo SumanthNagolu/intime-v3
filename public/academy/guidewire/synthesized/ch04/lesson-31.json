@@ -1,0 +1,230 @@
+{
+  "lessonId": "ch04-l31",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 31,
+  "title": "Introduction to Submission Intake",
+  "subtitle": "Streamlining insurance applications with automated ACORD form processing in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T17:33:32.294408+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance company receives hundreds of applications daily, each as a PDF containing various ACORD forms. Manually entering all this data into your policy management system is time-consuming, prone to errors, and a major bottleneck.",
+      "question": "How can we leverage technology to automate this intake process, ensuring accuracy and efficiency, and freeing up our underwriters to focus on more complex tasks?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the Submission Intake process.",
+        "Upload a PDF file with ACORD forms for a single or multiple lines.",
+        "View and review the uploaded ACORD forms.",
+        "Create submissions from the uploaded ACORD forms.",
+        "Explain creation and data mapping of new lines for Submission Intake."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You're likely familiar with the critical role of standardized forms, like ACORD forms, in the insurance industry for capturing consistent application data. You also understand the challenges associated with manual data entry and the benefits of automation in business processes.",
+      "warmupQuestion": "Think about a time you had to manually process a large volume of documents. What were the biggest pain points, and how might automation have helped?",
+      "hint": "Consider aspects like time, accuracy, and resource allocation."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Foundation: ACORD Forms and Submission Intake",
+      "narrative": "Before we dive into the technical specifics, it's crucial to understand the foundational role of **ACORD forms** in the insurance industry. These standardized forms are not just paperwork; they are the backbone for capturing consistent data across diverse insurance products. They ensure that all necessary information is collected uniformly, which is vital for efficient processing. For example, the ACORD 125 form is widely used for commercial insurance applications, providing a consistent structure for data capture.\n\nThis standardization is precisely what **Submission Intake** leverages to revolutionize the submission creation process in PolicyCenter. By simply uploading a PDF file containing one or more ACORD forms, you can automatically create submissions without the need for manual data entry. This capability offers significant advantages: it drastically **saves time**, minimizes the potential for **human error**, and allows your organization to efficiently utilize existing industry standards to boost operational efficiency.\n\nImagine a scenario where Succeed Insurance receives applications as PDF files filled with ACORD forms. Their goal is to upload these files directly to PolicyCenter and have submissions automatically generated. This is where Submission Intake truly shines, transforming what could be a laborious and error-prone manual process into an automated, streamlined, and highly efficient workflow. It's about turning industry standards into a powerful tool for automation.",
+      "keyPoints": [
+        "ACORD forms standardize data capture in insurance.",
+        "Submission Intake automates submission creation from ACORD PDFs.",
+        "Automation saves time and reduces errors in the intake process."
+      ],
+      "figures": [
+        {
+          "slideNumber": 2,
+          "caption": "An introductory slide highlighting the importance of ACORD forms in insurance."
+        },
+        {
+          "slideNumber": 3,
+          "caption": "Explains how Submission Intake streamlines submission creation by uploading ACORD form PDFs."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Illustrates a common business challenge: automatically creating submissions from ACORD form PDFs."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Provides a definition of ACORD and an example of a standardized form (ACORD 125)."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "ACORD",
+          "content": "Association for Cooperative Operations Research and Development, a non-profit organization dedicated to standardizing forms in the insurance industry."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Submission Intake Application and Its Core Process",
+      "narrative": "At the heart of Submission Intake is **App Reader**, a powerful micro-service designed to convert PDF documents into structured, usable data. Historically, integrating App Reader into PolicyCenter required complex custom solutions, often leading to separate user interfaces for review. However, with the advent of PolicyCenter Cloud, Submission Intake now seamlessly embeds App Reader, providing a unified and user-friendly interface directly within PolicyCenter. This integration significantly simplifies the intake process, enhancing the overall user experience by making it more intuitive and efficient. As an embeddable Jutro micro-app, Submission Intake is integrated into PolicyCenter via an iframe, necessitating that Single Sign-On (SSO) is enabled in PolicyCenter. This also offers the flexibility for customers to embed it in other digital applications, such as Producer Engage.\n\nThe entire **Submission Intake process** is structured into several logical and efficient steps, ensuring accuracy and a smooth workflow from start to finish. These steps include:\n\n1.  **Uploading** the ACORD forms, typically in PDF format.\n2.  **Viewing** these uploaded forms within the system.\n3.  **Reviewing** the uploaded files to identify and correct any potential errors or discrepancies.\n4.  Finally, **creating submissions** in PolicyCenter based on the reviewed and validated data.\n\nEach of these steps is meticulously designed to contribute to a smoother, more accurate, and highly efficient process for both developers configuring the system and end-users managing submissions.",
+      "keyPoints": [
+        "Submission Intake uses App Reader to convert PDFs to structured data.",
+        "It's seamlessly embedded in PolicyCenter Cloud, simplifying integration.",
+        "The process involves uploading, viewing, reviewing, and creating submissions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Diagram showing Submission Intake as a cloud-based Jutro app integrating App Reader with PolicyCenter Cloud."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Outlines the four key steps in the Submission Intake process: Upload, View, Review, Create."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "SSO Requirement",
+          "content": "Since Submission Intake is embedded via an iframe, Single Sign-On (SSO) must be enabled in PolicyCenter for proper functionality."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Step-by-Step: Uploading and Reviewing ACORD Forms",
+      "narrative": "The journey of a submission begins with **uploading the ACORD forms**. You have two primary locations within PolicyCenter to initiate this: either from the **Uploaded ACORD Documents page** on the Desktop or via the **Upload ACORD Documents tab** on the New Submissions page of an account. During this crucial upload phase, Submission Intake employs **Optical Character Recognition (OCR) technology** through App Reader. This technology is responsible for extracting data from the ACORD PDF and transforming it into a structured format that can be displayed and processed within Submission Intake, ensuring a seamless flow of information into the system.\n\nOnce the documents have been successfully scanned and processed by App Reader, they become accessible on the **Uploaded ACORD Documents screen**. This screen serves as your central hub for managing all incoming submissions. Here, you can efficiently filter and search for specific documents, monitor their processing status, and open them for a more detailed review. This centralized view is instrumental in managing and tracking the progress of all submissions, providing clear visibility into your workflow.\n\nFor the actual data validation, the **ACORD Document Review screen** offers a powerful side-by-side comparison. On one side, you'll see the data that has been extracted by Submission Intake, presented in an editable format. On the other side, the original ACORD form image is displayed. This dual-panel view is incredibly effective for easily identifying and correcting any data discrepancies or issues. It ensures that the information transferred into PolicyCenter is not only accurate but also complete, minimizing errors and improving data integrity. The system also provides visual indicators (red for errors, orange for warnings) to guide your review.",
+      "keyPoints": [
+        "ACORD forms can be uploaded from the Desktop or New Submissions page.",
+        "OCR technology extracts data from PDFs during upload.",
+        "The Uploaded ACORD Documents screen allows for managing and tracking submissions.",
+        "The Document Review screen enables side-by-side data validation and correction."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Shows the two locations within PolicyCenter where ACORD forms can be uploaded."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Illustrates the Uploaded ACORD Documents screen for viewing and managing scanned documents."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Depicts the ACORD Document Review screen with side-by-side view of extracted data and original form."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An agent has sent a new application for a Business Owner's Policy (BOP) as a single ACORD 125 PDF. You need to process this application using Submission Intake.",
+      "question": "Walk through the steps to upload this single ACORD PDF, review the extracted data, and create a submission in PolicyCenter. What are the key screens you would interact with?",
+      "hints": [
+        "Start by identifying where you would upload the document.",
+        "Recall the screen where you can compare extracted data with the original PDF.",
+        "Think about the final step to convert the reviewed data into a PolicyCenter submission."
+      ],
+      "expectedApproach": "Upload the ACORD 125 PDF from the Desktop's 'Uploaded ACORD Documents' page, navigate to the 'ACORD Document Review' screen to verify and correct data, then proceed to the 'Create Submissions' screen to finalize and submit to PolicyCenter."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Finalizing Submissions and Handling Multiple Lines",
+      "narrative": "Once you've thoroughly reviewed the documents and addressed any discrepancies, the **Create Submissions screen** is your final stop before finalizing the submission. On this screen, you'll confirm or select crucial details such as the agency, the associated account, and the specific insurance products for the submission. A significant advantage of Submission Intake is its automation: if this information is already present within the uploaded PDF, the system will automatically pre-populate these fields, saving you valuable time. While default values are set, you retain the flexibility to modify them if necessary. After confirming all details, clicking 'Create Submissions' will submit the data to PolicyCenter, and the document will be removed from the Uploaded ACORD Documents screen, signifying completion.\n\nSubmission Intake is not limited to single-line applications. A powerful feature is its ability to handle **multiple submissions from a single PDF file**. If you receive a PDF that contains ACORD forms for several lines of business—for example, Commercial Auto, Commercial Property, and Workers’ Compensation—Submission Intake allows you to create separate submissions for each of these lines, all linked to the same account. This capability is particularly beneficial for complex accounts that require diverse insurance products, significantly streamlining what would otherwise be a very cumbersome process.\n\n**Uploading a PDF for multiple lines** is just as straightforward as uploading a single document. You can do this from the **Upload ACORD Documents tab** on the New Submissions page of an account in PolicyCenter. This dedicated tab ensures that the system correctly processes the multi-line document, preparing it for review and subsequent creation of multiple, distinct submissions. This functionality underscores Submission Intake's robust design for handling comprehensive insurance needs efficiently.",
+      "keyPoints": [
+        "The Create Submissions screen allows final confirmation of agency, account, and products.",
+        "Information from the PDF can automatically populate submission details.",
+        "Submission Intake supports creating multiple submissions from a single multi-line ACORD PDF.",
+        "Multi-line PDFs are uploaded via the 'Upload ACORD Documents' tab on the New Submissions page."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Describes the Create Submissions screen where final submission details are confirmed."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Poses the question of whether multiple submissions can be created from a single multi-line ACORD PDF."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Shows the interface for uploading a PDF with ACORD forms for multiple lines."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your company, Succeed Insurance, has received a comprehensive application for a new client that includes ACORD forms for both Commercial Auto and Workers' Compensation within a single PDF document. You need to process this efficiently.",
+      "question": "Describe the process you would follow to upload this multi-line PDF and create separate submissions for Commercial Auto and Workers' Compensation. What specific considerations would you keep in mind during the review phase?",
+      "hints": [
+        "Where would you initiate the upload for a multi-line application?",
+        "How does Submission Intake handle the separation of different lines within the same PDF?",
+        "What kind of information might you need to verify for each distinct line of business during review?"
+      ],
+      "expectedApproach": "Navigate to the 'New Submissions' page of the client's account, use the 'Upload ACORD Documents' tab to upload the PDF. The system will identify both lines. Review each line's extracted data on the 'ACORD Document Review' screen, ensuring all line-specific details are accurate. Finally, create separate submissions for Commercial Auto and Workers' Compensation from the 'Create Submissions' screen."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Configuring Submission Intake for New Lines and Custom Mapping",
+      "narrative": "For insurers like Succeed Insurance, it's paramount that Submission Intake isn't a rigid, 'one-size-fits-all' solution. It must be flexible enough to **support new lines of business** as they are developed and allow for the **customization of data mapping** for ACORD forms. This adaptability ensures that as your company expands its product offerings, the underlying technology can seamlessly integrate and continue to provide efficient submission processing.\n\nThis crucial flexibility is provided by the **Submission Intake Configuration application**, which is readily available from Guidewire Cloud Home. While Submission Intake comes with default mappings between ACORD form fields and PolicyCenter fields for supported policy lines, this application empowers you to customize these existing mappings or even add entirely new configurations for policy lines not yet natively supported. This tool is essential for aligning the extracted ACORD data precisely with your unique business requirements and PolicyCenter's structure. Developers and admins use the `gwa.any_planet_class.si_config.developer` group to access this application.\n\n**Data mapping in Submission Intake** is a sophisticated process that handles two main types of data:\n\n1.  **Non-line-specific data**: This includes generic information like account locations, contacts, and named insured details (name, address, FEIN, organization type). Submission Intake automatically handles the mapping for this content, significantly reducing effort even for brand-new lines.\n2.  **Line-specific data**: This mapping is achieved through a **Kotlin script** uploaded to the Submission Intake Configuration application. This script translates the ACORD JSON data into the Advanced Product Designer (APD) structure within PolicyCenter. For non-APD products, a 'reverse engineering' process is required to extract the APD representation, ensuring compatibility and leveraging PolicyCenter's API capabilities for data transfer. Using the APD representation simplifies the mapping process and ensures that the APIs are available to pass the ACORD data to PolicyCenter.\n\nTo further streamline implementation, Submission Intake provides **pre-configured mappings for many lines of business** in PolicyCenter on Guidewire Cloud. This significantly reduces customer mapping effort, potentially to zero. For Standard Based Template (SBT) lines, Commercial Auto, Workers’ Compensation, and Crime are currently mapped, with Commercial Property and General Liability being added soon. For the Guidewire Go family of lines, General Liability and Commercial Property are already mapped. This continuous expansion of pre-configured lines further enhances the efficiency of the submission process.",
+      "keyPoints": [
+        "Submission Intake supports new lines of business and custom data mapping.",
+        "The Submission Intake Configuration app (from Guidewire Cloud Home) allows customization of mappings.",
+        "Data mapping covers non-line-specific data (handled automatically) and line-specific data (via Kotlin scripts to APD structure).",
+        "Pre-configured mappings are available for many lines (e.g., Commercial Auto, Workers' Comp, Crime) to reduce implementation effort."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Highlights the need for Submission Intake to support new lines of business and customizable data mapping."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Introduces the Submission Intake Configuration application on Guidewire Cloud Home for customizing mappings."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Provides an overview of data mapping, distinguishing between non-line-specific and line-specific data."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Lists the lines of business that are currently pre-mapped for Submission Intake."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Mapping Source",
+          "content": "Guidewire recommends using the PolicyCenter product definition (obtained from the PolicyCenter Graph API) as the source for mapping scripts, rather than older Advanced Product Designer definitions."
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Submission Intake streamlines insurance application processing by automating data extraction from ACORD PDFs.",
+        "It leverages App Reader and is seamlessly embedded in PolicyCenter Cloud, requiring SSO.",
+        "The process involves uploading, viewing, reviewing, and creating submissions for single or multiple lines.",
+        "The Submission Intake Configuration app allows customization of data mappings for new or existing lines of business.",
+        "Pre-configured mappings for common lines significantly reduce implementation effort."
+      ],
+      "realWorldConnection": "In real Guidewire projects, implementing Submission Intake can drastically reduce manual data entry, improve data accuracy, and accelerate the underwriting process. This leads to faster policy issuance, better customer experience, and more efficient resource allocation, directly impacting an insurer's bottom line and competitive advantage.",
+      "nextLessonPreview": "As we conclude our discussion on submission intake, our next chapter will introduce you to ClaimCenter. We'll explore the intricacies of claims processing and its vital integration with PolicyCenter, providing a holistic view of the Guidewire ecosystem."
+    }
+  ],
+  "videos": []
+}

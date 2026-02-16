@@ -1,0 +1,221 @@
+{
+  "lessonId": "ch07-l20",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 20,
+  "title": "Introduction to Subtypes",
+  "subtitle": "Explore how subtypes model diverse entities, inherit properties, and impact Guidewire applications.",
+  "synthesizedAt": "2026-02-16T18:12:46.342301+00:00",
+  "estimatedMinutes": 55,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a system for a large insurance company. You need to manage various types of contacts: individual policyholders, companies, and even specific places like repair shops. While they all share basic contact information, each type also has unique attributes.",
+      "question": "How can we model diverse entities that share common characteristics but also have unique properties, in a way that is both flexible and performant?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the role of subtypes and supertypes in the data model",
+        "Extend an existing subtype entity",
+        "Create new a subtype entity"
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of object-oriented programming concepts like inheritance, where a child class can inherit properties and methods from a parent class. Also, think about how data models are structured in a relational database.",
+      "warmupQuestion": "How might you represent a 'Person' and a 'Company' in a database if both are considered 'Contacts' but have different specific fields?",
+      "hint": "Consider how you would avoid duplicating common fields like 'Address' or 'Phone Number'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Subtypes and Their Hierarchy",
+      "narrative": "In object-oriented design and data modeling, a **subtype** is a specialized entity that is a child to a **supertype** entity. The core principle of subtyping is **inheritance**, meaning a subtype automatically inherits all fields and methods from its supertype. This allows for efficient reuse of common attributes while enabling specialized entities to define their unique characteristics. For instance, if `ABContact` is a supertype, `ABCompany` is a subtype that inherits fields like `PrefersContactByEmail` from `ABContact`, but `ABContact` does not inherit fields specific to `ABCompany`, such as `CanAddEmployees`.\n\nThis concept is extensively used in Guidewire applications to model complex relationships. In the `TrainingApp`, `ABContact` serves as the supertype for a hierarchy that includes `ABPerson`, `ABCompany`, and `ABPlace`. This structure helps organize contact information, allowing common details to be defined once at the `ABContact` level and automatically inherited by all its subtypes. Specific information, like details about an individual, can be defined at the `ABPerson` level and inherited by its own subtypes (e.g., `ABPolicyPerson`), but this information is not accessible to `ABCompany` or `ABPlace`.\n\nBeyond contacts, subtyping is prevalent across Guidewire's primary applications. For example, `ClaimCenter` uses subtypes for `Transaction` (e.g., `Payment`, `Recovery`) and `Incident` (e.g., `InjuryIncident`, `PropertyIncident`). `PolicyCenter` leverages subtyping for `Job` (e.g., `Submission`, `Renewal`) and `PlanDetail` (e.g., `BillingPlanDetail`, `PaymentPlanDetail`). Similarly, `BillingCenter` utilizes subtypes for `Plan` (e.g., `BillingPlan`, `CommissionPlan`) and `ChargePattern` (e.g., `ImmediateCharge`, `ProRataCharge`). This consistent application of subtyping across the platform demonstrates its power in creating flexible and extensible data models.",
+      "keyPoints": [
+        "A subtype is a child entity that inherits fields and methods from its supertype.",
+        "Supertypes do not inherit from their subtypes.",
+        "Guidewire applications use subtype hierarchies extensively to model diverse entities like contacts, transactions, and jobs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory visual to the concept of subtypes and supertypes."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definition of a subtype entity and a simple example of inheritance between ABContact and ABCompany."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An example of a subtype hierarchy within the TrainingApp, showing ABContact as a supertype with ABPerson, ABCompany, and ABPlace as direct subtypes."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Additional examples of subtype hierarchies across Guidewire applications like ClaimCenter, PolicyCenter, and BillingCenter."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Subtypes in the Database and Code",
+      "narrative": "When you define subtypes in Guidewire, the underlying database structure is designed for efficiency and flexibility. Instead of creating separate tables for each subtype, Guidewire typically stores all subtypes of a given supertype within a single, **denormalized** database table. For instance, all `ABContact` subtypes (like `ABPerson`, `ABCompany`, `ABPlace`, and its 17 total subtypes in TrainingApp) are stored in the `ab_abcontact` table. Columns specific to a particular subtype will contain `null` values for rows that belong to other subtypes. For example, an `ABAttorney` record will have `null` values for `FirstName` and `LastName` if those are fields defined only for `ABPerson` and its subtypes, while an `ABAutoRepairShop` record will have `null` values for `FirstName` and `LastName` but a value for `IsFranchise`.\n\nWhile this denormalized approach might seem unconventional to database purists, it's a deliberate trade-off in Guidewire applications. It simplifies querying by reducing the need for numerous `JOIN` operations that would be required with a highly normalized structure, thereby improving performance. The `Data Dictionary` clearly illustrates this by listing subtypes directly under their parent entity, showing all inherited fields and those specific to the subtype.\n\nIn terms of code, Guidewire's data model entities generate corresponding Java classes. For subtypes, this means that each subtype has its own generated Java class, which `extends` the Java class of its supertype. This mirrors the object-oriented inheritance model, where the child class automatically inherits all fields and methods of the parent class. For example, the `ABCompany` Java class would extend the `ABContact` Java class, inheriting all its properties. This code generation ensures that the data model's inheritance hierarchy is fully reflected and usable within the Gosu programming environment, allowing developers to interact with subtypes in a type-safe and intuitive manner.",
+      "keyPoints": [
+        "Subtype data is stored in a single, denormalized table belonging to the supertype, with irrelevant columns containing null values.",
+        "This denormalized structure is a trade-off for performance, reducing the need for complex database joins.",
+        "Each Guidewire subtype generates a Java class that extends its supertype's Java class, implementing object-oriented inheritance in code."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "An illustration of how subtypes are stored in a denormalized database table, showing null values for irrelevant columns."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "How subtypes are represented in the Data Dictionary, nested under their parent entity."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "A snippet of generated Java code demonstrating how a subtype class extends its supertype class."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A review of how subtypes are handled in the database and code generation, showing the relationship between the entity, generated code, and database table."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Denormalization",
+          "content": "In database design, denormalization is the process of intentionally adding redundant data or grouping data to optimize read performance, often at the expense of write performance and data integrity (which must then be managed by the application)."
+        },
+        {
+          "type": "tip",
+          "title": "Gosu and Java Types",
+          "content": "Gosu, being built on the JVM, has excellent Java compatibility. You can use Java types, extend Java types, and implement Java interfaces directly in Gosu. This means the generated Java classes for Guidewire entities are fully accessible and extensible within your Gosu code."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating new subtype entities in Guidewire Studio, specifically for personal and commercial auto policies. Pay close attention to how the supertype is selected and how new fields are added to the subtype.",
+      "transcriptSummary": "The video demonstrates creating a `PersonalAutoPolicy_Ext` subtype under `Policy_Ext`, ensuring the supertype is not 'final'. It shows how to add new integer columns for `numberOfVehicles` and `numberOfDrivers` to the subtype. Finally, it validates the changes and inspects the generated Java class to confirm that the subtype correctly extends its supertype."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Working with Subtypes: Limitations and Extensions",
+      "narrative": "While powerful, subtyping in Guidewire comes with important considerations and limitations, primarily due to the principle of **single inheritance**. This means a subtype can only inherit from one direct supertype; it cannot inherit fields and behaviors from multiple parent entities simultaneously. This can lead to modeling challenges. For example, if you have `ABAutoRepairShop` and `ABAutoTowingAgcy` as distinct subtypes, and you encounter a business that performs both auto repair and towing, you cannot create a single contact entity that inherently possesses the fields of both. To model such a scenario, you would typically have to choose one supertype and then manually add the missing fields from the other, potentially leading to field duplication or a less flexible model.\n\nTherefore, it's crucial to carefully consider your contact hierarchy. Create a new subtype only when you genuinely need to treat one set of entities distinctly from another. Over-specializing the hierarchy can make your data model rigid and less adaptable to future business needs. Guidewire recommends limiting the number of subtypes for a given entity to maintain flexibility.\n\nDespite these limitations, base application subtype entities can be extended in the exact same way as top-level entities. This involves creating an Entity Extension (ETX) file for the subtype. The ETX file shares the same name as the ETI file (e.g., `ABCompany.etx` for `ABCompany.eti`) and resides in the `.../configuration/config/extensions/Entity` folder. When adding new fields to an ETX file, Guidewire best practice recommends using a unique suffix like `_Ext` to distinguish custom fields from out-of-the-box ones. This allows you to add custom attributes to existing subtypes without modifying the base application's core definition. Understanding these aspects is key to effectively leveraging and extending Guidewire's data model.",
+      "keyPoints": [
+        "Subtypes are limited to single inheritance, meaning they can only inherit from one direct supertype.",
+        "Over-specializing subtype hierarchies can lead to rigid data models and potential field duplication.",
+        "Base application subtypes can be extended using ETX files, following the same conventions as top-level entity extensions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "An illustration of subtype limitations, particularly regarding single inheritance and the challenge of modeling entities with multiple roles."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Guidelines for extending existing subtype entities using ETX files and naming conventions."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "A review of the lesson objectives, reinforcing the key learning outcomes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Subtype Creation Best Practice",
+          "content": "Only create a new subtype if you need to treat one set of entities differently from another. Avoid creating subtypes for every minor variation, as this can lead to an overly complex and inflexible model."
+        },
+        {
+          "type": "warning",
+          "title": "PCF File Modifications",
+          "content": "When creating new subtypes, remember that you will also need to modify PCF (Page Configuration File) files to support both creating and searching for the new subtype in the user interface. This often involves updating modal PCF support."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You've just seen how to create a `PersonalAutoPolicy_Ext` subtype. Now, imagine you need to create a `CommercialAutoPolicy_Ext` subtype to store specific details for commercial auto policies.",
+      "question": "If `CommercialAutoPolicy_Ext` also needs to store information about the 'fleet size' (number of vehicles in the commercial fleet) and 'business type', how would you approach creating this subtype and adding these specific fields?",
+      "hints": [
+        "Remember to check the supertype's 'final' property first in Guidewire Studio.",
+        "Think about the appropriate data type for 'fleet size' (e.g., integer) and 'business type' (e.g., string or a typelist if there are predefined options).",
+        "Consider where you would define these new fields within the entity structure."
+      ],
+      "expectedApproach": "Create a new subtype entity named `CommercialAutoPolicy_Ext` under the `Policy_Ext` supertype. Add a new column for `fleetSize` (type: Integer) and another for `businessType` (type: String or a new Typelist, depending on requirements) to this new subtype. Ensure `Null OK` is set appropriately for each field."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis a subtype entity?",
+      "referenceAnswer": "Asubtype is an entity that is a child to a parent entity and inherits all fields from the\nparent.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis a subtype entity extension?",
+      "referenceAnswer": "Asubtype extension is an entity extension of a base application subtype entity.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Describe at least one limitation of relying heavily on subtype hierarchies.",
+      "referenceAnswer": "One major limitation of a subtype hierarchy is that a subtype entity can only have one\nparent entity and multiple inheritance (two or more direct parents) is not supported. In\naddition, the subtype always inherits the parents elements, meaning the subtype\ncontains the parent fields.\n\nFor a deep hierarchy (many levels), this means the lowest child will inherit all the fields\nof the parents. Deep su",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "When you create a new subtype, why are you NOT able specify a table\nname?",
+      "referenceAnswer": "You cannot specify a table name because the new subtype data is stored in the same\ntable as the supertype.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Subtypes are specialized entities that inherit fields and methods from a supertype.",
+        "Guidewire applications extensively use subtype hierarchies for flexible data modeling.",
+        "Subtype data is stored in a single, denormalized database table belonging to the supertype.",
+        "Each subtype generates a Java class that extends its supertype's class, reflecting inheritance in code.",
+        "Subtypes are limited to single inheritance, which can impact modeling complex, multi-faceted entities.",
+        "Existing base application subtypes can be extended using ETX files to add custom fields."
+      ],
+      "realWorldConnection": "Understanding subtypes is fundamental for configuring and extending Guidewire applications. It allows you to create robust and efficient data models that accurately represent complex business entities, ensuring data integrity and optimizing application performance. Proper use of subtyping minimizes data duplication and maximizes code reusability in real Guidewire projects.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the practical aspects of configuring entities and fields, building upon your understanding of subtypes to create more sophisticated data structures."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Apply your understanding of subtypes by completing the 'Subtypes' student exercise. This will involve hands-on practice creating and extending subtype entities within a Guidewire application, similar to what was demonstrated.",
+      "objectives": [
+        "Create new subtype entities in Guidewire Studio.",
+        "Add custom fields to newly created subtype entities.",
+        "Understand the impact of subtype creation on the data model and generated code."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_20.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_20.mp4"
+    }
+  ]
+}

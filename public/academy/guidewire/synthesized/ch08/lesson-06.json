@@ -1,0 +1,330 @@
+{
+  "lessonId": "ch08-l06",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 6,
+  "title": "Raising Underwriting Issues",
+  "subtitle": "Understand how PolicyCenter identifies and manages policy risks through underwriting rules and issues.",
+  "synthesizedAt": "2026-02-16T18:19:29.133050+00:00",
+  "estimatedMinutes": 75,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "ch08-l06-hook-1",
+      "scenario": "Imagine an agent trying to bind a new auto policy for a client, but the system flags a high-value vehicle, preventing the policy from being issued. This immediately stops the process, requiring an underwriter's review.",
+      "question": "How does PolicyCenter identify such risks and ensure the right person approves them before a policy can proceed?"
+    },
+    {
+      "type": "objectives",
+      "id": "ch08-l06-obj-1",
+      "objectives": [
+        "Describe the underwriting process and the role of underwriting issues.",
+        "Explain the key components of underwriting authority, including rules, issues, and authority profiles.",
+        "Detail how underwriting issues are raised in PolicyCenter, including the role of evaluators and plugins.",
+        "Define and configure underwriting rules, including checking sets, blocking points, and rule conditions.",
+        "Understand the concept of rule contexts and how to configure context definitions to support underwriting rules.",
+        "Identify best practices for defining and managing underwriting rules in a production environment."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "ch08-l06-act-1",
+      "priorKnowledge": "In previous lessons, we've explored policy transactions and the various stages a policy goes through from submission to issuance. You've also seen how data input can affect policy outcomes and trigger validations.",
+      "warmupQuestion": "Think about a time when a policy application might need special review or approval. What kind of conditions would trigger that?",
+      "hint": "Consider factors beyond standard eligibility, like unusual risk profiles or high coverage amounts, or specific regulatory requirements."
+    },
+    {
+      "type": "concept",
+      "id": "ch08-l06-concept-1",
+      "heading": "Understanding Underwriting Issues and the Underwriting Process",
+      "narrative": "The underwriting process is crucial for assessing and managing risk in insurance. When an agent creates a new policy, certain terms may require review by an underwriter before the policy can be bound. For example, if a carrier's underwriting rules state that any vehicle valued over $100,000 needs underwriter approval, adding a $200,000 car to a personal auto policy will trigger an underwriting issue. PolicyCenter automatically creates this issue, preventing the agent from binding the policy until an underwriter approves it.\n\nAs you can see in the underwriting process flow, an agent initiates a policy submission. If the policy has issues that block quoting, the agent cannot view the quote until an underwriter approves the issue and releases the policy. Once approved, the agent can view the quote, bind, and issue the policy. Alternatively, the agent might edit the policy, potentially raising new issues that restart the underwriting review cycle.\n\n**Underwriting authority** provides the framework for managing these issues. It encompasses underwriting rules and the infrastructure to handle them. The major components include:\n*   **Underwriting Issue**: A specific occurrence on a policy transaction where an underwriting condition was met, indicating a need for review.\n*   **Underwriting Rule**: Defines how a policy transaction is affected by issues and how they can be approved. It specifies the conditions under which an issue will be raised.\n*   **Authority**: The ability of a user to approve underwriting issues.\n\nUnderwriting issues are created when a condition leads to an undesirable result, based on policy or account data. This could be a specific coverage level, vehicle price, jurisdiction, or more complex factors like a driver in an urban area. These issues can stop job progression unless approved. For instance, a suspended driver's license would raise an issue requiring underwriter approval, whereas a valid out-of-state license might not.\n\nGuidewire recommends raising underwriting issues as early as possible. This makes users aware of potential problems sooner, allowing them to plan accordingly. For example, a high-value vehicle issue might be detected before quoting but block binding. PolicyCenter's `IPolicyEvaluationPlugin` checks for issues before quoting, calling line-of-business specific evaluators (like `PAUnderwriterEvaluator.gs`) and a default evaluator (`DefaultUnderwriterEvaluator.gs`). These evaluators retrieve `UWIssueType` definitions from the underwriting rule UI and trigger issues based on rule conditions or hard-coded logic. The plugin also removes 'orphaned issues' – those that were generated but are no longer relevant. The implementation of underwriting authority involves configuring context definitions, creating new UW rules, configuring rule conditions in the UI, and adding authority grants for new issue types.",
+      "keyPoints": [
+        "Underwriting issues prevent policy progression until approved.",
+        "The underwriting process involves agents, underwriters, and issue resolution.",
+        "Underwriting authority consists of rules, issues, and approval capabilities.",
+        "Issues are raised based on policy data and can be configured to block at various points.",
+        "PolicyCenter uses `IPolicyEvaluationPlugin` and evaluators to detect and raise issues."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An example of how a high-value vehicle triggers an underwriting issue, blocking policy binding."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "The cyclical underwriting process, showing how issues block progress until approved by an underwriter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Overview of the major components of underwriting authority: Underwriting Issue, Underwriting Rule, and Authority."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Examples of conditions that can create underwriting issues, such as coverage levels, jurisdiction, or complex driver scenarios."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The technical flow of how underwriting issues are raised, involving the `IPolicyEvaluationPlugin` and LOB-specific evaluators."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The four key steps to configure underwriting authority in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Underwriting Issue",
+          "content": "A specific occurrence on a policy transaction where an underwriting condition was true, requiring review or approval."
+        },
+        {
+          "type": "definition",
+          "title": "Underwriting Rule",
+          "content": "Defines an underwriting issue type, specifies when to check for it, and under what conditions to raise the issue."
+        },
+        {
+          "type": "best_practice",
+          "title": "Raise Issues Early",
+          "content": "Guidewire recommends raising underwriting issues as early as possible in the job flow to provide users with early visibility and allow for better planning."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "ch08-l06-demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration provides an overview of the underwriting authority feature within PolicyCenter. Pay attention to how the system identifies and presents underwriting issues.",
+      "transcriptSummary": "The demo illustrates the core functionality of underwriting authority, showing how issues are raised and displayed in the PolicyCenter UI, and the initial steps an underwriter might take."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "ch08-l06-kc-1",
+      "question": "What is underwriting authority?",
+      "referenceAnswer": "Underwriting authority provides underwriting rules and an underwriting infrastructure which user can modify or augment.",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "concept",
+      "id": "ch08-l06-concept-2",
+      "heading": "Defining Underwriting Rules: Checking Sets, Blocking Points, and Conditions",
+      "narrative": "Underwriting rules are the backbone of the underwriting authority system. An underwriting rule defines an underwriting issue type, specifies when to check for it, and under what conditions to raise the issue. These rules are managed in PolicyCenter under **Administration > Business Rules > Underwriting Rules**. It's critical to manage these rules carefully; Guidewire strongly recommends against removing underwriting rules once they've been deployed to a production system, as this can impact system metrics and historical data.\n\nThe Underwriting Rule screen is organized into several categories:\n*   **Fields related to defining the UW Rule**: Includes Name, Code, Description, Checking Set, Blocking Point, Enabled status, and Start/End Dates.\n*   **Fields related to evaluating the UW Issue**: Covers the Applicability section, Rule Context, Rule Condition, and UW Issue Details.\n*   **Fields related to approving the UW Issue**: Found mostly on the Advanced tab, these include Auto-approvable, Default Edit Before Bind, Default Approval Blocking Point, Default Duration, Value Comparator, Value Formatter Type, Default Value Assignment Type, and Default Value Offset Amount.\n\nTwo crucial fields for evaluating issues are the **Checking Set** and **Blocking Point**.\n*   A **checking set** represents a specific point in a job (e.g., pre-quote, bind, pre-issuance) where PolicyCenter checks if an issue exists. It's defined in the `UWIssueCheckingSet` typelist and mapped to a `TriggeringPointKey`. Issues can be detected early, but block at a later point.\n*   A **blocking point** stops the progress of a job until an issue is approved. For example, a high-value vehicle issue might block binding. Issues can also be configured as *informational* (non-blocking), allowing the agent to proceed without underwriter approval, though the issue will still be displayed on the Risk Analysis page. It's a best practice to detect issues as early as possible but carefully consider where they should block progress to avoid situations where a user cannot return to an earlier screen to make necessary changes.\n\nUnderwriting issues can be raised by specifying rule conditions directly in the PolicyCenter UI. The rule's applicability criteria (Policy Line, Jurisdiction, Policy Transaction, Start/End Date) restrict when the rule can be triggered. The **Rule Context** supplies the necessary data for the rule conditions, which are constructed using expressions with available context objects. The **Rule Condition editor** on the UI allows you to create conditions using expressions and operands in different modes: Formula (for calculations and comparisons), Count (to count items matching a condition), Sum (to sum expressions for matching items), and Lookup (to find values in data sources). When UI rule conditions are specified, it's recommended not to write Gosu conditions in LOB Underwriter Evaluators to prevent unpredictable behavior.",
+      "keyPoints": [
+        "Underwriting rules define issue types, checking points, and blocking points.",
+        "Rule fields categorize definition, evaluation, and approval aspects.",
+        "Checking sets determine when an issue is checked, while blocking points determine when progress is halted.",
+        "Issues can be informational (non-blocking) or blocking.",
+        "UI rule conditions use rule contexts and various expression modes to trigger issues."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Introduction to underwriting rules and the objectives for this section."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Overview of underwriting rules, their definition, and the categories of fields on the Underwriting Rule screen."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Explanation of a 'checking set' and its role in specifying when to check for an underwriting issue."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Illustration of a 'blocking point' and how it stops job progress, including the concept of informational (non-blocking) issues."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "How underwriting issues are raised using rule conditions in the UI, highlighting applicability, rule context, and issue details."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Details on specifying rule conditions using expressions and operands, and the different modes available in the rule condition editor."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Production Rule Changes",
+          "content": "Guidewire recommends against removing underwriting rules once they have been deployed in a production system. Changes to Code, Value Comparator, Blocking Point, Checking Point, and AutoApprovable fields should also be avoided post-production."
+        },
+        {
+          "type": "best_practice",
+          "title": "Early Detection, Careful Blocking",
+          "content": "Detect issues as early as possible to provide visibility, but carefully consider the blocking point. If a field is only available on a later screen, blocking too early might prevent the user from making necessary changes."
+        },
+        {
+          "type": "gotcha",
+          "title": "Gosu vs. UI Conditions",
+          "content": "If rule conditions are specified in the UI, it is recommended not to write Gosu conditions to raise UW issues in the LOB Underwriter Evaluators to avoid unpredictability."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "ch08-l06-practice-1",
+      "level": "guided",
+      "scenario": "An insurer wants to create a new underwriting rule for 'High-Risk Occupations.' This rule should flag policies where the primary insured's occupation is listed as 'Construction Worker' or 'Logger' and prevent the policy from being bound until approved.",
+      "question": "Based on what you've learned about underwriting rules, identify the key components you would need to define for this 'High-Risk Occupations' rule.",
+      "hints": [
+        "Think about when the system should check for this condition in the policy lifecycle.",
+        "Consider what action the system should take if the condition is met (i.e., stop progress).",
+        "What data would the rule need to access to make its decision (e.g., policyholder information)?",
+        "How would you express the condition 'occupation is Construction Worker or Logger'?"
+      ],
+      "expectedApproach": "Learners should identify the `UWIssueType` (e.g., 'HighRiskOccupation'), `Checking Set` (e.g., 'PreQuote' or 'Bind'), `Blocking Point` ('Bind'), `Rule Context` (to access policyholder occupation data), and `Rule Condition` (using a formula mode expression to check the occupation field)."
+    },
+    {
+      "type": "demo",
+      "id": "ch08-l06-demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration walks through the process of configuring an underwriting rule in PolicyCenter. Pay close attention to how different fields, like checking set and blocking point, are defined.",
+      "transcriptSummary": "The demo showcases navigating to the Underwriting Rules screen, creating a new rule, and configuring its various properties, including the rule details, applicability, and condition using the UI editor."
+    },
+    {
+      "type": "concept",
+      "id": "ch08-l06-concept-3",
+      "heading": "Configuring Context Definitions and Designing New Underwriting Rules",
+      "narrative": "Rule Contexts are essential for enabling underwriting rules to access policy data within the PolicyCenter UI. These contexts are defined in the `gw.bizrules.provisioning.contexts` package and contain one or more context objects. These objects allow you to create formula expressions in the UI by providing access to relevant policy data. You can extend existing contexts by using methods like `addSymbol` (for single objects) or `addIterativeSymbol` (for collections), specifying the object's name, type, and a code block to resolve the actual object at runtime. Each context definition is uniquely identified by a `RuleContextDefinitionKey`.\n\nThe relationship between context definitions and underwriting rules is crucial. The `BizRulesPlugin` contains the list of context definitions supported by the Rule framework. More specifically, `UnderwriterEvaluatorTriggeringPoint` maintains the set of supported contexts for each checking set (or triggering point). If a `Rule Context Definition Key` is not included in the supported contexts for a given policy line and triggering point, the UI issue will not be created, even if the rule condition is correctly defined in the UI.\n\nWhen defining a new underwriting rule, several points require careful consideration to ensure a clear and effective definition:\n1.  **Rule Existence**: Determine if an existing rule can be modified or if a new one is needed. Remember the warnings about changing rules in production.\n2.  **Field Values**: Decide on the values for fields that define the rule, such as Name, Code, Checking Set, and Blocking Point.\n3.  **Value Association**: Consider if the issue needs a value associated with it (e.g., a currency amount, a state, an age). This value might influence which underwriters can approve the issue. If the approval doesn't depend on the value, it might not be necessary.\n4.  **Job Types and Detection Points**: Identify on which job types (submissions, policy changes) and at which job lifecycle transitions (quoting, binding) the issue should be detected. Some issues might only need to be detected once, while others require multiple checks.\n5.  **Blocking Point**: Clearly define at what point in the job the issue should block progress.\n6.  **Line of Business**: Specify which line of business the issue applies to.\n\nFor the `IssueKey`, it's vital to use values that uniquely identify the issue and do not change over the lifetime of the policy. Guidewire strongly recommends against changing the algorithm for forming the key for an issue once that rule is in production, as this can lead to inconsistencies and data integrity issues.",
+      "keyPoints": [
+        "Rule contexts provide policy data objects for UI rule conditions.",
+        "Contexts are defined in `gw.bizrules.provisioning.contexts` and can be extended.",
+        "The `UnderwriterEvaluatorTriggeringPoint` links contexts to checking sets and policy lines.",
+        "Designing new rules requires considering existing rules, value associations, job types, detection points, blocking points, and LOBs.",
+        "The `IssueKey` must be unique and stable for the lifetime of the policy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "How rule contexts are defined in Gosu and how to add objects to existing contexts for use in the UI."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "The relationship between context definitions and underwriting rules, emphasizing the role of `BizRulesPlugin` and `UnderwriterEvaluatorTriggeringPoint`."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Key questions and considerations for defining a new underwriting rule, from value association to job types and blocking points."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Stable IssueKey",
+          "content": "Use values that uniquely identify the issue and do not change over the lifetime of the policy for the `IssueKey`. Do not change the algorithm for forming the key for an issue once that rule is in production."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "ch08-l06-demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration focuses on the configuration of underwriting rule context definitions. Observe how context objects are made available for use in rule conditions.",
+      "transcriptSummary": "The demo illustrates the process of defining and configuring rule contexts, showing how to add symbols to make policy data accessible for creating complex rule conditions in the UI."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "ch08-l06-kc-2",
+      "question": "What does the UW Rule define?",
+      "referenceAnswer": "The UW Rule defines the underwriting issues type, conditions to raise the issue in the base product.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "ch08-l06-kc-3",
+      "question": "Whatis the rule context?",
+      "referenceAnswer": "The rule context supplies data to the UW rule so that the objects in the context can be used to create rule conditions. It is defined in the context definition classes.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "ch08-l06-kc-4",
+      "question": "What values should be used as IssueKey to raise issues? Should this value be changed after a rule is in production?",
+      "referenceAnswer": "Values that uniquely identify the issue and do not change over the life time of the policy should be used to raise underwriting issues. Guidewire recommends that you do not change the algorithm for forming the key for an issue once that rule is in production.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "ch08-l06-kc-5",
+      "question": "Name three blocking points for an issue.",
+      "referenceAnswer": "Quote, bind, prequote, issuance.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "ch08-l06-kc-6",
+      "question": "Whatis a checking set?",
+      "referenceAnswer": "A checking set represents a point in a job at which issues can be raised such as pre-quote, bind or pre-issuance.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "demo",
+      "id": "ch08-l06-demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration guides you through the practical steps of creating a new underwriting rule from scratch in PolicyCenter. Observe the entire workflow from rule creation to condition definition.",
+      "transcriptSummary": "The demo provides a step-by-step walkthrough of defining a new underwriting rule, including setting its name, code, checking set, blocking point, and configuring the rule conditions using the available context objects in the UI."
+    },
+    {
+      "type": "practice",
+      "id": "ch08-l06-practice-2",
+      "level": "independent",
+      "scenario": "Your company wants to introduce a new underwriting rule: 'Excessive Claims History.' This rule should be triggered if an applicant has more than 3 claims in the last 5 years, and it should block quoting the policy. The rule should also display the number of claims as part of the issue details.",
+      "question": "Outline the steps and key considerations for defining this new underwriting rule in PolicyCenter, referencing the points discussed in the lesson.",
+      "hints": [
+        "Start by considering if this is a new rule or a modification of an existing one, and why.",
+        "Think about the appropriate `Checking Set` and `Blocking Point` for this scenario.",
+        "What `Rule Context` would provide the necessary data (claims history for the applicant)?",
+        "How would you formulate the `Rule Condition` using the available modes (e.g., 'Count' or 'Formula')?",
+        "What `IssueKey` and `Description` would be appropriate for this issue, keeping best practices in mind?"
+      ],
+      "expectedApproach": "Learners should describe creating a new underwriting rule, selecting 'PreQuote' as the `Checking Set` and 'Quote' as the `Blocking Point`. They would need a `Rule Context` that provides access to the applicant's claims history. The `Rule Condition` would likely use a 'Count' mode expression to check if `applicant.claims.count > 3` within the last 5 years. They should also define a unique and stable `IssueKey` and a descriptive `Description` that includes the number of claims."
+    },
+    {
+      "type": "summary",
+      "id": "ch08-l06-summary-1",
+      "keyTakeaways": [
+        "Underwriting authority provides the infrastructure to manage underwriting issues based on defined rules.",
+        "Underwriting issues are specific occurrences that can block policy progress until approved.",
+        "Issues are raised early in the job flow by evaluators and plugins, based on `UWIssueType` definitions.",
+        "Underwriting rules define the issue type, checking set (when to check), blocking point (when to stop progress), and conditions.",
+        "Rule contexts provide the necessary data objects for rule conditions in the UI.",
+        "Careful design of `IssueKey`, checking sets, and blocking points is crucial, and rules should not be changed once in production."
+      ],
+      "realWorldConnection": "In Guidewire projects, correctly implementing underwriting authority is vital for balancing business efficiency with risk management. It ensures that policies meet carrier guidelines while empowering agents and underwriters to process submissions effectively, preventing costly errors and ensuring regulatory compliance. By understanding how to define and manage these rules, you contribute directly to the integrity and efficiency of the insurance process.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into configuring underwriting authority grants and profiles, understanding how different users are empowered to approve specific types of issues and how to manage their approval limits."
+    },
+    {
+      "type": "assignment",
+      "id": "ch08-l06-assign-1",
+      "description": "In this assignment, you will apply your knowledge of underwriting rules and context definitions to configure a new underwriting rule in a PolicyCenter development environment. You will define a rule that flags a specific condition (e.g., a vehicle type, a driver's age, or a coverage amount) and sets appropriate checking and blocking points. You will then test this rule by creating a policy transaction that triggers the underwriting issue.",
+      "objectives": [
+        "Create a new underwriting rule using the PolicyCenter UI.",
+        "Define rule conditions using context objects and expressions.",
+        "Configure the checking set and blocking point for the new rule.",
+        "Test the new rule by creating a policy transaction that triggers the underwriting issue."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_06_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_06_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_06_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "PP_06_03.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_06_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "PP_06_04.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_06_04.mp4"
+    }
+  ]
+}

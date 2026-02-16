@@ -1,0 +1,346 @@
+{
+  "lessonId": "ch09-l15",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 15,
+  "title": "Configuring Permissions",
+  "subtitle": "Understand, navigate, and configure security permissions, roles, and access control in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T18:39:57.950530+00:00",
+  "estimatedMinutes": 105,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing a new feature in a Guidewire application, like a specialized report or a new claim type. Not everyone in the organization should have access to view or edit this feature, especially if it contains sensitive information. How do you ensure that only authorized personnel can interact with it?",
+      "question": "What mechanisms are in place to control who can see and do what within a Guidewire application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between permissions, roles, Access Control Lists (ACLs), and Application Permission Keys (APKs).",
+        "Explain the difference between static and object-based permissions.",
+        "Navigate and interpret the information presented in the Security Dictionary.",
+        "Generate the Security Dictionary from both the command line and the user interface.",
+        "Configure new static permissions and assign them to roles.",
+        "Apply permissions and APKs to user interface elements to control access."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon user management and how different users interact with the system. Now, we'll delve deeper into the underlying security framework that dictates these interactions.",
+      "warmupQuestion": "Think about any application you use daily. How does it manage who can access certain features or data?",
+      "hint": "Consider administrative privileges versus standard user access."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Core Security Concepts: Permissions and Roles",
+      "narrative": "At the heart of Guidewire's security model are **Permissions**, **Roles**, and **Access Control Lists (ACLs)**, which together define who can do what within the application. When a user logs into ClaimCenter, the system first authenticates them, then determines their assigned permissions and their designated start page. Permissions are granular controls that dictate whether a user can view, create, edit, delete, own, or act on specific 'objects.' These objects can be database entities like claims or activities, or user interface components such as a specific location on a screen or a button. Permissions are not assigned directly to users; instead, they are defined by the `SystemPermissionType` typelist, which allows for the addition of custom static permissions.\n\n**Roles**, on the other hand, are named collections of these permissions. They typically map to a job title or function within an organization, such as 'Adjuster' or 'Claims Supervisor.' Each user is assigned one or more roles, and their overall capabilities within the application are a combination of all permissions granted by their assigned roles. There are two common strategies for organizing tasks into roles: one where each role is 'isolated' and contains all necessary permissions (meaning some permissions might be duplicated across roles), and another where roles have unique sets of permissions, and users are assigned multiple roles to accumulate the necessary permissions. For example, an Adjuster might inherit all permissions of a Service Representative by being assigned both roles, plus an additional 'Adjuster' role for their specific tasks.\n\nIt's important to remember that permissions are the fundamental units of security, covering all data of the same type. For instance, the permission to view a claim means permission to view all claims, unless further restricted by an ACL. Permissions are always enforced and cannot be overridden.",
+      "keyPoints": [
+        "Permissions define specific actions a user can perform on an object (view, edit, create, delete, own, act).",
+        "Permissions are defined in the `SystemPermissionType` typelist and are not assigned directly to users.",
+        "Roles are collections of permissions, typically mapping to job functions, and are assigned directly to users.",
+        "Two strategies exist for organizing permissions into roles: isolated roles or roles with unique permission sets.",
+        "Permissions are always in force and cannot be overridden."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the key components in Guidewire's access control system: Permissions, Roles, and Access Control Lists."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Details on what a 'permission' allows a user to do, the types of 'objects' they apply to, and where they are defined."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An illustration showing how roles are named collections of permissions assigned to individual users."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Diagram illustrating two common strategies for organizing permissions into roles: isolated roles vs. roles with unique permission sets."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "SystemPermissionType Typelist",
+          "content": "This typelist is where all system permissions are defined. You can add custom typecodes to this list to create new static permissions, but you cannot create new object-based permissions here."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Access Control Lists (ACLs) and Application Permission Keys (APKs)",
+      "narrative": "While permissions and roles define general access, **Access Control Lists (ACLs)** provide a layer of object-specific security. An ACL is a list associated with individual claims, identifying the specific users who may access that particular claim. This ensures that only users with a legitimate 'need' can view or edit a claim, even if they possess the general 'View Claim' permission. For a user to view or act on a claim, they must possess the appropriate system permission *and* be listed on that claim's ACL. For example, an Adjuster might have the 'View Claim' permission, but if they are not on the ACL for a specific claim, they cannot access it. Conversely, a user listed on an ACL cannot view the claim if they lack the fundamental 'View Claim' system permission.\n\n**Application Permission Keys (APKs)** are system-defined groups of one or more permissions, often with additional logic, designed to optimize the evaluation of permissions. They group permissions according to specific entities and business processes, making permission checks more efficient than referencing individual permissions. APKs are immutable; they cannot be created or modified by configurators. You can easily distinguish an APK from a standard permission: permissions begin with `perm.System.`, while APKs start with `perm.entity.`. For instance, `perm.Claim.edit` might be an APK related to editing claims.\n\nPermissions and APKs can be either **static** or **object-based**. Static permissions are granted or denied across the entire application and do not reference an object's ACL. They are 'across the board' permissions. Object-based permissions, however, are granted or denied on a claim-by-claim (or other object-by-object) basis and explicitly reference the object's ACL. These are typically used for objects requiring an additional level of security, where both the permission and ACL membership are required.",
+      "keyPoints": [
+        "ACLs are claim-specific lists that identify users with access to a particular claim, ensuring 'need-to-know' access.",
+        "To access a claim, a user needs both the correct permission and to be on the claim's ACL.",
+        "APKs are system-defined, immutable groups of permissions with optimized logic, identified by `perm.entity.` prefix.",
+        "Static permissions apply application-wide, while object-based permissions are tied to an object's ACL (e.g., claim-by-claim)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "An example of an Access Control List (ACL) associated with a claim, listing users with access."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustration demonstrating that both correct permissions AND ACL membership are required to view a claim."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Explanation of Application Permission Keys (APKs) as system-defined groups of permissions with additional logic."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Comparison of static permissions (application-wide) and object-based permissions (ACL-related, object-specific)."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "ACLs and Permissions",
+          "content": "A common misconception is that being on an ACL is enough. Remember, a user must have *both* the appropriate system permission *and* be listed on the claim's ACL to interact with that specific claim."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through how permissions are applied in the base Guidewire application, showing the immediate effect of permission changes.",
+      "transcriptSummary": "The video illustrates the login process and how ClaimCenter authenticates users, determines their permissions, and renders the appropriate startup view. It also highlights that permission changes by an administrator are applied immediately, even if the user is already logged in."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis the difference between a static permission and an object-based\npermission?",
+      "referenceAnswer": "The correct answer is:\nAstatic permission is granted or revoked for the entire application.\nAn object-based permission is granted on a claim by claim (or exposure by exposure)\nbasis.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the difference between a permission and an application\npermission key (APK) containing only one permission?",
+      "referenceAnswer": "Possible answers:\n* Apermission can be created by a Guidewire configurator, while an APK cannot.\n* Apermission can be added to a role, while an APK cannot.\n* Apermissions check using an APK will execute faster than a permissions check\nwhich directly references a permission.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whatis the difference between an APK with two permissions (such as\n“create note” and “edit note”) and a role with the same two pennissions?",
+      "referenceAnswer": "Possible answers:\n\nAn APK is created to optimize permissions checks. A role is created to assign\npermissions to users.\n\nDevelopers can create and modify roles. Developers cannot create or modify APKs.\n\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Navigating the Security Dictionary",
+      "narrative": "The **Security Dictionary** is an invaluable resource for understanding the intricate web of permissions and roles within your Guidewire application. It's a series of HTML pages, typically located at `<server_url>/security/index.html`, that documents the initial relationships between permissions and roles. This dictionary provides comprehensive details across four main sections: Application Permission Keys, Pages (in the user interface), System Permissions, and Roles.\n\nWithin the dictionary, the **Application Permission Keys (APKs)** section lists each APK, detailing the system permissions it contains and identifying the pages and UI elements that reference it. This is crucial for understanding how groups of permissions control access to specific functionalities. For example, an APK like 'Activity assign' might be object-based, requiring permissions like `actraown` (reassign your own activities) and `actraunown` (reassign others' activities). In contrast, 'AuthorityLimit create' is a static APK, containing permissions like `usergrantauth`.\n\nThe **Pages** section documents every page in the application, displaying its `canVisit` and `canEdit` expressions. These expressions determine who can view or edit a particular page. Forwards, Screens, and Views are also listed, with Forwards having `canVisit` expressions, while Screens and Views do not. For instance, the `AccountDetail` page might have `perm.System.accountmng` for both `canVisit` and `canEdit` expressions, indicating that users need this specific system permission to access or modify account details.\n\nUnderstanding these sections of the Security Dictionary is fundamental for troubleshooting access issues and planning configuration changes.",
+      "keyPoints": [
+        "The Security Dictionary is an HTML-based documentation of permissions and roles.",
+        "It has four main sections: APKs, Pages, System Permissions, and Roles.",
+        "The APKs section lists permissions within each APK and their usage in the UI.",
+        "The Pages section shows `canVisit` and `canEdit` expressions for each UI page.",
+        "The dictionary is essential for understanding and managing application security."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "A visual representation of the Security Dictionary's structure and its key sections."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "An overview of the Security Dictionary, highlighting its purpose and the four main types of information it documents."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Examples from the Security Dictionary showing how APKs like 'Activity assign' and 'AuthorityLimit create' list their associated permissions and whether they are static or object-based."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "A screenshot of the Security Dictionary's 'Pages' section, illustrating `canVisit` and `canEdit` expressions for a page like 'AccountDetail'."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Security Dictionary Location",
+          "content": "You can typically find the Security Dictionary at `<server_url>/security/index.html` in your Guidewire environment. Bookmark it for quick reference!"
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Generating and Interpreting the Security Dictionary",
+      "narrative": "Beyond APKs and Pages, the Security Dictionary also provides detailed insights into **System Permissions** and **Roles**. The System Permissions page offers a menu of all existing system permissions. For each permission, it lists the roles to which it has been assigned (either directly or through an APK), any APKs that include it, and any pages or UI elements that use it in their `canView` or `canEdit` expressions. This comprehensive view helps you trace how a single permission impacts various parts of the application. For instance, examining the `claimown` permission would show which roles (like Adjuster or Claims Supervisor) possess it and where it's used in the UI, such as controlling the visibility of an input set in the `UserStatistics` detail view.\n\nSimilarly, the **Roles** page provides a menu of all roles in the system. For each role, it lists all permissions assigned to it, whether directly or via an APK. This allows you to quickly see the full scope of capabilities granted by a specific role, such as 'Adjuster,' which might include permissions like `abview` (view address book contacts) or `actcreate` (create new activities).\n\nGenerating the Security Dictionary is straightforward. From the command line, you can navigate to the ClaimCenter root directory and run `gwb genDataDictionary`. This command generates both the Data Dictionary and the Security Dictionary, placing the HTML files in `<ClaimCenter root>/build/dictionary/security`. Alternatively, you can generate the Security Dictionary directly from the ClaimCenter UI by navigating to **Administration > Utilities > Export Data**. Under 'Export Security Dictionary,' you can choose to export it as HTML or XML, which then downloads as a ZIP file. This UI method is particularly useful when user administrators make changes to roles and need an updated reference.",
+      "keyPoints": [
+        "The System Permissions page details roles, APKs, pages, and elements associated with each permission.",
+        "The Roles page lists all permissions assigned to each role.",
+        "The Security Dictionary can be generated from the command line using `gwb genDataDictionary`.",
+        "It can also be generated from the UI via Administration > Utilities > Export Data, as HTML or XML."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "A view of the Security Dictionary's 'System permissions' section, showing details for a permission like 'claimown'."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "An example from the Security Dictionary's 'Roles' section, listing permissions assigned to the 'Adjuster' role."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Instructions and a screenshot for generating the Security Dictionary from the command line using `gwb genDataDictionary`."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Steps and a screenshot for generating the Security Dictionary from the ClaimCenter user interface."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Regular Generation",
+          "content": "It's a best practice to regenerate the Security Dictionary whenever significant changes are made to permissions or roles, especially after deployments or major configuration updates, to ensure your documentation is always current."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through navigating the Security Dictionary, showing you how to find information about APKs, pages, system permissions, and roles.",
+      "transcriptSummary": "The video provides a tour of the Security Dictionary's HTML interface. It demonstrates how to locate specific APKs and view their contained permissions, inspect page access expressions (`canVisit`, `canEdit`), and explore which roles are assigned particular system permissions, and vice-versa."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Ifyou need to know which roles include the claimown system\npermission, how would you go about this?",
+      "referenceAnswer": "The correct answer is on the System Permissions page of the security dictionary, look\nat the roles section of the claimown system permission.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Howcan you generate or update the security dictionary?",
+      "referenceAnswer": "The correct answers are using one of these two ways:\n1. Atthe command line, navigate to the ClaimCenter root directory and enter gwb\ngenDataDictionary. The security dictionary is generated along with the data\ndictionary.\n\n2. On the Export Data page of the Administration tab, you may choose to generate\nthe security dictionary either as HTML or as XML. In either case, the file is then\ndownloaded as a .ZIP.\n\nSoe ee eon ee",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Configuring Custom Permissions and UI Access",
+      "narrative": "Configuring permissions involves several key steps, from defining new permissions to applying them to roles and user interface elements. You can create new **static permissions** by adding typecodes to the `SystemPermissionType` typelist in Guidewire Studio. It's crucial to remember that you *cannot* create new object-based permissions; these are system-defined. Once a static permission is defined, it becomes available for assignment.\n\nTo **add a permission to a role**, a user with appropriate administrative permissions navigates to **Administration > Users & Security > Roles** in the application. They can then select a role, click 'Edit,' and use the 'Add' button to select the new permission from the dropdown menu. This process directly grants the capabilities of that permission to all users assigned to that role. For example, if you create a `viewprivnote` permission, you would add it to roles that should be able to view private notes.\n\n**Adding permissions to the UI** involves modifying the relevant PCF (Page Configuration File) or a component within it. You'll target properties like `canEdit`, `canVisit`, or `visible`, and enter `perm.System.permissionName`. This expression returns `true` if the current user possesses the specified system permission, thereby controlling the visibility or editability of the UI element. For example, `canVisit perm.Claim.view(Claim) and perm.System.viewworkplan` ensures a user can only visit a page if they can view the claim and have the `viewworkplan` system permission.\n\nSimilarly, **adding APKs to the UI** follows a comparable process. For static APKs, you'd use `perm.entity.appKey`. For object-based APKs, you must include a reference to the specific object whose ACL is being checked, like `perm.entity.appKey(object)`. This ensures that the user has the necessary permissions within that APK *on the named object*. This granular control allows for precise management of user interactions with the application's various features and data.",
+      "keyPoints": [
+        "New static permissions are created by adding typecodes to the `SystemPermissionType` typelist.",
+        "Permissions are added to roles via Administration > Users & Security > Roles in the UI.",
+        "UI access is controlled by adding `perm.System.permissionName` to properties like `canEdit`, `canVisit`, or `visible` in PCF files.",
+        "APKs are added to the UI using `perm.entity.appKey` (static) or `perm.entity.appKey(object)` (object-based)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 33,
+          "caption": "Title slide for the section on configuring permissions within the Guidewire application."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "An example of the `SystemPermissionType` typelist, where new static permissions can be defined."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "Steps and a screenshot illustrating how to add a new permission to an existing role in the ClaimCenter UI."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Guidance on how to apply system permissions to UI elements using properties like `canEdit` or `canVisit` in PCF files."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "Instructions for adding Application Permission Keys (APKs) to the UI, distinguishing between static and object-based keys."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Naming Conventions",
+          "content": "When creating custom permissions, use clear and consistent naming conventions (e.g., `perm.System.viewCustomReport`, `perm.System.editNewClaimType`) to make them easily identifiable and manageable."
+        },
+        {
+          "type": "warning",
+          "title": "Impact of UI Permissions",
+          "content": "Be cautious when modifying `canEdit` or `canVisit` expressions in PCF files. Incorrect configurations can inadvertently lock users out of critical application sections."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you the practical steps of configuring permissions, including creating a new static permission, assigning it to a role, and then applying it to a UI element.",
+      "transcriptSummary": "The video guides through the process of defining a new permission in the `SystemPermissionType` typelist, then navigating to the 'Roles' section in the Administration tab to assign this new permission to a specific role. Finally, it illustrates how to modify a PCF file to use this permission to control access to a UI component, demonstrating the end-to-end configuration flow."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Given the perm condition perm. System. applyCheck, is applycheck a\nsystem permission or an APK?",
+      "referenceAnswer": "The correct answer is it is a system permission. If it were an APK, it would have the\nentity listed at the beginning of its name.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-41"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-7",
+      "question": "Given the perm condition perm. System. applyCheck, is applycheck\nstatic or object-based?",
+      "referenceAnswer": "The correct answer is Static. If it were object-based, it would have an (object)\nargument.\nSoe ee eon eee Soe e ese Ss",
+      "questionKey": "slide-43"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Permissions are granular controls, roles are collections of permissions, and ACLs provide object-specific access.",
+        "APKs are optimized, system-defined permission groups, distinct from individual permissions.",
+        "Permissions can be static (application-wide) or object-based (ACL-dependent).",
+        "The Security Dictionary is a vital tool for understanding and documenting the application's security model.",
+        "New static permissions are defined in `SystemPermissionType` and assigned to roles via the UI.",
+        "Permissions and APKs control UI element visibility and editability through PCF file expressions."
+      ],
+      "realWorldConnection": "Effective permission configuration is critical for maintaining data integrity, regulatory compliance, and operational efficiency in any Guidewire implementation. By correctly applying these concepts, you ensure that users have precisely the access they need to perform their jobs, without exposing sensitive data or functionalities to unauthorized individuals. This directly impacts the security posture and usability of the entire ClaimCenter application.",
+      "nextLessonPreview": "In our next lesson, we'll explore advanced security topics, including data-based security and how to implement more complex access control scenarios using security zones and claim security types."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to restrict the ability to move metro reports within the application. This will involve creating a new static permission, assigning it to a specific role (e.g., 'Report Viewer'), and then modifying the relevant UI component to only allow users with this new permission to perform the 'move metro reports' action.",
+      "objectives": [
+        "Create a new static permission using the `SystemPermissionType` typelist.",
+        "Assign the newly created permission to an existing role.",
+        "Identify the UI component responsible for 'moving metro reports'.",
+        "Apply the new permission to the UI component's `visible` or `canEdit` property to restrict access."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_15_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_15_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_15_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_15_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "CC_15_03.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_15_03.mp4"
+    }
+  ]
+}

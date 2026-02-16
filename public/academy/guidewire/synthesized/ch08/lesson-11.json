@@ -1,0 +1,250 @@
+{
+  "lessonId": "ch08-l11",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 11,
+  "title": "Creating Activities",
+  "subtitle": "Learn to define, manage, and programmatically create activities in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T18:22:54.605310+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter, and a complex policy submission requires multiple reviews, external reports, and approvals from different departments. How do you ensure every critical step is tracked, assigned, and completed on time, preventing delays and ensuring compliance?",
+      "question": "How does PolicyCenter help manage these diverse, time-sensitive tasks across different users and departments?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define what an activity is and its primary uses in PolicyCenter.",
+        "Identify the hierarchical parent objects to which an activity can be associated.",
+        "Describe the various methods by which activities are created, both automatically and manually.",
+        "Explain the purpose and function of activity patterns as templates for standardization.",
+        "Outline the process for managing and referencing activity patterns, particularly the significance of the 'Code' field.",
+        "Demonstrate how to programmatically interact with activity patterns and create activities using Gosu for accounts, policies, and jobs."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered various tasks and workflows in PolicyCenter, such as reviewing submissions or processing policy changes. Activities are a fundamental way PolicyCenter tracks and manages these operational tasks.",
+      "warmupQuestion": "Think about a time you had to manually track a task for a policy. What information did you need to remember, and how did you ensure it got done?",
+      "hint": "Consider the 'who, what, when, and why' of a task."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Activities and Their Purpose",
+      "narrative": "In PolicyCenter, an **Activity** is a crucial mechanism for managing and tracking tasks. Essentially, an activity represents a specific task that someone must attend to, or an issue that a user should be aware of. They are instrumental in ensuring that all necessary policy-handling tasks are performed, helping to identify any missed steps and allowing supervisors to track assigned work and identify policy issues, such as those with many overdue or escalated activities.\n\nActivities serve several key purposes: they allow automatic processes to assign work to a user, enable one user to assign work to another, and alert users to specific events, such as an underwriting issue or an overdue premium report. For instance, PolicyCenter uses activities to obtain credit reports, verify coverages with an insured, or review submissions before approval and issuance. An activity can also be created by a batch process, such as the Overdue Premium Report batch process, which creates a 'Premium report overdue' activity for an underwriter if a payment is not made by the due date.\n\nEvery activity is inherently associated with an **account**. Beyond this, an activity can also be directly linked to a **job** (including its subtypes like submission, policy change, or renewal) or a **policy**. When an activity is associated with a job or a policy, it implicitly links it to their respective account. For example, if you create an activity on a Policy Change job, that activity will be visible at both the policy level and the account level, providing a comprehensive view of all related tasks.\n\nActivities can be created in several ways. They are often generated **automatically** during policy job processes, typically when work must be done by a user to move the job forward, such as a policy review or submission review. They can also be created automatically by **business rules**, **Gosu code**, or as part of a **workflow** step. For example, a workflow step might create one or more blocking activities, suspending the workflow's execution until those activities are completed. Additionally, end users can **manually** create activities, usually to request work from another user, like a producer needing to follow up on a client detail.",
+      "keyPoints": [
+        "Activities track tasks and issues in PolicyCenter.",
+        "They facilitate work assignment, alerts, and process management.",
+        "Activities are always linked to an account, and can also be linked to jobs or policies.",
+        "Activities can be created automatically (by jobs, rules, Gosu, workflows) or manually by users."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of how activities help manage tasks and issues within PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key characteristics and uses of an activity in PolicyCenter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The hierarchical relationships between an activity and its parent objects: Account, Policy, and Job."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Different scenarios and methods for when activities are created in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is an Activity?",
+          "content": "An activity represents a task that someone must attend to or an issue that someone should be aware of. It's a core mechanism for tracking work and managing processes within PolicyCenter."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will provide a visual overview of activities within the PolicyCenter user interface, showing where they appear and how they are typically managed.",
+      "transcriptSummary": "The video will walk through the PolicyCenter UI, highlighting the 'Activities' section on various screens, demonstrating how to view open activities, and illustrating their association with accounts, policies, and jobs."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Standardizing Activities with Activity Patterns",
+      "narrative": "To ensure consistency and efficiency in task management, PolicyCenter utilizes **Activity Patterns**. These patterns are essentially templates that standardize how activities are generated, providing default characteristics for each type of activity. Whether an activity is created through the user interface or programmatically via Gosu code, it is typically based on one of these predefined patterns.\n\nAn activity pattern defines many typical characteristics for an activity, such as its subject, priority (e.g., medium), due days, and escalation days. For example, an 'Rate Policy' activity pattern might automatically set the subject to 'Rate Policy', the priority to 'medium', and calculate due and escalation dates based on the current date. This standardization ensures that activities are created with consistent information, reducing manual effort and potential errors.\n\nUsers with administrative permissions are responsible for creating and modifying activity patterns. This is done through the PolicyCenter Administration tab, under Business Settings > Activity Patterns. To create a new pattern, administrators click the 'New Activity Pattern' button, and to edit an existing one, they simply click its name in the list. It's important to note that any changes made to an activity pattern only affect *new* activities created from that pattern; existing activities are not retroactively updated.\n\nA critical field for every activity pattern is the **Code**. This field serves as a unique internal name for the pattern and is essential for referencing the activity pattern in Gosu code and business rules. If the code is not unique, the system will throw a 'Duplicate key in Activity Pattern' error. Configuration users can also extend the data model to add custom fields to the activity pattern entity, such as a 'Required Role' field, which would then be available on all activity patterns to further refine assignment logic.",
+      "keyPoints": [
+        "Activity patterns are templates that standardize activity creation.",
+        "They define default characteristics like subject, priority, and due dates.",
+        "Administrators manage activity patterns via the PolicyCenter UI.",
+        "The 'Code' field is a unique identifier used to reference patterns in Gosu and business rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "An illustration of how an activity pattern acts as a template for creating consistent activities."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The concept of activity patterns as templates for standardizing activity generation."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "How activity patterns are managed by administrators within PolicyCenter, highlighting the unique 'Code' field."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Unique Activity Pattern Codes",
+          "content": "Always ensure the 'Code' field for an activity pattern is unique. This code is the primary way Gosu and business rules identify and interact with specific patterns, and duplicate codes will cause system errors."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to navigate to and manage activity patterns within the PolicyCenter administration interface, including creating and modifying a pattern.",
+      "transcriptSummary": "The video will guide you through accessing the 'Activity Patterns' section, creating a new activity pattern by filling in its properties, and demonstrating how to edit an existing pattern, emphasizing the 'Code' field's importance."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Creating Activities Programmatically with Gosu",
+      "narrative": "Beyond manual creation and automatic generation by business rules or workflows, developers can leverage Gosu to programmatically create activities, offering powerful customization and automation capabilities. There are two primary operations you can perform in Gosu involving activity patterns: testing which activity pattern an existing activity uses, and retrieving an activity pattern to create a new activity.\n\nTo test which activity pattern an existing activity uses, you can compare its `Code` field: `Entity.ActivityPattern.Code == \"pattern_code\"`. To retrieve an activity pattern for creating a new activity, you use the `ActivityPattern.finder.getActivityPatternByCode(\"pattern_code\")` method, which returns an `ActivityPattern` object. This object then provides methods to create activities linked to specific entities.\n\nWhen creating activities in Gosu, you'll often interact with a `Bundle`. A bundle is a collection of in-memory entity instances that represent rows in the database. Guidewire applications group entity instances in bundles to manage database transactions, transmitting and saving all entities in the bundle to the database in one transaction. In PolicyCenter, a bundle is typically created when a policy transaction is executed, so if your Gosu code is referenced from a policy transaction, you usually don't need to explicitly create a bundle.\n\nHere are the common Gosu methods for creating activities related to different parent objects:\n\n*   **Creating an activity related to an account:** You can use `activityPattern.createAccountActivity(bundle, activityPattern, Account, subject, description, approvalIssue, priority, mandatory, targetDate, escalationDate)` or the more concise `account.newActivity(activityPattern)`. These methods allow you to specify the associated account, subject, description, priority, and other details. The `newActivity` method automatically populates many fields from the pattern.\n\n*   **Creating an activity related to a policy:** The method `activityPattern.createPolicyActivity(bundle, policy, subject, description, approvalIssue, priority, mandatory, targetDate, escalationDate)` is used. This explicitly links the activity to a `Policy` object, while still implicitly linking it to the associated account. You can pass `null` for fields you want to default from the activity pattern or leave blank.\n\n*   **Creating an activity related to a job:** For jobs, use `activityPattern.createJobActivity(bundle, job, subject, description, approvalIssue, priority, mandatory, targetDate, escalationDate)`. This method associates the activity directly with a `Job` object (which could be a submission, policy change, etc.), ensuring it appears in the context of that specific transaction. As with policy activities, it also implicitly relates to the job's account.\n\nIn all these cases, the activity pattern code is the key to referring to the correct template in your Gosu code, ensuring that the activities you create adhere to the defined standards and behaviors.",
+      "keyPoints": [
+        "Gosu allows programmatic creation and management of activities.",
+        "Activity patterns are retrieved by their unique 'Code' for use in Gosu.",
+        "The 'Bundle' object is crucial for database transactions when creating entities.",
+        "Specific Gosu methods exist to create activities related to accounts, policies, and jobs, inheriting properties from the activity pattern."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Gosu operations for interacting with activity patterns: testing existing activities and retrieving patterns for new ones."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Gosu code examples for creating an activity specifically related to an account."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Gosu code examples for creating an activity specifically related to a policy."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Gosu code examples for creating an activity specifically related to a job."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "A visual summary of the Gosu methods used to create activities linked to different parent objects."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Retrieving an Activity Pattern",
+          "code": "var anActivityPattern : ActivityPattern\nanActivityPattern = ActivityPattern.finder.getActivityPatternByCode(\"notification\")",
+          "explanation": "This code snippet demonstrates how to retrieve an ActivityPattern object by its unique code, 'notification', which can then be used to create new activities."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating an Account Activity",
+          "code": "var anAccount : Account\nvar anActivityPattern : ActivityPattern\n\nanActivityPattern = ActivityPattern.finder.getActivityPatternByCode(\"notification\")\nanAccount.newActivity(anActivityPattern)",
+          "explanation": "This example shows how to create a new activity associated with an 'Account' object, using a previously retrieved activity pattern. The `newActivity` method simplifies the creation process."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating a Policy Activity",
+          "code": "if (policy != null) {\n  var a: Activity\n  var pattern = ActivityPattern.finder.getActivityPatternByCode(\"coverage\")\n  a = pattern.createPolicyActivity(\n    policy.Bundle,\n    policy,\n    \"Verify coverage\",\n    \"Call customer to verify coverage\",\n    null,\n    typekey.Priority.TC_NORMAL,\n    false,\n    null,\n    null)\n}",
+          "explanation": "This Gosu code creates an activity related to a specific 'Policy' object. It uses the `createPolicyActivity` method, allowing for explicit setting of subject, description, priority, and other fields, while leveraging the activity pattern for defaults."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating a Job Activity",
+          "code": "if (policyPeriod != null) {\n  var a : Activity\n  var pattern = ActivityPattern.finder.getActivityPatternByCode(\"coverage\")\n  a = pattern.createJobActivity(policyPeriod.Job.Bundle, policyPeriod.Job, null, null, null, null, null, null, null)\n}",
+          "explanation": "This example demonstrates creating an activity associated with a 'Job' (accessed via `policyPeriod.Job`). By passing `null` for most parameters, the activity will inherit its details from the 'coverage' activity pattern."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is a Bundle?",
+          "content": "A bundle is a collection of in-memory entity instances (representing database rows) that Guidewire applications use to manage database transactions. All changed, new, or deleted entities within a bundle are transmitted and saved to the database in a single transaction."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your underwriting team frequently needs to create a 'Risk Review' activity for high-risk submissions. This activity should have a high priority and be mandatory. You want to automate its creation via Gosu when a submission meets certain criteria.",
+      "question": "Assuming an activity pattern with the code 'RiskReview' already exists, write a Gosu snippet that retrieves this pattern and creates a new mandatory activity for a given `Submission` object, setting its priority to 'High'.",
+      "hints": [
+        "Remember how to retrieve an activity pattern by its code.",
+        "Identify the correct Gosu method for creating a job-related activity (a submission is a type of job).",
+        "Pay attention to the parameters for setting priority and mandatory status."
+      ],
+      "expectedApproach": "Retrieve the 'RiskReview' activity pattern. Use `createJobActivity` on the pattern, passing the `Submission` object and explicitly setting `priority` to `typekey.Priority.TC_HIGH` and `mandatory` to `true`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the three possible parent objects for an Activity?",
+      "referenceAnswer": "Account, Job (and its subtypes), Policy.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What field is a unique internal name for an activity pattern?",
+      "referenceAnswer": "Code",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Activities are central to task management in PolicyCenter, linking to accounts, policies, or jobs.",
+        "They can be created automatically (by system processes, rules, workflows, Gosu) or manually.",
+        "Activity patterns serve as templates, standardizing activity creation with predefined characteristics.",
+        "Administrators manage activity patterns, with the 'Code' field being crucial for programmatic reference.",
+        "Gosu provides methods (`createAccountActivity`, `createPolicyActivity`, `createJobActivity`) to programmatically create activities, leveraging activity patterns for consistency."
+      ],
+      "realWorldConnection": "Mastering activity creation and management is vital for building robust and automated workflows in Guidewire PolicyCenter. By effectively using activities and activity patterns, you can ensure that critical tasks are consistently tracked, assigned, and completed, leading to more efficient policy processing, better compliance, and improved operational oversight in real-world insurance operations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through creating activities in a Guidewire PolicyCenter development environment, both manually and by configuring an activity pattern.",
+      "objectives": [
+        "Manually create an activity for an account and a policy.",
+        "Create a new activity pattern in the Administration UI.",
+        "Modify an existing business rule or create a new one to automatically generate an activity based on your new pattern when a specific event occurs (e.g., a submission reaches a certain status)."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_11_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_11_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_11_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_11_02.mp4"
+    }
+  ]
+}

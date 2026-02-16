@@ -1,0 +1,187 @@
+{
+  "lessonId": "ch04-l28",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 28,
+  "title": "Validation",
+  "subtitle": "Ensuring data accuracy and business rule compliance in PolicyCenter through robust validation.",
+  "synthesizedAt": "2026-02-16T17:31:48.098992+00:00",
+  "estimatedMinutes": 55,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a new policy application arrives, but critical fields are left blank or contain inconsistent data. This could lead to incorrect policies, processing delays, or even compliance issues.",
+      "question": "How can we ensure that all data entered into PolicyCenter is accurate and complete, preventing costly mistakes and maintaining business integrity?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the role of the data model in PolicyCenter validation.",
+        "Explain how PCF configuration influences UI and validation behavior.",
+        "Describe how Gosu is used to implement custom validation logic.",
+        "Differentiate between field validators and validation during data save.",
+        "Recognize how validation occurs at various policy job stages.",
+        "Distinguish between warnings and errors and their appearance in the UI."
+      ],
+      "estimatedMinutes": 1
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall how PolicyCenter's data model structures information and how user interface elements guide data entry. Think about the importance of consistent and accurate data in any business system.",
+      "warmupQuestion": "Consider a time you filled out an online form. What features helped you ensure your information was correct, and what made it difficult?",
+      "hint": "Think about required fields, specific input formats, and error messages."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Foundations of Validation: PCF Configuration and Gosu Logic",
+      "narrative": "In PolicyCenter, ensuring data validity is a multi-faceted process, starting with how the user interface is configured and extending to complex business logic. **PCF files**, or Page Configuration Files, are fundamental to this. They don't just dictate the layout of your UI; they also play a crucial role in influencing validation behavior. By configuring fields as 'required' or defining specific input masks, you're essentially setting the initial stage for how users interact with the system and what data they must provide. Mastering PCF configuration allows you to tailor the user experience while effortlessly maintaining a baseline of data accuracy.\n\nBeyond basic UI constraints, **Gosu** emerges as a powerful ally for implementing custom validation logic. While standard validations cover many common scenarios, Gosu provides the flexibility to script complex checks that align precisely with your organization's unique business rules. This could involve intricate calculations, conditional validations based on multiple field values, or checks against external data sources. Whether you're handling complex premium calculations or ensuring specific combinations of coverages are valid, Gosu provides the robust framework needed to enforce the rules that matter most to your organization. It allows you to go beyond simple pattern matching and implement sophisticated logic that ensures your data is not just present, but also meaningful and consistent within the broader business context.",
+      "keyPoints": [
+        "PCF files configure UI and basic validation (required fields, input masks).",
+        "Gosu is used for implementing complex, custom validation logic.",
+        "Validation ensures data integrity and adherence to business rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "PCF Configuration: The Role of UI Settings in Validation"
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Gosu and Validation Logic: Core Principles and Behaviors"
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is Validation?",
+          "content": "Validation is a check executed by PolicyCenter prior to a given action to ensure that the current business data is valid. It ensures users enter data that makes sense, all necessary data is present, and manages relationships between data fields."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Implementing Validation: Field Validators and Data Save Actions",
+      "narrative": "When it comes to ensuring data consistency at a granular level, **field validators** are your primary tool. These validators are patterns tied to one or more fields in the data model. They check whether user input matches a specified pattern, such as the format for zip codes, social security numbers (SSNs), or email addresses, before allowing the data to be saved. If a field value doesn't match the prescribed pattern, an error message is displayed, and the data cannot be committed. Field validators are particularly useful for simple pattern matching that holds true every time a field is used.\n\nTo further guide users, **input masks** can be specified at either the data model level or within a UI widget's properties. These masks appear as field watermarks, providing a visual cue for the expected format (e.g., 'MM/DD/YYYY' for a date of birth or 'XXX-XX-XXXX' for an SSN). They disappear once the user starts typing, helping to restrict input to the correct pattern and significantly enhancing both user experience and data integrity.\n\nBeyond individual fields, PolicyCenter also performs **validation when data is saved**. A field explicitly marked as 'required' in a PCF file must contain a value; users cannot proceed to the next page or screen without providing input. Furthermore, certain entities in the data model can be marked as 'validatable.' When changes are made to these entities, PolicyCenter invokes a validation process before the data is committed to the database. This mechanism is vital for ensuring that only complete and accurate records are stored, maintaining high-quality data throughout the system and preventing structurally inappropriate policies from being created.",
+      "keyPoints": [
+        "Field validators enforce pattern matching for single fields (e.g., zip codes, SSNs).",
+        "Input masks guide users in entering data in the correct format.",
+        "Required fields prevent users from proceeding without essential data.",
+        "Validatable entities trigger validation checks before data is committed to the database."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "Validation with Field Validators: Pattern Matching and Input Masks"
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Validation When Data is Saved: Required Fields and Validatable Entities"
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Field Validator",
+          "content": "A field validator is a pattern tied to one or more fields in the data model. If a field value does not match the prescribed pattern, data cannot be saved, and an error message is displayed. Useful for simple, consistent pattern matching."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Validation at Various Job Stages and User Feedback",
+      "narrative": "PolicyCenter's validation capabilities extend beyond simple data entry, integrating deeply into various stages of a policy job or transaction. Depending on the specific job level—such as Load, Save, Quick Quotable, Quotable, Bindable, or Ready for Issue—validations can trigger either **warnings or errors**. For example, if a Personal Auto submission lacks a defined vehicle, attempting to navigate away from the Vehicles page might initially display a warning, allowing the user to continue entering other policy data and return later. However, clicking the 'Quote' button will likely trigger an error, as a vehicle is essential for a valid quote. This layered validation approach ensures that critical data is captured and corrected at the appropriate time, preventing issues from propagating through the policy lifecycle.\n\nWhen PolicyCenter detects validation issues, it clearly presents them to the user as either **warnings or errors**. Warnings inform users of potential issues or recommendations but are non-blocking; they allow users to continue with their current action without immediate resolution. While non-blocking, it's generally a best practice to address warnings as they appear to prevent potential future complications. Errors, on the other hand, are blocking; they must be resolved before the user can proceed with the action that triggered the error. For instance, if clicking 'Quote' results in an error, the user must fix the underlying issue before successfully quoting the policy.\n\nThe **appearance of warnings and errors** in PolicyCenter is strategically designed to guide users efficiently. Errors or warnings on the current page typically appear prominently at the top of that page. If an error originates from a different page within a job, PolicyCenter often displays a message indicating the issue and may provide a link in the worksheet (usually at the bottom) to navigate the user directly to the source of the problem. This ensures that users are always aware of where corrections need to be made, streamlining the problem-solving process and enhancing the overall user experience by making it clear what needs attention and where.",
+      "keyPoints": [
+        "Validation occurs at different job stages (Load, Save, Quote, etc.).",
+        "Warnings are non-blocking suggestions; errors are blocking issues requiring resolution.",
+        "Validation messages appear at the top of the current page or link to the source page.",
+        "Effective validation is crucial for maintaining data quality and process continuity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Validation at Various Job Stages: Warnings and Errors in Policy Transactions"
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Handling Warnings and Errors: Differentiating Blocking vs. Non-Blocking Issues"
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Appearance of Warnings and Errors: UI Presentation for User Guidance"
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Validation vs. Underwriting Authority",
+          "content": "Use validation to prevent policy transactions that nobody can sign off on (e.g., structurally inappropriate policies or missing critical data). Use underwriting authority to restrict who can progress a policy transaction that *somebody* in the organization could approve (e.g., policies requiring special approval based on risk factors)."
+        },
+        {
+          "type": "tip",
+          "title": "Clear Warnings Promptly",
+          "content": "While warnings are non-blocking, it is recommended to clear them as they appear to prevent potential issues from accumulating or becoming more complex later in the process."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through the practical steps of implementing a field validator in PolicyCenter. Pay close attention to how the input mask visually guides user input and how the system responds with an error if the defined pattern is not matched.",
+      "transcriptSummary": "The demo will illustrate how to define a specific pattern for a field, apply this pattern within a PCF file to enforce validation, and then test the field's behavior during data entry. It will highlight the immediate feedback provided by PolicyCenter when validation rules are violated."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your business requires that all new policy numbers follow a strict format: they must start with 'POL-' followed by exactly six digits (e.g., POL-123456). You need to ensure that users cannot save a policy with an incorrectly formatted policy number.",
+      "question": "How would you implement a basic, client-side validation to enforce this specific policy number format in PolicyCenter?",
+      "hints": [
+        "Consider which type of validation is best suited for enforcing a pattern on a single field.",
+        "Think about how you would define the required pattern.",
+        "Remember that PCF files are used for UI configuration and basic validation."
+      ],
+      "expectedApproach": "Implement a field validator using a regular expression pattern (e.g., `^POL-\\d{6}$`) and apply it to the policy number field in the relevant PCF file. This will provide immediate feedback to the user if the format is incorrect."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the three types of PolicyCenter validation?",
+      "referenceAnswer": "Validation with field validators, validation during save and validation on demand which\ncan be run in a job wizard step or at a certain time in a job.",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What is the difference between an error and a waming?",
+      "referenceAnswer": "Errors block the action that the user was taking. Warnings are non-blocking and allow\nthe user to proceed to the next step and continue performing actions.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PCF configuration defines basic UI validation, including required fields and input masks.",
+        "Gosu is essential for implementing complex, custom business validation logic.",
+        "Field validators enforce specific patterns for individual fields.",
+        "Validation occurs during data save and at various stages of a policy job (e.g., Load, Quote, Bind).",
+        "Warnings are non-blocking notifications, while errors are blocking issues that must be resolved.",
+        "PolicyCenter provides clear UI feedback on validation issues, often with navigation links."
+      ],
+      "realWorldConnection": "In real Guidewire projects, robust validation is the cornerstone of data quality and operational efficiency. By effectively implementing PCF-based UI validations, Gosu-driven business rules, and understanding the nuances of warnings versus errors, developers ensure that only accurate and compliant data enters the system. This prevents downstream issues, streamlines policy processing, and ultimately supports better decision-making for insurers."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_29_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_29_01.mp4"
+    }
+  ]
+}

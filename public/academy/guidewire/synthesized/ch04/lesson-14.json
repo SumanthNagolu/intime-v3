@@ -1,0 +1,218 @@
+{
+  "lessonId": "ch04-l14",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 14,
+  "title": "Introduction to Underwriting Authority",
+  "subtitle": "Mastering Underwriting Authority in PolicyCenter: From Configuration to Workflow Management.",
+  "synthesizedAt": "2026-02-16T17:23:45.294091+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance product manager, like Darren, trying to launch a new policy. You need to ensure that high-risk applications are reviewed by senior underwriters, while routine approvals can be handled by agents to keep things moving. Without a clear system, critical decisions could be made by the wrong person, leading to significant financial risk or operational bottlenecks.",
+      "question": "How does PolicyCenter ensure that the right person, with the right level of expertise, approves each underwriting decision?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the pivotal role of underwriting in assessing risk and determining policy terms.",
+        "Describe how PolicyCenter evaluates data (applicant details, policy specifics) for underwriting decisions.",
+        "Identify key entities like PolicyPeriod and policy line items that provide data for underwriting.",
+        "Understand how underwriting authority levels are assigned and managed within PolicyCenter."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous modules, we've explored the basic structure of policies and transactions in PolicyCenter. You're familiar with how agents initiate submissions and how policy data is captured.",
+      "warmupQuestion": "Think about a time you needed approval for a task at work. What factors determined who could give that approval?",
+      "hint": "Consider the complexity, risk, and organizational hierarchy involved."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Underwriting Authority and Process Flow",
+      "narrative": "Underwriting is the cornerstone of risk management in insurance, and in PolicyCenter, **underwriting authority** is a fundamental system configuration that dictates who can approve specific underwriting decisions. As a developer, you'll be instrumental in configuring these authorities, ensuring they align with your organization's risk management policies and are tied to defined roles and permissions within the application. This structured approach prevents unauthorized approvals and maintains the integrity of the underwriting process.\n\nConsider the typical **underwriting process flow** in PolicyCenter, which often begins with an agent creating a policy submission. If an underwriting issue arises that prevents quoting, the agent cannot proceed until an underwriter approves the issue. This critical step ensures that potential risks are addressed early. Once approved, the policy is released back to the agent, who can then view the quote, bind, and issue the policy. However, any subsequent edits to the policy could introduce new issues, triggering another round of underwriting review. This iterative process is vital for continuous compliance with underwriting standards.\n\n**Configuring underwriting authority** is a specialized task that involves setting up underwriting rules, issues, and authority grants. While we'll delve into the specifics of configuration in a dedicated module, it's essential to grasp the core components:\n*   **Underwriting Issue**: A specific instance where an underwriting condition is met on a policy transaction.\n*   **Underwriting Rule**: Defines the conditions that raise an underwriting issue, how the policy transaction is affected, and how issues can be approved.\n*   **Authority Grant**: The explicit ability to approve underwriting issues, often tied to a user's role and authority profile.\nThis framework ensures that decisions are made by the appropriate personnel with the necessary oversight, safeguarding the organization's risk exposure.",
+      "keyPoints": [
+        "Underwriting authority in PolicyCenter is a configurable system feature tied to roles and permissions.",
+        "The underwriting process involves iterative reviews, especially when issues block quoting or binding.",
+        "Configuration includes defining underwriting issues, rules, and authority grants."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Underwriting authority in PolicyCenter is a system configuration that determines who can approve underwriting decisions, often linked to roles and permissions."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "The underwriting process flow illustrates how agents initiate policies, issues block progress, and underwriters provide approvals before a policy can be quoted or bound."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Key components of underwriting authority configuration include underwriting issues, rules, and authority grants, which manage risk and approval levels."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Underwriting Authority",
+          "content": "The system's mechanism to control who can approve specific underwriting decisions, based on roles, permissions, and predefined rules."
+        },
+        {
+          "type": "best_practice",
+          "title": "Align with Risk Management",
+          "content": "Align underwriting authority configurations with your organization's risk management framework to ensure appropriate oversight and compliance."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Handling Underwriting Issues with Checking Sets",
+      "narrative": "**Underwriting issues** are automatically generated in PolicyCenter when predefined conditions are met, indicating undesirable results based on policy or account data. These issues can range from simple data discrepancies, like a suspended driver's license, to more complex risk factors such as high-value vehicles or specific geographical jurisdictions. Some issues can be resolved by agents, while others, particularly those with higher risk implications, require underwriter approval. For instance, a suspended license will trigger an issue that blocks quoting until an underwriter intervenes. PolicyCenter's automation in detecting these issues, based on factors like vehicle types or coverage amounts, significantly streamlines operations while upholding underwriting guidelines.\n\nA crucial aspect of underwriting rules is the concept of **checking sets**. A checking set defines *when* the system evaluates specific conditions to determine if an underwriting issue should be raised. For example, a rule might specify a \"pre-quote\" checking set, meaning the system will evaluate certain policy criteria before a quote can even be generated. This proactive approach is invaluable for identifying potential issues early in the policy lifecycle, allowing for timely resolution and a smoother overall processing experience.\n\n**Checking sets** work in conjunction with **blocking points** to manage the policy transaction flow. While a checking set identifies *when* an issue is detected (e.g., pre-quote), the blocking point determines *when* that detected issue prevents further progress. For example, the underwriting rule for high-value vehicles might have a \"pre-quote\" checking set, raising an issue if a high-value vehicle is present. However, its blocking point might be set to \"bind.\" This means a quote can still be generated and displayed, but the policy cannot be bound until the high-value vehicle issue is resolved and approved. This mechanism effectively balances operational efficiency—allowing agents to see a quote—with robust risk management, ensuring critical issues are addressed before policy finalization.",
+      "keyPoints": [
+        "Underwriting issues are automatically raised by rules or Gosu code based on policy data and can block policy progression.",
+        "Checking sets define *when* underwriting rules are evaluated (e.g., pre-quote, bind).",
+        "Checking sets work with blocking points to identify issues early but block progress at a later, critical stage."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Underwriting issues are created when policy or account data triggers undesirable conditions, potentially stopping job progression until approved."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Underwriting issues are automatically raised by rules or Gosu code based on policy choices, with checking sets determining when these rules are triggered."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "A checking set specifies the point in a job (e.g., pre-quote, bind) where issues are checked, working with blocking points to manage policy progression."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Checking Set",
+          "content": "A configuration in an underwriting rule that specifies the point in a policy transaction (e.g., pre-quote, bind) where the system evaluates conditions to raise an underwriting issue."
+        },
+        {
+          "type": "tip",
+          "title": "Early Detection",
+          "content": "Detecting issues as early as possible, even if they block later, provides greater visibility to PolicyCenter users and improves their ability to plan work."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "The Impact of Blocking Points on Policy Workflow",
+      "narrative": "**Blocking points** are critical elements within underwriting rules that dictate precisely *when* a detected issue will halt the progress of a policy transaction. Depending on the rule's configuration, a blocking point can be set at various stages, such as the quote or bind stage. For instance, a rule might detect an issue at the pre-quote stage but only block the bind process, allowing the agent to generate a quote while knowing that further action is required. This strategic placement of blocking points directly impacts the policy workflow and user experience.\n\nIt's also important to understand that not all issues are blocking. Some can be configured as **informational** or non-blocking. These issues appear on the Risk Analysis page, highlighting potential risks without preventing the policy transaction from proceeding. Informational issues do not require underwriter approval, giving agents more flexibility for minor concerns. As developers, a deep understanding of how and when to set blocking points is crucial. Early detection of issues, even if they block at a later stage, provides agents with proactive visibility, enabling them to plan and address concerns efficiently, ultimately leading to smoother policy management. The goal is to detect issues as early as possible and carefully consider where they will block progress to avoid situations where a user cannot return to an earlier screen to implement changes.\n\nThis structured approach to underwriting authority, checking sets, and blocking points ensures that PolicyCenter effectively manages risk while maintaining operational efficiency. It's about empowering agents within their defined authority while ensuring critical decisions receive the necessary oversight.",
+      "keyPoints": [
+        "Blocking points stop policy progression until an issue is approved, occurring at stages like quote or bind.",
+        "Issues can be informational (non-blocking), allowing progression while highlighting risks.",
+        "Strategic placement of blocking points is crucial for workflow and user experience."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A blocking point halts job progression until an underwriting issue is approved, but issues can also be configured as informational (non-blocking)."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "The lesson objectives review highlights the core concepts of underwriting authority and issues, setting the stage for further learning."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Strategic Blocking Points",
+          "content": "Detect underwriting issues as early as possible in the workflow, but carefully consider the appropriate blocking point to balance risk management with user experience and operational flow."
+        },
+        {
+          "type": "gotcha",
+          "title": "Workflow Bottlenecks",
+          "content": "If a field value only available on a later screen (e.g., quote) blocks an earlier action, it can prevent users from returning to make necessary changes, causing workflow bottlenecks."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through viewing underwriting authority settings within PolicyCenter. Pay close attention to how authority levels and permissions are displayed and how they correspond to user roles in the system. This will give you a practical understanding of how underwriting authority is managed from a user's perspective.",
+      "transcriptSummary": "The video demonstrates navigating PolicyCenter to view existing underwriting authority profiles and their associated grants. It highlights the user interface elements that display who can approve specific underwriting issues based on their assigned roles and permissions."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your insurance company wants to implement a new underwriting rule: \"Any policy with a total insured value (TIV) exceeding $500,000 must be reviewed by a senior underwriter before the policy can be bound.\" However, agents should still be able to generate a quote to show the customer.",
+      "question": "How would you configure the checking set and blocking point for this new underwriting rule in PolicyCenter to meet these requirements?",
+      "hints": [
+        "Consider at what point the system *first needs to identify* if the TIV condition is met.",
+        "Think about at what point the system *must prevent further progress* if the condition is met and not yet approved.",
+        "Refer back to the definitions of checking sets and blocking points."
+      ],
+      "expectedApproach": "The learner should identify that the checking set should be \"pre-quote\" or \"quote\" to detect the high TIV early, and the blocking point should be \"bind\" to allow quoting but prevent finalization without approval."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "When is an undermnriting issue raised?",
+      "referenceAnswer": "underwriting rules or Gosu code. In certain situations, underwriters can add issues\nmanually depending on their permissions.",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Where are the underwriting issues displayed?",
+      "referenceAnswer": "Issues.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What decides when an underrriting issues is raised, checking set or\nx blocking point?",
+      "referenceAnswer": "example, whether an issue should be raised at pre-quote, bind or issue.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Who can approve or reject underwriting issues? How is this decided?",
+      "referenceAnswer": "depending on their authority grants.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Answer true or false:\n\no A. An approved UW issue cannot be reopened?\n\nB. An agent can reject an UW issue?",
+      "referenceAnswer": "Correct answers:\nA. False\nB. True",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Underwriting authority in PolicyCenter is a configurable framework for managing risk and approvals.",
+        "Underwriting issues are automatically raised by rules or Gosu code based on policy data.",
+        "Checking sets determine *when* an issue is detected, while blocking points determine *when* it stops policy progression.",
+        "Issues can be informational (non-blocking) or require approval, impacting workflow.",
+        "Effective configuration of authority, checking sets, and blocking points is crucial for compliance and efficiency."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring underwriting authority directly impacts an insurer's ability to manage risk, comply with regulations, and empower its agents. A well-designed system ensures that high-risk policies receive the necessary scrutiny, while routine tasks are streamlined, leading to faster policy issuance and improved customer satisfaction.",
+      "nextLessonPreview": "In our next lesson, we'll delve deeper into managing underwriting authority, focusing on ongoing maintenance, optimization strategies, and advanced configuration options to keep your system robust and responsive."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_15_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_15_01.mp4"
+    }
+  ]
+}

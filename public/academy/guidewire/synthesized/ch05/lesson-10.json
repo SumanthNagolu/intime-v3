@@ -1,0 +1,374 @@
+{
+  "lessonId": "ch05-l10",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 10,
+  "title": "Introduction to Creating payments and reserves",
+  "subtitle": "Mastering the creation of financial payments and managing claim reserves in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:40:23.529447+00:00",
+  "estimatedMinutes": 50,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an adjuster, and a claimant has incurred covered losses. Your primary responsibility is to ensure they receive their due compensation accurately and efficiently. This involves not just approving the payment, but also managing the funds set aside for it.",
+      "question": "How do you ensure that payments are made against the correct coverage, deductibles are applied, and the financial records accurately reflect the claim's status?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the purpose and function of reserve lines in claims processing.",
+        "Learn how to create, modify, and manage reserve lines and their transactions.",
+        "Differentiate between eroding and non-eroding payments, including partial and final payments.",
+        "Master the use of the Payment Wizard to create checks for single or multiple payees.",
+        "Understand the lifecycle of a check within ClaimCenter and the actions that can be taken at each stage.",
+        "Recognize the integration of ClaimCenter with external check processing systems."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've covered the basics of claims intake and adjudication. You should be familiar with the overall flow of a claim from initial report to resolution. This lesson builds on that foundation by focusing on the critical financial aspects: setting aside funds (reserves) and issuing payments.",
+      "warmupQuestion": "Before we dive in, consider: What are some of the key financial considerations an adjuster must keep in mind when managing a claim?",
+      "hint": "Think about how an insurance company tracks its potential liabilities and actual payouts."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Reserves in Claims Processing",
+      "narrative": "As an adjuster, a core part of your role is managing the financial aspects of a claim, which includes creating payments and setting aside funds for expected future payments. This process takes a claim from its initial intake all the way to compensating the claimant for their covered losses. You need to know how to create payments against the correct coverage and apply deductibles when necessary.\n\nAt the heart of managing claim financials in ClaimCenter are **reserves**. A reserve line can be thought of as a dedicated account for a specific aspect of exposure processing. It tracks both credits and debits, with its size reflecting the credits minus the debits. Essentially, it's money set aside for payments anticipated for a particular exposure. While you can create and even close exposures without establishing reserve lines, it's crucial to remember that you cannot make payments to claimants without reserve lines attached to an exposure.\n\nReserve lines are uniquely defined by three key elements: the **exposure**, the **cost type**, and the **cost category**. An individual exposure might have multiple reserve lines. For example, as shown in the figure, an exposure on 'Medical Details' coverage for a claimant like Jim Means could have two distinct reserve lines: one for 'Claim Cost' with a 'Medical' category, and another for 'Claim Expense' with a 'Case management' category. This categorization allows for precise tracking of specific claim costs, which is vital for accurate liability estimates and regulatory compliance.",
+      "keyPoints": [
+        "Adjusters must create payments against correct coverage and apply deductibles.",
+        "Reserve lines are accounts for expected payments related to a specific exposure.",
+        "Payments cannot be made without reserve lines attached to an exposure.",
+        "Reserve lines are defined by exposure, cost type, and cost category."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An adjuster's role in creating payments and managing deductibles."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of the claims adjudication process."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Overview of reserve lines, their definition, and an example for a Workers' Comp claim."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What are Reserves?",
+          "content": "In ClaimCenter, reserves are amounts of money set aside for expected payments related to a given exposure. They categorize liabilities by coverage, track projected costs, prevent excessive payments, ensure claims can be paid, and help assess adjuster performance."
+        },
+        {
+          "type": "best_practice",
+          "title": "Categorizing Liabilities",
+          "content": "Subcategorizing reserves (e.g., bodily injury into physician, hospital, therapy) makes tracking specific claim costs more accurate and helps with timely, complete estimates of an insurer's liabilities, which is often required by regulatory agencies."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Creating and Modifying Reserve Transactions",
+      "narrative": "When you establish a new reserve line in ClaimCenter, the system automatically generates a corresponding reserve transaction for that specified amount. Initially, the total of the reserve line will be exactly equal to this first reserve transaction. For instance, if you create a new reserve line of $2000 for the 'Medical' cost category under 'Medical Details' coverage, a $2000 transaction is initiated, and the reserve line total becomes $2000.\n\nModifying an existing reserve line also triggers a new reserve transaction. This transaction reflects the *difference* between the old and new reserve amounts. For example, if an original reserve line is $2000 and you increase it to $2500, ClaimCenter creates a new $500 reserve transaction. This principle applies whether you're adding to or subtracting from the reserve line. If you then decrease the $2500 reserve line by $200, a new -$200 reserve transaction is created, bringing the total to $2300. It's important to remember that the total reserve line displayed on ClaimCenter screens is always the sum of *all* transactions (credits and debits) associated with that specific reserve line.\n\nAfter you finish creating or modifying reserve transactions, you must call the `ReserveSet.prepareForCommit()` method to submit the reserve set for approval and update the financial calculations. Once `prepareForCommit()` is called, you cannot modify the transaction amount, currency, exchange rates, or other key fields.",
+      "keyPoints": [
+        "Creating a new reserve line initiates a transaction for the full amount.",
+        "Modifying an existing reserve line creates a transaction for the *change* in amount.",
+        "The displayed reserve line total is the sum of all its transactions.",
+        "The `ReserveSet.prepareForCommit()` method is used to submit reserve changes for approval."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Initial state of a reserve line before any transactions."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Creating a new reserve line initiates a transaction for the specified amount."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Changing an existing reserve line creates a transaction for the difference."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Further changes to a reserve line result in new transactions that add or subtract from the total."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Creating a new Reserve Transaction in Gosu",
+          "code": "var claim : Claim\nvar exposure : Exposure\nvar costType : CostType\nvar costCategory : CostCategory\nvar reserveSet = claim.newReserveSet()\nvar reserve = reserveSet.newReserve(exposure, costType, costCategory)\n// Modify the new Reserve transaction as you want – for example:\nreserve.Currency = Currency.TC_EUR\n// Set the amount to 100 EUR.\n// A Reserve transaction must have only one TransactionLineItem,\n// and its LineCategory must be null.\nreserve.addNewLineItem(gw.api.financials.CurrencyAmount.getStrict(100, Currency.TC_EUR), null, null)\n// Add more reserve transactions if required\nreserveSet.prepareForCommit()",
+          "explanation": "This Gosu code snippet demonstrates how to programmatically create a new reserve transaction within ClaimCenter. It initializes a reserve set, creates a new reserve for a specific exposure, cost type, and cost category, sets its currency and amount, and then prepares it for commitment."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Eroding Payments and Their Impact on Reserves",
+      "narrative": "Payments in ClaimCenter are classified as either **eroding** or **non-eroding**. Eroding payments are those that directly reduce the total amount of a reserve line by the payment amount. This is crucial because it provides the insurer with an accurate, up-to-date accounting of the remaining funds available on that reserve line for the claim. When the reserve line total is displayed, it's always calculated at runtime as the sum of all reserve transactions minus the eroding payment transactions.\n\nThere are different types of eroding payments:\n\n*   **Partial Payments**: A partial payment creates a payment transaction that is included in the total reserve line calculation, reducing the remaining reserves by the amount paid. For example, if a reserve line is $4000 and a partial payment of $1750 is made, the remaining reserve is reduced to $2250.\n*   **Final Payments**: A final payment signifies the completion of the financial obligation for a reserve line. When a payment is flagged as 'final,' ClaimCenter not only creates a payment transaction but also automatically generates an additional reserve transaction to reduce the total of that reserve line to zero. For instance, if a final payment of $1465 is made against a reserve line with a remaining balance of $335, ClaimCenter creates a -$335 reserve transaction to bring the reserve line total to zero. This action is designed to close exposures and potentially the entire claim.\n\nIn contrast, **non-eroding payments** do not cause the amount of money in the reserve line to decrease. In this scenario, only payment transactions are created, and the reserve line balance remains unaffected. Examples include supplemental payments after a claim is closed (when reserves are already zero) or LAE (Loss Adjustment Expense) payments if the insurer doesn't include LAE estimates in its reserves.",
+      "keyPoints": [
+        "Eroding payments reduce the reserve line total by the payment amount.",
+        "Partial payments reduce remaining reserves by the payment amount.",
+        "Final payments create a payment transaction and an additional reserve transaction to zero out the reserve line.",
+        "Non-eroding payments do not affect available reserves."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Eroding payments reduce the reserve line total, providing an accurate remaining balance."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A partial payment reduces the remaining reserves by the amount paid."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A final payment zeroes out the reserve line by creating an additional offsetting reserve transaction."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Payments Exceeding Reserves",
+          "content": "If the `AllowPaymentsExceedReservesLimits` configuration parameter is set to `true`, payments can exceed available reserves, potentially leading to negative values for available and remaining reserves. ClaimCenter can create an offsetting reserve to prevent negative reserves, but this happens on the scheduled send date for future-dated checks."
+        },
+        {
+          "type": "definition",
+          "title": "Reserve Calculations",
+          "content": "ClaimCenter defines several reserve calculations: **Total Reserves** (all approved reserves, no payments deducted), **Open Reserves** (Total Reserves minus all eroding payments made today or earlier), **Remaining Reserves** (Open Reserves minus all approved eroding payments to be made after today), and **Available Reserves** (Remaining Reserves minus all eroding payments that are Pending Approval)."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating and modifying reserves within ClaimCenter, showing how these actions impact the reserve line totals and generate transactions.",
+      "transcriptSummary": "The demo illustrates navigating to the reserves section, adding a new reserve line for a specific exposure, cost type, and category, and then modifying the amount of an existing reserve. It highlights how ClaimCenter automatically creates transactions for these changes and updates the displayed reserve totals."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Introduction to Checks and the Payment Wizard",
+      "narrative": "In ClaimCenter, **checks** represent transfers of funds from one or more reserve lines to a claimant or another third party. These can be actual paper checks or Electronic Funds Transfers (EFTs). A single check might be payable to multiple parties, such as a homeowner and their mortgage company for a property claim. Similarly, one check can cover multiple payments, like reimbursement for medical bills and towing expenses.\n\nEvery check, whether it's a standalone payment or part of a larger group, is always associated with a **CheckSet**. The process of creating checks and payments is streamlined through the **Payment Wizard**, a multi-step interface.\n\n**Step 1: Specify the Payees.** When you initiate the Payment Wizard, you create an empty checkset. In this first step, you define the number of payees, which directly determines the number of checks. For example, if a payment is split between a claimant and their attorney, there will be two payees and two checks. For multiple payees, you must specify each secondary payee's portion, either as a percentage or a fixed amount. This step also allows you to edit the payment method (check or EFT) and delivery address, or bank account and routing number for EFTs. You can also specify 'joint payees,' where a single check is made payable to both parties, common in scenarios like a homeowner and mortgage company.\n\n**Step 2: Specify the Payment Transactions.** In the second step, you identify one or more payment transactions. For each transaction, you must select the specific reserve line from which the funds will be drawn and the amount. Remember, every payment *must* originate from a reserve line. As you add payments, the Payment Wizard dynamically calculates and updates the total amount of the checkset and each individual check amount.\n\n**Step 3: Specify the Check Instructions.** The final step involves adding specific instructions for the check. This includes details such as the date of service, an invoice number, or any necessary check memos. You can also designate whether the check is a single payment or a recurring payment, and specify the desired issue date. Once all this information is complete and you click 'Finish,' the checkset is populated with the generated check(s).",
+      "keyPoints": [
+        "Checks are fund transfers from reserve lines to claimants or third parties.",
+        "Checks can be paper or EFTs, for one or more parties/payments.",
+        "Every check belongs to a CheckSet.",
+        "The Payment Wizard guides creation: Step 1 (Payees), Step 2 (Payment Transactions), Step 3 (Check Instructions)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Definition of a check in ClaimCenter and its key characteristics."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Payment Wizard Step 1: Specifying payees and their portions."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Payment Wizard Step 2: Specifying payment transactions and calculating totals."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Payment Wizard Step 3: Specifying check instructions like memos and issue dates."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Payments and Matters",
+          "content": "When making payments connected to a legal matter, the Payment Wizard detects payments made on reserve lines with the legal cost category. You must enter the category and line item on screen two of the Check wizard. ClaimCenter updates the 'Total Payments' column of the Budget Lines list view when the check status becomes 'submitting' or 'notifying'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Automatic Payments and External Check Processing Integration",
+      "narrative": "ClaimCenter offers functionality for **automatic payments**, also known as recurring payments. Within the 'Set check instructions' step of the Payment Wizard, specific fields appear if the check is designated as automatic or an Electronic Funds Transfer (EFT). These fields allow you to specify additional information that external automatic or electronic systems can utilize. For Workers' Compensation claims, a key feature is the ability to specify the **service period**, which defines the timeframe over which a payment represented by the check was earned. This is particularly useful for managing lost wages, where an injured worker might receive Temporary Total Disability (TTD), then Temporary Partial Disability (TPD), and potentially Permanent Partial Disability (PPD), each with different payment amounts and periods. The system can also create an activity reminder two days before the second-to-last check in a recurring series is submitted, alerting you that the payment stream is nearing its end.\n\nIt's important to understand that **ClaimCenter itself does not directly write checks or issue Electronic Funds Transfers**. Instead, it leverages a built-in integration point to connect with an **external check processing system**. This external system is responsible for processing checks and EFTs based on the data it receives from ClaimCenter. The data exchange is bidirectional: ClaimCenter sends comprehensive check or EFT information—such as the amount, line items, check memos, and payee details—to the external system. In return, ClaimCenter receives updates on the check's status, including 'requesting,' 'requested,' 'issued,' and so on. This integration ensures that ClaimCenter maintains an accurate record of payment statuses without handling the physical or electronic issuance of funds.",
+      "keyPoints": [
+        "The Check Wizard supports automatic (recurring) payments with specified frequency and service periods.",
+        "Service period defines the timeframe a payment covers, useful for Workers' Comp lost wages.",
+        "ClaimCenter integrates with external check processing systems for actual check writing/EFT issuance.",
+        "ClaimCenter sends payment data and receives status updates from the external system."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Features of automatic and recurring payments, including service periods and activity reminders."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Diagram illustrating ClaimCenter's integration with an external check processing system."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "The Lifecycle of a Check in ClaimCenter (Part 1)",
+      "narrative": "A check, or payment, in ClaimCenter progresses through a defined lifecycle, with different actions permissible at various stages. Understanding this lifecycle is crucial, as certain actions, like deleting a check, are only possible during specific phases.\n\n1.  **Draft**: Initially, a check is in a 'Draft' state while it is being created within the Payment Wizard. This is its most preliminary phase.\n\n2.  **Pending Approval**: Once a check is created and exits the draft state, its status is set to 'Pending Approval.' This is the first formal phase in its lifecycle. If the check amount exceeds the user's authority, it will remain in this phase until it is either approved by a supervisor or rejected. The check transaction, like other financial transactions, goes through an approval cycle.\n\n3.  **Awaiting Submission**: If a check is approved (or if no approval was required), it advances to the 'Awaiting Submission' status. In this phase, the check transaction waits for a batch process to move it to the next stage of its lifecycle. This is a critical phase because, while in 'Awaiting Submission,' the check has not yet been sent to the external check processing system, allowing for certain modifications.",
+      "keyPoints": [
+        "Checks progress through a defined lifecycle with specific actions allowed at each stage.",
+        "Initial status is 'Draft' during creation in the Payment Wizard.",
+        "'Pending Approval' is the first formal status, requiring approval if amount exceeds user authority.",
+        "'Awaiting Submission' means the check is approved but waiting for a batch process to send it to the external system."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Overview of the check lifecycle, from ClaimCenter to external processing."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Step 1: A check is in 'Draft' status during creation."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Step 2: A check moves to 'Pending Approval' after creation."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Step 3: If approval is needed, the check remains 'Pending Approval' until actioned."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Step 4: Once approved or no approval is needed, the check moves to 'Awaiting Submission'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "The Lifecycle of a Check in ClaimCenter (Part 2) and Available Actions",
+      "narrative": "After a check reaches the 'Awaiting Submission' status, its journey continues through further stages, largely managed in conjunction with the external check processing system.\n\n4.  **Requesting / Requested**: A batch process sends all checks in 'Awaiting Submission' status to the external check processing system. Upon sending, the check's status changes to 'Requesting.' Once the external system acknowledges the check request, the status transitions to 'Requested.'\n\n5.  **Issued**: When the external check processing system confirms that the check has been printed or the Electronic Funds Transfer (EFT) has been initiated, the status in ClaimCenter changes to 'Issued.'\n\n6.  **Cleared**: The final phase occurs when the payee(s) have cashed the check or the EFT is complete. The external system notifies ClaimCenter, which then updates the check's status to 'Cleared.'\n\nIt's crucial to understand the actions you can take at different points in this lifecycle:\n\n*   **Delete or Edit**: While a check is in 'Awaiting Submission' status, it can still be edited or even deleted. This is because it has not yet been sent to the external processing system.\n*   **Void**: If a check has been sent to the external system and is in 'Requesting' or 'Requested' status (meaning it hasn't been issued yet), it can be **voided**. Generally, a check is voided if it's still in the issuer's possession.\n*   **Stop or Void (after Issued)**: Once a check has reached 'Issued' status, it can be stopped or voided. If the check has left the issuer's possession (e.g., mailed), it can only be **stopped** (a stop payment order). If it's still with the issuer, it can be voided. These principles apply to both physical checks and EFTs: an EFT not yet sent can be voided, but once sent, it should only be stopped.",
+      "keyPoints": [
+        "Checks move from 'Awaiting Submission' to 'Requesting'/'Requested' when sent to the external system.",
+        "'Issued' status means the check is printed or EFT initiated.",
+        "'Cleared' status indicates the check has been cashed or EFT completed.",
+        "Checks can be deleted/edited in 'Awaiting Submission'.",
+        "Checks can be voided in 'Requesting'/'Requested' status.",
+        "Checks can be stopped or voided (if still with issuer) in 'Issued' status."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Step 5: A batch process sends checks to the external system, changing status to 'Requesting'/'Requested'."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Step 6: The check status becomes 'Issued' once processed by the external system."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Step 7: The check status becomes 'Cleared' when cashed or EFT is complete."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Step 8: Overview of actions (delete, edit, void, stop) available at different stages of the check lifecycle."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Visual summary of the check processing flow."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of issuing payments using the Payment Wizard, covering how to specify payees, allocate funds from reserve lines, and set check instructions.",
+      "transcriptSummary": "The demo showcases starting the Payment Wizard, adding a primary payee and a secondary payee with a percentage allocation, selecting specific reserve lines for payment transactions, and finally, entering check instructions before completing the process to generate the checks within a checkset."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A claimant, John Doe, has incurred $1500 in medical expenses and $500 in lost wages. You have two active reserve lines for his claim: one for 'Medical' with $2000 and another for 'Lost Wages' with $1000. John's attorney, Jane Smith, is to receive 20% of the total payment for medical expenses.",
+      "question": "Using the Payment Wizard, create a checkset to pay John Doe and Jane Smith for the medical expenses and John Doe for his lost wages. Ensure Jane Smith receives her portion of the medical payment.",
+      "hints": [
+        "Start by creating a new checkset via the Payment Wizard.",
+        "In Step 1, add John Doe as the primary payee and Jane Smith as a secondary payee with a 20% portion for the medical payment.",
+        "In Step 2, create two payment transactions: one for $1500 from the 'Medical' reserve line and another for $500 from the 'Lost Wages' reserve line.",
+        "Observe how the wizard calculates the individual check amounts for John and Jane based on the total payment and Jane's portion.",
+        "In Step 3, add a simple memo like 'Medical and Lost Wages Reimbursement' and set the issue date."
+      ],
+      "expectedApproach": "The learner should navigate to the Payment Wizard, add John Doe and Jane Smith as payees (specifying Jane's 20% portion for medical), then add two payment transactions from the respective reserve lines, and finally, add check instructions before completing the wizard."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Betty Baker went through the payment wizard one time. She specified\nthree payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\n\nc. Can you tell how many payment transactions there are?",
+      "referenceAnswer": "A. Can you tell how many CheckSets there are? Yes. There is one.\n(Each iteration of the payment wizard creates one checkset.)\n\nB. Can you tell how many checks there are? Yes. There are three.\n(Unless there are joint payees, each payee has a separate check.\nUnless there are recurring checks, then for three pa",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Acheck includes a $200 final payment from a $500 reserve line. Why\n¢ does ClaimCenter create a second transaction? What is the dollar\n“ amount of this transaction?",
+      "referenceAnswer": "The second transaction is used to zero out the reserve line. The dollar amount of this\ntransaction will be -$300, since there is $300 remaining after the $200 payment\ntransaction.",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Inwhat status must a check be for a user to delete the check?\n¢\n4\n¢",
+      "referenceAnswer": "Awaiting submission",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": ",7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n¢",
+      "referenceAnswer": "No. Validation rules prevent you from starting the payment wizard if the claim is not at\n“ability to pay\".",
+      "questionKey": "slide-41"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Reserve lines are essential for tracking expected payments and are defined by exposure, cost type, and cost category.",
+        "Creating or modifying reserves generates transactions that update the reserve line total.",
+        "Eroding payments (partial, final) reduce reserve balances, while non-eroding payments do not.",
+        "The Payment Wizard is a three-step process to create checks, specifying payees, payment transactions, and check instructions.",
+        "ClaimCenter integrates with external systems for actual check processing and EFTs.",
+        "Checks follow a lifecycle (Draft, Pending Approval, Awaiting Submission, Requesting/Requested, Issued, Cleared), with specific actions available at each stage."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering payments and reserves is fundamental for accurate financial management of claims. Proper reserve setting ensures regulatory compliance and provides a true picture of an insurer's liabilities, while efficient payment processing directly impacts claimant satisfaction and operational efficiency. Understanding the check lifecycle helps adjusters manage payments effectively, from initial creation to final clearance, and take appropriate actions like voiding or stopping payments when necessary.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced financial transactions, including recoveries and subrogation, and how they impact the overall financial picture of a claim."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access your ClaimCenter training environment. Navigate to an open claim and practice the following:\n1.  Create a new reserve line for an existing exposure, specifying a cost type and category.\n2.  Modify the amount of an existing reserve line and observe the new transaction created.\n3.  Using the Payment Wizard, create a checkset for a claimant. Include at least two payment transactions from different reserve lines. Experiment with adding a secondary payee with a percentage allocation.\n4.  Review the created checkset and identify its current status in the check lifecycle.",
+      "objectives": [
+        "Create and modify reserves in ClaimCenter.",
+        "Create payments using the Payment Wizard with multiple payees and payment types.",
+        "Understand the immediate impact of reserve and payment actions on financial transactions."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_10_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_10_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_10_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_10_02.mp4"
+    }
+  ]
+}

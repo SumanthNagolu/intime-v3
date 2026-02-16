@@ -1,0 +1,273 @@
+{
+  "lessonId": "ch04-l12",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 12,
+  "title": "Organizations and Producer Codes",
+  "subtitle": "Mastering PolicyCenter's organizational structure, producer roles, and security configurations for efficient operations.",
+  "synthesizedAt": "2026-02-16T17:22:32.940144+00:00",
+  "estimatedMinutes": 95,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance company trying to track sales performance, calculate commissions, and manage access for hundreds of agents across various agencies. Without a clear system, this would be a chaotic nightmare, leading to errors and inefficiencies. PolicyCenter provides a robust framework to manage this complexity.",
+      "question": "How can an insurance system effectively organize diverse users, agencies, and their sales activities while maintaining strict security?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the PolicyCenter organization model, including how organizations, groups, and users are structured.",
+        "Define what a producer is and differentiate between producer of record and producer of service.",
+        "Explain the purpose and function of producer codes in PolicyCenter.",
+        "Describe how to manage organizations and producer codes within the PolicyCenter administration screens.",
+        "Explain the concept of producer code security and its role in controlling data access.",
+        "Identify the different levels of external user access and how they are configured."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon user roles and basic system navigation. This lesson builds on that foundation by exploring how users are organized into larger business entities and how their access is further refined.",
+      "warmupQuestion": "Think about a time you've interacted with a system where your access was limited based on your role. What kind of information or actions were you restricted from?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Producers and the Organizational Model",
+      "narrative": "PolicyCenter's organizational model is fundamental to managing both internal insurer staff and external entities like agencies. At its core, an **organization** is a business entity representing either the insurer itself or an external agency. Within these organizations, you'll find **groups** of users, and individual **users** who can be assigned to multiple groups. This hierarchical structure allows for flexible management of people and their work, with permissions and access tailored to their specific roles.\n\nCentral to tracking sales and managing commissions are **producer codes**. As illustrated in the diagram, these codes are linked to groups and individual users, enabling detailed tracking of policy sales and performance metrics. A **producer** is essentially an intermediary—an agent, broker, or internal sales team member—who sells business on behalf of the insurer. They are identified by a unique producer code, which links them to specific policies, ensuring accurate commission calculations and performance tracking.\n\nProducers can have different roles, primarily **producer of record** and **producer of service**. The producer of record is the one who initially creates the policy and typically receives commissions based on the premium. The producer of service, on the other hand, is responsible for servicing the policy. Initially, these roles are often the same. However, if a policyholder requests a new agent, the producer of service can change. The new producer of service gains permissions to edit policies for renewal and, upon renewal, becomes the new producer of record, then becoming eligible for commissions. This distinction is crucial for managing commissions and ensuring the correct permissions are in place for policy management. Producer codes are pivotal in tracking which agents and agencies are responsible for particular policies, providing a layer of security and accountability. Assigning producer codes to groups simplifies administration and aligns with organizational hierarchies, as insurers often find that producer codes naturally follow their organizational or group hierarchy.",
+      "keyPoints": [
+        "Organizations represent internal insurers or external agencies, containing groups and users.",
+        "Producers are intermediaries (agents, brokers) identified by unique producer codes.",
+        "Producer codes track sales, performance, and commissions, linking individuals/entities to policies.",
+        "Producer of Record creates the policy and receives initial commission.",
+        "Producer of Service services the policy and becomes Producer of Record upon renewal, then receiving commissions.",
+        "Producer codes can be assigned to groups or users for streamlined administration and security."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Visual representation of producer code structure within an organization, linking to groups and users."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "PolicyCenter's organization and community model, showing internal and external organizations, groups, and users."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram illustrating the role of a producer as an intermediary between the insurer and the insured."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Distinction between internal (insurer employees) and external (agency/independent) producers."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Detailed explanation of Producer of Record and Producer of Service roles and their impact on commissions and permissions."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Definition of a producer code as a unique ID for tracking agents/agencies and policy categories."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Administering Organizations and Producer Codes",
+      "narrative": "Managing organizations and producer codes in PolicyCenter is primarily done through the Administration tab. The system presents the organizational structure in a clear tree format in the left sidebar, allowing for easy navigation and management of groups, users, and producer codes. When you select an organization, its details are displayed across various cards, such as the 'Basics' card for general information (name, type, address, supervisor, load factor for assignment rules), the 'Users' card listing all users within that organization, and the 'Producer Codes' card showing assigned codes with their descriptions, statuses, and preferred underwriters.\n\nTo manage producer codes, specific privileges like 'Superuser' or 'User Admin' are required. From the Administration tab, you can search, view, edit, or create new producer codes. The 'Basics' tab for a producer code lists its unique code, description, associated organization, and status. The 'Groups' tab shows which groups have security access to this producer code, defining what group users can access and what actions they can perform. Similarly, the 'Users' tab lists individual users with access. Roles can also be assigned directly to producer codes on the 'Roles' tab. While these tabs are view-only, producer codes are added to users and groups via the 'Edit Users' or 'Edit Groups' administration screens, streamlining the process by allowing codes to follow organizational or group hierarchies.\n\nFor external organizations, PolicyCenter supports delegation of management through the **User Admin role**. By assigning this role to a user within an external company, that user gains permission to administer users, groups, organizations, and permissions *within their own organization*. This empowers external partners to manage their internal structures while the insurer retains overall administrative control. This delegation is crucial for optimizing management in complex organizational structures, allowing external User Admins to build out their company's user, group, and permission sets without needing access to other organizations. This differs from a Supervisor role, which focuses on team screen access related to a group, whereas a User Admin manages the underlying user, group, and permission configurations.",
+      "keyPoints": [
+        "Organizations are managed via the Administration tab, using a tree structure.",
+        "Organizational details are viewed and edited through various cards (Basics, Users, Producer Codes).",
+        "Managing producer codes requires 'Superuser' or 'User Admin' privileges.",
+        "Producer code details include code, description, organization, status, and associated groups/users/roles.",
+        "Producer codes are assigned to users/groups through dedicated 'Edit' screens.",
+        "The User Admin role allows external organizations to self-manage their users, groups, and permissions, enhancing efficiency."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Marci, a Configuration Developer, asking about working with organizations and producer codes."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Screenshot of the 'Managing organizations' interface, showing the organizational tree and detail cards."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Overview of managing producer codes, including searching, viewing, editing, and creating new codes."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Screenshot showing producer codes assigned to a group, emphasizing access control."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Explanation of delegating management using the User Admin role for external companies."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the PolicyCenter interface for managing organizations and producer codes. Pay close attention to how the organizational tree is navigated and how details are accessed and modified for different entities.",
+      "transcriptSummary": "The demo covers navigating the Administration tab, viewing the organizational tree, inspecting organization details, and managing associated users and producer codes. It highlights the process of editing existing entities and creating new ones within the system."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Implementing Producer Code Security",
+      "narrative": "PolicyCenter employs a robust and flexible security model that combines **role-based security** with **data-based security**, specifically through producer codes. Role-based security assigns permissions (granular tasks like 'create submission' or 'edit account') to roles (collections of permissions, e.g., 'Underwriter', 'Producer'). Every user is assigned a role, which dictates their general capabilities within the system. However, to control access to specific data, PolicyCenter uses **producer code security**.\n\nProducer code security adds an additional layer of access control, ensuring that users can only perform actions on policies and accounts that have a matching producer code. This means a user with producer code security enabled can only use their role permissions against policies that are associated with one of their assigned producer codes. A permission must exist on *both* the user's role *and* the matching producer code's role for it to be effective. For instance, if a user has the 'edit policy' permission through their role, but the producer code associated with a specific policy does not grant that permission, the user cannot edit that policy. This mechanism is typically turned on for producers and off for roles like underwriters or auditors, who may need broader access.\n\nFurthermore, the **status field** of a producer code or organization is a critical component of this security. Typically, only 'Active' statuses grant full permissions. Other statuses, such as 'Suspended' or 'Terminated', can restrict access, preventing misuse or unauthorized actions by an agency whose contract has expired. Without specific security handler configurations, full permissions are granted only when the status is 'Active'. For renewals, a 'Limited' status might be allowed, enabling a producer to maintain existing business but not write new policies. This interplay between user roles, producer codes, and their statuses ensures granular control over data access and operational compliance, protecting sensitive policy information.",
+      "keyPoints": [
+        "PolicyCenter uses both role-based and data-based (producer code) security.",
+        "Producer code security restricts user actions to policies/accounts with matching producer codes.",
+        "Permissions require a match between the user's role and the producer code's role.",
+        "The 'Status' field (e.g., Active, Suspended, Terminated) of a producer code or organization dictates access permissions.",
+        "Security handlers can be configured to define permissions for non-active statuses, such as 'Limited' access for renewals."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Dialogue between a Business Analyst and Implementation Architect discussing controlling data access for producers using producer code security."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Explanation of PolicyCenter's security model, differentiating between role-based and data-based security."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Illustration of how producer code security controls data access in conjunction with user permissions."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Description of the 'Status' field for organizations and producer codes and its role in limiting access and preventing misuse."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on how producer code security is implemented and affects user access within PolicyCenter. Observe how different producer codes and their associated permissions control what actions a user can perform.",
+      "transcriptSummary": "The demo illustrates configuring producer code security, assigning producer codes to users and groups, and demonstrating the impact of these assignments on a user's ability to access and modify policies. It highlights the granular control offered by this security layer."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring External User Access",
+      "narrative": "For users, particularly external producers, their access within PolicyCenter is determined by their group memberships and assigned producer codes. The 'User Access' screen allows administrators to configure whether producer code security is 'on' or 'off' for a specific user (typically 'Yes' for producers). Users automatically inherit producer codes from the groups they belong to, and additional producer codes can be explicitly assigned. This setup ensures that users have the necessary permissions to manage policies effectively, aligning with the organization's operational needs.\n\nA key configuration parameter, `ExternalUserAccess` in the `config.xml` file, is crucial for controlling the level of access external users have. This parameter applies to all external users in PolicyCenter and offers three distinct levels:\n\n*   **FULLYRESTRICTED (Default)**: External users can only be assigned to groups within their own organization. They inherit producer codes from these groups and can only be assigned additional producer codes from their own organization.\n*   **PROTECTINTERNAL**: External users can be assigned to any *external* group and inherit producer codes from those groups. They can also be assigned producer codes from any *external* organization.\n*   **ALLOWINTERNAL**: This is the most permissive level. External users can be assigned to any group, whether internal or external. They inherit producer codes from these groups and can be assigned producer codes from *any* organization, internal or external.\n\nThis flexibility allows insurers to tailor access levels to suit complex business requirements, such as agents working for multiple agencies or needing access to internal insurer producer codes. While increasing access provides flexibility, it's important to review all users, groups, and producer codes to ensure they conform to a more restrictive setting if the parameter is later changed. This configuration is vital for maintaining security while facilitating necessary collaboration and multi-agency operations.",
+      "keyPoints": [
+        "User access is governed by group memberships and assigned producer codes.",
+        "Producer code security can be toggled on/off for individual users.",
+        "Users inherit producer codes from groups and can have additional codes assigned.",
+        "The `ExternalUserAccess` parameter in `config.xml` controls external user access levels.",
+        "Three levels of external user access exist: `FULLYRESTRICTED`, `PROTECTINTERNAL`, and `ALLOWINTERNAL`.",
+        "These levels determine whether external users can join internal groups or access producer codes from other organizations."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Marci, a Configuration Developer, asking how to configure producer code security."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Screenshot of the 'User Access' tab, showing options for producer code security, inherited, and additional producer codes."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Dialogue where a user explains needing access to multiple agencies, and Julia confirms this is possible with External User Access configuration."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Diagram illustrating the three levels of External User Access: FULLYRESTRICTED, PROTECTINTERNAL, and ALLOWINTERNAL."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This optional demonstration illustrates the impact of the `ExternalUserAccess` configuration parameter. Watch how changing this setting affects an external user's ability to be assigned to groups and producer codes from different organizations.",
+      "transcriptSummary": "The demo showcases configuring the `ExternalUserAccess` parameter in `config.xml` and then demonstrates how an external user's available groups and producer codes change based on the selected access level (FULLYRESTRICTED, PROTECTINTERNAL, or ALLOWINTERNAL)."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new independent agency, 'Global Brokers,' has just partnered with your insurer. They need to manage their own agents within PolicyCenter, but you also need to ensure their agents can only access policies they've written. One of their lead agents, 'Sarah Chen,' needs to be able to service policies from both 'Global Brokers' and a few specific policies from an older agency, 'Legacy Partners,' that Global Brokers recently acquired.",
+      "question": "Outline the steps you would take to set up 'Global Brokers' as an external organization, delegate management to a 'User Admin' within Global Brokers, and configure Sarah Chen's access to both Global Brokers' policies and specific Legacy Partners' policies.",
+      "hints": [
+        "Start by creating the 'Global Brokers' organization and assigning a User Admin role.",
+        "Consider how producer codes are assigned to groups and users.",
+        "Think about the `ExternalUserAccess` parameter in `config.xml` to allow Sarah to access producer codes from another external organization."
+      ],
+      "expectedApproach": "1. Create 'Global Brokers' as an external organization. 2. Create a user within 'Global Brokers' and assign them the 'User Admin' role. 3. Ensure 'Global Brokers' has its own producer codes. 4. For Sarah Chen, ensure her user is created within 'Global Brokers' and assigned to relevant groups. 5. Configure the `ExternalUserAccess` parameter to `PROTECTINTERNAL` or `ALLOWINTERNAL` to enable Sarah to be assigned producer codes from 'Legacy Partners'. 6. Explicitly assign the necessary 'Legacy Partners' producer codes to Sarah Chen's user profile."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a producer code? What does it identify?",
+      "referenceAnswer": "A producer code is a unique ID (alphanumeric) assigned by the insurer to determine\nwhat a producer can do. Producer code and its description identify the sales agent that\nsold the policy.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis an organization?",
+      "referenceAnswer": "An organization is a business entity which represents either the Insurer itself or an\nexternal company for any set of users, typically producers.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Which External User Access level allows the external users to be\nassigned to groups and producer codes from intemal and any extemal\norganization?\nA.\nB.\nC.\nD\n. None of the above\n\nFULLYRESTRICTED\nPROTECTINTERNAL\nALLOWINTERNAL",
+      "referenceAnswer": "Correct answer: C",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyCenter's organization model structures internal and external entities, groups, and users.",
+        "Producers are key intermediaries, identified by unique producer codes for tracking and commissions.",
+        "Producer of Record and Producer of Service roles define responsibilities and commission eligibility.",
+        "Organizations and producer codes are managed through the Administration tab, with delegation possible via the User Admin role.",
+        "Producer code security, combined with role-based security and status fields, controls granular data access.",
+        "The `ExternalUserAccess` parameter (`FULLYRESTRICTED`, `PROTECTINTERNAL`, `ALLOWINTERNAL`) configures access levels for external users."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring organizations and producer codes is paramount for accurate commission calculations, robust security, and efficient workflow management. Misconfigurations can lead to incorrect reporting, unauthorized access, and operational bottlenecks, directly impacting an insurer's profitability and compliance.",
+      "nextLessonPreview": "As we move forward, we'll delve into Forms, exploring how they integrate with PolicyCenter to streamline data capture and enhance user interactions. Stay tuned for more insights on how to leverage forms within your Guidewire implementations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will challenge you to apply your knowledge of organizations, producer codes, and security configurations in a hands-on scenario. You will be tasked with setting up a new agency, configuring its producer codes, and defining user access levels to meet specific business requirements.",
+      "objectives": [
+        "Create a new external organization and assign a User Admin.",
+        "Configure producer codes for the new organization and assign them to groups/users.",
+        "Adjust `ExternalUserAccess` settings to enable cross-organizational producer code access for a specific user.",
+        "Verify that security settings correctly restrict or grant access as intended."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_13_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_13_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_13_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_13_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "In_Policy_13_03.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_13_03.mp4"
+    }
+  ]
+}

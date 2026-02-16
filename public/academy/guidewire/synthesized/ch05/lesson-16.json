@@ -1,0 +1,297 @@
+{
+  "lessonId": "ch05-l16",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 16,
+  "title": "Introduction to Administering workers' compensation",
+  "subtitle": "Mastering the essential ClaimCenter administration tasks for Workers' Compensation claims, from benefits to compensability.",
+  "synthesizedAt": "2026-02-16T17:45:38.703589+00:00",
+  "estimatedMinutes": 112,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a new ClaimCenter administrator tasked with setting up the system for Workers' Compensation claims. You need to ensure that benefit calculations are accurate, compensability decisions are made on time, and medical diagnoses are correctly coded. The sheer volume of parameters and regulations can feel overwhelming.",
+      "question": "How can you effectively navigate ClaimCenter's administrative tools to manage Workers' Compensation claims efficiently and compliantly?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the basic setup requirements for Workers' Compensation (WC) in ClaimCenter.",
+        "Explain how jurisdictional benefit parameters are used to calculate payments for lost time.",
+        "Identify the factors and parameters involved in Permanent Partial Disability (PPD) calculations.",
+        "Understand the process and parameters for determining claim compensability, including denial periods.",
+        "Explain the role and administration of ICD-10 codes in ClaimCenter for medical diagnoses.",
+        "Describe relevant user settings that streamline Workers' Compensation claim administration."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered various types of insurance claims and understand that each line of business has unique requirements. You may also be familiar with general administrative tasks within ClaimCenter or other enterprise systems.",
+      "warmupQuestion": "What are some key pieces of information you anticipate would be critical for processing a workers' compensation claim?",
+      "hint": "Think about the injured worker, the employer, and the nature of the injury."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Workers' Compensation Setup Basics in ClaimCenter",
+      "narrative": "Welcome to the introduction to administering workers' compensation in ClaimCenter. This lesson will guide you through the essential setup and administration tasks required for managing Workers' Compensation (WC) claims effectively. While many advanced configurations are handled in Guidewire Studio, this lesson focuses on the day-to-day administration tasks you can perform directly within the ClaimCenter application. It's important to remember that all rates and parameters provided in this lesson are for illustrative purposes only and should not be considered official; always consult with official state regulations for accurate information. To properly implement the WC Line of Business (LOB), several key administration tasks are crucial. These primarily revolve around calculating benefits for Time Loss Exposures, managing the Compensability Decision Activity, performing Permanent Partial Disability (PPD) calculations, and utilizing ICD-10 codes for medical diagnoses. Additionally, user-specific settings play a role in streamlining the workflow. ClaimCenter's sample data offers examples of these parameters, but they may not always be current or comprehensive for all jurisdictions. Accessing these critical WC parameters is done through the **Administration** screen, provided you have the necessary permissions. From there, you navigate to **Business Settings > WC Parameters**. This menu provides four distinct links: **Benefit Parameters**, which lists jurisdictions and their benefit settings; **PPD Min / Max**, offering detailed data similar to the PPD area of the Benefit Parameter Detail screen but with more granularity; **PPD Weeks**, where you define the duration of benefits based on the disability; and **Compensability Parameters**, which outlines the maximum time an insurer has to make a compensability decision for each jurisdiction, also known as the denial period.",
+      "keyPoints": [
+        "WC LOB setup involves benefit calculations, PPD, compensability, and ICD-10 codes.",
+        "Many administration tasks can be performed directly in ClaimCenter without Guidewire Studio configuration.",
+        "WC parameters are accessed via the Administration screen under Business Settings.",
+        "Key WC parameter links include Benefit Parameters, PPD Min/Max, PPD Weeks, and Compensability Parameters."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Overview of the lesson topics, including WC setup, benefit parameters, PPD, compensability, ICD-10 codes, and user settings."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Heading slide indicating the start of the Workers' Compensation setup basics section."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Explains the ClaimCenter setup background for WC, highlighting key administration tasks related to benefit calculations, compensability, PPD, and ICD-10 codes."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Illustrates the ClaimCenter Administration screen, showing the entry points for WC Parameters like jurisdictional benefit rates, PPD Min/Max, PPD limits, and compensability decision formulas."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Jurisdictional Benefit Parameters for Lost Time",
+      "narrative": "A fundamental aspect of managing workers' compensation claims involves accurately calculating payments for lost time. This is where **Benefit Parameters** come into play. These parameters are essential for determining the appropriate compensation rate for various types of lost time, such as Temporary Total Disability (TTD), Temporary Partial Disability (TPD), Permanent Total Disability (PTD), and Permanent Partial Disability (PPD). Each parameter is tied to a specific jurisdiction and a defined start and end date, ensuring that the correct benefit rates are applied for a given time period. For instance, a TPD calculation might use the formula: `WeeklyCompRate = JurisdictionRate x (Pre-injuryAWW - Post-injuryAWW)`. ClaimCenter's base configuration includes sample calculations for several states, with more detailed PPD examples for California, demonstrating how these amounts can be calculated. While ClaimCenter automates these calculations using the parameters you enter, adjusters always have the flexibility to override the system-calculated amounts manually. There are four basic parameters common to all benefit types: **Percent of Wages** (typically two-thirds or 67%), **Maximum Weekly Benefit**, **Minimum Weekly Benefit**, and **Minimum adjusted by Weekly Wage**. The 'Minimum adjusted by Weekly Wage' setting is particularly important; if set to 'Yes' and the employee's Average Weekly Wage (AWW) is below the Minimum Weekly Benefit, the AWW is used as the minimum. Otherwise, the Minimum Weekly Benefit applies. If ClaimCenter cannot find appropriate benefit parameters for a claim, it will display 'Not available' for the reference data and weekly compensation rate, as shown in the Time Loss > Benefits card. For automatic calculation of the weekly compensation rate, specific claim data must match the WC benefit parameters. This includes the **State of Jurisdiction** on the Loss Details matching the parameter's jurisdiction, the **Loss date** (or notice date) falling within the parameter's start/end dates, and the **Weekly Wage (Pre-Injury)**, or AWW, being provided. For TPD, the post-injury weekly wage is also crucial. For PPD, the 'Impairment Rating' on the Time Loss exposure is matched to the 'Disability %' in the PPD Weeks WC parameter.",
+      "keyPoints": [
+        "Benefit parameters are used to calculate payments for lost time (TTD, TPD, PTD, PPD).",
+        "Parameters are jurisdiction-specific and time-bound, setting benefit rates for a period.",
+        "Key parameters include Percent of Wages, Maximum/Minimum Weekly Benefit, and Minimum adjusted by Weekly Wage.",
+        "Average Weekly Wage (AWW) is crucial for benefit calculations.",
+        "Claim data (jurisdiction, loss date, AWW) must match parameters for automatic calculation.",
+        "Adjusters can manually override calculated workers' comp amounts."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Transition slide for the Benefit Parameters section."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Explains how benefit parameters are used to calculate payments for lost time, linking jurisdiction, start/end dates, and benefit rates, with a note on sample data."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Defines the four basic benefit parameters (Percent of Wages, Max/Min Weekly Benefit, Minimum adjusted by Weekly Wage) for TTD, TPD, PTD, and PPD."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An example of a Time Loss exposure screen showing 'Not available' for weekly compensation rates when no matching benefit parameters are found."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Illustrates how claim data, such as jurisdiction, loss date, impairment rating, and weekly wage, must match WC benefit parameters for automatic rate calculation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Permanent Partial Disability (PPD) Administration",
+      "narrative": "Beyond the standard benefit parameters, **other jurisdictional factors** can significantly influence how workers' compensation benefits are calculated. Some states, like Florida or New Jersey, have unique laws that can override standard formulas, such as paying 60% of (80% pre-injury less 100% post-injury pay) or applying special rules for workers beginning at age 70. These overrides are often backed by Gosu code in the base product's sample data, allowing for programmatic application of these specific rules. When dealing with Permanent Partial Disability (PPD), the calculation becomes even more precise, relying heavily on an **impairment rating**, also known as a 'disability percentage.' This rating quantifies the injured worker's permanent disability and is crucial because PPD benefits are subject to specific jurisdiction limits, including the maximum number of weeks and the total benefit amount. An impairment rating of, for example, 30% doesn't necessarily mean 30% loss of a specific limb's use, but rather a 30% loss of overall physical function capacity. This rating directly determines the maximum number of weeks an injured worker can receive PPD payments. Additionally, PPD benefits are capped using two sets of minimax benefit values: one for impairment ratings between 1% and 69%, and another, often larger, for ratings between 70% and 99%. The sheer volume and precision required for PPD calculations are evident in the **PPD administration parameters**. ClaimCenter provides extensive parameters, such as 20 pages of PPD weeks parameters, to accommodate the detailed nature of these benefits. For instance, a 1% disability might equate to 3 weeks of PPD, 2% to 6 weeks, and so on, up to 99%. This granular detail, combined with specific Min/Max benefit amounts for different disability percentage brackets, ensures that PPD payments accurately reflect the worker's permanent impairment within jurisdictional limits.",
+      "keyPoints": [
+        "Other jurisdictional factors can override standard benefit calculation formulas.",
+        "PPD calculations use an 'impairment rating' (disability percentage) to quantify permanent disability.",
+        "The impairment rating determines the maximum number of weeks for PPD payments.",
+        "PPD benefits are capped by Min/Max rates, with higher maximums for higher disability percentages.",
+        "PPD administration parameters are extensive due to the precise nature of these calculations."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Shows examples of 'Other Jurisdictional Factors' for Florida and New Jersey, indicating how specific state laws can influence benefit calculations."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Transition slide for the PPD administration parameters section."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Explains the concept of 'impairment rating' or 'disability percentage' in PPD calculations, how it quantifies permanent disability, and sets benefit limits."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Illustrates the extensive PPD administration parameters, including PPD Min/Max values and PPD Weeks, highlighting the detailed nature of these calculations."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through navigating ClaimCenter to view and understand jurisdictional benefit parameters, which are crucial for accurate lost time payment calculations.",
+      "transcriptSummary": "The video shows how to access the Administration screen, navigate to Business Settings > WC Parameters, and then select Benefit Parameters. It demonstrates how to choose a specific jurisdiction and review the detailed benefit rates and settings, including minimums, maximums, and percentages of wages, for different time periods."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Compensability Decision and Denial Periods",
+      "narrative": "A critical step in managing any workers' compensation claim is the **compensability decision**: determining if the claim is valid and, therefore, payable. This decision involves a thorough evaluation of various factors. Adjusters often ask a series of questions to ascertain validity, such as whether safety equipment was used, if the injured worker was under the influence of illegal substances, or if they were performing their regular job duties at the time of the incident. It's also essential to confirm that the incident was accidental, occurred in the course of employment, and falls within the appropriate jurisdiction, which considers the time, place, and employment relationship. A key administrative aspect related to compensability is the **denial period**. This is a jurisdiction-specific timeframe within which an insurer *must* respond to a new WC claim by either accepting or denying it. ClaimCenter streamlines this process by creating a 'Determine Compensability' activity. The due and escalation dates for this activity are automatically set based on the compensability parameters configured for that specific jurisdiction. For example, Illinois might have a 3-calendar-day denial period, while Georgia allows 21 calendar days. If no matching parameter is found, ClaimCenter defaults to the activity pattern arguments, typically setting a target date of 5 days and an escalation date of 7 days. The compensability parameter also includes a denial period formula that dictates whether the target date is calculated from the loss date, the notice date, or the greater of the two. This ensures that insurers adhere to legal deadlines and efficiently manage the claim's initial assessment.",
+      "keyPoints": [
+        "The compensability decision determines if a WC claim is valid and payable.",
+        "Factors for compensability include safety equipment use, substance involvement, and job performance.",
+        "Jurisdiction considers time, place, and employment relationship for compensability.",
+        "The 'denial period' is a jurisdiction-specific deadline for insurers to accept or deny a claim.",
+        "ClaimCenter uses compensability parameters to set due and escalation dates for the 'Determine Compensability' activity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Illustrates the 'Compensability decision' process, showing key questions and the 'Loss Details' screen with compensability factors and decision fields."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Explains 'Compensability parameters: denial period,' detailing the jurisdiction-specific timeframes for insurers to accept or deny a WC claim and how ClaimCenter uses these to set activity due dates."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "ICD-10 Codes Administration",
+      "narrative": "Beyond financial parameters, accurate medical diagnosis is crucial for workers' compensation claims, and this is where **ICD-10 codes** come in. ICD stands for the International Statistical Classification of Diseases and Related Health Problems, and these codes provide a standardized way to classify diagnoses across the healthcare and insurance industries. In ClaimCenter, ICD codes are managed separately from the WC parameters because they are utilized across various lines of business, not just workers' compensation (for example, in personal auto claims). The base application for ClaimCenter 9.x provides ICD-10 codes only in its sample data; if ICD-9 codes are necessary for legacy claims, your implementation team can assist with their integration. It's important to note that you cannot enter both ICD-9 and ICD-10 codes on the same claim, nor can you enter the same ICD code more than once. The set of ICD-10 codes is dynamic, with updates published annually by the U.S. Centers for Medicare & Medicaid Services (CMS) to reflect new medical research and advances. As an administrator, you have the ability to **add and edit ICD codes** directly within ClaimCenter. To add a new code, you simply click 'Add new code.' To modify an existing one, you click on the code number in the list. It's important to note that, in the base application, codes cannot be deleted. This administrative flexibility ensures that ClaimCenter can keep pace with evolving medical standards and provide accurate diagnostic information for claims processing, with ICD-11 expected in the future.",
+      "keyPoints": [
+        "ICD-10 codes are international standards for medical diagnoses, used across various lines of business.",
+        "ICD codes are managed separately from WC parameters in ClaimCenter.",
+        "ClaimCenter 9.x sample data includes ICD-10 codes only; ICD-9 codes require implementation team assistance.",
+        "Administrators can add new ICD codes or edit existing ones.",
+        "ICD codes cannot be deleted in the base application, and updates are published annually."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Shows the 'ICD Codes' administration screen, explaining their purpose as medical diagnosis codes used across different lines of business, with ICD-10 codes provided in sample data."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Illustrates the process of 'Adding and editing ICD codes' in ClaimCenter, showing the interface for searching, adding new codes, and editing existing ones."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to manage compensability parameters, administer ICD codes, and configure user settings to optimize ClaimCenter for Workers' Compensation claims.",
+      "transcriptSummary": "The video guides you through accessing Compensability Parameters to review denial periods for different jurisdictions. It then demonstrates navigating to the ICD Codes page to search, add, or edit medical diagnosis codes. Finally, it illustrates how to adjust user settings, such as setting a default policy type for WC claims and enabling sorting by 'Injured Worker' for improved claim management."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new Workers' Compensation claim has just been entered into ClaimCenter for an employee in Georgia who suffered a back injury. The claim's loss date is today, and the Average Weekly Wage (AWW) is $800. The initial diagnosis is a lumbar sprain.",
+      "question": "As an administrator, describe the steps you would take to ensure the claim is set up correctly for benefit calculations, compensability, and medical coding. What specific parameters would you check or configure?",
+      "hints": [
+        "Consider the three main areas discussed: benefit parameters, compensability, and ICD codes.",
+        "For benefits, think about what data points on the claim need to match the system's parameters.",
+        "For compensability, remember the jurisdictional deadlines.",
+        "For medical coding, recall how ICD codes are managed and applied."
+      ],
+      "expectedApproach": "1. Verify Georgia's benefit parameters (Percent of Wages, Max/Min Weekly Benefit) are current for today's date, ensuring the AWW of $800 will be used in calculations. 2. Check Georgia's compensability parameters to determine the denial period and the due date for the 'Determine Compensability' activity. 3. Search for and apply the appropriate ICD-10 code for a lumbar sprain to the claim's medical details. 4. Ensure user settings (like default policy type) are configured for efficient WC claim handling."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "User Settings for WC Administration",
+      "narrative": "To further streamline the administration of workers' compensation claims, ClaimCenter offers several **user settings** that can significantly enhance efficiency for adjusters and other users. One such setting allows for claims to be **sorted by injured worker**. With the LossType set to Workers' Comp, the 'Claimant' column automatically changes to 'Injured Worker,' making it a sortable column. This is particularly useful in WC claims, where there is typically one injured worker per claim, unlike other lines of business (like Personal Auto or Homeowners) that might involve multiple claimants, making a generic 'Claimant' sort less meaningful. This sorting capability is available on both the desktop and claim search screens, improving navigation and access to specific claims. Users without this specific setting will still see the column labeled 'Claimant'. Another valuable setting is the **default policy type**. For adjusters or customer service representatives (CSRs) who primarily handle WC claims, their user profile can be configured to default to searching for 'Workers' Compensation' policies in the New Claim wizard. This convenience feature saves time and reduces clicks by pre-selecting the most common policy type for their workflow. While this setting is for convenience only and does not prevent a user from creating a claim or finding policies on a different Line of Business, it significantly speeds up the process for their primary responsibilities. These user-specific configurations contribute to a more tailored and efficient ClaimCenter experience for WC administrators.",
+      "keyPoints": [
+        "User settings can streamline WC administration workflows.",
+        "The 'Claimant' column becomes 'Injured Worker' and is sortable for WC claims.",
+        "Sorting by Injured Worker is available on desktop and claim search screens.",
+        "Adjusters can set a default policy type (e.g., Workers' Compensation) for new claims in the New Claim wizard.",
+        "Default policy type is a convenience feature, not a restriction on LOB selection."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "Demonstrates how users can 'Sort by injured worker' in ClaimCenter when the loss type is Workers' Comp, making the 'Injured Worker' column sortable."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Shows the 'Default policy type' setting, allowing users who primarily file WC claims to have 'Workers' Compensation' pre-selected in the New Claim wizard for efficiency."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Which parameter can set the Determine Compensability activity’s due\nx date on a claim?\n¢\nA) Jurisdictional Benefit Parameter\nB) PPD Min/Max\nC) Waiting Period\nD) Denial Period\n\nSooo oooe sooo oOo oOo oAaDS",
+      "referenceAnswer": "Which parameter can set the Determine Compensability activity’s due\nx date on a claim?\n74\nA) Jurisdictional Benefit Parameter\nB) PPD Min/Max\nC) Waiting Period\nD) Denial Period\n\nSooo ooo ooo Oooo oOoD",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the purpose of an impairment rating on a claim? How is this\nx matched to admin parameters?\n\nSooo oooe sooo oOo oOo oAaDS",
+      "referenceAnswer": "An impairment rating specifies, for PPD, the degree of disability or loss of use the IW\nhas suffered as part of a permanent disability. It is matched to two admin parameters:\nthe PPD Min/Max and the PPD # of weeks (for a given jurisdiction and effective\nstart/end dates)\n\nSooo ooo ooo Oooo oOoD",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "'fyou want to calculate a TTD weekly comp rate, what data on a claim\nx must exist to match admin parameters?\n¢\nSooo oooe sooo oOo oOo oAaDS",
+      "referenceAnswer": "Three pieces of data:\n1. The state (jurisdiction)\n2. The claim’s loss date or notice date\n3. The worker's AWW.\n\nSooo ooo ooo Oooo oOoD",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "'fyou want to calculate a PPD weekly comp rate, what data on a claim\nx must exist to match admin parameters?\n¢\nSooo oooe sooo oOo oOo oAaDS",
+      "referenceAnswer": "Four pieces of data:\n1. The state (jurisdiction)\n2. The claim’s loss date or notice date\n3. The worker's AWW.\n4. The impairment rating (disability %)\n\nSooo ooo ooo Oooo oOoD",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Workers' Compensation administration in ClaimCenter involves managing benefit parameters, PPD calculations, compensability decisions, and ICD-10 codes.",
+        "Jurisdictional benefit parameters, including Percent of Wages, Max/Min Weekly Benefit, and AWW, are crucial for calculating lost time payments.",
+        "Permanent Partial Disability (PPD) calculations are complex, relying on impairment ratings and extensive PPD Min/Max and Weeks parameters.",
+        "Compensability decisions are governed by jurisdictional denial periods, which dictate activity due dates in ClaimCenter.",
+        "ICD-10 codes standardize medical diagnoses across LOBs and can be added/edited by administrators.",
+        "User settings like 'Sort by Injured Worker' and 'Default Policy Type' enhance efficiency for WC administrators."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring and administering these WC parameters ensures compliance with state regulations, accurate benefit payouts, and efficient claim processing. Misconfigurations can lead to incorrect payments, regulatory fines, and operational inefficiencies, highlighting the critical importance of these administrative tasks."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_16_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_16_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_16_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_16_02.mp4"
+    }
+  ]
+}

@@ -1,0 +1,368 @@
+{
+  "lessonId": "ch09-l17",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 17,
+  "title": "Business Rules - Exposures and Reserves",
+  "subtitle": "Automate claim processing by configuring business rules for exposures and reserves in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T18:41:13.022640+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a high-volume claims department where adjusters manually create exposures and set initial reserves for every new claim. This repetitive task consumes valuable time and is prone to human error, slowing down the entire claims process. What if we could automate these routine steps?",
+      "question": "How can we streamline the initial setup of claims to ensure consistency, reduce manual effort, and accelerate processing without writing a single line of code?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Write business rules to create exposures for specific cases",
+        "Write business rules to create reserves for specific cases"
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of ClaimCenter's administrative interface and core concepts like incidents, exposures, and reserves. Recall how these elements are typically created and managed manually within the system.",
+      "warmupQuestion": "Think about a common claim type, like a personal auto collision. What exposures and initial reserves would typically be needed?",
+      "hint": "Consider the insured's vehicle damage and any potential third-party involvement."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to ClaimCenter Business Rules",
+      "narrative": "ClaimCenter provides powerful **Business Rules** that allow administrative users to automate critical claim processes. These rules enable the system to automatically create activities, exposures, or reserves based on predefined conditions. This capability is a game-changer for business analysts, as it allows them to respond swiftly to evolving business needs without requiring any programming or developer intervention. All business rules are managed directly within the ClaimCenter administration user interface, offering a user-friendly environment for design, testing, and deployment. A significant advantage is that these rules can be implemented without any server downtime, ensuring continuous operation and minimal disruption to production environments. This flexibility and ease of management make business rules an essential tool for optimizing claim workflows and maintaining agility in a dynamic insurance landscape. Unlike Gosu rules, which require technical expertise and server restarts, ClaimCenter's business rules are designed for rapid, administrative-level configuration and deployment.",
+      "keyPoints": [
+        "Business rules automate the creation of activities, exposures, and reserves.",
+        "They empower business analysts to adapt to changes without coding.",
+        "Managed in the ClaimCenter administration UI, allowing for design, testing, and deployment without server downtime."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Overview of ClaimCenter Business Rules and their key benefits."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Business Rules",
+          "content": "Configurable logic within ClaimCenter that automates actions (like creating exposures or reserves) based on specific conditions, managed via the administration UI without requiring code changes or server restarts."
+        },
+        {
+          "type": "tip",
+          "title": "Agile Configuration",
+          "content": "The ability to deploy business rules without server downtime is crucial for maintaining business continuity and rapidly responding to market or regulatory changes."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Exposures and Automation",
+      "narrative": "Before diving into automating exposures, let's quickly review what an exposure represents in ClaimCenter. An **exposure** is a fundamental mechanism used to track potential payments from a specific policy coverage to a particular claimant. It acts as a container for financial tracking related to a single aspect of a loss. Each exposure is primarily defined by four key elements: the specific **coverage** from the policy that might apply, the **claimant** who may receive payment, the **incident** (the item lost or damaged), and the associated **reserve lines**, which are amounts set aside for expected payments. When an exposure is initially created, users must specify the coverage, claimant, and incident. Reserve lines, representing anticipated payments, can be added later as more information becomes available, such as a repair estimate for a damaged vehicle. This flexibility allows for an initial setup even when full financial details are not yet known. Business rules can significantly streamline this process by automating the creation of exposures. This is particularly useful for claim types where the required exposures are consistent and predictable, such as a personal auto collision claim that almost always necessitates a collision exposure. Automating this ensures consistency and reduces manual entry for common scenarios.",
+      "keyPoints": [
+        "An exposure tracks potential payments from one coverage to one claimant.",
+        "It is defined by coverage, claimant, and incident; reserve lines are optional at creation.",
+        "Business rules automate exposure creation for consistent claim types, reducing manual effort."
+      ],
+      "figures": [
+        {
+          "slideNumber": 4,
+          "caption": "A review of exposures, their purpose, and defining elements."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "How business rules can automate the creation of exposures."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Exposure",
+          "content": "A ClaimCenter data set used to track a potential payment from a specific policy coverage to a particular claimant, defined by coverage, claimant, and incident."
+        },
+        {
+          "type": "best_practice",
+          "title": "Automate Common Exposures",
+          "content": "Use business rules to automatically create exposures for common claim types (e.g., collision for auto accidents) to improve efficiency and reduce errors."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Navigating and Defining Exposure Rules",
+      "narrative": "To manage exposure rules, you'll navigate to the ClaimCenter administration screens: **Administration > Business Settings > Business Rules > Exposure Rules**. This interface displays all currently defined exposure rules, offering robust filtering options to help you locate specific rules by properties such as Policy Type, Incident Type, or Status. By clicking 'Show Filters', you can reveal the full list of available properties for refining your search. The exposure rules screen provides key information about each rule, including its run status (indicating if it's active in the environment), whether it's in a staged or draft state, its version number, the triggering entity (which is always 'Incident' for exposure rules), and the triggering action (always 'creation'). From this central hub, you have the flexibility to add new rules, clone existing ones to use as templates, and even export or import rules for deployment across different environments. To modify an existing rule, simply click on its name to open the Rule screen, then select 'Edit'. Every exposure rule requires a unique name and an optional description. The triggering entity is pre-set to 'Incident', and the triggering action is pre-set to 'creation'. This means that any time a new Incident is created in ClaimCenter, the system will evaluate all enabled exposure rules. Rules can also be enabled or disabled, allowing you to control their execution without deleting them.",
+      "keyPoints": [
+        "Exposure rules are managed under Administration > Business Settings > Business Rules > Exposure Rules.",
+        "The UI allows filtering, adding, cloning, exporting, and importing rules.",
+        "Exposure rules are triggered when an 'Incident' is 'created', and can be enabled or disabled."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "The Exposure Rule User Interface, showing rule management and filtering options."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Basic definition elements of an exposure rule, including name, trigger, and status."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Cloning Rules",
+          "content": "Cloning an existing rule is an efficient way to create new rules with similar logic, saving time and ensuring consistency."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring Exposure Rule Conditions",
+      "narrative": "Once the basic definition of an exposure rule is set, you can further refine when it applies using the 'Applies To' section and 'Rule Conditions'. The 'Applies To' section provides a user-friendly way to restrict rule execution based on common claim characteristics. Here, you can specify criteria such as **Loss types**, **Policy types**, and **Claim jurisdictions**. For instance, you might configure a rule to only apply to 'Personal Auto' policies or 'Vehicle Incident' types. If an Incident is created that doesn't match these specified criteria, the rule will simply not be executed for that incident. This section acts as the first layer of filtering, making it easy to define broad applicability. For more granular control, the 'Rule Variables and Condition' section allows you to specify additional, more complex conditions. If 'None' is selected, the rule executes based solely on the 'Applies To' criteria. However, you can add multiple conditions, joining them with 'And' (all must be true) or 'Or' (any can be true), or a combination of both. These conditions can directly access entity-specific data using dot notation. For example, to prevent an exposure from being created if the claim is in a 'Coverage In Question' state, you can add a condition like `incident.Claim.CoverageInQuestion` set to `false`. This ensures the rule only executes when the claim is not under coverage review, providing precise control over rule execution.",
+      "keyPoints": [
+        "The 'Applies To' section restricts rules by Loss Type, Policy Type, and Claim Jurisdiction.",
+        "'Rule Conditions' provide additional, more granular filtering using 'And'/'Or' logic.",
+        "Conditions can access entity data (e.g., `incident.Claim.CoverageInQuestion`) to refine rule execution."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "The 'Applies To' section for exposure rules, showing how to restrict rule application."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Defining Rule Variables and Conditions for more advanced exposure rule logic."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Layered Conditions",
+          "content": "Use the 'Applies To' section for broad, common filters and 'Rule Conditions' for specific, data-driven logic to keep rules organized and efficient."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Defining Exposure Rule Actions",
+      "narrative": "The 'Actions' section is where you define 'what to do' when an exposure rule's conditions are met. After a candidate incident successfully passes all the restrictions defined in both the 'Applies To' and 'Rule Conditions' sections, the specified action is executed. For exposure rules, the only available action type is **'Create Exposure'**. This action allows the rule to automatically generate new exposures. While it's rare for a single incident to require multiple exposures from one rule, the system does support adding multiple 'Create Exposure' actions within a single rule if such a complex scenario were to arise. When configuring the 'Create Exposure' action, you must specify a valid combination of **Coverage Type** and **Coverage Subtype**. It's important to note that exposures will only be created if the specified coverages actually exist on the policy associated with the incident. This ensures that the automated exposure creation aligns with the actual policy details, preventing the creation of invalid or irrelevant exposures. This action-oriented approach allows for precise automation, ensuring that the correct exposures are generated exactly when needed, based on the defined business logic.",
+      "keyPoints": [
+        "The 'Actions' section defines what happens when a rule's conditions are met.",
+        "The only action for exposure rules is 'Create Exposure'.",
+        "Exposures are only created if the specified Coverage Type and Subtype exist on the policy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "The 'Actions' section of an exposure rule, detailing how to configure exposure creation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Policy Coverage Check",
+          "content": "Remember that an exposure rule will only successfully create an exposure if the specified Coverage Type and Coverage Subtype are actually present on the policy linked to the incident. Always verify policy configurations."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how to navigate the Exposure Rules UI, define basic rule properties, set 'Applies To' criteria, configure 'Rule Conditions', and specify the 'Create Exposure' action.",
+      "transcriptSummary": "This video guides you through the process of setting up an exposure creation business rule in ClaimCenter. It covers accessing the Exposure Rules screen, defining a new rule's name and description, selecting triggering entities and actions, and configuring the conditions under which an exposure should be automatically created, including the specific coverage types."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Understanding Reserve Lines and Automation",
+      "narrative": "Just as exposures track potential payments, **reserve lines** are crucial for managing the financial aspects of a claim. A reserve line functions like a dedicated account, set aside for a very specific aspect of exposure processing. It tracks both credits and debits, with its current 'size' reflecting the net difference between these transactions. While you can create and even close exposures without immediately attaching a reserve line, it's critical to understand that **payments cannot be made to claimants without an associated reserve line**. This highlights their importance in the financial lifecycle of a claim. Reserve lines are uniquely defined by the combination of the **exposure** they belong to, the **cost type** (e.g., Claim Cost, Claim Expense), and the **cost category** (e.g., Auto body, Vehicle Inspection). An individual exposure can have multiple reserve lines, allowing for granular financial tracking. For example, a collision exposure for a claimant might have one reserve line for 'Claim Cost - Auto body' and another for 'Claim Expense - Vehicle Inspection'. ClaimCenter also supports reserve lines directly against the claim, though this is less common. Business rules can automate the creation of these reserve lines, which is highly beneficial when the type and amount of reserves are consistent and predictable for a given exposure type. For instance, an insurer might have a rule that automatically creates a $1,000 reserve line for a 'low-complexity vehicle damage' exposure, ensuring immediate and consistent financial provisioning.",
+      "keyPoints": [
+        "A reserve line is an amount set aside for expected payments, defined by exposure, cost type, and cost category.",
+        "Payments cannot be made without reserve lines.",
+        "Business rules automate reserve line creation for consistent exposure types and amounts."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "A review of reserve lines, their purpose, and how they are defined."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "The role of business rules in automating the creation of reserve lines."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Reserve Line",
+          "content": "An amount of money set aside for expected payments related to a specific exposure, uniquely defined by exposure, cost type, and cost category."
+        },
+        {
+          "type": "warning",
+          "title": "No Payments Without Reserves",
+          "content": "Remember that ClaimCenter will not allow payments to be made to claimants if there are no reserve lines attached to the relevant exposure."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Navigating and Defining Reserve Rules",
+      "narrative": "The user interface for managing **Reserve Rules** is very similar to that of Exposure Rules, found under **Administration > Business Settings > Business Rules > Reserve Rules**. This screen provides a comprehensive view of all defined reserve rules, complete with filtering capabilities that mirror those for exposure rules, allowing you to easily search and manage specific rules. The Reserve Rules screen displays crucial details for each rule, including its run status, whether it's staged or in draft, its version number, the triggering entity (which is consistently 'Exposure' for reserve rules), and the triggering action (always 'creation'). This means that every time an Exposure is created, the system will evaluate the applicable reserve rules. Just like with exposure rules, you can add new reserve rules, clone existing ones, and export or import them for deployment. To edit a rule, simply click its name to open the Rule screen and then select 'Edit'. Each reserve rule must have a unique name and can include an optional description. The triggering entity is pre-set to 'Exposure', and the triggering action is pre-set to 'creation'. This configuration ensures that reserve rules are evaluated whenever an Exposure is created. You also have the option to enable or disable rules, providing control over which rules are actively executed in the environment.",
+      "keyPoints": [
+        "Reserve rules are managed under Administration > Business Settings > Business Rules > Reserve Rules.",
+        "The UI is similar to Exposure Rules, offering filtering and rule management options.",
+        "Reserve rules are triggered when an 'Exposure' is 'created', and can be enabled or disabled."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "The Reserve Rules User Interface, showing rule management and filtering options."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Basic definition elements of a reserve rule, including name, trigger, and status."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Consistent UI",
+          "content": "The consistent user interface for both Exposure and Reserve rules simplifies learning and management for administrators."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Configuring Reserve Rule Conditions",
+      "narrative": "Similar to exposure rules, reserve rules utilize 'Applies To' and 'Rule Condition' sections to precisely control when they are executed. The 'Applies To' section allows you to define broad applicability criteria, restricting rule evaluation based on various claim and exposure characteristics. Here, you can specify **Loss Types**, **Policy Types**, **Claim Jurisdictions**, **Exposure Types**, and **Exposure Segments**. For example, a rule might only apply to 'Auto' loss types, 'Personal Auto' policies, or exposures with a 'Vehicle' type and a 'low-complexity' segment. If an Exposure is created that does not match these criteria, the rule will not be executed. This section offers a user-friendly way to set initial filters using predefined values. For more advanced and data-driven filtering, the 'Rule Condition' section comes into play. If set to 'None', the rule relies solely on the 'Applies To' criteria. However, you can add multiple conditions, combining them with 'And' (all must be true) or 'Or' (any can be true), or a mix of both. Reserve rule conditions have direct access to both the **Exposure** and **Claim** entities, allowing you to reference specific properties using dot notation. For instance, to create a reserve only if the vehicle's airbags were deployed, you could add a condition checking `exposure.VehicleIncident.AirbagsDeployed` set to `true`. This granular control ensures that reserves are created only under very specific, data-validated circumstances.",
+      "keyPoints": [
+        "The 'Applies To' section restricts reserve rules by Loss Type, Policy Type, Claim Jurisdiction, Exposure Type, and Exposure Segment.",
+        "'Rule Conditions' provide additional, detailed filtering using 'And'/'Or' logic.",
+        "Reserve rule conditions can access data from both 'Exposure' and 'Claim' entities."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "The 'Applies To' section for reserve rules, showing how to restrict rule application."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Defining Rule Conditions for more advanced reserve rule logic, including entity access."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Exposure Segment",
+          "content": "A categorization of an exposure based on characteristics and complexity (e.g., 'Auto - low complexity'), often used in conjunction with business rules for routing or automation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Defining Reserve Rule Actions",
+      "narrative": "The 'Actions' section for reserve rules specifies the 'what to do' once an exposure successfully meets all defined 'Applies To' and 'Rule Conditions'. For reserve rules, the sole available action is **'Create Reserve'**. This action allows for the automatic generation of new reserve lines. It's common for a single reserve rule to create multiple reserves for an exposure, especially in scenarios where an exposure requires separate financial tracking for different cost types or categories. For example, a mid-complexity vehicle exposure might need one reserve for 'Claim Cost - Auto body' and another for 'Claim Expense - Inspection'. To achieve this, you simply add multiple 'Create Reserve' actions within the same rule. When configuring a 'Create Reserve' action, you must specify the **Cost Type** and **Cost Category**. Additionally, you can define the reserve amount in two ways: as a **fixed amount** or by referencing the value of a **defined script parameter**. Using a script parameter is a powerful best practice, as it allows the reserve amount to be centrally managed. If the parameter's value changes, the rule automatically uses the new value without needing to be updated itself, providing greater flexibility and easier maintenance. It's also important to note that automatic reserve creation respects any existing Financial Holds on the claim, ensuring compliance with financial controls.",
+      "keyPoints": [
+        "The 'Actions' section for reserve rules allows only 'Create Reserve'.",
+        "A single rule can create multiple reserves for an exposure.",
+        "Reserve amounts can be fixed or dynamically set by a script parameter for flexibility."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "The 'Actions' section of a reserve rule, detailing how to configure reserve creation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Use Script Parameters for Reserve Amounts",
+          "content": "Defining reserve amounts using script parameters (e.g., `IntialReserveForAutoMajorVehicleDamageBody`) allows for centralized management and easy updates without modifying the rule itself, promoting maintainability."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will walk you through setting up a reserve creation business rule, including navigating the UI, defining conditions based on exposure properties, and configuring the 'Create Reserve' action with specific cost types and categories.",
+      "transcriptSummary": "This video illustrates how to configure a reserve creation business rule in ClaimCenter. It covers accessing the Reserve Rules screen, defining rule basics, setting 'Applies To' criteria, adding 'Rule Conditions' that access exposure data, and specifying the 'Create Reserve' action, including cost types, categories, and reserve amounts."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Under what conditions are exposure rules triggered?",
+      "referenceAnswer": "The correct answer is when an incident is created, each exposure rule compares the\nincident to its Applies To section and any Rule Conditions; if the incident matches, the\nrule is triggered.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "~~ — lfabusiness rule condition access the property\n¢\nyn exposure .VehicleIncident .AirbagsDeployed,\n‘ what kind(s) of business rule can this be?\nen",
+      "referenceAnswer": "The correct answers are either a Reserve business rule or an Activity business rule.\nExposure creation rules can only directly access the triggering incident.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter business rules automate the creation of activities, exposures, and reserves without coding.",
+        "Exposure rules are triggered by Incident creation and configured via 'Applies To' and 'Rule Conditions' to create specific exposures.",
+        "Reserve rules are triggered by Exposure creation and configured via 'Applies To' and 'Rule Conditions' to create specific reserve lines.",
+        "Both rule types offer flexible condition logic and can use script parameters for dynamic values.",
+        "Managing these rules through the administration UI allows for agile business process adaptation."
+      ],
+      "realWorldConnection": "By mastering business rules for exposures and reserves, you can significantly enhance the efficiency and consistency of claim processing in real Guidewire projects. This automation reduces manual errors, speeds up claim setup, and allows adjusters to focus on complex tasks, ultimately improving customer satisfaction and operational costs.",
+      "nextLessonPreview": "In the next lesson, we will explore how business rules can be used to automate the creation of activities, further streamlining your claim workflows."
+    },
+    {
+      "type": "concept",
+      "id": "concept-10",
+      "heading": "Lesson Objectives Review",
+      "narrative": "Throughout this lesson, we've explored the foundational concepts and practical applications of ClaimCenter's business rules, specifically focusing on their use for automating exposures and reserves. We began by understanding what business rules are, their benefits, and how they are managed within the ClaimCenter administration interface. We then delved into the specifics of exposures, reviewing their core components and how business rules can be configured to automatically create them based on various claim characteristics. Following this, we shifted our focus to reserve lines, understanding their critical role in financial tracking and how similar business rule principles apply to their automated creation. We examined the user interfaces for both exposure and reserve rules, learned how to define their basic properties, and, most importantly, how to configure precise 'Applies To' criteria and 'Rule Conditions' using entity-specific data. Finally, we covered the 'Actions' available for each rule type, including the use of script parameters for dynamic reserve amounts. By now, you should be equipped with the knowledge to write business rules that create exposures and reserves for specific cases, directly addressing our lesson objectives.",
+      "keyPoints": [
+        "You can now write business rules to create exposures for specific cases.",
+        "You can now write business rules to create reserves for specific cases."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "A summary of the lesson's learning objectives, reinforcing key skills gained."
+        }
+      ]
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In a ClaimCenter training environment, create two new business rules:\n1.  An **Exposure Rule** that automatically creates a 'Collision' exposure for 'Personal Auto' claims whenever a 'Vehicle Incident' is created, but only if the claim's 'Coverage In Question' property is false.\n2.  A **Reserve Rule** that automatically creates a 'Claim Cost - Auto Body' reserve line for 'Vehicle' exposures with an 'Auto - low complexity' segment, setting an initial amount of $1,500. Ensure this rule only triggers if the associated vehicle incident indicates 'Airbags Deployed'.",
+      "objectives": [
+        "Configure an exposure rule with 'Applies To' criteria and 'Rule Conditions'.",
+        "Configure a reserve rule with 'Applies To' criteria and 'Rule Conditions' accessing exposure data.",
+        "Set a fixed reserve amount for a specific cost type and category."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_17_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_17_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_17_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_17_02.mp4"
+    }
+  ]
+}

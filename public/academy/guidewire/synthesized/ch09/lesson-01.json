@@ -1,0 +1,385 @@
+{
+  "lessonId": "ch09-l01",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 1,
+  "title": "Configuring the ClaimCenter User Interface",
+  "subtitle": "Mastering the structure and customization of ClaimCenter's user interface components.",
+  "synthesizedAt": "2026-02-16T18:25:51.079328+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a new regulatory requirement or a business process change that necessitates adding a new field or a new action to a specific screen in ClaimCenter. Without understanding how the user interface is structured, making these changes can feel like navigating a maze blindfolded. You need to ensure users can access critical information and perform their tasks efficiently.",
+      "question": "How can you confidently modify the ClaimCenter user interface to meet evolving business needs and enhance user experience?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Identify and describe the core components of the ClaimCenter user interface, including Pages, Location Groups, Location Refs, Actions Menus, Tab Bars, and Info Bars.",
+        "Explain the hierarchical relationships and interactions between these UI components.",
+        "Configure key properties of Pages and Location Groups within ClaimCenter Studio.",
+        "Describe the configuration elements for Location Refs, Actions Menus, Info Bars, and Tab Bars.",
+        "Understand the purpose and implementation of Forwards and dropdown menus within ClaimCenter tabs."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with various applications, navigating through tabs, menus, and different screens. ClaimCenter's UI shares many common patterns, but its underlying configuration uses specific terminology and structures.",
+      "warmupQuestion": "Think about a typical business application you use daily. What are the main elements you interact with to find information or perform a task?",
+      "hint": "Consider how you switch between major sections, find specific details, or initiate actions."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Pages and Location Groups in ClaimCenter",
+      "narrative": "At the heart of the ClaimCenter user interface are **Pages** and **Location Groups**, which work together to organize and display information. Think of a **Page** as the fundamental configuration object that brings together and presents related information on a single screen. When you view a claim summary, a policy detail, or an address book entry, you are interacting with a specific Page.\n\nPages don't exist in isolation; they are organized within a larger structure called a **Location Group**. A Location Group is essentially everything you see under one tab in the ClaimCenter application's tab bar. It serves as a container, grouping related pages and providing quick navigation between them. For instance, clicking the 'Claim' tab navigates you to the 'Claim' Location Group, which then presents various pages related to a specific claim, such as its summary, loss details, or parties involved. Location groups can be centered around a single object, like a Claim or the Address Book, or a functional area, such as the Desktop or Administration tabs. Understanding this fundamental relationship—that pages contain screens and are organized within location groups—is crucial for effective UI configuration.",
+      "keyPoints": [
+        "A Page is the configuration object that displays information on a single screen.",
+        "Pages are organized and displayed within Location Groups.",
+        "A Location Group represents everything under one tab in the ClaimCenter UI, organizing related pages and providing navigation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the ClaimCenter user interface, highlighting key configurable areas."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Visual representation of how Pages contain or reference screens within ClaimCenter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An example of a Location Group, showing how it encompasses all content under a single tab."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Page",
+          "content": "A configuration object in ClaimCenter that groups, organizes, and displays related information in a single screen."
+        },
+        {
+          "type": "definition",
+          "title": "Location Group",
+          "content": "A configuration object that organizes related pages and provides quick navigation between them, typically corresponding to a top-level tab in the UI."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Anatomy of a Location Group: Navigation and Actions",
+      "narrative": "Beyond just organizing pages, a **Location Group** is a rich container that includes several interactive elements crucial for user navigation and task execution. At its core, a location group contains a collection of **Location Refs**, which are essentially menu links. These Location Refs allow users to navigate from one page to another *within* the same location group, or even to open a sub-menu of other location refs. For example, when you click the 'Claim' tab, ClaimCenter automatically directs you to the 'Summary' Location Ref, which then leads to the 'Overview' page, displaying the claim's summary details.\n\nAnother vital component is the **Actions Menu**, which provides quick access to work tasks relevant to the current context. While not all location groups have an Actions Menu (e.g., Search and Address Book in base configuration), it's a powerful tool for streamlining workflows on pages like the Claim Summary. The **Tab Bar** is a universal element at the top of the application, providing links to all top-level location groups, ensuring consistent navigation across ClaimCenter. Finally, the **Info Bar** (which is optional and primarily used in the Claim location group in base configuration) displays critical information about the object currently under consideration, such as policy number, insured name, or claim status, offering a quick glance at essential data. These elements collectively define the user's experience and interaction within any given section of ClaimCenter.",
+      "keyPoints": [
+        "Location Groups contain Location Refs, an Actions Menu, a Tab Bar, and an Info Bar.",
+        "Location Refs are links within a Location Group to pages or other Location Groups.",
+        "The Actions Menu allows users to perform work tasks.",
+        "The Tab Bar provides links to top-level Location Groups.",
+        "The Info Bar displays contextual information about the object under consideration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Detailed view of a Location Group, showing its constituent parts: Location Refs, Actions Menu, Tab Bar, and Info Bar."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Illustration of Location Refs within a Location Group, acting as navigation links."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Example of an Actions Menu, providing quick access to tasks."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The Tab Bar, showing top-level navigation links across the application."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The Info Bar, displaying contextual information for the current object."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A review diagram summarizing the relationship between a Location Group's components and the displayed screen."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location Ref",
+          "content": "A link within a Location Group that points to a specific Page or another Location Group."
+        },
+        {
+          "type": "definition",
+          "title": "Actions Menu",
+          "content": "A menu within a Location Group that provides quick access to context-sensitive work tasks."
+        },
+        {
+          "type": "definition",
+          "title": "Tab Bar",
+          "content": "A common UI element across ClaimCenter that provides links to top-level Location Groups."
+        },
+        {
+          "type": "definition",
+          "title": "Info Bar",
+          "content": "An optional UI element that displays key information about the object currently being viewed, such as a claim or policy."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of configuring page components within ClaimCenter Studio. Pay close attention to how different elements are identified and modified.",
+      "transcriptSummary": "The video demonstrates how to navigate to a page in Studio, identify its properties, and make basic modifications to its layout and content. It highlights the relationship between the visual UI and its underlying PCF configuration."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuring Pages and Their Entry Points",
+      "narrative": "Now that we understand the basic structure, let's dive into configuring these elements. When configuring a **Page**, you'll encounter numerous properties, though many are self-explanatory or beyond the scope of typical customization. Key properties include `canEdit`, `canVisit`, and `startInEditMode`. The `canEdit` property defines the conditions under which a page can be modified, often tied to user permissions. Similarly, `canVisit` determines who can access the page, defaulting to `true` but frequently restricted by permissions (e.g., `perm.Claim.view(claim)`). The `startInEditMode` property dictates whether the page loads in an editable state by default.\n\nCrucially, every page needs one or more **entry points**. An entry point defines how users can navigate to a page and specifies the data it requires to display correctly. Each entry point has a `signature`, which declares the file name and any variables (like a `claim` object for a Claim Summary page) that the associated location ref must provide. These required variables must also be explicitly defined in the 'Variables' tab of the page configuration in Studio. Without correctly defined entry points and their corresponding variables, a page cannot be accessed or will fail to display its content.",
+      "keyPoints": [
+        "Page properties like `canEdit`, `canVisit`, and `startInEditMode` control access and initial state.",
+        "Pages require entry points with signatures that define required variables.",
+        "Variables declared in an entry point's signature must also be defined in the page's 'Variables' tab."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "An introductory slide to the configuration of pages and location groups."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "A screenshot showing various properties of a Page, such as `canEdit` and `canVisit`."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "An example of a Page's entry points, including its signature and required variables."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Permission-Based Access",
+          "content": "Always use `canVisit` and `canEdit` properties to enforce appropriate user permissions, ensuring data security and integrity."
+        },
+        {
+          "type": "gotcha",
+          "title": "Missing Variables",
+          "content": "If a page's entry point requires variables, ensure they are defined in both the entry point signature and the page's 'Variables' tab to avoid runtime errors."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring Location Groups and Location Refs",
+      "narrative": "Location groups are not just flat lists; they can be nested, allowing for complex hierarchical navigation. Top-level location groups, often represented as tabs, can contain other location groups as children. These child groups are typically indicated by a chevron (down arrowhead) icon in the UI. Clicking such an icon expands the child group, revealing its own set of location refs and automatically selecting the first one. For instance, the 'Parties Involved' location group might expand to show 'Contacts' and 'Users' location refs.\n\nWhen defining **Location Refs** in Studio, each has a `label` and a `signature`, separated by a colon. The `signature` specifies the target page or location group and any variables it needs. While less common, a location group can also include a `location ref iterator`, which dynamically generates location refs based on a collection of objects, though these are rarely visible due to complex `visible` properties. Essential **Location Group properties** include `title` and `id` (both required), `canVisit` (for access control), and references to `menuActions`, `infoBar`, and `tabBar` PCF files. Similarly, **Location Ref properties** include `location*` (designating the entry point and required variables) and `label`, which can dynamically include quantities using functions like `getDesktopCounts()` for displaying counts of activities or claims. Understanding these properties allows for precise control over navigation and display within ClaimCenter.",
+      "keyPoints": [
+        "Location groups can be nested, with child groups indicated by chevron icons.",
+        "Location Refs are defined by a label and a signature, pointing to pages or other location groups.",
+        "Location group properties include `title`, `id`, `canVisit`, `menuActions`, `infoBar`, and `tabBar` references.",
+        "Location Ref properties include `location*` (entry point) and `label` (which can be dynamic)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "An example of nested Location Groups, showing a parent group containing a child group with its own Location Refs."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Configuration details of Location Refs within a Location Group, including the concept of a Location Ref Iterator."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "A list of key properties for configuring a Location Group."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "The first part of Location Ref properties, focusing on the `location*` attribute."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "The second part of Location Ref properties, detailing the `label` attribute and dynamic content."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Dynamic Labels",
+          "content": "Leverage functions like `getDesktopCounts()` in Location Ref labels to provide users with immediate, relevant information, such as the number of pending activities or claims."
+        },
+        {
+          "type": "best_practice",
+          "title": "Modular Configuration",
+          "content": "By referencing separate PCF files for `menuActions`, `infoBar`, and `tabBar` within a Location Group's properties, you promote modularity and reusability in your UI configuration."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on configuring the components within a location group, such as location refs, actions menus, and info bars. Pay attention to how these elements are linked to their respective PCF files.",
+      "transcriptSummary": "The video illustrates how to modify a location group's properties, add or reorder location refs, and link to custom menu action or info bar PCF files. It emphasizes the impact of these changes on the user's navigation and contextual information display."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Configuring Menu Actions, Info Bars, and Tab Bars",
+      "narrative": "Each of the interactive elements within a location group—the Actions Menu, Info Bar, and Tab Bar—is configured through dedicated PCF elements. The **Menu Actions element** is specified by the `menuActions` property of a location group. It consists of a list of `menu item` elements, optionally organized into `menu item sets`. A `menu item` defines a `label` and an `action` to be performed when clicked, while a `menu item set` groups related items under a common heading, like 'New...'.\n\nSimilarly, the **Info Bar element** is referenced by the `infoBar` property. It comprises a series of `info bar elements`, each capable of displaying a `label`, a `value`, and an `icon`, with its visibility controlled by a `visible` property. For example, an info bar element might display a policy number with a specific icon, visible only if a claim is flagged. Finally, the **Tab Bar element**, specified by the `tabBar` property, consists of `tab elements`. Each `tab element` is primarily defined by an `action` (often a `go()` action to a location group) and a `label`, with its visibility also controlled by a `visible` property, typically based on user permissions. These configurable elements allow for a highly customized and context-sensitive user experience.",
+      "keyPoints": [
+        "Menu Actions elements contain menu items and optional menu item sets, defining actions and labels.",
+        "Info Bar elements consist of individual info bar elements, each with a label, value, icon, and visibility property.",
+        "Tab Bar elements are composed of tab elements, each defined by an action (usually `go()` to a location group) and a label, with visibility based on permissions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "Configuration of a Menu Actions element, showing menu items and sets."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Details of an Info Bar element, illustrating labels, values, icons, and visibility properties."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Configuration of a Tab Bar element, defining individual tabs and their actions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Contextual Visibility",
+          "content": "Use the `visible` property on menu items, info bar elements, and tab elements to ensure that users only see options and information relevant to their role and the current context, reducing clutter and improving usability."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Advanced Tab Bar Configuration: Forwards and Dropdowns",
+      "narrative": "While many tabs directly `go()` to a specific location group, some, like the Claim tab, utilize **Forwards**. A Forward is a powerful non-visual decision-making logic that routes a navigation request based on conditions evaluated at runtime. It's essentially a list of conditions, each pointing to a specific location group or page to navigate to if its condition is `true`. The last element in a forward typically has a `true` condition to ensure navigation always occurs. For example, the `ClaimTabForward` PCF might navigate to the most recently viewed claim, or to a 'NoClaim' page if no claim has been viewed. Forwards can also have parents, allowing for even more complex routing, such as directing to different claim states (active, draft, archived).\n\nAdditionally, tabs can feature **dropdown menus**, indicated by a downward-pointing triangle. These dropdowns allow for grouping related actions or navigation options directly under a tab. You can add items to a tab's dropdown menu by dragging `Menu Item` widgets from the Studio Toolbox onto the tab and configuring their `id`, `label`, and `action` properties. Visibility properties can also be set for these dropdown menu items, similar to other UI elements. This provides a flexible way to offer additional functionality without cluttering the main tab bar.",
+      "keyPoints": [
+        "Forwards provide conditional navigation logic, routing requests based on runtime information.",
+        "A Forward is a list of conditions, each linking to a location group or page.",
+        "Tabs can have dropdown menus, configured with `Menu Item` widgets, to group related actions or navigation options."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "An illustration of Forwards, showing how they provide conditional navigation logic for tabs."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Example of tabs with dropdown menus, detailing how menu items are configured within them."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Forward",
+          "content": "A non-visual decision-making logic that routes a navigation request based on conditions evaluated at the time of the request."
+        },
+        {
+          "type": "best_practice",
+          "title": "Streamline Navigation",
+          "content": "Use Forwards to create intelligent navigation paths that adapt to user context or data state, and use dropdowns to organize secondary actions under main tabs, improving UI clarity."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team needs to add a new 'Quick Report' option to the Actions menu of the Claim Summary page. This report should only be visible to users with 'Reports.view' permission.",
+      "question": "How would you begin to configure this new menu item, ensuring it appears in the correct location and respects permissions?",
+      "hints": [
+        "Recall which element defines the Actions Menu for a Location Group.",
+        "Think about the properties required for a `menu item` element.",
+        "Consider how to control the visibility of the new menu item."
+      ],
+      "expectedApproach": "Locate the `menuActions` PCF file referenced by the Claim Location Group. Add a new `menu item` element within this file, setting its `label`, `action` (e.g., to a new report page), and a `visible` property based on `perm.Reports.view`."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A business requirement dictates that the 'Claim' tab should automatically navigate to a 'Draft Claims' page if the user has any claims in a 'Draft' state, otherwise it should go to the standard 'Summary' page. If no claims exist, it should go to a 'New Claim' wizard.",
+      "question": "Describe the configuration changes you would make to the `ClaimTabForward` to implement this logic.",
+      "hints": [
+        "Remember that Forwards are a list of conditional navigations.",
+        "Consider the order of conditions: most specific (Draft claims) to most general (no claims).",
+        "What is the default condition for a Forward?"
+      ],
+      "expectedApproach": "Modify the `ClaimTabForward` PCF. Add a condition at the top to check for 'Draft' claims and navigate to the 'Draft Claims' page. Then, add a condition to check for any existing claims and navigate to the 'Summary' page. Finally, ensure a `true` condition at the end navigates to the 'New Claim' wizard if no other conditions are met."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "e Everything under one tab in the tab bar is called. ..?",
+      "referenceAnswer": "¢ The correct answer is a location group.\nSe see aS SSeS",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Which component of a location group provides navigation within the\nlocation group?",
+      "referenceAnswer": "The correct answer is Location refs.\nSe see aS SSeS",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "lowhat can a location ref widget refer?",
+      "referenceAnswer": "7a The correct answer is a page or another location group.\nSe see aS SSeS",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What does an info bar element define?",
+      "referenceAnswer": "¢ The correct answer is the informational widgets, like policy number and assigned\nadjuster, that appear at the top of a page.\nSe see aS SSeS",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The ClaimCenter UI is built upon Pages (screens) organized within Location Groups (tabs).",
+        "Location Groups contain Location Refs (navigation links), Actions Menus (task shortcuts), Tab Bars (top-level navigation), and Info Bars (contextual data).",
+        "Configuration involves setting properties for Pages and Location Groups, defining entry points for pages, and specifying the behavior of Location Refs.",
+        "Menu Actions, Info Bars, and Tab Bars are configured through dedicated PCF elements, allowing for granular control over labels, actions, icons, and visibility.",
+        "Advanced features like Forwards enable conditional navigation logic, and dropdowns provide additional functionality under tabs."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of UI configuration is essential for implementing new features, customizing workflows, and ensuring a seamless user experience. Whether it's adding a new field to a claim, creating a custom report action, or tailoring navigation for specific user roles, mastering these configuration concepts allows developers and instructional designers to build robust and intuitive ClaimCenter solutions that directly support business operations and user efficiency."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Please perform the lab called 'Adding a view to a page' in the Student Workbook. This hands-on exercise will guide you through modifying a ClaimCenter page to include a new view, reinforcing the concepts learned in this lesson.",
+      "objectives": [
+        "Practice identifying and modifying existing page configurations.",
+        "Implement a new view within a ClaimCenter page.",
+        "Apply knowledge of page properties and structure in a practical scenario."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_01_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_01_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_01_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_01_02.mp4"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "lessonId": "ch04-l21",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 21,
+  "title": "Modifiers",
+  "subtitle": "Understand how modifiers adjust premiums in PolicyCenter for nuanced control.",
+  "synthesizedAt": "2026-02-16T17:27:41.560648+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter trying to price a complex commercial policy. The standard rates don't quite capture the unique risk factors or the client's exceptional management quality. How do you adjust the premium to reflect these nuances accurately?",
+      "question": "How can we precisely tailor insurance premiums to account for specific risk factors or customer characteristics not covered by base rates?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain how modifiers in PolicyCenter are integral to the rating process.",
+        "Describe how modifiers allow for nuanced control over premium calculations.",
+        "Identify how modifiers are designed to apply adjustments based on factors like risk or customer characteristics.",
+        "Understand how modifiers fit into the data model.",
+        "Configure modifiers effectively to customize insurance products."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of how insurance products are structured in PolicyCenter and the basic principles of premium calculation. Think about how different coverages or policy lines might have unique pricing considerations.",
+      "warmupQuestion": "What are some common reasons an insurance premium might need to be adjusted up or down from its initial calculation?",
+      "hint": "Consider factors beyond just the basic coverage limits."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Modifier Application Levels and Product Modifiers",
+      "narrative": "Modifiers are powerful tools in PolicyCenter that allow for granular control over premium calculations. They can be applied at different levels, providing flexibility in how adjustments are made. Specifically, modifiers can be applied either at the **product level** or the **policy line level**.\n\n**Product-level modifiers** are designed to affect all lines within a particular product. For instance, in a Commercial Package product, a product-level modifier would influence the rating for all associated lines, such as General Liability, Commercial Property, etc. These are often referred to as `ProductModifier` patterns. This ensures consistency across a multi-line policy, where a single factor might impact the overall risk profile of the entire package. An excellent example from the base configuration is the `CPPIRPM` (Commercial Package Policy Individual Risk Premium Modification), which is a scheduled rate modifier that considers factors like the size of premium, spread of risk, superior building construction, and the quality of management, impacting all coverages within a CPP.\n\nIn contrast, **policy line modifiers** target specific lines of business, offering more specialized adjustments. For example, a modifier might only apply to the General Liability line within a Commercial Package, without affecting the Commercial Property line. This granular control is essential for fine-tuning premiums based on factors unique to a particular line of business.\n\nA modifier itself is a value that the rating engine uses to justify the policy premium, or some portion of it. It captures information relevant to pricing that isn't necessarily tied to a specific coverage or coverable, allowing for adjustments based on broader risk assessments or customer characteristics.",
+      "keyPoints": [
+        "Modifiers can be applied at the product level (affecting all lines) or policy line level (affecting only that line).",
+        "Product-level modifiers are known as `ProductModifier` patterns and ensure consistent rating across multi-line policies.",
+        "The `CPPIRPM` is an example of a product-level scheduled rate modifier for Commercial Package Policies.",
+        "Modifiers capture pricing-relevant information not tied to specific coverages."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Modifiers can be applied at either the product level or the policy line level, offering flexibility in premium adjustments."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Rate modifiers are values used by the rating engine to adjust policy premiums based on various factors."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "ProductModifiers affect the rating of coverages across all lines within a multi-line policy, creating an instance of a modifier that impacts the overall policy cost."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Modifier",
+          "content": "The most general term encompassing premium-bearing factors like experience modifiers, schedule rates, Individual Risk Premium Modification (IRPM), and package modifiers, which appear on the policy."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of adding a modifier to a Commercial Package product using the Product Designer interface. Pay close attention to how you select the application level and configure the modifier's properties.",
+      "transcriptSummary": "The demonstration shows how to navigate to the modifier section in Product Designer for a Commercial Package, add a new modifier, and specify its code, name, type (ProductModifier), data type, and whether it's a schedule rate modifier. It highlights the impact of these choices on the overall rating."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Schedule Rate Modifiers and Rate Factor Configuration",
+      "narrative": "Modifiers come in various types, each serving distinct purposes in policy rating, from basic adjustments to complex schedule rates. Understanding these types is crucial for implementing them effectively. One particularly versatile type is the **schedule rate modifier**.\n\nSchedule rate modifiers are designed to provide credits or debits within established value ranges. They are incredibly useful for adjusting rates based on intangible factors that cannot be easily quantified as part of the initial submission, such as the quality of management, specific property characteristics, or other unique risk aspects. This flexibility allows insurers to reflect nuanced risk assessments in their pricing, which is an essential feature for competitive product offerings and accurate risk reflection.\n\nWhen you create a schedule rate modifier, a crucial first step is to define its **rate factors**. A rating input modifier consists of one or more rate factors. These factors must be listed in the `RateFactorType` typelist before they can be added to a schedule rate in Product Designer. The `RateFactorType` typelist forms the basis of the modifier's calculations. For example, in the General Liability line, schedule rate modifiers might include rate factors like 'Location - Inside Premises' or 'Location - Outside Premises'.\n\nDuring modifier creation in Product Designer, once you set the data type to 'rate' and select the 'Schedule Rate' checkbox, a 'Rate Factors' link appears under 'Go to links'. This page is where you add one or more rate factors that combine to give the value of the schedule credit. It's important to remember a key configuration tip: while Studio automatically recognizes new typecodes, allowing configuration users to create the schedule rate modifier without restarting the server, any changes to typelists are considered data model changes. Therefore, you **must restart the server** before you can test the schedule rate modifier in the user interface to ensure accurate functionality.",
+      "keyPoints": [
+        "Schedule rate modifiers provide credits or debits for intangible factors like management quality or property characteristics.",
+        "Rate factors are the building blocks of schedule rate modifiers and must be defined in the `RateFactorType` typelist.",
+        "The `RateFactorType` typelist is crucial for the modifier's calculations.",
+        "A server restart is required after modifying the `RateFactorType` typelist to see changes in the user interface."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Modifiers come in various types, each serving distinct purposes in policy rating, requiring an understanding of their implications."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Schedule rate modifiers offer credits or debits for intangible factors, allowing for nuanced risk assessment."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The `RateFactorType` typelist is where rate factors are defined before they can be used in schedule rate modifiers."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Schedule Rate",
+          "content": "A specific type of modifier that provides credits or debits within established value ranges, used for factors such as management, property, and other intangibles that cannot be quantified as part of the submission."
+        },
+        {
+          "type": "tip",
+          "title": "Configuration Tip: Server Restart",
+          "content": "While Studio automatically recognizes new typecodes for rate factors, changes to typelists are data model changes. You must restart the server before testing a new schedule rate modifier in the user interface to ensure it functions correctly."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company is launching a new 'Green Initiative' product. You want to offer a discount for businesses that use renewable energy sources, but this isn't a standard coverage option. You also need to ensure this discount applies across all lines of business within the new product.",
+      "question": "How would you configure a modifier to provide this 'Green Initiative' discount, ensuring it applies to all policy lines within the new product, and what type of modifier would it be?",
+      "hints": [
+        "Consider the scope of the discount: product-wide or line-specific?",
+        "Think about factors that are 'intangible' or not directly tied to specific coverages.",
+        "What is the general term for modifiers that provide credits/debits based on such factors?"
+      ],
+      "expectedApproach": "Create a product-level modifier, specifically a schedule rate modifier, and define a new rate factor in `RateFactorType` for 'Renewable Energy Use'."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "For the Personal Auto policy line, why are there two possible values for a\n¢ modifier’s \"modifier type\"?",
+      "referenceAnswer": "In Personal Auto, a modifier can be associated with the policy line or to a specific\nvehicle. When creating the modifier, you specify a modifier type to denote if it is policy\nline level (PAModifier) or vehicle level (PAVehicleModifier).",
+      "questionKey": "slide-11"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When do you need to add values to the RateFactorType typelist?",
+      "referenceAnswer": "You need to add typecodes to the RateFactorType typelist when you create a\nschedule rate modifier and the desired rate factors don't already exist.",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Modifiers are essential for nuanced premium adjustments in PolicyCenter.",
+        "They can be applied at the product level (affecting all lines) or policy line level (affecting specific lines).",
+        "Product-level modifiers, like `ProductModifier` patterns, ensure consistent rating across multi-line policies.",
+        "Schedule rate modifiers provide credits/debits for intangible factors and rely on `RateFactorType` typelist for their calculations.",
+        "Changes to typelists require a server restart to be reflected in the user interface."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering modifiers allows developers and product managers to create highly competitive and accurately priced insurance products. This directly translates to better risk management and increased customer satisfaction by offering tailored policies that truly reflect individual circumstances.",
+      "nextLessonPreview": "Having explored modifiers, our next lesson will delve into contingencies, further expanding our toolkit for customizing insurance solutions and managing policy conditions."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on what you've learned, your task is to configure a new schedule rate modifier in Product Designer. This modifier should apply to a specific policy line (e.g., Commercial Property) and offer a credit for 'Advanced Security Systems'. You will need to define a new rate factor in the `RateFactorType` typelist and then integrate it into your new modifier.",
+      "objectives": [
+        "Create a new rate factor in the `RateFactorType` typelist.",
+        "Configure a new schedule rate modifier for a specific policy line.",
+        "Associate the new rate factor with the schedule rate modifier.",
+        "Understand the steps required to make the modifier visible and functional in the PolicyCenter UI."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_22_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_22_01.mp4"
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "lessonId": "ch06-l13",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 13,
+  "title": "Using Trouble Tickets to Resolve Issues",
+  "subtitle": "Learn how to leverage trouble tickets and holds to efficiently resolve billing issues and prevent delinquencies.",
+  "synthesizedAt": "2026-02-16T17:51:35.479206+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a policyholder calls to say their payment will be late due to an unexpected event. Without a system to manage this, they might face unnecessary late fees or even policy cancellation. How can we proactively manage such situations to maintain customer satisfaction and prevent issues from escalating?",
+      "question": "What tools can BillingCenter provide to track and resolve customer-reported issues before they become serious problems?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and key features of trouble tickets in BillingCenter.",
+        "Identify the entities that can be associated with a trouble ticket.",
+        "Explain how trouble ticket holds prevent automated processing.",
+        "Outline the process for creating and maintaining a trouble ticket, including adding activities.",
+        "Understand the lifecycle and escalation of trouble tickets and activities."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored various billing processes, including invoicing and delinquency management. We know that preventing issues is often better than resolving them after they've occurred.",
+      "warmupQuestion": "Think about a time you've had to track a complex customer issue. What challenges did you face, and what tools would have made it easier?",
+      "hint": "Consider how you currently manage customer inquiries or internal tasks that require follow-up."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Trouble Tickets and Their Purpose",
+      "narrative": "In the world of insurance billing, proactively addressing potential issues is key to maintaining customer satisfaction and avoiding costly delinquencies. As Marcus, a business analyst, wisely points out, preventing delinquencies is beneficial for everyone involved. When a policyholder, like the one calling to inform us of a late payment, reaches out, BillingCenter offers a powerful tool: the **trouble ticket**.\n\nTrouble tickets are central to tracking and resolving issues related to accounts, policies, and producers. They provide a structured mechanism for billing personnel to manage problems, ensuring that no issue falls through the cracks. A key feature of trouble tickets is their ability to suspend automatic processing through **trouble ticket holds**. These holds can be applied to critical processes such as delinquency, invoice sending, commission earning, commission payments, payment allocation, and disbursements. This means that if a customer is disputing a charge or has informed us of a late payment, we can pause automated actions to prevent further complications.\n\nEach trouble ticket follows a lifecycle, from creation to closure. You can specify a **due date** and an **escalation date** to help prioritize and manage the workload. If a trouble ticket remains open past its escalation date, an icon appears in the UI, flagging it as escalated. While users can manually create trouble tickets at any time, developers can also configure Gosu rules to automatically generate them when specific exception events occur, further streamlining issue management.",
+      "keyPoints": [
+        "Trouble tickets track and resolve issues related to accounts, policies, and producers.",
+        "They can suspend automated processes using trouble ticket holds.",
+        "Trouble tickets have due dates and escalation dates for prioritization.",
+        "They can be created manually or automatically via business rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the trouble ticket concept in BillingCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A scenario illustrating how trouble tickets can be used to avoid delinquency when a customer anticipates a late payment."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Key features and the lifecycle of a trouble ticket, from creation to closure and hold release."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Trouble Ticket Structure: Owners, Entities, and Holds",
+      "narrative": "Every trouble ticket has a clear structure to ensure accountability and effective resolution. Crucially, each trouble ticket is assigned to a single **owner** who is responsible for seeing the issue through to completion. This owner can be assigned explicitly or automatically based on configured rules. While one person owns the ticket, multiple parties can monitor it and be assigned tasks (activities) to assist in its resolution.\n\nTrouble tickets are always associated with one or more **related entities**. You can create a trouble ticket directly from an Account, Policy, Policy Period, or Producer tab, which automatically links it to that entity. Alternatively, you can create one from your Desktop and then manually add accounts, policies, policy periods, or producers. This association is vital because if an entity is linked to an open trouble ticket, a **trouble ticket alert** is displayed on that entity's summary screen, providing immediate visibility to anyone viewing the account or policy.\n\nOne of the most powerful aspects of trouble tickets is the **trouble ticket hold**. A hold acts as a lock, blocking specific automated system behaviors while a billing problem is investigated. These holds are always tied to an existing trouble ticket and cannot exist independently. Common examples include holds on delinquency processing, invoice sending, and disbursements (refunds). If a hold is placed on delinquency, it prevents new delinquencies from being initiated and suspends any existing delinquency processing for the related entities. Once the trouble ticket is closed, or if a specific release date is set for the hold, the hold is automatically released, and the suspended processes resume, with event target dates adjusted as needed. It's important not to confuse these with 'charge holds,' which are associated with specific charges.",
+      "keyPoints": [
+        "Each trouble ticket has a single owner responsible for its resolution.",
+        "Trouble tickets are associated with accounts, policies, policy periods, and/or producers.",
+        "An alert appears on related entity summary screens when an open trouble ticket exists.",
+        "Trouble ticket holds block automated processes like delinquency or invoice sending.",
+        "Holds are automatically released when the ticket is closed or on a specified release date."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Illustrates how a trouble ticket is assigned to an owner and associated with various related entities like accounts, policies, and producers."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Details the function of trouble ticket holds, their impact on automated processes, and how they are released."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "A visual placeholder for content, reinforcing the concept of trouble ticket management."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Trouble Ticket Hold vs. Charge Hold",
+          "content": "A **trouble ticket hold** is tied to a trouble ticket and affects an account, policy, or producer, suspending broad automated processes. A **charge hold** is associated with a particular charge and typically created/released automatically."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how a billing clerk creates a new trouble ticket in BillingCenter and applies holds to prevent delinquency and invoice sending for a policyholder's account.",
+      "transcriptSummary": "The demo walks through navigating to the New Trouble Ticket wizard, entering basic information, selecting related entities, and applying both delinquency and invoice sending holds. It highlights the steps a user would take to set up a trouble ticket to manage a customer's billing issue."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Managing Trouble Tickets: Creation, Activities, and Resolution",
+      "narrative": "Let's consider a practical scenario: Ashley, a policyholder, received an overdue notice despite having reduced her coverage and awaiting an adjusted bill. Zhang, a billing clerk, can address this by creating a trouble ticket and placing a hold on her billing until the adjusted bill is processed. This prevents further incorrect notices and gives time to resolve the underlying issue.\n\nOnce a trouble ticket is open, it's a dynamic record that can be edited at any time. You can add or remove related entities, link relevant transactions for reference, and modify existing holds. Throughout its lifecycle, it's common to add **notes** to document progress and create **activities** to involve other users or assign specific tasks. Notes are crucial for maintaining a clear audit trail of the issue's resolution, while activities serve as reminders to 'do something' and can be assigned to specific users or groups.\n\nActivities, much like trouble tickets, have priorities, due dates, and escalation dates. If an activity's due date passes, it's highlighted in red, and if it escalates, an icon appears. Closing a trouble ticket is the final step in its lifecycle. Once closed, a trouble ticket cannot be edited or reopened, and all associated open activities are automatically marked as 'Complete'. This ensures that all related tasks are considered resolved when the main issue is closed. For instance, if Ashley's late fee needs to be removed after her issue is resolved, Zhang can create an activity for this specific task, ensuring it's addressed before the trouble ticket is fully closed.",
+      "keyPoints": [
+        "Open trouble tickets can be edited to add/remove entities, transactions, and holds.",
+        "Notes document progress, and activities assign tasks for resolution.",
+        "Activities have priorities, due dates, and escalation dates.",
+        "Closing a trouble ticket marks all associated activities as complete and prevents further edits."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A scenario where a policyholder, Ashley, receives an overdue notice and a billing clerk, Zhang, offers to place a hold on billing."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Illustrates how an open trouble ticket can be maintained, including adding notes, activities, and editing related entities or holds."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Explains the role of activities as assignable tasks within a trouble ticket, including their lifecycle and assignment options."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A follow-up scenario where Ashley requests a late fee removal, demonstrating a common task after a primary issue is resolved."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration shows how to add an activity to an existing trouble ticket, such as removing a late fee, and then how to properly close the trouble ticket once all issues are resolved.",
+      "transcriptSummary": "The demo illustrates navigating to an open trouble ticket, adding a new activity with a subject and description, and assigning it. Finally, it demonstrates the process of closing the trouble ticket, which automatically completes all associated activities."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policyholder, Mr. Smith, calls to report that he received an invoice for a policy he canceled last month. He's concerned about potential delinquency notices and wants to ensure he isn't charged for a canceled policy.",
+      "question": "As a BillingCenter user, what steps would you take to address Mr. Smith's concern using a trouble ticket, ensuring no further incorrect invoices or delinquency notices are sent?",
+      "hints": [
+        "Consider which entities should be associated with the trouble ticket.",
+        "What type of hold would prevent further incorrect invoices and delinquency actions?",
+        "What information would you include in the trouble ticket's subject and description?",
+        "Would you assign any activities immediately?"
+      ],
+      "expectedApproach": "Create a new trouble ticket, associate it with Mr. Smith's policy and account, apply 'Invoice Sending' and 'Delinquency' holds, and add a detailed description of the issue. Optionally, create an activity to investigate the cancellation status."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatare the primary entities that can be associated with a trouble ticket?",
+      "referenceAnswer": "Account, producer, policy, and policy period.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the result of associating an entity with a trouble ticket?",
+      "referenceAnswer": "An alert is displayed on the summary screen of the associated entity (if you select both\nthe policy and policy period, you will see two alerts on the Policy Summary screen).\n\nAlso, any trouble ticket holds are applied to entities in the set of related entities.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "!fa trouble ticket hold is placed on invoice sending, what happens on the\nY bill date of a related invoice?",
+      "referenceAnswer": "On the bill date, the invoice status is changed to Carried Forward and the invoice\nitems are moved to the next planned invoice.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\ndates in the past?",
+      "referenceAnswer": "The target dates of those events are adjusted to occur in the future.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Why is it advisable to complete all associated activities before you close\n¢ a trouble ticket?",
+      "referenceAnswer": "Each activity represents a task that needs to be done. If an activity is not completed,\nthis is an indication of a task that has not been completed.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Trouble tickets are essential tools for tracking and resolving billing issues in BillingCenter.",
+        "They can be associated with accounts, policies, policy periods, and producers, providing central visibility.",
+        "Trouble ticket holds effectively suspend automated processes (e.g., delinquency, invoice sending) during issue investigation.",
+        "Activities allow for assigning specific tasks to users, ensuring comprehensive issue resolution.",
+        "Properly maintaining and closing trouble tickets, including completing all activities, ensures issues are fully resolved and documented."
+      ],
+      "realWorldConnection": "In real Guidewire projects, efficient issue resolution directly impacts customer satisfaction and operational efficiency. Trouble tickets provide a standardized, auditable way to manage complex billing scenarios, preventing financial losses from uncollected premiums and avoiding unnecessary customer churn due to unresolved disputes. Mastering their use is critical for any BillingCenter user.",
+      "nextLessonPreview": "In our next lesson, we will explore advanced configuration options for trouble tickets, including customizing assignment rules and integrating them with other Guidewire applications."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access the BillingCenter training environment. Create a trouble ticket for a simulated customer scenario where a payment is expected to be late. Apply appropriate holds to prevent delinquency and invoice sending. Then, add an activity to follow up on the payment status in one week. Finally, close the trouble ticket after simulating the payment receipt.",
+      "objectives": [
+        "Create a new trouble ticket.",
+        "Associate a trouble ticket with relevant entities.",
+        "Apply and manage trouble ticket holds.",
+        "Create and assign an activity within a trouble ticket.",
+        "Close a trouble ticket."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_13_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_13_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_13_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_13_02.mp4"
+    }
+  ]
+}

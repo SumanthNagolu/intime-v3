@@ -1,0 +1,284 @@
+{
+  "lessonId": "ch06-l10",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 10,
+  "title": "Applying Direct Bill Payments",
+  "subtitle": "Understand how BillingCenter allocates payments and manages unapplied funds.",
+  "synthesizedAt": "2026-02-16T17:50:03.982870+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a billing clerk, and a large payment just arrived. How does BillingCenter know which specific invoices or charges this payment should cover, especially when there are multiple outstanding items or even overpayments? It's not always as simple as 'first in, first out.'",
+      "question": "What underlying mechanism ensures that payments are applied correctly and efficiently, and when might you need to intervene manually?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain how BillingCenter applies direct bill payments to invoice items.",
+        "Identify the batch processes involved in automated payment allocation.",
+        "Describe the steps BillingCenter follows to allocate payments using a payment allocation plan.",
+        "Understand the components and filtering logic of a payment allocation plan.",
+        "Differentiate between allocating payments and allocating money from unapplied funds.",
+        "Demonstrate how to override the default payment allocation using the Direct Bill Payment screen."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You're already familiar with the concepts of invoices, invoice items, and payments in BillingCenter. You know that payments are received and need to be matched against outstanding charges.",
+      "warmupQuestion": "Think about a time you paid a bill with multiple items. How did you decide which items to pay first, or did the system handle it automatically?",
+      "hint": "Consider the difference between a partial payment and a full payment, and how that might affect allocation."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Payment Allocation and Automated Processes",
+      "narrative": "When BillingCenter receives a payment, a crucial process called **payment allocation** determines how that money is applied to specific invoice items. This process is managed by a **payment allocation plan**, which acts as a set of rules for distributing funds. Let's consider a common scenario: Marcus, a business analyst, asks Zhang, a billing clerk, how BillingCenter applies received payments to invoice items. Zhang explains that the payment allocation plan holds the key to this question, bringing together the concepts of invoices and payments.\n\nAutomated payments are initiated by BillingCenter itself. When an invoice is ready for billing, the Invoice batch process creates a payment request. The Payment Request batch process then takes over, initiating the necessary steps to retrieve payment from a financial institution. Once the money is received by BillingCenter, it's initially placed into an **unapplied fund**. Subsequently, a batch process allocates this unapplied money to specific invoice items, strictly following the rules defined in the payment allocation plan.\n\nThere are four primary batch processes responsible for allocating money from an unapplied fund to invoice items:\n*   **New Payment**: Primarily allocates automated payments and payments entered via the Multiple Payment Entry wizard.\n*   **Automatic Disbursement**: Ensures all unapplied funds are allocated before any refunds are issued.\n*   **Invoice**: While its main purpose is to bill eligible invoices, it also allocates unapplied money.\n*   **Invoice Due**: Similarly, its primary role is to make eligible invoices due, but it also allocates unapplied money.\n\nIt's important to note that all four of these batch processes utilize the *same* payment allocation plan to determine how money is distributed, ensuring consistency across different automated scenarios.",
+      "keyPoints": [
+        "Payment allocation plans dictate how funds are applied to invoice items.",
+        "Automated payments are initiated by BillingCenter batch processes.",
+        "Received payments are initially held in an unapplied fund.",
+        "Four batch processes (New Payment, Automatic Disbursement, Invoice, Invoice Due) allocate unapplied funds."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide setting the stage for understanding payment allocation."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marcus and Zhang discuss how BillingCenter applies payments, highlighting the role of the payment allocation plan."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram illustrating the flow of an automated payment from request to allocation from an unapplied fund by a batch process."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Unapplied Fund",
+          "content": "A temporary holding place for money received by BillingCenter that has not yet been allocated to specific invoice items. This can be due to overpayments, unallocated return premiums, or ad hoc credits."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Responsive Payments and the Allocation Process Steps",
+      "narrative": "Beyond automated payments, BillingCenter also handles **responsive payments**, which are initiated by a policyholder in response to an invoice they receive. While the trigger differs, BillingCenter processes responsive payments in much the same way as automated payments. Regardless of the payment method—automated or responsive—the **payment allocation plan** is consistently used to apply funds to invoice items.\n\nWhen a batch process allocates a payment, it follows a structured, three-step approach:\n\n1.  **Filter**: The first step involves identifying a set of eligible invoice items. BillingCenter filters all unsettled invoice items (meaning those not yet fully paid) to determine which ones are candidates for payment according to the rules defined in the payment allocation plan. The term 'settled' in BillingCenter specifically refers to an invoice item that has been fully paid.\n\n2.  **Partition & Rank**: After filtering, the eligible invoice items are then grouped, or 'partitioned,' based on the priorities specified in the payment allocation plan. For instance, the plan might dictate that items are paid in the order of their placement dates. This step organizes the eligible items into prioritized groups.\n\n3.  **Pay**: In the final step, BillingCenter allocates the available money to the invoice items within each partitioned group. This continues until all the money is exhausted or all eligible items are fully paid. A key principle here is that invoice items within the *same* partition are considered to have equal rank. If there isn't enough money to fully pay all items in a particular partition, BillingCenter will pay those items **pro rata**, meaning proportionally according to their individual amounts. Any remaining excess money (if the payment exceeds all eligible items) is left in the relevant unapplied fund.",
+      "keyPoints": [
+        "Responsive payments are processed similarly to automated payments, always using the payment allocation plan.",
+        "Payment allocation involves three steps: Filter, Partition & Rank, and Pay.",
+        "Invoice items are 'settled' when fully paid.",
+        "Items within a partition are paid pro rata if funds are insufficient."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Diagram showing the flow of a responsive payment, initiated by a policyholder, through the allocation process."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The first step in payment allocation: Filtering to identify unsettled invoice items eligible for payment."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The second step: Partitioning and ranking eligible invoice items based on priorities in the allocation plan."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The third step: Paying items pro rata within each partition until funds are exhausted or items are settled."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Dissecting the Payment Allocation Plan",
+      "narrative": "The **payment allocation plan** is a central configuration that governs how money is automatically allocated. It also dictates the default allocation behavior when a payment is entered manually through the Direct Bill Payment screen, although this default can be overridden. Essentially, the plan defines two critical aspects:\n\n1.  **Eligibility**: Which invoice items are eligible to be paid.\n2.  **Prioritization**: The order in which eligible invoice items should be paid, especially when there isn't enough money to cover everything.\n\nEvery account in BillingCenter is associated with a single payment allocation plan. In the base application, this plan is typically static for an account. However, for insurers requiring more granular control—such as different allocation strategies based on policy line of business or underwriting company—a configuration developer can implement conditional logic to tailor the payment allocation process.\n\nBillingCenter ships with a **Default Payment Allocation Plan** (accessible via Administration tab > Business Settings > Payment Allocation Plans). This plan can be updated, cloned, or used as a template for new plans. It's structured into sections that define the 'what' and 'how' of payment allocation:\n\n*   **What invoice items should be paid?** This section contains filters that are logically ANDed. For example, the default plan might specify that only positive, billed, or due items are eligible for automatic payment. Additional filters like 'Policy Period' and 'Invoice' are context-dependent; if a payment is associated with a specific invoice (e.g., entered via the Multiple Payment Entry wizard for Invoice 100000130), the 'Invoice' filter restricts eligible items to that invoice. The 'Positive' filter ensures that only positive invoice items (amounts owed to the insurer) are paid, as negative items (credits owed to the insured) are handled by a separate credit allocation plan.\n\n*   **What order do you want to pay them in?** This section establishes the payment order by grouping eligible items based on priorities. Items within each group are paid pro rata. For example, 'Recapture Charges' might be paid first. If funds remain, items are then paid pro rata based on their 'Placement Dates'. Subsequent priorities, like 'Charge Pattern', would only be considered if money and eligible items still remain after the higher-priority groups are settled.\n\nUnderstanding these filters and priorities is crucial for predicting how BillingCenter will automatically apply payments and manage unapplied funds.",
+      "keyPoints": [
+        "The payment allocation plan manages automatic and default manual payment allocation.",
+        "It specifies eligible invoice items and their payment order.",
+        "Every account has one payment allocation plan, which can be customized.",
+        "The Default Payment Allocation Plan uses filters (e.g., Positive, Billed or Due, Policy Period, Invoice) and priorities (e.g., Recapture Charges, Placement Dates) to determine allocation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Overview of the payment allocation plan's purpose and the key elements it specifies for managing funds."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Screenshot of the Default Payment Allocation Plan in BillingCenter, showing sections for defining eligible items and their payment order."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Pro Rata",
+          "content": "A Latin term meaning 'in proportion.' In payment allocation, it refers to distributing funds proportionally among items when there isn't enough money to fully pay all of them."
+        },
+        {
+          "type": "best_practice",
+          "title": "Customizing Allocation",
+          "content": "While the base application provides a default plan, configuration developers can implement conditional logic to create more sophisticated allocation strategies based on policy attributes like line of business, offering greater flexibility for insurers with diverse needs."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through navigating to and reviewing the Default Payment Allocation Plan within BillingCenter. Pay attention to how the filters and priorities are configured.",
+      "transcriptSummary": "The demo shows how to access the Payment Allocation Plans under Business Settings in the Administration tab. It highlights the Default Payment Allocation Plan, demonstrating where to view the filters for eligible invoice items and the defined order for paying those items."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Allocating Money from Unapplied Funds",
+      "narrative": "Marcus's next logical question is about the money that sits in an unapplied fund. Does the payment allocation plan still apply? The answer is yes, but with some key distinctions. Money can end up in unapplied funds for various reasons, such as an overpayment, an unallocated return premium, or an ad hoc credit. Crucially, this money often lacks a direct association with a specific payment or invoice at the time it's being allocated.\n\nBecause there's no direct payment context, certain filters in the payment allocation plan are ignored when a batch process distributes excess funds from an unapplied fund. Specifically, the **Invoice** and **Policy Period** filters, which normally reference fields on a payment, are disregarded. This means the allocation logic focuses solely on the account and policy context of the unapplied fund itself.\n\nLet's consider two scenarios:\n\n*   **Account-level billing (Default Unapplied)**: In a simple account-level billing setup, an account has a single 'Default Unapplied' fund. If the payment allocation plan specifies filters like 'Positive' and 'Billed or Due,' the New Payment batch process will allocate money from this Default Unapplied fund to any positive, billed, or due invoice items for *any* policy paid by that account. The Policy Period and Invoice filters are ignored here because the money isn't tied to a specific payment or policy period.\n\n*   **Policy-level billing (Designated Unapplied)**: For accounts using policy-level billing with **cash separation**, each policy has its own designated unapplied fund. This is a critical distinction: money allocated from a designated unapplied fund *never crosses unapplied boundaries*. For example, if a designated unapplied fund is associated with Policy HO01, the money within it can *only* be allocated to eligible invoice items for Policy HO01. Even if Policy PA01 is owned by the same account, money from HO01's designated unapplied fund cannot be allocated to PA01. The New Payment batch process, given the same 'Positive' and 'Billed or Due' filters, will allocate money from Designated Unapplied (HO01) only to eligible items for HO01, again ignoring the Policy Period and Invoice filters due to the lack of a specific payment context.\n\nThis cash separation behavior ensures that funds intended for one policy remain dedicated to that policy, even if they are temporarily unapplied.",
+      "keyPoints": [
+        "Unapplied funds are allocated by batch processes using the payment allocation plan.",
+        "The Policy Period and Invoice filters are ignored when allocating from unapplied funds.",
+        "For account-level billing, Default Unapplied funds can pay any eligible item for the account.",
+        "For policy-level billing with cash separation, designated unapplied funds are restricted to their associated policy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Marcus questions how unapplied funds are allocated, prompting Zhang to explain the process."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Diagram illustrating the allocation of excess money from a Default Unapplied fund in an account-level billing scenario."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Diagram demonstrating the allocation of excess money from a designated unapplied fund in a policy-level billing scenario with cash separation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Cash Separation",
+          "content": "An account behavior where each policy has its own designated unapplied fund. This ensures that payments for a given policy are used exclusively for invoice items on that specific policy, preventing funds from being applied across different policies within the same account."
+        },
+        {
+          "type": "tip",
+          "title": "Filter Context",
+          "content": "Remember that 'Policy Period' and 'Invoice' filters are only relevant when a payment is explicitly linked to a specific policy period or invoice. When allocating generic unapplied funds, these filters are bypassed."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Complete each sentence by filling in the blanks with\nY the correct word or phrase.\n7 1. Aninvoice item that has not been fully paid is\n\nEvery has a single payment allocation plan.\n\n3. Given these payment allocation steps:\n\nstep 2 is relevant only if\nThe Spread Excess Even priority applies to invoice items only.\n\nAbatch process will never allocate money in an unapplied fund to invoice\nitems that are\n\n6. The Policy Period and Invoice filters apply when a batch process is\nallocating a but not when it is allocating",
+      "referenceAnswer": "74,\n\n2.\n\nSoe ee ee eee Soo eSeoe Ss\n\n_- — Complete each sentence by filling in the blanks with\nthe correct word or phrase.\n\nAn invoice item that has not been fully paid is (e) unsettled.\nEvery (g) account has a single payment allocation plan.\n\nGiven these payment allocation steps:\n\nstep 2 is relevant only if (f) there is not enough money to fully pay eligible items.\n\nThe Spread Excess Even priority applies to (c) planned invoice items only.\n\nAbatch process will never allocate money in an unapplied fund to invoice\nitems that are (d) from a policy with a different unapplied fund.\n\nThe Policy Period and Invoice filters apply when a batch process is\nallocating a (b) payment but not when it is allocating (a) money from an unapplied fund.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Overriding the Payment Allocation Plan with Direct Bill Payments",
+      "narrative": "While automated allocation is efficient, there are scenarios where the default behavior of the payment allocation plan needs to be overridden. Marcus, the business analyst, naturally asks Zhang if such an override is possible. Zhang confirms that it is, particularly through the **Direct Bill Payment screen**.\n\nBilling clerks often use the Multiple Payment Entry wizard for routine payments, which doesn't offer visibility or modification of the allocation plan. However, for payments requiring special handling—such as an upfront payment for a new renewal or to secure coverage, which might not involve already billed or due invoices—the Direct Bill Payment screen provides the necessary flexibility. In these cases, a billing clerk can manually customize how a payment is allocated, bypassing the standard rules.\n\nWhen you access the Direct Bill Payment screen and select the applicable unapplied fund, BillingCenter initially displays the **default allocation** in the 'Preview Distribution' area. This preview essentially shows how a batch process *would* allocate the payment according to the account's payment allocation plan. If this default is acceptable, clicking 'Execute' will apply the payment as indicated.\n\nHowever, to deviate from this default, you click **Override Distribution**. This action signals to BillingCenter that you intend to ignore the filters and priorities defined in the payment allocation plan. Upon clicking 'Override Distribution,' a specialized toolbar appears, providing options to:\n\n*   **Specify items**: You can explicitly choose which invoice items, invoices, or policy periods to include in the allocation.\n*   **Specify amounts**: You gain control over the exact amount to allocate to each selected item, with an 'Override Amount' field appearing for each installment item row.\n*   **Add items**: The 'Add Items' popup allows you to search for and select additional items to include in the allocation, even from other policies owned by the same account. This is particularly useful for consolidating payments or addressing unusual billing situations.\n\nThis manual override capability is crucial for handling exceptions and ensuring that payments are applied precisely as required by specific business needs, even if they fall outside the standard automated allocation logic.",
+      "keyPoints": [
+        "The Direct Bill Payment screen allows overriding the payment allocation plan.",
+        "It's used for special payment handling, such as upfront payments not yet billed.",
+        "The screen initially shows a default allocation based on the plan.",
+        "'Override Distribution' enables manual selection of items and amounts, bypassing plan rules.",
+        "The 'Add Items' feature allows including items from other policies within the same account."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "A blank slide, often used as a visual break or transition in presentations."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Marcus asks Zhang about overriding the payment allocation plan, leading to a discussion about the Direct Bill Payment screen."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Screenshot of the Direct Bill Payment screen, showing the default allocation preview and the 'Override Distribution' button."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Screenshot of the Direct Bill Payment screen after 'Override Distribution' is clicked, displaying the toolbar and 'Override Amount' fields."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "When to Override",
+          "content": "Use the 'Override Distribution' feature for non-standard payment scenarios, such as applying a payment to a future invoice item that isn't yet billed or due, or when a policyholder specifically directs how a payment should be applied against multiple outstanding items."
+        },
+        {
+          "type": "gotcha",
+          "title": "Cash Separation and Overrides",
+          "content": "Even with cash separation, the 'Add Items' feature in the Direct Bill Payment screen allows you to manually pull invoice items from other policies under the same account into a single payment allocation. This bypasses the strict policy-level cash separation for that specific manual transaction."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to use the Direct Bill Payment screen to manually override the default payment allocation. Pay close attention to how items are selected and amounts are adjusted.",
+      "transcriptSummary": "The demo illustrates navigating to the Direct Bill Payment screen, selecting an unapplied fund, and then clicking 'Override Distribution.' It demonstrates how to add specific invoice items, including those from other policies, and manually adjust the amounts applied to each item, thereby customizing the payment allocation."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Assuming an account with policy-level billing and cash separation, can\nY you add an invoice item from Policy A to a direct bill payment allocation\nfor Policy B?",
+      "referenceAnswer": "Yes. Using the Direct Bill Payment screen:\n1.Click Override Distribution.\n2.Click Add Items.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Payment allocation plans define how BillingCenter automatically applies payments and unapplied funds.",
+        "Automated payments are processed through batch jobs that follow the allocation plan's rules.",
+        "The allocation process involves filtering eligible items, partitioning and ranking them, and then paying pro rata.",
+        "Unapplied funds are allocated based on the plan, but 'Policy Period' and 'Invoice' filters are ignored.",
+        "Policy-level billing with cash separation restricts unapplied funds to their specific policy.",
+        "The Direct Bill Payment screen allows manual override of the payment allocation plan for specific scenarios."
+      ],
+      "realWorldConnection": "In real Guidewire projects, understanding payment allocation is critical for ensuring financial accuracy and customer satisfaction. Misallocated payments can lead to incorrect balances, delinquency notices, and customer complaints. Customizing payment allocation plans or using the override feature allows insurers to adapt to diverse billing requirements and handle exceptions efficiently, maintaining accurate financial records and improving operational flexibility.",
+      "nextLessonPreview": "Next, we'll delve into managing credit and refunds, exploring how BillingCenter handles overpayments and other credit scenarios."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Explore the payment allocation plans in your BillingCenter environment. Identify the default plan and analyze its filters and priorities. Consider how you might modify it for a specific business requirement, such as prioritizing older invoices or certain charge types. Then, practice creating a direct bill payment and overriding its distribution to apply funds to a specific, non-default invoice item.",
+      "objectives": [
+        "Locate and analyze existing payment allocation plans.",
+        "Understand the impact of different filters and priorities.",
+        "Practice using the Direct Bill Payment screen to manually allocate funds."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_10_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_10_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_10_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_10_02.mp4"
+    }
+  ]
+}

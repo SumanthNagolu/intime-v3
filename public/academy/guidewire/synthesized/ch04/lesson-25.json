@@ -1,0 +1,212 @@
+{
+  "lessonId": "ch04-l25",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 25,
+  "title": "Notes",
+  "subtitle": "Understand how Notes capture and communicate essential information in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T17:30:01.965447+00:00",
+  "estimatedMinutes": 75,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a customer service representative handling a complex policy inquiry. A customer calls with a unique situation that requires several follow-up actions and specific details that don't fit into standard policy fields. How do you ensure all this crucial information is accurately recorded and easily accessible to anyone else who might interact with this policy or account in the future?",
+      "question": "What tools does PolicyCenter offer to capture these ad-hoc, yet vital, pieces of information?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and function of Notes in PolicyCenter.",
+        "Differentiate between Notes and Documents in PolicyCenter.",
+        "Identify and explain the key fields used in Notes, including security levels.",
+        "Understand how Notes can be created manually by users or programmatically using Gosu.",
+        "Explain the role of security and permissions in controlling Note visibility and access.",
+        "Recognize how Notes integrate with business rules for automated documentation."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In many business applications, you've likely encountered features for adding comments, logs, or supplementary details to records. PolicyCenter's Notes feature serves a similar purpose, providing a flexible way to attach contextual information to policies, accounts, and jobs.",
+      "warmupQuestion": "Think about a time you needed to record extra details about a customer interaction. What challenges did you face in ensuring that information was clear, accessible, and secure?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Capturing Context: The Role and Creation of Notes",
+      "narrative": "In PolicyCenter, **Notes** are a fundamental tool for capturing and communicating information that doesn't fit into predefined data fields. They provide a flexible way to add context, track decisions, and log actions related to policies, accounts, jobs, or contingencies. Think of them as digital sticky notes that stay permanently attached to the relevant record, ensuring transparency and a clear audit trail.\n\nCreating a Note can be straightforward, such as a user manually entering text into a form to document a customer conversation or a specific policy decision. For instance, a customer service representative might use a Note to record details about a customer's unique request or a complex issue that requires further investigation. This ensures that anyone else viewing the policy later understands the full context.\n\nBeyond manual entry, Notes can also be created **programmatically using Gosu scripts** or triggered by **business rules**. This capability is incredibly powerful for automating documentation. For example, if a business rule automatically updates a policy based on certain criteria, a Note can be generated to record this automated action, including details like the rule that triggered it and the changes made. This enhances accountability and provides a clear audit trail for system-driven actions.\n\nUnderstanding these practical applications of Notes is crucial for designing PolicyCenter implementations that facilitate effective communication and comprehensive documentation. They are stored directly within the PolicyCenter database, making them readily accessible within the system.",
+      "keyPoints": [
+        "Notes capture ad-hoc information for policies, accounts, and jobs.",
+        "They can be created manually by users or automatically via Gosu/business rules.",
+        "Notes provide context, track decisions, and create audit trails.",
+        "They are stored directly in the PolicyCenter database."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A customer service representative asks where to take notes in PolicyCenter, highlighting the need for a flexible documentation tool."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Notes vs. Documents: Choosing the Right Tool",
+      "narrative": "While both Notes and Documents serve to attach information to PolicyCenter records, it's vital to understand their distinct characteristics and use cases. **Notes** are designed for plain text entries, making them ideal for quick, accessible records of actions, decisions, or conversations. They are stored exclusively within the PolicyCenter database, ensuring immediate availability and tight integration with the system's data model.\n\n**Documents**, on the other hand, are more versatile in terms of content format. They can include various Multipurpose Internet Mail Extensions (MIME) types, such as PDFs, Word documents, or Excel spreadsheets. Documents might be stored either in the PolicyCenter database or, more commonly, in a separate, third-party document management system (DMS). This distinction is critical: if you need to attach a structured file, like a scanned application form or a generated policy declaration, you'd use a Document. If you need to record a quick summary of a phone call or an internal decision, a Note is the appropriate choice. Both Notes and Documents can leverage templates to standardize content, but their underlying storage and format capabilities differ significantly.\n\nEvery Note in PolicyCenter is structured with several key fields that help categorize, describe, and control its visibility:\n*   **Topic**: This field provides a general category for the note, helping users quickly understand its primary subject area (e.g., 'Customer Inquiry', 'Underwriting Decision', 'Claim Update').\n*   **Subject**: A concise description of the note's content, offering a quick summary for easy scanning.\n*   **Security Level**: This crucial field determines who can view the note, ensuring sensitive information is protected. Options typically include:\n    *   **Unrestricted**: Visible to everyone with access to the policy/account.\n    *   **Internal Only**: Visible only to internal users of PolicyCenter.\n    *   **Sensitive Note**: Restricted to the note creator, their supervisors, and users with specific permissions to view sensitive information.\n*   **Text**: This is the main body of the note, where the detailed plain text content is entered.\n\nConfiguring these fields correctly is essential for effective information management, ensuring that Notes are not only informative but also compliant with data privacy and access control policies within your organization.",
+      "keyPoints": [
+        "Notes are plain text, stored in PolicyCenter DB.",
+        "Documents can be various file types, stored in PC DB or external DMS.",
+        "Key Note fields include Topic, Subject, Security Level, and Text.",
+        "Security Level controls note visibility (Unrestricted, Internal Only, Sensitive Note)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 4,
+          "caption": "A table comparing the characteristics of Notes and Documents, highlighting their distinct functions and storage methods."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "An illustration of the key fields within a Note: Topic, Subject, Security Level, and Text."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Characteristic",
+            "Notes",
+            "Documents"
+          ],
+          "rows": [
+            [
+              "Content Type",
+              "Plain text",
+              "PDF, Word, Excel, etc. (various MIME types)"
+            ],
+            [
+              "Creation Method",
+              "User or Gosu",
+              "User, Gosu, or external DMS"
+            ],
+            [
+              "Storage Location",
+              "PolicyCenter database only",
+              "PolicyCenter database or external document management system"
+            ],
+            [
+              "Template Usage",
+              "Can use templates",
+              "Can use templates"
+            ]
+          ],
+          "caption": "Key Differences Between Notes and Documents in PolicyCenter"
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "MIME Type",
+          "content": "Multipurpose Internet Mail Extensions (MIME) types classify file formats on the internet, indicating the nature and format of a document, file, or byte stream."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration illustrates how Notes can be automatically generated through PolicyCenter's business rules. Pay close attention to how a rule triggers the creation of a Note and the information that is captured, providing an automated audit trail for system actions.",
+      "transcriptSummary": "The video shows a scenario where a specific business rule is configured to automatically create a Note whenever a policy update meets certain criteria. It highlights the setup of the rule, the content of the generated Note, and how this automation enhances transparency and accountability by documenting system-driven changes without manual intervention."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A customer calls to update their mailing address and also mentions a specific preference for future communication (e.g., 'prefers email for non-urgent updates'). This preference isn't a standard field in PolicyCenter but is important for the customer service team to know.",
+      "question": "How would you create a Note to capture this customer communication preference, ensuring it's easily visible to internal users but not external parties?",
+      "hints": [
+        "Navigate to the relevant policy or account screen.",
+        "Look for an option to 'Add Note' or similar.",
+        "Consider which 'Security Level' best fits the requirement for internal visibility."
+      ],
+      "expectedApproach": "The learner should navigate to a policy or account, select 'Add Note', fill in the Topic (e.g., 'Customer Communication'), Subject (e.g., 'Communication Preference'), set the Security Level to 'Internal Only', and enter the customer's preference in the Text field."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "For the following descriptions, identify whether it applies to Documents,\nYo Notes or both Documents and Notes.\n“ a) Involves integration with a third-party system\nb) Created within an account, policy or contingency\nc) Has a MIME type\nd) Can use a template to create it",
+      "referenceAnswer": "For the following descriptions, identify whether it applies to Documents,\n¢ Notes or both Documents and Notes.\n\na) Involves integration with a third-party system\n\na)\n6)\n¢)\nd)\n\nDocuments\nDocuments and Notes\nDocuments\n\nDocuments and Notes",
+      "questionKey": "slide-8"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Securing and Customizing Notes for Specific Needs",
+      "narrative": "Beyond basic creation, PolicyCenter offers robust capabilities for managing Note security and customization. The **Security Level** field, as discussed earlier, is paramount for controlling access. Developers and administrators must configure access controls based on specific business requirements, ensuring that sensitive information is protected and only accessible to authorized users. This aligns with organizational policies on data security and compliance. For instance, a 'Sensitive Note' might only be viewable by the note's creator, their direct supervisors, and specific roles with explicit permissions to handle confidential data. The PolicyCenter Security Dictionary provides detailed information on application permission keys, pages, and system permissions that govern access to various features, including Notes.\n\nPolicyCenter also provides flexibility in **customizing Note templates** to fit specific business needs. You can define templates that standardize the information captured in Notes, ensuring consistency across records. This is particularly useful for organizations with complex documentation requirements or those operating across different regions with varying regulations. For example, a template for 'Underwriting Review Notes' might pre-populate the Topic and Subject, and include specific prompts in the Text field to ensure all necessary details are captured.\n\nFurthermore, integrating Notes with business rules allows for automated documentation of system actions. While we saw a demo of this, it's worth reiterating that this capability is powerful for enhancing accountability and transparency in your workflows. For example, if a rule automatically flags a policy for review, a Note can be created to record this action, providing a clear audit trail. This ensures that every significant system interaction is documented, contributing to a comprehensive history of the policy or account.\n\nEffectively leveraging these advanced features—security configurations, template customization, and rule integration—enables you to build a PolicyCenter solution that is not only functional but also secure, compliant, and highly efficient in its documentation practices.",
+      "keyPoints": [
+        "Security Level is crucial for controlling Note visibility and access.",
+        "Access controls must align with business requirements and data privacy policies.",
+        "Note templates can be customized for consistency and specific documentation needs.",
+        "Integration with business rules enables automated documentation and audit trails."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "A review of lesson objectives, emphasizing the purpose and distinction of Notes in PolicyCenter, which are foundational to understanding their security and configuration."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Security Best Practice",
+          "content": "Always configure Note security levels with the principle of least privilege in mind. Users should only have access to the information necessary for their role, especially when dealing with sensitive customer or policy data."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your organization has a new compliance requirement: all notes related to 'Fraud Investigations' must only be visible to the investigation team and their direct supervisors. Other internal users should not see these notes, and they must never be visible to external parties.",
+      "question": "Describe the steps you would take to configure a new Note type or template to meet this security requirement. What specific field would you focus on, and what value would you assign to it?",
+      "hints": [
+        "Consider the 'Security Level' field and its available options.",
+        "Think about how you would enforce this for a specific 'Topic' of notes.",
+        "Refer to the PolicyCenter Configuration Guide for details on customizing note templates and permissions."
+      ],
+      "expectedApproach": "The learner should identify that a new Note template or a specific configuration for the 'Fraud Investigations' topic is needed. The primary focus would be on setting the 'Security Level' field to 'Sensitive Note'. This would require ensuring that the investigation team and their supervisors have the necessary permissions (ACLs) to view sensitive notes, while other roles do not."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Notes are essential for capturing contextual, plain-text information in PolicyCenter.",
+        "They differ from Documents in content type, storage, and integration.",
+        "Key Note fields (Topic, Subject, Security Level, Text) enable categorization and access control.",
+        "Notes can be created manually or programmatically via Gosu/business rules.",
+        "Security Levels (Unrestricted, Internal Only, Sensitive Note) are critical for data privacy and compliance.",
+        "Customizing Note templates ensures consistency and meets specific business needs."
+      ],
+      "realWorldConnection": "In real-world Guidewire projects, effective use of Notes is crucial for maintaining a comprehensive audit trail, facilitating clear communication among team members, and ensuring compliance with regulatory requirements. Properly configured Notes can significantly reduce miscommunication and improve the efficiency of policy management and claims processing.",
+      "nextLessonPreview": "In our next lesson, we'll delve into **Activities**, another key feature that complements Notes by tracking and managing tasks and workflows within PolicyCenter. While Notes capture information, Activities drive action and ensure tasks are completed efficiently."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Based on the concepts learned, access your PolicyCenter development environment. Your task is to: \n1. Create a new Note template for 'Underwriting Review Comments' that pre-fills the 'Topic' as 'Underwriting' and includes a placeholder in the 'Text' field for key considerations. \n2. Configure the default 'Security Level' for this template to 'Internal Only'. \n3. Manually create a new policy and add a note using your new template, observing how the fields are pre-populated and the security level is applied.",
+      "objectives": [
+        "Practice creating and customizing Note templates.",
+        "Apply security configurations to Notes.",
+        "Reinforce understanding of Note fields and their impact."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_26_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_26_01.mp4"
+    }
+  ]
+}

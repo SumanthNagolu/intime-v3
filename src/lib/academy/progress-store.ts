@@ -19,6 +19,7 @@ interface AcademyStore extends AcademyProgressState {
   updateLessonStatus: (lessonId: string, status: LessonStatus) => void
   updateScrollProgress: (lessonId: string, progress: number) => void
   markSlideVisited: (lessonId: string, slideNumber: number, totalSlides: number) => void
+  markBlockVisited: (lessonId: string, blockId: string) => void
   completeCheckpoint: (lessonId: string, checkpointId: string) => void
   markVideoWatched: (lessonId: string, videoFilename: string) => void
   submitAssignment: (lessonId: string, response: string) => void
@@ -92,6 +93,24 @@ export const useAcademyStore = create<AcademyStore>()(
                 ...current,
                 slidesVisited: visitedArr,
                 scrollProgress: Math.max(current.scrollProgress, syntheticProgress),
+                status: current.status === 'available' ? 'in_progress' : current.status,
+              },
+            },
+          }
+        })
+      },
+
+      markBlockVisited: (lessonId, blockId) => {
+        set((state) => {
+          const current = state.lessons[lessonId] || DEFAULT_LESSON_PROGRESS
+          const visited = new Set(current.blocksVisited ?? [])
+          visited.add(blockId)
+          return {
+            lessons: {
+              ...state.lessons,
+              [lessonId]: {
+                ...current,
+                blocksVisited: Array.from(visited),
                 status: current.status === 'available' ? 'in_progress' : current.status,
               },
             },

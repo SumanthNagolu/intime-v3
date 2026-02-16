@@ -1,0 +1,288 @@
+{
+  "lessonId": "ch04-l20",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 20,
+  "title": "Questions sets and Offerings",
+  "subtitle": "Explore how question sets and offerings customize insurance products in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T17:27:22.365502+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter trying to quickly assess high-risk drivers or a product manager needing to create tailored insurance policies for specific customer segments. How do you efficiently gather crucial, non-rating information and then customize product variations without overhauling your entire system?",
+      "question": "What tools in PolicyCenter allow for dynamic risk assessment and flexible product customization?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the product model in PolicyCenter as the foundation for product structure.",
+        "Grasp where question sets and offerings fit into the broader product model.",
+        "Explain the role and usage of question sets for risk assessment and pre-qualification.",
+        "Identify the limitations of question sets and appropriate alternatives.",
+        "Describe how offerings enable product customization and target specific market needs.",
+        "Recognize how offerings influence the submission process and product availability."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of how insurance products are generally structured, including elements like coverages, terms, and conditions. Think about how different customer segments might require variations of a base product.",
+      "warmupQuestion": "How might an insurer determine if a potential policyholder qualifies for a specific product before even getting to the rating stage?",
+      "hint": "Consider what information is crucial for initial eligibility, but not directly tied to calculating premiums."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Question Sets: Purpose and Configuration",
+      "narrative": "Question sets are a powerful feature in PolicyCenter designed to help insurers gather critical information that is not directly used for rating but is essential for underwriting decisions and determining product suitability. As an underwriter, you might need to quickly evaluate high-risk factors during the submission process, such as a driver's history of DUIs or license suspensions. Question sets provide a structured way to collect this type of data.\n\nThey serve as a mechanism for pre-qualifying potential policyholders by asking targeted questions. By linking question sets to the product model, insurers can effectively decide which products to market to whom, while simultaneously collecting vital underwriting information. It's important to remember that questions within a set are unique to that specific set. This means if you need the same question in multiple sets, you'll have to duplicate it. However, a single question set can be associated with multiple products, allowing you to reuse a collection of questions across different product lines without recreating the entire set. This ensures that each product can be precisely tailored to the insurer's unique requirements.",
+      "keyPoints": [
+        "Question sets assess risk and determine product suitability.",
+        "They gather pertinent underwriting information not tied to rating.",
+        "Question sets are linked to the product model for pre-qualification.",
+        "Questions are unique to their set, but sets can be associated with multiple products."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An underwriter's need for quick risk evaluation, highlighting the role of question sets."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key details on question set usage, configuration, and linkage to the product model."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Question Set",
+          "content": "A collection of questions presented within PolicyCenter that gathers information about an applicant, primarily used to evaluate risk and qualification for an insurance product."
+        },
+        {
+          "type": "best_practice",
+          "title": "Strategic Reuse",
+          "content": "While individual questions aren't reusable across sets, consider grouping common questions into a single set and associating that set with multiple products to streamline configuration."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Limitations and Primary Purpose of Question Sets",
+      "narrative": "While question sets are powerful for underwriting, it's crucial to understand their limitations to use them effectively. They are **not** intended for rating calculations or for direct integration with other systems. Similarly, question sets are not suitable for capturing detailed information about specific insurable objects, such as individual vehicles or buildings. For data that will be used in the rating process, modifiers are generally a more appropriate tool. If you need to collect detailed information about specific objects, leveraging standard data model fields is the recommended approach. This clear distinction ensures that data is collected and utilized appropriately across PolicyCenter, preventing misuse and maintaining data integrity.\n\nThe primary purpose of question sets is to evaluate risk, focusing on information that is critical to underwriting decisions rather than premium calculation. Typically, these sets are employed early in the submission process to filter out unsuitable risks, acting as a pre-qualification mechanism. However, their flexibility extends beyond initial submissions; question sets can also be applied at various stages throughout the policy lifecycle, for instance, to capture location-specific details. This adaptability allows insurers to fine-tune their risk assessment processes, ensuring comprehensive evaluation at relevant points. Incorrect answers to questions can be configured to block progress, display warnings, or even raise underwriting issues, preventing the binding of a policy until approved by an authorized user.",
+      "keyPoints": [
+        "Question sets are not for rating, integrations, or detailed object data.",
+        "Modifiers are better for rating data, and data model fields for object-specific data.",
+        "Primary use is risk evaluation and underwriting.",
+        "Can be used for pre-qualification in submissions or at other policy lifecycle stages."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "Explaining the limitations of question sets and when not to use them."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Illustrating the primary purpose of question sets in risk qualification during submission."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Avoid Misuse",
+          "content": "Do not use question sets to collect information about coverables or anything directly related to rating. Their storage and retrieval mechanism makes them unsuitable for these purposes."
+        },
+        {
+          "type": "best_practice",
+          "title": "Leverage Availability",
+          "content": "Question sets provide a product model availability mechanism to control when a question is visible, allowing for dynamic display based on context."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a question set within PolicyCenter. Pay close attention to how questions are defined and linked to the product model.",
+      "transcriptSummary": "The demo covers navigating to the product model, defining new questions, and configuring a question set. It highlights how to align questions with underwriting goals and integrate them into the submission workflow."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Introduction to Offerings: Customization and Base Configuration",
+      "narrative": "Shifting our focus, let's explore **offerings** in PolicyCenter, a feature that allows insurers to define variations of a base product. This capability is crucial for creating tailored insurance solutions that meet specific market needs, whether for different customer types or sales channels. Offerings provide immense flexibility in adjusting coverage options, terms, and conditions, significantly enhancing the customer experience by providing relevant choices.\n\nPolicyCenter's base configuration already includes offerings for common products such as Businessowners, Commercial Auto, and Personal Auto. These pre-configured offerings serve as excellent templates, demonstrating how a base product can be customized for specific market segments. By studying these examples, you can gain valuable insights into developing new offerings that align with your organization’s unique product strategies. Offerings empower insurers to quickly create hundreds of product variations based on existing definitions, allowing them to reach specific buyer groups effectively. While offerings allow for modifications to default values for coverages and terms within a product, it's important to note that switching between *different products* is not supported; offerings provide customization *within* a product line.",
+      "keyPoints": [
+        "Offerings define variations of a base product for tailored solutions.",
+        "They allow customization of coverages, terms, and conditions.",
+        "Base configuration includes offerings for common products as templates.",
+        "Offerings enhance product customization by modifying default values within a product."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Illustrates how offerings address the need for basic and premium policies for different customers."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Explains how offerings enhance product customization by allowing modifications to default values."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Offering",
+          "content": "A defined variation of a base product in PolicyCenter, allowing insurers to tailor coverages, terms, and conditions to specific market needs or customer segments."
+        },
+        {
+          "type": "tip",
+          "title": "Leverage Base Offerings",
+          "content": "Review the base configuration offerings to understand best practices for tailoring products and developing new offerings."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of configuring offerings based on a product definition. Observe how coverages and terms are adjusted to create a targeted insurance solution.",
+      "transcriptSummary": "The demo illustrates starting with a base product, identifying customizable aspects, and then configuring an offering by adjusting coverages and terms. It shows how a generic product can be transformed into a targeted insurance solution."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Offerings in the Submission Process and Availability Factors",
+      "narrative": "In PolicyCenter, selecting an offering is often the very first step in the submission process. This initial decision is critical because it directly influences the subsequent options and questions presented throughout the submission workflow. Offerings can determine which pre-qualification questions are asked and even control the visibility of certain coverages, effectively streamlining the process and ensuring customers are presented with the most relevant options for their chosen product variation. Understanding this workflow is essential for effective product management, as it dictates the user's journey through policy creation.\n\nOfferings are particularly ideal for creating targeted insurance programs, such as a specialized Businessowners policy for franchises or a commercial auto product exclusively for local delivery companies. While regulatory considerations can vary by region, offerings generally focus on addressing specific market needs rather than regulatory specifics. For example, in Canada, offerings might include unique rating and forms, or even specific discounts, whereas in the US, the emphasis might be more on ensuring non-discriminatory program assignments. Offerings inherit capabilities from the underlying product model, which significantly influences their availability. Whether a given coverage appears to the user depends on both its product model configuration and its explicit inclusion within the selected offering. Factors such as start and end dates, job type, state, industry, and even answers to offering-specific question sets can all determine an offering's availability, ensuring a layered and precise approach to product presentation.",
+      "keyPoints": [
+        "Offering selection is the first step in the submission process and impacts subsequent options.",
+        "Offerings are ideal for targeted insurance programs and specific market segments.",
+        "Regulatory considerations for offerings vary by region (e.g., Canada vs. US).",
+        "Offerings inherit capabilities from the product model, influencing availability.",
+        "Availability factors include dates, job type, state, industry, and question set answers."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Demonstrates the offering selection as the first step in a Commercial Auto submission."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Explains when to use offerings for specific product types and marketing segments."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Details the factors that determine an offering's availability and examples of use cases."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Strategic Offering Design",
+          "content": "When designing offerings, consider the unique needs of each target market segment to ensure customization of coverages, terms, and potentially special rates or conditions."
+        },
+        {
+          "type": "gotcha",
+          "title": "Availability Hierarchy",
+          "content": "Offering availability is checked *last* after all other product model availability checks. If a pattern is made unavailable by an earlier check, the offering cannot make it available."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you how to tailor an offering for a specific market segment. Focus on how adjustments to coverages, terms, and conditions align with product strategy and regulatory needs.",
+      "transcriptSummary": "The demo outlines the process of defining a market segment, customizing coverages and terms to meet specific needs, and ensuring the tailored offering aligns with product strategy and regulatory requirements."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An insurance company wants to launch a new 'Eco-Driver' auto insurance product. To qualify for this product, drivers must confirm they drive an electric or hybrid vehicle and have no at-fault accidents in the last 3 years. This information is crucial for eligibility but doesn't directly affect the premium calculation.",
+      "question": "How would you use PolicyCenter's question sets to implement these pre-qualification requirements for the 'Eco-Driver' product?",
+      "hints": [
+        "Consider the type of questions needed (e.g., Boolean, Choice).",
+        "Think about how to link these questions to the new product.",
+        "Remember the primary purpose of question sets and their limitations."
+      ],
+      "expectedApproach": "Create a new question set linked to the 'Eco-Driver' product. Add two questions: one Boolean question for 'Electric/Hybrid Vehicle' and another Boolean question for 'No At-Fault Accidents in Last 3 Years'. Configure incorrect answers to block progression or raise an underwriting issue."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your company offers a standard 'Businessowners Policy' (BOP) but wants to create a specialized version for 'Franchise Restaurants' that includes specific coverages and higher limits tailored to their unique risks, as well as a 'Small Retailer' version with different default coverages and lower limits. Both should be selectable during the submission process.",
+      "question": "Outline the steps you would take in PolicyCenter to implement these two specialized versions of the BOP using offerings.",
+      "hints": [
+        "Start with the existing BOP product definition.",
+        "Consider how offerings allow modification of default values.",
+        "Think about how these offerings would appear to a user during submission."
+      ],
+      "expectedApproach": "Define two new offerings under the existing BOP product: 'Franchise Restaurant BOP' and 'Small Retailer BOP'. For each offering, modify the default values for coverages, coverage terms, and limits as appropriate. Ensure these offerings are available for selection during the submission process, potentially influencing pre-qualification questions or visibility of specific coverages."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a question set and when should it be used?",
+      "referenceAnswer": "particular product, either right before they enter the wizard or through accumulated\ninformation indicating an unacceptably large level of risk that isn't tied to any one\nsingle issue.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "e What is an offering and what is its purpose?",
+      "referenceAnswer": "An Offering lets insurers define different product types based on existing base product\ndefinitions. The primary use case of offerings is to define specific product types.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "List at least two factors that make an offering available.",
+      "referenceAnswer": "Start and end date, Job type, State, Industry, offerings question set answers.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Question sets are crucial for risk evaluation and pre-qualification, gathering non-rating underwriting information.",
+        "They are not suitable for rating, integrations, or detailed object-specific data.",
+        "Offerings enable flexible product customization, allowing variations of a base product for specific market needs.",
+        "Offerings influence the submission process and determine the availability of coverages and terms.",
+        "Both question sets and offerings are integral to PolicyCenter's product model, enhancing how insurers interact with customers and manage product lines."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering question sets and offerings allows you to build highly responsive and targeted insurance products. This directly translates to improved underwriting efficiency, better risk selection, and the ability to rapidly adapt product offerings to evolving market demands and customer segments, ultimately driving business growth and customer satisfaction.",
+      "nextLessonPreview": "Up next, we'll explore Modifiers, which further enhance rating flexibility and customization, building on what we've learned about tailoring product offerings."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Explore the base configuration of PolicyCenter to identify existing question sets and offerings. Analyze how they are structured and linked to different products. Consider how you might adapt or create new ones to address a specific business need, such as a new pre-qualification rule or a specialized product offering for a niche market.",
+      "objectives": [
+        "Locate and review existing question sets in Product Designer.",
+        "Examine the configuration of offerings for base products like Commercial Auto or Businessowners.",
+        "Propose a scenario where a new question set or offering would be beneficial.",
+        "Outline the high-level steps to implement your proposed scenario."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_21_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_21_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_21_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_21_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "In_Policy_21_03.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_21_03.mp4"
+    }
+  ]
+}

@@ -1,0 +1,385 @@
+{
+  "lessonId": "ch05-l07",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 7,
+  "title": "Introduction to Adjudication",
+  "subtitle": "Master the core process of evaluating, managing, and paying insurance claims in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:38:09.246686+00:00",
+  "estimatedMinutes": 120,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance adjuster, and a complex workers' compensation claim just landed on your desk. The customer service representative gathered initial details, but now it's up to you to decide if the claim is valid, how much should be paid, and to whom. This isn't just about processing paperwork; it's about making critical financial decisions that impact both the claimant and the company.",
+      "question": "How do you ensure every claim is handled accurately, fairly, and efficiently, from the first report to the final payment?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define adjudication from a functional perspective and its role in ClaimCenter.",
+        "Identify common questions and critical data points involved in the adjudication process.",
+        "Explain the process of determining compensability for Workers' Compensation claims.",
+        "Describe the primary elements of an exposure: coverage, claimant, incident, and reserve lines.",
+        "Differentiate between automatic and manual creation of Workers' Compensation exposures.",
+        "Understand the purpose and structure of reserve lines, cost types, and cost categories in managing claim financials."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored the initial stages of a claim, such as First Notice of Loss (FNOL) and basic claim setup. You've seen how initial information is captured and how a claim begins its journey in ClaimCenter. Now, we'll delve deeper into the core decision-making process.",
+      "warmupQuestion": "What do you think are the most important pieces of information an adjuster needs to decide if a claim should be paid?",
+      "hint": "Consider the policy, the loss event, and the people involved."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Adjudication Process: From Report to Payment",
+      "narrative": "As an adjuster, you're at the heart of the claims process, tasked with understanding every aspect of a claim to manage it effectively. From the moment a customer service representative (CSR) takes a call, gathering as much information as possible, the journey of adjudication begins. The more thoroughly a CSR understands how their collected information is used, the better they can contribute to the overall process.\n\n**Adjudication** is the comprehensive process of determining whether a claim will be paid, and if so, the exact amount. It encompasses everything from the initial claim report to issuing the final payment and ultimately closing the claim. Within ClaimCenter, this involves completing all relevant activities on the claim and its associated exposures, effectively moving them to an 'ability to pay' level of maturity. This means ensuring all data requirements are met to enable payments.\n\nDuring adjudication, several common questions guide the process. First, you must establish the insurer's responsibility: Was a policy in effect at the time of the loss? And, crucially, do any of the policy's coverages actually apply to this specific loss? Coverage terms, such as deductibles and limits, are vital in determining if and how much a payment should be made. Beyond policy details, you need to understand the loss itself: where, when, and how it occurred, and if other parties were involved. This information is critical for third-party payments or shared responsibility. Sometimes, external agencies provide crucial data, like police reports from services such as the Metropolitan Reporting Bureau, or medical bills and reports for Workers' Compensation claims. Ultimately, adjudication also involves calculating the precise cost to indemnify the claimant, which can range from simple calculations to complex assessments of medical necessity or modified duty options.",
+      "keyPoints": [
+        "Adjudication determines if and how much a claim will be paid.",
+        "It covers the entire lifecycle from claim creation to payment and closure.",
+        "Key questions involve policy coverage, loss details, involved parties, and external information.",
+        "ClaimCenter's adjudication process involves completing activities and moving exposures to 'ability to pay'."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An adjuster's perspective on the importance of understanding all claim aspects for effective management."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A customer service representative highlights the value of thorough information gathering for adjudication."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Definition of adjudication from a functional perspective and its process within ClaimCenter."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Common questions that arise during the adjudication process, guiding the evaluation of insurer responsibility and costs."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Determining Compensability in Workers' Compensation Claims",
+      "narrative": "A critical and often time-sensitive step in Workers' Compensation (WC) claim processing is determining **compensability**. This decision establishes whether the claim is payable, and it's typically one of the first tasks an adjuster undertakes. This process is also referred to as 'claim acceptance.'\n\nThe compensability decision is paramount, not only for its financial implications but also due to regulatory requirements. Many state laws mandate that if a carrier fails to respond or accept a claim within a specific timeframe (known as the 'Denial Period'), the claim may be automatically deemed compensable. This emphasizes the urgency of a timely decision. Furthermore, this step is crucial for identifying potential fraud or injuries sustained outside of employment, allowing for appropriate claim denial.\n\nFor every WC claim saved in ClaimCenter, a compensability decision must be made: accepted, denied, or pending. To track this, a 'Determine Compensability' activity is automatically generated. The process generally involves three steps: gathering information related to compensability factors, setting the activity's value to 'Accepted' or 'Denied,' and then completing the activity. The due date for this decision is derived from the 'Denial Period' configured for each jurisdiction. For instance, Illinois requires a decision within three days, while Connecticut allows twenty-eight. These jurisdictional details, including due date logic and document templates for acceptance or denial letters, are configurable within ClaimCenter's Administration screen.\n\nIt's important to note that the 'Determine Compensability' activity behaves like a regular activity in most ways, appearing in the Workplan and being editable. However, it's unique because it's always auto-created and cannot be manually generated. It's also a mandatory activity, meaning it cannot be skipped, and it includes two additional fields: 'Compensability' and 'Reason for decision.' The activity cannot be completed until the 'Compensability' field is set to either 'accepted' or 'denied.'",
+      "keyPoints": [
+        "Compensability determines if a WC claim is payable and is a time-sensitive task.",
+        "State laws dictate 'Denial Periods' for making compensability decisions.",
+        "A 'Determine Compensability' activity is auto-generated and mandatory for all WC claims.",
+        "This activity tracks whether a claim is accepted, denied, or pending, and requires a reason for the decision."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Overview of determining compensability for Workers' Compensation claims, outlining the decision process."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Comparison of ordinary activities versus the unique characteristics of the 'Determine Compensability' activity."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Denial Period",
+          "content": "The specific timeframe mandated by state laws within which an insurer must make a compensability decision for a Workers' Compensation claim. Failure to meet this deadline can result in automatic claim acceptance."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of determining compensability for a Workers' Compensation claim within ClaimCenter.",
+      "transcriptSummary": "The video shows how to access the 'Determine Compensability' activity, gather necessary information, select 'Accepted' or 'Denied,' provide a reason for the decision, and complete the activity, highlighting the fields and workflow involved."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Exposures: Tracking Potential Payments",
+      "narrative": "Once the initial claim details are in, and perhaps compensability is determined, the adjuster, like Tanvi, needs to pinpoint exactly what needs to be paid, to whom, for what damage, and under which coverage. This is where **exposures** come into play. An exposure is a crucial mechanism in ClaimCenter used to track potential payments from a single coverage to a single claimant.\n\nEvery exposure is fundamentally defined by four primary elements: the **coverage** from the policy that might cover the loss, the **claimant** to whom payment will be made, the **incident** (the specific item or person lost or damaged), and the **reserve lines**, which are the financial 'buckets' set aside for payments. For Workers' Compensation claims, the coverage, claimant, and incident are often automatically set when the exposure is created. An exposure remains open until all associated payments are made on its reserve lines, or until final payments are issued if multiple payments are linked to a single reserve line (e.g., ongoing medical treatments).\n\nIn Workers' Compensation claims, exposures are frequently created automatically based on the incurred losses, such as medical, indemnity, and liability. These can be generated by Gosu rules during claim setup. However, adjusters also have the flexibility to create exposures manually when needed. For instance, a single loss event might necessitate multiple exposures; a workers' comp claim involving an injured worker might require one exposure for statutory workers' compensation (injury) and another for employer's liability.\n\n**Incidents** represent a single instance of loss—the property or person that was damaged or injured. In a WC claim, incidents typically include injuries or lost wages. While incidents can involve multiple coverages, this is less common for WC incidents. Incidents serve two main purposes: they allow initial loss information to be captured without immediately creating exposures (useful for CSRs or when coverage isn't yet clear), and they enable shared information when an injury applies across several exposures.",
+      "keyPoints": [
+        "Exposures track potential payments from one coverage to one claimant.",
+        "Key elements of an exposure are coverage, claimant, incident, and reserve lines.",
+        "WC exposures are often auto-created for medical, indemnity, and liability losses.",
+        "Incidents capture details of the loss (e.g., injuries) and can be shared across exposures."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "An adjuster's focus on determining specific payment details for a claim."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "The four primary elements that define an exposure: coverage, claimant, incident, and reserve lines."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Explanation of how exposures are created and used in Workers' Compensation claims."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "The concept of coverage within a policy and how multiple coverages can be involved in a single loss."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Definition and purpose of incidents as single instances of loss in a claim."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Exposure",
+          "content": "In ClaimCenter, an exposure is a specific link between a single coverage and a single claimant, used to track potential payments related to a particular incident."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Automatic and Manual Creation of WC Exposures",
+      "narrative": "In ClaimCenter, Workers' Compensation exposures are typically generated automatically through Gosu rules during the claim creation process. There are three main types of exposures available for a WC claim:\n\n1.  **Time Loss**: This covers a worker's wages for time lost due to a work-related injury or illness.\n2.  **Medical Details**: This addresses the treatment costs for a work-related injury or illness.\n3.  **Employer Liability**: This accounts for potential settlements from a lawsuit against the employer.\n\nThe most common scenario involves the automatic creation of a Medical Details Exposure for nearly every WC claim, especially for 'medical-only' claims where there's no lost time from work. If the injured worker does lose time, and this is indicated during the New Claim Wizard (NCW), a Time Loss exposure is also automatically created. It's important to note that Employer Liability exposures are generally *not* created by rules in the base configuration.\n\nWhile many exposures are automated, adjusters can also **manually create** WC exposures. This is typically done by modifying the 'Classification' section on the Loss Details screen. For example, Employer Liability exposures can *only* be created manually through this method. It's crucial to understand that changing an answer (e.g., from 'Yes' to 'No' for 'Lost time from work?') after a claim has been saved will *not* remove any existing exposures. The mechanism is additive only; it will not close or prevent transactions on an exposure that was previously created. An Employer Liability exposure is distinct from a 'matter,' which is an assignable object in ClaimCenter used to track legal documents and processes.",
+      "keyPoints": [
+        "WC exposures are generally auto-created by rules during claim setup.",
+        "Three types of WC exposures: Time Loss, Medical Details, and Employer Liability.",
+        "Medical Details and Time Loss exposures are commonly auto-created based on initial claim input.",
+        "Employer Liability exposures are typically created manually via the Loss Details screen.",
+        "Exposure creation is additive; changing claim classification after creation does not remove existing exposures."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Overview of automatic creation of Workers' Compensation exposures by rules during claim setup."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "How to manually create Workers' Compensation exposures by adjusting the Classification section on the Loss Details screen."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "A summary table illustrating the conditions under which different Workers' Compensation exposures are created."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Additive Exposure Creation",
+          "content": "Remember that changing 'Yes/No' answers for exposure creation questions after a claim is saved will not remove existing exposures. The system is additive only, meaning it will only create new exposures if conditions are met, but won't undo previous creations."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration illustrates how exposures are created and managed within ClaimCenter, showing both automatic and manual processes.",
+      "transcriptSummary": "The video guides you through viewing existing exposures on a claim, understanding their elements, and manually adding an Employer Liability exposure by modifying the claim's classification details."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Financials: Understanding Reserve Lines",
+      "narrative": "For an adjuster like Tanvi, accurately tracking potential payouts is paramount, as it directly impacts the company's financial health. This is where **reserve lines** become essential. The financial side of adjudication involves both setting aside money (reserves) and issuing payments to claimants. While an exposure links a coverage to a claimant, it doesn't directly record monetary amounts. That's the job of reserve lines.\n\nA reserve line can be conceptualized as a dedicated account for a specific aspect of exposure processing. It tracks both credits (money set aside) and debits (payments made). The total size of a reserve line is the sum of its credits minus its debits. For an exposure to be payable, it *must* have at least one reserve line. Without it, there's no allocated money to cover the potential payment. ClaimCenter uses 'reserve line' to refer to the total amount of money earmarked for an exposure, while 'reserve transaction' refers to the individual actions that increase or decrease this amount.\n\nConsider an example: for a Workers' Compensation medical details exposure for a claimant named Jim Means, you might have multiple reserve lines. One could be for 'hospitalization' and another for a 'nurse case manager.' Each of these represents a distinct financial commitment within that single exposure. These reserve lines ensure that funds are properly allocated and tracked for every anticipated payment.",
+      "keyPoints": [
+        "Financials involve setting aside money (reserves) and issuing payments.",
+        "Reserve lines track money associated with a specific exposure.",
+        "An exposure must have a reserve line to be payable.",
+        "A reserve line is an account for a specific aspect of exposure processing, tracking credits and debits."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "An adjuster emphasizes the importance of accurate reserve lines for financial tracking."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Overview of financials, distinguishing between exposures (tracking information) and reserve lines (tracking money)."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Detailed explanation of reserve lines as amounts of money set aside for expected payments related to an exposure."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Reserve Line",
+          "content": "An amount of money set aside for expected payments related to a specific exposure. It acts as an account, tracking both allocated funds (credits) and payments made (debits)."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Cost Types and Categories for Granular Financial Tracking",
+      "narrative": "To further refine financial tracking, every reserve line is categorized by a **cost type**, which broadly indicates whether the money is for **indemnity** or **expense**. An **indemnity payment** is made directly to the claimant to 'make them whole again'—for example, repairing a damaged vehicle or covering a worker's lost wages. An **expense payment**, on the other hand, covers costs incurred by the insurer during the claim processing, such as hiring an independent auto inspector or a nurse case manager. These are operational costs not passed to the claimant.\n\nWhile there are typically two broad categories (indemnity and expense), claims processing systems like ClaimCenter often have more granular cost types. The ClaimCenter base application, for instance, includes 'Claim Cost' (indemnity), 'Adjusting and other expense' (expense), 'Defense and cost containment' (expense), and 'Unspecified.'\n\nBeyond cost types, **cost categories** provide even more specific classifications. A single cost category, such as 'vehicle inspection,' can be shared across multiple cost types. For example, it could be an 'Expense' if the carrier hires an inspector, or an 'Indemnity' if the claimant's inspection cost is covered. Crucially, every reserve line is uniquely defined by a combination of its **exposure, cost type, and cost category**. This unique combination ensures precise financial tracking and helps in identifying leakage, predicting future reserves, and controlling reserve creation and approval processes.\n\nWho creates these reserve transactions? Often, they are created **automatically** by Gosu rules during exposure setup, typically through an 'Initial Reserve' rule set that executes after the exposure workplan is generated. However, adjusters also have the ability to **manually create** reserves as needed, allowing for flexibility and adjustments throughout the claim lifecycle.",
+      "keyPoints": [
+        "Cost types categorize reserve lines as either indemnity (to claimant) or expense (insurer's processing costs).",
+        "ClaimCenter uses specific cost types like Claim Cost, Adjusting and other expense, and Defense and cost containment.",
+        "Cost categories provide granular classification and can be shared across cost types.",
+        "Each reserve line is uniquely defined by its exposure, cost type, and cost category.",
+        "Reserve transactions can be created automatically by rules or manually by adjusters."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Explanation of cost types, differentiating between indemnity reserves (claim cost) and expense reserves."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Details on cost categories as specific classifications of cost types, uniquely defining reserve lines."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Overview of who creates reserve transactions, including automated processes and manual creation by adjusters."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Indemnity Payment",
+          "content": "A payment made directly to a claimant to compensate them for a covered loss, aiming to restore them to their pre-loss condition."
+        },
+        {
+          "type": "definition",
+          "title": "Expense Payment",
+          "content": "A payment made by the insurer to cover costs incurred during the processing of a claim, not directly to the claimant (e.g., investigator fees, legal costs)."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you how to work with reserve lines, including their creation and management, within ClaimCenter.",
+      "transcriptSummary": "The video illustrates how to view existing reserve lines, understand their associated cost types and categories, and manually create new reserve transactions to allocate funds for specific claim expenses."
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Loss Details and Critical Data for Adjudication",
+      "narrative": "As the adjudication process unfolds, adjusters continually gather more information about the claim. It's crucial to understand that the specific data required can vary significantly depending on the **Line of Business (LOB)**. For instance, the critical data for an auto claim will differ from that of a homeowners claim, or, in our focus, a Workers' Compensation claim. This detailed information, often referred to as **loss details**, forms the foundation for deciding whether to pay a claim and, if so, how much.\n\nThe decision to pay is based on multiple criteria, including whether the policy was in force at the time of loss, if it was a covered loss, the specific coverage involved, and if other parties might share responsibility. Capturing accurate and comprehensive loss details is paramount for making informed adjudication decisions.\n\nFor Workers' Compensation claims, specific critical data points are essential:\n\n*   **Injured worker (incident)**: Is the worker covered by the policy?\n*   **Location**: Is the location where the incident occurred covered by the policy?\n*   **Loss cause**: Is the specific cause of the injury covered by the policy's coverage type?\n*   **Fault rating**: While less common in no-fault WC systems, understanding any contributing factors can be relevant.\n*   **Witnesses**: Can witness statements help clarify the incident or identify responsible parties?\n*   **Metropolitan reports**: Are there police or incident reports that provide additional context?\n*   **Contributing factors**: Are there any other elements that could help identify responsible parties or influence the claim's outcome?\n\nBy meticulously collecting and analyzing these loss details, adjusters can ensure that every adjudication decision is accurate, compliant, and fair.",
+      "keyPoints": [
+        "Loss details are critical for determining if and how much to pay on a claim.",
+        "Required data varies significantly by Line of Business (LOB).",
+        "Key decision criteria include policy in-force, covered loss, specific coverage, and third-party involvement.",
+        "Critical WC data includes injured worker status, location, loss cause, and information from witnesses or reports."
+      ],
+      "figures": [
+        {
+          "slideNumber": 29,
+          "caption": "An adjuster highlights the need to understand data differences across various claim types during adjudication."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Explanation of loss details as a critical part of adjudication, influencing payment decisions based on specific claim data."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "List of critical data points specifically relevant for Workers' Compensation claims adjudication."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration focuses on how to access and update loss details within ClaimCenter, emphasizing the critical data points for different claim types.",
+      "transcriptSummary": "The video shows navigating to the Loss Details screen, reviewing existing information, and entering additional data specific to a Workers' Compensation claim, such as injured worker details, loss cause, and location information."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new Workers' Compensation claim has been reported. The initial intake indicated a workplace injury, but the CSR was unsure about specific coverages or potential liabilities. You, as the adjuster, need to begin the adjudication process.",
+      "question": "What are the first three key steps you would take in ClaimCenter to initiate the adjudication of this Workers' Compensation claim, focusing on compensability and initial exposure setup?",
+      "hints": [
+        "Think about the mandatory activity for WC claims.",
+        "Consider how exposures are typically created for WC claims.",
+        "What are the primary elements an exposure tracks?"
+      ],
+      "expectedApproach": "1. Locate and address the 'Determine Compensability' activity, gathering information to make a decision (Accepted/Denied). 2. Verify or initiate the creation of necessary Workers' Compensation exposures (e.g., Medical Details, Time Loss if applicable). 3. Review the primary elements of the created exposures: coverage, claimant, and incident."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a main goal of adjudication?",
+      "referenceAnswer": "To determine if a claim should be paid, and if so, how much should be paid to make\nthe claimant whole again.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "InClaimCenter terms, what is an incident?",
+      "referenceAnswer": "An incident is a single instance of loss. It is the property or person that is damaged or\ninjured.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "ae What is the purpose of an exposure?",
+      "referenceAnswer": "An exposure is the mechanism that ClaimCenter uses to track potential payments for\none coverage to one claimant.",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What is the purpose of a reserve line?",
+      "referenceAnswer": "Areserve line is an amount of money set aside for expected payments related to a\ngiven exposure. It is defined by the exposure, a cost type, and a cost category.",
+      "questionKey": "slide-42"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Adjudication is the end-to-end process of determining claim payment and amount, from first notice to closure.",
+        "Compensability decisions are critical and time-sensitive for Workers' Compensation claims, managed by an auto-created activity.",
+        "Exposures link a single coverage to a single claimant for tracking potential payments, defined by coverage, claimant, incident, and reserve lines.",
+        "WC exposures can be automatically generated (Medical Details, Time Loss) or manually created (Employer Liability).",
+        "Reserve lines are financial accounts within exposures, tracking money set aside for payments, categorized by cost type (indemnity/expense) and cost category.",
+        "Accurate loss details, varying by Line of Business, are essential for making informed adjudication decisions."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of adjudication ensures that claims are processed efficiently, compliantly, and in line with business rules. Mismanaging exposures or reserve lines can lead to financial inaccuracies, regulatory penalties, and dissatisfied claimants. Mastering these concepts is fundamental to effective claim management and maintaining the insurer's financial integrity.",
+      "nextLessonPreview": "In our next lesson, we'll explore the detailed workflow of managing payments and recoveries, building on our understanding of exposures and reserve lines."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access the ClaimCenter training environment. Create a new Workers' Compensation claim. Practice the following tasks:\n1.  Locate and complete the 'Determine Compensability' activity, making an 'Accepted' decision and providing a reason.\n2.  Review the automatically created exposures (e.g., Medical Details). If not present, manually create a Medical Details exposure.\n3.  Manually create an 'Employer Liability' exposure for the claim.\n4.  For one of the created exposures, navigate to its financials and manually create a new reserve line, assigning an appropriate cost type and cost category.",
+      "objectives": [
+        "Practice making compensability decisions.",
+        "Gain hands-on experience with automatic and manual exposure creation.",
+        "Apply knowledge of reserve lines, cost types, and cost categories in a practical scenario."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_07_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_07_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_07_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_07_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Claim_07_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_07_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "IS_Claim_07_04.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_07_04.mp4"
+    }
+  ]
+}

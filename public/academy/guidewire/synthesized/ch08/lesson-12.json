@@ -1,0 +1,357 @@
+{
+  "lessonId": "ch08-l12",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 12,
+  "title": "Assigning Activities",
+  "subtitle": "Learn how to configure and manage activity assignments in Guidewire PolicyCenter.",
+  "synthesizedAt": "2026-02-16T18:23:32.465546+00:00",
+  "estimatedMinutes": 65,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a new policy submission comes in, requiring an underwriter review. Without an efficient system, this task could sit unassigned, delaying the policy issuance and potentially frustrating the customer. How does PolicyCenter ensure that critical tasks like this are automatically directed to the right person or team?",
+      "question": "What mechanisms are in place to intelligently route work items to the most appropriate user or group, ensuring timely processing and operational efficiency?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe primary assignment",
+        "Assign an activity"
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored how activities are created and their role in managing workflows within PolicyCenter. Recall that activities represent specific tasks that need to be completed.",
+      "warmupQuestion": "Think about a time you've seen a task assigned in a system. What information was used to decide who received the task?",
+      "hint": "Consider factors like roles, workload, or specific criteria."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Fundamentals of Activity Assignment",
+      "narrative": "In PolicyCenter, assigning activities is a core function that ensures tasks are directed to the appropriate users or groups. Guidewire distinguishes between two main types of assignable entities: **Primary Assignment** and **Role-Based Assignment**. Primary assignment, which is our focus in this lesson, means an entity can have only a single owner. In the base configuration, the `Activity` entity is a prime example of a primarily assignable entity. For an entity to be primarily assignable, it must implement the `Assignable` and `PCAssignable` delegates. These delegates are reusable data objects that provide the necessary methods and fields for assignment, allowing entities to share common assignment logic without duplicating code.\n\nUnderstanding the typical flow of assignment execution is crucial. When an activity needs to be assigned, PolicyCenter follows a specific process. If neither a user nor a group is specified for the assignment, the system first executes **global assignment rules**. These rules typically assign the object to a group. Following this, **default group assignment rules** are executed to assign the object to a specific user within that assigned group. However, if the global rules manage to assign both a group and a user, the default group rules are skipped. If a group and user are *already* specified when the assignment is initiated, no rules are run; the object is simply assigned directly to the specified user and group.\n\nActivity ownership in PolicyCenter is always dual: an activity is owned by both a user and a group. A critical rule is that the assigned user *must* be a member of the assigned group. If you assign an activity to 'just' a user, that user's default group is also automatically assigned. Activities can also be assigned to a queue, in which case the group associated with that queue becomes the activity's assigned group. While an activity might briefly be assigned to only a group, this is a transient state, always leading to assignment to a user or a queue. It's a best practice to never configure the application to assign an entity simultaneously to both a queue and a user. When an activity is assigned to a user, it appears in their 'My Activities' list, can only be edited by them (or their supervisor), but can be viewed by other members of their group.",
+      "keyPoints": [
+        "Primary assignment means a single owner, typically for Activity entities.",
+        "Assignment flow depends on whether a user/group is initially specified, executing global and then default group rules if needed.",
+        "Activities are owned by both a user and a group, with the user being a member of that group.",
+        "Never assign an activity to both a queue and a user simultaneously."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the 'Assigning Activities' lesson."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the difference between primary and role-based assignment in PolicyCenter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram showing the typical execution flow of assignment rules based on specified user/group."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Explains the concept of activity ownership, emphasizing assignment to both a user and a group."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Delegate Data Object",
+          "content": "A reusable entity containing an interface and its default implementation, allowing multiple entities to implement an interface by delegating its implementation to another class."
+        },
+        {
+          "type": "best_practice",
+          "title": "Activity Ownership",
+          "content": "Ensure an activity is never assigned to both a queue and a user simultaneously to avoid conflicts and confusion."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Assignment Logic and Configuration",
+      "narrative": "Activity assignment in PolicyCenter is highly configurable, allowing carriers to tailor the logic to their specific business requirements. While the base configuration often uses simple round-robin assignment within a group, many carriers need more sophisticated logic. For instance, they might want to assign an activity to an underwriter who speaks a specific foreign language, has familiarity with a particular line of business, or possesses a certain level of seniority based on client value. This level of customization is achieved through a combination of **assignment rules** and **assignment classes**.\n\nEach assignable entity, such as an Activity, has its own set of rule sets. Assignment is the process of executing these rules until the object has a user and group assigned, or no more rules are left to run. It's important to note that assignment rules are *not* used when a user (or queue) and group are explicitly specified by the user creating or reassigning the item. Rules come into play only when there's a group but no specified user, or when neither a group nor a user is specified. The `DefaultGroupActivityAssignmentRules` typically assign an activity to a user within a group using a round-robin approach. In contrast, `GlobalActivityAssignmentRules` might assign an activity based on a specific role on the policy transaction or the policy itself, such as to the underwriter or producer.\n\nAssignment can also be initiated programmatically from Gosu code. The `Assign To` field in the Activity Worksheet, for example, triggers specific `Activity` methods and assignment rules. If `Assign To Group` is specified in the UI, it calls `autoAssign(group, null)`, which then triggers assignment rules because the user ID is null. If `Assign To User` is specified, it calls `assign(group, user)`, directly assigning the activity without executing assignment rules. The `autoAssign()` methods are powerful as they invoke the activity assignment engine and can cause assignment rules to run. However, a critical warning is to *never* call `autoAssign()` from within an assignment rule itself, as this can lead to infinite loops or unexpected behavior. A common use case for `autoAssign()` is within the `PreUpdateHandlerImpl` class, which executes logic before data is saved to the database. For example, you might add code here to create an activity informing a user in the account creator group that a participant was updated on the account. In such a scenario, if a group is specified, only the default group rule set will run.",
+      "keyPoints": [
+        "Activity assignment can be configured using assignment rules, assignment classes, or a combination.",
+        "Assignment rules are executed when a user or group is not explicitly specified.",
+        "Global rules typically assign to a group, while default group rules assign to a user within that group.",
+        "Gosu's `autoAssign()` methods trigger the assignment engine, but should not be called from within assignment rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Highlights that activity assignment in PolicyCenter is configurable through rules, classes, or both."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Shows examples of activity assignment rule sets, including Default Group and Global rules."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Explains how activity assignment can be initiated from Gosu, particularly using `autoAssign()` methods."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Provides a code example of using `autoAssign()` within the `PreUpdateHandlerImpl` for a business requirement."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Avoid `autoAssign()` in Rules",
+          "content": "Do not call `autoAssign()` from within an assignment rule, as it can lead to unintended recursive calls or infinite loops."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the fundamental concepts of activity assignment, showing how activities are created and initially assigned within PolicyCenter.",
+      "transcriptSummary": "The video covers the basics of activity assignment, including how to create an activity and observe its initial assignment behavior based on the default configuration."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Common Assignment Strategies and Methods",
+      "narrative": "PolicyCenter offers several common strategies for object assignment, which can be implemented through its flexible configuration. One popular approach is to **assign to a specific group and then use round-robin** among the users within that group. The round-robin functionality is intelligent enough to ignore users who lack the necessary permissions to own the object and can even be configured to account for user workload or load factors, ensuring a balanced distribution of tasks. Other straightforward strategies include assigning to a **specific group and user** directly, or assigning to a **queue**, which acts as a holding area for tasks to be picked up by available users.\n\nGuidewire provides a suite of assignment methods on the `Activity` entity that can be utilized within assignment rules or called directly from assignment classes. These methods fall into general categories like Queue Assignment, Immediate Assignment, Condition-based Assignment, Round-robin Assignment, and Dynamic Assignment. Key methods include `assignGroup()` for assigning to a named group, `assignGroupByLocation()` for assigning to a group matching a specified location and group type, `assign()` for assigning to a named user (and their group), `assignUserAndDefaultGroup()` for assigning to a named user and any group they belong to, and `assignActivityToQueue()` for assigning to a named queue.\n\nFor more advanced or custom assignment logic, you might need to modify existing assignment enhancement classes located under `gsrc/gw/assignment`. Examples include `AuditAssignmentEnhancement` and `JobAssignmentEnhancement`. These classes contain logic to create and assign activities to users with specific roles on a job, such as an auditor. A good example is the `createRoleActivity()` method on the `Job` entity, which creates an activity from a specified `ActivityPattern` and assigns it to a user with a particular role on that job.\n\nWhen configuring assignment rules, it's a **best practice to always exit the rule set when assignment succeeds**. Assignment methods return boolean values: `true` if successful, `false` if unsuccessful (e.g., the specified group or user couldn't be found). By wrapping assignment methods in an `if/exit` wrapper, you ensure that if an assignment is successful, the rule set is exited immediately. This prevents subsequent rules from inadvertently reassigning the entity and streamlines the assignment process. If the assignment fails, execution proceeds to the next rule, allowing for fallback logic. The `actions.exit()` method is the simplest way to stop processing the rule set, but other options like `actions.exitAfter`, `actions.exitToNext`, and `actions.exitToNextParent` offer more granular control for complex rule hierarchies.",
+      "keyPoints": [
+        "Common assignment strategies include round-robin within a group, direct assignment to a user/group, or assignment to a queue.",
+        "Gosu methods like `assignGroup()`, `assignGroupByLocation()`, `assign()`, and `assignActivityToQueue()` facilitate different assignment types.",
+        "Assignment enhancement classes can be configured for custom role-based assignment logic.",
+        "Always use `if/actions.exit()` wrappers in assignment rules to prevent unintended reassignments and ensure efficient rule execution."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Outlines common strategies for assigning objects, such as round-robin or direct assignment."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Lists common assignment methods available on the Activity entity and their functions."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Identifies configurable classes under `gsrc/gw/assignment` for modifying activity assignment logic."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Emphasizes the best practice of exiting assignment rules upon successful assignment using an `if/exit` wrapper."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Exit Rules on Success",
+          "content": "Always wrap assignment methods in an `if` statement with `actions.exit()` to prevent further rules from reassigning an already assigned entity."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Exiting Rule on Successful Assignment",
+          "code": "var theGroup = activity.Job.getUserRoleAssignmentByRole( \"Underwriter\" ).AssignedGroup\nif (activity.assign( theGroup, theGroup.Supervisor )) {\n  actions.exit()\n}",
+          "explanation": "This code snippet demonstrates how to assign an activity to a group's supervisor. If the assignment is successful, `actions.exit()` is called to stop further rule processing."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Group-Based Assignment Details",
+      "narrative": "When assigning an activity to a specific group, you can use the `object.assignGroup(group)` syntax. For example, `activity.findGroup(\"Los Angeles Branch UW\")` can locate a group by name, and then `activity.assignGroup(group)` attempts the assignment. If successful, the rule set should be exited. If the group doesn't exist or the assignment fails for any reason, the method returns `false`, and the next assignment rule is executed. The `findGroup()` method, typically an enhancement to the `Activity` entity, uses `AtMostOneRow` to ensure it returns a unique group, throwing an exception if multiple matches are found.\n\nA more sophisticated approach is `object.assignGroupByLocation(groupType, address, directChildrenOnly, group)`. This method is ideal for assigning objects based on geographic criteria, such as assigning an activity to an inspector in the same region as the policy. It assigns to a group of a specified type whose region covers a given address. The `directChildrenOnly` parameter (typically `false` to check all descendent groups) and the `group` parameter (often `null` for global rules or `entity.CurrentAssignment.AssignedGroup` for default group rules) control the scope of the search.\n\nThe `assignGroupByLocation` method follows a three-step process: First, it **identifies candidate groups** by finding all descendants (or immediate children) of the specified starting group. For instance, if starting from the root group 'Enigma Fire Casualty Insurance', all groups in the hierarchy become candidates. Second, it **filters these candidates by group type**. If a `groupType` is specified (e.g., `IC_HOMEOFFICEADMIN`), only groups matching that type remain. If no type is specified, this step is skipped. Third, it **selects a group by location**. This selection uses zones and regions, which are configured in `zone-config.xml` and through the Administration tab. Zones are types of geographic areas (state, county, postal code), while regions are collections of specific zone values. The `regionMatchOrder` property in `zone-config.xml` dictates the priority of matching (e.g., by zip, then county, then state). If no group with a matching location is found, the method returns `false`.\n\nWhat happens if group assignment fails? After global assignment rules run, PolicyCenter checks if the object was assigned to a group. If not, it's assigned to a **Default Owner** and the root group of the hierarchy. The Default Owner is a dummy user, and objects assigned to them require manual reassignment, incurring extra overhead. It's considered bad practice to have rules that result in objects being assigned to the Default Owner, emphasizing the importance of robust assignment rule configuration.",
+      "keyPoints": [
+        "`assignGroup()` assigns to a specific named group.",
+        "`assignGroupByLocation()` assigns based on group type and geographic location, using zones and regions.",
+        "Location-based assignment involves identifying candidates, filtering by type, and selecting by location based on `zone-config.xml`.",
+        "If global group assignment fails, the object is assigned to the 'Default Owner' and the root group, which should be avoided."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Demonstrates how to assign an object to a specific group using `assignGroup()`."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explains the `assignGroupByLocation()` method for assigning based on group type and location."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Illustrates Step 1 of `assignGroupByLocation()`: Identifying candidate groups."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Illustrates Step 2 of `assignGroupByLocation()`: Filtering candidate groups by type."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Illustrates Step 3 of `assignGroupByLocation()`: Selecting a group by location."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Details how location selection is configured using zones and regions in `zone-config.xml`."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Explains the process when group assignment fails, leading to assignment to the 'Default Owner'."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Default Owner",
+          "content": "A dummy user to whom objects are assigned when global assignment rules fail to assign the object to a group. This is generally an undesirable outcome."
+        },
+        {
+          "type": "best_practice",
+          "title": "Robust Group Assignment",
+          "content": "Configure your global assignment rules thoroughly to prevent activities from being assigned to the Default Owner."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to assign activities to specific users and groups, building on the basic assignment concepts.",
+      "transcriptSummary": "The video illustrates various methods of assigning activities, including direct assignment to users and groups, and highlights the outcomes of different assignment scenarios."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "User-Based Assignment and Lesson Review",
+      "narrative": "Once an activity has been assigned to a group, the next step is often to assign it to a specific user within that group. PolicyCenter provides methods for this, such as `object.assign(group, user)`. This method assigns the object to both a specified group and a specified user. While it requires both parameters, it's primarily considered a user assignment method because, in most cases, the group is determined by the user's default group. This method can be called from either global or default group rules. If called from global rules and successful, the object will have an assigned user, and the default group rule set will not execute.\n\nAnother useful method is `object.assignUserAndDefaultGroup(User)`. This assigns the object to a specified user and any group that the user belongs to, typically their primary group. Similar to `assign(group, user)`, if this method is called successfully from global rules, it bypasses the execution of default group rules.\n\nWhat happens if user assignment fails? After the default group assignment rules have been executed, the assignment engine checks if the object was assigned to a user. There are three possible outcomes:\n\n1.  **Successful User Assignment**: If the object was assigned to a user, the assignment process is complete.\n2.  **No User, New Group**: If the object was not assigned to a user, but it *was* assigned to a *new* group, the default group rules are re-executed. This allows an object to 'travel' between groups until a user can be found at the appropriate group level.\n3.  **No User, No New Group**: If the object was not assigned to a user and no new group was assigned, the object is automatically assigned to the **supervisor of the current group**. This is an inherent behavior of the assignment engine and cannot be modified. Logging messages at the WARN level will indicate when an object cannot be assigned to a user within the Default Group rule set, alerting administrators to potential issues.\n\nThis lesson has covered the fundamental aspects of assigning activities in PolicyCenter, from understanding primary assignment to configuring assignment rules and handling various assignment scenarios. We've explored how activities are routed to the right individuals or teams, ensuring efficient workflow management.",
+      "keyPoints": [
+        "`assign(group, user)` assigns an activity to a specific user within a specified group.",
+        "`assignUserAndDefaultGroup(User)` assigns an activity to a user and their default group.",
+        "If user assignment fails, default group rules may re-execute, or the activity may be assigned to the group supervisor.",
+        "The lesson reviewed primary assignment and the process of assigning activities."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "A transition slide before diving into user-specific assignment methods."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Illustrates how to assign an object to a specific user and group using `assign(group, user)`."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Explains the `assignUserAndDefaultGroup()` method for assigning to a user and their default group."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Details the outcomes when user assignment fails, including re-execution of rules or assignment to a supervisor."
+        },
+        {
+          "slideNumber": 42,
+          "caption": "A review of the lesson objectives: describing primary assignment and assigning an activity."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new policy submission requires a review by an underwriter. The system should first try to assign it to an underwriter in the 'Eastern Region Underwriting' group. If that group doesn't exist or is unavailable, it should fall back to assigning it to the 'Home Office Underwriting' group.",
+      "question": "Write Gosu code for a global assignment rule that attempts to assign an activity to the 'Eastern Region Underwriting' group. If that fails, it should then attempt to assign it to the 'Home Office Underwriting' group. Ensure the rule exits upon successful assignment.",
+      "hints": [
+        "Use `activity.findGroup()` to locate groups by name.",
+        "Employ `activity.assignGroup()` for the assignment.",
+        "Remember to use an `if` statement with `actions.exit()` for successful assignments."
+      ],
+      "expectedApproach": "The solution should involve two `if` blocks, one for each group, with the second `if` block executing only if the first assignment fails. Both successful assignments should trigger `actions.exit()`."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "An activity needs to be assigned to a specific user, 'jsmith', who is part of the 'Los Angeles Branch UW' group. This assignment should bypass all assignment rules.",
+      "question": "How would you programmatically assign an activity to user 'jsmith' in the 'Los Angeles Branch UW' group, ensuring no assignment rules are executed?",
+      "hints": [
+        "Consider the Gosu methods that directly assign to a user and group without invoking the assignment engine.",
+        "You'll need to find both the user and the group first.",
+        "Refer to the `assign(group, user)` method."
+      ],
+      "expectedApproach": "The solution should involve finding the 'Los Angeles Branch UW' group and the 'jsmith' user, then calling `activity.assign(group, user)` directly. This method bypasses rule execution."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Whatis the difference between primary and secondary assignment?",
+      "referenceAnswer": "In primary assignment, a single user is assigned ownership of the assigned object. In\nsecondary assignment, one or more users are assigned to roles with respect to the\nassigned object.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When an activity is assigned by rules, which two rule sets are typically\nexecuted? In what order?",
+      "referenceAnswer": "First, global rules are executed. Then, default group rules are executed.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Under what circumstances can an activity be assigned without\nassignment rules being executed?",
+      "referenceAnswer": "When the activity is assigned to a specific user.",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Why are assignment methods always inside i‘ statements in assignment\n7 rules?\n0 ! ’",
+      "referenceAnswer": "Assignment methods are always inside if statements because they might fail. For\nexample, an assignGroup method may not be able to find the specified group.\nIf the assignment succeeds, then the if statement causes control of flow to execute an\nactions.exit() statement, which exits execution from the rule set.\nIf the assignment fails, then the actions.exit() statement is skipped and execution\nproceeds to the next rule.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What is the Default Owner of an object?",
+      "referenceAnswer": "Default Owner is a dummy user that objects are assigned to when global assignment\nrules fail to assign the object to a group.",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Primary assignment involves a single owner for an entity, like an Activity.",
+        "Assignment can be driven by global and default group rule sets, or by direct programmatic calls.",
+        "PolicyCenter offers various Gosu methods for assigning activities to specific groups, users, or queues.",
+        "Best practices include exiting rule sets upon successful assignment and avoiding assignment to the 'Default Owner'.",
+        "Assignment logic can be customized using assignment classes and `zone-config.xml` for location-based routing."
+      ],
+      "realWorldConnection": "Effective activity assignment is critical in Guidewire projects for automating workflows, ensuring tasks reach the right personnel, and maintaining operational efficiency. Properly configured assignment rules reduce manual intervention, improve processing times, and enhance customer satisfaction by ensuring timely handling of policy-related tasks. This directly impacts a carrier's ability to manage workload, meet service level agreements, and adapt to evolving business needs.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced topics in workflow management, including how to escalate activities and configure notifications for overdue tasks."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the 'Assigning Activities' student exercise to apply the concepts learned in this lesson. You will practice configuring assignment rules and using Gosu methods to assign activities under various scenarios.",
+      "objectives": [
+        "Configure global assignment rules to assign activities to specific groups.",
+        "Implement fallback logic for group assignment failures.",
+        "Use Gosu methods to assign activities directly to users and groups.",
+        "Understand the impact of assignment rule execution order."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_12_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_12_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_12_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_12_02.mp4"
+    }
+  ]
+}

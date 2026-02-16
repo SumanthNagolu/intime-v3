@@ -1,0 +1,198 @@
+{
+  "lessonId": "ch11-l05",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 5,
+  "title": "Gosu Templates",
+  "subtitle": "Learn to create dynamic, formatted text payloads using Gosu's native templating system.",
+  "synthesizedAt": "2026-02-16T18:51:50.824417+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you need to generate a complex, dynamic message payload for an external system, perhaps to send bank account details or policy information. Manually concatenating strings in Gosu can quickly become cumbersome and error-prone, especially with conditional logic and varying data structures.",
+      "question": "How can you efficiently create flexible, readable, and maintainable dynamic text outputs in Guidewire, ensuring type safety and clean separation of logic from presentation?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and characteristics of Gosu Templates.",
+        "Create a new Gosu Template file in Guidewire Studio.",
+        "Define input parameters within a Gosu Template.",
+        "Utilize Gosu Template expression syntax to render dynamic text.",
+        "Implement Gosu Template scriptlet syntax for control flow and advanced logic.",
+        "Generate string output from a Gosu Template using the renderToString method.",
+        "Deploy Gosu Template changes to a running Guidewire server."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely worked with Gosu programming, including defining methods, using variables, and performing string manipulation. You might also be familiar with other templating systems or concepts of dynamic text generation.",
+      "warmupQuestion": "Think about a time you needed to generate a custom text output based on varying data. What challenges did you face?",
+      "hint": "Consider how you handled dynamic values, conditional logic, and formatting."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Gosu Templates",
+      "narrative": "Gosu includes a powerful native templating system designed to generate dynamic, formatted text based on input parameters. Think of a Gosu Template as a blueprint for text, where you embed Gosu code to calculate and insert values at specific locations. This is incredibly useful for creating structured outputs like message payloads, reports, or custom log entries.\n\nAt its core, a Gosu Template always evaluates to a string. It can accept any number of input parameters, allowing you to pass in various data objects that will drive the dynamic content. The template then evaluates these parameters and any derived values, seamlessly integrating them into the final text output. A key feature is its support for scriptlet syntax, which enables you to embed Gosu API calls and control flow logic directly within the template, providing immense flexibility. This separation of presentation (the template text) from logic (the embedded Gosu code) makes your code cleaner and easier to maintain, especially for complex text generation tasks.",
+      "keyPoints": [
+        "Gosu Templates generate dynamic, formatted text.",
+        "They always evaluate to a string and accept multiple input parameters.",
+        "Embedded Gosu code calculates and exports values into the text.",
+        "Supports scriptlet syntax for API calls and control flow."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Gosu Templates provide a native way to generate dynamic text outputs."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Creating and Defining Gosu Templates",
+      "narrative": "Creating a Gosu Template is straightforward within Guidewire Studio. You can either embed Gosu expressions directly within text literals for simpler, inline dynamic strings, or create separate template files for more complex scenarios. For dedicated templates, you'll typically right-click the parent package in Studio, select **New > Gosu Template**, and provide a descriptive name. A common naming convention is `<entity/description>Template`, and all Gosu Template files are identified by a `.gst` extension.\n\nOnce created, the first step in your `.gst` file is to define its input parameters. This is done at the top of the template using the syntax `<%@ params (paramList) %>`. Similar to a standard Gosu method, you can define one or more parameters, each specified as `name : type`, separated by commas. These parameters can be of any valid Gosu type. It's crucial to remember that, except for this parameter definition line, any whitespace or line breaks within your template will be reflected directly in the generated output string. This means careful formatting of your template text is important for the desired output structure.",
+      "keyPoints": [
+        "Create new Gosu Templates via Studio's 'New > Gosu Template' option, resulting in a .gst file.",
+        "Define input parameters using `<%@ params (param1 : type, param2 : type, ..) %>` syntax.",
+        "Whitespace and line breaks in the template are preserved in the output."
+      ],
+      "figures": [
+        {
+          "slideNumber": 4,
+          "caption": "Steps to create a new Gosu Template file in Guidewire Studio."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Defining input parameters at the top of a Gosu Template using the `<%@ params %>` syntax."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Naming Conventions",
+          "content": "Follow consistent naming conventions like `<entity/description>Template` for your `.gst` files to improve readability and organization within your project."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Gosu Template Syntax: Expressions and Scriptlets",
+      "narrative": "Gosu Templates offer two primary forms of syntax for embedding dynamic logic: expressions and scriptlets. **Template expression syntax**, denoted by `${valueToRender}` or `<%=valueToRender%>`, is used for rendering dynamic text directly into the output. The `${...}` syntax is generally preferred for its conciseness. When Gosu encounters an expression, it evaluates it at runtime and attempts to coerce the result to a `String` type if it's not already one. This process is type-safe, as Gosu's built-in type checking system validates the embedded expression at compile time. Expressions can also be embedded within Gosu `String` literals, which is useful for short, complex dynamic strings generated within a method or business rule without needing a separate `.gst` file.\n\nIn contrast, **template scriptlet syntax**, enclosed within `<%` and `%>`, is used for executing Gosu statements and control flow, but *does not directly generate output*. Unlike expressions, there's no equals sign in the opening tag. Scriptlets are evaluated in the order they appear, and any plain text *between* scriptlet tags generates output within the scope and logic of the scriptlet code. This allows you to write advanced logic that spans multiple scriptlet tags, maintaining variable scope across them. For example, you might use scriptlets to conditionally include blocks of text or iterate over collections. A common use case is adding an extra name-value pair to the output only when a specific condition, like an `AccountType` being 'Savings', is met. This enables sophisticated dynamic content generation, including placeholders for 'late binding' values that are determined later in the process.",
+      "keyPoints": [
+        "Template expression syntax (${...} or <%=...%>) renders dynamic text directly into the output.",
+        "Expressions are type-checked at compile time and coerced to String at runtime.",
+        "Template scriptlet syntax (<%...%>) executes Gosu statements and control flow but does not generate direct output.",
+        "Scriptlets allow for advanced logic and conditional text inclusion, with scope maintained across tags."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Template expression syntax for rendering dynamic values into the output."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Template scriptlet syntax for embedding Gosu logic and control flow."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Embedding Expressions in String Literals",
+          "code": "msg = messageContext.createMessage(\n  publicID, ${aABcontact.PublicID}\\nNumOfEvals, ${aABcontact.VendorEvaluations.length}\n)",
+          "explanation": "This example shows how to embed Gosu expressions directly within a String literal to generate a dynamic message, useful for short, complex strings without a separate .gst file."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Generating Output and Deploying Gosu Templates",
+      "narrative": "Once you've defined your Gosu Template, the next step is to generate its string output. In Gosu, templates are considered first-class objects within their package namespace, meaning they can be referenced and used dynamically. To run a template, you don't instantiate it as an object directly; instead, you reference the template by its name and call its static `renderToString` method. If your template defines parameters, you'll pass the required values as arguments to this method.\n\nFor convenience, you can use a `uses` statement at the top of your Gosu code to import the template, allowing you to reference it by its simple name (e.g., `BankAccountDataTemplate`). Without a `uses` statement, you would need to use the fully qualified name (e.g., `trainingapp.messaging.bank.BankAccountDataTemplate`). After making any changes to your Gosu Template files, these changes need to be deployed to your Guidewire server to take effect. The simplest way to do this from Studio is to stop the running server and then start it again in either Run or Debug mode. This ensures that the updated template code is compiled and loaded by the application.",
+      "keyPoints": [
+        "Gosu Templates are first-class objects, referenced by name.",
+        "Use the static `renderToString` method to execute a template and get its string output.",
+        "Pass required parameters to `renderToString`.",
+        "Use `uses` statements for simpler template referencing, or fully qualified names otherwise.",
+        "Deploy template changes by restarting the Guidewire server from Studio."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Example of Gosu code calling a template's `renderToString` method and the resulting string output."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Restarting the server from Studio to deploy Gosu Template code changes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Accessing Gosu Libraries in Templates",
+          "content": "You can access Gosu libraries from within templates using the `Libraries` object, similar to how you would in regular Gosu code. For example: `<%= Libraries.Financials.getTotalIncurredForExposure(exposure) %>`."
+        },
+        {
+          "type": "tip",
+          "title": "Typecode Alias Conversion",
+          "content": "Within Gosu templates, you can use the `$typecode` object to access PolicyCenter typelist mapping tools, such as `typecode.getAliasByInternalCode(\"LossType\", \"ns1\", policy.PolicyType)`. This specific API is available only within Gosu templates."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a Gosu Template, defining its parameters, adding dynamic expressions and scriptlets, and finally, calling it from Gosu code to output a string payload. Pay close attention to how the template's structure directly influences the generated text.",
+      "transcriptSummary": "The video demonstrates creating a new Gosu Template, adding parameter declarations, embedding Gosu expressions for dynamic values, using scriptlets for conditional logic, and then executing the template from a Gosu program to generate a formatted string payload. It highlights the interaction between the template definition and the final output."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Identify if each statement about Gosu Templates is True or False.\n\n, A\nB\nCc\n\nIt can take any number of input values.\n\nIt can make use of conditional statements and for loops.\n\nwv\n\nIt can include values from both the object that triggered the message event and\nobjects related to the triggering object.\n\nD\n\nz=\n\nIt can be used only for message payload generation.\n\nSe Soe Se sees esse ese",
+      "referenceAnswer": "A) True\nB) True\nC) True - Gosu Templates can do this either by having the related objects passe\nD) False",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu Templates provide a robust system for generating dynamic, formatted text.",
+        "Templates are `.gst` files where Gosu code is embedded within text.",
+        "Parameters are defined with `<%@ params(...) %>` and control input data.",
+        "Expressions (`${...}`) are used for rendering dynamic values directly into the output.",
+        "Scriptlets (`<%...%>`) are used for control flow and logic without direct output.",
+        "Templates are executed by calling their static `renderToString` method.",
+        "Server restart is required to deploy template changes."
+      ],
+      "realWorldConnection": "In real Guidewire projects, Gosu Templates are indispensable for integrations, especially when generating structured message payloads for external systems (e.g., sending claims data, policy updates, or billing information). They ensure that complex, dynamic text outputs are type-safe, maintainable, and clearly separated from business logic, leading to more robust and readable integration code.",
+      "nextLessonPreview": "In the next lesson, we'll explore how these generated payloads are then sent as messages to external systems, building upon your understanding of dynamic content creation."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to create a new Gosu Template that generates a formatted string message payload containing specific details about a Policy and its primary account holder. You will need to define appropriate parameters, use both expression and scriptlet syntax, and then call your template from a Gosu program to verify the output.",
+      "objectives": [
+        "Create a new Gosu Template (.gst file).",
+        "Define parameters for Policy and Contact objects.",
+        "Use template expressions to include Policy number, effective date, and Contact name.",
+        "Implement a scriptlet to conditionally include additional information (e.g., 'VIP Client' if a certain condition is met).",
+        "Call the template from a Gosu Scratchpad or method to generate and print the string payload."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_05_01.mp4"
+    }
+  ]
+}

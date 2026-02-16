@@ -1,0 +1,511 @@
+{
+  "lessonId": "ch09-l12",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 12,
+  "title": "Configuring Vendor Services",
+  "subtitle": "Mastering the setup and automation of vendor services and invoice processing in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T19:22:17.133895+00:00",
+  "estimatedMinutes": 110,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a busy claims department where adjusters are constantly managing vendor interactions, from requesting quotes for auto repairs to approving invoices for property restoration. Manually tracking every service request and invoice can be time-consuming and prone to errors, impacting efficiency and claim cycle times.",
+      "question": "How can we streamline these vendor service processes and automate routine tasks to empower adjusters and speed up claims?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the concepts of services and service requests in ClaimCenter.",
+        "Configure service definitions and their hierarchy using XML files.",
+        "Link services to service request kinds and incident types.",
+        "Explain how service request history and metrics are managed.",
+        "Describe Straight-Through Invoice Processing (STIP) and its components.",
+        "Configure and customize STIP for automatic invoice approval and payment."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with basic ClaimCenter navigation and the general claims lifecycle, including how claims are created and how different parties (like vendors) interact with the system. Understanding the concept of configuration files in Guidewire applications will also be beneficial.",
+      "warmupQuestion": "Think about a typical claim scenario. What kinds of services might a vendor provide, and what steps would an adjuster take to engage that vendor?",
+      "hint": "Consider services like towing, auto repair, medical assessments, or property restoration."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Services and Service Requests",
+      "narrative": "In ClaimCenter, a **service** represents the actual work that needs to be performed by a third-party vendor or an internal provider. This could range from medical services and towing to auto rental or construction for fire restoration. A **service request**, on the other hand, is the formal record within ClaimCenter that summarizes all communications and instructions sent to the vendor regarding the service. It's the digital paper trail that details the request, the receipt and approval of quotes, and the processing of invoices.\n\nVendors themselves are typically managed in an address book application, such as Guidewire ContactManager, and are retrieved and associated with service requests as needed. Adjusters have flexibility in when they create these requests. While some services might be initiated during the initial claim creation process, often the specific needs aren't fully known until later. In such cases, adjusters can create new service requests at any point using the Actions menu within an existing claim.\n\nClaimCenter provides different **service request types**, each defining a specific lifecycle for the request, managed by a dedicated state handler. The base application includes four primary types: 'Quote only Services', 'Quote and perform service', 'Service only', and 'Unmanaged service'. It's important to note that 'Unmanaged service' requests are unique, primarily used in the Auto First and Final wizard, allowing adjusters to proceed directly to invoicing and payments without a formal quote or approval process. The service request type is distinct from the *service type*, which describes the actual kind of service being performed (e.g., 'Medical' or 'Towing').",
+      "keyPoints": [
+        "A service is the work performed; a service request is the record of vendor communication.",
+        "Service requests can be created during claim creation or later via the Actions menu.",
+        "Service request types (e.g., Quote Only, Service Only) define the request's lifecycle."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the 'Configuring Vendor Services' lesson."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Illustrates the distinction between a 'service' (the work) and a 'service request' (the record of communication)."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Shows the two main points in the claims process where service requests can be initiated: during claim creation or from the Actions menu."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Details the four standard service request types in ClaimCenter and how they influence the request's lifecycle."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating and managing services and service requests within ClaimCenter, highlighting where these actions take place in the user interface.",
+      "transcriptSummary": "The video demonstrates how to initiate a service request, select a service type, and track its status, providing a practical view of the concepts just discussed."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Defining Services in a Hierarchical Structure",
+      "narrative": "Services in ClaimCenter are organized in a flexible, tree-like hierarchy, allowing for categorization and subcategorization. This structure helps in managing a wide array of services, making them easier to locate and assign. Conceptually, you can think of three levels: a top-level service definition (like 'Auto'), a second-level service category (such as 'Auto inspection'), and a third-level subcategory (like 'Auto inspect and repair audio'). While the base configuration supports three levels, this structure can be extended with additional configuration.\n\nThis hierarchical definition is crucial for integration with Guidewire ContactManager, ensuring that the same service definitions are used across both applications for consistent vendor searching. Each service type must be explicitly defined in the `vendorservicetree.xml` file, which is located in `configuration > config > sampledata`. This XML file establishes the parent-child relationships between services, where a service with no parent is a 'root node' and a service with no children is a 'leaf node'. Each entry in this file includes a `public-id`, a `Code`, and one or more `Description` and `Name` fields. While you can add more levels to this hierarchy in the XML, displaying them in the base application's user interface would require significant additional configuration of the UI.",
+      "keyPoints": [
+        "Services are organized in a tree-like hierarchy (categories, subcategories).",
+        "The `vendorservicetree.xml` file defines this hierarchy, including root and leaf nodes.",
+        "Each service entry in the XML has a public-id, code, description, and name."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A conceptual diagram illustrating the hierarchical structure of service definitions, from general categories to specific services."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Visualizes the vendor service tree, showing root nodes, intermediate nodes, and leaf nodes, emphasizing the parent-child relationships."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A screenshot of the `vendorservicetree.xml` file, highlighting the key attributes (public-id, code, description, name) for defining services."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example Service Definition in vendorservicetree.xml",
+          "code": "<SpecialistService public-id=\"svc:acc\">\n  <Code>accomm</Code>\n  <Description displayKey=\"true\">Services.Accommodation.Description</Description>\n  <Name displayKey=\"true\">Services.Accommodation.Name</Name>\n  <Parent/>\n</SpecialistService>\n\n<SpecialistService public-id=\"svc:acc_alt\">\n  <Active>true</Active>\n  <code>acc_alt_accomm</code>\n  <Description displayKey=\"true\">Services.Accommodation.Alternative.Description</Description>\n  <Name displayKey=\"true\">Services.Accommodation.Alternative.Name</Name>\n  <Parent public-id=\"svc:acc\"/>\n</SpecialistService>",
+          "explanation": "This XML snippet shows a root node 'svc:acc' (Accommodation) and a child leaf node 'svc:acc_alt' (Alternative Accommodation), demonstrating the parent-child relationship and key attributes."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Connecting Services to Request and Incident Types",
+      "narrative": "Beyond defining the service hierarchy, ClaimCenter needs to understand how these services relate to different types of requests and incidents. This crucial linking is managed through the `vendorservicedetails.xml` file, also found in `configuration > config > sampledata`. This file acts as a set of associations, connecting specific services to `ServiceRequestKind` types and `IncidentType` types.\n\nFor **ServiceRequestKinds**, the `vendorservicedetails.xml` file associates a request kind (like 'Quote Only' or 'Service Only') with a *leaf node* service from the `vendorservicetree.xml`. A single service can be compatible with multiple request kinds. The base application provides four request kinds: Quote Only, Quote and Service, Service Only, and Unmanaged. The 'Unmanaged' type is specifically for the Auto First and Final wizard. The list of `ServiceRequestKind` types is extensible, allowing for custom request workflows.\n\nFor **IncidentTypes**, the `vendorservicedetails.xml` file associates an incident type (such as `Injury Incident` or `Property Incident`) with a *root node* service. Similar to request kinds, a service can be associated with more than one incident type. Incident types are subtypes of the `Incident` class and include various categories like `Dwelling Incident`, `Vehicle Incident`, and `Trip Incident`. Understanding these associations is key to ensuring that when an adjuster selects a service, ClaimCenter can correctly determine the applicable request processes and incident contexts. For instance, a root node like 'Auto' (svc:aut) must be linked to relevant Incident Types, while a leaf node like 'Auto — Inspection / Repair — Audio Equipment' (svc:aut_ins_aud) must be linked to appropriate Service Request Kinds.",
+      "keyPoints": [
+        "The `vendorservicedetails.xml` file links services to `ServiceRequestKind` and `IncidentType`.",
+        "Leaf node services are associated with `ServiceRequestKind` types (e.g., Quote Only).",
+        "Root node services are associated with `IncidentType` types (e.g., Property Incident).",
+        "A service can be associated with multiple request or incident types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Conceptual diagram showing how services are linked to service request types and incident types."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Screenshot of `vendorservicedetails.xml` demonstrating the association of a `SpecialistService` with a `ServiceRequestKind`."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Screenshot of `vendorservicedetails.xml` illustrating the association of a `SpecialistService` with an `IncidentKind`."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Examples of how the `vendorservicetree.xml` and `vendorservicedetails.xml` files work together to link services to incident and request types."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example ServiceRequestKind Association",
+          "code": "<SpecialistServiceCompatibleServiceRequestKind public-id=\"svc:aut_ins_aud_quoteonly\">\n  <ServiceRequestKind typekey=\"QuoteOnly\"/>\n  <SpecialistService public-id=\"svc:aut_ins_aud\"/>\n</SpecialistServiceCompatibleServiceRequestKind>",
+          "explanation": "This XML snippet from `vendorservicedetails.xml` links the 'Auto inspect and repair audio' service (a leaf node) to the 'QuoteOnly' service request kind."
+        },
+        {
+          "language": "xml",
+          "title": "Example IncidentKind Association",
+          "code": "<SpecialistServiceCompatibleIncidentKind public-id=\"svc:aut_vehicleincident\">\n  <IncidentKind typekey=\"VehicleIncident\"/>\n  <SpecialistService public-id=\"svc:aut\"/>\n</SpecialistServiceCompatibleIncidentKind>",
+          "explanation": "This XML snippet from `vendorservicedetails.xml` links the 'Auto' service (a root node) to the 'VehicleIncident' incident type."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Configuring Services: Important Considerations and History Tracking",
+      "narrative": "When you're configuring services, there are a couple of critical points to remember to ensure your changes take effect and avoid errors. After modifying both the `vendorservicetree.xml` and `vendorservicedetails.xml` files, you must import these changes into ClaimCenter. This is done through the Administration pages (specifically, `Administration > Utilities > Import Data`). Crucially, after importing, you **must restart the ClaimCenter server** for the changes to be fully applied. If you're also using Guidewire ContactManager and have edited `vendorservicetree.xml`, you'll need to perform the same import and restart steps there as well.\n\nBe cautious when adding new child nodes to existing service types. If a node has previously been assigned to any service providers or associated with a service request kind, adding a child to it can cause errors during import. This is because non-child nodes cannot be associated with service request kinds or service providers, so changing a leaf node into a parent node without adjusting its associations will lead to conflicts.\n\nClaimCenter also diligently tracks the lifecycle of service requests through a **service request history**. Major events and changes are recorded and displayed on the History tab of the Services screen. These history records can even include links to relevant documents like quotes and invoices, providing a comprehensive audit trail. If you need to configure how these history records are created, you'll use the `recordChange()` method of the `ServiceRequest` object in Gosu. This method allows you to specify a description of the change, the operation performed, the statement, and the initiator, returning a `ServiceRequestChange` object that populates the history record.",
+      "keyPoints": [
+        "After modifying service XML files, import them via Administration > Utilities > Import Data and restart ClaimCenter (and ContactManager if applicable).",
+        "Adding child nodes to existing service types with associations can cause import errors.",
+        "Service request history tracks major lifecycle events on the History tab.",
+        "Use `ServiceRequest.recordChange()` to configure the creation of history records."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Highlights two crucial notes regarding the import process and potential errors when modifying the service tree."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Shows the 'History' tab on the Services screen, where changes to a service request are recorded and displayed."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Illustrates the `ServiceRequest.recordChange()` method used to programmatically create service request history entries."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Example of ServiceRequest.recordChange()",
+          "code": "serviceRequest.recordChange(DisplayKey.get(\"Web.ServiceRequest.StateTransition.Description.UnmanagedService\"),\n                            ServiceRequestOperation.UNMANAGED_SERVICE,\n                            ServiceRequestStatement.UNMANAGED_SERVICE_CREATED,\n                            User.util.CurrentUser)",
+          "explanation": "This Gosu code snippet demonstrates how to use `recordChange()` to create a history record for an unmanaged service being created, populating the description, operation, statement, and initiator fields."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Restart Required",
+          "content": "Always remember to restart ClaimCenter (and ContactManager if applicable) after importing changes to `vendorservicetree.xml` and `vendorservicedetails.xml` for the changes to take effect."
+        },
+        {
+          "type": "gotcha",
+          "title": "Child Node Restrictions",
+          "content": "A node that is not a child node cannot be associated with a service request kind or a service provider. If you add a child to a node that has these associations, an error will occur during import."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Monitoring Service Request Performance with Metrics",
+      "narrative": "To effectively manage vendor services and ensure timely claim resolution, ClaimCenter provides a robust system for tracking **service request metrics**. Each service request has a set of associated measurements that offer insights into its status and timeliness. These metrics are dynamically calculated and displayed whenever the Details tab for a service request is viewed. Importantly, only those metrics relevant to the specific service request type are shown; for instance, a 'service only' request wouldn't display metrics related to quotes.\n\nThe base application includes six key measurements, such as Response Time, Quote Timeliness, Number Of Delays, and Cycle Time. These metrics help adjusters and managers quickly assess performance against targets, identifying bottlenecks or areas for improvement. For example, a 'Response Time' metric might show 9 hours against a target of 4 hours, indicating a potential delay.\n\nWhile the base configuration provides a solid foundation, you might find a need to extend these metrics to capture more specific performance indicators relevant to your business processes. Adding new service request metrics involves a structured approach: first, creating a subtype for the new metric, then adding it to the implementation class, and finally, thoroughly testing the changes. The detailed steps for extending service request metrics can be found in the Guidewire ClaimCenter Configuration Guide, allowing for tailored performance monitoring.",
+      "keyPoints": [
+        "ClaimCenter tracks six key service request metrics (e.g., Response Time, Cycle Time).",
+        "Metrics are displayed on the Details tab and are relevant to the service request type.",
+        "New metrics can be added by creating subtypes and modifying implementation classes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Shows the 'Metrics' section on the Services screen, displaying various performance measurements for a service request."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Outlines the three high-level steps required to add new service request metrics to ClaimCenter."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of configuring services within ClaimCenter, showing how the XML files discussed previously translate into practical setup steps.",
+      "transcriptSummary": "The video illustrates how to access and modify service configurations, emphasizing the impact of changes made in the underlying XML files on the ClaimCenter application."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "When and where can service requests be created?",
+      "referenceAnswer": "74\ng The correct answers are:\n¢ During claim creation, in the New Claim Wizard\n* After the claim has been created, from the Actions menu",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatare the types of Service Request in the base application?",
+      "referenceAnswer": "74\n¢ The correct answers are:\n* Quote Only\n¢ Service Only\n* Quote and Perform Service\n« Unmanaged Service (for Auto First and Final only)",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "'fyou need to add a new service type, what files must you modify?",
+      "referenceAnswer": "74\ng The correct answer is vendorservicetree.xml and vendorservicedetails.xml.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "--- After modifying the files, what must you do for the new service type to be\navailable?",
+      "referenceAnswer": "(and ContactManager) administrator user interfaces.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Introduction to Straight-Through Invoice Processing (STIP)",
+      "narrative": "Moving beyond service requests, let's explore how ClaimCenter automates the processing of invoices. **Straight-Through Invoice Processing (STIP)** is a powerful feature designed to automate the approval and payment of many routine invoices, significantly reducing manual effort and accelerating the claims process. With STIP, payments can be automatically made against Reserve Lines, either at the Claim or the Exposure level, providing flexibility in financial management.\n\nSTIP is implemented using **State Transition Helper classes**, which are core components of the automation logic. In the base application, there are two primary helper classes: `InvoiceAutoApprovalHelper`, which manages the criteria and logic for automatic invoice approvals, and `InvoiceAutoPaymentHelper`, responsible for automatic payments. These helper classes are located within the `vendormanagement` package. If your business needs to adjust the criteria for what qualifies an invoice for automatic processing, you would modify the implementation of these helper classes. This modular approach allows for targeted customization without overhauling the entire system.",
+      "keyPoints": [
+        "STIP automates approval and payment of routine invoices.",
+        "Payments can be made against Reserve Lines at Claim or Exposure level.",
+        "STIP uses `InvoiceAutoApprovalHelper` and `InvoiceAutoPaymentHelper` classes.",
+        "Modify helper classes to change automatic processing criteria."
+      ],
+      "figures": [
+        {
+          "slideNumber": 31,
+          "caption": "Title slide for 'Configuring Straight-Through Invoice Processing (STIP)'."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Defines Straight-Through Invoice Processing (STIP) and its core function in automating invoice approvals and payments."
+        },
+        {
+          "slideNumber": 33,
+          "caption": "Introduces the State Transition Helper classes (`InvoiceAutoApprovalHelper`, `InvoiceAutoPaymentHelper`) that implement STIP."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "STIP Helper Methods and Plugin Architecture",
+      "narrative": "Each STIP helper class is structured around four essential methods that dictate its behavior. The `getRelevantInvoices()` method identifies a list of invoices that are candidates for processing, typically returning invoices that are awaiting approval or payment. For each of these relevant invoices, the `getFailedToQualifyReasons()` method generates a list of reasons why that invoice *cannot* be automatically processed. If this list is empty, meaning no disqualifying reasons are found, the `performAction()` method is then invoked. For `InvoiceAutoApprovalHelper`, this action marks the invoice as approved, while for `InvoiceAutoPaymentHelper`, it triggers the payment.\n\nThese helper classes are instantiated and managed by a **plugin**. In the base configuration, this is the `InvoiceAutoApproveAutoPayPlugin`. This plugin serves as the entry point for STIP, orchestrating the execution of the helper classes. When an invoice enters the system, either manually or through an integration, a 'processor' is invoked *after* any regular Gosu rules have run. This processor operates independently of the bundle that created the invoice, ensuring that prior user work is unaffected. The processor essentially uses each helper as a 'checklist,' evaluating a series of potential failure reasons against each invoice. If an invoice passes all checks, it proceeds with the automated action.\n\nFrom the user interface perspective, STIP is triggered when an adjuster interacts with an invoice. For example, on the Invoices tab, if a user clicks the button to pay an invoice that hasn't been previously approved, ClaimCenter automatically invokes the invoice automatic processor to determine if STIP can handle it.",
+      "keyPoints": [
+        "Helper classes use `getRelevantInvoices()`, `getFailedToQualifyReasons()`, and `performAction()` methods.",
+        "The `InvoiceAutoApproveAutoPayPlugin` instantiates and manages the helper classes.",
+        "A processor invokes STIP after Gosu rules run, checking invoices against helper criteria.",
+        "STIP is triggered in the UI when an unapproved invoice is selected for payment."
+      ],
+      "figures": [
+        {
+          "slideNumber": 34,
+          "caption": "Outlines the four required methods for each STIP helper class, detailing their roles in invoice processing."
+        },
+        {
+          "slideNumber": 35,
+          "caption": "Shows the `InvoiceAutoApproveAutoPayPlugin` class, which implements `IInvoiceAutoProcessingPlugin` and instantiates the STIP helper classes."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Illustrates how STIP is invoked from the ClaimCenter user interface when an invoice is selected for payment."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "Explains the role of the 'processor' in the STIP workflow, which evaluates invoices against helper criteria."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "InvoiceAutoApproveAutoPayPlugin StateTransitionHelpers Property",
+          "code": "package gw.plugin.vendormanagement\n\nuses java.util.List\n\n@Export\nclass InvoiceAutoApproveAutoPayPlugin implements IInvoiceAutoProcessingPlugin {\n\n  override property get StateTransitionHelpers(): List<InvoiceAutomaticStateTransitionHelper> {\n    return {\n      InvoiceAutoApprovalHelper.Instance,\n      InvoiceAutoPaymentHelper.Instance\n    }\n  }\n}",
+          "explanation": "This Gosu code snippet shows the `StateTransitionHelpers` property within the `InvoiceAutoApproveAutoPayPlugin`, which returns a list of the helper instances responsible for automatic approval and payment."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "STIP Permissions and Configuration Options",
+      "narrative": "A critical aspect of STIP is how it handles permissions and authority limits. When an invoice is processed automatically, the system uses the permissions and authority limits of the user who *inputs* the invoice to determine if it can be automatically approved and paid. This is particularly important for invoices coming into the system through integrations, such as a vendor portal. In such cases, the web service that accepts the invoice is associated with a specific user, and the approval limits applied are those of that user. This ensures that even automated processes adhere to the defined security and financial controls.\n\nSTIP offers several configuration possibilities to tailor its behavior to specific business needs. By default, STIP is enabled in the base configuration. However, you have the flexibility to: \n*   **Turn STIP off entirely:** This is achieved by deregistering or disabling the `InvoiceAutoProcessingPlugin` in ClaimCenter. \n*   **Change criteria for automatic processing:** You can modify the `getFailedToQualifyReasons()` method within the relevant helper classes (`InvoiceAutoApprovalHelper` or `InvoiceAutoPaymentHelper`) to add, edit, or remove conditions that prevent an invoice from being automatically processed. \n*   **Change criteria for which invoices are considered:** The `getRelevantInvoices()` method in the helper classes can be modified to filter which invoices are even considered for automatic approval or payment. \n*   **Change what kinds of processing are automated:** You can edit the `StateTransitionHelpers` property of the `InvoiceAutoApproveAutoPayPlugin` to comment out existing helpers or introduce custom ones, thereby controlling whether approval, payment, or other processes are automated.",
+      "keyPoints": [
+        "STIP uses the permissions and authority limits of the invoice input user.",
+        "STIP can be turned off by disabling the `InvoiceAutoProcessingPlugin`.",
+        "Criteria for automatic processing can be changed by modifying `getFailedToQualifyReasons()`.",
+        "The types of invoices considered for STIP can be adjusted via `getRelevantInvoices()`.",
+        "Automated processing types can be customized by editing `StateTransitionHelpers` in the plugin."
+      ],
+      "figures": [
+        {
+          "slideNumber": 38,
+          "caption": "Emphasizes that the permissions and authority limits of the user who inputs an invoice determine its eligibility for automatic approval and payment."
+        },
+        {
+          "slideNumber": 39,
+          "caption": "Lists the various ways STIP can be configured, from turning it off to changing processing criteria."
+        },
+        {
+          "slideNumber": 40,
+          "caption": "Shows how to disable STIP by deregistering or disabling the `InvoiceAutoProcessingPlugin` in the ClaimCenter administration interface."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Security and Automation",
+          "content": "Always ensure that the user associated with automated invoice input (e.g., via web service) has appropriate, but not excessive, permissions and authority limits to prevent unauthorized approvals or payments."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Customizing STIP Criteria for Specific Needs",
+      "narrative": "Customizing STIP is often necessary to align its automated processes with your organization's unique financial policies and workflows. One common customization involves **changing the criteria for which invoices will be automatically approved or paid**. This is done by editing the `getFailedToQualifyReasons()` method within the relevant helper class (e.g., `InvoiceAutoApprovalHelper`). Here, you can add, modify, or remove conditional clauses that, if met, will add a 'failure reason' string to a list, preventing the invoice from being automatically processed. For example, you might add a condition to reject invoices from certain vendor types or those exceeding a specific age.\n\nAnother key customization is **changing the maximum amount that can be auto-approved**. The `InvoiceAutoApprovalHelper` includes a static property, `SmallAmountThresholds`, which maps currencies to the largest amount that can be automatically approved. By default, this might be set to 600 CAD or 500 USD. The `getFailedToQualifyReasons()` method then includes a clause that rejects invoices exceeding this threshold. Modifying this property directly allows you to adjust these limits.\n\nYou can also **change which invoices are even considered for automatic processing** by modifying the `getRelevantInvoices()` method of the helper. This method must return a `List<ServiceRequestInvoice>` that the `getFailedToQualifyReasons()` method will then consume. For instance, you could modify it to only consider invoices from preferred vendors or those associated with specific claim types. Finally, for more advanced scenarios, you can **change the kinds of processing that are automated** by editing the `StateTransitionHelpers` property of the `InvoiceAutoApproveAutoPayPlugin`. This involves commenting out existing helpers or creating and adding your own custom helper implementations. This should be done with extreme caution, as it directly impacts the core automation logic.",
+      "keyPoints": [
+        "Customize `getFailedToQualifyReasons()` to define conditions for automatic processing failure.",
+        "Adjust `SmallAmountThresholds` in `InvoiceAutoApprovalHelper` to change auto-approval limits.",
+        "Modify `getRelevantInvoices()` to filter which invoices are considered for STIP.",
+        "Change `StateTransitionHelpers` in the plugin to alter the types of automated processing (use with caution)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 41,
+          "caption": "Shows a code snippet from `getFailedToQualifyReasons()` method, illustrating how to add conditions to prevent automatic invoice processing."
+        },
+        {
+          "slideNumber": 42,
+          "caption": "Highlights the `SmallAmountThresholds` property in `InvoiceAutoApprovalHelper` for configuring maximum auto-approval amounts by currency."
+        },
+        {
+          "slideNumber": 43,
+          "caption": "Illustrates how to modify the `getRelevantInvoices()` method to control which invoices are considered for automatic processing."
+        },
+        {
+          "slideNumber": 44,
+          "caption": "Demonstrates how to edit the `StateTransitionHelpers` property in `InvoiceAutoApproveAutoPayPlugin` to customize automated processing types."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Customizing getFailedToQualifyReasons()",
+          "code": "override protected function getFailedToQualifyReasons (invoice: ServiceRequestInvoice): List<String> {\n  var failurereasons = new List<String>()\n  var serviceRequest = invoice.ServiceRequest\n  var claim = serviceRequest.Claim\n\n  if (claim.Flagged) {\n    failurereasons.add(\"Invoice cannot be auto-approved for a flagged claim.\")\n  }\n  // ... other existing conditions ...\n  return failurereasons\n}",
+          "explanation": "This example shows how to add a new condition to `getFailedToQualifyReasons()`: if the associated claim is flagged, the invoice will not be auto-approved, and a reason is added to the list."
+        },
+        {
+          "language": "gosu",
+          "title": "Modifying SmallAmountThresholds",
+          "code": "static property get SmallAmountThresholds(): Map<Currency, BigDecimal> {\n  return {\n    Currency.TC_CAD -> 1000bd,\n    Currency.TC_USD -> 750bd\n  }\n}",
+          "explanation": "This code snippet demonstrates increasing the auto-approval thresholds for CAD and USD currencies, allowing larger invoices to be automatically processed if other criteria are met."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Extreme Caution with Plugin Modifications",
+          "content": "Modifying the `StateTransitionHelpers` property of `InvoiceAutoApproveAutoPayPlugin` directly impacts the core STIP logic. Exercise extreme caution and thorough testing when making such changes to avoid unintended consequences."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you Straight-Through Invoice Processing (STIP) in action, illustrating how invoices are automatically approved and paid based on configured criteria.",
+      "transcriptSummary": "The video provides a practical walkthrough of an invoice being processed through STIP, highlighting the automatic approval and payment steps and the role of helper classes in the background."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What do State Transition Helper classes enable?",
+      "referenceAnswer": "oO The correct answer is Straight-Through Invoice Processing (STIP).",
+      "questionKey": "slide-47"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "'faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?",
+      "referenceAnswer": "faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?\n\n74\n\nThe correct answer is:\n\nThe web service that accepts the invoice is associated with a user, whose permissions\nenable that web service.\n\nThe approval limits are those of that user.",
+      "questionKey": "slide-49"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your claims department wants to introduce a new 'Emergency Repair' service type for urgent situations. This service should be available for Property Incidents and should only allow 'Service Only' requests (no quotes needed).",
+      "question": "Which XML files would you modify, and what key elements would you add or change to define this new service and its associations?",
+      "hints": [
+        "Think about the two main XML files for service configuration.",
+        "Consider whether 'Emergency Repair' would be a root, intermediate, or leaf node in the service hierarchy.",
+        "Remember which file links services to incident types and which links them to request kinds."
+      ],
+      "expectedApproach": "Modify `vendorservicetree.xml` to define the new 'Emergency Repair' service (e.g., as a leaf node under an existing 'Property' root). Then, modify `vendorservicedetails.xml` to associate this new service with the 'Property Incident' type and the 'Service Only' request kind."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your company has a policy that invoices for claims marked as 'High Severity' should never be automatically approved, regardless of the amount. Additionally, you want to increase the auto-approval limit for USD invoices to $1000.",
+      "question": "Describe the steps you would take to implement these two changes in ClaimCenter's STIP configuration, including the specific files or methods you would modify.",
+      "hints": [
+        "For the 'High Severity' rule, think about where you would add a new condition to prevent auto-approval.",
+        "For the auto-approval limit, recall the specific property that controls currency thresholds.",
+        "Consider the helper classes involved in automatic approval."
+      ],
+      "expectedApproach": "To prevent auto-approval for 'High Severity' claims, you would modify the `getFailedToQualifyReasons()` method in `InvoiceAutoApprovalHelper.gs` to add a condition that checks the claim's severity. If it's 'High Severity', a failure reason would be added. To increase the USD auto-approval limit, you would modify the `SmallAmountThresholds` static property in `InvoiceAutoApprovalHelper.gs` to change the `Currency.TC_USD` value to `1000bd`."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Services are the work performed, while service requests are the records of vendor communication, with different types defining their lifecycle.",
+        "Service definitions are structured hierarchically in `vendorservicetree.xml` and linked to `ServiceRequestKind` and `IncidentType` in `vendorservicedetails.xml`.",
+        "Changes to service configuration XML files require import and ClaimCenter server restart.",
+        "Service request history and metrics provide essential tracking and performance insights.",
+        "Straight-Through Invoice Processing (STIP) automates invoice approval and payment using helper classes and a plugin.",
+        "STIP is highly configurable, allowing customization of approval criteria, limits, and automated processes via helper methods and plugin properties."
+      ],
+      "realWorldConnection": "In real Guidewire projects, effectively configuring vendor services and STIP is crucial for operational efficiency, cost control, and compliance. Proper setup ensures adjusters can quickly engage the right vendors, track service progress, and process invoices without unnecessary manual intervention, ultimately leading to faster claim resolution and improved customer satisfaction. Customizing STIP allows organizations to align automation with their specific business rules and financial controls, adapting to evolving needs.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into advanced integration patterns for vendor management, exploring how ClaimCenter interacts with external systems for seamless data exchange and process orchestration."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This assignment involves two hands-on exercises to reinforce your understanding of configuring vendor services and STIP. You will first practice adding a new service type to ClaimCenter, and then configure STIP to disable automatic approval for specific types of claims.",
+      "objectives": [
+        "Add a new service type to the ClaimCenter configuration.",
+        "Modify STIP helper classes to disable automatic approval based on custom criteria."
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-10",
+      "heading": "Lesson Review",
+      "narrative": "We've covered a significant amount of ground in this lesson, from the foundational concepts of services and service requests to the intricate details of configuring Straight-Through Invoice Processing (STIP). We began by differentiating between services and service requests, understanding their creation points, and exploring the various service request types that dictate their lifecycle. We then delved into the hierarchical structure of service definitions, learning how `vendorservicetree.xml` and `vendorservicedetails.xml` are used to define services and link them to appropriate request and incident types. We also discussed the critical steps of importing configuration changes and the importance of restarting ClaimCenter.\n\nOur journey continued with an examination of service request history and metrics, highlighting how ClaimCenter tracks the performance and lifecycle events of vendor interactions. Finally, we dedicated a substantial portion of the lesson to STIP, understanding its role in automating invoice approvals and payments. We explored the architecture of STIP, including helper classes, methods, and the plugin that orchestrates the automation. Crucially, we covered the extensive configuration options available, from turning STIP off to customizing approval criteria, maximum amounts, and the types of processing that are automated. By mastering these configurations, you are now equipped to streamline vendor service management and enhance efficiency within ClaimCenter.",
+      "keyPoints": [
+        "Services and service requests are fundamental to vendor management in ClaimCenter.",
+        "XML files (`vendorservicetree.xml`, `vendorservicedetails.xml`) define service hierarchy and associations.",
+        "STIP automates invoice processing, configurable via helper classes and plugins.",
+        "Customization of STIP is key to aligning with specific business rules and financial controls."
+      ],
+      "figures": [
+        {
+          "slideNumber": 53,
+          "caption": "A transition slide marking the end of the core content."
+        },
+        {
+          "slideNumber": 54,
+          "caption": "A review of the lesson objectives: configuring services and activating/configuring STIP."
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_12_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_12_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "CC_12_02.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_12_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "CC_12_03.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_12_03.mp4"
+    }
+  ]
+}

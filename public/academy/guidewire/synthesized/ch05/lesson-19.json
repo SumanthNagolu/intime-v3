@@ -1,0 +1,258 @@
+{
+  "lessonId": "ch05-l19",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 19,
+  "title": "Managing Service Requests",
+  "subtitle": "Efficiently track and manage external vendor services throughout the claim lifecycle.",
+  "synthesizedAt": "2026-02-16T17:47:15.582153+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a major incident, like a severe hailstorm, has just occurred, leading to a surge of claims requiring external services such as vehicle repairs, property restoration, and specialized inspections. As an adjuster, you're faced with the challenge of coordinating multiple vendors for various services across numerous claims.",
+      "question": "How can you effectively manage these diverse service requests, monitor vendor performance, and ensure timely, cost-effective resolution for every claimant?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and benefits of managing service requests in ClaimCenter.",
+        "Identify the different types of service requests an adjuster can make.",
+        "Describe the process of adding a service request to a claim using the New Claim Wizard and the Claim page.",
+        "Outline the possible vendor responses to a service request.",
+        "Understand the lifecycle of various service request types, including quote and perform services.",
+        "Explain how ClaimCenter tracks vendor performance metrics for services.",
+        "Differentiate between managing vendor progress with and without the Vendor Claim Portal.",
+        "Identify conditions under which an invoice can be automatically paid for a service."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall how claims are initially created in ClaimCenter and how contacts, including potential vendors, are managed within ContactManager. Think about the various stages a claim goes through from First Notice of Loss (FNOL) to closure.",
+      "warmupQuestion": "Consider a time you've had to arrange a service, like a home repair or car maintenance. What were the key steps you took, and what information was critical to track?",
+      "hint": "Think about initial contact, getting estimates, scheduling, and payment."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Service Requests and Vendor Interactions",
+      "narrative": "Effectively managing services is a critical component of adjudicating claims. It's essential to have a robust system to track what services are needed, which vendors are providing them, and how those services are progressing. This not only streamlines the claims process but also allows for the evaluation of vendor performance, ensuring that recommended vendors meet quality and timeliness standards.\n\n**Vendor services** in ClaimCenter are designed to facilitate this process. They enable claim adjusters to easily search for and assign work to specific vendors, track the progress of services from inception to completion, and manage payments. A key identifier for vendors in ClaimCenter is the 'Vendor' tag in ContactManager, which distinguishes them from other contacts. This is important because a service vendor can be either a company or an individual.\n\nWhen creating a service request, adjusters have three distinct **request types** to choose from, depending on the claim's needs: \n*   **Perform Service**: Used when a quote is not required, and the vendor simply needs to perform the service.\n*   **Quote Only**: Used when the adjuster needs to compare quotes from multiple vendors before making a selection.\n*   **Quote and Perform Service**: This option covers the full service lifecycle, including obtaining a quote, approving it, having the service performed, and managing payment. This is ideal for situations requiring detailed estimates and comprehensive tracking.\n\nOnce a service request is sent to a vendor, there are several **possible vendor responses**. The vendor can **Accept** the request, potentially providing an estimated quote delivery date. They might **Decline** the request, perhaps due to capacity issues or if the service is outside their scope. Alternatively, they could request a **Delay**, indicating they need more time to provide a quote or perform the service. Each of these responses helps the adjuster manage expectations and plan the next steps for the claim.",
+      "keyPoints": [
+        "Tracking services and vendor performance is crucial for claims adjudication.",
+        "The 'Vendor' tag in ContactManager identifies service providers.",
+        "Service requests can be for 'Perform Service', 'Quote Only', or 'Quote and Perform Service'.",
+        "Vendors can accept, decline, or delay service requests."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Highlights the business requirement for tracking services and vendor performance."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates how vendor services help adjusters find and track vendors, emphasizing the 'Vendor' tag in ContactManager."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Outlines the three types of service requests: Quote Only, Perform Service Only, or Quote and Perform Service."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Shows the possible responses a vendor can provide to a service request: Accept, Decline, or Delay."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Vendor Tag",
+          "content": "In ContactManager, the 'Vendor' tag is the primary identifier that distinguishes a contact as a service provider eligible for service requests in ClaimCenter, regardless of whether the contact type is a company or a person."
+        },
+        {
+          "type": "best_practice",
+          "title": "Choosing Request Type",
+          "content": "Select 'Quote and Perform Service' for a full-service lifecycle, including quote documents, estimates, and service work. Use 'Perform Service' for straightforward tasks not requiring a quote, and 'Quote Only' for vendor comparison."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Initiating Service Requests in ClaimCenter",
+      "narrative": "Service requests can be initiated at various stages of a claim's lifecycle, offering flexibility to adjusters. Whether it's during the initial claim intake or later as new needs arise, ClaimCenter provides clear pathways to add and manage these services.\n\nDuring the **New Claim Wizard**, there are two primary points where services can be added. The first is directly on the **Incident Details screen**. For example, if the incident involves a vehicle, you can add details and select services like autobody repair. It's crucial to enter all required details for the service at this stage, such as selecting a specific repair shop and providing the service address. The second point is a dedicated **Vendor Services screen** within the wizard, which functions similarly to the incident details screen, allowing for comprehensive service setup during FNOL.\n\nBeyond the New Claim Wizard, adjusters can add services to an existing claim at any time from the **Claim page**. This is done by navigating to the `Actions` menu and selecting `New > Service`. The `Add Service` screen will then appear, where you can specify whether the service relates to the entire claim, a specific incident, or an exposure. Just like in the New Claim Wizard, you'll select the type of request (Quote, Perform, or Quote and Perform), identify the vendor, and provide the service address. The requirements for information entry remain consistent, ensuring all necessary data is captured regardless of when the service is added. This flexibility ensures that adjusters can adapt to evolving claim needs and integrate external services seamlessly into the claim management process.",
+      "keyPoints": [
+        "Service requests can be added during claim creation via the New Claim Wizard.",
+        "Services can also be added to an existing claim using the Actions menu.",
+        "Required information (request type, vendor, service address) is consistent across entry points."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Shows how to add a service to a claim within the New Claim Wizard, either on the Vehicle Details screen or a dedicated Services screen."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustrates adding a service to an existing claim using the Actions > New > Service menu option from the Claim page."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Dynamic Service Creation",
+          "content": "ClaimCenter allows for dynamic service request creation in multiple ways, including within the New Claim Wizard, via the Actions menu, or even programmatically through Gosu for predetermined incidents, offering great flexibility in workflow."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see the practical steps involved in adding a new vendor service request to a claim, including selecting the request type and assigning a vendor.",
+      "transcriptSummary": "The demonstration illustrates navigating to the 'New Service' option from the Actions menu on a claim. It shows how to select the related incident, choose a service category and type, specify the request type (e.g., 'Quote and Perform Service'), search for and assign a vendor, and input the service address and communication method."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Service Lifecycle, Metrics, and Payment Automation",
+      "narrative": "Beyond simply requesting services, ClaimCenter provides robust capabilities for tracking vendor performance and managing the entire lifecycle of a service request, from initial contact to final payment. This comprehensive approach ensures accountability and efficiency.\n\n**Service metrics** are automatically collected for assigned services, providing valuable data for evaluating vendor performance over time. These metrics include critical indicators such as quote timeliness, response time, service timeliness (measured against the estimate), and the variance between the final invoice and the initial quote. It's important to note that 'Quote only' service requests do not track service timeliness or invoice variances, as their primary purpose is just to obtain an estimate.\n\nThe **lifecycle of a service** request varies slightly depending on its type. A 'Quote only' service focuses on the timely receipt of the quote. However, a 'Quote and Perform Service' encompasses a full lifecycle, starting with the creation of the request, followed by the vendor's response (accept, decline, or delay). Once the vendor accepts, the next crucial step is to receive and approve the quote. For 'Quote and Perform' services, the service cannot be marked as complete until the quote has been received and approved. After the service is marked complete and an invoice is received, ClaimCenter can automatically create a payment if **Straight Through Invoice Processing (STIP)** is enabled and the invoice meets configured limits and reserve requirements. The base application typically has a default STIP limit, such as $500, for automatic payments. Adjusters can also manually invoke the payment wizard from the service screen if STIP criteria are not met or for larger payments.",
+      "keyPoints": [
+        "ClaimCenter tracks vendor performance metrics like timeliness and invoice variance.",
+        "'Quote only' services do not track service timeliness or invoice variance.",
+        "The service lifecycle for 'Quote and Perform' requires quote approval before completion.",
+        "STIP can automate payments for completed services if conditions are met."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Displays the various service metrics ClaimCenter tracks to evaluate vendor performance over time."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Illustrates the lifecycle of a service request, from vendor acceptance and quote approval to service completion and potential automatic payment."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Straight Through Invoice Processing (STIP)",
+          "content": "STIP is a feature that allows ClaimCenter to automatically approve and create payments for invoices associated with completed services, provided they meet predefined criteria such as existing reserves and configured payment limits (e.g., $500 in the base application)."
+        },
+        {
+          "type": "warning",
+          "title": "Quote Approval for 'Quote and Perform'",
+          "content": "For 'Quote and Perform Service' requests, the service CANNOT be marked as complete until the vendor's quote has been received and formally approved by the adjuster. This is a critical step in the workflow."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on how adjusters manage the progress of vendor services, including updating statuses, approving quotes, and processing invoices within ClaimCenter.",
+      "transcriptSummary": "The demo showcases the process of updating vendor progress, such as marking work as accepted or completed. It then demonstrates how to review a submitted quote, approve it, and subsequently mark the service as complete. Finally, it touches upon the steps for adding an invoice and initiating payment for the completed service."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Managing Vendor Progress: Portal vs. Manual Updates",
+      "narrative": "The method for recording and tracking vendor progress in ClaimCenter depends significantly on whether the vendor utilizes a dedicated portal. While the ultimate goal of tracking data remains the same, the interaction flow differs.\n\nWhen a service request is sent to a vendor through a **Vendor Claim Portal**, the vendor gains direct access to manage the request (Slide 13). They can choose to 'Accept Work', 'Add Quote', or 'Decline Work'. For example, a vendor might accept the work and specify a date by which they expect to send the quote. This direct interaction provides real-time updates to the claims adjuster, offering insight into expected timelines and contributing to the evaluation of the vendor's timeliness and overall performance. The portal facilitates easy communication, allowing vendors to submit quotes, invoices, and progress milestones (like 'Vendor Accepted Work' or 'Vendor Completed Quote'), which are automatically recorded in ClaimCenter. This streamlines the entire service request lifecycle.\n\nConversely, when a vendor does not have access to a portal, the **CSR or adjuster must manually record progress** (Slide 14). In this scenario, the vendor communicates updates directly to the adjuster (e.g., via phone or email), and the adjuster then enters this information into ClaimCenter. These manual updates include recording the vendor's acceptance of the service request, submitting quotes, and marking the service as complete. Although the process is manual, the data collected and maintained in ClaimCenter remains consistent with portal-driven updates. The key difference lies in the method of information entry, requiring the adjuster to be proactive in capturing and updating service statuses based on external communications.",
+      "keyPoints": [
+        "Vendor Claim Portal allows vendors to directly manage service requests, providing real-time updates.",
+        "Without a portal, adjusters must manually record vendor progress, quotes, and invoices.",
+        "The data tracked for vendor progress is consistent, regardless of the entry method."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Illustrates how a vendor interacts with a service request through the Vendor Claim Portal, accepting work and providing quote dates."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Shows how adjusters manually record vendor progress and add quotes/invoices when a vendor does not use the Vendor Claim Portal."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Leveraging Vendor Portals",
+          "content": "Encourage vendors to use the Vendor Claim Portal whenever possible. It significantly reduces manual data entry for adjusters, improves communication efficiency, and provides more accurate, real-time tracking of service progress and performance metrics."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An adjuster has initiated a 'Quote and Perform Service' request for a complex property repair. The chosen vendor has just sent an email confirming they've completed the repair and attached their invoice, but they haven't yet submitted a formal quote through the system.",
+      "question": "Based on the service lifecycle for 'Quote and Perform' requests, what critical step must the adjuster ensure is completed before they can mark the service as 'complete' and process the vendor's invoice for payment?",
+      "hints": [
+        "Recall the specific requirements for a 'Quote and Perform Service' to move to the 'complete' status.",
+        "Think about the sequence of events: request -> vendor response -> quote -> service -> payment.",
+        "What is the prerequisite for moving past the 'quote' stage?"
+      ],
+      "expectedApproach": "The learner should identify that the quote must first be received and approved, even if the service work is already done and an invoice has been submitted. The adjuster would need to add the quote (manually if no portal) and then approve it before marking the service complete."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What different types of requests can an adjuster make on a service\n¢ request?",
+      "referenceAnswer": "x request?\n“ Perform Service, Quote, Quote and Perform service.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis one thing that will prevent a service from being marked\nx completed?",
+      "referenceAnswer": "If a service is a Quote and Perform Service request, it cannot be marked complete\nuntil after the quote is received and approved.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "When can an invoice be automatically paid?",
+      "referenceAnswer": "When an invoice is entered for a service that is marked complete and there is a\nmatching reserve line.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter enables efficient management of external vendor services for claims.",
+        "Adjusters can create 'Perform Service', 'Quote Only', or 'Quote and Perform Service' requests.",
+        "Services can be added during claim creation or anytime via the Actions menu.",
+        "Vendor performance metrics are tracked to ensure quality and timeliness.",
+        "The 'Quote and Perform' lifecycle requires quote approval before service completion.",
+        "Vendor progress can be managed via a Vendor Claim Portal or through manual adjuster updates.",
+        "STIP allows for automatic payment of invoices under specific conditions."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering service request management is crucial for streamlining claims operations, reducing cycle times, and enhancing customer satisfaction. Efficiently tracking vendor performance helps in building a reliable network of service providers, directly impacting the insurer's reputation and profitability.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into configuring service requests and customizing their lifecycles to meet specific business needs."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In your ClaimCenter training environment, practice managing service requests. This includes creating a new claim and adding a 'Quote and Perform Service' request during the New Claim Wizard. Then, navigate to an existing claim and add a 'Perform Service' request using the Actions menu. Simulate vendor responses by manually updating the progress of these services, adding a quote, approving it, and finally marking the service as complete. Explore how to add an invoice and observe the payment process.",
+      "objectives": [
+        "Create service requests using both the New Claim Wizard and the Actions menu.",
+        "Practice selecting different service request types.",
+        "Manually update vendor progress and add/approve quotes.",
+        "Mark a service as complete and initiate invoice processing."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_19_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_19_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_19_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_19_02.mp4"
+    }
+  ]
+}

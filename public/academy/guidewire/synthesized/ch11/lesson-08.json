@@ -1,0 +1,450 @@
+{
+  "lessonId": "ch11-l08",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 8,
+  "title": "RESTful Web Services",
+  "subtitle": "Learn to design, implement, and publish RESTful APIs within the InsuranceSuite framework.",
+  "synthesizedAt": "2026-02-16T18:55:28.541902+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance application needs to seamlessly exchange data with a partner's mobile app or a third-party analytics platform. Traditional integration methods can be complex and rigid. How can we enable flexible, standardized communication that allows different systems to interact efficiently and reliably?",
+      "question": "What is the most effective way to expose our application's data and functionality to external systems in a modern, scalable, and easily consumable manner?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the core concepts of RESTful web services and their application within InsuranceSuite.",
+        "Identify the key components of the InsuranceSuite REST framework, including Swagger schemas and Integration Views.",
+        "Design API schemas using YAML to define resources, operations, and parameters.",
+        "Implement API handler classes and methods to process incoming REST requests.",
+        "Understand how to publish and test REST APIs using `published-apis.yaml` and Swagger-UI."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You have likely encountered web services in various forms, perhaps through SOAP-based integrations or general HTTP requests. Recall how applications communicate over a network and the importance of structured data exchange.",
+      "warmupQuestion": "What are some common methods you've used or seen for applications to share data or invoke actions remotely?",
+      "hint": "Think about protocols like HTTP and data formats like XML or JSON."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the InsuranceSuite REST Framework",
+      "narrative": "The InsuranceSuite REST framework provides a robust mechanism for defining and publishing RESTful web services. A RESTful API, often called a RESTful web service, leverages standard HTTP requests (GET, PUT, PATCH, POST, DELETE) to interact with data, following the principles of Representational State Transfer (REST). This approach uses unique resource locators (URLs) to reference exposed entities and relies on HTTP response codes to communicate the status of interactions.\n\nUnlike traditional code-first API approaches like JAX-RS, the InsuranceSuite framework adopts a **schema-first design**. This means you define the API's structure and contracts using schemas before implementing the underlying logic. This approach offers significant advantages, such as cleaner extension capabilities, reusability across API versions, and better modularity, as base application code can execute without explicit knowledge of customer extensions. The framework also handles essential aspects like authentication, logging, standard error formats, and localization.\n\nAt its core, the framework is built upon **Swagger schemas** (version 2.0), which have become an industry standard for documenting REST APIs. Swagger schemas define the available resources (paths), the HTTP verbs (operations) that can be used with them, the parameters each operation accepts, and the schema for any request or response payloads, typically in JSON format. This schema-first design encourages thinking about the API from a client's perspective upfront, ensuring a well-defined and consistent interface.",
+      "keyPoints": [
+        "InsuranceSuite REST framework enables publishing RESTful web services.",
+        "It uses a schema-first design based on Swagger 2.0 schemas.",
+        "Common HTTP verbs (GET, PUT, PATCH, POST, DELETE) are used for data manipulation.",
+        "The framework handles cross-cutting concerns like authentication and error handling.",
+        "Schema-first design promotes clean extension and modularity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Introduction to RESTful Web Services in InsuranceSuite."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of the InsuranceSuite REST framework and basic REST API concepts."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Key components of the InsuranceSuite REST framework, including Swagger and JSON Schema."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "RESTful API",
+          "content": "An application program interface (API) that uses HTTP requests to GET, PUT, PATCH, POST, and DELETE data, based on Representational State Transfer (REST) technology."
+        },
+        {
+          "type": "definition",
+          "title": "Swagger",
+          "content": "A specification for documenting REST APIs, widely adopted as an industry standard, used by InsuranceSuite for schema-first API definition."
+        },
+        {
+          "type": "tip",
+          "title": "PATCH vs. PUT",
+          "content": "Use PATCH for partial updates to a resource, applying only the changes described in the request entity. Use PUT to replace an entire resource with the enclosed entity."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Designing Your REST API: Use Cases and Schema Definition",
+      "narrative": "When designing a REST API, it's crucial to think about common use cases and structure your API around operations on resources rather than remote procedure calls (RPC). For instance, instead of calling an `addContact` function, you would `POST` to a `/contacts` resource. This resource-oriented approach simplifies the API and makes it more intuitive for clients.\n\nThe typical design approach for creating an API in InsuranceSuite involves four main steps: first, defining the API schema using Swagger; second, defining the API Integration View for inputs and outputs; third, implementing the API handler class; and finally, publishing and testing the API.\n\nSwagger schemas are written in YAML (YAML Ain't Markup Language) files, which are human-readable data serialization standards. These files are placed in sub-directories within the `config/integration/apis` folder. A best practice is to organize customer-specific schemas into a dedicated namespace, such as `apis/<company_code>/<product_code>`, and always include a version in the schema name (e.g., `contact/v1`).\n\nEach Swagger YAML file begins with header information, including `swagger: '2.0'`, basic API `info`, and a `basePath`. The `basePath` determines the root URL for your resources on the REST servlet, forming a prefix for all paths defined within the schema. For example, `http://localhost:8880/ab/rest/trn/ta/contact/v1/<resource>`. Custom InsuranceSuite extensions, prefixed with `x-gw`, can also be defined here, such as `x-gw-schema-import` for referencing other JSON schemas. This header also specifies default `produces` and `consumes` media types, typically `application/json`.",
+      "keyPoints": [
+        "Structure APIs around resources (e.g., POST to /contacts) rather than RPC calls.",
+        "The API design process involves schema definition, Integration Views, handler implementation, and publishing.",
+        "Swagger schemas are YAML files stored in `config/integration/apis` with versioning and namespaces.",
+        "Header information in the YAML defines the API's base path, imports, and default media types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Common use cases and the four-step design approach for creating a REST API."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A visual representation of the API design process flow."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Guidelines for creating and organizing Swagger YAML files within the InsuranceSuite framework."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Example of defining header information in a Swagger YAML file."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Resource Naming",
+          "content": "Use plurals for resource paths where there are multiple sub-resources (e.g., `/contacts/{contactId}/addresses` instead of `/contact/{contactId}/address`)."
+        },
+        {
+          "type": "definition",
+          "title": "YAML",
+          "content": "YAML (YAML Ain't Markup Language) is a human-readable data serialization standard often used for configuration files and data storage."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "yaml",
+          "title": "Swagger Header Template",
+          "code": "swagger: '2.0'\ninfo:\n  description: \"My API\"\n  version: '1.0'\n  title: \"My API\"\nbasePath: <basePath> # The base path prepended to every path in this API, generally of the form /<grouping>/<version> like 'claims/v1'\nx-gw-schema-import:\n  <alias>: <json schema name> # Can include any number of imports, but you’ll just need one for now\nproduces: # Used as the default for operations that do not explicitly declare it\n  - application/json\nconsumes: # Used as the default for operations that do not explicitly declare it\n  - application/json\npaths:",
+          "explanation": "This template shows the essential header information for a Swagger YAML file, including the Swagger version, API metadata, base path, schema imports, and default content types."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Defining API Operations: GET, PATCH, and POST",
+      "narrative": "Within your Swagger schema, you define specific operations (HTTP verbs) for each resource path. Each operation requires a unique `operationId`, which will correspond to the handler method name in your Gosu code. You can also specify permissions using the `x-gw-permissions` extension, though it's generally a best practice to enforce permissions within the handler logic for more granular control.\n\nFor `GET` operations, which are used to retrieve resource information, you define parameters such as path parameters (e.g., `contactId`) and query parameters (e.g., `filter`). Path parameters are typically required and embedded directly in the URL, while query parameters are optional and follow a `?` in the URL. The `responses` section defines the expected HTTP status codes and the schema for the returned data. For a successful GET, a `200` (OK) status code is common, with a `$ref` to a JSON schema defining the response body.\n\n`PATCH` operations are used for partial updates to a resource. Similar to GET, they define parameters, often including a path parameter for the resource ID and a `body` parameter for the JSON object containing the fields to be updated. The `body` parameter references a JSON schema that defines the structure of the update payload. A `200` (OK) status code typically indicates a successful update.\n\n`POST` operations are used to create new resources under an existing container. For example, adding a note to a contact would involve a `POST` to `/contacts/{contactId}/note`. Like `PATCH`, `POST` operations often include a `body` parameter referencing a JSON schema for the new resource's data. A `201` (Created) status code is the standard response for successful resource creation.\n\nParameter validation is crucial for ensuring data integrity. Swagger schemas allow you to define constraints for parameters, such as `required`, `type` (string, integer, etc.), and even custom InsuranceSuite `x-gw-type` for typekeys. These constraints ensure that incoming requests conform to the expected schema, and the framework automatically validates inputs, returning appropriate HTTP responses for invalid data.",
+      "keyPoints": [
+        "Define operations (GET, PATCH, POST) for each resource path in the Swagger schema.",
+        "Each operation needs a unique `operationId` that maps to a handler method.",
+        "GET retrieves data, PATCH partially updates, and POST creates new resources.",
+        "HTTP response codes (200, 201) indicate operation status.",
+        "Parameter validation constraints (e.g., `required`, `type`, `x-gw-type`) ensure data integrity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Example of defining a GET operation to view contact details and notes, including parameters and responses."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Example of defining a PATCH operation to update a contact, specifying the request body schema."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Example of defining a POST operation to add a note to a contact, including the request body schema."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Illustrates parameter validation constraints in Swagger, including the `x-gw-type` extension."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Blank slide for visual separation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "HTTP Response Codes",
+          "content": "Standardized codes indicating the status of an HTTP request. Categories include 1xx (Informational), 2xx (Success), 3xx (Redirection), 4xx (Client Error), and 5xx (Server Error)."
+        },
+        {
+          "type": "best_practice",
+          "title": "Permissions Enforcement",
+          "content": "While `x-gw-permissions` can be used in the schema, it's generally safer and more flexible to enforce permissions within the API handler method itself, especially for application-level logic."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "yaml",
+          "title": "GET Operation Template",
+          "code": "paths:\n  /<path>:\n    <method>: # methods are in lower-case, i.e. get, post, patch, put, delete, options, or head\n      summary: <summary>\n      description: <description>\n      operationId: <operationId> # Becomes the handler method name, must be unique within this schema\n      parameters: # You can omit this if the method has no parameters. Parameters is a list, so each element is prefixed with '-' to indicate its a list item\n        - name: <foo>\n          in: <query/path/body/header> # either query, path, body, or header\n          required: <true/false> # defaults to false, must be set to 'true' for path parameters\n          type: <string/integer/number/boolean> # only for query, path, or header parameters\n          schema: # Only included for the body parameter\n            $ref: <alias>#/definitions/<name>\n      responses:\n        '<code>': # Make sure it's in single or double quotes. 200 is generic, 201 for \"created\", 204 for responses without a body\n          description: <description>\n          schema: # Only include for a 201 or 204\n            $ref: <alias>#/definitions/<name>",
+          "explanation": "This template outlines the structure for defining an API operation, including its summary, description, unique ID, parameters, and expected responses with their schemas."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Integration Views and API Inputs/Outputs",
+      "narrative": "The InsuranceSuite REST API framework leverages **Integration Views** to define the structure of API inputs and outputs. These views utilize JSON Schema draft 4 files to specify the format and validation rules for data. Importantly, the JSON schema and mapping files used by the REST API framework are shared with the Integration Views framework, ensuring consistency and reusability across different integration points.\n\nFor operations like viewing a contact and its notes, you would define a schema file (e.g., `contact-1.0.schema.json`) that imports other relevant schemas (like `address`) and contains definitions for response objects, such as `ContactDetails`. A corresponding mapper file (e.g., `contact-1.0.mapping.json`) would then define the paths to the data needed from the domain model to populate these schema definitions.\n\nWhen updating a contact via a `PATCH` request, the input schema (e.g., `ContactUpdate` within `contact-1.0.schema.json`) might need to allow for `null` values for certain properties. By default, explicitly null properties are not allowed on input. To enable this, you must add `x-gw-nullable: true` to the property definition in the JSON schema. This is particularly useful for PATCH requests where you might want to explicitly nullify a field. However, it's crucial to note that required fields cannot have null values, and you should always consult the data dictionary before allowing nulls.\n\nFor adding a contact note, a dedicated schema file (e.g., `contactnote-1.0.schema.json`) would define the input properties, potentially using `x-gw-type` for typekey validation. In cases where the mapping of input properties to domain properties is handled directly within the API handler class, a separate mapper file for the input might not be required.",
+      "keyPoints": [
+        "API inputs and outputs are defined using JSON Schema files and Integration Mapping files.",
+        "JSON Schema and mapping files are shared between Integration Views and the REST API framework.",
+        "Schema files define data structure, while mapper files define data paths from the domain model.",
+        "`x-gw-nullable: true` allows explicit null values for properties in input schemas, especially for PATCH requests.",
+        "Mapper files might be optional for inputs if mapping is handled in the API handler."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Explains how Integration Views and JSON Schema are used for API inputs and outputs."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Details the schema and mapper files used for viewing a contact and its notes."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Shows the Integration View files for updating a contact, highlighting the `x-gw-nullable` property."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Illustrates the schema file for adding a contact note and notes on mapper file requirements."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Blank slide for visual separation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Null Values for Required Fields",
+          "content": "Required fields in your schema cannot have null values. Always reference the data dictionary before allowing a null field to ensure data integrity."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "json",
+          "title": "x-gw-nullable Example",
+          "code": "\"properties\" : {\n  \"DateOfBirth\" : {\n    \"type\" : \"string\",\n    \"format\" : \"date-time\",\n    \"x-gw-nullable\" : true\n  },\n  \"DriversLicenseNumber\" : {\n    \"type\" : \"string\",\n    \"x-gw-nullable\" : true\n  }\n}",
+          "explanation": "This JSON schema snippet demonstrates how to use `\"x-gw-nullable\": true` to allow properties like `DateOfBirth` and `DriversLicenseNumber` to accept explicit null values in an input payload, which is common for PATCH operations."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "API Handler Class Structure and Logic",
+      "narrative": "The API handler class is where the business logic for your REST API operations resides. A new instance of the handler class is created for every request, so it must have a public, no-argument constructor. Handler methods are invoked only after the request has been authenticated and all inputs have been validated and deserialized. If the input is invalid, the handler method will not be called.\n\nHandler methods must be public, non-static, and their names must match the `operationId` defined in the Swagger schema. While technically possible in Java, handler classes are practically implemented in Gosu due to parameter binding relying on method parameter names, which are not consistently preserved in Java. If you must use Java, you can create a Gosu wrapper class to handle parameter binding and delegate logic to a Java helper.\n\nParameter binding in handler methods is flexible. Each method parameter can either correspond to a parameter declared in the Swagger schema (matching name and type) or be of type `gw.api.rest.RequestContext`. The `RequestContext` object provides access to raw HTTP request information, headers, query/path parameters by name, and metadata about the request, making it useful for common infrastructure or advanced request handling.\n\nHandler methods can return various types, including `gw.api.rest.Response`, `void`, or any type that the framework can serialize (e.g., `JsonObject`, `JsonWrapper` subtypes, `TransformResult`, `String`, or `byte[]`). If an operation defines multiple 2xx response codes or requires custom headers, returning `gw.api.rest.Response` provides explicit control over the status code and headers. For operations with a `204` (No Content) response, a `void` return type is appropriate.\n\nException handling is built into the framework. Handler methods can throw exceptions that implement `gw.api.exception.HasErrorInfo` (such as `NotFoundException` or `BadInputException` from `gw.api.rest.exception`) which will be translated into appropriate HTTP status codes and error messages. Any other unhandled exception will default to a `500` (Internal Server Error) status code.",
+      "keyPoints": [
+        "API handler classes are instantiated per request and must have a public, no-arg constructor.",
+        "Handler methods must be public, non-static, and match the `operationId` from the Swagger schema.",
+        "Parameter binding supports schema-defined parameters and the `RequestContext` object.",
+        "Handler methods can return `void`, `gw.api.rest.Response`, or serializable types.",
+        "Exceptions implementing `HasErrorInfo` are mapped to specific HTTP status codes; others default to 500."
+      ],
+      "figures": [
+        {
+          "slideNumber": 20,
+          "caption": "Details the API handler class structure, lifecycle, and how handler classes are specified."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Explains parameter binding in API handler methods, including `RequestContext`."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Describes various return values for API handler methods and exception handling."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Gosu for Handlers",
+          "content": "Implement API handler classes in Gosu due to the parameter binding algorithm's reliance on method parameter names, which are not consistently preserved in Java."
+        },
+        {
+          "type": "definition",
+          "title": "RequestContext",
+          "content": "An interface representing information about the current request being processed, allowing access to raw request data, headers, parameters, and API metadata."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Handler Method Parameter Binding",
+          "code": "class ContactAPIHandler {\n  function getContact(contactId : String, filter : String) : TransformResult {...}\n  function updateContact(contactId : String, body : JsonObject) : String {...}\n  function createContactNote(contactId : String, body : JsonObject) : void {...}\n}",
+          "explanation": "This example shows how handler methods declare parameters that match the Swagger schema definitions or use `JsonObject` for the request body. The return types vary based on the operation's needs."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Implementing API Handler Methods",
+      "narrative": "Let's walk through the implementation of handler methods for the contact API we've been designing. For the `GET` operation to view a contact and its notes, the `getContact` method would first retrieve the `Contact` object, typically by its Public ID. It then creates a `JsonMapper` object, specifying the mapper file and name. Crucially, it uses `JsonMappingOptions` to apply a filter based on the `filter` argument (e.g., `contact_details` or `contactnote_details`), allowing the external resource to request specific subsets of data. Finally, it returns a `TransformResult` object, which is the output of the mapping process.\n\nFor the `PATCH` operation to update a contact, the `updateContact` method retrieves the existing `Contact` object. It then wraps the incoming `JsonObject` body using a generated schema wrapper class, such as `ContactUpdate`. This wrapper provides type-safe access to the fields in the JSON payload. The update logic is performed within a new bundle (`Transaction.runWithNewBundle`), ensuring transactional integrity. The method checks if specific fields are present in the `body` (e.g., `dateOfBirth`, `driversLicenseNumber`) and updates the contact object accordingly. It then returns a `String` indicating success.\n\nFor the `POST` operation to create a contact note, the `createContactNote` method also retrieves the `Contact` object. It wraps the `JsonObject` body with a `ContactNoteDetails` schema wrapper. Within a new bundle, it creates a new `entity.ContactNote` instance, maps the fields from the `contactNote` wrapper to the new entity, and adds the new note to the contact. This method typically returns `void` as a `201` (Created) response usually doesn't include a body.\n\nAfter implementing these handler classes and methods, you must deploy the code changes. In Studio, this typically involves restarting the server in either Run or Debug mode to ensure the new Gosu classes and modified configurations are loaded and active.",
+      "keyPoints": [
+        "GET handler retrieves data, applies mapping options based on filters, and returns a `TransformResult`.",
+        "PATCH handler retrieves existing object, uses schema wrappers for input, updates specific fields within a transaction, and returns a status string.",
+        "POST handler retrieves parent object, uses schema wrappers for input, creates a new entity within a transaction, and adds it to the parent.",
+        "Deploying code changes requires restarting the server in Studio."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "Gosu code for the handler method to view a contact and its notes, demonstrating `JsonMapper` and `JsonMappingOptions`."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Gosu code for the handler method to update a contact, showing schema wrapper usage and transactional updates."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Gosu code for the handler method to create a contact note, illustrating entity creation and association."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Instructions for deploying code changes by restarting the server in Guidewire Studio."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Blank slide for visual separation."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "getContact Handler Method",
+          "code": "function getContact(contactId : String, filter : String) : TransformResult {\n  var contact = findContactById(contactId)\n  var jsonMapper = new JsonMapper(\"trn.ta.contact-1.0\", \"ContactDetails\")\n  var mappingOpts = new JsonMappingOptions()\n  switch (filter) {\n    case \"contact_details\":\n      mappingOpts.withFilter(\"trn.ta.contact_details-1.0\")\n      break\n    case \"contactnote_details\":\n      mappingOpts.withFilter(\"trn.ta.contactnote_details-1.0\")\n      break\n  }\n  return jsonMapper.transformObject(contact, mappingOpts)\n}",
+          "explanation": "This Gosu code demonstrates how the `getContact` method uses `JsonMapper` and `JsonMappingOptions` to dynamically apply filters based on the `filter` query parameter, returning a `TransformResult`."
+        },
+        {
+          "language": "gosu",
+          "title": "updateContact Handler Method",
+          "code": "function updateContact(contactId : String, body : JsonObject) : String{\n  var contact = findContactById(contactId)\n  var contactUpdate = ContactUpdate.wrap(body)\n  Transaction.runWithNewBundle(\\b -> {\n    contact = b.add(contact)\n    if (body.containsKey(\"dateOfBirth\")) {\n      (contact as ABPerson).DateOfBirth = contactUpdate.DateOfBirth\n    }\n    if (body.containsKey(\"driversLicenseNumber\")) {\n      (contact as ABPerson).LicenseNumber = contactUpdate.DriversLicenseNumber\n    }\n  })\n  return \"Contact was updated\"\n}",
+          "explanation": "This Gosu code for `updateContact` shows how to retrieve a contact, wrap the JSON body into a `ContactUpdate` object, and then update specific fields within a transaction, returning a success message."
+        },
+        {
+          "language": "gosu",
+          "title": "createContactNote Handler Method",
+          "code": "function createContactNote(contactId : String, body : JsonObject) : void {\n  var contact = findContactById(contactId)\n  var contactNote = ContactNoteDetails.wrap(body)\n  Transaction.runWithNewBundle(\\b -> {\n    var newNote = new entity.ContactNote()\n    newNote.ContactNoteType = contactNote.ContactNoteType\n    newNote.IsConfidential = contactNote.Confidential\n    newNote.Subject = contactNote.Subject\n    newNote.Body = contactNote.Body\n    contact.addToContactNotes(newNote)\n  })\n}",
+          "explanation": "This Gosu code for `createContactNote` demonstrates how to create a new `ContactNote` entity, populate its fields from the `ContactNoteDetails` wrapper, and associate it with the contact within a transaction."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Publishing and Testing Your REST API",
+      "narrative": "Defining your API schemas and implementing handler classes is only part of the process; you must explicitly publish your APIs to make them accessible over the network. This is done by adding your schema files to `config/integration/apis/published-apis.yaml`. This configuration file controls which Swagger schemas are exposed via the REST servlet. The framework supports an extension model, allowing customers to extend core APIs and publish their extended versions, even supporting multiple live versions based on a core version.\n\nOnce published, you can verify and test your API. The default API URL, typically `http://localhost:8880/ab/rest/apis`, returns a list of all currently published APIs. For interactive testing and documentation, InsuranceSuite bundles a **Swagger-UI** distribution. You can access it at `<base servlet url>/resources/swagger-ui/`, for example, `http://localhost:8880/ab/resources/swagger-ui`. Each published API automatically gets a `/swagger.json` endpoint (e.g., `<basePath>/swagger.json`) that returns its external schema view.\n\nTo test an API using Swagger-UI, you'll typically need to authorize by entering login credentials. Then, you can select an HTTP verb (GET, POST, PATCH, etc.), click 'Try it out' to enable parameter input, enter any required parameters, and finally click 'Execute' to send the request and view the server's response. This interactive interface is invaluable for developers to understand and test API endpoints without writing client-side code.",
+      "keyPoints": [
+        "APIs must be explicitly published by adding schema files to `published-apis.yaml`.",
+        "The framework supports an extension model for customer-specific API versions.",
+        "Published APIs can be listed at the default `/rest/apis` endpoint.",
+        "Swagger-UI provides an interactive interface for API documentation and testing.",
+        "Testing involves authorization, entering parameters, and executing requests via Swagger-UI."
+      ],
+      "figures": [
+        {
+          "slideNumber": 28,
+          "caption": "Explains the API publishing process using `published-apis.yaml` and the extension model."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Describes how to access and use the bundled Swagger-UI for API interaction."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Screenshot demonstrating how to test a Contact API using Swagger-UI, including authorization and execution steps."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "API Versioning",
+          "content": "Always include a version in your API's base path (e.g., `/contact/v1`) to allow for future changes without breaking existing client integrations."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a User REST API, from defining its schema to implementing its handler logic. Pay close attention to how the Swagger schema maps to the Gosu handler methods and how data is transformed.",
+      "transcriptSummary": "The demonstration covers creating a new Swagger YAML file, defining GET and POST operations for a User API, implementing the corresponding Gosu handler methods to retrieve and create user data, and finally, publishing and testing the API using Swagger-UI."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to expose an API endpoint to allow external systems to retrieve a list of all available product codes in InsuranceSuite.",
+      "question": "Which HTTP verb would you use for this operation, and what would be a suitable resource path? Outline the key elements you would define in the Swagger schema for this operation.",
+      "hints": [
+        "Consider the purpose of the request: are you creating, updating, or retrieving data?",
+        "Think about RESTful conventions for resource paths (e.g., plurals).",
+        "What information would be essential to include in the `responses` section of the schema?"
+      ],
+      "expectedApproach": "The learner should identify GET as the appropriate verb. A suitable path might be `/products/v1/codes`. The schema definition should include `operationId`, `summary`, and a `200` response with a schema referencing a list of product code definitions."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A new requirement comes in to allow external systems to update a contact's email address. The update should only affect the email field, leaving other contact details unchanged.",
+      "question": "Describe how you would define this operation in your Swagger schema, including the HTTP verb, resource path, and the structure of the request body. Also, mention any specific `x-gw` properties you might use.",
+      "hints": [
+        "Which HTTP verb is best for partial updates?",
+        "How do you specify that only certain fields are sent in the request body?",
+        "Consider if the email field could potentially be set to null, and how to allow that in the schema."
+      ],
+      "expectedApproach": "The learner should identify PATCH as the verb, with a path like `/contacts/{contactId}`. The request body would be a JSON object containing only the `email` field, referencing a JSON schema. The schema for the `email` property might include `x-gw-nullable: true` if allowing nulls is a requirement."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "7~ — Match the HTTP verb with its description\n\n[verb answer Description\n\nif\n\n| PUT Delete from the database\n\n| RETRIEVE Update/Replace row in the database\nI GET Create a new record in the database\n| PATCH Read from the database\n\n| INSERT Update/Modify row in the database\n\n1 REMOVE Not an HTTP verb\n\n' POST Not an HTTP verb\n\n' REPLACE Not an HTTP verb\n\n|||\n\nDELETE Not an HTTP verb",
+      "referenceAnswer": "Match the HTTP verb with its description\n\nSve [answer Description\n\nf\n\n| PUT Update/Replace row in the database Delete from the database\n\n| RETRIEVE Not an HTTP verb Update/Replace row in the database\nI GET Read from the database Create a new record in the database\n| PATCH Update/Modify row in the database Read from the database\n\n| INSERT Not an HTTP verb Update/Modify row in the database\n\n| REMOVE Not an HTTP verb Not an HTTP verb\n\ni] POST Create a new record in the database Not an HTTP verb\n\n| REPLACE Not an HTTP verb Not an HTTP verb\n\n! DELETE Delete from the database Not an HTTP verb",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What file must be updated to publish an API schema?\n\now A) swagger.yaml\n\nB) published-schemas.yaml\nC) codegen-schemas.yaml\nD) published-apis.yaml\n\nE) json-apis.yaml\n\nSe Soe Se sees esse ese",
+      "referenceAnswer": "What file must be updated to publish an API schema?\nook\nB\n\nc\n\nD\n\nE\n\nswagger.yaml\n\npublished-schemas.yaml\n\nw\n\ncodegen-schemas.yaml\n\npublished-apis.yaml\n\njson-apis.yaml\n\nThe correct answer is published-apis.yaml\n\nSoo eS oe ese Sse ese",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The InsuranceSuite REST framework enables schema-first API design using Swagger 2.0 and JSON Schema.",
+        "HTTP verbs (GET, PATCH, POST, PUT, DELETE) define operations on resources.",
+        "API schemas are defined in YAML files, including header information, paths, parameters, and responses.",
+        "Integration Views (JSON Schema and mapping files) define API input/output structures.",
+        "API handler classes in Gosu implement the business logic for each operation, handling parameter binding, return values, and exceptions.",
+        "APIs are published by listing them in `published-apis.yaml` and can be tested using Swagger-UI."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering RESTful web services is essential for building robust integrations with external systems like customer portals, mobile applications, or third-party data providers. A well-designed REST API ensures secure, scalable, and maintainable data exchange, critical for modern insurance ecosystems. This knowledge allows you to extend Guidewire's core capabilities and connect it seamlessly with the broader digital landscape.",
+      "nextLessonPreview": "In the next lesson, we will explore advanced topics in REST API design, including authentication mechanisms and error handling strategies for production environments."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Building on the concepts learned, create a new REST API for managing policy documents. This API should allow external systems to:\n1.  Retrieve a list of documents for a given policy (GET).\n2.  Upload a new document to a policy (POST).\n\nYou will need to define the Swagger schema, create the necessary JSON Schema and mapping files (if applicable), implement the Gosu handler class with methods for each operation, and finally, publish the API and verify its functionality using Swagger-UI.",
+      "objectives": [
+        "Apply schema-first design principles to a new API.",
+        "Define GET and POST operations in a Swagger YAML file.",
+        "Implement Gosu handler methods to interact with Guidewire entities.",
+        "Configure API publishing and test using Swagger-UI."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_08_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_08_01.mp4"
+    }
+  ]
+}

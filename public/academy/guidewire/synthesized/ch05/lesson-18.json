@@ -1,0 +1,235 @@
+{
+  "lessonId": "ch05-l18",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 18,
+  "title": "Managing Vendors",
+  "subtitle": "Learn how to create, modify, and enhance vendor records within ClaimCenter and ContactManager.",
+  "synthesizedAt": "2026-02-16T17:46:41.995544+00:00",
+  "estimatedMinutes": 65,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a claims adjuster working on a complex case, and you need to bring in a specialized repair service that your company hasn't worked with before. Time is critical, and you need to ensure this new vendor is properly onboarded and their services are available for the claim. How do you handle this efficiently while maintaining data integrity across systems?",
+      "question": "What steps would you take to register and assign a new, unlisted vendor to a claim, and what are the implications for data management?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the distinction between shared contacts, claim contacts, and vendor contacts.",
+        "Describe the process of creating and modifying vendor contacts in ClaimCenter and ContactManager.",
+        "Understand the approval workflow for vendor changes and additions.",
+        "Identify how to attach documents and assign services to vendor records.",
+        "Recognize ContactManager as the system of record for vendors."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Before diving into managing vendors, it's helpful to recall your understanding of contacts within ClaimCenter. Remember that contacts can represent various entities involved in a claim, such as claimants, drivers, and, of course, vendors. We'll build on this foundation to explore the specific characteristics and management of vendor contacts.",
+      "warmupQuestion": "Think about a time you've had to add a new person or company to a claim. What information did you typically need to provide?",
+      "hint": "Consider the difference between a one-time contact and a contact that might be used across many claims."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Vendor Contacts and Shared Data",
+      "narrative": "As a claims adjuster, you'll frequently assign vendors to claims. While you can often select from an existing list, there will be times when you need to register a new vendor. This process involves understanding how contacts are managed across different systems.\n\nFirst, let's review the concept of **shared contacts**. A shared contact is a contact that exists in both ClaimCenter and ContactManager (also known as the Address Book). These are typically entities like doctors, hospitals, or courts that are used across multiple claims. When a contact is shared, ContactManager acts as the central repository, and ClaimCenter keeps a local, linked copy. For instance, a doctor like Dr. Matt Sawyer might have roles on many claims, so his record is maintained in ContactManager and linked to ClaimCenter. In contrast, a person like Tanya Fan, who might only have a role on a single claim, might exist only in ClaimCenter and not be linked to ContactManager.\n\n**Claim contacts** are any contacts with one or more roles on a specific claim. These can be persons or vendors. Persons typically exist only within ClaimCenter for that particular claim, meaning they are local contacts not linked to ContactManager. However, vendors, due to their potential for use across multiple claims, are generally maintained in ContactManager and shared with ClaimCenter. This distinction is crucial because the system of record for vendors is ContactManager.\n\nWhen a vendor contact is used on a claim, its details in ClaimCenter will show its link status to ContactManager. It will indicate if the contact is linked and in sync. If any vendor data is changed in either system, the link message will update to show if the contact is out of sync, highlighting the importance of ContactManager as the authoritative source for vendor information.",
+      "keyPoints": [
+        "Claims adjusters often assign vendors to claims, sometimes requiring new vendor registration.",
+        "Shared contacts exist in both ClaimCenter and ContactManager, typically for entities used across multiple claims.",
+        "Claim contacts are any contacts with roles on a specific claim; persons are often local, while vendors are shared.",
+        "ContactManager is the system of record for vendor contacts.",
+        "ClaimCenter displays the sync status of vendor contacts with ContactManager."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An adjuster's perspective on assigning vendors to claims, highlighting the need to register new vendors."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the concept of shared contacts, distinguishing between contacts linked to ContactManager (Dr. Matt Sawyer) and local ClaimCenter contacts (Tanya Fan)."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Explains claim contacts, showing that persons are typically local to ClaimCenter, while vendors are shared from ContactManager."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Details vendor contacts as shared contacts, existing in both ClaimCenter and ContactManager, with ContactManager as the system of record. It also shows the sync status."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Creating and Modifying Vendors in ClaimCenter",
+      "narrative": "While ContactManager is the system of record for vendor contacts, you can initiate the creation and modification of vendors directly within ClaimCenter. It's important to remember that contacts in ClaimCenter only exist when associated with a claim, meaning you can only create a contact from within a claim context, not independently.\n\nWhen you create a vendor in ClaimCenter, it is immediately and automatically linked to ContactManager. However, additions or changes to vendor contacts typically require approval from a ContactManager user or process. So, even though ClaimCenter will show the vendor as 'linked and in sync,' ContactManager will initially mark its status as 'requiring approval.' Until this approval is granted, the vendor can still be used on multiple claims, but users might need to specifically search for 'pending' vendors. If a pending vendor is selected, ClaimCenter will indicate that the remote contact is awaiting approval.\n\nThe process for **modifying a vendor** is similar. Any changes made to a vendor in ClaimCenter are pushed to ContactManager for approval. Other claims using that vendor will see a message about pending updates, though they aren't forced to adopt them immediately. Once the changes are approved in ContactManager, the ClaimCenter contact will reflect the 'in sync' status, and the vendor will appear in Address Book searches without needing to include pending approvals.\n\nUltimately, **managing vendors in ContactManager** is where the final decisions are made. A manager or supervisor in ContactManager will review pending changes (both new vendors and modifications) and either accept or reject them. ContactManager then communicates this status back to ClaimCenter. Vendor managers can also make direct changes in ContactManager, which can then be copied to ClaimCenter.",
+      "keyPoints": [
+        "Vendors can be created and modified in ClaimCenter, but only when associated with a claim.",
+        "New vendors created in ClaimCenter are automatically linked to ContactManager but require approval there.",
+        "Modified vendors in ClaimCenter also trigger an approval process in ContactManager.",
+        "Pending vendors can be used, but their status will indicate 'pending approval'.",
+        "ContactManager is where all vendor additions and changes are formally approved or rejected."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Explains that vendor contacts created in ClaimCenter are linked to ContactManager and require approval for additions or changes."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Part 1 of creating a vendor, showing how a new vendor is added within a claim and linked to ContactManager."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Part 2 of creating a vendor, illustrating the approved status in ClaimCenter after ContactManager approval."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Demonstrates modifying a vendor, where changes made in ClaimCenter are sent to ContactManager for approval."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Shows the ContactManager interface for managing vendors, including pending changes that require approval."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a new vendor within ClaimCenter and observing its initial status before ContactManager approval.",
+      "transcriptSummary": "The video shows how to navigate to the 'Parties Involved' screen on a claim, use the 'Add Existing Contact' or 'New Vendor' options, and fill in the necessary details for a new vendor. It highlights how the system automatically links the new vendor to ContactManager and displays its pending approval status."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Enhancing Vendor Records with Documents and Services",
+      "narrative": "Beyond basic contact information, vendor records in ContactManager can be enriched with important details like documents and assigned services. These enhancements significantly improve efficiency for claims adjusters.\n\n**Vendor documents** can be attached to vendor contacts in ContactManager. These might include service level agreements, order forms, quote templates, or any other relevant documentation. The key benefit is that when a vendor has a role on a claim, all documents attached to that vendor in ContactManager become immediately available within ClaimCenter. This means adjusters can easily view and download these documents directly from the contact's detailed information screen, whether in ContactManager or ClaimCenter, streamlining the claims process.\n\n**Uploading documents** is straightforward: you navigate to the Documents tab on the selected vendor in ContactManager and use the 'New Document' button to add a file. Once the document is added and the vendor record is updated, it's instantly accessible in ClaimCenter.\n\nSimilarly, **vendor services** can be assigned to vendors in ContactManager. For example, a restoration company might be assigned services like 'water removal' or 'debris removal,' while an auto repair shop might have 'auto body' or 'glass repair.' Assigning these specific services is incredibly beneficial for ClaimCenter users. When an adjuster searches for vendors, they can filter by the required service. This ensures that search results only include vendors capable of performing the specific task needed, along with any other criteria provided. This capability significantly improves the accuracy and efficiency of vendor selection.",
+      "keyPoints": [
+        "Documents can be attached to vendor contacts in ContactManager.",
+        "Attached vendor documents are immediately available on claims where the vendor has a role.",
+        "Documents are uploaded via the 'Documents' tab in ContactManager.",
+        "Vendors in ContactManager can be assigned specific services they perform.",
+        "Assigned services enhance vendor search capabilities in ClaimCenter, allowing adjusters to find specialized vendors efficiently."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Explains that documents attached to vendors in ContactManager are available on claims in ClaimCenter."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Illustrates the process of uploading documents to a vendor in ContactManager and their immediate availability in ClaimCenter."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Shows how services are assigned to vendors in ContactManager, which aids in searching for vendors in ClaimCenter."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to add documents and assign specific services to an existing vendor within ContactManager, and how these updates reflect in ClaimCenter.",
+      "transcriptSummary": "The video guides you through accessing a vendor's record in ContactManager, navigating to the 'Documents' tab to upload a new file, and then to the 'Services' tab to select and assign relevant service types. It demonstrates how these changes become immediately available for use and search within ClaimCenter."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You're an adjuster needing to find a specific type of vendor for a claim. You remember that ContactManager allows for detailed service assignments. You need to verify if a particular vendor offers 'debris removal' services.",
+      "question": "Describe the steps you would take to confirm if an existing vendor in ContactManager is assigned the 'debris removal' service, and how this information would benefit you in ClaimCenter.",
+      "hints": [
+        "Think about where vendor services are managed.",
+        "Consider how ClaimCenter leverages this information during a vendor search."
+      ],
+      "expectedApproach": "The learner should describe navigating to the vendor's record in ContactManager, checking the 'Services' tab for 'debris removal', and then explain that this assignment allows for targeted searches in ClaimCenter, filtering for vendors that provide this specific service."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What is a shared contact?",
+      "referenceAnswer": "Ashared contact is one that exists in both ContactManager and ClaimCenter.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What differentiates ClaimCenter vendor contacts from ClaimCenter non-\nYo vendor contacts?",
+      "referenceAnswer": "What differentiates ClaimCenter vendor contacts from ClaimCenter non-\nYo vendor contacts?\nIn ClaimCenter, vendor contacts that are edited or created require approval from a\nvendor manager on the ContactManager side.\nClaimCenter vendors are linked to ContactManager whereas non-vendors are not.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What happens when a newly created vendor contact is approved in\nx ContactManager?",
+      "referenceAnswer": "Once a vendor manager approves a newly created vendor contact, a notification is\nsent to ClaimCenter. The Parties Involved screen will show that this vendor contact is\nlinked to the Address Book and is in sync (unless the contact has been unlinked).",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What happens when a vendor manager adds documents to a vendor\nx that has a role on a claim?",
+      "referenceAnswer": "The documents are immediately available on the claim.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What is the system of record for vendors?",
+      "referenceAnswer": "ContactManager",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "What is one of the benefits or advantages of defining services for a\nx vendor?",
+      "referenceAnswer": "Defining services provides better search capability from ClaimCenter.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ContactManager is the authoritative system of record for all vendor contacts.",
+        "Vendors created or modified in ClaimCenter are automatically linked to ContactManager but require approval.",
+        "The approval workflow ensures data integrity and consistency across systems.",
+        "Attaching documents and assigning services to vendors in ContactManager enhances their utility in ClaimCenter.",
+        "Effective vendor management streamlines claims processing and improves search efficiency."
+      ],
+      "realWorldConnection": "In real Guidewire projects, robust vendor management is critical for efficient claims processing, cost control, and maintaining service quality. By understanding the interplay between ClaimCenter and ContactManager, adjusters can ensure they are always working with accurate, up-to-date vendor information and leveraging specialized services effectively, directly impacting customer satisfaction and operational efficiency.",
+      "nextLessonPreview": "Next, we'll explore advanced search techniques within ClaimCenter to quickly locate the right vendors and resources for any claim scenario."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this hands-on exercise, you will practice the full lifecycle of vendor management. You will start by creating a new vendor in ClaimCenter for a hypothetical claim, then navigate to ContactManager (or simulate the approval process) to approve this vendor. Finally, you will add a relevant document and assign at least two services to this vendor, observing how these changes reflect in ClaimCenter's vendor search functionality.",
+      "objectives": [
+        "Create a new vendor contact in ClaimCenter.",
+        "Understand and simulate the vendor approval process in ContactManager.",
+        "Attach a document to a vendor record.",
+        "Assign specific services to a vendor.",
+        "Verify vendor information and services are accessible and searchable in ClaimCenter."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_18_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_18_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_18_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_18_02.mp4"
+    }
+  ]
+}

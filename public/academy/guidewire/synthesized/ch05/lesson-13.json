@@ -1,0 +1,345 @@
+{
+  "lessonId": "ch05-l13",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 13,
+  "title": "Introduction to Managing contacts",
+  "subtitle": "Learn to effectively manage all involved parties and vendors within ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:42:16.095943+00:00",
+  "estimatedMinutes": 55,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an adjuster handling a complex auto accident claim. You need to track the claimant, witnesses, the repair shop, and even the doctor treating an injured party. Each of these individuals and organizations plays a crucial role in the claim's lifecycle.",
+      "question": "How do you efficiently manage all these diverse relationships and ensure everyone's information is accurate and accessible throughout the claims process?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Identify the various components that constitute a claim in ClaimCenter.",
+        "Define what a contact is within the context of a claim.",
+        "Differentiate between local contacts and shared contacts, and understand their storage locations (ClaimCenter vs. ContactManager).",
+        "Describe the procedures for adding new contacts and existing vendor contacts to a claim.",
+        "Explain the purpose and significance of assigning roles to contacts on a claim."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Before diving into contact management, let's quickly recall the fundamental components that make up a claim in ClaimCenter. Understanding these parts provides the necessary context for how contacts relate to the overall claim.",
+      "warmupQuestion": "Can you name at least three key components of a claim that you've encountered in previous lessons?",
+      "hint": "Think about the core elements involved when a loss occurs and is reported."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the Core Components of a Claim",
+      "narrative": "To effectively manage contacts, it's essential to first understand the broader context of a claim in ClaimCenter. A claim represents an event where one or more potential covered losses have occurred, and it's comprised of several interconnected parts. Let's review these foundational elements.\n\nFirst, a **claim** itself is the overarching event. Within this, a **contact** is any person or organization related to the claim, such as a claimant, reporter, doctor, or vendor. Each contact has a unique role, defining their relationship to the claim. An **incident** refers to an item that was lost or damaged, like a vehicle, property, or a person's injury. When services are needed, a **service request** is used to track vendor progress, manage quotes, and list available services and providers.\n\nFinancially, an **exposure** tracks a potential payment from a specific coverage to a claimant. A **reserve line** is the money set aside for expected payments related to an exposure, and a **check** represents a single transfer of money, which could be a traditional check or an Electronic Funds Transfer (EFT). Beyond financials, an **activity** is a task required to process a claim, ranging from mandatory approvals to simple reminders, often forming a 'workplan'. **Documents** are electronic or physical files containing relevant claim information, while **notes** are text entries detailing user actions, events, or thoughts during claim processing. Finally, a **matter** pertains to a single potential lawsuit. This lesson will specifically focus on the crucial aspect of managing **Contacts** within this intricate claim structure.",
+      "keyPoints": [
+        "A claim is composed of multiple interconnected parts, including contacts, incidents, exposures, and activities.",
+        "Each part plays a specific role in the overall claim processing workflow.",
+        "Contacts are fundamental to every claim, representing all involved parties."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the interconnected components that form a claim in ClaimCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Reviewing the definition of a 'claim' as an event with potential covered losses."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Defining a 'contact' as any person or organization with a relationship to a claim, each having a unique role."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Explaining 'incident' as a lost or damaged item/person, and 'service request' for tracking vendor services."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Detailing 'exposure' for tracking payments, 'reserve line' for allocated funds, and 'check' for money transfers."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Introducing 'activity' as a task within the claim's workplan."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Defining 'document' as an electronic or physical file containing claim-relevant information."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Explaining 'note' as a text entry detailing events, actions, or user thoughts during claim processing."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Defining 'matter' as a set of data related to a single potential lawsuit."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Highlighting that this lesson will focus specifically on managing contacts within the claim structure."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Claim Components",
+          "content": "A claim in ClaimCenter is a comprehensive record of an event involving potential losses, encompassing contacts, incidents, exposures, activities, documents, notes, and matters."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Introduction to Claim Contacts and Management Systems",
+      "narrative": "As a claims adjuster, keeping track of everyone associated with a claim—from witnesses and claimants to vendors and legal entities—is paramount. This is where the concept of a 'contact' becomes central to ClaimCenter. A contact is broadly defined as any party with a relationship to a claim. This can include individuals like claimants, reporters, or witnesses; organizations such as auto repair shops or hospitals; or even venues like a courthouse. Each of these contacts plays a distinct role, such as someone who suffered a loss, a company providing repair services, or a place where disputes are resolved.\n\nTo manage these diverse contacts efficiently, Guidewire ClaimCenter integrates with a separate application called **ContactManager**, often referred to as an Address Book. While ClaimCenter stores contact information specific to a single claim (known as 'single-use' contacts), ContactManager is designed to store and maintain contacts that are relevant across *multiple* claims (known as 'multi-use' contacts). For instance, a frequently used auto repair shop, a doctor, or a lawyer would typically reside in ContactManager. This integration ensures seamless functionality, allowing contacts to be shared and synchronized between both applications, providing a centralized repository for common vendors and parties.",
+      "keyPoints": [
+        "Contacts are all parties (persons, organizations, vendors, venues) related to a claim.",
+        "ClaimCenter stores claim-specific contact information (single-use).",
+        "ContactManager (Address Book) stores contacts relevant to multiple claims (multi-use), typically vendors.",
+        "ClaimCenter and ContactManager are integrated, allowing contacts to be shared."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "A visual representation of the lesson's focus on managing contacts."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A claims adjuster, Tanvi, poses a question about how ClaimCenter manages involved parties and integrates with other systems."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Defining what a contact is: a person, organization, vendor, or venue related to a claim, with examples of roles."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Illustrating the two applications that store contacts: ClaimCenter for single-use and ContactManager (Address Book) for multi-use contacts, with shared capabilities."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "ContactManager",
+          "content": "ContactManager is Guidewire's central address book application, integrated with ClaimCenter, for managing vendor and other multi-use contact information across multiple claims and other Guidewire applications."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Differentiating Local and Shared Contacts",
+      "narrative": "Understanding where contact information is stored is key to effective management. Most contacts in ClaimCenter are considered **local contacts**, meaning they exist exclusively within ClaimCenter and are specific to a single claim. This is typical for individuals like claimants, witnesses, or passengers, whose involvement is usually confined to one particular claim. There's no operational need for their details to be shared across multiple claims, so they are not stored in ContactManager.\n\nConversely, **shared contacts** are those that exist in both ContactManager and ClaimCenter. These are typically vendors or entities that are likely to be used across many claims, such as doctors, lawyers, hospitals, or courts. When a shared contact is added to a claim, ClaimCenter creates a local copy of that contact. This means ContactManager maintains a single master record (e.g., for Dr. Matt Sawyer), while ClaimCenter might have multiple local copies, one for each claim Dr. Sawyer is associated with. These local copies in ClaimCenter are linked to the master record in ContactManager, ensuring that core information can be synchronized and maintained centrally, while allowing for claim-specific details (like 'okay to contact' status) to vary.",
+      "keyPoints": [
+        "Local contacts exist only in ClaimCenter and are specific to a single claim (e.g., witnesses, claimants).",
+        "Shared contacts exist in ContactManager and are copied to ClaimCenter when used on a claim (e.g., doctors, repair shops).",
+        "ContactManager acts as a central repository for multi-use contacts, while ClaimCenter holds claim-specific instances linked to the central record."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Illustrating local contacts, which are single-use and exist only in ClaimCenter, versus multi-use contacts in ContactManager."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Demonstrating shared contacts, where a single ContactManager entry can be linked to multiple local copies in ClaimCenter across different claims."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Centralized Vendor Management",
+          "content": "Storing vendors and frequently used organizations in ContactManager ensures data consistency, reduces duplication, and streamlines the process of adding them to new claims."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Methods for Adding Contacts to a Claim",
+      "narrative": "In ClaimCenter, contacts are always created within the context of a claim, meaning you cannot create a standalone contact independent of a claim. This is because every contact must have a defined relationship or 'role' on that claim. There are two primary methods for adding contacts to a claim, catering to different scenarios.\n\nThe first method is to **add a new contact** that is not expected to be a vendor or shared across multiple claims. This is typically done from screens like the 'Parties Involved' screen. When you add a new non-vendor contact, it becomes a local contact, existing only within ClaimCenter for that specific claim. You'll need to provide minimal information, usually a name and their role on the claim, at the time of creation.\n\nThe second method is to **add an existing vendor contact** from ContactManager. This approach is used when the contact is a multi-use entity, such as a doctor, auto repair shop, or a court, that is already stored in your central Address Book. You'll search ContactManager for the relevant contact, and upon selection, ClaimCenter creates a new local object for that contact within the claim. Crucially, this new ClaimCenter contact is automatically linked to its master record in ContactManager, ensuring that shared information remains consistent while allowing for claim-specific details to be managed locally.",
+      "keyPoints": [
+        "Contacts are always created within the context of a claim and must have a role.",
+        "New, non-vendor contacts are created directly in ClaimCenter and are local to that claim.",
+        "Existing vendor contacts are pulled from ContactManager, creating a linked local copy in ClaimCenter.",
+        "The linking process ensures synchronization between ClaimCenter and ContactManager for shared contacts."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Overview of adding contacts to a claim, showing the two main approaches: new contact (non-vendor) and existing vendor."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Detailing the first method: adding a new, local (non-vendor) contact directly to a claim, such as Stanley Poole."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Introducing the second method: adding an existing vendor contact, like Dr. Matt Sawyer, from ContactManager to a claim."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Illustrating the search and identification process for an existing contact in ContactManager to be added to a claim."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Explaining that adding an existing contact creates a new, automatically linked object in ClaimCenter, copied from ContactManager."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Creating Contacts in ClaimCenter and the New Claim Wizard",
+      "narrative": "When you create a contact directly within ClaimCenter, it's always tied to a specific claim. This means you can't create a 'standalone' contact without associating it with a claim. A critical aspect of this process is defining the contact's **role**, which specifies their relationship to the claim. This relationship can be broad, applying to the entire claim (e.g., a reporter), or more specific, relating to an exposure, an incident, or even the policy itself (e.g., an injured party related to a specific incident).\n\nWhile any contact created in ClaimCenter *can* be linked to ContactManager, this linking is primarily utilized for vendors or entities that are expected to be shared across multiple claims. For persons or companies that are unique to a single claim, linking is typically not necessary. ClaimCenter provides a 'Check for Duplicates' button during contact creation, which queries ContactManager to identify potential matches, primarily for vendor contacts, helping to maintain data integrity and prevent redundant entries in the central Address Book.\n\nDuring the **New Claim Wizard (NCW)**, contacts can be added at various stages, including the Basic Information step, Add Claim Information, and Parties Involved screens. In the Basic Information step, roles are often pre-defined; for example, the person in the 'Reported By' section automatically gets the 'reporter' role. In other sections, like 'Parties Involved', you have the flexibility to assign any relevant role, such as a witness, attorney, or alternate contact. Contacts can also be created within the NCW when adding service requests to a claim, further streamlining the initial claim setup process.",
+      "keyPoints": [
+        "Contacts in ClaimCenter are always claim-specific and must have a defined role.",
+        "Roles can relate to the claim, exposure, incident, or policy.",
+        "The 'Check for Duplicates' feature helps identify existing contacts in ContactManager, especially for vendors.",
+        "Contacts can be added at multiple points during the New Claim Wizard, with some roles automatically assigned."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Details on creating new contacts in ClaimCenter, emphasizing their claim context, role assignment, and potential linking to ContactManager."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Illustrating how contacts are created within the New Claim Wizard, with automatic role assignments in some steps and flexible role selection in others."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Leverage 'Check for Duplicates'",
+          "content": "Always use the 'Check for Duplicates' button when creating new contacts, especially for potential vendors, to ensure you're not creating redundant entries that might already exist in ContactManager."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "The Importance of Contact Roles and Vendor Management",
+      "narrative": "Every contact associated with a claim must be assigned one or more **roles**. These roles are crucial because they define the specific relationship the contact has with the claim. A contact's role can be broad, applying to the entire claim (e.g., a witness), or it can be more granular, tied to a specific part of the claim like an exposure, an incident, a service, or even the policy itself. For example, Ellen might be the insured on the policy, the reporter of the claim, and a claimant on a specific exposure, demonstrating how one person can have multiple roles. Conversely, Jim might simply be a witness for the entire claim.\n\nConsider Matt Sawyer, a doctor who might be a vendor maintained in ContactManager. When he's added to an auto claim and a workers' comp claim, two unique contact objects are created in ClaimCenter, each linked back to his master record in ContactManager. While some fields, like his address, might be identical across these objects, others, such as an 'okay to contact' flag, could differ based on the specific claim's needs. This flexibility allows for claim-specific nuances while maintaining a central source of truth for core vendor information.\n\n**Vendor contacts** are a prime example of multi-use contacts managed in ContactManager. To add an existing vendor to a claim, you typically use the 'Add Existing Contact' function. This initiates a search of ContactManager, allowing you to filter by vendor type (person, company, place) and search by name or location. Once the vendor is selected from the search results, you assign their appropriate role on the claim. The vendor's information is then copied to ClaimCenter, and the new ClaimCenter contact object is automatically linked to its corresponding record in ContactManager, ensuring that changes to the master record can be reflected in the linked claim contacts.",
+      "keyPoints": [
+        "Contact roles are mandatory and define the relationship between a contact and the claim or its sub-parts.",
+        "A single contact can have multiple roles on a claim.",
+        "Linked contacts from ContactManager create unique local objects in ClaimCenter, allowing for claim-specific data while maintaining a central master record.",
+        "Adding existing vendors involves searching ContactManager, selecting the vendor, assigning a role, and automatically linking the new ClaimCenter contact."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "Illustrating various contact roles on different claims (Auto and Workers' Comp) and how a single person can have multiple roles or be linked across claims."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Detailed steps for adding an existing vendor contact from ContactManager to a claim, including searching and linking."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "A concluding slide for the content presentation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Role Specificity",
+          "content": "Always assign the most specific role possible to a contact. This improves reporting, workflow automation, and clarity regarding their involvement in the claim."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of adding different types of contacts to a claim within ClaimCenter. Pay close attention to how new contacts are created and how existing vendor contacts are searched for and linked from ContactManager.",
+      "transcriptSummary": "The video demonstrates adding a new non-vendor contact to a claim, specifying their role. It then shows how to search for and add an existing vendor contact from ContactManager, highlighting the linking process. The demo covers navigating the 'Parties Involved' screen and assigning contact roles."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are an adjuster working on a new property claim. The policyholder, Sarah Chen, reported the claim. During your investigation, you identify a witness, David Lee, and need to engage 'Rapid Restoration Services' for property repairs.",
+      "question": "Describe the steps you would take in ClaimCenter to add Sarah Chen as the reporter, David Lee as a witness, and 'Rapid Restoration Services' as a vendor. For 'Rapid Restoration Services', assume they are a known vendor in ContactManager.",
+      "hints": [
+        "Consider which type of contact (new/existing) each person/organization represents.",
+        "Think about the specific screens or wizards where you would perform these actions.",
+        "Remember the 'Add New Contact' vs. 'Add Existing Contact' options."
+      ],
+      "expectedApproach": "1. Add Sarah Chen as a new contact (reporter role) during the New Claim Wizard or via 'Parties Involved'. 2. Add David Lee as a new contact (witness role) via 'Parties Involved'. 3. Use 'Add Existing Contact' to search for 'Rapid Restoration Services' in ContactManager, then select and assign the appropriate vendor role."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "|f “Tire Town” is in Address Book and is associated with three claims, ow how many contacts have the name “Tire Town\"?",
+      "referenceAnswer": "Four. There would be one contact in ContactManager and three in ClaimCenter. Every contact, whether it is linked or not, is a unique and separate object.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "'sitcommon or uncommon to have a contact that exists only in ¢ ClaimCenter? Only in ContactManager?",
+      "referenceAnswer": "It is common to have a contact that exists only in ClaimCenter. This is true for contacts that are relevant to only one claim (such as a witness or passenger). It is uncommon to have a contact exist only in Address Book. The primary purpose for a contact in Address Book is to have it associated with multiple claims, and if it is associated with even one claim, then the contact will also exist in ClaimCenter.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is the purpose of a contact role?",
+      "referenceAnswer": "Acontact role identifies the relationship that the contact has with the claim (such as insured, witness, doctor, and so on).",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Howcan you tell if a contact is linked or in sync?",
+      "referenceAnswer": "You can tell whether a contact is linked and/or in sync by selecting the contact from the Parties Involved — Contacts’ screen. A label on the Basics card identifies the contact's status.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "How many claims can a contact be associated with if the contact is only ow defined in ClaimCenter?",
+      "referenceAnswer": "One. Each contact is created within a claim. If a contact (usually an insured) has multiple claims, there will be a separate contact on each of those claims.",
+      "questionKey": "slide-40"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "A claim is a complex event made up of various interconnected components, with contacts being central.",
+        "Contacts are all persons, organizations, vendors, or venues related to a claim.",
+        "ClaimCenter manages local contacts (single-claim use), while ContactManager manages shared contacts (multi-claim use, typically vendors).",
+        "Contacts can be added as new (local) or existing (from ContactManager, then linked) to a claim.",
+        "Every contact must have one or more roles defining their relationship to the claim or its sub-parts.",
+        "The New Claim Wizard allows for contact creation at multiple stages, often with automated role assignment."
+      ],
+      "realWorldConnection": "In real Guidewire projects, effective contact management is crucial for operational efficiency, data accuracy, and regulatory compliance. By leveraging the integration between ClaimCenter and ContactManager, insurers can maintain a consistent, reliable database of all involved parties, streamline workflows, and ensure adjusters have immediate access to the right information, whether it's a claimant's details or a preferred vendor's contact information. This directly impacts claims cycle times and customer satisfaction.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into specific actions you can perform on contacts, such as editing their information, managing their communication preferences, and understanding the implications of synchronization."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access a test ClaimCenter environment and practice adding different types of contacts to an existing claim. Specifically, add a new witness, and then search for and add an existing auto repair shop vendor. Experiment with assigning various roles to these contacts and observe how their information is displayed on the 'Parties Involved' screen.",
+      "objectives": [
+        "Practice adding new local contacts to a claim.",
+        "Practice searching for and adding existing vendor contacts from ContactManager.",
+        "Apply different contact roles to newly added contacts.",
+        "Verify contact information and roles on the 'Parties Involved' screen."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_13_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_13_01.mp4"
+    }
+  ]
+}

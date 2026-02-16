@@ -1,0 +1,185 @@
+{
+  "lessonId": "ch06-l11",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 11,
+  "title": "Managing Direct Bill Payments",
+  "subtitle": "Learn to handle suspense payments and correct allocation issues in BillingCenter.",
+  "synthesizedAt": "2026-02-16T17:50:27.327521+00:00",
+  "estimatedMinutes": 55,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a customer sends a payment, but the policy number is missing or incorrect. Or perhaps a payment was allocated to the wrong account entirely. These situations can disrupt billing cycles and customer satisfaction.",
+      "question": "How does BillingCenter help you manage payments that can't be immediately applied, and what tools are available to fix payment errors after they occur?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and lifecycle of suspense payments in BillingCenter.",
+        "Differentiate between automatic and manual methods for releasing suspense payments.",
+        "Perform actions to modify payment details and allocations, including reversing payments and moving funds.",
+        "Correctly reallocate payments to different policies or move them to suspense."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of direct bill payments, unapplied funds, and basic payment processing within BillingCenter. Recall how payments are typically entered and allocated to invoices.",
+      "warmupQuestion": "What happens to a payment if BillingCenter cannot immediately identify the policy or account it belongs to?",
+      "hint": "Think about temporary holding places for funds."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Handling Suspense Payments",
+      "narrative": "In BillingCenter, a **suspense payment** is a payment received where the target—such as the specific account, policy, or producer—is not yet known or cannot be identified. These payments are crucial to manage correctly to ensure funds are eventually applied to the right place. As shown in the dialogue in **Figure 1**, a common question arises: what happens to these payments once their target becomes clear? BillingCenter offers two primary methods to release these funds: an automatic process and a manual intervention.\n\n**Figure 2** illustrates the automatic method. The **Suspense Payment batch process** is designed to periodically scan for suspense payments. When this batch process runs, it actively searches for the target of each payment currently held in a `SuspensePayment unapplied fund`. If it successfully identifies the corresponding account, policy, or producer, the system automatically moves the money from the `SuspensePayment unapplied fund` to the appropriate `applicable unapplied fund`. Once the funds are in the applicable unapplied fund, BillingCenter treats and allocates them just like any other money in that fund, following the account's payment allocation plan.\n\nFor situations requiring direct action, BillingCenter also provides a manual method, detailed in **Figure 3**. The **Suspense Payments screen** on the Desktop serves as a central hub, listing all payments currently held in suspense. When the missing target information (account, policy, or producer) is finally added to BillingCenter, you can manually intervene. By selecting the relevant suspense payment, you can use the `Apply Suspense Payment` popup to search for and designate the correct target. This popup also allows you to change the target if needed. Clicking `Update` then releases the suspense payment, moving it to the applicable unapplied fund. Once released, the payment will no longer appear on the Suspense Payments screen. To verify the released payment, you can navigate to the Account Summary or Policy Summary and click on the 'Total Unapplied' amount. It's worth noting that the Suspense Payments screen offers both `Edit` and `Apply` links; `Edit` allows for changes to the payment amount or notes, while `Apply` focuses solely on releasing the payment to a target fund.",
+      "keyPoints": [
+        "Suspense payments are for funds where the target account, policy, or producer is initially unknown.",
+        "The automatic method uses a batch process to identify and move funds to applicable unapplied funds.",
+        "The manual method involves using the Suspense Payments screen to designate a target and release funds."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of suspense payments and their purpose."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Dialogue introducing the concept of handling suspense payments and the two release methods."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram illustrating the automatic release of a suspense payment via the batch process."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Screenshots demonstrating the manual release of a suspense payment using the Suspense Payments screen and Apply Suspense Payment popup."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Suspense Payment",
+          "content": "A payment whose target (account, policy, or producer) is not known or cannot yet be identified in BillingCenter."
+        },
+        {
+          "type": "tip",
+          "title": "Edit vs. Apply",
+          "content": "Use the 'Edit' link on the Suspense Payments screen if you need to change the payment amount or add/update notes. Use 'Apply' if you only need to designate a target and release the payment."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of manually handling a suspense payment in BillingCenter, showing how to identify the payment and assign it to a known target.",
+      "transcriptSummary": "The demo illustrates navigating to the Suspense Payments screen, selecting a suspense payment, and using the 'Apply Suspense Payment' popup to search for and assign the payment to a specific policy. It concludes by showing how the payment is then moved to the policy's unapplied fund."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Correcting Payment Allocation Issues",
+      "narrative": "Mistakes can happen when entering or allocating payments, such as assigning a payment to the wrong account or policy. Fortunately, BillingCenter provides a robust set of actions to rectify these errors, as highlighted in **Figure 4**. These actions are accessible from two key locations: the **Payments screen** under the Account tab, and the **Account Details screen**.\n\n**Figure 5** provides a summary of the available payment actions. It's important to note that the `Modify Payment Details` action is only available for payments that have not yet been allocated. All other actions, however, can be used for both allocated and unallocated payments. Here's a brief overview of each:\n\n*   **Modify Payment Details**: Allows you to change the payment amount and details of the payment instrument.\n*   **Modify Distribution**: Enables modification of both payment details and how the payment is allocated across invoice items.\n*   **Reverse**: Used to undo a payment, for instance, if a check was returned or an account was closed.\n*   **Move to Account/Unapplied Fund**: Transfers money from one unapplied fund to another.\n*   **Move To Suspense**: Shifts money to a `SuspensePayment unapplied fund` if the target becomes unknown.\n*   **Transaction**: Displays the accounting entries related to the payment.\n\nWhen you need to adjust how a payment has been allocated, especially if it involves an invoice item on a different policy within the same account, the `Modify Distribution` action is your tool. As shown in **Figure 6**, the screen for modifying a payment distribution is similar to the initial Direct Bill Payment screen. The process involves selecting `Actions > Modify Distribution` for the payment, then clicking `Override`. If the account uses cash separation (where each policy has its own designated unapplied fund), you'll click `Add Items` to find and select the correct invoice item from the target policy. After adding the item, you can enter the desired amount in the `Override Amount` field. Finally, clicking `Execute` completes the reallocation.\n\nFor payments that were entirely receipted incorrectly, such as being credited to the wrong designated unapplied fund, you have options to move the funds. **Figure 7** illustrates two scenarios: if the payment was intended for a different policy within the same account, you would select `Move To Account/Unapplied Fund`. This screen allows you to specify a different account number and/or unapplied fund, and even re-allocate the payment. If, however, the payment was for an account or policy not yet known to BillingCenter, you would choose `Move To Suspense`. In the `Move Payment to Suspense Payment` popup, you can enter the expected account or policy number, effectively placing the funds back into a suspense state until the target is fully established.",
+      "keyPoints": [
+        "BillingCenter provides several actions to correct payment errors, accessible from the Payments or Account Details screens.",
+        "Actions include modifying payment details, distribution, reversing payments, and moving funds between accounts/unapplied funds or to suspense.",
+        "Modifying distribution allows reallocating payments to different invoice items, even across policies within the same account.",
+        "Incorrectly receipted payments can be moved to the correct unapplied fund or back into suspense."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Dialogue setting the context for fixing payment issues and available actions."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Screenshot displaying the available payment modification actions from the Account tab."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Screenshot detailing the steps to modify a payment allocation to include an item from a different policy."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Screenshots showing options for moving incorrectly receipted payments to another fund or to suspense."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Cash Separation",
+          "content": "When an account uses cash separation, each policy has its own designated unapplied fund. This helps ensure that payments for a specific policy are used only for that policy's invoice items, preventing accidental cross-policy allocation."
+        },
+        {
+          "type": "tip",
+          "title": "Refer to Application Guide",
+          "content": "For more in-depth details on each payment action, consult the BillingCenter Application Guide."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of correcting a payment that was allocated incorrectly, showing how to modify its distribution to the correct invoice items.",
+      "transcriptSummary": "The demo showcases how to access the 'Modify Distribution' action for a payment, override existing allocations, add invoice items from a different policy within the same account, and execute the corrected distribution to ensure funds are applied accurately."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A customer, John Doe (Account #DEMO001), made a payment of $750 for Policy PA-1234. However, the payment was mistakenly applied to Policy HO-5678, which also belongs to John Doe. You need to correct this allocation.",
+      "question": "How would you reallocate the $750 payment from Policy HO-5678 to Policy PA-1234?",
+      "hints": [
+        "Start by navigating to the Account tab for John Doe and finding the payment.",
+        "Consider which action allows you to modify how a payment is distributed across invoice items.",
+        "Remember to 'Override' the current distribution and 'Add Items' from the correct policy."
+      ],
+      "expectedApproach": "Locate the payment on the Account's Payments screen, select 'Modify Distribution', override the existing allocation, add the correct invoice item(s) from Policy PA-1234, specify the amount, and execute the change."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Designate each action as one of: Automatic (in 1 step), Manual, Both, or\nY Neither (can’t be done):\n\na 1) Move a payment to a suspense payment\n2) Apply a suspense payment to an invoice item\n\n3) Move a suspense payment from a Suspense Payment Unapplied fund to another\nunapplied fund\n\n4) Change the target account # of a payment that has already been allocated\n\n5) Add an invoice item from one policy to a payment distribution (allocation) of\nanother policy",
+      "referenceAnswer": "Designate each action as one of: Automatic (in 1 step), Manual, Both, or\nY Neither (can’t be done):\n\n1) Move a payment to a suspense payment Manual\n2) Apply a suspense payment to an invoice item Neither\n\n3) Move a suspense payment from a Suspense Payment Unapplied fund to another\nunapplied fund Both\n\n4) Change the target account # of a payment that has already been allocated\nManual\n\n5) Add an invoice item from one policy to a payment distribution (allocation) of\nanother policy Manual",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Suspense payments are temporary holdings for funds with unknown targets, managed automatically by a batch process or manually via the Suspense Payments screen.",
+        "BillingCenter provides various actions (Modify Payment Details, Modify Distribution, Reverse, Move to Account/Unapplied Fund, Move To Suspense) to correct payment errors.",
+        "Payment allocations can be modified to include invoice items from different policies within the same account.",
+        "Incorrectly receipted payments can be moved to the correct unapplied fund or back into suspense if the target remains unknown."
+      ],
+      "realWorldConnection": "Efficiently managing direct bill payments, especially handling suspense funds and correcting allocation errors, is critical for maintaining accurate financial records, ensuring customer satisfaction, and preventing revenue leakage in real-world Guidewire BillingCenter projects. Mastering these functions directly impacts operational efficiency and financial integrity for insurers."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the following hands-on exercises in your BillingCenter training environment:",
+      "objectives": [
+        "(1) Handle a Suspense payment: Locate a suspense payment, identify its correct target, and manually release it to the appropriate unapplied fund.",
+        "(2) Correct payment allocation: Find a payment that was incorrectly allocated to an invoice item and reallocate it to the correct invoice item on a different policy within the same account."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_11_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_11_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_11_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_11_02.mp4"
+    }
+  ]
+}

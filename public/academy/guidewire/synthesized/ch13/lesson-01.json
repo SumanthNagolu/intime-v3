@@ -1,0 +1,352 @@
+{
+  "lessonId": "ch13-l01",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 1,
+  "title": "Rating Business Overview",
+  "subtitle": "Understand PolicyCenter's rating process, components, and implementation for insurance products.",
+  "synthesizedAt": "2026-02-16T19:07:40.363032+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance company launching a new product or updating an existing one. Accurately calculating premiums, taxes, and discounts is critical for profitability and compliance. PolicyCenter's Rating Management system is designed to handle this complexity.",
+      "question": "How do insurance systems efficiently determine the precise cost of a policy, accounting for various risks and factors?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the overall process of rating in PolicyCenter.",
+        "Identify the main components of PolicyCenter rating management, including rate books, rate tables, rate routines, and parameter sets.",
+        "Explain the role of actuaries and rating analysts in preparing rating content for PolicyCenter.",
+        "Outline the process for implementing rating content within PolicyCenter."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your foundational understanding of PolicyCenter, particularly how new submissions are initiated and processed. Familiarity with basic insurance concepts like premiums, coverages, and policy terms will also be beneficial.",
+      "warmupQuestion": "Think about a time you've seen an insurance quote. What factors do you think go into calculating that final premium?",
+      "hint": "Consider the type of insurance, the insured item/person, and any discounts or surcharges."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "PolicyCenter Rating: Overview and Core Components",
+      "narrative": "PolicyCenter Rating Management is a crucial system that enables insurance companies to accurately determine the cost of a policy. This process, known as **rating**, involves calculating premiums, taxes, discounts, surcharges, and other monetary amounts associated with an insurance policy. The primary goal during implementation is to precisely capture costs per risk, per line of business (LOB), and the total cost for each policy. These 'costs' act as containers for all monetary values within PolicyCenter, such as coverage premiums, taxes, and fees.\n\nTo manage this complex process, PolicyCenter relies on several core components. As shown in the conversation between Kalani, a Rating Analyst, and Julia, an Implementation Architect, understanding these components is key to grasping how rating works. The main components include **rate books**, **rate tables**, **rate routines**, and **parameter sets**. These elements work together within the **Rating Engine** to orchestrate the premium calculation.\n\nThe rating process typically begins when a quote is requested. The Rating Engine then selects the appropriate **Rate Book**, which is a collection of rate tables and routines. It then calls a specific **Rate Routine** for each cost item, such as a particular coverage. This routine performs the necessary calculations, and the results are compiled into a corresponding **worksheet**. Finally, these calculated results are returned to the calling policy transaction, completing the rating cycle for the quote. This structured approach ensures consistency and accuracy in premium determination.",
+      "keyPoints": [
+        "Rating is the process of determining the total cost of a policy, including premiums, taxes, and discounts.",
+        "Costs in PolicyCenter are containers for monetary amounts associated with a policy.",
+        "Key components of PolicyCenter rating management are rate books, rate tables, rate routines, and parameter sets.",
+        "The rating process involves the Rating Engine selecting a rate book, calling rate routines, constructing a worksheet, and returning results to the policy transaction."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Kalani and Julia discuss the overall process of PolicyCenter Rating Management."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "An overview of PolicyCenter rating, defining it as the process of determining policy cost and its outputs."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Julia introduces the main components of PolicyCenter rating management to Kalani."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "A visual representation of the core rating components within the Rating Engine."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A diagram illustrating the step-by-step process of how rating works from quote to calculated results."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Costs in PolicyCenter",
+          "content": "Costs are the 'containers' for a monetary amount associated with a policy, such as premium, taxes, discounts, surcharges, and other amounts. They represent the calculated financial aspects of a policy."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through the process of creating a personal auto submission in PolicyCenter. Pay close attention to how an offering is selected, as this can influence default coverages and rating.",
+      "transcriptSummary": "The demo shows how to create a personal auto submission starting from an existing account (Ray Newton). It covers searching for an account, initiating a new submission, selecting the 'Personal Auto' line of business, choosing a 'Basic Program' offering, and answering a qualification question before proceeding to policy information."
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on creating a commercial property submission. Observe how buildings are added to a location and how property class codes and coverage forms are assigned, as these are critical for commercial rating.",
+      "transcriptSummary": "This demo illustrates creating a commercial property submission from a commercial account (Write Construction). It demonstrates initiating a new submission, adding a building to a location, assigning a property class code (e.g., 0074), selecting a coverage form (Building and Personal Property), and customizing coverages before saving the building."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you how to copy an existing submission in PolicyCenter. This is a common task for creating similar policies or for testing rating changes.",
+      "transcriptSummary": "This demonstration, though without a provided transcript, typically illustrates the process of navigating to an existing submission and using an 'Actions' menu option to create a copy, allowing for quick duplication and modification of policy data."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are some of the actions that take place in terms of rating after a\n¢ quote is requested?",
+      "referenceAnswer": "Possible answers include:\n1. Rating Engine selects a Rate Book\n2. The Rating Engine calls a Rate Routine for the Cost Item (for example, coverage)\n3. The PolicyCenter Rating Engine constructs the corresponding Worksheet with the\ncalculated results\n4. The results are returned to the calling policy transaction (quote)",
+      "questionKey": "slide-8"
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Rate Tables and Definitions",
+      "narrative": "As Kalani expressed, the world of PolicyCenter rating introduces several new terms that are fundamental to its operation. Let's delve deeper into some of these, starting with **rate tables** and **rate table definitions**.\n\nA **rate table** is essentially a structured collection of static rates, organized in a table format with one or more rows. Think of it as a lookup table where you can find specific values based on certain criteria. These tables are crucial because they contain the raw data used in rating calculations. Each rate table is composed of columns that represent **parameters**. These parameters are the inputs or criteria used to look up a specific value, which is known as a **factor**.\n\nA **factor** is a versatile value found within a rate table. It can serve various purposes: it might be a direct rate factor used in a calculation, a classification (class), a tier, or even a code that triggers further lookups. For example, a factor could represent a discount percentage based on a driver's age and driving record, or a surcharge based on a vehicle's make and model. PolicyCenter provides the capability to view, create, and edit these rate tables, allowing users to adjust rates or add new entries for coverages and limits as needed. The **rate table definition** is what formally describes the parameters and factors for a particular rate table, ensuring consistency and proper data structure.",
+      "keyPoints": [
+        "Rate tables store static rates in a structured, lookup format.",
+        "Columns in rate tables represent parameters used for value lookups.",
+        "A factor is the value retrieved from a rate table, which can be a rate, class, tier, or lookup code.",
+        "Rate table definitions describe the parameters and factors for a specific rate table."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Kalani asks Julia to elaborate on the new rating terminology."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Explanation of rate tables and rate table definitions, including their structure and purpose."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Factor",
+          "content": "A value in a rate table that can be a rate factor, class, tier, or a code for further lookups. It's the output of a rate table lookup."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis a rate table?",
+      "referenceAnswer": "Arate table contains static rates in a table format consisting of one or more rows.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whatis a factor?",
+      "referenceAnswer": "A factor is a value in a rate table that can be a rate factor, class, or tier, or as code for\nuse in further lookups.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Whatis a parameter set?",
+      "referenceAnswer": "A parameter set enables users to define the usable information available within a rate\nroutine.",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Rate Routines, Rate Books, and the Rating Engine's Flow",
+      "narrative": "Beyond rate tables, **rate routines** are the algorithms that define the actual steps for calculating a cost. These routines are critical for determining premiums for coverages, taxes, and other policy costs. A single step within a rate routine can encompass various operations, including mathematical calculations, logical conditions (like 'if-then' statements), and variable assignments that might pull values from a rate table lookup. Rate routines can be used to directly calculate properties on a cost or to set up intermediate rating information that will be utilized by another rate routine. This modularity allows for complex rating logic to be broken down into manageable, reusable steps.\n\n**Rate books** serve as logical groupings of both rate tables and rate routines. They act as containers that organize all the necessary rating content for a particular insurance product or offering. From the Administration tab in PolicyCenter, you can access and manage rate books, including approving, testing, and promoting them to production environments. A rate book can also define an implied rate order or specific rate steps, meaning the rate flow logic can be embedded within the rate book itself.\n\nThe **Rating Engine** is the core system component that executes all these rating calculations. Its base implementation leverages a hierarchy of classes and flexible logic to handle the premium calculation and proration process. The term **'rate flow'** refers to the specific logic within this rating engine that orchestrates the entire premium calculation for a policy line. It coordinates actions among the various rating components, ensuring that all necessary steps are performed in the correct sequence to arrive at the final premium. While the base configuration provides examples of rate flow, it can be customized to meet specific implementation requirements, such as rating multi-line policies as a single component.",
+      "keyPoints": [
+        "Rate routines define the algorithms for calculating costs, including mathematical operations, logic, and variable assignments.",
+        "Rate books group related rate tables and rate routines, accessible via the Administration tab.",
+        "The Rating Engine executes premium calculations using a hierarchy of classes and flexible logic.",
+        "Rate flow is the logic within the rating engine that orchestrates the premium calculation for a policy line."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "Details on rate routines, explaining their purpose and the types of steps they can specify."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Explanation of rate books as a grouping of rate tables and routines, and where they are accessed."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Description of the rating engine and the concept of 'rate flow' in calculating premiums."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Rate Flow",
+          "content": "The logic within the rating engine plugin that orchestrates the premium calculation for a policy line. It defines the order of execution for rating components."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Whatis “rate flow”?",
+      "referenceAnswer": "Rate flow is the logic in the rating engine plugin that calculates the premium.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing Rating: Bridging Manuals to PolicyCenter",
+      "narrative": "Implementing rating in PolicyCenter involves a crucial transformation process. While the underlying rating manual—the actuarial rules and guidelines—typically remains consistent, the format and structure of the rating content must be significantly adjusted to be compatible with PolicyCenter. This is a key challenge when migrating from older systems, such as mainframe-based policy administration systems, to a modern platform like PolicyCenter. Your existing rating content, whether it's in spreadsheets, PDFs, or legacy system formats, is likely not 'PolicyCenter-ready' out of the box.\n\nThis is where the expertise of the **actuary or rating analyst** becomes indispensable during implementation. Their role is to meticulously examine the existing rating content and its current format, then work closely with implementation experts to 'translate' and organize this information in a way that PolicyCenter can understand and utilize. The goal is to transition the 'old' rating content format into a PolicyCenter-ready format, all while preserving the integrity and accuracy of the original rating manual. A recommended starting point for this process is to begin at the coverage level, then systematically analyze the various aspects and factors that influence the rating for each coverage. This ensures a granular and comprehensive approach to adapting the rating logic for the new system.",
+      "keyPoints": [
+        "Implementing rating requires adjusting the format of existing rating content to work with PolicyCenter, even if the rating manual remains the same.",
+        "Existing rating content from legacy systems is often not directly compatible with PolicyCenter.",
+        "Actuaries and rating analysts are crucial for translating and organizing rating content into a PolicyCenter-ready format.",
+        "The process typically starts by examining rating content at the coverage level and then considering all influencing factors."
+      ],
+      "figures": [
+        {
+          "slideNumber": 29,
+          "caption": "Kalani asks Julia about the process for implementing rating in PolicyCenter."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Illustrates the need to adjust rating content format when moving from a mainframe system to PolicyCenter."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Highlights the critical role of actuaries and rating analysts in preparing rating-specific content for PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Content Transformation",
+          "content": "Focus early efforts on adjusting the rating content format to work in PolicyCenter, rather than trying to directly import existing, unformatted data."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "From Raw Data to Structured Rating User Stories",
+      "narrative": "The transformation of rating content often begins with disparate data sources, such as complex spreadsheets or data embedded in legacy systems. The challenge is to convert this raw, often unstructured, information into a format that clearly defines the logical flow for each coverage and focuses on the algorithms needed to calculate costs. This structured approach is essential for successful PolicyCenter rating implementation.\n\nTo guide this process, **rating user stories** are often developed. These stories articulate the needs of an actuary or rating analyst in a way that can be translated into system configuration. For example, user stories might include: 'As an actuary or rating analyst, I want to be able to define and populate the required rate tables,' or 'As an actuary or rating analyst, I want to enter the rate routines into the Rating Engine.' Another crucial story is the creation of country-wide and jurisdictional rate books to manage policy line requirements.\n\nThe journey from raw data, perhaps a spreadsheet detailing a rating algorithm, to a PolicyCenter-ready format involves organizing information by 'coverable' (e.g., vehicle) and by 'coverage' (e.g., Liability, Medical Payments). This means defining the specific rate routines and the data needed from rate tables for each. Achieving this level of organization allows for a clear description of the requirements for a PolicyCenter rating implementation, making the configuration process much smoother and more accurate.",
+      "keyPoints": [
+        "Rating implementation starts with organizing existing rating data into a PolicyCenter-ready format.",
+        "Rating user stories help define the requirements for configuring rate tables, rate routines, and rate books.",
+        "The transformation involves moving from raw rating algorithms to a structured format organized by coverable and coverage.",
+        "Clearly defined logical flows and algorithms are essential for PolicyCenter rating configuration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 32,
+          "caption": "Examples of rating user stories that guide the implementation of rate tables, routines, and books."
+        },
+        {
+          "slideNumber": 33,
+          "caption": "An example of raw rating algorithm data, often found in spreadsheets, that needs to be transformed."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "The desired structured format for rating content, organized by coverable and coverage, defining logical flows."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Reviewing Requirements and Rate Flow Implementation",
+      "narrative": "To summarize, the ultimate goal of translating existing rating content into PolicyCenter is to arrive at a set of well-defined components: **Costs**, **Rate Flow**, **Rate Routines**, and **Rate Tables**, all organized within **Rate Books**. The specific amount of work required for this transformation largely depends on the current state of your rating content. It could range from readily available rates in a spreadsheet or a calculable formula, to a spreadsheet model, or even just a PDF document or manual.\n\nRegarding **rate flow implementation**, it's crucial to understand that the rate flow defines the precise order in which rating calculations are executed. While PolicyCenter's base configuration provides out-of-the-box (OOTB) samples for lines of business like Personal Auto (PA) and Commercial Property (CP) rating engines, simple lines of business may not require extensive alterations. However, a key best practice is to **avoid hard-coding rate routines**. Instead, a more flexible and recommended approach is to define the rate order in a separate table. This table can then dynamically call the appropriate routines based on priority, offering greater configurability and ease of maintenance. Examples of this approach can be found in resources like the WC Basic Template or the Rate Flow Order Accelerator.",
+      "keyPoints": [
+        "The core components required for PolicyCenter rating are Costs, Rate Flow, Rate Routines, Rate Tables, and Rate Books.",
+        "The effort to transform rating content depends on its existing format (e.g., spreadsheet, PDF).",
+        "Rate flow defines the order of execution for rating calculations.",
+        "Best practice: Avoid hard-coding rate routines; instead, define rate order in a table for flexibility."
+      ],
+      "figures": [
+        {
+          "slideNumber": 35,
+          "caption": "A review of the required components for PolicyCenter rating: Rate Flow, Rate Tables, Rate Book, and Rate Routines."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Guidelines for implementing rate flow, emphasizing the order of execution and recommending against hard-coding routines."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "This slide serves as a visual break or transition, reinforcing the concepts discussed."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Flexible Rate Flow",
+          "content": "For maintainability and flexibility, define the order of rate routine execution in a configurable table rather than hard-coding it directly into the system."
+        },
+        {
+          "type": "warning",
+          "title": "Avoid Hard-Coding",
+          "content": "Hard-coding rate routines is generally not recommended as it makes updates and maintenance more difficult."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "Whatis the process that an actuary or rating analyst must follow in order\n¢ to prepare usable rating content for the configuration developer?",
+      "referenceAnswer": "Each rating implementation starts from a different place. For example, a rating analyst\nmay have a spreadsheet with existing rating data or it may be contained in the current\nsystem in another format. Actuaries and rating specialists must create content that is\nPolicyCenter ready.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your insurance company is introducing a new discount for drivers who complete a defensive driving course. This discount needs to be applied to Personal Auto policies. You have the discount percentages in a spreadsheet, categorized by driver age and years of experience.",
+      "question": "How would you begin to prepare this discount information for implementation in PolicyCenter, considering the components discussed in this lesson?",
+      "hints": [
+        "Think about which PolicyCenter rating component is best suited to store static lookup data like discount percentages.",
+        "Consider how the driver age and years of experience would be represented in that component.",
+        "What would be the 'factor' in this scenario?"
+      ],
+      "expectedApproach": "Identify that a rate table is the appropriate component. Define the rate table with columns for 'Driver Age' and 'Years of Experience' as parameters, and a column for 'Discount Percentage' as the factor. This would then be grouped into a rate book and referenced by a rate routine."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyCenter rating calculates policy costs using a structured process involving a Rating Engine.",
+        "Key components include Rate Books (groups of rating content), Rate Tables (static rate lookups), Rate Routines (calculation algorithms), and Parameter Sets (data for routines).",
+        "Rate Flow defines the execution order of premium calculations within the Rating Engine.",
+        "Actuaries and rating analysts play a vital role in transforming existing rating content into a PolicyCenter-ready format.",
+        "Best practices recommend defining rate order in tables rather than hard-coding routines for flexibility."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of these rating components is essential for configuring new insurance products, updating existing rates, and ensuring compliance. Actuaries and developers collaborate closely to translate complex actuarial rules into the precise logic and data structures that PolicyCenter uses to calculate premiums, directly impacting an insurer's profitability and customer experience.",
+      "nextLessonPreview": "In the next lesson, we will dive deeper into configuring rate tables and rate routines, exploring how to define parameters, factors, and the step-by-step logic for various rating scenarios."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise is designed to reinforce your understanding of creating and managing submissions in PolicyCenter, a foundational skill for working with rating. You will practice creating different types of submissions and copying existing ones.",
+      "objectives": [
+        "Create a Personal Auto submission.",
+        "Create a Commercial Property submission.",
+        "Copy an existing submission."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_01_01.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_01_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Ra_Intro_01_02.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_01_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Ra_Intro_01_03.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_01_03.mp4"
+    }
+  ]
+}

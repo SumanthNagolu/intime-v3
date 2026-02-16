@@ -1,0 +1,378 @@
+{
+  "lessonId": "ch06-l17",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 17,
+  "title": "Billing at the Account Level",
+  "subtitle": "Streamlining invoices: Understanding account-level billing in Guidewire BillingCenter.",
+  "synthesizedAt": "2026-02-16T17:54:41.778165+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a large corporate client with dozens of insurance policies – property, auto, liability – all under one umbrella. They receive a separate invoice for each policy every month. Their accounting department is overwhelmed, and they're asking for a simpler, consolidated solution.",
+      "question": "How could you streamline their billing process to provide a single, consolidated invoice for all their policies?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between policy-level and account-level billing.",
+        "Explain how policies are grouped onto invoice streams in account-level billing.",
+        "Identify how to view and modify an account's billing level.",
+        "Describe the role of periodicity and payment intervals in invoice stream selection.",
+        "Explain how placement dates and cutoff dates determine invoice item placement in account-level billing.",
+        "Describe how unapplied funds are managed in account-level billing."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored policy-level billing, where each policy has its own dedicated invoice stream. You've also learned about payment plans and how they dictate invoicing frequency.",
+      "warmupQuestion": "Think about the challenges an insurer might face when a customer has multiple policies, each with its own billing cycle.",
+      "hint": "Consider the administrative burden and potential for customer confusion."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introducing Account-Level Billing: A Consolidated Approach",
+      "narrative": "When dealing with customers who hold multiple insurance policies, the traditional method of policy-level billing can become cumbersome. With policy-level billing, as we've reviewed, each policy operates with its own independent invoice stream, meaning every policy generates its own separate invoice. This can lead to a deluge of paperwork and administrative complexity for both the customer and the insurer, especially for large accounts with many policies.\n\nThis is precisely the challenge Marcus, a Business Analyst, highlights: customers with multiple policies desiring a single, consolidated invoice each month. Zhang, a Billing Clerk, proposes account-level billing as a straightforward solution. Account-level billing fundamentally changes how invoices are generated. Instead of each policy having its own stream, multiple policies can share the same invoice stream, provided they have compatible payment intervals. This means a single invoice can include items from several policies, offering a much-desired simplification. For instance, if an account has two policies both invoiced monthly, they will be consolidated onto the same monthly invoices within a shared invoice stream. This approach significantly reduces the number of invoices a customer receives, streamlining their payment process and improving their overall experience. It's important to note that certain account-level charges, such as specific fees, are always invoiced through a monthly periodicity stream, regardless of the individual policy's payment interval.",
+      "keyPoints": [
+        "Account-level billing consolidates invoices for multiple policies into a single invoice stream.",
+        "Policy-level billing issues separate invoices for each policy.",
+        "Policies with compatible payment intervals can share an invoice stream in account-level billing.",
+        "Account-level charges are typically invoiced using a monthly periodicity stream."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A comparison illustrating the difference between account-level and policy-level billing."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marcus and Zhang discuss the need for account-level billing to consolidate invoices for multi-policy customers."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A diagram reviewing policy-level billing, where each policy has its own dedicated invoice stream."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "A comparison showing how account-level billing allows multiple policies with compatible payment intervals to share a single invoice stream."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Account-Level Billing",
+          "content": "A billing method where multiple policies with compatible payment intervals can be grouped onto a single invoice stream, allowing for consolidated invoices."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Configuring and Viewing Account-Level Billing in BillingCenter",
+      "narrative": "Let's take a brief tour of how account-level billing is managed within BillingCenter, starting with the Account Details screen. This is where the billing level for an account is initially specified and can be modified. To change an account's billing level, you would typically click the down arrow associated with the billing level field and select 'Modify.' This option is accessible only when viewing the account details, not when in edit mode.\n\nAn important consideration for account-level billing is its interaction with cash separation. As shown on the Account Details screen, cash separation is disabled when account-level billing is active. This is a key distinction, as account-level billing does not support cash separation, meaning all funds for the account are managed through a single unapplied fund, which we will discuss later. Once the billing level is set, you can observe its impact on individual policies. On the Policy Summary screen for each policy, the Financials section will clearly indicate that the policy is paid at the account level. This visual confirmation signifies that, assuming compatible payment intervals, these policies will share the same invoice stream and set of invoices, reinforcing the consolidated billing approach.",
+      "keyPoints": [
+        "The billing level for an account is specified and modified on the Account Details screen.",
+        "Cash separation is automatically disabled for accounts using account-level billing.",
+        "The Policy Summary screen indicates if a policy is paid at the account level."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "The Account Details screen, highlighting where to view and modify the billing level for an account."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The Policy Summary screen for two monthly policies, showing they are paid at the account level."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "Cash Separation Limitation",
+          "content": "Account-level billing does not support cash separation. If an account is configured for account-level billing, the option for cash separation will be disabled."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Understanding Invoice Streams and Consolidated Invoices",
+      "narrative": "Continuing our tour, let's delve into how invoice streams function within an account-level billing setup. For our example, we assume two policies with a 'Monthly' payment interval. This compatibility allows both policies to utilize the same monthly invoice stream. The `Invoicing Dates` fields on the Account Details screen play a crucial role here, providing default values for the corresponding fields on the invoice stream. For instance, if the invoice stream's periodicity is Monthly, it will have a single anchor date, typically determined by the 'Day of Month' setting on the account.\n\nThe real power of account-level billing becomes evident when we look at the invoices themselves. As demonstrated, invoice items from both policies are seamlessly combined and placed onto the same set of invoices. This consolidation means that instead of receiving separate invoices for Policy X and Policy Y, the customer receives a single invoice that includes all relevant charges from both policies. This unified approach simplifies the billing experience for the customer and reduces the administrative burden of managing multiple billing cycles. BillingCenter intelligently groups these items based on their placement dates and the invoice stream's schedule, ensuring that all compatible charges appear together.",
+      "keyPoints": [
+        "Account `Invoicing Dates` provide default anchor dates for invoice streams.",
+        "Policies with compatible payment intervals share a single invoice stream.",
+        "A single invoice can contain items from multiple policies when using account-level billing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "The Account Details screen showing `Invoicing Dates` and the associated monthly invoice stream."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An example invoice stream demonstrating how invoice items from multiple policies are consolidated onto a single invoice."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show you how to add a new policy to an existing account that uses account-level billing. Pay close attention to how the system handles the new policy's billing configuration and its integration into the existing invoice stream.",
+      "transcriptSummary": "The demo illustrates the process of creating a third policy for an account already set up with account-level billing. It highlights how the new policy automatically integrates into the shared monthly invoice stream, demonstrating the consolidation feature and the system's ability to manage multiple policies under a single billing umbrella."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Periodicity, Payment Intervals, and Invoice Stream Compatibility",
+      "narrative": "Marcus raises an excellent point about the relationship between 'periodicity' on an invoice stream and the 'payment interval' on a payment plan. These terms are indeed closely related and crucial for understanding how BillingCenter groups policies. The `Payment Interval` field, specified on a policy's payment plan, dictates how often billing *can* occur – essentially, the invoicing frequency for that policy. In parallel, the `Periodicity` field on an invoice stream defines the frequency of the set of potential invoices managed by that stream.\n\nBillingCenter intelligently uses the policy's payment interval to select an invoice stream with a compatible periodicity. For instance, a 'Monthly' invoice stream is quite versatile; it can accommodate policies with payment intervals of Monthly, Every Other Month, Quarterly, Every Four Months, Every Six Months, Every Year, and Every Other Year. This means a policy with a Quarterly payment interval would simply use every third invoice within a monthly stream. The account's `Invoicing Dates` settings provide default anchor dates for these invoice streams. For example, the 'Monthly Policies: Day of Month' setting on the account determines the anchor date for a monthly stream. However, payment intervals shorter than a month, such as 'Twice Per Month' or 'Weekly,' require their own dedicated invoice streams, as they cannot be effectively managed by a monthly stream. A 'Twice Per Month' interval, for example, requires two anchor dates, typically 'First Invoice Day of Month' and 'Second Invoice Day of Month' from the account settings.",
+      "keyPoints": [
+        "`Payment Interval` (on the payment plan) specifies how often billing can occur.",
+        "`Periodicity` (on an invoice stream) specifies the frequency of potential invoices.",
+        "BillingCenter matches compatible payment intervals to invoice stream periodicities.",
+        "Monthly invoice streams can handle monthly and longer payment intervals (e.g., quarterly, yearly).",
+        "Payment intervals shorter than a month (e.g., weekly, twice per month) require separate, dedicated invoice streams."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Marcus and Zhang discuss the relationship between invoice stream periodicity and payment plan interval."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A table illustrating the compatibility between payment intervals, invoice stream periodicities, and related account settings."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "A diagram showing how different payment intervals (quarterly, monthly, weekly) are handled by various invoice streams."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Payment interval (payment plan)",
+            "Invoice stream periodicity",
+            "Related account settings"
+          ],
+          "rows": [
+            [
+              "Monthly",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Every Other Month",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Quarterly",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Every Four Months",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Every Six Months",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Every Year",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Every Other Year",
+              "Monthly",
+              "Invoice Day of Month"
+            ],
+            [
+              "Every Week",
+              "Every Week",
+              "Day of Week"
+            ],
+            [
+              "Every Other Week",
+              "Every Other Week",
+              "Anchor Date"
+            ],
+            [
+              "Twice Per Month",
+              "Twice Per Month",
+              "First Day of Month, Second Day of Month"
+            ]
+          ],
+          "caption": "Compatibility of Payment Intervals and Invoice Stream Periodicity"
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Periodicity",
+          "content": "The frequency of potential invoices within an invoice stream (e.g., Monthly, Weekly, Twice Per Month)."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "An account is set up for account-level billing. It currently has two policies: Policy A with a Quarterly payment interval and Policy B with a Yearly payment interval.",
+      "question": "If a new Policy C is added with a Monthly payment interval, how many invoice streams will the account have in total, and which policies will share which stream(s)?",
+      "hints": [
+        "Refer to the compatibility rules for payment intervals and invoice stream periodicity (Slide 14).",
+        "Remember that monthly streams can handle payment intervals greater than a month (Slide 15)."
+      ],
+      "expectedApproach": "Identify compatible payment intervals and group them into appropriate invoice streams. Policies A, B, and C all have payment intervals compatible with a monthly invoice stream. Therefore, they will all share a single monthly invoice stream."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Invoice Item Placement and Cutoff Dates in Account-Level Billing",
+      "narrative": "The accurate placement of invoice items onto invoices is critical, and it relies heavily on placement dates and cutoff dates. Every invoice item is assigned a placement date, which signifies the earliest date it can be invoiced. This concept holds true for both account-level and policy-level billing.\n\nFor down payments and one-time charges, the invoice item placement dates are consistently determined by the payment plan settings, regardless of the billing level. However, a significant difference emerges for installment invoice items. In account-level billing, the placement dates for installments, as well as the invoice dates themselves, are determined by the `Invoicing Dates` settings configured on the account. This contrasts with policy-level billing, where the payment plan settings govern all placement and invoice dates. This distinction is key to how BillingCenter addresses invoice alignment issues.\n\nFurthermore, every invoice has a cutoff date, which plays a crucial role in determining when an invoice item is placed. An invoice item is placed on the first chronological invoice whose cutoff date is on or after the item's placement date. The `Item Placement Cutoff Date` setting on the payment plan (which can be either 'Bill Date' or 'Due Date') dictates this behavior. For example, if an item has a placement date of June 15th: if the cutoff is 'Bill Date' (e.g., June 10th), the item might be placed on the July invoice; but if the cutoff is 'Due Date' (e.g., June 21st), it could be placed on the June invoice. Guidewire recommends aligning this cutoff date with your billing model (e.g., use 'Due Date' for due date billing). For policy-level billing, the 'Fix Due Date/Bill Date & Item Placement Cutoff Date' setting synchronizes these values, but for account-level billing, the cutoff date is set at the account level.",
+      "keyPoints": [
+        "Invoice item placement dates determine the earliest date an item can be invoiced.",
+        "For account-level billing, account settings (`Invoicing Dates`) determine installment placement dates and invoice dates.",
+        "For policy-level billing, payment plan settings determine all placement dates and invoice dates.",
+        "Invoice cutoff dates (Bill Date or Due Date) dictate which invoice an item is placed on.",
+        "The `Item Placement Cutoff Date` on the payment plan applies to account-level billing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "A diagram illustrating how invoice items are placed on invoices based on their placement dates."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "A visual explanation of how placement dates and invoice dates are assigned in account-level billing, contrasting with policy-level billing."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "An example demonstrating how cutoff dates (Bill Date vs. Due Date) influence invoice item placement."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Cutoff Date Alignment",
+          "content": "Guidewire recommends that insurers using due date billing should use due date as the item placement cutoff and those using bill date billing should use bill date as the item placement cutoff."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\n: uses the payment plan?",
+      "referenceAnswer": "If account-level billing is being used, each invoice item will be placed on the earliest\ninvoice whose due date comes on or after the invoice item’s placement date. If policy-\nlevel billing is being used, the setting is ignored.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly.\n\na. How many invoice streams does the account have?\n\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?",
+      "referenceAnswer": "a. Two. Monthly and yearly use the same invoice stream; weekly requires a\nsecond invoice stream.\n\nb. Yes. The number of invoice streams will be either three (one for each policy)\nor four (one for each policy plus a monthly one for",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Managing Unapplied Funds in Account-Level Billing",
+      "narrative": "A fundamental aspect of account-level billing is its approach to managing unapplied funds. Marcus's question about where BillingCenter initially places customer payments highlights a key difference from policy-level billing. Zhang clarifies that with account-level billing, there is **only one unapplied fund** for the entire account, known as `Default Unapplied`. This means that cash separation, an option available in policy-level billing to maintain separate unapplied funds for each policy, is not supported when an account uses account-level billing.\n\nAll payments received by BillingCenter, regardless of which specific policy they might be intended for, pass through this single `Default Unapplied` fund before being allocated. Any positive balance in this fund is then used to pay eligible invoice items belonging to *any* policy for which the account is the payer. This includes policies owned by the account, account-level charges, and even invoice items owned by other accounts or producers if they are assigned to this account for payment. This consolidated approach simplifies payment processing and allocation across multiple policies. The Direct Bill Payment screen visually reflects this, presenting only one unapplied fund option, as you cannot choose a specific fund when only one exists. By default, the Distribution tab on this screen will list all billed policy periods for which the account is the payer, ready for allocation from the single `Default Unapplied` fund.",
+      "keyPoints": [
+        "Account-level billing uses a single unapplied fund called `Default Unapplied`.",
+        "Cash separation is not supported for accounts using account-level billing.",
+        "All payments flow into `Default Unapplied` and can be allocated to eligible invoice items across any policy for which the account is the payer.",
+        "The Direct Bill Payment screen reflects the single unapplied fund, offering no choice for selection."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "A visual emphasizing that account-level billing uses only one unapplied fund."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Marcus and Zhang discuss the single unapplied fund for account-level billing."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "A diagram illustrating how all payments for an account-level billing setup flow into a single `Default Unapplied` fund."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "The Direct Bill Payment screen, showing only one unapplied fund available for an account-level billing account."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Default Unapplied Fund",
+          "content": "The single unapplied fund used in account-level billing where all payments are initially held before being allocated to eligible invoice items across any policy for which the account is the payer."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly. How many unapplied funds does the\naccount have?",
+      "referenceAnswer": "One. Account-Level billing will only ever have one unapplied fund.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Identify all the valid combinations of billing level and unapplied fund:\n\na a) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\neach policy\n\nc) Policy-level billing with a single unapplied fund\n\nd) Policy-level billing with a separate unapplied fund for\neach policy",
+      "referenceAnswer": "(a), (c), and (d) are valid combinations. However, c is rarely used because the primary\nreason for using policy-level billing is the ability to keep unapplied ",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "Your company is considering implementing account-level billing for its commercial clients. A key stakeholder is concerned about how payments will be managed, especially if a client has multiple policies and makes a single payment that doesn't exactly match an invoice total.",
+      "question": "Explain how BillingCenter handles payments and unapplied funds for an account using account-level billing, specifically addressing how a single payment from a client with multiple policies would be processed.",
+      "hints": [
+        "Consider the number of unapplied funds available for account-level billing.",
+        "Think about how payments are allocated from this fund to various invoice items."
+      ],
+      "expectedApproach": "Describe that account-level billing uses a single 'Default Unapplied' fund. All payments, regardless of their intended policy, are deposited into this fund. BillingCenter then uses the positive balance in this fund to pay eligible invoice items across all policies for which the account is the payer, effectively consolidating payment management."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Account-level billing consolidates invoices for multiple policies with compatible payment intervals into a single invoice stream.",
+        "The account's `Invoicing Dates` settings determine installment placement dates and invoice dates for account-level billing.",
+        "`Periodicity` of invoice streams must be compatible with `Payment Intervals` of policies; monthly streams handle longer intervals, while shorter ones need dedicated streams.",
+        "Account-level billing utilizes a single `Default Unapplied` fund, meaning no cash separation, and payments can be allocated across all eligible policies.",
+        "The `Item Placement Cutoff Date` on the payment plan (Bill Date or Due Date) influences when invoice items are placed on an invoice."
+      ],
+      "realWorldConnection": "Implementing account-level billing can significantly improve customer experience for clients with multiple policies by simplifying their billing and payment processes. For insurers, it can reduce administrative overhead associated with managing numerous individual policy invoices. Understanding these mechanics is crucial for configuring BillingCenter effectively to meet diverse client needs and streamline operations, leading to greater efficiency and customer satisfaction in real Guidewire projects."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "In this hands-on exercise, you will log into BillingCenter and modify the bill dates for an existing account configured with account-level billing. This will allow you to observe how changes to account-level invoicing settings impact the planned invoices.",
+      "objectives": [
+        "Locate and modify the `Invoicing Dates` settings on an account.",
+        "Observe the effect of changing account-level invoicing settings on planned invoices."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_17_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_17_01.mp4"
+    }
+  ]
+}

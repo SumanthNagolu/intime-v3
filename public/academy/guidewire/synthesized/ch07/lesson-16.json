@@ -1,0 +1,199 @@
+{
+  "lessonId": "ch07-l16",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 16,
+  "title": "Introduction to Popups",
+  "subtitle": "Explore Guidewire's powerful popup mechanism for enhanced UI flexibility and data management.",
+  "synthesizedAt": "2026-02-16T18:08:39.825878+00:00",
+  "estimatedMinutes": 80,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing an application where users need to manage complex data, but the current interface is becoming cluttered. A business analyst requests a way to view and edit many policy fields from a list view without navigating away from the main screen. How can you provide this detailed interaction efficiently?",
+      "question": "What UI element can offer focused interaction for data management without disrupting the user's current context?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and benefits of using Guidewire popups.",
+        "Differentiate between Guidewire popups and standard browser popups.",
+        "Identify and explain the three primary use cases for Guidewire popups.",
+        "Understand the basic steps involved in configuring a Guidewire popup."
+      ],
+      "estimatedMinutes": 4
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall your understanding of PCF elements, particularly how 'Locations' define navigable points within a Guidewire application and how list views display object data.",
+      "warmupQuestion": "How do locations and screen containers work together to define what a user sees and interacts with?",
+      "hint": "Think about the role of a location as a navigation target and a screen container as the visual content provider."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Need for Popups and a Review of Locations",
+      "narrative": "Imagine a scenario where your users need to manage complex data, but the current interface is limiting. As shown in **Figure 1 (Slide 3)**, a business analyst from an insurance company has a common problem: their `Policy list view` panel currently only exposes a limited number of policy entity fields. Users can add, remove, and edit some details, but with the anticipated need to add 5-10 more fields in the near future, the existing editable list view panel is becoming insufficient. This highlights a frequent challenge in application design: how to provide detailed views and editing capabilities for objects without cluttering the main screen or forcing users through multiple navigation steps.\n\nWhile **Figure 2 (Slide 4)** might represent the current limited view or the potential for a new, more flexible solution, the core of our application's navigation relies on fundamental PCF elements called **Locations**. As a quick review, **Figure 3 (Slide 5)** reminds us that a location is a specific point in the application's user interface to which a user can navigate. Importantly, locations themselves do not define any visual content directly; instead, they act as containers for `Screen container(s)` which *do* define the visual elements. Furthermore, locations are crucial for controlling user access, as they can leverage system permissions to determine what users can see or access within the application. The challenge from our user story is that simply adding more fields to the existing list view panel isn't scalable or user-friendly. This limitation, coupled with the need for a focused interaction, points us towards a more dynamic and dedicated UI element: the popup.",
+      "keyPoints": [
+        "User stories often reveal limitations of standard list views for complex data.",
+        "Locations are fundamental PCF elements for navigation and access control.",
+        "List view panels can become cluttered when too many fields are added."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "A user story illustrating the business need for a more comprehensive policy details view."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A blank slide, representing a transition or the current limited view that needs improvement."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A review of 'Locations' as navigable PCF elements that contain screen containers and control access."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location",
+          "content": "A PCF element to which a user can navigate. Locations define navigation points and can control access, but they contain Screen containers for visual content."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Introducing Guidewire Popups and Their Advantages",
+      "narrative": "To address the limitations of list views and the need for focused interaction, Guidewire applications utilize **Popups**. As illustrated in **Figure 4 (Slide 6)**, a popup in Guidewire contains a single screen and is designed to return the user to the previous PCF location once it's closed. This provides a seamless user experience, often including an automatic 'Return to <previous location>' link, making navigation intuitive and efficient. Visually, **Figure 5 (Slide 7)** could represent the moment a popup appears, overlaying the main application content, providing a focused interaction without navigating away from the current context.\n\nYou might wonder why Guidewire implements its own popup mechanism rather than relying on standard browser popup windows. **Figure 6 (Slide 8)** clarifies the critical reasons. Firstly, many users configure their web browsers to block popups, even from trusted sources, leading to a poor user experience. More importantly, passing context and objects between separate browser windows can cause significant synchronization problems. Imagine multiple popups open for the same view, or a popup window remaining open after its parent window is closed – these scenarios can lead to data inconsistencies and usability issues. Guidewire popups are architected to provide virtually all the functionality of true popup windows while completely avoiding these blocking issues and synchronization problems, ensuring a robust and consistent user experience.",
+      "keyPoints": [
+        "Guidewire popups contain a single screen and return to the previous location upon closing.",
+        "They mimic true browser popups but avoid common issues like blocking and synchronization errors.",
+        "Guidewire popups ensure a robust and consistent user experience."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "An overview of Guidewire popups, showing their structure and 'Return to previous location' link."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A blank slide, visually representing a popup appearing over the main application window."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Reasons why Guidewire uses its own popup architecture instead of standard browser popups."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Avoid Browser Popups",
+          "content": "Guidewire's custom popup implementation is designed to overcome the inherent challenges of browser popups, such as user blocking and synchronization issues. Always use Guidewire's built-in popup mechanism for consistency and reliability."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Primary Use Cases for Guidewire Popups",
+      "narrative": "Guidewire popups are incredibly versatile and serve three primary use cases, each designed to enhance user interaction and data management.\n\nThe first common use case is to **view and edit existing objects**. As depicted in **Figure 7 (Slide 9)**, a popup can be used to display and modify an object when it's not convenient to edit it directly within a location, or when some fields a user needs to view or edit aren't displayed in the main view. A classic example is a list view panel that only shows a limited number of object fields. Navigation cell widgets within such a list can be configured to open a popup, allowing users to access and edit all relevant object fields. When a popup edits an existing object, it doesn't return the object to the parent list view; instead, it commits the changes directly to the database. The parent list view then refreshes its data from the database to reflect these updates.\n\nSecondly, popups can be configured to **create new objects**. **Figure 8 (Slide 10)** illustrates this scenario. In many cases, a single popup can handle both the creation of new objects and the viewing/editing of existing ones. When a popup creates a new object, the source container (often a list view panel) doesn't initially know about this object. Therefore, the popup must return the newly created object to the source container, and the source must then commit the object to the appropriate array associated with the parent object.\n\nFinally, popups are excellent for **executing 'popped' searches**. **Figure 9 (Slide 11)** demonstrates how a popup can be configured to search for an existing record. This is particularly useful when search functionality is needed in a part of the user interface where it wouldn't be convenient to include a full search mechanism. The popup provides a dedicated, focused interface for searching, returning the selected record to the main screen.\n\n**Figure 10 (Slide 14)**, a generic screen, can be seen as a template or a blank canvas for any of these popup use cases, ready to be populated with specific fields for viewing, editing, creating, or searching, depending on its configuration and purpose.",
+      "keyPoints": [
+        "Popups enable viewing and editing of existing objects without leaving the current context.",
+        "Popups can be used to create new objects, which are then returned to the parent container.",
+        "Popups provide a dedicated interface for 'popped' searches, returning selected records."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Example of a popup used to view and edit an existing 'Flag Entry' object."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Example of a popup configured to create a new 'Service' object."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Example of a popup used to execute a 'popped' search for an existing contact."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "A generic screen, illustrating a potential layout or template for a popup's content."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through configuring a popup to view and edit policy details. Pay close attention to how the popup is created within the PCF structure and how an entry point is defined to link to it.",
+      "transcriptSummary": "The demonstration addresses the user story by configuring a popup to view and edit all policy fields. It shows how to create a new popup PCF file in the Policies_EXT folder and then specifies an entry point for the popup, which is crucial for widgets to navigate to this new location."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team is working on a new feature where users need to quickly update a specific field on an object from a list view without navigating away from the main page. The current list view only shows a summary of the object's data.",
+      "question": "Given a list view of `Policy` objects, how would you enable users to view and edit *all* fields of a selected policy in a non-disruptive way, similar to the user story presented earlier?",
+      "hints": [
+        "Consider the UI element discussed in this lesson that overlays the main screen.",
+        "Think about how this element handles existing objects and returns control to the parent.",
+        "What are the advantages of this approach over a full-page navigation for quick edits?"
+      ],
+      "expectedApproach": "The learner should suggest using a Guidewire popup. They should explain that a popup can be configured to view and edit existing objects, committing changes directly to the database, and then returning the user to the original list view without full page navigation, thus providing a focused and efficient user experience."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the three primary use cases for popups?",
+      "referenceAnswer": "x Viewing and editing existing objects, creating new objects, and executing popped\nsearches.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What happens if a location's canEdit property evaluates to false?",
+      "referenceAnswer": "“ The screen and its contents are non-editable.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What happens if a location's canVisit property evaluates to false?",
+      "referenceAnswer": "x The widget navigating to the location is either not visible or not clickable.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Guidewire popups provide a focused, single-screen interaction that returns users to their previous location.",
+        "They are a superior alternative to browser popups, avoiding blocking and synchronization issues.",
+        "The three main use cases for popups are viewing/editing existing objects, creating new objects, and executing 'popped' searches.",
+        "Popups are configured within the PCF structure and require an entry point for navigation."
+      ],
+      "realWorldConnection": "In real Guidewire projects, popups are essential for creating dynamic and user-friendly interfaces. They allow developers to present detailed information or complex forms without forcing users to navigate away from their current context, significantly improving workflow efficiency and data management for tasks like policy adjustments, claim handling, or contact management.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into the practical implementation of popups, exploring how to pass data to and from popups effectively."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "The student exercise 'Popups' involves hands-on configuration of a popup within a Guidewire application, building upon the concepts and demonstration from this lesson.",
+      "objectives": [
+        "Configure a new popup PCF file.",
+        "Define an entry point for the popup.",
+        "Implement a popup to view and edit policy details from a list view."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_16.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_16.mp4"
+    }
+  ]
+}

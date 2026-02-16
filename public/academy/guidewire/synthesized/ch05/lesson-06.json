@@ -1,0 +1,326 @@
+{
+  "lessonId": "ch05-l06",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 6,
+  "title": "Introduction to Data Model",
+  "subtitle": "Understand ClaimCenter's core data structure, entities, and relationships for effective customization.",
+  "synthesizedAt": "2026-02-16T17:37:29.446396+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "As a Business Analyst like Marcus, you often need to understand the underlying structure of applications to tailor them to specific business needs. ClaimCenter manages a vast amount of information related to claims, from initial reports to final payments. How is all this complex data organized and interconnected?",
+      "question": "What foundational knowledge about ClaimCenter's data organization is crucial for evaluating and implementing custom solutions?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the major components of the ClaimCenter data model.",
+        "Describe the relationships between components of the data model.",
+        "Use the data dictionary to discover information about the data model."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely worked with databases or data structures in other applications, where information is stored in tables and linked through relationships. Think about how a typical business application might store customer information, orders, and products.",
+      "warmupQuestion": "How do you think a system like ClaimCenter might logically group different pieces of information, such as details about a claim, the people involved, or financial transactions?",
+      "hint": "Consider the concept of 'objects' or 'records' that hold related data."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding the ClaimCenter Data Model",
+      "narrative": "To effectively tailor ClaimCenter to specific business needs, it's essential to grasp how the system manages its vast amounts of data. The **ClaimCenter data model** is the fundamental structure that defines how data is stored, retrieved, and utilized within the application. It's essentially a blueprint for the claims business data, visible and documented in the Data Dictionary.\n\nAt its core, the data model is built around **entities** and **typelists**. An **entity** defines a collection of attributes (like fields or properties) related to a specific object, such as a `Claim`, `Exposure`, or `Contact`. These entities can contain various types of data, including columns for direct values, type keys for predefined options, arrays for collections of related items, and foreign keys to link to other entities. For example, the `Activity` entity holds data specific to tasks, and it can relate to a `Claim`, `Exposure`, or `Matter` through these relationships.\n\n**Typelists**, on the other hand, are similar to reference or lookup tables. They define a set of code/value pairs, known as typecodes, which specify allowable values for certain fields. For instance, a claim's status might be stored as a reference to a typelist with values like 'draft', 'open', or 'closed'. This ensures data consistency and provides predefined options for users.",
+      "keyPoints": [
+        "The data model is ClaimCenter's data structure for storage, retrieval, and use.",
+        "Entities define attributes for objects like claims, contacts, and exposures.",
+        "Typelists provide predefined, allowable code/value pairs for fields."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Marcus, a Business Analyst, highlights the importance of understanding ClaimCenter's data management for tailoring the system."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "This slide defines the ClaimCenter data model as a structure of entities, relationships, and typelists, and explains what entities and typelists are."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Data Model",
+          "content": "The logical structure that defines how data is organized, stored, and accessed within ClaimCenter, comprising entities, relationships, and typelists."
+        },
+        {
+          "type": "definition",
+          "title": "Entity",
+          "content": "A data object that defines a set of attributes (fields, columns, keys) related to a specific business concept, such as a Claim, Contact, or Incident."
+        },
+        {
+          "type": "definition",
+          "title": "Typelist",
+          "content": "A set of predefined code/value pairs (typecodes) that specify allowable values for certain fields, ensuring data consistency and providing lookup options."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Core Entities: Claim, Contact, and ClaimContact",
+      "narrative": "The **Claim** entity is the central hub of information in ClaimCenter; almost everything significant revolves around it. While the `Claim` entity itself holds basic data like `Loss Date`, `Reported Date`, `Assigned User`, and `Loss Cause`, much of its comprehensive detail is derived from its relationships with other entities.\n\nOne crucial related entity is **Contact**. This entity stores information about individuals, organizations, or vendors relevant to a claim, such as the insured, witnesses, or repair shops. Contacts are highly flexible, supporting multiple subtypes like `Person`, `Company`, and `Place` to categorize different types of parties involved. The `ABContact` data model in ContactManager, for instance, has a parallel in the core application's `Contact` entity hierarchy, with subtypes like `ABPerson`, `ABCompany`, and `ABPlace` further subtyped into specific roles like `ABAdjudicator` or `ABAutoRepairShop`.\n\nTo manage the potentially complex relationships between a `Contact` and a `Claim`, ClaimCenter uses the **ClaimContact** entity. A single `Contact` might have various roles on a claim (e.g., an injured party, a witness, or the reporter). The `ClaimContact` entity acts as a join table, allowing a single `Contact` to be associated with a claim in multiple ways. If a contact has several relationships to a claim, there will be multiple `ClaimContact` records, each defining a specific role or connection. This ensures that all interactions and roles are accurately tracked.",
+      "keyPoints": [
+        "The Claim entity is central, holding basic claim data and linking to other entities.",
+        "The Contact entity stores information about all parties involved in a claim, with various subtypes.",
+        "The ClaimContact entity manages multiple relationships between a Contact and a Claim."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "The Claim entity is the central point in the data model, storing core claim details like loss and reported dates."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The Contact entity stores information about people, companies, or places related to a claim, with various subtypes."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The ClaimContact entity links a Contact to a Claim, allowing a single contact to have multiple roles on a claim."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Incidents and Exposures: Tracking Damages and Potential Payments",
+      "narrative": "Beyond the core claim and contact information, ClaimCenter needs to track what was actually lost or damaged, and how potential payments are managed. This is where **Incidents** and **Exposures** come into play.\n\nAn **Incident** represents an item that was lost or damaged, such as an `Injury` to a person, `Property` damage, or a `Vehicle` involved in an accident. A single claim can involve multiple incidents. For example, a workers' compensation claim might include an `Injury` incident, `Lost Wages`, and other liabilities. Incidents are typically captured during the initial claim creation process, though additional details might be gathered later. They can belong to the insured or a third party, often involving liability coverage. The `Assessment` data model, for instance, shows that assessments are properties of the `Incident` entity, with related entities like `AssessmentSource`, `AssessmentLine`, and `AssessmentItem` capturing detailed information about damages and costs.\n\n**Exposures** are a critical mechanism for tracking the progress of each potential compensation payment for a loss. While a policy administration system might view 'exposures' as potential coverages, in ClaimCenter, an `Exposure` is specifically used to track possible payments. Each `Exposure` associates a claimant with a particular policy coverage and coverage subtype. For instance, an `Exposure` might track payments related to a specific injury under a medical coverage. This allows ClaimCenter to manage the financial aspects of each distinct part of a loss. The subrogation data model also highlights how `Exposure` relates to `SubrogationSummary` and `ExpectedRecovery` for tracking potential recoveries.",
+      "keyPoints": [
+        "Incidents track items lost or damaged (e.g., injury, property, vehicle).",
+        "A claim can have multiple incidents.",
+        "Exposures track potential payments for a loss, linking claimants to policy coverages."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "The Incident entity tracks lost or damaged items, such as injuries, property, or vehicles, and can have multiple subtypes."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The Exposure entity tracks potential payments for a loss, associating a claimant with specific policy coverage and subtype."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Managing Activities, Reserves, Transactions, and Checks",
+      "narrative": "Effective claim processing involves a series of tasks, financial allocations, and payments, all managed through specific entities in ClaimCenter.\n\n**Activities** are individual tasks required to process a claim. Each `Activity` can be assigned to a person and tracked to completion, even for work performed outside ClaimCenter. They store details about what needs to be done, who is responsible, and a history of completion. Common examples include contacting the insured, completing external documents, or adding investigation notes. Activities themselves don't store the results of the work, but rather the task itself. The `Activity` entity has foreign keys to `Claim`, `Exposure`, `Matter`, `ServiceRequest`, and `User`, and contains typekeys to typelists like `ActivityClass`, `ActivityStatus`, `ActivityType`, `ImportanceLevel`, and `Priority`.\n\n**Reserve lines** represent amounts of money set aside for expected payments related to a specific `Exposure`. Think of them as dedicated accounts for different aspects of an exposure. An `Exposure` can have one or more `Reserve Lines`; for example, a workers' compensation exposure might have separate reserve lines for medical payments and for a medical case manager. Adjusters can increase (credit) or decrease (debits) these reserves.\n\n**Transactions** track individual financial events, such as credits or debits to a `Reserve Line`. When an adjuster increases available reserves, it's a credit. When a payment is made against a reserve line, it's a debit. The total remaining reserve is the result of credits minus debits.\n\nFinally, the **Check** entity holds information specific to a payment. While named 'Check', it encompasses all forms of payment, including physical checks and electronic fund transfers (EFTs). It maintains details like `Pay To`, `GrossAmount`, `BankAccount`, and `CheckInstructions`, and is related to the `Transaction` and `ClaimContact` entities. The `EFTData` entity and `Check` entity both implement the `EFTDataDelegate` entity, and `Check.instant.etx` contains additional fields for instant checks.",
+      "keyPoints": [
+        "Activities are tasks assigned to process a claim, tracking assignment and completion.",
+        "Reserve lines are amounts set aside for expected payments related to an exposure.",
+        "Transactions track individual financial events (credits/debits) against reserve lines.",
+        "The Check entity manages payment details, including physical checks and EFTs."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "The Activity entity tracks tasks required to process a claim, including assignment and completion status."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Reserve lines represent money set aside for expected payments, linked to specific exposures."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Transactions track individual financial events, such as credits and debits, against a reserve line."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "The Check entity stores details for any form of payment, linking to transactions and claim contacts."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Activity",
+          "content": "A single task required to process a claim, assigned to a person, and tracked for completion."
+        },
+        {
+          "type": "definition",
+          "title": "Reserve Line",
+          "content": "An amount of money allocated for expected payments related to a specific exposure, tracking both credits and debits."
+        },
+        {
+          "type": "definition",
+          "title": "Transaction",
+          "content": "A record of a single financial event, such as a payment or reserve adjustment, affecting a reserve line."
+        },
+        {
+          "type": "definition",
+          "title": "Check",
+          "content": "An entity holding information specific to a payment, encompassing physical checks and electronic fund transfers."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through how various entities, such as Claim, Contact, and Exposure, are represented and interact within the ClaimCenter user interface. Pay close attention to how different pieces of information are grouped and linked.",
+      "transcriptSummary": "The demo illustrates navigating ClaimCenter to view different entities. It shows how a claim record is structured, how contacts are associated, and how incidents and exposures are managed, providing a visual understanding of the data model in action."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Exploring the Data Dictionary",
+      "narrative": "The **Data Dictionary** is an indispensable resource for anyone working with ClaimCenter's data model. It comprehensively documents all entities and typelists within a ClaimCenter installation, including both the base application's data model and any custom extensions you've made. To ensure it reflects your customizations, the Data Dictionary must be manually generated by running `gwb genDataDictionary` from the ClaimCenter directory after installation and any subsequent data model changes. It's stored in `<install directory>/build/dictionary/data/index.html` and can be viewed in any web browser.\n\nThe Data Dictionary offers three distinct views, each serving a specific purpose:\n*   The **Full view** displays both persistent (stored in the database) and virtual (non-persistent, derived) entities. It provides the most comprehensive detail, including columns, typekeys, arrays, foreign keys, derived arrays, derived properties, and subtypes for each entity.\n*   The **Database view** focuses solely on non-virtual, or persistent, entities and their definitions. This view is useful for understanding the actual database schema.\n*   The **Migration view** shows only persistent, loadable entities and their columns. This view is primarily used for developing migration plans when integrating with legacy systems, as it highlights data that can be directly loaded.",
+      "keyPoints": [
+        "The Data Dictionary documents all entities and typelists, including customizations.",
+        "It must be generated using `gwb genDataDictionary` and viewed via `index.html`.",
+        "Three views (Full, Database, Migration) offer different levels of detail on entities."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "The Data Dictionary documents all entities and typelists in ClaimCenter, requiring generation and accessible via a browser."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "The Data Dictionary offers three views: Full (persistent and non-persistent), Database (persistent only), and Migration (persistent and loadable only)."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "text",
+          "title": "Generating the Data Dictionary",
+          "code": "gwb genDataDictionary",
+          "explanation": "This command is run from the ClaimCenter directory to generate or regenerate the Data Dictionary, ensuring it includes any custom data model extensions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Regenerate Data Dictionary",
+          "content": "Always regenerate the Data Dictionary after installing ClaimCenter or making any data model customizations to ensure it reflects the most current structure."
+        },
+        {
+          "type": "tip",
+          "title": "Accessing the Data Dictionary",
+          "content": "The Data Dictionary is a set of HTML files. Open `index.html` in your web browser from the `<install directory>/build/dictionary/data/` path to view it."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Navigating and Utilizing the Data Dictionary",
+      "narrative": "The Data Dictionary is an invaluable tool for understanding the intricate details of each entity and typelist in ClaimCenter. It clarifies how different parts of a claim, maintained across various entities, relate to one another. This detailed insight is crucial when deciding what fields can be added to a user interface screen, used in Business Rules, or exported for integration and reporting purposes.\n\nWhen you select an entity, the dictionary provides an **Entity header** that displays the entity's name, its corresponding database table (e.g., `Claim (cc_claim)`), and any **delegates** it uses. A delegate is an abstract entity that defines common fields and behaviors, such as `CCAssignable` for entities that can be assigned to users. This means entities like `Claim`, `Exposure`, `Activity`, and `Matter` all inherit assignment-related fields and methods by delegating to `CCAssignable`.\n\nIf an entity has a parent-child relationship, it will feature a **Subtypes list**. For example, the `Contact` entity has subtypes like `Company`, `Person`, and `Place`. These subtypes inherit all attributes from their supertype while also possessing their own specific attributes. The dictionary clearly lists these child subtypes and provides links to their individual definitions. The `ABContact` entity hierarchy, for instance, shows how `ABCompany` can be subtyped into `ABCompanyVendor`, which then has further subtypes like `ABAutoRepairShop` or `ABMedicalCareOrg`.\n\nFinally, the **Fields list** section details all properties on an entity, including columns, foreign keys, type keys, and virtual properties. Base application fields are typically shown in dark green, while custom extensions appear in dark blue. Virtual properties are identified by 'Derived property returning some data type'. A useful feature is the ability to 'Show user interface details', which links to a table showing which UI elements (screens, labels) use a specific property, aiding in UI customization and impact analysis.",
+      "keyPoints": [
+        "The Data Dictionary provides details on entities, relationships, fields, and arrays.",
+        "Entity headers show the entity name, database table, and delegate entities.",
+        "Subtypes lists identify child entities that inherit attributes from their supertype.",
+        "Fields lists detail columns, foreign keys, type keys, and virtual properties, indicating UI usage."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "The Data Dictionary lists entities and provides details like foreign key references, fields, and arrays, useful for customization and integration."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "The entity header shows the entity name, database table, and delegate entities, which define inherited fields and behaviors."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "The subtypes list identifies child entities that inherit attributes from their supertype, such as Company, Person, and Place for the Contact entity."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "The fields list details all properties on an entity, including columns, foreign keys, type keys, and virtual properties, with indicators for base vs. extended fields."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Delegate Entity",
+          "content": "An abstract entity that defines a set of fields and methods needed by other entities to enable a specific behavior, promoting reusability and consistency."
+        },
+        {
+          "type": "tip",
+          "title": "Customization Insight",
+          "content": "The Data Dictionary is your go-to resource for understanding where you can add fields to screens, what data is available for business rules, and what can be used in integrations or reports."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through navigating the Data Dictionary. Pay attention to how to locate specific entities, understand their attributes, and identify relationships and subtypes, which is crucial for any customization work.",
+      "transcriptSummary": "The demo showcases how to open and browse the Data Dictionary. It highlights finding an entity, examining its header for delegates, viewing its subtypes, and inspecting the fields list to distinguish between base and extended properties, and to see UI usage."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You are tasked with understanding how ClaimCenter stores information about a specific type of vendor, for example, an 'AutoRepairShop'. You need to find out what fields are available on this entity and how it relates to other entities.",
+      "question": "Using the Data Dictionary (or recalling the demo), describe the hierarchy of the 'AutoRepairShop' entity and list at least three fields that might be specific to it, or inherited from its direct supertype.",
+      "hints": [
+        "Start by looking for the 'Contact' entity or its subtypes.",
+        "Remember that subtypes inherit attributes from their parent entities.",
+        "Consider what kind of information would be unique to a repair shop versus a general company or person."
+      ],
+      "expectedApproach": "Navigate to the 'Contact' entity, then find its 'Company' subtype, and then 'CompanyVendor' to locate 'AutoRepairShop'. Identify inherited fields and look for specific fields listed under 'AutoRepairShop' or 'CompanyVendor'."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "How does ClaimCenter manage a contact that has multiple relationships\nx toaclaim?",
+      "referenceAnswer": "Through the ClaimContact entity",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis an incident?",
+      "referenceAnswer": "An incident is an item that was lost or damaged, such as a vehicle, property, or person\nsuffering one or more injuries.",
+      "questionKey": "slide-27"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is an exposure?",
+      "referenceAnswer": "Exposures are the mechanism used by ClaimCenter to track the progress of each\npossible payment in compensation for a loss.",
+      "questionKey": "slide-29"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The ClaimCenter data model is built upon entities, relationships, and typelists, defining how data is structured and used.",
+        "Key entities like Claim, Contact, ClaimContact, Incident, Exposure, Activity, Reserve Line, Transaction, and Check work together to manage the entire claim lifecycle.",
+        "The Data Dictionary is a vital tool for understanding the data model, providing detailed views of entities, their attributes, subtypes, and UI usage.",
+        "Understanding delegates and subtypes helps in comprehending inherited behaviors and specialized data structures."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of the data model is paramount for successful customizations, integrations, and reporting. It enables developers to correctly extend entities, configure business rules, and build efficient data queries, ensuring that ClaimCenter accurately reflects and supports complex business processes.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into how to extend the data model using Guidewire Studio, allowing you to implement your own custom entities and fields."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_06_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_06_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_06_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_06_02.mp4"
+    }
+  ]
+}

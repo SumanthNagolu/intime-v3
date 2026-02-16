@@ -1,0 +1,435 @@
+{
+  "lessonId": "ch05-l01",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 1,
+  "title": "Introduction to The Claims Process",
+  "subtitle": "Mastering the lifecycle of insurance claims from first report to final settlement.",
+  "synthesizedAt": "2026-02-16T17:34:13.545616+00:00",
+  "estimatedMinutes": 130,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a major storm hits, and your insurance company is flooded with thousands of claims. Efficiently managing each claim, from initial report to final payout, is critical for customer satisfaction and business solvency. How can a system ensure every claim is handled accurately and promptly?",
+      "question": "What are the core components and processes required to manage a high volume of diverse insurance claims effectively?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the key components of ClaimCenter, including the claim file, exposures, and financial transactions.",
+        "Identify the primary internal user types in ClaimCenter and their roles in claims processing.",
+        "Explain the authentication and authorization process, including role-based access control.",
+        "Describe the Claim Summary panel and how it provides a high-level view of claim status and financials.",
+        "Detail how adjusters enrich claim data by adding loss details and compensability factors.",
+        "Outline the financial approval workflow and the mechanisms that determine transaction approval.",
+        "Explain the process of reassigning claims and activities, and how ownership is maintained."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You likely have experience with online systems that require a username and password, and where your access is tailored to your role. You might also have a general understanding of how insurance claims are reported or processed.",
+      "warmupQuestion": "Think about a time you reported an issue or requested a service online. What information was collected, and how did the system guide you through the process?",
+      "hint": "Consider the steps involved from your perspective as a user, and what might be happening behind the scenes."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "ClaimCenter Fundamentals: Components, Users, and Value",
+      "narrative": "ClaimCenter is a robust, web-based enterprise application designed to streamline the entire claims management process, from the first notice of loss (FNOL) through to financial transactions and final settlement. At its heart is the **claim file**, which serves as a centralized repository for all claim-related data. This includes crucial elements like policies, financials, diaries, documents, involved parties, and even litigation details, providing a holistic view for all users.\n\nVarious internal user types interact with ClaimCenter to manage claims. Key roles include **Customer Service Representatives (CSRs)**, who typically initiate claims; **Adjusters**, who actively work on claims; and **Supervisors** and **Claims Managers**, who oversee teams, approve work, and manage workflows. Each role has specific needs that ClaimCenter addresses to enhance efficiency. For instance, CSRs need quick access to information, while adjusters require tools to track outstanding items and ensure timely processing.\n\nClaimCenter's value proposition lies in its claim-centric, collaborative, and controlled approach. By centralizing all data, it fosters seamless collaboration among claims workers, allowing them to uniformly access and share information. Supervisors benefit from real-time team statistics and a wide span of control, enabling them to manage and direct team activities effectively. This integrated environment ensures that all participants have the necessary insights to make informed decisions and maintain compliance with corporate policies and best practices.",
+      "keyPoints": [
+        "ClaimCenter centralizes all claim data in a single claim file.",
+        "Key internal user types include CSRs, Adjusters, and Supervisors.",
+        "ClaimCenter offers a claim-centric, collaborative, and controlled claims management solution.",
+        "Integrated collaboration provides real-time insights for effective team management."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of ClaimCenter's key components, emphasizing the claim file, exposures, and financial transactions."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the main internal user types in ClaimCenter: CSRs, Adjusters, and Supervisors."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Highlights ClaimCenter's value proposition as a claim-centric, collaborative, and controlled system."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Emphasizes how ClaimCenter facilitates integrated collaboration among claims workers and supervisors."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Claim File",
+          "content": "The central repository in ClaimCenter for all data related to a specific claim, including policies, financials, documents, and parties involved."
+        },
+        {
+          "type": "best_practice",
+          "title": "Data Centralization",
+          "content": "Centralized data storage in ClaimCenter is pivotal for reducing redundancy and minimizing errors, ensuring data accuracy and consistency across all claim-related information."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show how ClaimCenter centralizes data, making it easy for a Customer Service Representative (CSR) to find needed information quickly.",
+      "transcriptSummary": "The demo illustrates the basic navigation and data access within ClaimCenter from a CSR's perspective, highlighting how all claim-related information is readily available in one place to enhance efficiency."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Secure Access: Authentication, Authorization, and Role-Based Control",
+      "narrative": "Security in ClaimCenter is paramount, managed through robust **authentication** and **authorization** processes. When a user attempts to log in, they provide credentials (username and password) on the login page. ClaimCenter then authenticates these credentials, verifying the user's identity either against its internal database or an integrated external authentication system. This initial step ensures that only legitimate users can proceed.\n\nOnce authenticated, the system moves to **authorization**, which determines what the user is allowed to do. ClaimCenter queries its database to understand the user's assigned **permissions** and their designated **start page**. This is the foundation of **role-based access control (RBAC)**. Permissions dictate which screens a user can navigate to and what actions they can perform, ensuring that access is tailored to their specific responsibilities. For example, a Customer Service Representative will have different access rights and a different default view than an Adjuster or a Supervisor.\n\nTo further enhance security, ClaimCenter includes configurable account lockout policies. If a user makes a certain number of failed login attempts (defaulting to three, but configurable), their account is automatically locked. This mechanism protects against brute-force attacks and unauthorized access. Locked accounts can only be unlocked by a manager, balancing security with necessary accessibility. This structured approach ensures data integrity and a secure, efficient workflow aligned with each user's role.",
+      "keyPoints": [
+        "Authentication verifies user identity via credentials.",
+        "Authorization determines user access rights and permissions.",
+        "Role-based access control tailors the user experience based on assigned permissions and start page.",
+        "Account lockout policies enhance security against unauthorized access."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Diagram illustrating the ClaimCenter login process, including authentication and authorization steps."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Shows how role-based access control ensures users like CSRs have tailored access for efficient claim handling."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Authentication",
+          "content": "The process of verifying a user's identity, typically through a username and password."
+        },
+        {
+          "type": "definition",
+          "title": "Authorization",
+          "content": "The process of determining what objects a user is allowed to view and edit, and what actions they can perform within the system."
+        },
+        {
+          "type": "tip",
+          "title": "Configurable Security",
+          "content": "ClaimCenter's security features, such as the number of login attempts before an account locks, are configurable to meet specific organizational security policies."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the New Claim Wizard, showcasing how ClaimCenter efficiently gathers initial claim information.",
+      "transcriptSummary": "The demo highlights the New Claim Wizard's guided process for creating new claims, adapting screens and data gathering based on the specific line of business (e.g., Workers' Compensation, auto, property)."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Claim Summary and Detailed Loss Information",
+      "narrative": "After a claim is initiated, the **Claim Summary** panel in ClaimCenter provides adjusters with a crucial high-level overview. This panel is divided into three main sections: **Basics**, **Financials**, and **High-Risk Indicators**. The **Basics** section offers an immediate snapshot of the claim's timeline, showing how long it's been open, target closure days, and a brief description. This helps adjusters quickly prioritize and manage their workload. The **Financials** section provides a summary of the claim's monetary status, including gross incurred amounts (recorded exposures and reserve lines) and total payments made to date, which is essential for financial oversight.\n\nCrucially, the **High-Risk Indicators** section flags potential issues like litigation status or coverage questions, allowing adjusters to proactively address challenges. For efficient navigation, the **Sidebar** provides quick access to all relevant claim file sections, enabling adjusters to easily update or review details without getting bogged down.\n\nAdjusters play a vital role in enriching claim data during the adjudication process. They can add comprehensive **Loss Details** to a claim, such as a detailed description of the incident, the location, specific activities being performed, and equipment used. For injured workers, they can add contact information, details of the injury (what was injured, how badly, and how it happened), and critical **compensability factors**. These factors, along with employment details, help determine if an injury is legitimately covered by the policy and how much 'lost time' coverage may be required. This thorough data capture is essential for accurate claim assessment and resolution, ensuring all pertinent information is available for investigation and decision-making.",
+      "keyPoints": [
+        "The Claim Summary panel provides a high-level view of claim status, financials, and high-risk indicators.",
+        "The Basics section shows claim duration and description.",
+        "The Financials section summarizes gross incurred amounts and payments.",
+        "High-Risk Indicators flag potential issues like litigation.",
+        "Adjusters enrich claims with detailed loss information, including incident descriptions, injured worker details, and compensability factors."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Overview of the New Claim Wizard, guiding users through manual claim creation for various lines of business."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Illustrates an adjuster's need for efficient tracking of outstanding items and timely claim processing."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Details the sections of the Claim Summary panel: Basics, Financials, and High-Risk Indicators."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Highlights the importance of adding additional information to a claim after initial filing, which can impact its progression."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Compensability Factors",
+          "content": "Data points that help determine whether an injury or loss is legitimately covered by an insurance policy, crucial for workers' compensation claims."
+        },
+        {
+          "type": "tip",
+          "title": "Efficient Navigation",
+          "content": "The ClaimCenter Sidebar is a powerful tool for adjusters, offering quick access to all relevant claim file sections, streamlining the process of updating or reviewing claim details."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration focuses on how adjusters navigate claims using the sidebar and utilize the claim summary and workplan features.",
+      "transcriptSummary": "The demo showcases an adjuster's workflow, demonstrating how the sidebar provides quick access to claim sections and how the claim summary and workplan help manage tasks and track claim progress efficiently."
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This demonstration illustrates how adjusters add and manage parties involved and loss details within a claim.",
+      "transcriptSummary": "The demo shows the process of enriching claim data by adding witnesses, new claimants, and detailed loss information, including accident descriptions and injury specifics, to ensure thorough claim investigations."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Exposures and Supervisor Oversight",
+      "narrative": "In ClaimCenter, **exposures** are fundamental for tracking potential payments related to a claim. Every exposure is uniquely linked to one **coverage** (identifying the source of funds) and one **claimant** (identifying the recipient). For example, in a workers' compensation claim, an exposure might track payments for medical expenses or compensation for lost work time/wages. This granular tracking ensures precise financial management and accountability for each aspect of a loss. Exposures capture the financial implications of specific incidents, distinct from the broader claim file.\n\n**Supervisors** play a critical role in the claims process, ensuring that their team's work is completed efficiently and accurately. Their responsibilities are multifaceted: they are accountable for ensuring a group’s work is completed, handling issues that are flagged or escalated, and approving transactions that exceed an adjuster's authority limits. Supervisors also have the capability to reassign objects, such as claims or activities, to other users within their group, which is vital for balancing workloads and adapting to organizational changes. They can view summary information and team performance metrics, providing them with the necessary insights to manage their team effectively.\n\nOne key aspect of a supervisor's role is managing **payment approval limits**. Adjusters are typically authorized to issue payments up to a certain amount. If a payment exceeds this limit, it requires supervisor verification and approval. This control mechanism is in place to prevent overpayment and ensure financial integrity. The supervisor's ability to review and approve these higher-value transactions is a critical safeguard in the claims process, maintaining financial control and compliance.",
+      "keyPoints": [
+        "Exposures track potential payments, linking coverage to a claimant.",
+        "Supervisors ensure team work completion, handle escalations, and approve transactions.",
+        "Supervisors can reassign claims and activities to balance workloads.",
+        "Payment approval limits require supervisor oversight for higher-value transactions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "Defines exposures as mechanisms to track potential payments linked to specific coverage and claimants."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Illustrates a claims supervisor's need to monitor team activities and ensure timely claim processing."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Outlines the key responsibilities of a supervisor in ClaimCenter, including work completion, issue handling, and transaction approvals."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Explains the role of payment approval limits and the need for supervisor verification for payments exceeding adjuster limits."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Exposure",
+          "content": "A ClaimCenter object used to track potential payments from a claim, always linked to a specific coverage and a claimant."
+        },
+        {
+          "type": "best_practice",
+          "title": "Workload Management",
+          "content": "Supervisors leverage ClaimCenter's reassigning capabilities to ensure an even distribution of workload among adjusters, preventing bottlenecks and improving overall team efficiency."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-5",
+      "videoIndex": 4,
+      "context": "This demonstration focuses on how adjusters manage exposures and financial transactions within ClaimCenter.",
+      "transcriptSummary": "The demo illustrates the process of creating and managing exposures, setting reserves, and handling payments, emphasizing how financial transactions are recorded and tracked to maintain the monetary integrity of a claim."
+    },
+    {
+      "type": "demo",
+      "id": "demo-6",
+      "videoIndex": 5,
+      "context": "This demonstration provides an overview of a supervisor's basic functions and dashboard in ClaimCenter.",
+      "transcriptSummary": "The demo showcases how supervisors access high-level views of team performance, monitor claim statuses, and identify areas requiring their attention, enabling effective oversight and management."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Financial Approvals and Dynamic Claim Reassignment",
+      "narrative": "ClaimCenter incorporates a sophisticated **financials approval workflow** to ensure accountability and compliance for all monetary transactions. Every transaction is reviewed to determine if it requires approval. Transactions that fall within an adjuster's authority limits are processed immediately. However, those exceeding predefined limits or meeting specific transaction approval rules enter a 'pending approval' state. This mechanism ensures that more complex or high-value transactions are thoroughly reviewed by supervisors, maintaining the financial integrity and regulatory compliance of the claims process. This system uses both **authority limits** (based on user roles) and **transaction approval rules** (based on transaction characteristics) to identify which items need review.\n\n**Reassigning objects** is a crucial feature for dynamic workload management and adapting to organizational changes. When an entire claim is reassigned, all associated exposures and activities that belong to the original claim owner are automatically transferred to the new owner. This ensures continuity and prevents tasks from being overlooked. However, it's important to note that any exposures or activities belonging to users *other than* the original claim owner remain with their respective owners, preserving individual accountability for specific tasks. Similarly, when an exposure is reassigned, all activities associated with that exposure and owned by the original owner are also reassigned. This granular control allows supervisors to efficiently redistribute work, ensuring that claims progress smoothly even with personnel shifts or workload imbalances. This flexibility is key to maintaining operational efficiency and responsiveness in a dynamic claims environment.",
+      "keyPoints": [
+        "ClaimCenter's financial approval workflow uses authority limits and transaction rules.",
+        "Transactions requiring approval enter a 'pending approval' state for supervisor review.",
+        "Reassigning a claim transfers all associated exposures and activities belonging to the original owner.",
+        "Activities belonging to users other than the claim/exposure owner remain with their original owners.",
+        "Reassignment ensures continuity and efficient workload distribution."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "Explains how adjusters add various details to claims, such as witnesses or new claimants, to enrich data during adjudication."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Highlights the adjuster's responsibility to determine and issue correct payments to cover losses."
+        },
+        {
+          "slideNumber": 33,
+          "caption": "Details the financial approval process, where ClaimCenter reviews transactions based on authority limits and approval rules."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "Illustrates a supervisor's need to reassign claims to balance team workload and ensure efficient processing."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "Visual representation of reassigning objects (claims, exposures) and how ownership transfers."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Maintaining Activity Ownership",
+          "content": "When a claim is reassigned, activities belonging to users other than the claim owner remain with their original owners, ensuring tasks are completed by those best equipped to handle them."
+        },
+        {
+          "type": "definition",
+          "title": "Authority Limits",
+          "content": "Predefined monetary thresholds that determine whether a financial transaction requires supervisor approval or can be processed directly by an adjuster."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-7",
+      "videoIndex": 6,
+      "context": "This demonstration shows a supervisor's process for reviewing and approving payments that exceed an adjuster's authority limits.",
+      "transcriptSummary": "The demo highlights the supervisor's interface for reviewing pending financial transactions, verifying amounts, and providing final approval, ensuring financial controls are maintained for high-value payments."
+    },
+    {
+      "type": "demo",
+      "id": "demo-8",
+      "videoIndex": 7,
+      "context": "This demonstration illustrates how a supervisor reassigns a claim to another adjuster to balance workloads.",
+      "transcriptSummary": "The demo shows the steps a supervisor takes to transfer a claim's ownership, including how associated exposures and activities are reassigned to the new owner, ensuring seamless continuity in claim management."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new claim has just been reported for a worker's compensation injury. You are a Customer Service Representative (CSR) and need to ensure the claim is properly initiated and assigned.",
+      "question": "What are the first two critical pieces of information you would need to input or verify in ClaimCenter, and why are they important for the system's security and initial setup?",
+      "hints": [
+        "Think about what's required to simply get into the system.",
+        "Consider what determines who can see and do what once inside."
+      ],
+      "expectedApproach": "Identify the login credentials and the system's subsequent actions regarding user permissions."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You are an Adjuster managing a complex property damage claim. After initial reporting, you receive new information about additional damage and a new witness. Your supervisor also informs you that due to a team restructuring, your claim will be reassigned to another adjuster.",
+      "question": "Describe the steps you would take to update the claim with the new information, and explain what happens to your outstanding activities and the claim's financial approvals when the claim is reassigned.",
+      "hints": [
+        "Recall the sections in the Claim Summary and Loss Details where you'd add information.",
+        "Think about how ClaimCenter handles ownership transfer for claims, exposures, and activities.",
+        "Consider the role of authority limits in financial transactions."
+      ],
+      "expectedApproach": "Detail updating loss details and parties involved, then explain the reassignment process for claims, exposures, and activities, and how financial approvals are handled."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What does an end user need to access a Guidewire application?",
+      "referenceAnswer": "A supported web browser and a valid username and password.",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When a user attempts to log into ClaimCenter, what three pieces of\nof information does the application attempt to determine?",
+      "referenceAnswer": "1.Whether or not the user can be authenticated,\n2.What are the user's roles (permissions), and\n3.What is the user's startup page.",
+      "questionKey": "slide-41"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is one thing that determines what data is gathered on a claim intake\nof screen?",
+      "referenceAnswer": "The type of claim (personal auto, homeowners, worker's comp.)",
+      "questionKey": "slide-43"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What is the purpose of an exposure?",
+      "referenceAnswer": "An exposure is used to track potential payments on one coverage, for one claimant.",
+      "questionKey": "slide-45"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What are two mechanisms used to determine if a transaction requires\nof approval?",
+      "referenceAnswer": "Authority limits and transaction approval rules are used to identify which transactions require approval.",
+      "questionKey": "slide-47"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter centralizes all claim data, fostering collaboration and control.",
+        "Authentication and role-based authorization secure access and tailor user experience.",
+        "The Claim Summary and Loss Details screens provide comprehensive claim overview and data enrichment capabilities.",
+        "Exposures are crucial for tracking specific payments linked to coverage and claimants.",
+        "Supervisors play a vital role in workload management, issue resolution, and financial transaction approvals.",
+        "Financial approval workflows ensure accountability through authority limits and transaction rules.",
+        "Claim and activity reassignment features enable dynamic workload balancing while preserving ownership."
+      ],
+      "realWorldConnection": "In real Guidewire projects, understanding these foundational concepts is critical for configuring ClaimCenter to meet specific business needs. Developers and implementers must ensure that data models, user roles, workflows, and financial rules accurately reflect the client's claims processes, enabling efficient and compliant claims handling from start to finish.",
+      "nextLessonPreview": "Next, we'll delve into the specifics of claim maintenance, exploring how ongoing claim management, including updates, notes, and communications, is handled within ClaimCenter."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Log into a ClaimCenter sandbox environment (if available) as both a Customer Service Representative and an Adjuster. Explore the differences in their default views and available actions. Create a new dummy claim and practice adding detailed loss information and parties involved. Then, simulate a financial transaction that would require supervisor approval (e.g., a payment exceeding a small threshold) and observe its status.",
+      "objectives": [
+        "Navigate ClaimCenter from different user perspectives.",
+        "Practice creating a new claim and enriching its data.",
+        "Identify the impact of authority limits on financial transactions."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_01_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_01_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Claim_01_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "IS_Claim_01_04.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_04.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "IS_Claim_01_05.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_05.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "IS_Claim_01_06.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_06.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "IS_Claim_01_07.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_07.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "IS_Claim_01_08.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_01_08.mp4"
+    }
+  ]
+}

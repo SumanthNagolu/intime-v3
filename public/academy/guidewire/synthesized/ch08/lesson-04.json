@@ -1,0 +1,453 @@
+{
+  "lessonId": "ch08-l04",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 4,
+  "title": "Contacts and Locations",
+  "subtitle": "Mastering contact and location management within Guidewire PolicyCenter for efficient policy administration.",
+  "synthesizedAt": "2026-02-16T18:18:07.668702+00:00",
+  "estimatedMinutes": 95,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're managing a large insurance account with multiple policies, each requiring specific individuals and properties to be tracked. Manually entering and updating contact and location details for every policy can lead to inconsistencies, errors, and significant time loss. How do you ensure data accuracy and efficiency across all policies and the entire account?",
+      "question": "What strategies or system capabilities would be essential to centralize and synchronize this critical information effectively?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the fundamental concepts of contacts and locations in PolicyCenter.",
+        "Differentiate between account-level and policy-level contacts and locations and their reusability.",
+        "Identify and describe various contact roles and their behavior patterns (Normal, Singleton, Simple Details, Join Details).",
+        "Explain how to configure new contact roles using the IContactConfigPlugin.",
+        "Describe the process of creating and managing account and policy locations.",
+        "Recognize Line of Business (LOB) specific location types and their purpose."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously worked with basic policy creation and account management in PolicyCenter. You understand that policies involve various individuals and properties, and that data consistency is crucial.",
+      "warmupQuestion": "Think about a time you had to update a customer's address. How many places in an insurance system might that address need to be updated to ensure all records are current?",
+      "hint": "Consider the different types of policies or roles a single customer might have."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Contacts and Their Roles",
+      "narrative": "In PolicyCenter, a **contact** is a fundamental entity representing either a person or a company. These contacts are crucial for policy information, as they may need to be contacted for various policy-related matters. A key design principle in PolicyCenter is the ability to manage contacts efficiently: they can be created at the account level and then reused across multiple policies associated with that account, or they can be created directly on a specific policy if they are unique to that policy. This reusability helps avoid data reentry and ensures consistency.\n\nThe 'Account File Contacts' screen provides a centralized list-detail view of all contacts associated with an account. This view allows you to see details of each contact, their roles, associated work orders, addresses, and the policies they are linked to. When you select a contact from the list, the details view at the bottom refreshes to show information specific to that contact. A single contact can fulfill multiple roles, both at the account level and on individual policies. For instance, one person could be the account holder, the primary named insured on a personal auto policy, and also a driver of an insured vehicle. While some contact information, like a primary address, is shared and propagates across all unbound usages of a contact, other details are policy or usage-specific and do not propagate. This distinction ensures flexibility while maintaining data integrity.",
+      "keyPoints": [
+        "Contacts can be persons or companies.",
+        "Contacts can be created at the account level for reuse or directly on a policy.",
+        "The Account File Contacts screen offers a centralized view of all account contacts.",
+        "One contact can hold multiple roles across accounts and policies.",
+        "Some contact information is shared and propagates, while other information is policy-specific."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of how contacts are linked to accounts and policies."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key characteristics and management options for contacts in PolicyCenter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The relationship between contacts, contact roles, and how they are listed on the Account File Contacts page."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Contact",
+          "content": "A person or company entity in PolicyCenter that may need to be contacted for policy information, and can fill various roles on an account or policy."
+        },
+        {
+          "type": "best_practice",
+          "title": "Centralized Contact Management",
+          "content": "Leveraging account-level contacts for reuse across policies minimizes data entry, reduces errors, and ensures consistency. PolicyCenter's Contact tab also provides a central place to view and manage contact information, including associated accounts, policies, work orders, and claims."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration provides a visual overview of how contacts are managed within PolicyCenter, highlighting the Account File Contacts screen and the various details associated with a contact.",
+      "transcriptSummary": "The demo walks through navigating to the Account File Contacts page, viewing the list of contacts, and exploring the detailed information available for a selected contact, including their roles, addresses, and associated policies."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Contact Roles and Behavior Patterns",
+      "narrative": "PolicyCenter defines various **contact roles** that contacts can fill, both at the account and policy levels. These roles are subtypes of `AccountContactRole` and `PolicyContactRole` entities. For example, a 'Driver' is an `AccountContactRole`, and a 'PolicyDriver' is its corresponding `PolicyContactRole`. Some roles, like 'AccountHolder', exist only at the account level, while others, like 'PolicyNamedInsured', are specific to policies. It's important to note that an `AccountContactRole` can correspond to multiple `PolicyContactRole`s, and many roles are line-of-business (LOB) specific.\n\nWhen configuring new contact roles, it's crucial to consider their **behavior patterns**. PolicyCenter exhibits several consistent patterns:\n*   **Normal**: An array of contacts connected to an entity, like multiple 'Additional Named Insureds' attached at the Policy Period level.\n*   **Singleton**: Only one contact of this role exists at any given time for a specific entity, such as a 'Billing Contact' for a Policy Period.\n*   **Simple Details**: One contact can fill the role in multiple ways, requiring an array of details. An 'Additional Insured' contact, for instance, might have multiple types (e.g., Controlling Interest, Townhouse Association) for the same contact.\n*   **Join Details**: Represents a many-to-many relationship between the role and another entity. The 'Driver' role is a classic example, where multiple drivers can be associated with multiple vehicles on a policy, but each driver is represented by a single `PolicyDriver` record.\n\nUnderstanding these patterns helps in designing new roles effectively. For example, a 'Location Named Insured' follows a Join Details pattern, linking Named Insureds to locations, even though it's not a directly defined role but an implicit join table. When creating a new role, you should identify an existing role with similar behavior in the base application and use its implementation as a guide.",
+      "keyPoints": [
+        "Contact roles are subtypes of AccountContactRole and PolicyContactRole.",
+        "Roles can be account-level only or policy-level, often with corresponding entities.",
+        "Four main contact role behavior patterns exist: Normal, Singleton, Simple Details, and Join Details.",
+        "The 'Simple Details' pattern allows one contact to have multiple types of a specific role, like 'Additional Insured'.",
+        "New contact roles should be configured based on existing patterns for consistency."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A table illustrating common contact roles defined at the account and policy levels in PolicyCenter."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Descriptions of the four primary contact role behavior patterns in PolicyCenter: Normal, Singleton, Simple Details, and Join Details."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A list of policy contact roles in the default configuration, showing their behavior pattern and where they attach in the data model."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "An example demonstrating the 'Simple Details' pattern for an Additional Insured contact with multiple types."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Role",
+            "Pattern",
+            "Attaches to"
+          ],
+          "rows": [
+            [
+              "Named Insured",
+              "Normal",
+              "Policy Period"
+            ],
+            [
+              "Primary Named Insured",
+              "Singleton",
+              "Policy Period"
+            ],
+            [
+              "Secondary Named Insured",
+              "Singleton",
+              "Policy Period"
+            ],
+            [
+              "Location Named Insured",
+              "Join Details",
+              "Policy Period"
+            ],
+            [
+              "Additional Insured",
+              "Simple Details",
+              "Policy Line"
+            ],
+            [
+              "Billing Contact",
+              "Singleton",
+              "Policy Period"
+            ],
+            [
+              "Driver",
+              "Join Details",
+              "PA Line"
+            ],
+            [
+              "Additional Interest",
+              "Join Details",
+              "Policy Period"
+            ],
+            [
+              "Owner Officer",
+              "Normal",
+              "WC Line"
+            ],
+            [
+              "Labor Client",
+              "Simple Details",
+              "WC Line"
+            ],
+            [
+              "Labor Contractor",
+              "Simple Details",
+              "WC Line"
+            ]
+          ],
+          "caption": "Policy Contact Roles in Default Configuration"
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Contact Role",
+          "content": "A specific function or capacity a contact fills on an account or policy, such as 'Account Holder' or 'Primary Named Insured'."
+        },
+        {
+          "type": "tip",
+          "title": "Data Dictionary Reference",
+          "content": "For a complete and up-to-date list of contact roles and their configurations, always refer to the PolicyCenter Application Guide or the data dictionary."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuring and Extending Contact Roles",
+      "narrative": "The **IContactConfigPlugin** is central to configuring contact entities in PolicyCenter. This plugin, typically implemented by `ContactConfigPlugin` or `WC7ContactConfigPlugin` and registered in `config/plugin/registry/IContactConfigPlugin.gwp`, maps `PolicyContactRole` to its corresponding `AccountContactRole`. For instance, it maps `PolicyNamedInsured` to `NamedInsured`. It also controls which contact subtypes (Person or Company) are allowed for each role; a 'Driver' can only be a Person, while an 'Account Holder' can be a Person or a Company. You can even disable roles by setting the first argument in the `ContactConfig` line to `false`.\n\nExtending the contact role data model generally involves defining new subtypes of `PolicyContactRole` and `AccountContactRole`. This allows you to create roles for persons, companies, or both, and integrate them into the application's contact scheme with appropriate user interfaces. Guidewire recommends a strategic approach for configuring new contact roles: find an existing role in the base application that best matches the desired behavior for your new role. By reviewing its implementation, you can leverage similar logic for your custom role.\n\nAdding a new contact role involves several steps: first, define the necessary entities by creating subtypes at both the account level (`AccountContactRole`) and policy level (`PolicyContactRole`), unless the role is account-only. If additional properties are needed, define them in extension (`_Ext.eti`) files. Second, modify the registered `ContactConfigPlugin` file to map these new subtypes. Finally, add display keys, create entity names, reference display names, and modify PCFs and Gosu classes as needed, followed by a server restart to load the new configuration.",
+      "keyPoints": [
+        "The IContactConfigPlugin maps PolicyContactRole to AccountContactRole and controls allowed contact subtypes.",
+        "Roles can be disabled via the plugin configuration.",
+        "New contact roles are typically created by extending PolicyContactRole and AccountContactRole entities.",
+        "The recommended strategy for new roles is to model them after existing roles with similar behavior.",
+        "Configuration involves defining entities, modifying the plugin, and updating UI components."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Details on the IContactConfigPlugin, its function, and syntax for configuration."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "How to extend the contact role data model by defining new subtypes of PolicyContactRole and AccountContactRole."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Guidewire's recommended strategy for configuring new contact roles based on existing behavior patterns."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Steps involved in adding a new contact role, including defining entities and modifying the Contact Config Plugin."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Disabling a Contact Role in ContactConfigPlugin",
+          "code": "new ContactConfig(false, {\"company\", \"person\"}, \"AuditContact\", {\"PolicyAuditContact\"}),",
+          "explanation": "This Gosu code snippet from the ContactConfigPlugin demonstrates how to disable a contact role (e.g., 'AuditContact') by setting the first argument to 'false'. It also specifies the allowed contact types and maps the account-level role to its policy-level counterpart."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Leverage Existing Patterns",
+          "content": "When creating new contact roles, always start by identifying an existing role in the base application that exhibits the desired behavior. This approach significantly reduces development time and ensures consistency with PolicyCenter's core design."
+        },
+        {
+          "type": "warning",
+          "title": "Server Restart Required",
+          "content": "After modifying the Contact Config Plugin file or adding new contact role entities, a server restart is necessary for the changes to take effect and be loaded into the application."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration illustrates the process of creating a new contact role, such as an 'Audit Contact', within PolicyCenter, showcasing the configuration steps involved.",
+      "transcriptSummary": "The demo guides viewers through the necessary UI and configuration changes to introduce a new contact role, demonstrating how it integrates into the system and becomes available for use on accounts and policies."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Name the plugin that maps the AccountContactRole to the\no PolicyContactRole in the default application.",
+      "referenceAnswer": "ContactConfigPlugin",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Name the types of contact pattens available that occur in the base\n¢ configuration of PolicyCenter.",
+      "referenceAnswer": "Normal, Singleton, Simple Details, Join Details.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your insurance company needs to introduce a new contact role, 'Legal Representative', which should only be applicable to 'Company' contacts and should behave like a 'Singleton' role at the policy level, meaning only one legal representative can be assigned per policy. You've identified that the 'Billing Contact' role has similar 'Singleton' behavior.",
+      "question": "Outline the high-level steps you would take to configure this new 'Legal Representative' contact role in PolicyCenter, referencing the `IContactConfigPlugin` and entity extensions.",
+      "hints": [
+        "Consider the two main entity types that need to be extended for new roles.",
+        "Think about how the `ContactConfigPlugin` syntax allows you to specify contact types and role mapping.",
+        "Remember the importance of UI integration for new roles."
+      ],
+      "expectedApproach": "1. Define new subtypes: `LegalRepresentativeAccountContactRole_Ext.eti` and `PolicyLegalRepresentativeContactRole_Ext.eti`. 2. Modify the `IContactConfigPlugin` to add a new `ContactConfig` entry, specifying `true` for enable, `{\"company\"}` for contactType, `\"LegalRepresentative\"` for AccountContactRole, and `{\"PolicyLegalRepresentative\"}` for PolicyContactRole. 3. Add display keys and update PCFs/Gosu classes for UI integration. 4. Restart the server."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through hands-on tasks related to managing contacts and locations within PolicyCenter. You will practice creating new contacts, assigning roles, and managing locations at both the account and policy levels.",
+      "objectives": [
+        "Create new Person and Company contacts.",
+        "Assign various contact roles to existing contacts.",
+        "Create new account locations and associate them with policies.",
+        "Modify existing contact and location information and observe propagation."
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Managing Locations in PolicyCenter",
+      "narrative": "Similar to contacts, **locations** in PolicyCenter represent physical places that may be referenced on a policy. These can include properties, buildings, or other physical sites relevant to coverage. Just like contacts, locations can be created at the account level and then reused across multiple policies, or they can be created directly on a specific policy. This approach promotes consistency and reduces redundancy.\n\nThe 'Account File Locations' screen provides a list-detail view of all locations associated with an account, stored in the `AccountLocation` entity. When a location is selected from the list, the detail view at the bottom displays its specific information, along with policy terms and transactions linked to it. For policy-specific locations, the 'Policy Locations' screen lists all `PolicyLocation` entities. The detail view here might include tabs for questions or additional coverages, depending on the Line of Business (LOB) configuration.\n\nPolicyCenter automatically assigns a sequential number to each location, stored in the `LocationNum` field. It's important to note that `AccountLocation` and `PolicyLocation` are numbered separately. While the system assigns these numbers, the numbering algorithm can be configured by developers to align with a carrier's specific requirements. For example, if locations 1, 2, and 3 exist on an issued policy and location 2 is removed, the remaining locations are 1 and 3. However, at renewal, the system will renumber them sequentially to 1 and 2, ensuring a clean and continuous numbering scheme for the new policy period.",
+      "keyPoints": [
+        "Locations are physical places referenced on a policy.",
+        "Locations can be created at the account level for reuse or directly on a policy.",
+        "Account locations are stored in `AccountLocation` entities, policy locations in `PolicyLocation` entities.",
+        "The system assigns sequential `LocationNum` values, which can be configured.",
+        "Account and policy locations are numbered separately, and renumbering occurs at renewal."
+      ],
+      "figures": [
+        {
+          "slideNumber": 24,
+          "caption": "An illustration showing the relationship between accounts, policies, and locations."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Key characteristics and management options for locations in PolicyCenter, highlighting account and policy-level views."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Explanation of PolicyCenter's location numbering system, including how numbers are assigned and resequenced."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Location",
+          "content": "A physical place defined and contractually enforced on a policy, which can be managed at both the account and policy levels."
+        },
+        {
+          "type": "tip",
+          "title": "Location Numbering Configuration",
+          "content": "While end-users cannot change the location numbering algorithm via the UI, configuration developers have the flexibility to customize it based on specific carrier needs. This is particularly useful for managing location sequences during policy changes and renewals."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "context": "This demonstration provides a visual overview of how locations are managed within PolicyCenter, highlighting the Account File Locations screen and the various details associated with a location.",
+      "transcriptSummary": "The demo walks through navigating to the Account File Locations page, viewing the list of locations, and exploring the detailed information available for a selected location, including its address and associated policies."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "LOB-Specific Locations and Creation Methods",
+      "narrative": "While `PolicyLocation` provides general location management, certain Lines of Business (LOBs) require **LOB-specific location types**. These are subtypes of the `PolicyLine` entity and have an associated location type, often with a foreign key pointing back to `PolicyLocation`. Examples in the base configuration include `CommercialPropertyLine` with `CPLocation` and `InlandMarineLine` with `IMLocation`. These LOB-specific locations are crucial when the location itself is a coverable (meaning coverages or modifiers are directly associated with it) or when other coverables, such as buildings, exist at that location. It's important to understand that LOB-specific locations do not replace `PolicyLocation`s; rather, they extend their functionality to meet specialized LOB requirements.\n\nCreating new locations in PolicyCenter is straightforward. To add a new `AccountLocation`, you call the `newLocation()` method on the account object. This is often done when the primary location on the account is null, and a new primary location is created from the main contact's address. For policy-level locations, you use methods in the `PolicyPeriod` class. The `newLocation()` method creates both a new `PolicyLocation` and a new `AccountLocation` if one isn't already defined. Alternatively, `newLocation(acctLoc : AccountLocation)` creates a new `PolicyLocation` that is linked to an existing `AccountLocation`. If the associated account location is not yet defined, a new account-level location is created, and then a new policy-level location linked to it. If the account location already exists, only a new policy-level location is created and linked to the existing account location. This ensures that policy locations always have a foreign key to an account-level location, maintaining the hierarchical structure and reusability.",
+      "keyPoints": [
+        "LOB-specific location types are subtypes of `PolicyLine` and extend `PolicyLocation` functionality.",
+        "They are needed when locations are coverables or contain other coverables (e.g., buildings).",
+        "LOB-specific locations do not replace general `PolicyLocation`s.",
+        "New `AccountLocation`s are created using `account.newLocation()`.",
+        "New `PolicyLocation`s are created using `PolicyPeriod.newLocation()` (which can also create an `AccountLocation`) or `PolicyPeriod.newLocation(acctLoc)` to link to an existing account location."
+      ],
+      "figures": [
+        {
+          "slideNumber": 30,
+          "caption": "A table listing LOB-specific location types and their associated policy lines in the base configuration."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Gosu code example demonstrating how to create a new AccountLocation using the `newLocation()` method."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Gosu code example illustrating the methods for creating a new PolicyLocation, either with or without an existing AccountLocation."
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Subtype of PolicyLine",
+            "Associated Location"
+          ],
+          "rows": [
+            [
+              "BusinessOwnersLine",
+              "BOPLocations"
+            ],
+            [
+              "CommercialPropertyLine",
+              "CPLocation"
+            ],
+            [
+              "InlandMarineLine",
+              "IMLocation"
+            ]
+          ],
+          "caption": "LOB Specific Location Types in Base Configuration"
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Creating a New AccountLocation",
+          "code": "if (contact.PrimaryAddress != null) {\n    // ... logic to check for primary location ...\n    this.newLocation() // Creates a new AccountLocation\n}",
+          "explanation": "This snippet from `AccountBaseEnhancement.gsx` shows how `newLocation()` is called on an account object to create a new `AccountLocation`, typically when a primary location doesn't exist and can be derived from the main contact's address."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating a New PolicyLocation",
+          "code": "var policyLoc = this.PolicyPeriod.newLocation(acctLoc)",
+          "explanation": "This code from `PersonalVehicleEnhancement.gsx` demonstrates creating a new `PolicyLocation` and linking it to an existing `AccountLocation` (`acctLoc`) using the `newLocation(acctLoc)` method on the `PolicyPeriod` object."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "gotcha",
+          "title": "LOB-Specific vs. Policy Locations",
+          "content": "Remember that LOB-specific locations (like `CPLocation`) are extensions of `PolicyLocation`s, not replacements. They provide additional functionality for specific lines of business but still rely on the underlying `PolicyLocation` structure."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What is LocationNum?\ny ¢\nr",
+      "referenceAnswer": "LocationNum is the field that stores the sequential location number for account and\npolicies.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Howare locations numbered between accounts and policies?\n¢\n4\n¢",
+      "referenceAnswer": "Locations are numbered separately between accounts and policies using\nLocationNum field.",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Which lines of business in the base configuration have extendable\no location related entities?\n¢",
+      "referenceAnswer": "Inland Marine, Commercial Property and Buessinessowners",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Contacts and locations are fundamental entities in PolicyCenter, manageable at both account and policy levels for reusability and consistency.",
+        "Contacts can fill multiple roles, each with specific behavior patterns (Normal, Singleton, Simple Details, Join Details).",
+        "The `IContactConfigPlugin` is key for mapping contact roles and controlling their behavior and allowed subtypes.",
+        "New contact roles are configured by extending `AccountContactRole` and `PolicyContactRole` and modifying the plugin.",
+        "Locations are sequentially numbered, with separate numbering for account and policy levels, and renumbering at renewal.",
+        "LOB-specific location types extend `PolicyLocation` functionality for specialized needs.",
+        "Gosu methods like `account.newLocation()` and `PolicyPeriod.newLocation()` are used to programmatically create locations."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering contact and location management is critical for building robust and efficient insurance applications. Proper configuration ensures accurate data, streamlines policy processing, and supports complex underwriting rules. For instance, correctly defining a 'Driver' contact role with 'Join Details' behavior allows a single driver to be associated with multiple vehicles across different policies, while LOB-specific locations enable precise risk assessment for commercial properties. This foundational knowledge directly impacts data quality, user experience, and the ability to adapt PolicyCenter to diverse business requirements."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_04_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_04_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_04_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_04_02.mp4"
+    }
+  ]
+}

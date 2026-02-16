@@ -1,0 +1,343 @@
+{
+  "lessonId": "ch08-l10",
+  "chapterId": 8,
+  "chapterSlug": "ch08",
+  "lessonNumber": 10,
+  "title": "Introduction to Permission Configuration",
+  "subtitle": "Understand PolicyCenter's security model, system permissions, roles, and how to configure access control.",
+  "synthesizedAt": "2026-02-16T18:22:24.146193+00:00",
+  "estimatedMinutes": 120,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're launching a new insurance product in PolicyCenter, and your team needs specific access levels. Underwriters require the ability to approve policies, while agents should only be able to create submissions. How do you ensure each user can perform their job effectively without over-privileging them?",
+      "question": "What mechanisms does PolicyCenter provide to precisely control who can see and do what within the application?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the role-based security model in PolicyCenter.",
+        "Explain the purpose and structure of system permissions and roles.",
+        "Utilize the Security Dictionary to understand permissions and roles.",
+        "Create new system permissions.",
+        "Apply `perm` expressions in Gosu to check user permissions.",
+        "Differentiate between static and object-based permissions.",
+        "Identify how static and object-based permissions are used in PolicyCenter."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we touched upon the general architecture of PolicyCenter. Now, we'll dive deeper into how security is fundamentally integrated into its design, building on your understanding of application configuration.",
+      "warmupQuestion": "Think about any application you use daily. How do you think it manages different user access levels, for example, between a regular user and an administrator?",
+      "hint": "Consider the concept of 'roles' and 'permissions' you might have encountered in other software systems."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "PolicyCenter's Role-Based Security Foundation",
+      "narrative": "PolicyCenter's security framework is designed to be flexible, robust, and protective of sensitive information, primarily through a **role-based security model**. This means that users are granted access to functionalities based on the roles assigned to them, which typically map to job functions within an organization. For instance, a 'Producer' role might have permissions to create submissions, while an 'Underwriter' role would have additional permissions to approve policies.\n\nAt the heart of this system are **system permissions**, which represent granular abilities to 'see or do something' within PolicyCenter. These are the building blocks of access control. For example, `View users`, `Edit groups`, or `Own activities` are distinct system permissions. These permissions are then bundled into **roles**, which are named collections of permissions. A user must be assigned at least one role, and they inherit all permissions contained within their assigned roles. In the base configuration, the `Superuser` role is typically granted all permissions and is responsible for assigning permissions to other roles, though this can be customized.\n\nWhen designing roles, you have flexibility. If an 'Underwriter' needs all the permissions of an 'Underwriter Assistant' plus additional tasks, you could either create the 'Underwriter' role with all combined permissions, or create 'Underwriter' with only the additional permissions and assign both 'Underwriter Assistant' and 'Underwriter' roles to the user. The key is to ensure roles align with job functions to simplify management and maintain security.",
+      "keyPoints": [
+        "PolicyCenter uses a flexible role-based security model.",
+        "System permissions are granular abilities to perform actions or view data.",
+        "Roles are collections of permissions, typically mapping to job functions.",
+        "Users are assigned roles and inherit all associated permissions.",
+        "The `Superuser` role in base configuration has all permissions and manages other roles."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Overview of PolicyCenter security and core concepts."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the role-based security model, highlighting roles, permissions, and producer codes."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Examples of system permissions, categorized by the entity they pertain to."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Demonstrates how roles are collections of permissions, using Underwriter Assistant and Underwriter roles as examples."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "System Permission",
+          "content": "A granular ability to see or do something within PolicyCenter, such as 'View users' or 'Edit groups'."
+        },
+        {
+          "type": "definition",
+          "title": "Role",
+          "content": "A named collection of system permissions used to simplify the assignment of permissions to users, typically mapping to a job title or function."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Navigating the Security Dictionary",
+      "narrative": "To effectively manage and understand PolicyCenter's security, the **Security Dictionary** is an indispensable tool for both business and technical users. It's a series of HTML pages located at `<server directory>\\build\\dictionary\\security\\index.html` that documents all permissions and roles within your application. This dictionary provides a comprehensive overview of how security is implemented.\n\nThe Security Dictionary is organized into four main sections:\n\n*   **Application Permission Keys (APKs)**: These are internal sets of one or more system permissions, defined by PolicyCenter to optimize system performance. For example, the `Account edit` APK represents all system permissions needed to edit an account. While you can't create or modify APKs, understanding them is crucial as they appear in user interface files.\n*   **Pages**: This section lists each page in the user interface and the specific permissions required to view or edit that page. This helps in quickly identifying access requirements for UI elements.\n*   **System Permissions**: This section details each individual system permission, listing which roles contain it and which UI components reference it. Permissions that appear grayed out are internal and cannot be modified.\n*   **Roles**: This section provides a clear breakdown of each role and all the system permissions it contains.\n\nIt's important to remember that the Security Dictionary is a set of static HTML pages. Therefore, any changes made to permissions or roles in the application configuration will not automatically reflect in the dictionary. You must regenerate the dictionary using a command-line utility, `gwb gendictionary`, to ensure it's up-to-date.",
+      "keyPoints": [
+        "The Security Dictionary is an HTML-based documentation of permissions and roles.",
+        "It's located at `<server directory>\\build\\dictionary\\security\\index.html`.",
+        "It has four main sections: Application Permission Keys, Pages, System Permissions, and Roles.",
+        "APKs are internal performance optimizations, not directly configurable.",
+        "The dictionary must be regenerated after any changes to permissions or roles."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Introduces the Security Dictionary as a key resource for understanding permissions and roles."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Details the four main sections of the Security Dictionary: Application Permission Keys, Pages, System Permissions, and Roles."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Regenerate Dictionary",
+          "content": "Always remember to regenerate the Security Dictionary using `gwb gendictionary` after making any changes to permissions or roles to ensure your documentation is current."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Creating and Managing System Permissions",
+      "narrative": "While the Security Dictionary helps you understand existing permissions, you'll often need to create new ones to support custom functionalities or new lines of business. System permissions are defined within the `SystemPermissionType` typelist in PolicyCenter. When adding new permissions, follow these best practices:\n\n*   **Lowercase and No Spaces**: Permission codes should always be in lowercase and without white spaces for consistency and ease of use.\n*   **One Permission Per Action**: Avoid combining multiple actions into a single permission. Instead, create granular permissions for each specific action. For example, instead of a generic 'modify account' permission, create separate permissions like `accountedit`, `accountdelete`, and `accountcreate`.\n*   **Verb-Entity Naming Convention**: A common and recommended naming convention is `[entity][action]`, such as `accountcreate` or `activityedit`. This makes the purpose of the permission clear.\n\nThe code of a permission is also referred to as its **permission key**. Once you've added new typecodes to the `SystemPermissionType` typelist to define your new system permissions, it's crucial to regenerate the dictionaries using the `gwb gendictionary` command. This ensures that your new permissions are properly listed and recognized throughout the system, including in the Security Dictionary.\n\nThis process allows you to extend PolicyCenter's security model to precisely match your organization's unique operational needs.",
+      "keyPoints": [
+        "New system permissions are defined in the `SystemPermissionType` typelist.",
+        "Follow best practices for naming: lowercase, no spaces, one action per permission, `[entity][action]` format.",
+        "The permission code is also known as the permission key.",
+        "Always regenerate dictionaries (`gwb gendictionary`) after creating new permissions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "A transition slide, leading into the practical aspects of creating permissions."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Guidelines for creating new system permissions, including naming conventions and definition location."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Another transition slide, often used before or after a demonstration."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Permission Naming",
+          "content": "Always use lowercase, no spaces, and a `[entity][action]` format (e.g., `accountcreate`) for clarity and consistency. Define one permission per distinct action."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a new system permission within PolicyCenter's configuration, showing you where to define it and the steps involved.",
+      "transcriptSummary": "The demo illustrates how to add a new typecode to the `SystemPermissionType` typelist in Studio, following the recommended naming conventions. It highlights the importance of regenerating the dictionary after making these changes."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Checking Permissions with the `perm` Namespace in Gosu",
+      "narrative": "Once permissions are defined, the next step is to integrate them into the application logic to control access. This is achieved using the built-in **`perm` namespace** in Gosu. The `perm` namespace is always in scope, meaning you don't need to import it explicitly. It allows you to create expressions that evaluate whether the current user has a specific permission, returning `true` or `false`.\n\nThe `perm` namespace offers two primary syntaxes for checking permissions:\n\n*   **`perm.System.permission`**: This syntax is used when checking a system permission directly, as defined in the `SystemPermissionType` typelist. For example, `perm.System.viewteam` would check if the current user has the `viewteam` system permission.\n*   **`perm.Entity.permission`**: This syntax is used when checking an **Application Permission Key (APK)**, which is typically associated with an entity. For instance, `perm.Account.create` checks if the user has the permission to create an account, and `perm.Organization.create` checks for organization creation permission. These APKs are defined in `SecurityConfig.xml` and often represent a set of underlying system permissions.\n\n`perm` expressions are incredibly versatile and are used in various parts of PolicyCenter's configuration to control user interface elements and business logic. They can:\n\n*   **Control atomic widget attributes**: Determine the visibility, editability, or availability of individual fields, buttons, or menu items.\n*   **Control container widget attributes**: Manage the visibility or editability of entire detail views or list views.\n*   **Control location attributes**: Govern the ability to navigate to or edit specific locations within the application.\n*   **Influence business rules**: Modify the behavior of business rules, such as generating an additional activity if a user lacks a particular permission.\n\nBy strategically placing these `perm` expressions, developers can ensure that the application's behavior dynamically adapts to the current user's assigned permissions, enforcing the security model effectively.",
+      "keyPoints": [
+        "The `perm` namespace in Gosu is used to check if a user has a given permission.",
+        "It returns `true` or `false` and is always in scope.",
+        "Use `perm.System.permission` for direct system permissions (e.g., `perm.System.viewteam`).",
+        "Use `perm.Entity.permission` for Application Permission Keys (e.g., `perm.Account.create`).",
+        "APKs are defined in `SecurityConfig.xml`.",
+        "`perm` expressions control UI visibility/editability and influence business rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Explains the `perm` Gosu namespace and its syntax for checking system permissions and application permission keys."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Lists typical uses of `perm` expressions, such as controlling UI elements and modifying business rules."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "`perm` Namespace",
+          "content": "A built-in Gosu package used to create expressions that determine if the current user has a given permission, returning `true` or `false`."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to use Gosu's `perm` namespace to check for permissions, illustrating its application in controlling access within PolicyCenter.",
+      "transcriptSummary": "The demo provides practical examples of `perm.System.permission` and `perm.Entity.permission` in action, demonstrating how these expressions are used in Gosu code to verify a user's access rights for various functionalities."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Understanding Static and Object-Based Permissions",
+      "narrative": "Permissions in PolicyCenter can be broadly categorized into two types: **static** and **object-based**. This distinction is crucial for correctly implementing access control, especially when dealing with entities and their lifecycle.\n\n**Application Permission Keys (APKs)** play a significant role here. An APK is a set of one or more system permissions defined in `security-config.xml`. These APKs use custom handlers (like `StaticHandlers`, `WrapHandler`, `AccountProducerCodeHandler`) to define how different objects in PolicyCenter map to system permissions. PolicyCenter defines APKs for various core objects such as `Account`, `PolicyPeriod`, `Jobs` (submission, rewrite, policy change), `Notes`, `Documents`, and `Activities`.\n\n**Static permissions** do not require an object as an argument when checked. They are typically used for actions that don't pertain to a specific instance of an object, or when an object doesn't yet exist. A common example is the permission to create a new activity pattern (`actpatcreate`). When you're checking if a user can *create* something, there's no existing object to pass as an argument. Static permissions may or may not use APKs.\n\n**Object-based permissions**, in contrast, always require a specific object as an argument. These permissions are used for actions that modify or manage an *existing* object. For instance, the permission to reassign an owned activity (`actraown`) requires you to pass the actual activity object that needs to be reassigned. Object-based permissions always utilize APKs, as they involve mapping permissions to specific entity instances.\n\nIn some base configurations, static permissions might be used in an object-based context, but with a `null` object passed as the parameter, blurring the lines slightly. However, the core distinction lies in whether a specific object instance is required for the permission check.",
+      "keyPoints": [
+        "Permissions are either static or object-based.",
+        "Application Permission Keys (APKs) are sets of system permissions defined in `security-config.xml`.",
+        "APKs use custom handlers to map objects to system permissions.",
+        "Static permissions do not require an object argument and are for general or creation actions (e.g., `create activity pattern`).",
+        "Object-based permissions always require an object argument and are for actions on existing objects (e.g., `reassign owned activity`)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Title slide introducing the concept of static and object-based permissions."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explains Application Permission Keys (APKs), their definition, custom handlers, and associated PolicyCenter objects."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Differentiates between static and object-based permissions with clear examples."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Static Permission",
+          "content": "A permission that does not require a specific object as an argument, typically used for general actions or creating new objects."
+        },
+        {
+          "type": "definition",
+          "title": "Object-Based Permission",
+          "content": "A permission that always requires a specific object as an argument, used for actions that modify or manage an existing object."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Implementing Static and Object-Based Permissions",
+      "narrative": "The Security Dictionary is a valuable resource for identifying whether a permission is static or object-based. It explicitly indicates this characteristic for each permission. For example, `actpatcreate` (create activity pattern) is marked as `[static]`, while `actraown` (reassign owned activities) is `[object-based]`. This distinction directly impacts how you write the `perm` expression.\n\n**Static system permissions** are straightforward. They are checked using `perm.System.permission` and only require the typecode of the permission. For instance, `perm.System.viewteam` checks if the user can view the team tab. These are often used for general UI visibility or access to broad functionalities.\n\n**Static permissions on entities** are defined using APKs with `StaticHandlers` in `security-config.xml`. These are checked using `perm.Entity.permission`. A classic example is `perm.Account.create`. The `StaticHandler` maps the `Account` entity and the `create` permKey to the `accountcreate` system permission. This means that when `perm.Account.create` is evaluated, it checks for the `accountcreate` system permission. These are crucial for controlling the ability to create new instances of an entity, as no object exists yet to pass as an argument.\n\n**Object-based permissions** are defined using custom handlers in `security-config.xml` and are checked with `perm.Entity.permission(object)`. Here, you *must* pass the actual object instance as an argument. For example, `perm.Account.edit(account)` checks if the current user has permission to edit a specific `account` object. Similarly, `perm.Submission.view(submission)` checks if the user can view a particular `submission` object. These are essential for fine-grained control over existing entity instances, ensuring users only interact with objects they are authorized to.\n\nUnderstanding and correctly implementing both static and object-based permissions is fundamental to building a secure and functional PolicyCenter application, ensuring that access control is applied at the appropriate level of granularity.",
+      "keyPoints": [
+        "The Security Dictionary indicates if a permission is static or object-based.",
+        "Static system permissions use `perm.System.permission` (e.g., `perm.System.viewteam`).",
+        "Static permissions on entities use `perm.Entity.permission` and `StaticHandlers` in `security-config.xml` (e.g., `perm.Account.create`).",
+        "Object-based permissions use `perm.Entity.permission(object)` and custom handlers in `security-config.xml` (e.g., `perm.Account.edit(account)`).",
+        "Create permissions are typically static; view, edit, delete permissions are typically object-based."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "Shows how to identify static vs. object-based permissions in the Security Dictionary."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Explains static system permissions and provides an example using `perm.System.viewteam`."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Details static permissions on entities, their definition via APKs and `StaticHandlers`, and an example with `perm.Account.create`."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Explains object-based permissions, their definition via custom handlers, and examples like `perm.Account.edit(account)`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Create vs. Modify Permissions",
+          "content": "Generally, 'create' permissions should be static as no object exists yet. 'View', 'edit', or 'delete' permissions should be object-based, requiring the specific object to be passed as an argument."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will visually distinguish between static and object-based permissions, showing how they are implemented and the different scenarios in which each type is used.",
+      "transcriptSummary": "The demo provides concrete examples of static permissions, such as enabling a 'New Account' menu item, and object-based permissions, like controlling the editability of an existing account. It highlights how the presence or absence of an object argument in the `perm` expression defines the permission type."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team is developing a new custom entity, `ClaimReview`, in PolicyCenter. You need to ensure that only users with a specific 'Reviewer' role can create new `ClaimReview` records, and only the assigned reviewer can edit an *existing* `ClaimReview` record.",
+      "question": "How would you define the necessary system permissions and the corresponding `perm` expressions for these two scenarios (create new, edit existing)?",
+      "hints": [
+        "Consider the naming conventions for system permissions.",
+        "Think about whether an object is available when checking the 'create' permission versus the 'edit' permission.",
+        "Recall the `perm` namespace syntax for static vs. object-based permissions."
+      ],
+      "expectedApproach": "Define `claimreviewcreate` in `SystemPermissionType` for static permission. Define `claimreviewedit` in `SystemPermissionType` for object-based permission. Use `perm.ClaimReview.create` for the static check and `perm.ClaimReview.edit(claimReviewObject)` for the object-based check."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "ae What is a system permission?",
+      "referenceAnswer": "System permissions are permissions defined in the SystemPermissionType typelist.",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "_~ — Define static and object-based permissions. Give examples.",
+      "referenceAnswer": "Static permissions do not take any parameter as argument whereas object-based\npermissions take an object as an argument.\n\nExample of static permission — perm.System.viewteam.\n\nExample of object-based permission — perm.Account.edit( account ).",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "PolicyCenter uses a robust role-based security model built on granular system permissions and roles.",
+        "The Security Dictionary is a vital tool for understanding and documenting permissions and roles.",
+        "New system permissions are defined in `SystemPermissionType` and require dictionary regeneration.",
+        "The `perm` Gosu namespace is used to check permissions, controlling UI and business logic.",
+        "Permissions are either static (no object argument) or object-based (requires an object argument), depending on the action and context."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring permissions is paramount for data security, regulatory compliance, and user efficiency. Misconfigured permissions can lead to security vulnerabilities or hinder user productivity. A deep understanding of static vs. object-based permissions ensures that your custom features integrate seamlessly and securely into the PolicyCenter application.",
+      "nextLessonPreview": "In our next lesson, we will explore advanced security configurations, including how to define custom handlers for Application Permission Keys and integrate external security systems."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through the process of configuring a new permission and applying it within PolicyCenter. You will define a new system permission, integrate it into a role, and then use a `perm` expression to control a UI element based on this new permission.",
+      "objectives": [
+        "Create a new typecode in `SystemPermissionType` to define a custom system permission.",
+        "Regenerate the Security Dictionary to reflect the new permission.",
+        "Modify an existing role (or create a new one) to include the new permission.",
+        "Implement a `perm` expression in a PCF file to control the visibility or editability of a UI component based on the new permission.",
+        "Test the new permission by logging in with users assigned and not assigned the modified role."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "PP_10_01.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_10_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "PP_10_02.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_10_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "PP_10_03.mp4",
+      "path": "/academy/guidewire/videos/ch08/PP_10_03.mp4"
+    }
+  ]
+}

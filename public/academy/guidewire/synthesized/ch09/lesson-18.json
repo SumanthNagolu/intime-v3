@@ -1,0 +1,376 @@
+{
+  "lessonId": "ch09-l18",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 18,
+  "title": "Cloud Data Archiving for ClaimCenter",
+  "subtitle": "Learn how Guidewire Cloud manages data archiving, retrieval, and purging for ClaimCenter applications.",
+  "synthesizedAt": "2026-02-16T18:43:00.130621+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine your insurance company has millions of claims, many of which are years old and rarely accessed, yet still need to be retained for regulatory compliance. Storing all this data in your active operational database can significantly impact performance and increase costs. How do you manage this ever-growing volume of historical data efficiently?",
+      "question": "What strategies can you employ to optimize your ClaimCenter database performance while ensuring long-term data retention and compliance?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the key business use cases for cloud data archiving in ClaimCenter.",
+        "Compare data archiving in self-managed vs. Guidewire Cloud implementations.",
+        "Identify what types of data can be archived in ClaimCenter.",
+        "Explain the process of archiving claims in the Guidewire Cloud.",
+        "List the configuration components involved in ClaimCenter archiving.",
+        "Describe the process and capabilities for restoring archived claims, including single and bulk restore.",
+        "Explain how data model changes are handled during data restoration.",
+        "Describe the process and configuration for purging archived data in ClaimCenter.",
+        "Understand the security and privacy aspects of archived data in the Cloud."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with the basic operations of ClaimCenter, including how claims are processed and closed, and have a general understanding of database management concepts. Recall how ClaimCenter manages various entities like claims, activities, and policies.",
+      "warmupQuestion": "What are some challenges you've encountered with managing large volumes of historical data in an operational system?",
+      "hint": "Think about performance, storage costs, and regulatory requirements."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Cloud Data Archiving",
+      "narrative": "Data archiving is a critical process for managing the lifecycle of information within an application like ClaimCenter. It involves moving data that is no longer actively needed for daily operations from the primary, high-performance database to a more cost-effective, long-term storage solution, while still retaining it for business needs and regulatory compliance. This practice significantly enhances application and database performance by reducing the size of the operational database. In the Guidewire Cloud, this process is managed by Guidewire, shifting the responsibility for infrastructure and data store scaling from the customer.\n\nKey business use cases for data archiving in the Cloud include the core archiving process itself, which moves entities to an archive data store and supports scaling for large volumes. Data retrieval is another crucial aspect, allowing entities to be returned from the archive to the operational database for specific needs such as litigation, catastrophe response, fraud investigation, audits, or amendments. Furthermore, Cloud archiving inherently addresses stringent security and compliance requirements, including regulations like GDPR and CCPA, by providing robust data privacy and security for all archived information. Finally, data purge ensures that data is permanently deleted from the archive at the end of its useful life, once all business and regulatory retention periods are satisfied.\n\nIn self-managed implementations, the customer bears the full responsibility for the underlying infrastructure, including servers, databases, and networks. ClaimCenter identifies objects for archiving, encodes them into XML, and serializes them. A `ClaimInfo` object, summarizing the claim, remains in the operational database, while the detailed XML archive items are written to a customer-provided archive data store. When data is no longer needed, the customer is also responsible for purging it from both the archive and the operational database. In contrast, with Guidewire Cloud, Guidewire Cloud Operations owns and manages the entire infrastructure, including the operational database and the archive data store (typically AWS S3). ClaimCenter still handles the identification, encoding, and serialization of archive objects, but Guidewire manages the storage, retrieval, and purging mechanisms, simplifying the process for the customer.",
+      "keyPoints": [
+        "Data archiving moves inactive data to a separate store to improve operational database performance.",
+        "Guidewire Cloud manages the entire archiving infrastructure, including storage and scaling.",
+        "Key use cases include archiving, retrieval, security/compliance (GDPR/CCPA), and data purging.",
+        "Self-managed archiving requires customer responsibility for infrastructure and data store.",
+        "Cloud archiving offloads infrastructure and data store management to Guidewire, using AWS S3."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the data archiving concept, showing data moving from an active database to an archive."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates the key business use cases for data archiving in the Cloud: archiving, retrieval, security/compliance, and purge."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram showing the architecture of data archiving in a self-managed ClaimCenter implementation, highlighting customer responsibilities."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Diagram illustrating data archiving in the Guidewire Cloud, showing ClaimCenter interacting with an AWS S3 archive data store."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A blank slide, often used as a transition or placeholder in presentations."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "A comparison table outlining the responsibilities of Guidewire and the customer for archiving in self-managed vs. Guidewire Cloud environments."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "ClaimInfo Object",
+          "content": "A summary object created in the operational database when a claim is archived, retaining essential details while the full claim data moves to the archive."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "The Claim Archiving Process in Cloud",
+      "narrative": "In ClaimCenter, the primary archival object is a `Claim`. When a claim is archived, it includes the `Claim` as the root entity and all other entity types that the root `Claim` entity owns within its domain graph. This ensures that all related information necessary to reconstruct the claim is archived together. For example, a `Claim` entity can own `Activity`, `Exposure`, `Matter`, `ServiceRequest`, `Document`, `TransactionSet`, `ActivityPattern`, and `BulkInvoice` entities, among others, as detailed in the ClaimCenter data model documentation.\n\nThe archiving process for claims in the Cloud begins with active claims. As part of normal operations, many claims eventually reach a closed state. Once a claim is closed, and Claim Archiving is enabled, the `ClaimClosed` ruleset automatically calculates and sets the `DateEligibleForArchive`. This date is determined by adding the value of the `DaysClosedBeforeArchive` parameter (configured in `config.xml`) to the claim's closed date. A claim will only be considered for archival once this eligibility date has passed.\n\nNext, claims marked as eligible are evaluated against the `Archive` ruleset. This ruleset contains various checks to ensure the claim meets all conditions for archiving. These checks typically verify that the claim remains closed, has no open activities, is not part of an unapproved bulk invoice, is not in subrogation, and other similar conditions. If a claim passes all these checks, it is then archived. The archived claim is removed from the active operational database, and its `ClaimInfo` object is updated with a summary. The archival data is then sent to an AWS S3 data store via the `IArchiveSource` plugin.\n\nOnce a claim is archived, it can be restored if needed. The restore process can retrieve a single claim or multiple claims, repopulating the active database with the detailed claim information from the archived XML. Finally, when all regulatory and business retention requirements are met, the claim can be purged. This is a permanent action that removes the claim entirely from the archive and deletes its `ClaimInfo` object from the operational database.",
+      "keyPoints": [
+        "The `Claim` entity is the root archival object, including all owned related entities.",
+        "Claims become eligible for archive after being closed for a configurable number of days (`DaysClosedBeforeArchive`).",
+        "The `Archive` ruleset performs checks to ensure claims meet all archiving conditions.",
+        "Archived claims are moved to an AWS S3 data store, leaving a `ClaimInfo` summary in the operational database.",
+        "Archived claims can be restored to the active database or permanently purged after their useful life."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Illustrates that a 'Claim' is the root archival object in ClaimCenter, including all owned entities in its domain graph."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "The first step in the archiving example, showing several active claims."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "The second step, where some active claims become closed, making them potential candidates for archiving."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "The third step, showing eligible closed claims being checked against the Archive ruleset before actual archiving."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "The fourth step, depicting an eligible claim being removed from the active database and sent to an AWS S3 archive."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "The fifth step, demonstrating that an archived claim can be restored back to the active database."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "The sixth and final step, showing an archived claim being permanently purged from the archive."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A flowchart summarizing the step-by-step archive process for claims, from eligibility to archival."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Claim Archival Rules",
+          "content": "Carefully configure your `ClaimClosed` and `Archive` rulesets to align with your business and regulatory requirements for claim retention and eligibility. This prevents premature archiving or archiving of claims that still require active management."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Configuration Components for Archiving",
+      "narrative": "Implementing and managing data archiving in ClaimCenter involves several key configuration components. These components work together to define when and how data is archived, restored, and purged.\n\nFirst, **Configuration Parameters** are defined in the `config.xml` file. These parameters enable archiving and set critical thresholds. For ClaimCenter, the `ArchiveEnabled` parameter toggles the archiving feature on or off. The `DaysClosedBeforeArchive` parameter specifies the number of days a claim must remain closed before it becomes eligible for archiving, which is used to set the `Claim.DateEligibleForArchive` property. While PolicyCenter has similar parameters like `ArchivePolicyTermDays` and `ArchiveRecentJobCompletionDays`, for ClaimCenter, `DaysClosedBeforeArchive` is paramount. It's important to review the `Archive Parameters` section of `config.xml` and product documentation for a comprehensive list.\n\nSecond, **Gosu Rules** play a vital role in determining eligibility. The `ClaimClosed` ruleset contains a rule that calculates and sets the `DateEligibleForArchive` based on the `DaysClosedBeforeArchive` parameter when a claim is closed. The `DefaultGroupClaimArchiving` ruleset includes rules designed to *skip* claims from archiving if they fail certain conditions, such as being open, part of an unapproved bulk invoice, having open activities, incomplete vendor reviews, unacknowledged transactions, or incomplete subrogation. This acts as a safeguard. The `ArchivedClaimPurge` ruleset, by default, has no active rules in the base product; customers are expected to develop their own rules here to define when archived claims are eligible for permanent purging, for example, based on jurisdiction and age.\n\nThird, **Batch Processes** handle the actual execution of archiving, restoring, and purging. In ClaimCenter, the `Archiving Item Writer` processes eligible claims for archiving. The `Bulk Purge` process permanently deletes claims from the archive and their corresponding `ClaimInfo` objects from the operational database. The `Restore Archived Claims` process retrieves claims from the archive back to the operational database. These batch processes can be run manually from the Server Tools page (accessible via Alt+Shift+T) under 'Batch Process Info' or scheduled in the `scheduler-config.xml` file.\n\nFinally, the **IArchiveSource Plugin** is a crucial platform component included in all InsuranceSuite applications. It manages the low-level operations of writing archive data to and retrieving it from the designated archive data store, such as AWS S3. This plugin abstracts the details of interacting with the storage system, providing a consistent interface for archiving functionality.",
+      "keyPoints": [
+        "`config.xml` parameters like `ArchiveEnabled` and `DaysClosedBeforeArchive` control archiving behavior.",
+        "Gosu rulesets (`ClaimClosed`, `DefaultGroupClaimArchiving`, `ArchivedClaimPurge`) define eligibility for archiving and purging.",
+        "Batch processes (`Archiving Item Writer`, `Bulk Purge`, `Restore Archived Claims`) execute the archiving, purging, and restoration operations.",
+        "The `IArchiveSource` plugin handles the technical interaction with the archive data store (e.g., AWS S3)."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "An overview of the primary configuration components for archiving in InsuranceSuite Cloud applications: parameters, Gosu rules, batch processes, and plugins."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Details on key `config.xml` parameters that control archiving, specifically `ArchiveEnabled` and `DaysClosedBeforeArchive` for ClaimCenter."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explanation of the Gosu rulesets involved in archiving: `ClaimClosed`, `DefaultGroupClaimArchiving`, and `ArchivedClaimPurge`."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Describes the main batch processes (`Archiving Item Writer`, `Bulk Purge`, `Restore Archived Claims`) and the `IArchiveSource` plugin."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "xml",
+          "title": "Example config.xml parameter",
+          "code": "<param name=\"DaysClosedBeforeArchive\" value=\"30\"/>",
+          "explanation": "This XML snippet from `config.xml` sets the number of days a claim must be closed before it is considered eligible for archiving to 30 days."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Restoring Archived Data: Single and Bulk Retrieval",
+      "narrative": "Once a claim or policy is archived, its detailed information is moved to the archive data store, leaving only summary information in the operational database. However, there are several compelling reasons why restoring archived data becomes necessary. You might need to view detailed information for a claim or its related objects, as only a summary is available in the active database. New information might be received that needs to be added to an archived object, or changes in business or regulatory requirements could necessitate retrieving historical data. Additionally, new reporting requirements might require access to archived data.\n\nThe process of restoring archived claims involves retrieving the claim and its entire archive domain graph from the archive data store and writing them back to the operational database. ClaimCenter offers several capabilities for this: the ability to search for and retrieve individual claims, a new bulk restore capability for multiple claims, the option to group restored claims into an association for easier management, and the ability to monitor the progress of a restore operation directly in the user interface.\n\nFor a **single restore**, you begin in the Advanced Search screen for claims. By selecting 'Archive' as the data source and entering your search criteria, you can find archived claims. The search results will show claims with an 'Archived' status. To retrieve a specific claim, simply select its checkbox and click the 'Retrieve from Archive' button. A pop-up will prompt you to enter a reason for the retrieval, after which you can complete the process. This action repopulates the active database with the full claim details from the archived XML.",
+      "keyPoints": [
+        "Archived data restoration is needed for viewing details, adding new information, meeting regulatory changes, or new reporting.",
+        "Restoring retrieves the full claim domain graph from the archive to the operational database.",
+        "Capabilities include single restore, bulk restore, grouping restored claims, and monitoring progress.",
+        "Single restore is initiated from the Advanced Search screen by selecting 'Archive' as the data source."
+      ],
+      "figures": [
+        {
+          "slideNumber": 22,
+          "caption": "An introductory slide to the concept of restoring archived data."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Explains the business reasons and scenarios that necessitate restoring archived data."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Outlines the capabilities for restoring data from the archive, including new bulk restore features."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Demonstrates the user interface steps for performing a single claim restore from the archive via the Advanced Search screen."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Restoring Archived Data: Bulk Restore and Associations",
+      "narrative": "Beyond single claim retrieval, ClaimCenter also provides a robust **bulk restore** capability, which is particularly useful when a large number of claims need to be brought back into the active database simultaneously. To initiate a bulk restore, a user with administrative rights navigates to the Administration tab, then selects Utilities -> Restore Archived Claims in Bulk -> Bulk Restore Claims Records. On this screen, you can start a new bulk restore by clicking 'New Restore with Claim Numbers'.\n\nThe process involves several steps: first, you must enter a descriptive string in the 'Restore Summary' field. This summary acts as an identifier and groups the claims into an 'association,' which can be easily accessed and reviewed later. An optional description can provide more context for this association. Next, you choose how to provide the claim numbers for restoration. You can either manually enter up to 10 claim numbers directly into a comma-separated list, or for larger volumes, upload a `.csv` file containing up to 2000 claim numbers. After providing the claim numbers, clicking 'Restore' initiates the retrieval process.\n\nOnce a bulk restore request is submitted, you can monitor its progress directly within the ClaimCenter UI. The 'Bulk Restore Claims Record Details' screen displays the summary, description, and the list of claims being retrieved. An 'Overview' column provides real-time status updates, showing how many claims are found, retrieving, or already restored. You can click the 'Refresh' button to update the screen and see the latest status. Upon completion, the screen will confirm that all specified claims have been successfully restored. These completed bulk restore requests, or 'associations,' remain accessible from the 'Bulk Restore Claims Records' page, allowing administrators to review past restorations and their details. If there are many requests, a search term can be used to quickly locate a specific association.",
+      "keyPoints": [
+        "Bulk restore allows retrieval of multiple claims simultaneously, up to 2000 via CSV upload.",
+        "Bulk restore is accessed via Administration > Utilities > Restore Archived Claims in Bulk.",
+        "Each bulk restore creates an 'association' identified by a 'Restore Summary'.",
+        "Progress of bulk restore requests can be monitored in the UI, with real-time updates.",
+        "Completed bulk restore associations can be reviewed from the 'Bulk Restore Claims Records' page."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "The first step in initiating a bulk restore, showing navigation to the 'Bulk Restore Claims Records' screen."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "The second step of bulk restore, detailing how to enter a summary, select the input method, and provide claim numbers."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Illustrates how to monitor the progress of a bulk restore request in the ClaimCenter user interface, showing before and after completion."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Shows how to access and review completed bulk restore requests (associations) from the 'Bulk Restore Claims Records' page."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Descriptive Restore Summaries",
+          "content": "When performing a bulk restore, use clear and descriptive 'Restore Summary' and 'Description' fields. This helps future administrators understand the purpose and context of the restoration, especially when reviewing historical associations."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Advanced Restore Considerations: Configuration and Data Model Changes",
+      "narrative": "When configuring archived claim retrieval, a key parameter to be aware of is `MaxNumberOfArchivedEntitiesToRestore`, defined in `config.xml`. This parameter specifies the maximum number of claims that can be included in a single bulk claim restore request. In the base configuration, this value is typically set to 2000, aligning with the `.csv` upload limit for bulk restores. It's crucial to consult the `Archive Parameters` section of the `config.xml` file and the product documentation for other parameters related to claim retrieval.\n\nOne of the most complex aspects of data restoration involves **data model changes**. Archived data may span multiple versions of the ClaimCenter data model. If a mandatory column is added to the active database after data has been archived, previously archived data will not possess this new column, potentially preventing its restoration. To address this, ClaimCenter performs a data model version check during the restore process. If the archived data's model is an earlier version, upgrade triggers are executed to update the domain graph to match the current data model.\n\nThere are two types of upgrade triggers: **built-in upgrade triggers** provided by Guidewire to handle changes to the core data model made during product updates, and **custom upgrade triggers** that customers develop to manage their own data model changes. All these triggers operate on one XML document at a time. If any of these upgrade triggers fail during the restoration of a claim, the entire restore process for that claim will fail. This emphasizes the importance of robust and well-tested upgrade triggers.\n\nFor customers who implement archiving and make custom data model changes to archived entities, the `IDataModelUpgrade` plugin is essential. Specifically, the `IDataModelChange` interface includes `getDatabaseUpgradeVersionTrigger` and `getArchivedDocumentUpgradeVersionTrigger` methods. Customers should implement both triggers whenever data model changes are made. It is a best practice to create and thoroughly test these triggers at the time the data model change is implemented, rather than waiting until they are needed months or years later. This proactive approach ensures that when archived data is retrieved, it can be successfully upgraded to the current data model, maintaining data integrity and system functionality. Refer to the Gosu documentation for detailed guidance on 'Upgrading archived entities using a version trigger'.",
+      "keyPoints": [
+        "`MaxNumberOfArchivedEntitiesToRestore` in `config.xml` limits claims per bulk restore.",
+        "Data model changes between archive and current database require upgrade triggers during restore.",
+        "ClaimCenter checks data model versions and runs built-in or custom upgrade triggers.",
+        "Custom data model changes require implementing `IDataModelChange` interface triggers (`getDatabaseUpgradeVersionTrigger`, `getArchivedDocumentUpgradeVersionTrigger`).",
+        "Failure of any upgrade trigger during restore will cause the entire restore process for that claim to fail."
+      ],
+      "figures": [
+        {
+          "slideNumber": 31,
+          "caption": "Highlights the `MaxNumberOfArchivedEntitiesToRestore` parameter in `config.xml` and its role in bulk retrieval limits."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "Explains how ClaimCenter handles data model changes during restoration, including the use of upgrade triggers."
+        },
+        {
+          "slideNumber": 33,
+          "caption": "Provides further detail on implementing custom data model upgrade triggers using the `IDataModelChange` interface."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "A blank slide, often used as a transition or placeholder in presentations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Proactive Trigger Implementation",
+          "content": "Always implement and test `IDataModelChange` triggers concurrently with any custom data model changes that affect archived entities. This ensures that your archived data remains restorable and compatible with future versions of your application."
+        },
+        {
+          "type": "warning",
+          "title": "Restore Failure on Trigger Error",
+          "content": "Be aware that if any upgrade trigger fails during the restoration of an archived entity, the entire restore operation for that entity will fail. Thorough testing of these triggers is paramount."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Purging Archived Data and Security",
+      "narrative": "Once archived data has passed its useful life and satisfied all business and regulatory retention requirements, it can be permanently deleted through the **purging** process. In ClaimCenter, purging is a permanent action and is supported by a two-stage configurable ruleset designed to prevent unintended data deletion. By default, the purge functionality is disabled and must be explicitly enabled in the `config.xml` file if needed.\n\nThe purging process for claims involves the `MarkArchivedEntityPurgeReady` work queue, which executes the `ArchiveClaimPurge` ruleset. This ruleset contains rules that determine if a claim should be marked for purge. For example, a default (though disabled) rule might check if a claim's jurisdiction is California and its loss date is more than 7 years ago. Any closed claim that is eligible for archive and satisfies the rules in `ArchiveClaimPurge` will be marked as ready for purge. Subsequently, when the `Bulk Purge` batch process is executed, all claims marked for purge are permanently removed from both the active database (specifically, their `ClaimInfo` object) and the AWS S3 archive.\n\n**Archived data security and privacy** are paramount. In the Guidewire Cloud, archived data is stored in an AWS S3 database. AWS S3 inherently provides robust data security and privacy features, which are managed by the data store itself. Furthermore, Guidewire's cloud archiving solution is designed to be compliant with major data protection regulations, including GDPR (General Data Protection Regulation). This compliance extends to data destruction, or purging, ensuring that when data is purged, it is completely and permanently destroyed from both the AWS S3 archive and the live operational database (Aurora), meeting strict regulatory requirements for data erasure.",
+      "keyPoints": [
+        "Purging permanently deletes archived data after its useful life and regulatory retention periods.",
+        "Purge is disabled by default and must be enabled in `config.xml`.",
+        "The `ArchiveClaimPurge` ruleset determines which archived claims are marked for purge.",
+        "The `Bulk Purge` batch process permanently deletes marked claims from both the archive and operational database.",
+        "Archived data in AWS S3 is secured, private, and GDPR compliant, including data destruction."
+      ],
+      "figures": [
+        {
+          "slideNumber": 35,
+          "caption": "Explains the purpose and characteristics of purging data in ClaimCenter, including its two-step ruleset and default disabled state."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "Illustrates the process of purging claims, involving the `MarkArchivedEntityPurgeReady` work queue and the `ArchiveClaimPurge` ruleset."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "An introductory slide to the topic of archived data security."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Details on data security and privacy for archived data, emphasizing AWS S3 storage and GDPR compliance."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Purge is Permanent",
+          "content": "Data purging is a permanent and irreversible action. Ensure your `ArchiveClaimPurge` ruleset is thoroughly tested and aligns perfectly with your organization's data retention policies and legal obligations to prevent accidental data loss."
+        },
+        {
+          "type": "best_practice",
+          "title": "GDPR Compliance",
+          "content": "Leverage the built-in GDPR compliance features of Guidewire Cloud archiving for data privacy and destruction. Ensure your custom purge rules also adhere to these regulations."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company has a policy to archive claims that have been closed for at least 90 days. You also have a specific business rule that prevents claims involved in ongoing subrogation from being archived, even if they are closed. A new regulatory requirement states that claims from California must be purged 10 years after their loss date.",
+      "question": "How would you configure ClaimCenter to meet these requirements for archiving and purging?",
+      "hints": [
+        "Consider which `config.xml` parameter controls the initial eligibility for archiving.",
+        "Think about which Gosu ruleset is used to *skip* claims from archiving based on specific conditions.",
+        "Identify the Gosu ruleset where you would define custom purge logic.",
+        "Remember that purge is disabled by default."
+      ],
+      "expectedApproach": "1. Modify `DaysClosedBeforeArchive` in `config.xml`. 2. Add or modify a rule in the `DefaultGroupClaimArchiving` ruleset to check for ongoing subrogation. 3. Enable purge in `config.xml`. 4. Develop a custom rule in the `ArchivedClaimPurge` ruleset to identify California claims older than 10 years for purging."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "A recent audit requires you to retrieve 500 specific archived claims related to a particular incident type from two years ago. Simultaneously, your data science team needs to restore a single, critical archived claim to investigate a fraud pattern. Your ClaimCenter data model has undergone several custom changes since these claims were archived.",
+      "question": "Outline the steps you would take to perform these restorations, considering the data model changes.",
+      "hints": [
+        "Which restore method is best for 500 claims? For a single claim?",
+        "How do you provide a list of claim numbers for a bulk restore?",
+        "What is the role of `IDataModelChange` and its triggers?",
+        "What happens if a data model upgrade trigger fails?"
+      ],
+      "expectedApproach": "1. For the 500 claims, use the bulk restore feature, uploading a CSV file with the claim numbers. 2. For the single critical claim, use the single restore feature from Advanced Search. 3. Ensure that custom `IDataModelChange` triggers (`getDatabaseUpgradeVersionTrigger` and `getArchivedDocumentUpgradeVersionTrigger`) are correctly implemented and tested to handle your data model changes. 4. Monitor the progress of both restore operations in the UI and be prepared to troubleshoot any failures related to data model upgrade triggers."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Cloud data archiving in ClaimCenter offloads infrastructure management to Guidewire, improving performance and ensuring compliance.",
+        "The archiving process is driven by configurable parameters in `config.xml` and Gosu rulesets (`ClaimClosed`, `DefaultGroupClaimArchiving`).",
+        "Claims are archived to AWS S3, leaving a `ClaimInfo` summary in the operational database.",
+        "Archived claims can be restored individually or in bulk, with UI monitoring for progress.",
+        "Data model changes between archive and current versions are handled by built-in and custom upgrade triggers during restoration.",
+        "Purging permanently deletes data based on customer-defined rules in the `ArchivedClaimPurge` ruleset, and is disabled by default.",
+        "Archived data in AWS S3 benefits from robust security, privacy, and GDPR compliance."
+      ],
+      "realWorldConnection": "In real Guidewire projects, effective data archiving is crucial for maintaining optimal ClaimCenter performance, managing storage costs, and meeting stringent regulatory requirements for data retention and deletion. By leveraging Guidewire Cloud's archiving capabilities, organizations can streamline their data lifecycle management, reduce operational overhead, and ensure business continuity and compliance without compromising system speed or data integrity."
+    }
+  ],
+  "videos": []
+}

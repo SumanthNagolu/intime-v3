@@ -1,0 +1,241 @@
+{
+  "lessonId": "ch05-l03",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 3,
+  "title": "Introduction to Organizational Structure",
+  "subtitle": "Understand how ClaimCenter organizes users and groups for efficient claim assignment.",
+  "synthesizedAt": "2026-02-16T17:35:24.991778+00:00",
+  "estimatedMinutes": 55,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a Business Analyst at Succeed Insurance, tasked with configuring ClaimCenter. Your company has a complex, specific organizational structure that dictates how claims are handled and who is responsible for what. You need to ensure ClaimCenter accurately reflects this structure.",
+      "question": "How does ClaimCenter translate a real-world organizational hierarchy into its system to ensure claims are assigned to the right people?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Identify the two basic building blocks of the ClaimCenter organizational structure: Users and Groups.",
+        "Describe the key characteristics and functions of Users within ClaimCenter.",
+        "Explain the purpose, hierarchy, and types of Groups, including virtual groups.",
+        "List the six assignable objects in a base ClaimCenter configuration.",
+        "Describe when and how assignment occurs in ClaimCenter, including the role of regions and group types."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely worked in organizations with departments, teams, and reporting structures. You also understand that enterprise software systems need a way to manage who can access what and who is responsible for specific tasks.",
+      "warmupQuestion": "Think about a time you needed to find the right person or team for a specific task at work. What information did you use to make that decision?",
+      "hint": "Consider factors like expertise, location, or reporting lines."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Fundamental Building Blocks: Users and Groups",
+      "narrative": "When configuring ClaimCenter, understanding its organizational structure is paramount. As Marcus, our Business Analyst, highlights in **Figure 1**, the system needs to mirror Succeed Insurance's specific way of doing business. At its core, ClaimCenter organizes a carrier's employees, the people who handle claims, into two basic building blocks: **Users** and **Groups**.\n\n**Users** are individuals permitted to log into ClaimCenter. They are directly involved in the process of settling claims and are the ultimate owners of assigned work. Every user must belong to at least one group, ensuring they are always part of the organizational structure. As detailed in **Figure 2**, users are characterized by several key pieces of information:\n\n*   **Credentials**: Typically a username and password for system access.\n*   **Roles**: A set of permissions that dictate what data a user can view and edit.\n*   **Authority Limits**: Defines a user's power to create and approve reserves and payments.\n*   **Location Information**: Includes name, address, email, and phone, which can be crucial for proximity-based assignments.\n*   **Group Membership**: Specifies which groups the user belongs to.\n*   **Experience Level**: Identifies a user's proficiency, which can influence the complexity of assigned work or the level of detail in a claim's workplan.\n*   **Attributes**: Special skills, such as additional language abilities, relevant to specific claims.\n\n**Groups**, as shown in **Figure 2**, are the primary way ClaimCenter organizes these users. They can contain other groups (forming teams or subgroups) or individual users. Groups often mirror the insurer's real-world organizational structure, such as a main office with departments, divisional offices, and local offices. However, groups can also be 'virtual' – a collection of people not necessarily on the same team or department but related by a shared characteristic, like all adjusters in a region with commercial arson expertise. These virtual groups simplify assignment by bringing together individuals from different parts of the organization's hierarchy who share similar job responsibilities.",
+      "keyPoints": [
+        "Users and Groups are the foundational elements of ClaimCenter's organizational structure.",
+        "Users are individuals with credentials, roles, authority, and specific attributes.",
+        "Groups organize users and can reflect real-world or virtual organizational structures."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Marcus, the Business Analyst, highlights the importance of aligning ClaimCenter's organization structure with Succeed Insurance's business model."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "An overview of the basic organizational structure in ClaimCenter, defining Groups and Users."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Detailed characteristics and attributes that define a User in ClaimCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Virtual Group",
+          "content": "A set of people who are not part of the same team or department but are related in some other way, such as shared expertise or a common job responsibility. Virtual groups simplify assignment logic for specific types of work."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Group Dynamics and User-to-Group Relationships",
+      "narrative": "Groups in ClaimCenter are designed to streamline operations. As illustrated in **Figure 6**, groups generally contain users who perform similar tasks, such as an 'Auto group' for auto-related claims. They are also hierarchical, meaning each group typically has only one parent group, with the top-level organization being the exception. This hierarchy supports various ClaimCenter functions, including automatic assignment logic, determining access to claim objects, and providing supervisors with an overview of assignments and tasks within their supervised groups. Groups can be organized around specific lines of business (e.g., auto, workers' comp, property) and can also be associated with geographic regions.\n\nAn important distinction lies in the relationships: while child groups belong to a single parent group, user-to-group relationships are **many-to-many**. This means a single user can belong to multiple groups, as depicted in **Figure 7**. For example, Terry Martel and Jessie Hickman might belong to both a 'Phoenix WC Adjusters' group and a 'Western Fraud WC Adjusters' virtual group. This flexibility allows users to receive assignments from all groups they belong to, enabling specialized roles that span traditional departmental boundaries.\n\nMost groups in a live ClaimCenter instance reflect the carrier's actual reporting structure. However, a small but crucial number of groups are 'virtual' groups. These don't represent a reporting structure but rather a common job responsibility shared by individuals in different departments. For instance, a 'Western Fraud Auto Adjusters' group might contain individuals from various local offices who all specialize in fraudulent auto claims. Virtual groups are invaluable for simplifying the assignment of objects that involve similar logic to individuals across different parts of the organization's hierarchy.",
+      "keyPoints": [
+        "Groups are hierarchical, task-oriented, and support assignment, access, and supervision.",
+        "Users can belong to multiple groups (many-to-many relationship).",
+        "Virtual groups facilitate assignment for specialized tasks across different organizational departments."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Key characteristics and functions of Groups, including hierarchy and association with lines of business and regions."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "An example illustrating how users can belong to multiple groups, including 'virtual' groups, for flexible assignment."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Understanding Assignment and Assignable Objects",
+      "narrative": "At the heart of ClaimCenter's workflow is the concept of **assignment**. As shown in **Figure 8**, assignment is simply the act of selecting an owner for an assignable object. When an object needs work, ClaimCenter assigns it to both a specific group and a user within that group. This holds true whether the assignment is automatic, driven by business rules, or performed manually by a user.\n\nIn the base ClaimCenter application, there are six primary types of assignable objects that require an owner:\n\n1.  **Claim**: The overarching claim record itself.\n2.  **Exposure**: Represents a specific aspect of loss within a claim (e.g., vehicle damage, bodily injury).\n3.  **Activity**: Individual tasks or steps required to process a claim.\n4.  **Service Request**: Requests for external services related to a claim (e.g., appraisal, towing).\n5.  **Matter**: Legal matters or disputes associated with a claim.\n6.  **Subrogation**: The process of recovering money from a third party responsible for a loss.\n\nWhile an object might sometimes be assigned to a temporary location, such as a 'Pending assignments' list for claims or a group queue for activities, these are merely intermediate steps. The ultimate outcome of the assignment process, as highlighted in **Figure 9**, is always the same: every assignable object is definitively assigned to a specific group and a user within that group. This ensures clear ownership and accountability throughout the claims handling process.",
+      "keyPoints": [
+        "Assignment is the process of selecting an owner (group and user) for an object.",
+        "ClaimCenter has six core assignable objects: Claim, Exposure, Activity, Service Request, Matter, and Subrogation.",
+        "All assignable objects are ultimately assigned to a group and a user."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Definition of assignment and the six types of assignable objects in ClaimCenter."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "The outcome of assignment, showing that all assignable objects are assigned to a group and a user."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Leveraging Regions and Types in Rule-Based Assignment",
+      "narrative": "ClaimCenter's powerful rule-based assignment engine relies heavily on two key attributes: **Regions** and **Types**. As detailed in **Figure 10**, a **region** is a named geographic area. This can be broadly defined (e.g., 'Southern U.S.' including multiple states) or very specific (e.g., a particular postal code, county, or city). Regions are highly configurable and can even overlap. Both users and groups can be associated with one or more regions, enabling location-based assignment rules. For instance, a claim with a loss location in Germany could be routed to a group covering the Saxony state.\n\nConversely, a **type** defines the specific kind of work a group performs. Examples include 'Workers’ Compensation Group,' 'Fraud Group,' or 'Subrogation Group.' These types allow ClaimCenter to categorize and direct work based on its nature. The assignment engine uses these attributes in conjunction, as shown in **Figure 11**, to efficiently assign Claim objects:\n\n1.  **Region-based narrowing**: The rules first consider all groups and narrow down the list of eligible groups based on the claim's loss location and the regions groups cover. For example, if a claim is in Texas, the rules will prioritize groups within that region.\n2.  **Type-based narrowing**: Next, the rules further restrict the list by group type. If it's an auto claim, only groups handling auto claims will remain eligible.\n3.  **User selection**: Finally, a specific user is selected from the remaining eligible group. This systematic approach ensures that claims are routed to the most appropriate group and individual based on both geographic location and the specialized nature of the work.",
+      "keyPoints": [
+        "Regions are configurable geographic areas associated with users and groups for location-based assignment.",
+        "Types define the specific kind of work a group performs.",
+        "The rule-based assignment engine uses regions to narrow by location and types to narrow by work specialization."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Explanation of Regions (geographic areas) and Types (work categories) and their role in assignment."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "How users, groups, and regions are utilized by the rule-based assignment engine to assign Claim objects."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Region",
+          "content": "A named geographic area (states, postal codes, cities, etc.) that groups or users may cover. Used in location-based assignment rules."
+        },
+        {
+          "type": "definition",
+          "title": "Group Type",
+          "content": "An attribute that defines the specific kind of work a group performs (e.g., Auto, Workers' Comp, Fraud). Used to match claims to specialized groups."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Advanced Assignment Logic and Timing",
+      "narrative": "To illustrate the power of location-based assignment, consider the example in **Figure 12**. ClaimCenter can use a configurable geographic hierarchy to select the most precise group. If a claim's location is postal code 77089, it might first be assigned to an 'Eastern Harris' group. If no postal-code-based group matches, it escalates to the county level (e.g., 'Harris County' group). If still no match, it goes to the state level (e.g., 'Texas' group). This ensures a claim is always assigned, starting with the most specific geographic match.\n\nGroup attributes, specifically **Type** and **Region**, are used in conjunction within assignment rules, as highlighted in **Figure 13**. For example, an insurer might have 'Auto Normal' and 'Auto Complex' groups across 'North,' 'South,' and 'Central' regions. A medical Workers' Comp claim in Tennessee would need to be assigned to a 'Workers' Comp Medical' group within the 'Southeast' region. The system combines these attributes to pinpoint the correct assignment. It's also assumed that users assigned to a particular group are capable of handling the type of work that group performs.\n\nFinally, it's crucial to understand **when and how assignment occurs**, as shown in **Figure 14**. Assignment generally happens when an assignable object is created. For instance, at the end of the New Claim Wizard, ClaimCenter can automatically assign the claim using its rules, or a user can manually assign it. Existing objects can also be reassigned explicitly by their owner or a supervisor with sufficient permissions. During automated claim setup or initial claim creation, not only the claim itself but also any associated activities and exposures created during that process are assigned to a group and a user. This ensures continuous ownership and workflow management.",
+      "keyPoints": [
+        "ClaimCenter uses a configurable geographic hierarchy (e.g., postal code, county, state) for precise location-based assignment.",
+        "Group Type and Region attributes are combined in rules to ensure accurate, specialized assignments.",
+        "Assignment occurs upon object creation (initial setup) and through explicit reassignment by authorized users."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "An example demonstrating how ClaimCenter selects a group by location using a hierarchical approach (postal code, county, state)."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Illustrates how group attributes like Type and Region are used together in assignment rules to direct claims to specialized groups in specific areas."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Details the circumstances under which assignment occurs, including object creation and reassignment."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through how regions, groups, and users are configured and interact within ClaimCenter. Pay close attention to how these elements are linked to facilitate the assignment process.",
+      "transcriptSummary": "The video demonstrates the setup of regions, groups, and users in ClaimCenter. It shows how to define geographic areas, create hierarchical groups, assign users to multiple groups, and how these configurations support the automated assignment engine."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new claim has just been created for a property loss in Houston, Texas (postal code 77002). This claim involves potential fraud.",
+      "question": "Based on what you've learned about ClaimCenter's organizational structure and assignment logic, describe the likely steps ClaimCenter's rule-based assignment engine will take to assign this claim to the appropriate group and user.",
+      "hints": [
+        "Consider the order in which assignment rules typically narrow down options.",
+        "Think about how both location and the nature of the claim (fraud) would influence the assignment.",
+        "Remember the geographic hierarchy and group types."
+      ],
+      "expectedApproach": "The learner should describe the assignment process, starting with location-based narrowing (postal code, then county, then state if needed), followed by type-based narrowing (fraud group), and finally user selection within that group."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are the two basic building blocks of the ClaimCenter organizational structure?",
+      "referenceAnswer": "Users and Groups",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When does object assignment happen?",
+      "referenceAnswer": "Object creation and manual object reassignment",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "What are the six (6) assignable objects in a ClaimCenter base configuration?",
+      "referenceAnswer": "1.Claim\n2.Exposure\n3. Activity\n4.Service\n5.Matter\n6.Subrogation",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "ClaimCenter's organizational structure is built upon Users and Groups, which can reflect both real-world hierarchies and virtual teams.",
+        "Users have specific characteristics (roles, authority, experience) that influence their assignments.",
+        "Groups are hierarchical, task-oriented, and can be associated with lines of business, types, and geographic regions.",
+        "Assignment is the process of giving ownership of an object (Claim, Exposure, Activity, Service Request, Matter, Subrogation) to a specific group and user.",
+        "The rule-based assignment engine uses a combination of regions (location) and group types (work specialization) to efficiently route objects.",
+        "Assignment occurs upon object creation and can be manually triggered for reassignment."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a deep understanding of organizational structure is critical for configuring ClaimCenter to accurately reflect an insurer's business processes. Correctly setting up users, groups, regions, and assignment rules ensures that claims are handled efficiently, by the right people, and in compliance with company policies, directly impacting operational effectiveness and customer satisfaction.",
+      "nextLessonPreview": "In the next lesson, we'll delve deeper into configuring assignment rules and explore advanced scenarios for customizing the assignment engine to meet specific business requirements."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access your ClaimCenter training environment. Navigate to the Administration section and explore the existing Users and Groups. Identify at least one example of a hierarchical group structure and one user who belongs to multiple groups. Document your findings, noting the roles and attributes of the users you observe.",
+      "objectives": [
+        "Locate and examine user and group configurations in ClaimCenter.",
+        "Identify examples of hierarchical group structures.",
+        "Recognize users with multiple group memberships and their associated roles/attributes."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_03.mp4"
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "lessonId": "ch06-l19",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 19,
+  "title": "Controlling Access",
+  "subtitle": "Understand how BillingCenter manages user permissions, roles, authority limits, and security zones.",
+  "synthesizedAt": "2026-02-16T17:56:13.513959+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Marcus, a new business analyst at Succeed Insurance, needs to understand how BillingCenter protects sensitive financial data. He's concerned about who can see what and who can approve high-value transactions.",
+      "question": "How does BillingCenter ensure that only authorized users can access and modify critical financial information, and what mechanisms are in place to prevent unauthorized actions?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Identify the main entities that control user capabilities within BillingCenter",
+        "Explain how monetary limits restrict a user’s ability to execute a transaction without approval",
+        "Describe group approval structures",
+        "Navigate around the Security Dictionary"
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered user accounts and permissions in other software systems. Think about how your email or banking applications control what you can see and do based on your login.",
+      "warmupQuestion": "What are some common ways software applications restrict access to features or data for different types of users?",
+      "hint": "Consider roles like 'administrator' vs. 'guest' or 'read-only' vs. 'editor'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Foundations of Access Control: Permissions",
+      "narrative": "In BillingCenter, the ability for a user to perform actions or view information is fundamentally governed by **system permissions**. As Marcus learns from Whitney, the Chief Information Technology Officer, security is a multi-layered system involving users, roles, system permissions, and security zones. At its core, access is about what you, as a user, are allowed to see and do within the system. This includes everything from creating and deleting records to owning objects or modifying payments.\n\nSystem permissions are granular capabilities that define specific actions a user can take or data they can view. These are often simply referred to as 'permissions.' The system categorizes these permissions based on what they pertain to: objects (like accounts or policies), groups, or user interface (UI) elements. For instance, while you can own an object, you cannot 'own' a group or the Desktop UI. Your specific set of permissions is directly tied to your job function or role within the organization. This ensures that a customer service representative has a different set of capabilities than a billing manager, aligning system access with real-world responsibilities.",
+      "keyPoints": [
+        "BillingCenter security is managed through users, roles, system permissions, and security zones.",
+        "Access defines what a user can see and do within BillingCenter.",
+        "System permissions are granular abilities to perform actions or view data.",
+        "Permissions are categorized by what they pertain to: objects, groups, or UI elements.",
+        "A user's permissions are determined by their job function."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Marcus and Whitney discuss how BillingCenter controls access to financial information."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of how access is controlled and granted through system permissions in BillingCenter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Examples of system permissions categorized by object, group, and UI elements."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Permissions influence user capabilities, determining what they can view, create, own, or act on."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Permissions in Action: View, Edit, Own, and Act On",
+      "narrative": "Permissions directly influence a user's experience in BillingCenter, often by controlling the visibility of UI elements or determining the success of a task. Let's explore some common types of permissions:\n\n*   **View/Navigate to permissions:** These control whether a user can see specific menu items or tabs. For example, a billing clerk like Christine Craft might not have the 'View commission plans' permission, so the 'Commission Plans' menu item is hidden from her sidebar. In contrast, a manager like Edward Lee, with the appropriate permission, can see and access it.\n\n*   **Create, Edit, and/or Delete permissions:** These govern a user's ability to modify or remove objects. If Christine Craft lacks the 'Edit Account Contact' permission, the 'Edit' button for contacts will be hidden. Edward Lee, as a manager, would have this permission and see the button.\n\n*   **Own permissions:** These determine if a user can be assigned ownership of an object. If someone tries to assign a trouble ticket to Judith Wiley, who lacks the 'Own Trouble Ticket' permission, the system will prevent the assignment. Edward Lee, with the correct permission, can successfully become the owner of a trouble ticket.\n\n*   **Act on permissions:** These enable users to perform specific actions on objects. Christine Craft, without 'Create Writeoff on Account' permission, will not see the 'Write-Off' menu item in her Desktop Actions. Edward Lee, with this permission, will have it available.\n\nIt's important to note that a user's permissions are initially determined when they log in to BillingCenter, rendering the appropriate startup view. However, if an administrator modifies a user's permissions while they are logged in, those changes are applied immediately, ensuring real-time security adjustments.",
+      "keyPoints": [
+        "Permissions control UI visibility (e.g., menu items, buttons) and task success.",
+        "View/navigate permissions determine what a user can see.",
+        "Edit permissions control modification of objects.",
+        "Own permissions dictate if a user can be assigned ownership of an object.",
+        "Act on permissions enable specific actions on objects.",
+        "User permissions are determined at login but update immediately if changed by an administrator."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Example of 'View/navigate to' permissions affecting menu item visibility for different users."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Illustration of 'Edit object' permissions controlling the visibility of an 'Edit' button."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Demonstration of 'Own object' permissions impacting the ability to assign a trouble ticket."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Example of 'Act on' permissions determining the availability of a 'Write-Off' menu item."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Flowchart showing how user permissions are determined during the login process."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Kashmira has been asked to issue a commission advance to a producer,\nbut she doesn’t see a menu item for paying a commission advance.\n: What is the problem?",
+      "referenceAnswer": "Kashmira does not have a role that includes the permission to give a commission\nadvance.",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "When does BillingCenter determine which permissions a given user\n“ has?\n’",
+      "referenceAnswer": "BillingCenter determines the permissions for a user when that user logs in.",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Streamlining Access: Roles and User Assignment",
+      "narrative": "Directly assigning individual permissions to every user would be an administrative nightmare. To simplify this, BillingCenter uses **roles**. A role is a named collection of permissions designed to reflect a specific job title or function within an organization. Instead of assigning dozens or hundreds of permissions to each user, administrators assign one or more roles.\n\nFor example, a 'Billing Clerical' role might include permissions like 'View Accounts tab,' 'View activity,' 'Create activity,' 'Own activity,' and 'Edit activity.' A 'Billing Manager' role could then either inherit all these permissions plus additional manager-specific permissions, or it could be designed to only contain the *additional* permissions, with managers being assigned both the 'Billing Clerical' and 'Billing Manager' roles. The key is flexibility in design.\n\nEach user is assigned one or more roles, and they inherit all the permissions from all their assigned roles. For instance, Patty Doe might have the 'Commissions Admin' role, Christine Craft the 'Billing Clerical' role, and Edward Lee could have both 'Billing Manager' and 'Plan Admin' roles to reflect his broader responsibilities. It's crucial to understand that BillingCenter's permission structure is additive; it grants abilities. There are no permissions that explicitly *deny* access. To prevent someone from having a permission, you simply ensure they are not assigned any role that includes that permission.",
+      "keyPoints": [
+        "Roles are named sets of permissions that simplify user access management.",
+        "Roles typically map to job titles or functions.",
+        "Users are assigned one or more roles and inherit all permissions from those roles.",
+        "BillingCenter's permission model is additive; it grants access, it does not deny it."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "Whitney explains to Marcus that permissions are assigned via roles, not directly to users."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Comparison of permissions within 'Billing Clerical' and 'Billing Manager' roles."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Examples of how different users are mapped to one or more roles to define their permissions."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Howmany roles can a given user have?",
+      "referenceAnswer": "Theoretically, a user can have any number of roles from zero to many. Every user\nmust have at least one role in order to be able to do something in BillingCenter. A user\nwith broader responsibility than another user can be given additional roles so that they\nare able to accomplish these responsibilities.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Monetary Restrictions: Authority Limits and Approvals",
+      "narrative": "Beyond simply granting access, BillingCenter also allows for **monetary restrictions** on transactions through **authority limits**. An authority limit is a predefined monetary threshold for a specific transaction type. If a user attempts a transaction for an amount less than or equal to their assigned limit, it proceeds without special approval. However, if the transaction amount exceeds this limit, it automatically triggers an approval process.\n\nAuthority limits are not assigned directly to users but rather through an **authority limit profile**. These profiles are typically crafted to align with the responsibilities of various job roles, such as a 'Billing Clerk Profile' or a 'Superuser Profile,' each containing a set of appropriate limits for different transaction types. A user can only have one authority limit profile assigned at a time. If a user has no authority limit profile, any transaction requiring a limit will require approval.\n\nWhen a user, like Aaron Applegate, attempts a transaction (e.g., a $2,000,000 commission advance) that exceeds their authority limit, BillingCenter generates an alert. It informs the user that the action requires approval and automatically creates an approval activity, assigning it to a designated supervisor. This ensures financial controls are maintained for high-value operations.",
+      "keyPoints": [
+        "Authority limits set monetary restrictions on transaction amounts.",
+        "Transactions exceeding a user's limit require approval.",
+        "Authority limits are assigned to users via authority limit profiles.",
+        "A user can only have one authority limit profile.",
+        "Exceeding a limit triggers an approval activity assigned to a supervisor."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "Whitney introduces the concept of authority limits for monetary restrictions."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Explanation of authority limits, their impact on transactions, and how they are assigned via profiles."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Examples comparing 'Superuser' and 'Low' authority limit profiles with different monetary thresholds."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "An alert showing a user attempting a transaction that exceeds their authority limit, triggering an approval."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "The supervisor's response to an approval activity, with options to approve or reject the transaction."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Organizing Approvals: Groups and Tiered Structures",
+      "narrative": "The approval process for transactions exceeding authority limits often involves **groups** and a structured hierarchy. A group in BillingCenter is a work-related unit comprising any number of users. Whitney confirms that the supervisors mentioned in the approval process are indeed **group supervisors**. Typically, every user belongs to at least one group, and each group has a designated supervisor.\n\nGroups are organized in a single **tree hierarchy**, meaning each group (except the top-level root group) has a single parent, and can have multiple child groups and members. This hierarchical structure is crucial for implementing **tiered approvals**. Tiered approvals allow transactions to move up the organizational hierarchy, from one supervisor to the next, until they reach a supervisor with sufficient approval authority for the specific amount.\n\nConsider an example: Eric can approve bonus commissions up to $1,000. His supervisor, Betty, can approve up to $10,000, and her supervisor, Chris, up to $1,000,000. If Eric creates a $5,000 bonus, it only needs Betty's approval. If he creates a $50,000 bonus, it first goes to Betty, and if she lacks the authority, it then moves up to Chris. BillingCenter facilitates this by creating new approval activities at each level until the transaction is fully approved. This ensures that high-value transactions receive appropriate oversight.",
+      "keyPoints": [
+        "Groups are work-related units containing users, essential for approvals.",
+        "Every group has a single supervisor (except the root group).",
+        "Groups are organized in a single tree hierarchy.",
+        "Tiered approvals allow transactions to escalate up the group hierarchy for higher-level authorization.",
+        "BillingCenter creates new approval activities at each level for tiered approvals."
+      ],
+      "figures": [
+        {
+          "slideNumber": 26,
+          "caption": "Marcus and Whitney discuss group supervisors and the role of groups in the approval process."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Definition and characteristics of groups in BillingCenter, including their hierarchical structure."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Visual representation of groups organized in a single tree structure."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "An example illustrating how tiered approvals work within a group hierarchy for bonus commissions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Data-Level Security: Security Zones",
+      "narrative": "To address requirements for **data-level security**, BillingCenter employs **security zones**. A security zone restricts access to specific entities such as accounts, policies, or producers. If an entity is assigned to a particular security zone, only users who are members of a group within that same security zone can access that entity. If an entity is not in any zone, access is unrestricted by default.\n\nMembership in a security zone is gained through group affiliation. A user can belong to multiple groups, and therefore, can be a member of multiple security zones, allowing for flexible access configurations. However, a single group can only be in a maximum of one zone. For example, if Sally and Will are in the 'Admin' group, they are in the 'HQ' zone. Igor, being in both 'Admin' and 'East' groups, could be a member of both 'HQ' and 'Special' security zones.\n\nThis mechanism is powerful for scenarios where divisions or legal entities within a company need to operate independently, or when access to sensitive accounts (like those of celebrities) must be tightly controlled. The only exception to security zone restrictions is the 'Superuser' role, which typically has permissions to ignore security zones, providing an override for critical administrative tasks.",
+      "keyPoints": [
+        "Security zones restrict access to specific accounts, policies, or producers.",
+        "Only users in a group within a zone can access entities in that zone.",
+        "Entities not in a zone have unrestricted access by default.",
+        "Users gain zone membership through groups and can be in multiple zones.",
+        "Security zones enable independent operations for divisions or restrict access to sensitive data.",
+        "The 'Superuser' role can bypass security zone restrictions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 30,
+          "caption": "Overview of security zones, how they restrict access, and how users gain membership."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Further explanation of security zones restricting access to entities and their practical applications."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Kevin wants to update the address details for the Inna Starr account, but\nPa he cannot find the account. What is the problem?",
+      "referenceAnswer": "Most likely, the Irma Starr account is in a security zone that Kevin does not belong to.\n\nLess likely is that Kevin’s assigned role or roles lack permission to view an account.",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show you how to view security-related information directly within the BillingCenter user interface, giving you a practical understanding of how permissions and access controls are reflected in the system.",
+      "transcriptSummary": "The video guides the user through navigating the BillingCenter UI to find and inspect various security settings and user capabilities, demonstrating where to see assigned roles and permissions for a user."
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "The Security Dictionary: Your Go-To Reference",
+      "narrative": "When you need to understand the intricate details of BillingCenter's security configuration, the **Security Dictionary** is your best resource. As Whitney explains to Marcus, it's a series of HTML pages that comprehensively document all permissions and roles within your application. This tool is invaluable for both business analysts and technical users, allowing you to quickly check which pages or UI elements a permission applies to, or to see all permissions contained within a specific role.\n\nThe Security Dictionary provides four main types of information:\n\n1.  **Application Permission Keys:** Lists BillingCenter's internal permission keys, the system permissions they contain, and where they are referenced in the UI.\n2.  **Pages:** Lists all PCF screen pages and the permissions required to view or edit them.\n3.  **System Permissions:** Lists each individual system permission, the roles that include it, and its UI references.\n4.  **Roles:** Lists all defined roles and the permissions each role contains.\n\nIt's important to remember that the Security Dictionary is a static snapshot. If you make any changes to permissions or roles in your BillingCenter configuration, you must **regenerate** the dictionary to ensure it reflects the most current security settings. This ensures that your documentation is always up-to-date with your application's behavior.",
+      "keyPoints": [
+        "The Security Dictionary is the primary source for security-related information in BillingCenter.",
+        "It documents all permissions and roles in a series of HTML pages.",
+        "It provides four types of information: Application Permission Keys, Pages, System Permissions, and Roles.",
+        "The dictionary must be regenerated after any changes to permissions or roles to reflect updates."
+      ],
+      "figures": [
+        {
+          "slideNumber": 36,
+          "caption": "Whitney introduces the Security Dictionary as the best source for security information."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "Overview of the Security Dictionary, its purpose, and the four types of information it provides."
+        },
+        {
+          "slideNumber": 38,
+          "caption": "Instructions on how to navigate and view detailed information within the Security Dictionary."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Howcan you determine the number of roles that enable users to create\ntrouble tickets?",
+      "referenceAnswer": "Go to the Security Dictionary and view the\ncreate trouble ticket permission to see\nwhich roles the permission has been added to.",
+      "questionKey": "slide-39"
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will walk you through navigating the Security Dictionary to find specific information about permissions and roles, showing you how to effectively use this powerful reference tool.",
+      "transcriptSummary": "The video illustrates how to access the Security Dictionary, browse its different sections (Application Permission Keys, Pages, System Permissions, Roles), and search for specific permissions or roles to understand their configurations and relationships."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team is onboarding a new 'Senior Billing Specialist' role. This role needs to be able to approve commission advances up to $5,000, view all account details, and create new activities. They should NOT be able to create write-offs.",
+      "question": "Using your knowledge of BillingCenter security, outline the steps you would take to configure this new role and ensure the user has the correct access and authority limits. Where would you verify your configuration?",
+      "hints": [
+        "Consider which core entities (permissions, roles, authority limits) are involved.",
+        "Think about how permissions are grouped and assigned.",
+        "Remember where monetary limits are defined and applied.",
+        "How would you check if the 'create write-off' permission is *not* assigned?"
+      ],
+      "expectedApproach": "1. Identify necessary permissions (e.g., 'View Accounts tab', 'Create activity', 'Own activity', 'Advance Commission' up to $5,000). 2. Create or modify an existing role (e.g., 'Senior Billing Specialist') to include these permissions. Ensure no 'Create Writeoff on Account' permission is included. 3. Create or assign an authority limit profile that includes a $5,000 limit for 'Advance Commission' transactions. 4. Assign the new role and authority limit profile to the user. 5. Verify the configuration using the Security Dictionary to check the role's permissions and by testing a transaction that exceeds the limit."
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Lesson Objectives Review",
+      "narrative": "We've covered the essential components of access control in BillingCenter. You should now be able to identify the core entities that govern user capabilities, understand how monetary limits trigger approval workflows, describe the hierarchical structure of group approvals, and confidently navigate the Security Dictionary to find detailed security information. These concepts are fundamental to managing a secure and compliant BillingCenter environment.",
+      "keyPoints": [
+        "Main entities controlling user capabilities: users, roles, system permissions, security zones.",
+        "Monetary limits restrict transactions, requiring approval if exceeded.",
+        "Group hierarchies facilitate tiered approval processes.",
+        "The Security Dictionary is the central reference for all security configurations."
+      ],
+      "figures": [
+        {
+          "slideNumber": 43,
+          "caption": "Review of the lesson objectives, summarizing the key learning outcomes."
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Access in BillingCenter is controlled by granular system permissions, which are grouped into roles.",
+        "Users are assigned roles, inheriting all associated permissions.",
+        "Authority limits impose monetary restrictions on transactions, triggering approval workflows for amounts exceeding a user's limit.",
+        "Groups and their hierarchical structure enable multi-level (tiered) approval processes.",
+        "Security zones provide data-level access control, restricting access to specific entities based on user group membership.",
+        "The Security Dictionary is the definitive source for understanding and verifying all security configurations."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring access control is paramount for compliance, data privacy, and operational efficiency. Misconfigured permissions can lead to security breaches, unauthorized financial transactions, or hinder user productivity. A thorough understanding of roles, authority limits, and security zones ensures that your BillingCenter implementation is both secure and tailored to your organization's specific business processes and regulatory requirements."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Explore BillingCenter security by logging in with different user roles (if available in your training environment). Observe how the UI changes, which menu items are visible, and which actions you can perform. Attempt to create a transaction that would exceed a known authority limit to see the approval workflow in action. Finally, use the Security Dictionary to look up a specific permission and identify which roles contain it.",
+      "objectives": [
+        "Observe the impact of different roles on UI and functionality.",
+        "Experience an authority limit approval workflow.",
+        "Practice navigating and extracting information from the Security Dictionary."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_19_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_19_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_19_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_19_02.mp4"
+    }
+  ]
+}

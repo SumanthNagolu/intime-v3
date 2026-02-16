@@ -1,0 +1,217 @@
+{
+  "lessonId": "ch09-l11",
+  "chapterId": 9,
+  "chapterSlug": "ch09",
+  "lessonNumber": 11,
+  "title": "Configuring ClaimCenter Financials - Transaction Approvals",
+  "subtitle": "Learn to customize financial holds and transaction approval rules in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T18:33:42.755649+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine an adjuster is about to issue a significant indemnity payment for a claim, but there's a lingering doubt about whether the policy actually covers the incident. Paying out prematurely could lead to substantial financial losses for the insurer.",
+      "question": "How does ClaimCenter prevent such costly mistakes, ensuring that payments are only made when all conditions are met and coverage is confirmed?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and impact of financial holds in ClaimCenter.",
+        "Identify the configurable factors that trigger financial holds, including 'Coverage in Question'.",
+        "Describe how to modify ClaimCenter's configuration to customize financial hold behavior and transaction validation rules."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we explored the core financial features of ClaimCenter, including reserves, payments, and recoveries. We know that ClaimCenter tracks and controls the flow of money to satisfy claims.",
+      "warmupQuestion": "What are some reasons an insurance company might want to temporarily stop or prevent certain payments on a claim, even if expenses are still being processed?",
+      "hint": "Think about the integrity of the claim and policy, or potential fraud."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Financial Holds and Their Core Logic",
+      "narrative": "In ClaimCenter, a **financial hold** is a critical mechanism designed to prevent indemnity payments on a claim until specific issues are resolved. This is particularly useful when there's uncertainty, such as when coverage is in question, a claim is 'incident only' (meaning no exposures for payments), or the policy hasn't been verified. While indemnity payments are halted, expenses can still be reserved and paid, allowing the claim process to continue without committing to potentially unwarranted claim costs.\n\nAt its core, the decision to apply a financial hold is managed by a single function: `applyFinancialHolds()` within the `FinancialHoldsImpl.gs` class. When this function executes, it checks a series of predefined conditions. If even one of these conditions evaluates to `true`, the function returns `true`, and a financial hold is applied to the claim. Conversely, if all conditions are `false`, no hold is applied. To customize the behavior of financial holds, you would modify this function by adding or removing conditions, ensuring they are logically connected with 'or' operators.\n\nFinancial holds are also integrated into other ClaimCenter processes, such as initial reserve rules. For instance, a base application rule like 'IRR02200 — Trip Cancellation' demonstrates this integration. Before creating an initial reserve, the rule first checks if the `applyFinancialHolds()` method returns `true`. If a hold is active, it might add a note to the claim instead of creating a reserve, effectively preventing the allocation of funds for claim costs until the hold is lifted. This ensures that financial controls are in place from the earliest stages of a claim's financial lifecycle.",
+      "keyPoints": [
+        "Financial holds prevent indemnity payments but allow expense payments.",
+        "The `applyFinancialHolds()` function in `FinancialHoldsImpl.gs` determines if a financial hold is active.",
+        "Financial holds can be integrated into initial reserve rules to prevent reserve creation under certain conditions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Overview of financial holds, their effects, and base configuration triggers."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "The `applyFinancialHolds()` function in `FinancialHoldsImpl.gs` that determines financial hold applicability."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Example of how financial holds are integrated into initial reserve rules."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "applyFinancialHolds() function",
+          "code": "override function applyFinancialHolds() : Boolean {\n  return _claim.CoverageInQuestion\n  or _claim.IncidentReport\n  or not _claim.Policy.Verified\n}",
+          "explanation": "This Gosu code snippet from `FinancialHoldsImpl.gs` shows the default conditions that trigger a financial hold: if coverage is in question, if the claim is incident-only, or if the policy is unverified. You would add or remove 'or' conditions here to customize financial hold triggers."
+        },
+        {
+          "language": "gosu",
+          "title": "Financial Holds in Initial Reserve Rules",
+          "code": "var finImpact = exposure.TripIncident.getTotalFinancialImpact(TC_APPROVE).Amount\n\nif (finImpact > 0 and finImpact < (exposure.Coverage.ExposureLimit as java.lang.Double)) {\n  if (_claim.applyFinancialHolds()) {\n    _claim.addNote(Note.createNote(TC_FINANCIAL_HOLD, \"Financial hold applied due to trip cancellation.\"))\n  } else {\n    exposure.createInitialReserve(finImpact, TC_CLAIMCOST)\n  }\n}",
+          "explanation": "This example demonstrates how an initial reserve rule checks for financial holds. If `_claim.applyFinancialHolds()` returns true, a note is added instead of creating an initial reserve, preventing claim cost allocation."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Configuring \"Coverage in Question\" (CiQ)",
+      "narrative": "One of the primary triggers for a financial hold is when **Coverage in Question (CiQ)** is true. This boolean field indicates doubt about whether the policy actually covers the claim. In the base configuration, CiQ is set to true under specific circumstances, such as when the loss date falls outside the policy's effective or expiration dates, or if the policy status is anything other than 'In force' or 'Archived'. This flag is prominently displayed on the Claim Summary > Status screen, alerting adjusters to potential coverage issues. This aligns with ClaimCenter's need for a *verified policy* to make payments, as detailed in the 'Working with policies in ClaimCenter' guide.\n\nThe determination of whether CiQ applies is handled by a slightly more complex function, `isCoverageInQuestionFactorsNotEmpty()`, found within `GWClaimFinancialsHoldsEnhancement`. This function, in turn, calls `getCoverageInQuestionFactors()`. The `getCoverageInQuestionFactors()` function initializes an empty hashmap and then populates it with entries for any conditions that cause coverage to be in question. To modify CiQ behavior, you would add or remove 'if' statements within this function that add entries to the `coverageInQuestionMap` if their conditions are met.\n\nOnce CiQ is determined, the Claim Pre-update rule **CPU20000 - Coverage in question** acts as a 'gatekeeper.' This rule fires if coverage is in question *or* if the CiQ field for the claim has been changed. When triggered, CPU20000 executes its child rules. In the base configuration, these children perform three key actions: setting the claim's `CoverageInQuestion` flag to true, creating an activity (or activities) related to the CiQ status, and creating a history activity to document the change. This structured approach ensures that any change in coverage status is properly flagged, communicated, and recorded.",
+      "keyPoints": [
+        "CiQ is a boolean field indicating doubt about policy coverage, triggering financial holds.",
+        "CiQ is determined by `getCoverageInQuestionFactors()` in `GWClaimFinancialsHoldsEnhancement`.",
+        "The `CPU20000` rule and its children manage actions when CiQ is triggered, such as setting flags and creating activities."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Explanation of Coverage in Question (CiQ) and its base configuration triggers."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Gosu code showing how CiQ is determined using `isCoverageInQuestionFactorsNotEmpty()` and `getCoverageInQuestionFactors()`."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "The `CPU20000` rule and its child rules that activate when coverage is in question."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Coverage in Question (CiQ)",
+          "content": "A boolean field in ClaimCenter that is true if there is doubt about whether the policy actually covers the claim, often triggering a financial hold."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "getCoverageInQuestionFactors() function",
+          "code": "function getCoverageInQuestionFactors() : java.util.HashMap<Object, Object> {\n  var validPolicyStatuses = {PolicyStatus.TC_INFORCE, PolicyStatus.TC_ARCHIVED}\n  var coverageInQuestionMap = new java.util.HashMap<Object, Object>()\n\n  if (this.LossDate < _claim.Policy.EffectiveDate) {\n    coverageInQuestionMap.put(\"Loss Date\", \"Before policy effective date\")\n  }\n  // ... other conditions ...\n  return coverageInQuestionMap\n}",
+          "explanation": "This snippet from `getCoverageInQuestionFactors()` illustrates how conditions (like loss date before policy effective date) add entries to a map, which then determines if CiQ is true. You would add new 'if' statements here for additional CiQ conditions."
+        },
+        {
+          "language": "gosu",
+          "title": "CPU20000 - Coverage in question rule condition",
+          "code": "CONDITION (claim : entity.Claim):\n  return claim.isCoverageInQuestionFactorsNotEmpty() or claim.CoverageInQuestion_Changed",
+          "explanation": "The condition for the `CPU20000` rule. It fires if `isCoverageInQuestionFactorsNotEmpty()` is true (meaning CiQ applies) OR if the `CoverageInQuestion` field on the claim has recently changed."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Enforcing Financial Holds with Transaction Validation Rules",
+      "narrative": "After defining the conditions that trigger financial holds and how 'Coverage in Question' is managed, the next crucial step is to enforce these holds on actual financial transactions. This is primarily achieved through the **Transaction Validation rule TXV15000 - Financial Holds**.\n\nTXV15000 acts as another 'gatekeeper' rule, but specifically for transactions. It fires if two conditions are met: first, there are active financial holds on the claim (determined by `transactionSet.Claim.applyFinancialHolds() == true`), AND second, the evaluated `TransactionSet` is of a type to which financial holds apply. This second condition is vital because not all transaction types might be subject to financial holds; for example, expense payments are typically allowed even with a hold. To change which transaction set types are affected, you would edit the `CONDITION` clause of TXV15000.\n\nBeneath TXV15000, there are child rules, typically one for each cause of financial holds (e.g., TXV15100 for Coverage In Question, TXV15200 for Incident Only). If you modify the conditions that cause financial holds (in `FinancialHoldsImpl.gs`), you must also update these child rules of TXV15000 accordingly to specify the actions taken when each condition applies. This ensures that the system responds correctly to each specific reason for a financial hold.\n\nIn summary, configuring financial holds involves a three-step process: \n1. **Modify `FinancialHoldsImpl.gs`**: If you're changing the factors that trigger financial holds, edit the `applyFinancialHolds()` function in this class.\n2. **Edit `TXV15000`**: If you need to change which `TransactionSets` are subject to financial holds, modify the `CONDITION` clause of the `TXV15000 - Financial Holds` transaction validation rule.\n3. **Create or Modify Child Rules of `TXV15000`**: Specify the exact action to be taken for each factor triggering a financial hold by adjusting or creating child rules under TXV15000. This comprehensive approach ensures that your ClaimCenter instance accurately reflects your organization's financial control policies.",
+      "keyPoints": [
+        "The `TXV15000` transaction validation rule enforces financial holds on specific transaction types.",
+        "Its condition checks for active financial holds and applicable transaction set types.",
+        "Configuration involves modifying `FinancialHoldsImpl.gs`, the `TXV15000` rule condition, and its child rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "The `TXV15000` transaction validation rule and its child rules for enforcing financial holds."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Summary of the three key steps for configuring financial holds in ClaimCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Structured Configuration",
+          "content": "When modifying financial hold logic, always ensure consistency across `FinancialHoldsImpl.gs` (defining triggers) and `TXV15000` (enforcing actions) to avoid unexpected system behavior or gaps in financial control."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "TXV15000 - Financial Holds rule condition",
+          "code": "CONDITION (transactionSet : entity.TransactionSet) :\n  return transactionSet.Claim.applyFinancialHolds() == true\n  and (transactionSet.Subtype == TC_CLAIMCOST or transactionSet.Subtype == TC_CLAIMCOST_RECOVERY)",
+          "explanation": "This condition for `TXV15000` checks if financial holds are active on the claim AND if the transaction set is a claim cost or claim cost recovery type. This determines which transactions are subject to the hold."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the ClaimCenter UI and configuration files to show where financial holds are applied and how they can be customized. Pay close attention to the `FinancialHoldsImpl.gs` class and the `TXV15000` rule.",
+      "transcriptSummary": "The video illustrates navigating to the `FinancialHoldsImpl.gs` class to modify conditions for financial holds and then demonstrates how to adjust the `TXV15000` transaction validation rule to control which transaction types are affected by these holds. It highlights the practical steps involved in implementing the configuration changes discussed."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your organization wants to implement a new financial hold condition: no indemnity payments should be made if the claim's 'Fraud Indicator' flag is set to `true`. This flag is a boolean field on the Claim entity (`_claim.FraudIndicator`).",
+      "question": "Which Gosu class and function would you modify first to incorporate this new condition into the financial hold logic? Provide a snippet of where you would add this new condition.",
+      "hints": [
+        "Think about the central function that determines if *any* financial hold condition is true.",
+        "Remember the 'or' logic for combining conditions in Gosu."
+      ],
+      "expectedApproach": "The learner should identify `FinancialHoldsImpl.gs` and its `applyFinancialHolds()` function. They should then add `or _claim.FraudIndicator` to the return statement within that function."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What kind of rules enforce financial holds?",
+      "referenceAnswer": "The correct answer is Transaction Validation rules",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Inthe base ClaimCenter configuration, what happens when a policy’s\n¢ status is set to anything but “In force” or “Archived”?",
+      "referenceAnswer": "The correct answer is the claim’s Coverage in Question flag is set, resulting ina\nfinancial hold.",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Financial holds prevent indemnity payments under specific conditions, while allowing expense payments.",
+        "The `applyFinancialHolds()` function in `FinancialHoldsImpl.gs` defines the conditions that trigger a financial hold.",
+        "\"Coverage in Question\" (CiQ) is a key trigger for financial holds, determined by `getCoverageInQuestionFactors()` and managed by `CPU20000` rules.",
+        "The `TXV15000` transaction validation rule enforces financial holds on specific transaction types.",
+        "Configuring financial holds involves modifying Gosu classes (`FinancialHoldsImpl.gs`) and transaction validation rules (`TXV15000` and its children)."
+      ],
+      "realWorldConnection": "Properly configuring financial holds is crucial for maintaining financial integrity in an insurance company. It prevents erroneous payments, reduces fraud risk, and ensures compliance with internal policies and regulatory requirements. In Guidewire projects, this often involves close collaboration between business analysts and developers to accurately translate complex business rules into robust system configurations, directly impacting the company's bottom line and reputation for responsible claims handling."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Please complete the lab called Configuring financials rules in the Student Workbook.",
+      "objectives": [
+        "Apply learned concepts to configure financial rules in a practical scenario.",
+        "Modify financial hold conditions and transaction validation rules within ClaimCenter."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "CC_11_01.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_11_01.mp4"
+    }
+  ]
+}

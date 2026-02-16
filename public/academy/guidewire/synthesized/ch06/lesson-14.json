@@ -1,0 +1,321 @@
+{
+  "lessonId": "ch06-l14",
+  "chapterId": 6,
+  "chapterSlug": "ch06",
+  "lessonNumber": 14,
+  "title": "Managing Producers and Commissions",
+  "subtitle": "Learn how BillingCenter automates the entire process of calculating, earning, and paying commissions to producers, including advanced configuration and overrides.",
+  "synthesizedAt": "2026-02-16T17:52:30.720653+00:00",
+  "estimatedMinutes": 120,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an insurance company with a vast network of independent producers. Each producer has unique agreements, different commission rates for various policy types, and specific payment schedules. Manually tracking and calculating these commissions would be a monumental task, prone to errors and delays.",
+      "question": "How can an advanced billing system like BillingCenter automate this complex process, ensuring producers are paid accurately and on time, while also allowing for flexibility and overrides?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the commission lifecycle in BillingCenter, from reserve to payment.",
+        "Explain the purpose and components of commission plans and subplans.",
+        "Identify how producer codes link policies to specific commission plans.",
+        "Determine the various events and criteria that trigger commission earning.",
+        "Demonstrate how to configure and test commission subplans in BillingCenter.",
+        "Explain how to apply commission overrides at both the policy and charge levels."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored how BillingCenter manages accounts, policies, and invoices. We understand that charges flow from the Policy Administration System (PAS) into BillingCenter, forming the basis for billing.",
+      "warmupQuestion": "Think about any experience you might have with sales commissions. What are some common challenges in managing them?",
+      "hint": "Consider factors like varying rates, different products, and payment triggers."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Commission Lifecycle in BillingCenter",
+      "narrative": "Let's begin by addressing a common question: how does BillingCenter track commissions? Our expert, Marci, explains that BillingCenter manages the entire process of calculating and paying commissions to producers. This process follows a clear lifecycle, starting when BillingCenter receives a billing request from the Policy Administration System (PAS).\n\nFirst, if the billing instruction is for a commissionable charge (such as a premium) and the policy has an associated producer, BillingCenter calculates the total commission the producer is expected to earn over the policy's lifetime. This calculated amount is then set aside as a **commission reserve**. This ensures that the potential commission liability is accounted for from the outset.\n\nOver time, this reserved commission transitions to being **earned**. The specific event that triggers commission earning is highly configurable and is defined within the commission plan. Possible commission earning events are diverse and include scenarios such as when a policy is bound, the first payment is received, an invoice is billed, any payment is received, an invoice is fully paid, or when the policy's effective or expiration date is reached. BillingCenter also offers the flexibility to define **custom commission earning events** through configuration, allowing insurers to adapt to unique business requirements.\n\nFinally, the earned commission is **paid**. Every producer has a designated 'commission day of month.' When this date is reached and a batch process (the Producer Payment batch process) is run, all commission that has been earned up to that point is then paid out to the producer. This automated, three-stage lifecycle—reserve, earn, and pay—ensures a streamlined and accurate commission management process within BillingCenter.",
+      "keyPoints": [
+        "BillingCenter automates the entire commission tracking process.",
+        "The commission lifecycle involves three stages: reserving, earning, and paying.",
+        "Commission is reserved when a commissionable charge is received from the PAS.",
+        "Commission earning is triggered by configurable events, including custom options.",
+        "Earned commissions are paid out on a producer's specific 'commission day of month' via a batch process."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to the topic of managing producers and commissions."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Marcus asks Marci how BillingCenter tracks commissions, initiating the discussion."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "The first stage of the commission lifecycle: commission is put in reserve after a billing request."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The second stage: commission earning occurs based on a defined event."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The complete commission lifecycle, showing commission being paid after the producer's commission day and batch process."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new insurance product is being launched, and the sales team wants commissions to be earned only when the *first payment* for a policy is successfully received.",
+      "question": "Which stage of the commission lifecycle would this requirement directly impact, and what setting in BillingCenter would you look to configure?",
+      "hints": [
+        "Think about the three main stages of the commission lifecycle: reserve, earn, pay.",
+        "Consider where the 'rules' for commission are defined.",
+        "Refer to the list of possible commission earning events discussed in the previous section."
+      ],
+      "expectedApproach": "Identify that this requirement impacts the 'earning' stage of the commission lifecycle. The configuration would be made within the 'commission plan' (or subplan), specifically by setting the 'Earn Commissions' field under 'Payable Criteria' to 'On First Payment Received'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Commission Plans and Producer Codes: The Foundation of Commission Rules",
+      "narrative": "At the heart of BillingCenter's commission management are **commission plans**. A commission plan represents a formal agreement between the insurer and the producer, dictating the terms for commission payments. It specifies several key elements:\n\n*   **Commissionable Charges**: Which types of charges (e.g., premium, specific fees) are eligible for commission.\n*   **Commission Rate**: The percentage or flat amount of commission paid for selling or renewing a policy.\n*   **Earning Triggers**: The events or dates that cause commission to be earned, as we discussed earlier.\n\nTo link a policy to a specific commission plan, BillingCenter uses **producer codes**. Each producer has one or more unique producer codes, and each code is associated with a single commission plan. When a policy is created and linked to a producer code, BillingCenter automatically determines the applicable commission plan and its rates. While producer codes are typically managed by an external producer management system, they are fundamental to how BillingCenter applies commission rules.\n\nConsider the example of Producer Y, a 'Gold tier' producer, whose producer code `001` is linked to the `CP03` commission plan. This plan might have an 'Allowed Tiers' section, restricting its use to producers with 'Gold' or 'Silver' tiers. A policy can involve multiple producers, each with a different role (Primary, Secondary, Referrer), and the commission plan can specify different rates for each role. For simplicity, we'll focus on the Primary producer in this course. The `Earn Commissions` field within the commission plan's `Payable Criteria` is where you configure *when* commission is earned, such as 'On Billing' or 'On Binding'.\n\nFor a charge to be eligible for commission, two primary conditions must be met: first, the policy must be associated with at least one producer code; and second, the commission plan linked to that producer code must explicitly list the charge pattern as a commissionable item. An additional requirement applies if a commissionable charge has a breakdown (e.g., 'Premium Including Taxes' with separate 'Premium' and 'Taxes' items). In such cases, only the individual charge breakdown items explicitly flagged as commissionable will earn commission. This 'commissionable flag' is typically sent from PolicyCenter as part of the charge breakdown details, ensuring precise control over what components of a charge are commissionable.",
+      "keyPoints": [
+        "Commission plans define the agreement between insurer and producer, specifying commissionable charges, rates, and earning triggers.",
+        "Producer codes link a policy to a specific commission plan.",
+        "A policy can have multiple producers (Primary, Secondary, Referrer), each with potentially different commission rates defined in the plan.",
+        "Commission earning requires both a producer code on the policy and the charge pattern to be listed as commissionable in the plan.",
+        "For charges with breakdowns, individual breakdown items must be flagged as commissionable to earn commission."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "A diagram illustrating how a commission plan controls the earning part of the commission lifecycle."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "This diagram shows how a producer code acts as the link between a policy and its associated commission plan."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "An example of a commission plan, detailing its components like plan details, allowed tiers, producer roles, and payable criteria."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "A summary of the requirements that must be met for a charge to earn commission in BillingCenter."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "a What event is represented by each number?\n\nProducer\n\n£ BS\n\nCommission is put in Commission is earned Commission is paid\nreserve\n\nSSeS ee ee eee Soo Se Seoe",
+      "referenceAnswer": "reserve\nCommission day for\nproducer is reached\nProducer Payment batch\nprocess runs\nProducer",
+      "questionKey": "slide-12"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "— How many producers can earn commission from a single policy billing\noo instruction?\n\nSSeS ee ee eee Soo Se Seoe",
+      "referenceAnswer": "instruction?\nThree — Primary, Secondary, and Referrer",
+      "questionKey": "slide-14"
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the end-to-end commission process within BillingCenter, illustrating how a policy's charges lead to commission being reserved, earned, and eventually paid to a producer.",
+      "transcriptSummary": "The demo shows how a new policy with a producer code triggers commission calculation, how a commission plan determines earning events, and the steps involved in the system paying out earned commissions. It highlights the screens where commission reserves and earned amounts are visible."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Specifying Commission Rules with Subplans",
+      "narrative": "Marcus recognizes that Succeed Insurance has quite complex commission schedules, and he asks Marci how these can be mapped to BillingCenter's commission plans. Marci explains that the key to handling these varied requirements lies in **commission subplans**.\n\nA single commission plan can contain multiple subplans, each designed to specify different rules for commission rates, commissionable items, and the event that triggers commission earning. This modular approach is incredibly powerful for managing diverse commission structures. For example, a 'Personal Auto' subplan might specify that a primary producer earns 10% commission on premium when a policy is bound, while a 'Homeowners' subplan could dictate an 8.5% commission on premium on the policy's effective date.\n\nEvery commission plan includes a **Default subplan**. This is crucial because it serves as a fallback, used if no other conditional subplan is relevant for a particular policy. For instance, if a policy doesn't match the criteria for 'Personal Auto' or 'Homeowners' subplans, the 'Default' subplan would apply.\n\nThe **Subplan Availability tab** is where you define the specific characteristics of policies that will earn commission under a given subplan. These criteria are derived from account, policy, and policy term attributes (e.g., Line of Business, Policy Type, Segment, Account Evaluation). Each subplan is assigned a priority, and BillingCenter evaluates the availability criteria in that priority order. The first subplan that matches the policy's attributes is the one that will be used. If no conditional subplans match, BillingCenter automatically uses the Default subplan. For this reason, the Default subplan does not have an availability tab, as it applies universally when no other specific subplan is applicable. This robust mechanism allows for highly granular and flexible management of commission rules.",
+      "keyPoints": [
+        "Commission subplans allow for specifying different sets of commission rules within a single commission plan.",
+        "Each subplan defines its own rates, commissionable items, and earning events.",
+        "Every commission plan has a Default subplan, used when no other subplan's criteria are met.",
+        "The Subplan Availability tab defines criteria (from account, policy, term attributes) that restrict a subplan's usage.",
+        "Subplans are evaluated in priority order; the first matching subplan is applied."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Marcus queries Marci about mapping complex commission schedules to BillingCenter plans, leading to the discussion on subplans."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "A diagram illustrating how a single commission plan can have multiple subplans, each with distinct rules."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "A screenshot of the Subplan Availability tab, showing how criteria and priority restrict a subplan's usage."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Howwould you configure BillingCenter to pay different commission\n: rates for different lines of business with the same producer?\n¢\n4\n~- SSS 55555555 55=->=-=",
+      "referenceAnswer": "Howwould you configure BillingCenter to pay different commission\nPa rates for different lines of business with the same producer?\n¢\nThere are two ways to do this: (1) Set up commission subplans that define different\ncriteria for different types of cases or (2) set up different producer codes.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "_— — Howdoes BillingCenter determine which commission subplan applies to\n: a given policy period?\n¢\n4\n~- SSS 55555555 55=->=-=",
+      "referenceAnswer": "(evaluations, customer segments). If all the checks fail, the Default subplan is used.",
+      "questionKey": "slide-23"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": ",— — Whatis the role of the Default subplan?\n¢\n¢\n4\n~- SSS 55555555 55=->=-=",
+      "referenceAnswer": ",— — Whatis the role of the Default subplan?\n¢\noo If no conditional subplans match the policy, BillingCenter uses the Default subplan.",
+      "questionKey": "slide-25"
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will guide you through the process of creating a new commission subplan within BillingCenter, configuring its specific rules, and setting its availability criteria.",
+      "transcriptSummary": "The demo shows how to navigate to a commission plan, add a new subplan, define its commission rates for different producer roles, specify commissionable items, and set the conditions on the Subplan Availability tab that determine when this subplan will be used."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Determining When Commission is Earned",
+      "narrative": "A crucial setting within each commission subplan is the `Earn Commissions` field, found under the `Payable Criteria` section. This field precisely controls *when* a producer earns their commission, offering a range of options to suit various business models. Commission can be earned in several ways:\n\n*   **Earned all at once**: This includes options like `On Binding` (all commission earned when the policy is bound), `On First Payment Received` (all commission earned upon the first payment), `On Effective Date` (all commission earned on the policy's effective date), `On Expiration Date` (all commission earned on the policy's expiration date), or `On Invoice Fully Paid` (all commission earned once a specific invoice is fully paid).\n*   **Earned pro rata**: This approach distributes commission earning over time. Options here include `On Billing` (commission earned incrementally as invoices with commissionable items are billed) or `On Payment Received` (commission earned incrementally as payments are received for commissionable items).\n*   **Earned on a specified date**: This allows for commission to be earned on a particular, predefined date.\n*   **Custom**: This highly flexible criterion provides configuration developers with a powerful way to implement unique, custom logic for releasing commission. For example, an insurer might have a two-year policy requiring half the commission in the first year and the other half on the policy's anniversary in the second year. The `Custom` criterion is evaluated both when a policy is bound (to check for immediate earning) and subsequently whenever the `Commission Payable Calculation` batch process runs. This ensures that even the most intricate earning schedules can be accurately accommodated within BillingCenter.",
+      "keyPoints": [
+        "The `Earn Commissions` field on a subplan determines the timing of commission earning.",
+        "Earning options include 'all at once' (e.g., On Binding, On Effective Date), 'pro rata' (e.g., On Billing, On Payment Received), or 'on a specified date'.",
+        "The 'Custom' earning criterion allows for highly flexible, configured logic for commission release.",
+        "Custom criteria are evaluated at policy binding and during the `Commission Payable Calculation` batch process."
+      ],
+      "figures": [
+        {
+          "slideNumber": 29,
+          "caption": "A screenshot showing the 'Payable Criteria' section of a subplan, highlighting the 'Earn Commissions' field and its various options."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-6",
+      "question": "_~ — When is commission earned?\n¢\n¢\n4\n~- SSS 55555555 55=->=-=",
+      "referenceAnswer": ": ‘ The timing of commission earning varies. It is determined by the Earn Commissions\nsetting on the commission subplan that is being used.",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Testing Commission Plans for Accuracy",
+      "narrative": "Once you've configured your commission plans and subplans, it's absolutely essential to **test them thoroughly** to ensure they function exactly as intended. As Marci explains to Marcus, testing involves creating a new policy that is specifically designed to interact with the commission plan you want to validate. This test policy should have a producer code that points to your target commission plan.\n\nBy simulating real-world scenarios with this test policy, you can observe how BillingCenter processes charges, calculates commission reserves, triggers earning events, and ultimately prepares for commission payments. This hands-on verification step is critical for identifying and correcting any misconfigurations or unexpected behaviors before they can impact actual producer payments. It's a proactive measure that ensures the accuracy and reliability of your commission management system.",
+      "keyPoints": [
+        "Thorough testing of configured commission plans and subplans is crucial.",
+        "Testing involves creating a new policy linked to the specific commission plan to be validated.",
+        "The process allows for verification of commission calculation, reserving, earning, and payment behavior.",
+        "Testing helps identify and correct configuration errors before they affect real operations."
+      ],
+      "figures": [
+        {
+          "slideNumber": 32,
+          "caption": "Marci explains to Marcus the importance and method of testing a commission plan."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will show you how to test a configured commission subplan by creating a new policy and observing the commission calculations in BillingCenter.",
+      "transcriptSummary": "The demo illustrates creating a policy with a specific producer code, which in turn links to a configured commission plan and subplan. It then shows how to navigate to the policy's commission details to verify that the commission reserve and earning events are functioning as expected according to the subplan's rules."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Commission Overrides: Handling Exceptions",
+      "narrative": "Even with meticulously designed commission plans and subplans, there are often unique situations that require deviations from the standard rules. Marcus asks Marci if it's possible to override the commission specified on a plan, and Marci confirms that **commission overrides** provide this essential flexibility. BillingCenter offers various ways to adjust commission earned for a policy or a specific charge.\n\n**Overriding Commission on a Policy**: For an entire policy, you have two primary override options:\n\n1.  **Alternate Plan**: You can select an entirely different commission plan to apply to the policy.\n2.  **Percentage**: You can specify a new commission rate percentage that will override the default rate from the assigned plan.\n\nTo perform a policy-level override, navigate to the `Policy` tab, click `Commissions` in the SideBar, and then click `Override Plan`. From there, you can choose either `Alternate Plan` or `Percentage`, enter the new value, and click `Update` to save your changes.\n\n**Overriding Commission on a Charge**: For more granular control, you can override commission for individual charges. This can be done from the `Charges` screen, accessible from either the `Account` tab or the `Policy` tab. After selecting the specific charge, click `Override Commission`. For each producer role (Primary, Secondary, Referrer), you can then specify either a `Commission Rate Override` (a new percentage) or a `Commission Amount Override` (a flat monetary amount). It's important to note that you cannot specify both a rate and an amount override for the same role on a charge. Overriding commission by specifying a flat amount is particularly useful for insurers that employ complex incentive systems where commission is calculated externally, allowing them to simply input the final calculated amount directly into BillingCenter. These override capabilities ensure that BillingCenter can adapt to exceptional circumstances without requiring changes to the underlying commission plans.",
+      "keyPoints": [
+        "Commission overrides allow for adjustments to default commission rates or amounts.",
+        "Policy-level overrides can involve selecting an alternate commission plan or specifying a new percentage rate.",
+        "Charge-level overrides allow for a new commission rate percentage or a flat commission amount for individual charges.",
+        "Flat amount overrides are beneficial for integrating with external commission calculation systems.",
+        "Overrides provide flexibility for managing exceptions to standard commission rules."
+      ],
+      "figures": [
+        {
+          "slideNumber": 35,
+          "caption": "Marcus asks Marci about overriding commission, leading to a discussion on this functionality."
+        },
+        {
+          "slideNumber": 36,
+          "caption": "A screenshot demonstrating how to override commission at the policy level, either by selecting an alternate plan or specifying a percentage."
+        },
+        {
+          "slideNumber": 37,
+          "caption": "A screenshot showing the 'Override Commission' option on the Charges screen, allowing for rate or amount overrides for individual charges."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-7",
+      "question": "ae boine commission overrides are available on the policy, on a charge, or\n¢\nCommi n plan\n~- SSS 55555555 55-==-",
+      "referenceAnswer": "a bot, commission overrides are available on the policy, on a charge, or\n, ?\nCommission % is available on both; commission plan is available for the policy only;\ncommission amount is available for a charge only.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "BillingCenter automates the commission lifecycle: reserve, earn, and pay.",
+        "Commission plans define the rules for commissionable charges, rates, and earning events.",
+        "Producer codes link policies to specific commission plans.",
+        "Subplans enable complex, rule-based commission structures based on policy attributes and are evaluated by priority.",
+        "The 'Earn Commissions' field dictates when commission is earned, offering various standard and custom options.",
+        "Commission overrides provide flexibility to adjust commission rates or amounts at the policy or individual charge level."
+      ],
+      "realWorldConnection": "In real Guidewire projects, accurately managing producer commissions is crucial for maintaining strong relationships with agents and ensuring financial compliance. Leveraging BillingCenter's robust commission framework, including plans, subplans, and overrides, allows insurers to automate complex payment structures, reduce manual errors, and adapt to evolving business needs efficiently.",
+      "nextLessonPreview": "In our next lesson, we will delve into managing payments and disbursements, exploring how BillingCenter handles incoming funds and outgoing refunds."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This hands-on exercise will guide you through creating and testing commission subplans in a BillingCenter virtual machine environment. You will configure a new subplan with specific earning criteria and then create a test policy to observe its effects on commission calculation.",
+      "objectives": [
+        "Start the BillingCenter application in a VM.",
+        "Create a new commission subplan within an existing commission plan.",
+        "Define commission rates and earning events for the subplan.",
+        "Set availability criteria for the subplan.",
+        "Create a test policy linked to the configured commission plan.",
+        "Verify commission reserve and earning behavior based on the subplan's rules."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Billing_14_01.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_14_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Billing_14_02.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_14_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Billing_14_03.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_14_03.mp4"
+    }
+  ]
+}

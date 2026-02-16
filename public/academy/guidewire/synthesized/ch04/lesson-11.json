@@ -1,0 +1,207 @@
+{
+  "lessonId": "ch04-l11",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 11,
+  "title": "Users and groups",
+  "subtitle": "Mastering user and group management in PolicyCenter for efficient workflow and security.",
+  "synthesizedAt": "2026-02-16T17:21:56.131527+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an administrator at a rapidly growing insurance company. New employees are joining, roles are shifting, and external agents need access to specific policy data. How do you ensure everyone has the right access, no more and no less, while keeping workflows smooth and secure?",
+      "question": "How can PolicyCenter's user and group management features help you navigate this complex organizational landscape effectively?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the diverse roles users play in PolicyCenter, such as underwriters, CSRs, or producers.",
+        "Recognize how user roles dictate transaction capabilities and policy interaction.",
+        "Learn to configure PolicyCenter's user and group settings to align with organizational workflows."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered user accounts and permission settings in various software systems. PolicyCenter extends these concepts to manage insurance-specific roles and responsibilities.",
+      "warmupQuestion": "Think about a system you use daily. How are different users granted different levels of access or capabilities?",
+      "hint": "Consider administrative users versus regular users, or different departments having access to different modules."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Users and Group Dynamics",
+      "narrative": "In PolicyCenter, **users** are the individuals who interact with the system, driving policy processes forward. Each user is assigned a specific **role**, such as an underwriter, customer service representative (CSR), or producer. These roles are critical as they determine the types of transactions a user can perform and their level of interaction with policies. For instance, an underwriter might have permissions to approve policies, while a CSR focuses on customer inquiries and policy status lookups. Users are not isolated; they manage activities, handle assignments, and can belong to multiple **groups**.\n\n**Groups** are the foundational building blocks of your organizational hierarchy within PolicyCenter. As illustrated in **Figure 3**, they streamline processes by grouping users based on department, geography, or function. This structure is vital for managing workloads and ensuring that policy tasks are seamlessly assigned and executed. For example, all underwriters in a specific region might belong to an 'Eastern Region Underwriting' group.\n\nPolicyCenter supports different **user types**, primarily categorized as internal or external, as shown in **Figure 5**. **Internal users** are employees of the insurer, such as CSRs, and are typically part of the organization’s hierarchy, with their group memberships mirroring the company's structure. **External users** are individuals outside the company who need access to PolicyCenter data, most commonly producers. They must be associated with an organization. **Captive agents** can be modeled as either internal or external users, depending on their contractual relationship with the insurer. Access for both internal and external users is meticulously controlled through their assigned roles and producer codes, ensuring data security and operational integrity.",
+      "keyPoints": [
+        "Users are individuals with specific roles (e.g., underwriter, CSR, producer) that dictate their PolicyCenter capabilities.",
+        "Groups are organizational units (department, region, function) that streamline workflows and task assignments.",
+        "Users can be internal (employees) or external (e.g., producers), with access controlled by roles and producer codes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Illustrates how users fit into groups, forming the organizational structure within PolicyCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Depicts various user roles in PolicyCenter, such as Producer, Underwriter, Supervisor, and Auditor."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Explains the distinction between internal and external user types, including captive agents, and how access is controlled."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Configuring Groups and Managing Users",
+      "narrative": "Groups in PolicyCenter are more than just collections of users; they are comprehensive units that can include **producer codes**, **queues**, and **regions**, as depicted in **Figure 6**. This flexible configuration allows administrators to tailor groups to specific organizational needs, such as geographic divisions or departmental structures. The ability to create **sub-groups**, as highlighted in **Figure 7**, enables a deeper level of organization, ensuring precise task assignments and efficient user management even in complex hierarchies. Once a policy is assigned to a group, PolicyCenter's assignment engine can efficiently distribute tasks within that group, often using methods like round-robin selection, significantly enhancing operational efficiency.\n\n**User management** is a core administrative function, primarily handled through the **Administration tab**, as detailed in **Figure 8**. Here, administrators define user roles, assign group memberships, and manage credentials. This tab provides a comprehensive view of user information, allowing for searching, viewing, editing, and creating new users. When creating an external user, it's crucial to explicitly associate them with an organization. External users have restricted access to internal organizational details, which is a key security measure. The system also allows for defining attributes that can be used for assignment decisions. Users can belong to an unlimited number of groups, with at least one representing their primary reporting relationship.\n\n**Producer codes** play a crucial role in group management, as seen in **Figure 10**. In the Administration tab, administrators can view and modify group configurations, including the producer codes assigned to them. Any user, internal or external, assigned to a group automatically gains access to all producer codes available to that group. This ensures that users have the necessary permissions to perform their roles efficiently and in alignment with organizational objectives. The reference guide clarifies that **roles are groups of permissions**, and **data-based security for accounts and policies** is managed through producer codes and organizations, defining exactly what a producer can do on an account or policy.",
+      "keyPoints": [
+        "Groups are configurable units containing users, producer codes, queues, and regions, supporting hierarchical structures with sub-groups.",
+        "The Administration tab is the central hub for managing users, defining roles, assigning group memberships, and setting credentials.",
+        "Producer codes assigned to groups grant users within those groups access to specific policies and permissions, ensuring data-based security."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Illustrates the components of a group in PolicyCenter: users, producer codes, queues, and regions."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Demonstrates the concept of group hierarchies and sub-groups for refined organization and task assignment."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Outlines the administrative functions for managing users, including creating new users and defining their characteristics."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Shows how administrators manage groups and their associated producer codes within the Administration tab."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical aspects of managing users and groups in PolicyCenter. Pay close attention to how administrators navigate the interface to configure user profiles, assign group memberships, and manage producer codes. You'll also see how the Team tab provides supervisors with tools to monitor and adjust workloads.",
+      "transcriptSummary": "The demo covers navigating group structures, searching and editing user profiles in the Administration tab, configuring user access permissions, and utilizing the Team tab for workload monitoring. It highlights how roles, group memberships, and producer codes are adjusted to align with user responsibilities and organizational goals, and how activities are assigned to users for clear responsibility."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "User Access, Permissions, and Team Oversight",
+      "narrative": "User access and permissions in PolicyCenter are meticulously controlled to ensure that individuals can perform their roles effectively without compromising security. As shown in **Figure 9**, group memberships directly influence what users can access, including the producer codes assigned to their groups. Permissions are dual-layered, relying on both the user's assigned roles and matching producer codes. For instance, if 'Producer Code Security' is enabled for a user, they can only use their role permissions against policies that have a matching producer code. This means both producer code and user role permissions must align for access to be granted. Administrators can configure these settings in the User Access tab, allowing for the inheritance of producer codes from groups and the addition of supplementary codes.\n\n**Configuring user access** involves setting up permissions that align with both user roles and organizational needs, as depicted in **Figure 13**. Proper configuration ensures that users have access to the necessary resources while maintaining robust security. This balance is crucial for efficient and secure operations within PolicyCenter.\n\nFor supervisors and managers, the **Team tab** (see **Figure 14**) is an invaluable tool for comprehensive team management. It provides a visual overview of workloads, allowing leaders to monitor caseloads, identify potential backlogs, and reassign tasks as needed. This functionality transforms team management into an insightful process, enabling optimization of workload distribution and preventing team members from becoming overwhelmed. The Team tab reports activities and jobs grouped by time and status, and it allows for mass reassignment of activities and jobs, which is particularly useful when a user leaves a group or company. The reference guide notes that PolicyCenter organizes users into groups and subgroups, and the Team tab displays a root group (My Groups) that contains other subgroups, queues, and misassigned items.",
+      "keyPoints": [
+        "User access is controlled by dual-layered permissions based on user roles and matching producer codes, often inherited from group memberships.",
+        "The Team tab provides supervisors with a comprehensive management tool to monitor workloads, identify backlogs, and reassign tasks.",
+        "Proper configuration of user access and permissions is essential for maintaining both operational efficiency and security."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Details the User Access tab, showing how producer code security and group-inherited producer codes control user permissions."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Illustrates how user access and permissions are configured and managed within PolicyCenter."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Provides an overview of the Team tab's capabilities for supervisors to manage groups and monitor workloads."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Workload Management and Reporting Categories",
+      "narrative": "PolicyCenter offers flexible ways to view and manage workloads, primarily by **Role** or by **Activity**, as illustrated in **Figure 15**. This distinction is vital for accurately assessing responsibilities within a policy workflow:\n\n*   **View by Role**: When viewing by role, the Team screen displays jobs where a user is a participant, such as a Customer Service Representative (CSR). A CSR ensures a job progresses and may not have explicit activities assigned to them, but their role dictates their involvement in numerous jobs.\n*   **View by Activity**: This view focuses on jobs where a user has an explicit activity assigned to them. An underwriter, for example, might participate in thousands of jobs but only needs to take action when an activity is specifically assigned. This ensures that underwriters focus on tasks requiring their direct intervention, preventing unnecessary work on automatically progressing policies.\n\nThis dual perspective helps in accurately assessing workloads and ensuring that users are focused on their key responsibilities, thereby enhancing productivity and accountability. **Role-based work management** is central to how tasks are assigned and distributed, as further emphasized by **Figure 16**, which shows reporting icons and their meanings on the Team page. These icons provide quick visual cues about the status of various tasks, such as 'Open', 'Overdue', or 'New', allowing supervisors to quickly grasp the state of their team's workload. Understanding these reporting categories and icons is crucial for effective workload distribution and maintaining operational efficiency.",
+      "keyPoints": [
+        "Workloads can be viewed by 'Role' (user participation in jobs) or 'Activity' (explicit tasks assigned to a user).",
+        "Viewing by Role is useful for users whose involvement is continuous, like CSRs.",
+        "Viewing by Activity is crucial for users who act on specific tasks, like underwriters.",
+        "Reporting icons on the Team page provide quick visual status updates for tasks."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Compares viewing workloads by 'Role' versus 'Activity' to differentiate user participation from explicit task assignments."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Displays common reporting icons and their meanings on the Team tab for quick workload status assessment."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company has just hired a new Underwriter, 'Sarah Connor', who needs to be part of the 'Eastern Region Underwriting' group. This group has specific producer codes assigned to it. You also need to ensure Sarah can only access policies matching her group's producer codes.",
+      "question": "Describe the steps you would take in PolicyCenter to create Sarah's user account, assign her to the correct group, and enable producer code security.",
+      "hints": [
+        "Start in the Administration tab.",
+        "Remember that group membership automatically grants access to certain producer codes.",
+        "Consider the 'User Access' tab for security settings."
+      ],
+      "expectedApproach": "Navigate to Administration > Actions > New User. Fill in Sarah's details. Go to the 'Groups' sub-tab to add her to 'Eastern Region Underwriting'. Then, go to the 'Access' sub-tab and ensure 'Producer Code Security' is set to 'Yes'."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "As a supervisor, you notice that one of your team members, John Doe, has an unusually high number of 'Overdue' activities when viewing 'By Activity'. You suspect he might be overwhelmed or stuck on certain tasks.",
+      "question": "How would you use the Team tab to investigate John's workload, identify the specific overdue activities, and potentially reassign some of them to another team member?",
+      "hints": [
+        "Start by selecting your group in the Team tab.",
+        "Drill down to John Doe's individual workload.",
+        "Look for options to reassign activities."
+      ],
+      "expectedApproach": "Go to the Team tab, select your group, then click on John Doe's name to view his individual workload. Filter or sort by 'Overdue' activities. Select the activities to be reassigned and use the mass reassignment feature to move them to another user in the group."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Answer true or false:\n\n_’ _ Anintemal user could be assigned a producer code for any organization.",
+      "referenceAnswer": "True",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Users in PolicyCenter have specific roles that define their capabilities and interactions with policies.",
+        "Groups are organizational structures that streamline workflows, manage assignments, and control access to producer codes.",
+        "The Administration tab is central for managing users, groups, roles, and permissions.",
+        "The Team tab provides supervisors with tools to monitor, manage, and adjust team workloads, viewing by both 'Role' and 'Activity'.",
+        "Producer codes and roles work together to enforce data-based security and access control."
+      ],
+      "realWorldConnection": "Effective user and group management in PolicyCenter is crucial for maintaining operational efficiency, ensuring data security, and adapting to organizational changes in a dynamic insurance environment. It directly impacts how quickly policies are processed, how accurately tasks are assigned, and how securely sensitive information is handled.",
+      "nextLessonPreview": "In our next lesson, we will delve deeper into 'Organizations and Producer Codes', exploring how these entities are structured and how they further refine access control and business relationships within PolicyCenter."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Access your PolicyCenter training environment. Practice creating a new internal user, assigning them to an existing group, and then verifying their inherited producer codes. Next, navigate to the Team tab and explore the 'By Role' and 'By Activity' views for different users within your assigned group. Try to identify any overdue activities and simulate a reassignment.",
+      "objectives": [
+        "Create and configure a new user account.",
+        "Assign a user to a group and understand producer code inheritance.",
+        "Utilize the Team tab to monitor and manage workloads.",
+        "Practice reassigning activities to optimize team performance."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_12_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_12_01.mp4"
+    }
+  ]
+}

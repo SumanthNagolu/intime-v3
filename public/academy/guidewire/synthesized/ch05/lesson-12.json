@@ -1,0 +1,226 @@
+{
+  "lessonId": "ch05-l12",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 12,
+  "title": "Introduction to Constraining payments - Financial holds",
+  "subtitle": "Ensuring claims are paid correctly by understanding and applying financial holds in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:41:36.678993+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a complex claim where the policy details are unclear, or the incident date is close to the policy's expiration. Paying out immediately could lead to significant financial losses if the claim isn't valid. How do you ensure that only legitimate payments are made, without completely halting all claim processing?",
+      "question": "What mechanisms can an insurer use to pause or restrict certain payments while still allowing essential claim activities to continue?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe how financial holds prevent payments against claim costs",
+        "Describe what conditions make a claim Coverage in Question (CIQ)",
+        "Describe how object maturity affects payments"
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've discussed the general flow of claims processing and the importance of accurate data. You may also recall how 'maturity levels' can impact a claim's readiness for payment. This lesson builds on that understanding by introducing another critical control mechanism.",
+      "warmupQuestion": "Think about a time when you might want to pay for some claim-related expenses (like investigation costs) but not the actual claim payout. What kind of situation would that be?",
+      "hint": "Consider scenarios where the validity of a claim is still under review."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Payment Constraints: Maturity Levels vs. Financial Holds",
+      "narrative": "When processing claims, it's crucial to ensure that all conditions are met before any payments are disbursed. Sometimes, we might be unsure if a claim should be paid at all, or if certain data requirements are complete. ClaimCenter provides automated tools to manage these requirements, significantly reducing the risk of overpayments. As shown in **Figure 1**, several conditions, such as verifying a covered loss or an in-force policy, must be met.\n\nClaimCenter offers two primary methods to constrain, or restrict, payments: **Maturity Levels** and **Financial Holds**. While both restrict payments, they do so in different ways, as highlighted in **Figure 2**. Maturity levels are data-driven; they prevent *all* payments—both claim costs (indemnity) and claim expenses—until specific data completeness conditions are met and the claim or exposure reaches an 'ability to pay' status. For instance, a payment might be restricted until a payee's driver's license is recorded.\n\n**Financial holds**, on the other hand, address business-based conditions. These are situations where the insurer is unsure about core aspects of the claim, such as whether it's for a covered event, if the policy was in force at the time of the event, or if the policy itself can be verified. In such cases, you wouldn't want to pay claim costs, but you might still need to cover claim expenses (like investigation or legal fees). As **Figure 3** illustrates, financial holds specifically mark a claim to prevent indemnity (cost) payments, while still allowing expense payments. This is a key distinction from maturity levels, which block all types of payments. Financial hold status isn't a stored value; instead, it's evaluated dynamically for every financial transaction, ensuring real-time application of these restrictions. The base application defines three main financial hold conditions: Coverage in Question, Incident Only, and Policy Unverified.",
+      "keyPoints": [
+        "ClaimCenter uses automated controls to prevent overpayments.",
+        "Maturity levels prevent all payments (costs and expenses) based on data completeness.",
+        "Financial holds prevent only claim cost (indemnity) payments, allowing expenses, based on business conditions.",
+        "Financial hold status is evaluated dynamically for each transaction."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "The need for payment verification and automated management in ClaimCenter."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Overview of constraining claim costs payments, differentiating maturity levels and financial holds."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Definition of financial holds and their distinction from maturity levels, listing the three base conditions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Indemnity Payments",
+          "content": "Also known as claim costs, these are payments made to compensate the claimant for their loss, directly related to the covered event."
+        },
+        {
+          "type": "definition",
+          "title": "Expense Payments",
+          "content": "These are payments for services or administrative costs associated with managing a claim, such as investigation fees, legal costs, or case management, not directly compensating for the loss itself."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "How Financial Holds Impact Payment Processing",
+      "narrative": "Understanding how financial holds function is critical for effective claim management. Every time a financial transaction is initiated in ClaimCenter, the system evaluates the current financial hold conditions. If any of these conditions are true, financial holds are applied to the claim, influencing how payments can proceed. The process differs significantly depending on whether the transaction is for an expense or a claim cost.\n\nAs depicted in **Figure 4**, if an expense payment is initiated while financial holds are active, ClaimCenter doesn't outright prevent the payment. Instead, it issues a warning to the user, prompting them to confirm if they are sure they want to proceed. This allows for necessary operational expenses, like those for investigations or legal counsel, to continue even when the claim's core validity is in question. **Figure 5** shows that if the user confirms, the expense payment is then successfully created.\n\nHowever, the situation is different for claim cost payments, also known as indemnity payments. As illustrated in **Figure 6**, if a cost payment is initiated when financial holds are in place, ClaimCenter will actively prevent that payment from being created. This strict control ensures that no funds are disbursed for the actual loss until the underlying business conditions causing the financial hold are resolved. This mechanism is crucial for preventing premature payouts on potentially invalid or unverified claims, safeguarding the insurer's financial integrity. This real-time evaluation and differentiated handling of expense versus cost payments are central to how financial holds provide flexible yet robust control over claim disbursements.",
+      "keyPoints": [
+        "Financial hold conditions are evaluated for every transaction.",
+        "Expense payments are allowed with a user warning when financial holds are active.",
+        "Claim cost (indemnity) payments are prevented when financial holds are active."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Workflow for an expense payment when financial holds are active, showing the user warning."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Continuation of the expense payment workflow, showing the payment creation after user confirmation."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Workflow for a cost payment when financial holds are active, showing the payment being prevented."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Specific Conditions Triggering Financial Holds",
+      "narrative": "ClaimCenter's base application defines three specific conditions that can trigger financial holds, each addressing a distinct business concern regarding claim validity or policy verification.\n\nFirst, **Coverage in Question (CIQ)**, as detailed in **Figure 7**, arises when the insurer is uncertain about the claim's coverage. This can be set automatically if the loss date falls outside the policy's effective dates, or if the policy's status is anything other than 'In Force' or 'Archived'. CIQ can also be set manually for any other reason. Once CIQ is applied, it's a significant restriction; only a supervisor or manager with the `unsetcovinquestion` permission can clear it, even if the underlying automatic condition is resolved. The Claim UI displays a distinct icon to indicate a CIQ status, ensuring visibility. The `ClaimPreupdate` rule `CPU20000` and its children are responsible for automatically setting CIQ, checking factors like loss date against policy dates and policy status.\n\nSecond, the **Incident Only** condition, shown in **Figure 8**, is used when initial claim information is received, but it's not yet certain to become a full claim. A common example is a Workers' Comp incident report where an injury is reported, but it's unclear if medical care or lost time will be involved. While not yet a full claim, some expenses (like initial medical reports) might be incurred. Financial holds ensure that these necessary expenses can be paid, but no indemnity costs are disbursed. This status is a property on the Claim Status screen and in the New Claim Wizard, allowing for early flagging of such situations.\n\nFinally, an **Unverified Policy** triggers financial holds, as explained in **Figure 9**. Policies are typically copied into ClaimCenter from an external policy system during claim creation. However, a customer service representative might create a policy directly in ClaimCenter if it cannot be found externally, or a user might make changes to an externally sourced policy. In either case, the policy is marked as unverified. An unverified policy means ClaimCenter can no longer deem the policy true to its original snapshot, and it must be re-verified (often by refreshing the policy). All claims associated with an unverified policy are placed under financial holds, allowing expenses but preventing claim costs, until the policy's validity is confirmed.",
+      "keyPoints": [
+        "Coverage in Question (CIQ) is triggered by policy date mismatches, policy status, or manual intervention.",
+        "CIQ requires supervisor permission to reset.",
+        "Incident Only claims allow expense payments but prevent indemnity, used for potential claims.",
+        "Unverified policies (created or changed in ClaimCenter) trigger financial holds, preventing cost payments until verified."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Conditions and implications of a claim being marked as Coverage in Question (CIQ)."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Explanation of the Incident Only claim condition and its impact on financial holds."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "How policies become unverified in ClaimCenter and the resulting financial holds."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Policy Verification",
+          "content": "Regularly refreshing unverified policies is crucial to remove financial holds and ensure accurate claim processing. This ensures the claim is based on the most current and accurate policy information."
+        },
+        {
+          "type": "gotcha",
+          "title": "Manual CIQ Reset",
+          "content": "Remember that even if an automatic condition for CIQ is resolved (e.g., loss date corrected), the CIQ status will persist if it was manually set, or if the automatic condition was the initial trigger. It requires explicit manual removal by an authorized user."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of how financial holds are applied and how they affect different types of payments within ClaimCenter. Pay close attention to the user interface cues and the system's responses when attempting to make payments.",
+      "transcriptSummary": "The demo illustrates setting a financial hold condition, such as Coverage in Question, and then attempting to create both an expense payment and a claim cost payment. It highlights the warning issued for expense payments and the prevention of claim cost payments when financial holds are active."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A new auto claim has just been filed. The loss date provided by the claimant is one day before the policy's effective date. The adjuster needs to arrange for a tow truck (an expense) but wants to ensure no actual vehicle repair costs (indemnity) are paid until the policy coverage issue is resolved.",
+      "question": "Given the scenario, what financial hold condition would likely be automatically applied, and how would ClaimCenter handle the tow truck payment versus a repair payment?",
+      "hints": [
+        "Recall the automatic conditions for Coverage in Question.",
+        "Think about the difference in how financial holds treat expense payments versus cost payments."
+      ],
+      "expectedApproach": "Identify that 'Coverage in Question' would be automatically applied due to the loss date. Explain that the tow truck payment (expense) would be allowed with a warning, while the repair payment (cost) would be prevented."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Transition to Knowledge Check",
+      "narrative": "Before we move on to assess your understanding, take a moment to reflect on the key concepts we've covered regarding financial holds. We've explored their purpose, how they differ from maturity levels, their operational mechanics, and the specific conditions that trigger them. This foundational knowledge is essential for effectively managing claim payments and ensuring compliance within ClaimCenter.",
+      "keyPoints": [
+        "Financial holds are a critical control for managing claim payments.",
+        "They prevent indemnity payments while allowing expenses under specific conditions."
+      ],
+      "figures": [
+        {
+          "slideNumber": 15,
+          "caption": "Transition slide signaling a shift to knowledge assessment."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What claim condition prevents any type of payment against an\n\nx exposure?",
+      "referenceAnswer": "Maturity level (claim and exposure must be at ability to pay for any payment to be\nmade).",
+      "questionKey": "slide-16"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What are some conditions that cause an unverified policy?",
+      "referenceAnswer": "* Apolicy is changed in ClaimCenter\n* Apolicy is created in ClaimCenter",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Whatare some conditions that result in automatic CIQ?",
+      "referenceAnswer": "* Loss date is before the policy’s effective date,\n* Loss date is after the policy’s expiration date,\n* Status on the policy is other than In Force or Archived.",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What is constrained if a policy is under financial holds?",
+      "referenceAnswer": "All cost type payments (expenses are allowed).",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "Ifyou reset the value that caused the CIQ, is CIQ removed?",
+      "referenceAnswer": "No. Only a supervisor or someone with the correct permissions can remove CIQ\nmanually.",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Financial holds are a critical mechanism in ClaimCenter to constrain claim cost payments based on specific business conditions.",
+        "Unlike maturity levels, financial holds allow expense payments while preventing indemnity (cost) payments.",
+        "The three primary conditions for financial holds are Coverage in Question (CIQ), Incident Only, and Unverified Policy.",
+        "CIQ can be triggered automatically or manually and requires specific permissions to reset.",
+        "Financial hold status is dynamically evaluated for every transaction, providing real-time control over disbursements."
+      ],
+      "realWorldConnection": "In real Guidewire projects, implementing and configuring financial holds correctly is vital for risk management and regulatory compliance. It ensures that insurers can investigate claims thoroughly and manage operational expenses without prematurely paying out on claims that may lack full coverage or verification, thereby protecting the company's financial integrity and maintaining customer trust.",
+      "nextLessonPreview": "In our next lesson, we will delve deeper into the configuration aspects of financial holds, exploring how administrators can customize these conditions to align with specific business rules and workflows."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_12_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_12_01.mp4"
+    }
+  ]
+}

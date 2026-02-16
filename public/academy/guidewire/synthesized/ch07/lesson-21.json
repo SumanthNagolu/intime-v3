@@ -1,0 +1,202 @@
+{
+  "lessonId": "ch07-l21",
+  "chapterId": 7,
+  "chapterSlug": "ch07",
+  "lessonNumber": 21,
+  "title": "Introduction to Modes",
+  "subtitle": "Learn how to use modes in PCF files to create dynamic user interfaces for varied business scenarios.",
+  "synthesizedAt": "2026-02-16T18:13:11.745271+00:00",
+  "estimatedMinutes": 45,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a user interface for an insurance application. Depending on whether the user is an individual, an adjudicator, or an attorney, the required information and the layout of the 'License Info' section change significantly. How would you design your UI components to efficiently handle these distinct variations without creating a maintenance nightmare?",
+      "question": "What architectural approach allows a single UI component to adapt its structure and content based on specific business contexts?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose of modes in Guidewire PCF architecture.",
+        "Identify business scenarios where modal PCFs are beneficial.",
+        "Describe the essential characteristics of PCFs within a modal set.",
+        "Explain the function and importance of a 'default' mode.",
+        "Recognize common applications of modal PCFs.",
+        "Understand how modes interact with entity subtypes."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of PCF (Page Configuration File) files and how they are used to define the structure and content of user interfaces in Guidewire applications.",
+      "warmupQuestion": "Think about a time you've seen a web form change its fields based on a selection you made. How do you think that dynamic behavior is implemented behind the scenes?",
+      "hint": "Consider how different data structures might require different input fields."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Addressing UI Variation with Modal PCFs",
+      "narrative": "In Guidewire applications, it's common for user interface widgets to need significant variations based on specific business requirements. For example, the 'License Info' section for a contact might display a driver's license for an individual, an adjudicator's license for an adjudicator, or a law license for an attorney, each with unique fields and labels. This presents a challenge in UI design.\n\nOne approach might be to include all possible structures within a single PCF file, using conditional logic (like `if` statements) to show or hide widgets. However, as illustrated in **Slide 5**, this method quickly leads to overly complex and difficult-to-maintain PCF files. Such 'monolithic' PCFs become hard to debug, modify, and reuse. The conditional logic can become repetitive, and the sheer volume of fields makes the container cumbersome. Developers generally prefer working with smaller, more focused components.\n\nTo overcome these challenges, Guidewire's PCF architecture introduces the concept of **modes**. As shown in **Slide 6**, instead of one complex PCF, you can create a *set* of separate PCF files, each tailored to a specific business scenario or 'use case'. When the application needs to display a particular UI, it dynamically selects and includes the appropriate PCF file from this set based on the current context. This modular approach significantly reduces complexity, improves maintainability, and promotes reusability of UI components.",
+      "keyPoints": [
+        "UI widgets often need to vary based on business scenarios.",
+        "Including all variations in a single PCF leads to complexity and poor reusability.",
+        "Modal PCFs provide a solution by allowing multiple PCFs for different use cases.",
+        "The application dynamically selects the appropriate modal PCF at runtime."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An example of a user interface with various input fields and sections."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Illustrates how 'License Info' widgets need to vary significantly based on contact type (person, adjudicator, attorney, doctor)."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Demonstrates the complexity of trying to address all UI scenarios within a single PCF using conditional visibility."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Introduces the concept of using multiple, separate PCFs for different scenarios, with the application dynamically selecting the correct one."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Modal PCF Sets and Their Properties",
+      "narrative": "A **mode** is a property assigned to a PCF that identifies the specific business scenario(s) it is designed for. While it's technically possible to have a single PCF with a mode that has no counterparts, in practice, modal PCFs always come in *sets*. These sets allow for different visual representations of the same logical component based on context.\n\nAs depicted in **Slide 7**, for a set of modal PCFs to function correctly, they must adhere to strict rules:\n*   **Same ID**: All PCFs within a modal set must share the exact same ID. This is how the application knows they are different versions of the same component.\n*   **Same Required Variables**: They must all have the same number, type, and order of required variables. This ensures that regardless of which mode is loaded, the calling component can provide the necessary data.\n*   **Multiple Modes**: A single PCF can be assigned multiple modes, separated by commas (e.g., `mode = ABPerson, ABPolicyPerson`). This is useful when several scenarios share the same UI structure.\n\nAn essential part of any modal PCF set is the **default mode**, as shown in **Slide 8**. One PCF in the set should have its mode property set to `default` (all lowercase). This 'default' PCF acts as a fallback. If the application attempts to reference a mode that doesn't explicitly exist within the set (e.g., `ABPropertyInspector` when only `ABPerson` and `ABAdjudicator` modes are defined), the system will automatically use the PCF with the `default` mode. If no `default` PCF exists and an unknown mode is referenced, a runtime error will occur.\n\nModes are incredibly versatile and are commonly used across various Guidewire components, including detail view panels, card view panels, input sets, list view panels, info bars, and even entire screens. **Slide 9** highlights that modes are often used to accommodate variations based on:\n*   **Contact type**: Differentiating UI for individuals, companies, adjudicators, attorneys, etc.\n*   **Line of business**: Tailoring UI for Auto, Workers' Comp, Property policies, and so on.\n*   **Policy transaction type**: Adjusting UI for submissions, changes, renewals, or cancellations.\n\nIt's important to understand how modes interact with entity subtypes, as illustrated in **Slide 10**. The `mode` property explicitly recognizes specified subtypes. However, it is *not* aware of a subtype's hierarchy. This means if you have a mode for `ABPerson` and another for `ABAttorney` (which is a subtype of `ABPerson`), but you reference a contact of type `ABPersonVendor` (another subtype of `ABPerson`) and there's no explicit mode for `ABPersonVendor`, the system will not automatically fall back to the `ABPerson` mode. Instead, it will use the `default` mode if one exists, or throw an error if not. Unspecified subtypes will not render correctly without a matching mode or a default fallback.",
+      "keyPoints": [
+        "Modes are properties identifying specific business scenarios for PCFs.",
+        "Modal PCFs always come in sets and must share the same ID and required variables.",
+        "A single PCF can have multiple modes.",
+        "The 'default' mode acts as a fallback when a specific mode is not found.",
+        "Common uses include varying UI by contact type, line of business, or transaction type.",
+        "Modes recognize explicitly specified subtypes but are not aware of subtype hierarchy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 7,
+          "caption": "Defines modes as properties for PCFs and illustrates how modal PCFs come in sets with shared IDs and variables."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Explains the concept of a 'default' mode and its role as a fallback in modal PCF sets."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Lists common Guidewire components and business variations where modes are frequently used."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Clarifies that modes recognize explicit subtypes but not their hierarchy, impacting fallback behavior."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Naming Convention for Default Mode",
+          "content": "Always use 'default' in lowercase for the default mode property. This is a strict requirement for the system to recognize it correctly."
+        },
+        {
+          "type": "warning",
+          "title": "Runtime Error Risk",
+          "content": "If an unknown mode is called and no 'default' widget exists in the modal set, a runtime error will occur, potentially breaking the UI."
+        },
+        {
+          "type": "gotcha",
+          "title": "Subtype Hierarchy Ignored",
+          "content": "Remember that modes do not implicitly understand subtype hierarchies. If a specific subtype doesn't have a matching mode, the system will look for a 'default' mode, not a mode of its parent type."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating and configuring modal input sets to display policy subtype details dynamically. Pay close attention to how the different modes are defined and how the application selects the correct PCF.",
+      "transcriptSummary": "The demo shows how to implement modal containers for varying policy layouts. It guides you through creating a new PCF folder, then creating three input set PCF files: one with a 'default' mode, one for 'PersonalAutoPolicy' mode, and one for 'CommercialAutoPolicy' mode. It emphasizes using input sets within a detail view and correctly naming the modes based on subclass entities."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to display different contact information panels based on whether the contact is an 'ABPerson' (individual) or an 'ABCompany' (organization). The 'ABPerson' panel should show fields for 'First Name' and 'Last Name', while the 'ABCompany' panel should show 'Company Name' and 'Tax ID'.",
+      "question": "How would you structure your PCF files to achieve this dynamic display using modes?",
+      "hints": [
+        "Consider creating an input set for each contact type.",
+        "What property would you use to differentiate these input sets?",
+        "What common elements must these input sets share?"
+      ],
+      "expectedApproach": "Create two separate input set PCFs with the same ID. One PCF will have `mode = ABPerson` and contain individual-specific fields. The other will have `mode = ABCompany` and contain company-specific fields. Ensure both have the same required variables."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Name two business situations in which it might be useful to use modal\n¢ PCFs.\n\nee ee a",
+      "referenceAnswer": "¢ PCFs.\nPossible answers: Different types of contacts (individual vs. business); different lines\nof business (auto vs. property).",
+      "questionKey": "slide-13"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Foragiven set of modal PCFs, what two things must all of the PCFs have\nie in common?\n7\n\nee ee a",
+      "referenceAnswer": "All of the files must have the same required variables (identical in number, order, and\ntype), as well as the same ID.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Cana PCF have more than one mode?\n\n4\n¢\n¢\n\nee ee a",
+      "referenceAnswer": "Yes.",
+      "questionKey": "slide-17"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "Can the same mode be used by more than one PCF within the same\n¢ modal set?\n\n¢\n¢\n\nee ee a",
+      "referenceAnswer": "No. If the same mode is used in multiple PCFs in the same set, then the application\ncannot determine which file to use and a runtime error occurs.",
+      "questionKey": "slide-19"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-5",
+      "question": "What happens if a reference identifies a mode, but there is no PCF with\n¢ that mode in the set?\n\n¢\n¢\n\nee ee a",
+      "referenceAnswer": "If a PCF with a mode of \"default\" exists, then that default is used. Otherwise, a runtime\nerror occurs.",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Modes are a powerful feature in Guidewire PCF architecture for creating dynamic and context-sensitive user interfaces.",
+        "They allow you to define multiple versions of a UI component, each tailored to a specific business scenario.",
+        "Modal PCFs must belong to a set, sharing the same ID and required variables.",
+        "The 'default' mode is crucial for handling unspecified scenarios and preventing runtime errors.",
+        "Modes are widely used for variations based on contact types, lines of business, and policy transaction types."
+      ],
+      "realWorldConnection": "In real Guidewire projects, modes are indispensable for building flexible and maintainable applications. They enable developers to avoid complex conditional logic within single files, leading to cleaner code, easier debugging, and a more robust user experience that adapts seamlessly to diverse business needs, such as displaying country-specific address formats or policy-specific details."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Implement a modal input set for a contact detail screen. Create different modes for 'ABPerson' and 'ABCompany' contacts, displaying relevant fields for each. Include a 'default' mode for any other contact types.",
+      "objectives": [
+        "Create a new PCF folder for modal input sets.",
+        "Define multiple input set PCFs with the same ID but different modes (ABPerson, ABCompany, default).",
+        "Configure each modal PCF to display appropriate fields for its respective contact type.",
+        "Ensure the 'default' mode handles unspecified contact types gracefully."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Fund_21.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_21.mp4"
+    }
+  ]
+}

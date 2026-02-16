@@ -1,0 +1,323 @@
+{
+  "lessonId": "ch13-l03",
+  "chapterId": 13,
+  "chapterSlug": "ch13",
+  "lessonNumber": 3,
+  "title": "Rate Books and Rate Tables",
+  "subtitle": "Understand how Guidewire PolicyCenter organizes and manages insurance rates and rating logic.",
+  "synthesizedAt": "2026-02-16T19:09:09.449203+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're a rating analyst at an insurance company, tasked with implementing new premium rates for a specific policy line. These rates need to be organized and applied consistently across different jurisdictions and policy types, often requiring approval before going live.",
+      "question": "How do insurance systems manage complex sets of rates and rules to ensure accuracy, compliance, and controlled deployment?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define rate books, rate tables, and rate table definitions.",
+        "Explain the purpose and structure of rate books in PolicyCenter.",
+        "Describe how rate tables contain static rates and their role in policy costs.",
+        "Identify the components and purpose of a rate table definition.",
+        "Outline the lifecycle of a rate book, including its different statuses and the concept of editions and versions.",
+        "Explain how the rating engine selects the appropriate rate book for policy rating.",
+        "Demonstrate how to export and import rate books in PolicyCenter."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've touched upon the overall rating process and how the Rating Engine calculates policy costs. You've seen how different factors contribute to a final premium.",
+      "warmupQuestion": "What are some of the key pieces of information you think an insurance system needs to calculate a policy premium accurately?",
+      "hint": "Consider the variables that influence a premium, like coverage, location, and policyholder characteristics."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Rate Books",
+      "narrative": "Our journey into managing insurance rates begins with **rate books**, which are fundamental to implementing rating in PolicyCenter. As Kalani, a rating analyst, learns from Julia, an Implementation Architect, a rate book essentially **represents a rating manual** used by an insurer. Think of it as a comprehensive binder that groups together all the necessary rate tables and rate routines for a specific insurance product or line of business.\n\nTo effectively implement rating in PolicyCenter, you must create a rate book for each rating manual your company utilizes. This ensures that all the numerical values (rates) and the logic (routines) for calculating premiums are centrally organized and accessible.\n\nThe rating process diagram (Slide 5) illustrates this: when a quote is generated, the Rating Engine first selects the appropriate rate book. It then calls specific rate routines for each cost item, like a coverage, to calculate the necessary values. These calculated results are then compiled into a worksheet and returned to the policy transaction.\n\nFrom an implementation perspective, rate books play a crucial role in managing jurisdictional requirements. Insurers must file specific rates and routines with each state, and rate books provide the structure to \"lock in\" these rates. This allows actuaries and rating analysts to define country-wide rate books, as well as more specific jurisdictional rate books, ensuring that the correct rates are applied based on the policy's location.\n\nIn PolicyCenter, a rate book's details page (Slide 7) clearly lists all the included rate tables and rate routines. This centralized view makes it easy to manage and understand the components of a given rate book. Furthermore, rate books can be downloaded in a spreadsheet format, facilitating offline review and editing of the contained rate tables.",
+      "keyPoints": [
+        "Rate books represent rating manuals, grouping rate tables and rate routines.",
+        "They are essential for implementing rating in PolicyCenter and managing jurisdictional requirements.",
+        "The Rating Engine selects a rate book and executes its routines to calculate policy costs.",
+        "In PolicyCenter, rate books list included rate tables and routines and can be exported to spreadsheets."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Kalani and Julia discuss the components of a rate book: rate tables and rate routines."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definition of a rate book as a representation of a rating manual in PolicyCenter."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Diagram illustrating how the Rating Engine selects a rate book and executes routines."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The implementation story of rate books, highlighting their role in jurisdictional filing."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "A screenshot of Rate Book Details in PolicyCenter, showing included rate tables and routines."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "What is a Rate Book?",
+          "content": "A rate book is a collection of rate tables and rate routines that represents a rating manual, used to organize and apply rates and logic for insurance products within PolicyCenter."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Understanding Rate Tables",
+      "narrative": "Now that we understand rate books, let's delve into their core components: **rate tables**. As Kalani correctly observes, a rate table contains **static rates** in a structured, tabular format. These tables are essentially the lookup mechanisms for the numerical values required to rate a policy.\n\nRate tables are comprised of rows and columns, where columns define parameters (like coverage type, deductible, or location) and factors (the resulting numerical values, such as base rates or multipliers). For instance, a base rate table for Personal Auto (Slide 9) might list different base rates for various physical damage coverages across different jurisdictions. Similarly, a Commercial Property rate table (Slide 10) could define rates based on building/contents categories and deductible groups. These examples are often found in the PolicyCenter base configuration.\n\nThe implementation story for rate tables (Slide 11) highlights their purpose: actuaries and rating analysts define and populate these tables to represent the lookups for various rate factors. Rate tables are organized with specific columns for parameters and contain values like coverage terms. PolicyCenter allows you to export these tables to spreadsheets, making it convenient to manage and update their content.\n\nThe \"Included Rate Tables\" list in PolicyCenter (Slide 12) provides an overview of all available rate tables, showing their names, codes, descriptions, and usage. When you select a specific rate table, such as \"DriverAgeFactor\" (Slide 13), you can view its details, including the policy line it applies to, the rate book it's part of, and its usage. This detailed view helps in understanding the context and application of each rate table within the rating system.",
+      "keyPoints": [
+        "Rate tables contain static numerical values (rates) in a tabular format.",
+        "They are used for lookups of rate factors, such as base rates or multipliers.",
+        "Rate tables are organized by columns for parameters and factors and can be exported to spreadsheets.",
+        "PolicyCenter provides a detailed view of rate tables, including their associated policy lines and rate books."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Kalani asks Julia about rate tables, which contain static rates."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "An example of a Personal Auto base rate table, showing rates for different coverages and jurisdictions."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Examples of base rates for Commercial Property, categorized by business type."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "The implementation story for rate tables, emphasizing their role in defining rate factor lookups."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "A list of rate tables in PolicyCenter, showing names, codes, and descriptions."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Details of the 'DriverAgeFactor' rate table in PolicyCenter, including its code and associated rate book."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Rate Table Definitions",
+      "narrative": "Beyond just the raw data, rate tables require a clear structure, which is provided by **rate table definitions**. As Julia explains, a rate table definition describes the **parameters and factors** for a particular rate table. It's the blueprint that dictates what information a rate table can contain and how that information is organized.\n\nFor example, consider the `DriverAgeFactor` table (Slide 15). Its definition specifies the parameters, such as `AGE_MIN` and `AGE_MAX` for driver age, and the factors, which might be a resulting decimal value. This definition ensures consistency and proper data interpretation. In PolicyCenter, the rate table definition specifies:\n*   **Basics**: General information about the table.\n*   **Parameters**: The input values used for lookup (e.g., `max/min` age). Parameter sets determine the information available for setting default argument sources.\n*   **Factors**: The output values returned by the lookup (e.g., a decimal multiplier).\n*   **Argument Sources**: How parameters are populated (e.g., from a parameter set).\n*   **Usage**: How the rate table is applied.\n\nSlide 16 provides a concrete example for \"driver age,\" showing how parameters like `AGE_MIN` and `AGE_MAX` are used to compare against a driver's age, and how a factor (e.g., 1.25 for 25 or under, 1 for 26 or over) is returned. This structure is crucial for the rating engine to correctly interpret and use the data.\n\nIn PolicyCenter, you define these details using the rate table definition option, which is editable directly in the user interface (Slide 17). This allows you to specify column codes, priorities, data types, and labels for both parameters and factors, ensuring that your rate tables are precisely configured to meet your rating requirements.",
+      "keyPoints": [
+        "Rate table definitions specify the parameters and factors for a rate table.",
+        "They act as a blueprint, defining the structure and content of the rate table.",
+        "Definitions include basics, parameters (e.g., min/max values), factors (e.g., decimal values), argument sources, and usage.",
+        "These definitions are configurable within the PolicyCenter user interface."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "Julia introduces the concept of rate table definitions to Kalani."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "An overview of what a rate table definition specifies, including parameters and factors."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A Personal Auto example illustrating how driver age parameters and factors are defined."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Screenshots showing where rate table definitions are configured in the PolicyCenter UI."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Rate Book Lifecycle and Versioning",
+      "narrative": "Rate books, like any critical configuration, follow a defined **lifecycle** to ensure controlled deployment and auditability. As Kalani inquires, rate books progress through various statuses: created, reviewed, and approved for use in production (Slide 18).\n\nThe default implementation of the rate book lifecycle (Slide 19) typically involves several stages:\n1.  **Draft**: When a new rate book or a new version of an existing active rate book is created, it starts in `Draft` status. In this status, users can freely modify the rate book's content.\n2.  **Stage**: After changes are complete, the rate book can be promoted to `Stage` status. This is typically where testing occurs. Insurers often use separate staging environments for thorough testing. To move a rate book to a testing environment, you can use the export and import actions in the Rate Book Editor. Exporting a rate book includes all its associated rate tables and definitions. If testing fails, the rate book can be returned to `Draft` for further modifications.\n3.  **Approved**: Once testing is successful, the rate book status can be updated to `Approved`, signifying it's ready for production.\n4.  **Active**: Finally, the rate book is activated for production use. Upon activation, its status becomes `Active`, and it becomes available for policy rating.\n\n**Important Note**: Active rate books **cannot be modified**. This is a critical design choice to ensure integrity and auditability of policies rated with those rates. If any changes are needed for an active rate book, a new edition must be created.\n\nRate books group rate tables and rate routines together, allowing them to be **versioned as a unit** (Slide 20). This is crucial because during rating, the engine selects the appropriate **rate book edition** and **rate table version** to calculate a rate by executing the routines within that specific rate book (Slide 21).\n\nWhen you edit a rate table within a rate book, PolicyCenter automatically creates a **new version** of that rate table (Slide 22). This new version is then included in the rate book you are editing. If you need to change rate tables that are part of an *active* rate book, you must create a **new rate book edition** (Slide 23). Each rate book edition groups a specific set of rate table versions, helping to manage changes to active rate books.\n\nConsider the example on Slide 24:\n*   You start with \"Edition 1\" of a rate book, containing Rate Table A and Rate Table B.\n*   To make a change, you create \"Edition 2.\"\n*   Rate Table A remains unchanged, so \"Edition 2\" continues to reference the *existing* version of Rate Table A. This prevents unnecessary duplication of rate table versions.\n*   However, if Rate Table B is modified, a *new version* (Rate Table B') is created, and \"Edition 2\" includes this new version.\n\nThis mechanism ensures that previous versions of rate tables are preserved in existing rate books, maintaining historical accuracy while allowing for necessary updates.",
+      "keyPoints": [
+        "Rate books follow a lifecycle: Draft -> Stage -> Approved -> Active.",
+        "Active rate books cannot be modified; a new edition is required for changes.",
+        "Rate books group rate tables and routines, allowing them to be versioned together.",
+        "Editing a rate table creates a new rate table version; changing an active rate book requires a new rate book edition.",
+        "Unchanged rate tables in new editions reference existing versions to avoid proliferation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Kalani asks about the rate book lifecycle, which involves creation, review, and approval."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Diagram illustrating the default rate book lifecycle, including statuses and transitions."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Julia explains that rate books group rate tables and routines for versioning."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Diagram showing how the rating engine selects rate book editions and rate table versions."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Explanation of how PolicyCenter creates new rate table versions when edits are made."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "Description of rate book editions and their role in managing changes to active rate books."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "An example demonstrating how rate book editions and rate table versions interact during changes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Active Rate Books Cannot Be Modified",
+          "content": "Once a rate book is in 'Active' status, it cannot be directly modified. To make changes, you must create a new edition of the rate book. This ensures data integrity and auditability for policies rated with that specific rate book."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Rate Book Selection",
+      "narrative": "A crucial aspect of the rating process is how the Rating Engine determines **which rate book to use** for policy rating (Slide 25). The system employs specific criteria to select the most appropriate rate book edition.\n\nWhen a rating query is made, the engine selects the most appropriate rate book edition, potentially using a **cascaded lookup** (Slide 26). A cascaded lookup allows the system to search for matching rate tables and routines in a hierarchical list of rate books if an exact match isn't found immediately. If \"most appropriate ratebook only\" is configured, and an exact match isn't found, the system relaxes optional attributes by looking for 'null' occurrences in those attributes.\n\nRegardless of whether cascaded lookup is enabled, certain **required attributes** must be met for a rate book to be considered a candidate (Slide 27):\n*   **Activation Date**: The rate book's activation date must be earlier than the policy's `Rate as of Date`. This ensures that only rate books active at the time of rating are considered.\n*   **Rate Book Status**: The rate book's status must be set to `Minimum Rating` or higher (e.g., Approved, Active).\n*   **Effective/Expiration Dates**: The reference date (typically the policy's effective date) must be greater than or equal to the rate book’s effective date, and earlier than its expiration date.\n\nSlide 28 provides an example of how the `Policy Rate as of Date` controls which rate book is used, especially when multiple rate books have overlapping effective dates. For a submission on September 10, 2016, Rate Book Y might be used. If a policy change occurs later, and Rate Books X, Y, and Z are all effective on January 1, 2017, the system will typically use Rate Book Y for the policy change if those rates were originally used and the `Rate as of Date` reflects the original policy's rate date. This behavior can be configured to meet specific insurer requirements, leveraging features like cascaded lookup to find matching rate tables in a hierarchical structure.",
+      "keyPoints": [
+        "The Rating Engine selects the most appropriate rate book edition based on specific criteria.",
+        "Rate book matching can involve cascaded lookups or \"most appropriate ratebook only\" logic.",
+        "Required attributes for selection include Activation Date, Rate Book Status (Minimum Rating or higher), and Effective/Expiration Dates.",
+        "The `Policy Rate as of Date` is crucial for selecting the correct rate book version, especially with overlapping effective dates."
+      ],
+      "figures": [
+        {
+          "slideNumber": 25,
+          "caption": "Kalani asks how the rating engine selects a rate book for policy rating."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Explanation of rate book matching, including cascaded lookup options."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Required attributes for rate book candidates, such as activation date and status."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "An example demonstrating how the 'Rate as of Date' determines which rate book is used."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Unique Public IDs for Environments",
+          "content": "When synchronizing development rate books with production, ensure unique public ID prefixes for development and stage servers. This prevents public ID clashes when importing rate books to the stage or production environment, maintaining data integrity."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of exporting a rate book to a spreadsheet, making an edit to a rate table within that spreadsheet, and then importing the updated rate table back into PolicyCenter. This is a common workflow for managing rate changes.",
+      "transcriptSummary": "The demo illustrates how to navigate to rate books, create a new edition of an active rate book to enable editing (setting its status to Draft), export the rate book to an Excel spreadsheet, modify a base rate value directly in the spreadsheet, and then import the updated spreadsheet back into PolicyCenter to apply the changes. It reinforces that active rate books cannot be modified directly."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your insurance company is introducing a new coverage for personal auto policies, and you need to ensure that the base rates for this new coverage are correctly integrated into the rating system. You've been asked to update an existing rate book.",
+      "question": "Outline the high-level steps you would take in PolicyCenter to add new base rates for a new coverage, considering the rate book lifecycle.",
+      "hints": [
+        "Think about the status of the rate book you want to change and what that implies for editing.",
+        "What happens when you edit a rate table within a rate book, especially if it's part of a new edition?",
+        "What is the final step to make the changes available for rating in production?"
+      ],
+      "expectedApproach": "The learner should identify the need to create a new rate book edition if the current one is active, then edit the rate table (potentially via export/import), and finally promote the rate book through its lifecycle (Stage, Approved) to 'Active' status."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "An underwriter reports that a policy issued on March 15, 2024, is using an outdated rate book. You check the system and find three rate books for the relevant policy line:\n*   Rate Book A: Activated Jan 1, 2024, Effective Jan 1, 2024 - Dec 31, 2024, Status: Active\n*   Rate Book B: Activated Feb 1, 2024, Effective Feb 15, 2024 - Feb 14, 2025, Status: Active\n*   Rate Book C: Activated Mar 1, 2024, Effective Mar 1, 2024 - Feb 28, 2025, Status: Approved\nThe policy's \"Rate as of Date\" is March 15, 2024.",
+      "question": "Which rate book should the policy be using, and why? If the policy is using an incorrect rate book, what might be the reason?",
+      "hints": [
+        "Review the required attributes for rate book selection, especially status and dates.",
+        "Pay close attention to the 'Status' of each rate book.",
+        "Consider the 'Rate as of Date' in relation to each rate book's effective and activation dates."
+      ],
+      "expectedApproach": "The learner should analyze each rate book against the selection criteria: Activation Date < Rate as of Date, Status >= Minimum Rating (Active), and Effective <= Rate as of Date < Expiration. Rate Book C is 'Approved' but not 'Active', so it would not be selected. Both Rate Book A and B are 'Active' and meet the date criteria. Rate Book B (Activated Feb 1, 2024, Effective Feb 15, 2024) is the most recent active rate book that meets the criteria for a policy with a 'Rate as of Date' of March 15, 2024. If the policy is using an outdated rate book (e.g., Rate Book A), it could be due to an incorrect 'Rate as of Date' on the policy or a configuration issue in the rate book selection logic."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Describe the relationship among rate routines, rate tables and rate\n: books.",
+      "referenceAnswer": "Arate book is a group of rate tables and rate routines.",
+      "questionKey": "slide-31"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the purpose of a rate table definition?",
+      "referenceAnswer": "fa\n\nWhatis the purpose of a rate table definition?\n\noe Arate table definition describes the parameters and factors for a particular rate table.",
+      "questionKey": "slide-33"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Explain the concept of rate table versions and rate book editions.",
+      "referenceAnswer": "fa\n\nExplain the concept of rate table versions and rate book editions.\noe PolicyCenter creates new rate table versions when you edit a rate table in a rate book.\nActive rate books cannot be edited. You must create a new rate book edition to be\nable to edit a rate table.",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Rate books are central to Guidewire's rating management, grouping rate tables and rate routines to represent rating manuals.",
+        "Rate tables contain the static numerical values (rates) and are defined by parameters and factors.",
+        "Rate table definitions specify the structure and content of rate tables.",
+        "Rate books have a lifecycle (Draft, Stage, Approved, Active), and active rate books cannot be modified directly; new editions are required for changes.",
+        "PolicyCenter manages rate table versions and rate book editions to ensure data integrity and auditability.",
+        "The Rating Engine selects rate books based on activation date, status, effective/expiration dates, and the policy's \"Rate as of Date.\"",
+        "Rate books can be exported and imported for management across environments."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering rate books and rate tables is critical for actuaries, rating analysts, and implementation architects. It ensures that insurance products are rated accurately, comply with regulatory filings, and can be efficiently updated as market conditions or product offerings change. Proper management of the rate book lifecycle is key to maintaining system integrity and auditability in production environments.",
+      "nextLessonPreview": "In the next lesson, we will explore rate routines in more detail, understanding how they define the logic and calculations that utilize the rates stored in rate tables."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This hands-on exercise will guide you through creating a new rate book edition, modifying a rate table within it, and then promoting it through its lifecycle. This simulates a common task for rating analysts.",
+      "objectives": [
+        "Create a new edition of an existing rate book.",
+        "Export a rate book to a spreadsheet.",
+        "Edit rate table content in a spreadsheet.",
+        "Import updated rate tables back into PolicyCenter.",
+        "Understand the impact of rate book status changes."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Intro_03_01.mp4",
+      "path": "/academy/guidewire/videos/ch13/Ra_Intro_03_01.mp4"
+    }
+  ]
+}

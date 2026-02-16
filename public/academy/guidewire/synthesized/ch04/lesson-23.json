@@ -1,0 +1,223 @@
+{
+  "lessonId": "ch04-l23",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 23,
+  "title": "policy Holds and Underwriting referral Reasons",
+  "subtitle": "Understand how PolicyCenter manages policy holds and underwriting referral reasons to ensure compliance.",
+  "synthesizedAt": "2026-02-16T17:28:48.692934+00:00",
+  "estimatedMinutes": 85,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a major hurricane is approaching a coastal region, or new insurance regulations are about to take effect nationwide. As an insurance carrier, you need to prevent agents from issuing or changing policies with outdated rates or coverage forms in affected areas.",
+      "question": "How can PolicyCenter help you temporarily halt policy transactions to ensure compliance and prevent errors during critical periods?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the purpose and function of policy holds in PolicyCenter.",
+        "Describe the lifecycle of a policy hold, from application to release.",
+        "Differentiate between policy holds and underwriting referral reasons.",
+        "Outline how underwriting referral reasons are created, managed, and impact policy transactions.",
+        "Identify key developer considerations for implementing and customizing policy holds and referral reasons."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've previously learned about standard policy transaction workflows and how PolicyCenter manages policy lifecycle events. Now, we'll explore mechanisms that can temporarily alter or pause these workflows.",
+      "warmupQuestion": "Think about a time when a critical update or external event required a pause in a business process. What were the challenges in managing that pause?",
+      "hint": "Consider the need for communication, data integrity, and eventual resumption of work."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Role and Application of Policy Holds",
+      "narrative": "Imagine you're a product manager like Darren, facing situations where customer policies need to be put on hold due to unforeseen circumstances or critical updates. PolicyCenter is designed to handle this, providing a robust capability to manage policy holds. When a policy hold is active, **all related policy transactions are automatically blocked**, preventing any further processing. This is a crucial mechanism, as PolicyCenter generates an underwriting issue directly tied to the policy hold, signaling that the transaction cannot proceed until the hold is resolved. This ensures that any changes are thoroughly reviewed and approved, maintaining the integrity of the underwriting process and preventing transactions from proceeding with outdated information.\n\nPolicy holds are typically implemented for two primary reasons: **natural disasters** or **changes in business**, such as regulatory updates or rate adjustments. For instance, if a natural disaster like a hurricane is imminent, an insurer might place a hold on issuing or changing policies in the affected region. Similarly, when new coverage forms or rates are being finalized, a hold can prevent transactions from using incorrect data. These changes often occur at the state level, but can sometimes be nationwide. Policy holds are placed for a specific period and region, allowing carriers to prevent users from creating new policies or modifying existing ones in the affected areas. An underwriting issue is automatically raised during a transaction if its effective date falls within the policy hold's date range and the policy's location matches the affected region. This proactive approach safeguards against compliance issues and ensures policies reflect the most current and accurate information.",
+      "keyPoints": [
+        "Policy holds block all related policy transactions.",
+        "An underwriting issue is automatically generated when a hold is in effect.",
+        "Holds are used for natural disasters or regulatory/business changes.",
+        "Holds are region- and time-specific, preventing new policies or changes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Policy holds block transactions and generate underwriting issues."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Details on when and why policy holds are applied in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Policy Hold",
+          "content": "A temporary pause on policy transactions in a specific region for a period, typically due to natural disasters or regulatory/business changes, to prevent processing with incorrect rates or forms."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Policy Hold Lifecycle and Release in PolicyCenter",
+      "narrative": "The lifecycle of a policy hold in PolicyCenter is a structured process designed to ensure compliance and efficient resolution. When a policy hold is applied, it directly impacts the transaction flow, creating an underwriting issue of the 'policy hold' type that effectively blocks further processing. This initial step ensures that all transactions are paused until the underlying reason for the hold is addressed.\n\nTo release a policy hold, an **underwriter with the appropriate authority** must step in to approve the underwriting issue. This approval is a critical checkpoint, typically controlled through user permissions and roles within PolicyCenter, ensuring that only qualified individuals can modify the status of a hold. Once approved, it allows the transaction to progress.\n\nHowever, the system doesn't rely solely on manual intervention. PolicyCenter employs a sophisticated **batch process called 'Policy Hold Job Evaluation'** to continuously assess whether a hold can be lifted. This process runs at scheduled intervals, comparing current policy conditions against the hold criteria. The `PolicyHoldJobEvalPlugin` plays a critical role here, tracking transactions currently held by a policy hold and noting the last time they were evaluated. A hold becomes eligible for removal when its end date has passed, or if a superuser modifies the hold. Once the system determines a hold can be removed, an activity is automatically generated and sent to the producer, notifying them that they can now proceed with the transaction. This automated evaluation helps maintain workflow efficiency, minimizes manual intervention, and ensures timely updates, highlighting PolicyCenter's structured approach to policy management.",
+      "keyPoints": [
+        "Policy holds create underwriting issues that block transactions.",
+        "Underwriters with proper authority can approve these issues to release the hold.",
+        "A batch process, 'Policy Hold Job Evaluation', continuously checks if holds can be lifted.",
+        "The `PolicyHoldJobEvalPlugin` tracks held transactions and their evaluation status.",
+        "An activity is sent to the producer when a hold is removed, allowing transaction processing."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "The initial phase of a policy hold: transaction blocked, UW issue created."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "An underwriter's role in approving the underwriting issue to release a hold."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The complete policy hold lifecycle, including automated evaluation and producer notification."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Automated Hold Evaluation",
+          "content": "Leveraging PolicyCenter's batch processes like 'Policy Hold Job Evaluation' ensures efficient and timely release of holds, minimizing manual intervention and maintaining workflow efficiency."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demo illustrates the practical steps involved in applying a policy hold to a transaction and then releasing it within PolicyCenter. Pay close attention to how underwriting issues are generated and resolved.",
+      "transcriptSummary": "The video demonstrates how to initiate a policy hold, showing the immediate blocking of transactions and the creation of an associated underwriting issue. It then walks through the process an underwriter follows to approve the issue, ultimately releasing the hold and allowing the transaction to proceed."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Understanding Underwriting Referral Reasons",
+      "narrative": "Beyond policy holds, PolicyCenter offers another powerful mechanism for managing underwriting concerns: **underwriting referral reasons**. As an agent like Simone might encounter, sometimes there isn't enough information in the system to make an immediate decision on a policy, necessitating a referral to an underwriter. Unlike policy holds, which block all transactions, referral reasons offer a means to document issues that arise *outside* the context of a regular transaction. They can be added to a policy at any point, even when no transaction is active, providing significant flexibility in managing ongoing underwriting concerns.\n\nWhen an underwriting referral reason is added to a policy, PolicyCenter doesn't immediately block transactions. Instead, it creates corresponding underwriting issues the *next time* a user processes a transaction on that policy, or when the transaction reaches a checking set. These issues can then halt transaction progress until resolved, similar to policy holds, ensuring all concerns are addressed before completion. This automatic checking helps prevent policy discrepancies and maintains underwriting standards.\n\nConsider a real-world application: an external claims system might identify a policy with unacceptably high loss claims. This external system can then send a message to PolicyCenter via an API to add an underwriting referral reason to that policy. The next time a transaction runs on the policy, an issue is created corresponding to this referral reason. While an underwriter cannot 'approve' an underwriting referral reason in the same way they approve a policy hold issue, they *can remove* it. For example, if a site visit reveals safety violations that led to a referral reason, and a subsequent visit confirms these violations have been addressed, the underwriter can remove the referral reason. When the referral reason is removed, the corresponding underwriting issue is deactivated the next time a transaction is run or reaches a checking set. This distinction is crucial: **referral reasons are policy-specific and persist**, generating transaction-specific UW issues that can be approved or deactivated. This mechanism ensures that all necessary underwriting concerns are addressed, streamlining policy operations while maintaining compliance.",
+      "keyPoints": [
+        "Referral reasons document underwriting issues outside of transaction context.",
+        "They can be added manually or by external systems at any time.",
+        "Referral reasons raise underwriting issues on the next policy transaction.",
+        "Underwriters can remove, but not approve, referral reasons.",
+        "Removing a referral reason deactivates its corresponding underwriting issue."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "An agent's need to refer a policy to an underwriter due to insufficient information."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Real-world application of underwriting referral reasons, including external system integration."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Comparison of underwriting referral reasons and underwriting issues."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Underwriting Referral Reason",
+          "content": "A record of a notable condition or issue related to a policy, often arising outside of a transaction, that requires an underwriter's attention and generates an underwriting issue on subsequent transactions."
+        },
+        {
+          "type": "tip",
+          "title": "Integration with External Systems",
+          "content": "Underwriting referral reasons can be seamlessly integrated with external systems (e.g., claims systems) via APIs to enable proactive policy management based on real-world data."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on how to configure and manage underwriting referral reasons within PolicyCenter. Observe the process of adding a referral reason and how it impacts policy evaluation, including developer considerations for customization.",
+      "transcriptSummary": "The video guides you through the steps to add an underwriting referral reason to a policy, highlighting the user interface and data entry points. It also touches upon the developer's role in customizing the data model and integration points to ensure these reasons are effectively captured and processed, adapting PolicyCenter to specific business needs."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your company has just announced a temporary freeze on new policy issuances in Florida due to an impending hurricane. You need to ensure no new policies are bound in that state for the next 72 hours.",
+      "question": "Outline the steps you would take in PolicyCenter to implement this policy hold, including what information you would need to specify.",
+      "hints": [
+        "Consider the 'Specifying policy holds' section in the reference guide.",
+        "Think about the type of hold, region, and date range.",
+        "What happens to transactions during this period?"
+      ],
+      "expectedApproach": "The learner should describe creating an underwriting policy hold, specifying 'Natural disaster' type, selecting Florida as the region, and setting a start and end date. They should also mention that transactions will be blocked and an UW issue will be created."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "An external system has flagged a commercial property policy (Policy #CP12345) due to a recent, significant increase in fire claims. This requires an underwriter's review before any further transactions. The safety violations were later addressed.",
+      "question": "As an agent, how would you record this issue in PolicyCenter, and what would be the underwriter's action to resolve it once the issue is no longer relevant? What happens to the associated underwriting issue?",
+      "hints": [
+        "Recall the difference between approving and removing referral reasons.",
+        "Think about the lifecycle of the UW issue once the referral reason is removed.",
+        "Refer to the 'Add underwriting referral reasons' procedure in the reference guide."
+      ],
+      "expectedApproach": "The learner should describe adding an underwriting referral reason via the Risk Analysis tab, selecting an appropriate rule, and providing descriptions. They should state that an underwriter cannot 'approve' it but can 'remove' it. Upon removal, the corresponding underwriting issue will be deactivated the next time a transaction is run or reaches a checking set."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Distinguish underwriting (UW) referral reasons from an UW issue.",
+      "referenceAnswer": "The underwriting referral reason is specific to a policy. When it generates an underwriting issue, the transaction will not progress further. UW referral reasons are often manually created, cannot be approved, and are manually deleted (or through an API). UW referral reasons persist with the policy. Underwriting issues are related to the transaction. When something is notable about this transaction requiring the attention of underwriting. They are often automatically generated, and are usually automatically removed when the cause no longer exists.",
+      "questionKey": "slide-15"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Policy holds block transactions for compliance or disaster response, creating underwriting issues.",
+        "Holds are managed through underwriter approval and automated batch processes (`Policy Hold Job Evaluation`).",
+        "Underwriting referral reasons document policy-specific issues outside of transactions, also generating UW issues.",
+        "Referral reasons cannot be approved but can be removed, deactivating associated UW issues.",
+        "Both mechanisms ensure policy accuracy and adherence to underwriting standards."
+      ],
+      "realWorldConnection": "In Guidewire projects, implementing robust policy hold and referral reason functionality is crucial for maintaining data integrity, ensuring regulatory compliance, and enabling agile responses to market changes or catastrophic events. Developers often customize these features to align with specific business rules and integrate with external systems, making them powerful tools for proactive policy management.",
+      "nextLessonPreview": "Next, we'll delve deeper into configuring advanced underwriting rules and how they integrate with the policy lifecycle to automate decision-making."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Using a Guidewire PolicyCenter development environment, practice adding and managing underwriting referral reasons. Your task is to simulate a scenario where an external system flags a policy for high risk, requiring a referral reason, and then simulate its resolution.",
+      "objectives": [
+        "Navigate to an account and policy in PolicyCenter.",
+        "Add a new underwriting referral reason with a short and long description.",
+        "Observe how the referral reason appears on the policy.",
+        "Simulate the resolution of the underlying issue by removing the referral reason.",
+        "Understand the impact of adding/removing referral reasons on subsequent policy transactions."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_24_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_24_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_24_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_24_02.mp4"
+    }
+  ]
+}

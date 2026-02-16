@@ -1,0 +1,258 @@
+{
+  "lessonId": "ch05-l04",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 4,
+  "title": "Introduction to Claim Intake",
+  "subtitle": "Learn how claims are initiated and processed within ClaimCenter, from initial report to automated setup.",
+  "synthesizedAt": "2026-02-16T17:35:52.025036+00:00",
+  "estimatedMinutes": 75,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a customer calls you, distressed after an accident, needing to report a claim. They might have all the details, or very little. Your ability to efficiently capture this information is crucial for both the customer's peace of mind and the smooth processing of their claim.",
+      "question": "How can we ensure every claim, regardless of how it's reported or how much information is initially available, is handled effectively and consistently?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define First Report of Injury (FROI) / First Notice of Loss (FNOL).",
+        "Identify the three primary methods for entering a claim into ClaimCenter.",
+        "Describe the steps involved in the automated claim setup process.",
+        "Explain the purpose of claim segmentation and assignment.",
+        "Differentiate between imported claims, portal claims, and claims entered via the New Claim Wizard.",
+        "Understand the role of a Customer Service Representative (CSR) in the claim intake process."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely interacted with insurance companies before, perhaps even reported a claim. Think about the initial steps involved when you first contact an insurer about a loss.",
+      "warmupQuestion": "What do you think is the most critical piece of information an insurance company needs when a claim is first reported?",
+      "hint": "Consider what allows them to identify the policy and the nature of the event."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "The Foundation of Claim Intake: FROI and the CSR's Role",
+      "narrative": "The journey of every insurance claim begins with its intake, a critical phase that sets the stage for all subsequent processing. As a Customer Service Representative (CSR), you are often the first point of contact for policyholders reporting a loss. This initial interaction, known as the First Report of Injury (FROI) or First Notice of Loss (FNOL), is when the insurer is officially informed of a potentially covered event. It's a moment that demands efficiency, empathy, and accuracy.\n\nAs Tanya, a CSR, highlights in **Figure 1**, you'll encounter a wide spectrum of situations: some customers will have a wealth of detailed information, while others may have very little. Your ability to navigate both extremes, capturing essential data quickly and accurately, is paramount. The FROI/FNOL isn't always initiated by a direct call; it can also originate from external systems, feeding claim information directly into ClaimCenter. This initial report is more than just data entry; it's about understanding the core event and ensuring that the claim is properly documented from its very inception, laying the groundwork for effective claim management.",
+      "keyPoints": [
+        "FROI/FNOL is the initial notification of a potentially covered loss.",
+        "CSRs handle diverse claim intake scenarios, from detailed to minimal information.",
+        "Claims can originate from direct reports or external systems."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Tanya, a Customer Service Representative, describes the varied nature of claim intake calls."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Definition of First Report of Injury (FROI) or First Notice of Loss (FNOL)."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Three Pathways to Claim Creation in ClaimCenter",
+      "narrative": "ClaimCenter offers three distinct pathways for a claim to come into existence, each designed to accommodate different reporting scenarios and optimize the intake process. Understanding these methods is key to appreciating the flexibility and robustness of the system. As shown in **Figure 2**, the first method involves a customer portal, such as Guidewire Claim Portal for Policyholders. This allows policyholders to directly submit their claims online, offering convenience and often expediting the initial report.\n\nThe second pathway, illustrated in **Figure 3**, involves claims created in an external FROI application. This is a two-step process where the claim is initially saved in an external system and then subsequently imported into ClaimCenter. This method is common for organizations that use specialized FROI tools or have integrated third-party systems. Finally, and often the most direct method, is when a 'reporter' (typically the policyholder) contacts the carrier, usually by phone. In this scenario, as depicted in **Figure 4**, a CSR or another insurer employee uses the New Claim Wizard within ClaimCenter to manually enter the claim details. Each of these methods funnels the initial claim information into ClaimCenter, initiating the subsequent automated setup processes.",
+      "keyPoints": [
+        "Claims can be created via customer portals for direct policyholder submission.",
+        "External FROI applications can import claims into ClaimCenter.",
+        "CSRs use the New Claim Wizard for claims reported directly by phone."
+      ],
+      "figures": [
+        {
+          "slideNumber": 5,
+          "caption": "The first method of claim intake: Customer Portal submission."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "The second method of claim intake: External FROI application import."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "The third method of claim intake: New Claim Wizard entry by a CSR."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Automated Claim Setup: Segmentation, Assignment, and Workplans",
+      "narrative": "Once a claim has been successfully created or imported into ClaimCenter, it enters a crucial automated setup process designed to streamline its management. This process involves three primary actions: segmentation, assignment, and workplan creation. First, as shown in **Figure 5**, the claim undergoes **segmentation**. This is the process of determining the optimal strategy for how the claim should be handled. It assesses the claim's complexity, identifying whether it's a straightforward case or one requiring specialized expertise, which then influences subsequent steps.\n\nNext, as highlighted in **Figure 6**, the claim is **assigned**. This involves determining who will be responsible for managing the claim. While the user creating the claim can sometimes specify an assignee, automated rules often dictate the assignment based on factors like segmentation results, adjuster availability, or expertise. Finally, and critical for guiding the claim's progression, a series of activities known as the 'workplan' are created and assigned, as seen in **Figure 7**. These activities outline the specific tasks that must be completed to process the claim and designate who is responsible for each task. After these automated setup steps, validation rules are executed, as shown in **Figure 8**, to ensure the claim meets all minimum system requirements. Successful validation marks the completion of the claim intake process, allowing the claim to officially exist and move forward in the system.",
+      "keyPoints": [
+        "Automated claim setup includes segmentation, assignment, and workplan creation.",
+        "Segmentation determines the claim's processing strategy and complexity.",
+        "Assignment allocates responsibility for the claim to a specific group or user.",
+        "Workplans define the necessary activities and assign them to relevant parties.",
+        "Validation ensures the claim meets minimum system requirements before finalization."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "The automated claim setup process begins with segmentation."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Following segmentation, the claim is assigned to a responsible party."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Automated setup includes the creation and assignment of a workplan."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "The final step of claim intake is validation to ensure data integrity."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Segmentation",
+          "content": "Segmentation is the process of determining the strategy for how a claim should be processed, often based on its complexity or specific characteristics. This helps ensure the claim is handled by the most appropriate resources."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Navigating Imported and Portal Claim Intake",
+      "narrative": "Beyond direct entry by a CSR, ClaimCenter is designed to seamlessly integrate claims from various sources, particularly imported and portal submissions. As **Figure 9** illustrates, claims can be created in external FROI applications and then imported into ClaimCenter. It's crucial to understand that these imported claims must adhere to the same minimum data requirements as claims entered through the New Claim Wizard or a portal. If an imported claim fails validation at the 'load save' level, it will not be saved in ClaimCenter, emphasizing the importance of data integrity from external sources. Policyholders can also include notes during submission, which appear as activities on the claim in ClaimCenter, providing valuable context for adjusters, as seen in **Figure 10**.\n\nAnother significant intake method is through policyholder portals, where customers can submit claims directly from their devices, as depicted in **Figure 11**. This portal submission process can occur in stages, allowing policyholders to save incomplete 'draft' claims. These drafts are saved in ClaimCenter and can be retrieved later, either by the policyholder or by a CSR using the New Claim Wizard if the customer calls in to complete the claim. This ensures that no initial information is lost, even if the submission is interrupted. It's important to note that while policyholders initiate the claim, exposures are typically created automatically during the claim setup or manually by adjusters, not directly by the policyholder in the portal, as detailed in **Figure 12**.",
+      "keyPoints": [
+        "Imported claims must meet ClaimCenter's minimum data requirements and will fail if validation is not met.",
+        "Policyholder notes from external submissions appear as activities in ClaimCenter.",
+        "Portal claims allow policyholders to submit directly, often in stages, with draft claims saved in ClaimCenter.",
+        "Exposures are not created by policyholders in the portal but are handled automatically or by adjusters."
+      ],
+      "figures": [
+        {
+          "slideNumber": 12,
+          "caption": "Overview of the intake process for imported claims."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "Details on validation requirements and policyholder notes for imported FROI claims."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Overview of the intake process for claims submitted via a policyholder portal."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Detailed steps and considerations for the portal intake process, including draft claims."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "The New Claim Wizard: Empowering CSRs for Efficient Intake",
+      "narrative": "While external systems and portals offer automated pathways, the New Claim Wizard remains a cornerstone of claim intake, especially for Customer Service Representatives (CSRs) and adjusters. As shown in **Figure 13**, this wizard is the primary tool for manually entering claims when a reporter contacts the carrier directly. It's designed to model the natural flow of collecting First Notice of Loss (FNOL) information, guiding the user through a series of logically ordered steps to capture high-level details efficiently. The wizard is optimized for various lines of business, such as personal auto and workers' compensation, and can be configured to meet specific business requirements.\n\nTanya, our CSR, emphasizes in **Figure 14** that some customers call with almost all the necessary information. In these scenarios, the New Claim Wizard's comprehensive structure allows CSRs to capture as much detail as possible quickly, making the experience smooth for the customer. The wizard facilitates the collection of information about the reporter, relevant parties, loss details, and even allows for the selection of subflows (like first-and-final or auto glass) to further optimize the workflow. This ensures that whether the customer has minimal or extensive information, the CSR can efficiently record a complete claim, contributing to a positive customer experience and accurate claim setup.",
+      "keyPoints": [
+        "The New Claim Wizard is the primary tool for CSRs and adjusters to enter claims directly.",
+        "It models the natural flow of FNOL, simplifying data collection.",
+        "The wizard allows for efficient capture of extensive claim details, improving customer experience.",
+        "It supports configurable workflows and subflows for different claim types."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "The New Claim Wizard is the tool used by CSRs and adjusters for direct claim entry."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "Tanya explains the importance of capturing complete information efficiently when customers provide it."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of creating a full claim using the New Claim Wizard in ClaimCenter. Pay close attention to each step, from policy search to final assignment, to understand the flow of data entry.",
+      "transcriptSummary": "The demo covers the end-to-end process of creating a claim in ClaimCenter. It starts with a policy search, moves through entering loss date, reported party, involved vehicles, witnesses, loss cause, and location. It concludes with selecting services, group and user assignment, and the claim completion page."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policyholder, Sarah, calls to report a minor fender-bender. She has her policy number, the date and time of the loss, and knows the other driver's license plate. She wants to get this reported as quickly as possible.",
+      "question": "Based on what you've learned about claim intake methods and the New Claim Wizard, what would be your first few steps to assist Sarah and ensure her claim is entered efficiently?",
+      "hints": [
+        "Consider which intake method is most appropriate for a phone call.",
+        "What's the very first piece of information you'd need to verify or find?",
+        "Think about the initial screens of the New Claim Wizard."
+      ],
+      "expectedApproach": "Start the New Claim Wizard, search for Sarah's policy using her policy number, and then proceed to enter the basic loss details like date and time."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You are reviewing a newly created claim and notice that it was imported from an external FROI system. The claim has a note attached that says, 'Policyholder mentioned minor neck pain, but declined ambulance.'",
+      "question": "What automated processes should have occurred for this claim after its import, and where would you expect to see the policyholder's note within ClaimCenter?",
+      "hints": [
+        "Recall the three main steps of automated claim setup.",
+        "Think about how policyholder notes from external systems are handled.",
+        "Consider how the 'minor neck pain' might influence one of the automated steps."
+      ],
+      "expectedApproach": "Identify segmentation, assignment, and workplan creation as automated steps. Expect the note to appear as an activity on the claim, potentially influencing segmentation (e.g., flagging for injury assessment) and subsequent workplan activities."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are three ways that a claim can be entered into ClaimCenter?",
+      "referenceAnswer": "Portal\nExternal application (FRO! application)\nNew Claim Wizard",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What happens during the automated claim setup?",
+      "referenceAnswer": "[a\n\nWhat happens during the automated claim setup?\n\nThe claim is segmented\nThe claim is assigned to a group and user\n\nActivities may be created for work that must be done on the claim",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "ae What is the purpose of segmentation?",
+      "referenceAnswer": "ane What is the purpose of segmentation?\n\nSegmentation is the process of determining a strategy for processing a claim. The\nresult of segmentation is that the claim complexity is determined so that appropriate\nassignment can be made.",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Claim intake begins with FROI/FNOL, the initial notification of a loss.",
+        "Claims can be entered via customer portals, external FROI applications, or the New Claim Wizard.",
+        "Automated claim setup involves segmentation (determining strategy), assignment (allocating responsibility), and workplan creation (defining tasks).",
+        "Imported and portal claims have specific validation rules and processes for handling draft submissions and policyholder notes.",
+        "The New Claim Wizard is a flexible tool for CSRs to efficiently capture comprehensive claim information."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a well-designed claim intake process is fundamental to operational efficiency and customer satisfaction. By understanding these intake methods and automated processes, you can configure ClaimCenter to accurately capture data, quickly route claims to the right adjusters, and ensure compliance, ultimately leading to faster and more accurate claim resolutions.",
+      "nextLessonPreview": "In the next lesson, we'll delve deeper into the specific screens and fields within the New Claim Wizard, exploring how to capture detailed loss information and involved parties."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Using a training environment of ClaimCenter, practice creating claims using the New Claim Wizard. Try creating a claim with minimal information and then another with extensive details, paying attention to how the wizard guides you through the process. Explore how policy search and loss details are captured.",
+      "objectives": [
+        "Practice navigating the New Claim Wizard.",
+        "Simulate entering claims with varying levels of initial information.",
+        "Reinforce understanding of policy search and basic loss data entry."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_04.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_04.mp4"
+    }
+  ]
+}

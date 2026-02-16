@@ -1,0 +1,279 @@
+{
+  "lessonId": "ch05-l15",
+  "chapterId": 5,
+  "chapterSlug": "ch05",
+  "lessonNumber": 15,
+  "title": "Introduction to Specialized claim processes;workers' compensation",
+  "subtitle": "Explore specialized claim processes including recovery, litigation, and fraud detection in ClaimCenter.",
+  "synthesizedAt": "2026-02-16T17:43:32.892413+00:00",
+  "estimatedMinutes": 70,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a complex workers' compensation claim where an employee was injured by a defective machine, leading to significant medical costs. Now, the insurer suspects the machine manufacturer is at fault, and there are also some inconsistencies in the employee's injury report. This isn't a straightforward claim, is it?",
+      "question": "How do insurance companies manage these intricate claims that go beyond the standard intake and payment, involving legal battles, third-party recoveries, or even potential fraud?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Differentiate between fundamental and specialized claim processes.",
+        "Explain the purpose and process of claim recovery, including subrogation.",
+        "Describe the role of litigation in claims handling and how 'matters' are used to manage legal disputes.",
+        "Outline the fraud detection process and the escalation to special investigations.",
+        "Identify key features and steps within ClaimCenter for managing specialized claim processes like subrogation, litigation, and fraud detection."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've already learned about the fundamental phases of claim handling: intake, discovery/investigation, loss assessment, and payment. These are the core steps for almost every claim.",
+      "warmupQuestion": "Can you recall a situation where a claim might require more than just these basic steps, perhaps involving external parties or legal action?",
+      "hint": "Think about claims where someone else might be responsible for the loss, or where there's a disagreement."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Specialized Claim Processes",
+      "narrative": "In the world of insurance claims, not all claims follow the exact same path. While most claims go through **fundamental processes** like intake, discovery/investigation, loss assessment, and payment, some require additional, more intricate steps. These are known as **specialized claims processes**, and they only come into play under specific circumstances. For instance, a claim with a single payment and a normal flow will primarily involve the fundamental phases.\n\nOne such specialized process is **Recovery**, which is crucial when there's an opportunity to recover claim costs. This might happen if property is a total loss, or if a third party is at fault and has insurance. If neither of these conditions applies, there might be no recovery opportunity. Another specialized process is **Litigation**, which becomes relevant when there's a dispute between parties that needs formal resolution. Litigation can emerge at any point during claim handling, from the initial report to the final payment stages.\n\n**Fraud detection** is unique among specialized processes because it's an *ongoing* activity throughout the entire claims process for *all* claims. It's a continuous vigilance against suspicious activity. If fraud detection flags a claim as potentially fraudulent, it can then escalate to **Special Investigations (SI)**. This specialized process is exclusively for claims that are considered suspicious enough to warrant a deeper, dedicated investigation. These distinctions help adjusters and claims professionals navigate the diverse landscape of claim management efficiently.\n\nIt's helpful to visualize these processes. The fundamental processes form the core, while specialized processes like Recovery, Litigation, and Special Investigations branch off as needed. Fraud detection, however, is a layer that overlays all processes, constantly evaluating for anomalies.",
+      "keyPoints": [
+        "Fundamental processes (Intake, Discovery, Loss Assessment, Payment) apply to most claims.",
+        "Specialized processes (Recovery, Litigation, Special Investigations) are conditional.",
+        "Recovery is for claims with opportunities to recoup costs, often from third parties.",
+        "Litigation addresses disputes between parties and can occur at any claim phase.",
+        "Fraud detection is an ongoing process for all claims, potentially leading to Special Investigations for suspicious cases."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of fundamental versus specialized claims processes."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Recovery, including subrogation, aims to recoup claim costs, often from responsible third parties."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Litigation handles disputes between parties and can arise at any stage of claim handling."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Fraud detection is a continuous process that applies to all claims."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Special Investigations are initiated only for claims identified as potentially fraudulent."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Recovery and Subrogation in Detail",
+      "narrative": "Let's delve deeper into the **recovery process**, specifically focusing on **subrogation**. Recovery is about getting back claim costs, and subrogation is a key method for this. It involves recovering costs by collecting from a responsible third party. Consider an example: Sam Stanley is injured on the job, and his company, ACME Co. & Sons, files a Workers' Comp claim. It turns out the injury was caused by a defective machine manufactured by Widgets R Us. In this scenario, Succeed Insurance (the WC insurer) needs to recover claim costs from Widgets R Us, as they were responsible for the accident. This entire process of recovery from Widgets R Us is called subrogation.\n\nIn ClaimCenter, initiating subrogation is a manual process. An adjuster sets the **Subrogation Status** field on the Summary > Status screen to either 'In Review' or 'Open'. Typically, adjusters start with 'In Review' because they might not have all the information to fully warrant subrogation. Once this status is set, a 'Subrogation' option appears in the menu, allowing access to further details. For Property & Casualty (P&C) claims, there can be automatic triggers, such as setting the 'Fault Rating' to 'not at fault', which flags the claim for subrogation review.\n\nOnce subrogation is initiated, the adjuster uses the **Subrogation Summary screen** to enter crucial data. The **Jurisdiction** is automatically derived from the loss details, which is important as it dictates specific laws or limitations. The **Fault** rating allows the adjuster to identify the party responsible for the loss. The 'Subrogation manager' then reviews the 'In Review' status and may change it to 'Open' if there's a viable opportunity. Key information like **Responsible Parties** and **Statute of Limitations** are also completed here, detailing who is liable and any time limits for pursuing recovery.\n\n**Subrogation notes and documents** are vital for communication and record-keeping. Notes are often started by the adjuster to explain why they believe a claim is a candidate for subrogation, helping the assigned subrogation associate understand the referral. The associate then uses these notes to record further information throughout the process. Documents specifically related to subrogation are stored here, though all claim documents are accessible from the main Documents screen. When an adjuster refers a claim to subrogation, it appears in the subrogation associate's list and triggers an activity assigned to them.\n\nFinally, the **Subrogation Financials** screen provides a clear financial overview. It focuses solely on claim costs, not expenses, and reflects the expected recovery based on the third-party liability percentage. If the third party is 100% liable, the insurer expects to recover 100% of costs. This screen automatically updates expected recovery amounts as payments are made and shows actual recovered payments, updating the pending recovery balance. This ensures a transparent and up-to-date financial picture of the subrogation effort.",
+      "keyPoints": [
+        "Recovery is about recouping claim costs, with subrogation being a key method.",
+        "Subrogation involves collecting costs from a responsible third party.",
+        "In ClaimCenter, subrogation status is manually set to 'In Review' or 'Open'.",
+        "The Subrogation Summary screen captures jurisdiction, fault, responsible parties, and statute of limitations.",
+        "Notes and documents are crucial for communication and evidence in subrogation.",
+        "Subrogation Financials track claim costs, expected recovery, and actual recovered amounts."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Focusing on the Recovery process within specialized claims."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Visual representation of the recovery process."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Subrogation is the act of retrieving money from a responsible third party or their insurer."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Steps to initiate subrogation in ClaimCenter by setting the subrogation status."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Key data fields on the Subrogation Summary screen, including jurisdiction and fault."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "The importance of notes and documents for effective subrogation handling."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "The Subrogation Financials screen tracks claim costs and expected recovery."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of initiating and managing subrogation within ClaimCenter. Pay close attention to how the subrogation status is set and how relevant data is entered.",
+      "transcriptSummary": "The video demonstrates how to set a claim's subrogation status to 'In Review' or 'Open' in ClaimCenter, access the subrogation menu, and populate the Subrogation Summary screen with details like jurisdiction, fault, and responsible parties. It highlights the importance of notes and documents for tracking the subrogation process."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Litigation and Matters in Claim Handling",
+      "narrative": "Litigation is a specialized process that comes into play when there's a dispute between parties that cannot be resolved through negotiation, mediation, or arbitration. It can occur at any phase of claim handling; for example, a claim might be a 'first notice suit' if litigation is already pending when the loss is reported. While litigation affects a small percentage of claims, these claims often represent the largest dollar values.\n\nCommon types of litigation include third parties suing policyholders, or injured workers suing their employers (known as 'Employer Liability'). Since the insurer typically pays the settlement, they usually retain the right to manage the defense. In some cases, the insurer itself might be sued, leading to 'bad faith' lawsuits where a claimant alleges unfair claim handling. This underscores the importance of consistent claim practices and thorough documentation.\n\nTo manage legal actions, ClaimCenter uses **Matters**. A Matter is a structured collection of information that tracks events surrounding a lawsuit or potential lawsuit, supporting both informal mediation and formal legal processes. Each Matter has an owner and group, and its own set of contacts (e.g., attorneys), activities, documents, and notes. This organization helps adjusters efficiently manage all litigation-related information.\n\nCreating a Matter in ClaimCenter is straightforward. From the Litigation page, you can use the 'New > Matter' link to display a detail view where you enter information like the Matter's name, case number, plaintiff, defendant, court type, and owner. Similar to claim or exposure setup, rules run after creation to assign the Matter and generate any specific activities. For instance, a new contact created from the 'Plaintiff Attorney' field will automatically be assigned the 'attorney' role.\n\nMatter-related activities can be viewed in a dedicated **Matter Calendar**, which provides a consolidated view of all matter-specific activities across all claims. For claims with disputed liability, insurers often develop a **'plan of action'** to track the dispute's resolution. This plan has two main components: **evaluations** and **negotiations**. An **evaluation** assesses the financial liabilities or damages for an aspect of the loss, helping to estimate low, likely, and high settlement costs. While not directly tied to the Financials summary, ClaimCenter can be configured to link them, for example, by creating automatic reserve transactions when an evaluation is made. A **negotiation** tracks a specific point of dispute, including arguments from both sides and the history of demands, offers, and counter-offers, with detailed negotiation lines for each interaction.",
+      "keyPoints": [
+        "Litigation handles disputes and can occur at any claim phase, often involving high-value claims.",
+        "Common litigation types include third-party suits and 'Employer Liability' in WC claims.",
+        "Insurers often manage the defense, and 'bad faith' suits highlight the need for consistent claim handling.",
+        "Matters in ClaimCenter organize all information related to a lawsuit or potential lawsuit.",
+        "Matters have specific contacts, activities, documents, and notes, and can be created with automated setup rules.",
+        "Matter activities appear in a dedicated calendar, and 'plans of action' use evaluations and negotiations to manage disputed liability."
+      ],
+      "figures": [
+        {
+          "slideNumber": 18,
+          "caption": "Litigation addresses disputes and can occur at any phase of claim handling."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Litigation affects a small number of claims but often involves the largest dollar values, impacting defense management."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Matters organize information about lawsuits, including contacts, activities, documents, and notes."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Creating a Matter involves detailing lawsuit information, with rules assisting in setup."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Matter contacts have specific roles, and matter-related activities are visible in a dedicated calendar."
+        },
+        {
+          "slideNumber": 23,
+          "caption": "A 'plan of action' uses evaluations to assess financial liabilities and potential settlement costs for disputed claims."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Negotiations track offers, counter-offers, and demands related to disputed aspects of a loss."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to create and manage Matters in ClaimCenter, including adding contacts and tracking activities related to litigation. Observe how these features help organize legal information.",
+      "transcriptSummary": "The video illustrates the process of creating a new Matter in ClaimCenter, detailing how to input essential information such as plaintiff, defendant, and court type. It also covers associating specific contacts with roles and how matter-related activities are managed and viewed within the system's calendar."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A workers' compensation claim has been filed, but the injured worker is now suing the employer for negligence, and the initial injury report seems inconsistent with medical findings. The insurer also believes a third-party vendor might be partially responsible for the accident.",
+      "question": "Based on this scenario, identify which specialized claim processes are likely to be involved and briefly explain why each is relevant.",
+      "hints": [
+        "Consider the legal action being taken.",
+        "Think about the inconsistencies in the report.",
+        "What happens when another party is at fault for the loss?"
+      ],
+      "expectedApproach": "Identify litigation due to the lawsuit, fraud detection/special investigations due to inconsistencies, and recovery/subrogation due to the third-party vendor's potential fault."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Fraud Detection and Special Investigations",
+      "narrative": "As we've discussed, **fraud detection** is an ongoing, continuous process that applies to every claim throughout all phases of handling. While every claim undergoes this scrutiny, only a small number will be escalated to **Special Investigations (SI)**. SI refers to the dedicated activities involved in determining if a claim is fraudulent or otherwise suspicious, requiring a deeper dive beyond standard processing.\n\nClaimCenter's base application includes a configurable fraud detection process. This process identifies 'fraud triggers' – events or conditions that could indicate fraudulent activity. Examples include a workers' comp claimant continuing to work despite reporting an injury, a lack of witnesses for an accident, or a significant delay between the loss date and the report date. Each trigger has an associated point value. As these triggers occur, they are added to a claim's trigger list, accumulating points.\n\nWhen the sum of these points reaches or exceeds a configurable 'trigger threshold' (e.g., 5 points in the base application), the rules engine automatically creates a 'Special investigations claim review' activity. This activity is assigned to the supervisor of the claim's group. The supervisor then reviews the claim to decide if it warrants escalation to the Special Investigations Unit (SIU). If the supervisor flags it for escalation, two things happen: an SI specialist is assigned to the claim, and a 'special investigations escalation' activity is created and assigned to that specialist, prompting their review.\n\nClaimCenter features **automatic fraud triggers** that are operational in the base configuration. These triggers are evaluated daily without user action and appear in 'Section One' of the SIU screen if their conditions are met. Different triggers activate based on the claim's age, and each has an assigned point value, all definable through rules configuration. For instance, the absence of a police report or a long delay in reporting a stolen vehicle can be automatic triggers.\n\n**The Special Investigations scoring** is visible on the SIU Details screen. 'Section One' displays the score from automated triggers. 'Section Two' contains a manual questionnaire with WC-specific questions (e.g., 'Is possible injury not job-related?'). If the total score from both sections reaches the threshold (e.g., 5 or higher), it triggers a special investigation. When a claim is under special investigation, processing typically continues, but ClaimCenter can be configured with rules to prevent payments. If fraud is confirmed, the insurer may take legal action, seek remuneration, or even cancel the claimant's policy. Slide 34 serves as a visual break, reinforcing the journey through these specialized processes.",
+      "keyPoints": [
+        "Fraud detection is an ongoing process for all claims; Special Investigations are for potentially fraudulent claims.",
+        "ClaimCenter uses 'fraud triggers' with point values; reaching a threshold initiates an SIU review activity.",
+        "Supervisors review flagged claims and can escalate them to an SI specialist.",
+        "Automatic fraud triggers are evaluated daily and contribute to the SIU score.",
+        "The SIU Details screen combines automatic trigger scores with manual questionnaire scores.",
+        "Claims under investigation may have payment restrictions, and confirmed fraud can lead to legal action or policy cancellation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 27,
+          "caption": "Introduction to Fraud Detection and Special Investigations."
+        },
+        {
+          "slideNumber": 28,
+          "caption": "Fraud detection is continuous, with only a few claims escalating to special investigations."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "The base application's fraud detection process, from triggers to SIU escalation."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Automatic fraud triggers are visible in Section One of the SIU screen and are evaluated daily."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "The Special Investigations scoring combines automatic and manual questionnaire scores to determine escalation."
+        },
+        {
+          "slideNumber": 32,
+          "caption": "When a claim is under special investigation, processing continues, but payments may be restricted."
+        },
+        {
+          "slideNumber": 34,
+          "caption": "A visual placeholder reinforcing the specialized processes."
+        }
+      ]
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Amatter does not have to be assigned. (True or false?)\no A) True\nB) False",
+      "referenceAnswer": "False. Matters (like claims, activities, and exposures) must be assigned to a group\nand a user.",
+      "questionKey": "slide-35"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Which of the following choices describes the correct sequence of steps\nx for an SIU review in the base application?\nt A. Create SIU review activity, supervisor completes SIU questionnaire, SIU\nescalation activity created\n' B. User completes SIU questionnaire, SIU review activity created, SIU escalation\n| activity created\n| C. SIU escalation activity created, user completes SIU questionnaire, SIU review\nI activity created\ni D. User completes SIU questionnaire",
+      "referenceAnswer": "A. Create SIU review activity, supervisor completes SIU questionnaire, SIU\nescalation activity created",
+      "questionKey": "slide-37"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Specialized claim processes like Recovery, Litigation, and Special Investigations handle complex scenarios beyond fundamental claim steps.",
+        "Subrogation is a key recovery method, allowing insurers to recoup costs from responsible third parties.",
+        "Litigation is managed through 'Matters' in ClaimCenter, which organize all legal-related information, contacts, and activities.",
+        "Fraud detection is an ongoing process for all claims, using triggers and scoring to identify and escalate suspicious cases to Special Investigations.",
+        "ClaimCenter provides specific tools and workflows for managing each specialized process, ensuring compliance and efficient resolution."
+      ],
+      "realWorldConnection": "In real-world Guidewire projects, understanding these specialized processes is crucial for configuring ClaimCenter to accurately reflect an insurer's business rules for complex claims. Proper configuration of subrogation triggers, matter creation, and fraud detection thresholds directly impacts an insurer's ability to recover losses, manage legal risks, and combat fraud, ultimately affecting their profitability and operational efficiency."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Review the 'WC Parameters' and 'ICD Codes' sections within the ClaimCenter Administration tab (if available in your environment). Explore how these settings might influence the handling of workers' compensation claims, particularly in relation to medical details and compensability decisions. Document any parameters you find that could impact the specialized processes discussed in this lesson.",
+      "objectives": [
+        "Navigate ClaimCenter's administration settings for Workers' Compensation.",
+        "Identify configurable parameters related to WC claims.",
+        "Reflect on the impact of these parameters on specialized claim processes."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "IS_Claim_15_01.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_15_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Claim_15_02.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_15_02.mp4"
+    }
+  ]
+}

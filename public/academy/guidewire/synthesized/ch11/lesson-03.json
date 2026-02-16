@@ -1,0 +1,444 @@
+{
+  "lessonId": "ch11-l03",
+  "chapterId": 11,
+  "chapterSlug": "ch11",
+  "lessonNumber": 3,
+  "title": "Gosu Queries",
+  "subtitle": "Learn to efficiently retrieve, filter, and count data using Gosu queries in Guidewire applications.",
+  "synthesizedAt": "2026-02-16T18:48:15.940236+00:00",
+  "estimatedMinutes": 95,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a new feature in a Guidewire application that needs to display all contact notes created by a specific user, or find all policies with a certain status that were created last month. How would you efficiently retrieve this specific data from potentially millions of records without impacting performance?",
+      "question": "What tools and techniques would you use to precisely target and fetch the required information from the Guidewire database?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Understand the purpose and advantages of Gosu queries for retrieving entity instances.",
+        "Execute basic Gosu queries, including creating query and results objects, and processing results.",
+        "Apply various restriction methods (e.g., compare, or) to filter query results based on specific criteria, including handling null values.",
+        "Utilize methods to inspect the generated SQL for Gosu queries (toString, withLogSQL).",
+        "Efficiently count, check for existence, retrieve single results, and sort query results.",
+        "Identify and avoid common anti-patterns related to filtering and counting entities in memory.",
+        "Implement best practices for performing filtering and counting operations directly on the database."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "This lesson builds on your understanding of Gosu syntax, basic entity relationships, and the need for efficient data retrieval in large-scale applications. Recall how you might iterate through collections or access related objects.",
+      "warmupQuestion": "Think about a time you needed to find specific information within a large dataset. What challenges did you face?",
+      "hint": "Consider performance, memory usage, and the accuracy of your results."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding and Executing Basic Gosu Queries",
+      "narrative": "Gosu queries are a powerful and recommended way to work with sets of objects that don't already exist as an array, such as all contact notes created by a particular user. They offer significant advantages, including better support for complex queries, simplified creation of search screens through builder patterns, and a more intuitive syntax for those familiar with SQL. When you execute a Gosu query, the results are fetched from the Guidewire application (potentially from cache or the database) only when they are counted, made iterable, or when a single object is retrieved. \n\nTo execute a basic query, you follow three straightforward steps, as illustrated in Figure 5. First, you **create the query object** using the `Query.make()` method, specifying the entity type you wish to query (Figure 6). For instance, `Query.make(entity.ABContact)` creates a query object for all `ABContact` instances. While this retrieves all instances, best practice dictates adding restrictions for performance, which we'll cover shortly. Second, you **create the results object** using the `select()` method on your query object (Figure 7). This step defines the result set, but critically, the actual data isn't fetched until it's referenced. Finally, you **process the results** as needed, typically by iterating through the `resultsObj` using a `for` loop (Figure 8). You can access properties like `DisplayName` for improved readability in your output. Remember that Gosu's `for` loop supports an optional index variable, useful for numbering your results.",
+      "keyPoints": [
+        "Gosu queries retrieve entity instances based on specified criteria.",
+        "They are recommended for complex queries and non-array object sets.",
+        "Results are fetched only when accessed (counted, iterated, or single object retrieved).",
+        "Basic query execution involves creating a query object, a results object, and then processing the results."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An introductory slide to Gosu queries, highlighting their role in retrieving entity data."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Explains what Gosu query objects are and how they specify entity and retrieval criteria."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Outlines the three fundamental steps required to execute a basic Gosu query."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Demonstrates the first step: creating a query object using `Query.make()` for a specific entity."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Illustrates the second step: creating a results object using the `select()` method."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Shows how to process the fetched results, typically using a `for` loop to iterate through entity instances."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Query Restrictions",
+          "content": "Always add restrictions to your queries, especially for large entities like `ABContact`, to avoid retrieving excessive data and impacting performance."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Creating a Query Object",
+          "code": "uses gw.api.database.Query\n\nvar queryObj = Query.make(entity.ABContact)",
+          "explanation": "This code creates a query object targeting the `ABContact` entity type. At this stage, no data has been retrieved."
+        },
+        {
+          "language": "gosu",
+          "title": "Creating a Results Object",
+          "code": "uses gw.api.database.Query\n\nvar queryObj = Query.make(entity.ABContact)\nvar resultsObj = queryObj.select()",
+          "explanation": "The `select()` method is called on the query object to define the result set. Data is still not fetched until `resultsObj` is accessed."
+        },
+        {
+          "language": "gosu",
+          "title": "Processing Query Results",
+          "code": "uses gw.api.database.Query\n\nvar output = \"\"\nvar queryObj = Query.make(entity.ABContact)\nvar resultsObj = queryObj.select()\n\nfor(anABContact in resultsObj) {\n  output += anABContact.DisplayName + \"\\n\"\n}\nprint (output)",
+          "explanation": "This `for` loop iterates through the `resultsObj`, fetching each `ABContact` instance and appending its `DisplayName` to the `output` string, which is then printed."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Inspecting SQL and Applying Basic Restrictions",
+      "narrative": "Understanding the SQL generated by your Gosu queries is crucial for debugging and performance tuning. The query builder APIs offer two primary ways to preview this SQL: `toString()` and `withLogSQL()`. The `toString()` method provides an *approximation* of the SQL `SELECT` statement before it's submitted, showing bound variables and the SQL structure, including table aliases like `gRoot` for the entity type (Figure 9). For a more precise view, `withLogSQL()` displays and records the *exact* SQL `SELECT` statement at the moment it's submitted to the database. Keep in mind that the actual SQL might have vendor-dependent variations or optimizations.\n\nOnce you have a query object, you'll often need to restrict the results. The `compare()` method is your go-to for adding comparison predicates, which translate directly to `WHERE` clauses in SQL (Figure 11). This method is overloaded, allowing for various signatures, but generally takes a property (e.g., `ABPerson#LastName`), an operator from `gw.api.database.Relop` (like `Relop.Equals`, `Relop.GreaterThan`), and a value. For string fields, the comparison value must match exactly. For typecode comparisons, always use typekey reference syntax (e.g., `TC_OPEN`) rather than string literals to ensure type safety and avoid casting issues.\n\nGuidewire applications also allow for `null` values in certain entity elements, indicated by the `nullok=true` attribute in the data model. To query for records where a field *is* or *is not* null, you can use the `compare()` method with `Relop.Equals` or `Relop.NotEquals` and `null` as the value (Figure 12). This translates to `IS NULL` or `IS NOT NULL` in the underlying SQL.",
+      "keyPoints": [
+        "Use `toString()` for approximate SQL preview and `withLogSQL()` for exact SQL logging.",
+        "The `compare()` method adds `WHERE` clause restrictions to queries.",
+        "Comparison operators are defined in `gw.api.database.Relop`.",
+        "Use typekey literals (e.g., `TC_OPEN`) for typecode comparisons.",
+        "Query for `null` values using `Relop.Equals, null` or `Relop.NotEquals, null`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Compares `toString()` for approximate SQL output with `withLogSQL()` for exact SQL logging."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "A transition slide for query restriction methods."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Explains the `compare()` method for adding comparison predicates to a query."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Demonstrates how to query for entities where a specific field is `null` or `not null`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Typekey Literals",
+          "content": "Always use Gosu typekey literals (e.g., `TC_OPEN`) for typecode comparisons instead of string literals to ensure compile-time validation and avoid potential runtime errors."
+        },
+        {
+          "type": "definition",
+          "title": "Overloaded Method",
+          "content": "An overloaded method has multiple method signatures, meaning it can accept different types or numbers of arguments while performing a similar function."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Using `compare()` for Restrictions",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryObj = Query.make(entity.ABPerson)\nqueryObj.compare(ABPerson#LastName, Relop.Equals, \"Andy\")\nqueryObj.compare(ABPerson#NumDependents, Relop.GreaterThan, 0)\nqueryObj.compare(ABPerson#PrimaryPhone, Relop.Equals, TC_Work)",
+          "explanation": "This code adds three restrictions: `LastName` equals 'Andy', `NumDependents` is greater than 0, and `PrimaryPhone` is of type `Work`."
+        },
+        {
+          "language": "gosu",
+          "title": "Querying for Null Values",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryNull = Query.make(entity.ABPerson)\nqueryNull.compare(ABPerson#Score, Relop.Equals, null)\n\nvar queryNotNull = Query.make(entity.ABPerson)\nqueryNotNull.compare(ABPerson#Score, Relop.NotEquals, null)",
+          "explanation": "The first query finds `ABPerson` records where `Score` is `null`. The second finds records where `Score` is `not null`."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Combining Multiple Restrictions with AND and OR Logic",
+      "narrative": "When you apply multiple `compare()` restrictions to a single query object, they are inherently combined using an `AND` operator. This means that all specified conditions must be true for a record to be included in the results. For example, if you compare `LastName` to 'Andy' and `FirstName` to 'William', the query will only return `ABPerson` records where *both* conditions are met (Figure 13). You can add as many `AND` restrictions as needed to precisely narrow down your search.\n\nHowever, if you need to combine conditions with `OR` logic, you must use the `or()` method. This method takes a block as an input parameter, where the block's placeholder represents the original query object. Inside this block, you can list multiple `compare()` criteria, and these criteria will be combined with `OR` logic (Figure 14). For instance, `queryObj.or(\\ criteria -> { criteria.compare(ABPerson#LastName, Relop.Equals, \"Andy\") criteria.compare(ABPerson#FirstName, Relop.Equals, \"William\") })` would return records where the `LastName` is 'Andy' *OR* the `FirstName` is 'William'. It's also possible to combine `AND` and `OR` logic in complex ways within these blocks, allowing for highly specific queries.\n\nThe Gosu Reference Guide provides a comprehensive list of all available options for restricting queries, including methods like `between`, `compareIgnore`, `contains`, `subselect`, and `startsWith` (Figure 15). These methods allow you to perform various types of comparisons, such as checking if a value falls within a range, ignoring case in string comparisons, or performing subqueries. Exploring these additional options will enable you to write even more sophisticated and precise queries.",
+      "keyPoints": [
+        "Multiple `compare()` restrictions on a query object are implicitly `AND`ed.",
+        "The `or()` method is used to combine restrictions with `OR` logic, taking a block of `compare()` methods.",
+        "Complex `AND` and `OR` combinations are possible within `or()` blocks.",
+        "Additional restriction options are available in the Gosu Reference Guide."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Illustrates how multiple `compare()` restrictions are implicitly `AND`ed together in a Gosu query."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Demonstrates the `or()` method, which uses a block to combine multiple criteria with `OR` logic."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Highlights additional restriction options available in the Gosu Reference Guide for advanced querying."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "A transition slide for further query capabilities."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Complex Logic",
+          "content": "For highly complex queries involving nested AND/OR logic, carefully structure your `or()` blocks and nested `and()` blocks to ensure the desired conditions are met."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Multiple Restrictions ANDed Together",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.compare(ABPerson#LastName, Relop.Equals, \"Andy\")\nqueryObj.compare(ABPerson#FirstName, Relop.Equals, \"William\")",
+          "explanation": "This query will return `ABPerson` records only if both the `LastName` is 'Andy' AND the `FirstName` is 'William'."
+        },
+        {
+          "language": "gosu",
+          "title": "Multiple Restrictions ORed Together",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryObj = Query.make(ABPerson)\nqueryObj.or(\\ criteria -> {\n  criteria.compare(ABPerson#LastName, Relop.Equals, \"Andy\")\n  criteria.compare(ABPerson#FirstName, Relop.Equals, \"William\")\n})",
+          "explanation": "This query will return `ABPerson` records if the `LastName` is 'Andy' OR the `FirstName` is 'William'."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Counting, Peeking, and Ordering Query Results",
+      "narrative": "After defining your query, you often need to know how many results it will return, or if it will return any at all. The `resultsObj.Count` property can identify the number of objects in the result set (Figure 17). However, it's crucial to understand that Guidewire does not query the database for the *complete* result set immediately, nor does it store a snapshot. This means `Count` can be problematic in implementation code as its value might change if the underlying data changes during processing. For instructional and debugging purposes, it's useful, but for production code, consider alternatives.\n\nFor simply checking if a query will return *anything* or *too much*, more performant and reliable alternatives exist (Figure 18). `isEmpty()` performs a fast check to see if the query has any results, returning `true` or `false`. `getCountLimitedBy(x)` returns the number of results if it's less than `x`, otherwise it returns `x`. These methods are superior to `Count` because they issue a count query with an extra clause that tells the database to stop counting after `n` results, significantly improving performance for large datasets. Avoid 'peeking' if you intend to process the entire result set anyway, as it adds unnecessary overhead.\n\nWhen you expect only a single result from a query, the `AtMostOneRow` property is invaluable (Figure 19). If a single item exists, it returns that row. If no item exists, it returns `null`. Crucially, if multiple items exist, it throws an exception, preventing unintended behavior. This property is a published name for the `getAtMostOneRow` method. Finally, you can sort your query results using ordering methods like `orderBy()` and `orderByDescending()` (Figure 20). These methods take an object that implements `IQuerySelectColumns`, often created using `Paths.make()` to specify the property path for sorting. You can also use `thenBy()` and `thenByDescending()` for multi-level sorting, which do not clear previous ordering.",
+      "keyPoints": [
+        "The `Count` property can be unreliable in production due to dynamic result sets.",
+        "`isEmpty()` and `getCountLimitedBy(x)` are efficient for checking result existence or quantity limits.",
+        "`AtMostOneRow` retrieves a single result, returns `null` if none, and throws an exception if multiple.",
+        "Sort results using `orderBy()`, `orderByDescending()`, and for multi-level sorting, `thenBy()` and `thenByDescending()`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Demonstrates using `resultsObj.Count` to get the number of results, with a note on its limitations."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Introduces `isEmpty()` and `getCountLimitedBy(x)` as more efficient and reliable alternatives for checking query results."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Explains the `AtMostOneRow` property for queries expected to return a single entity instance."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Shows how to sort query results using `orderBy()` and `thenBy()` methods with `Paths.make()`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Count Property Caution",
+          "content": "Be cautious when using `resultsObj.Count` in production code, as its value can change if the underlying database data is modified while the query results are being processed. Prefer `isEmpty()` or `getCountLimitedBy(x)` for existence checks."
+        },
+        {
+          "type": "best_practice",
+          "title": "Efficient Peeking",
+          "content": "Use `isEmpty()` or `getCountLimitedBy(x)` when you only need to know if a query will return results or if the number of results is below a certain threshold, rather than fetching the entire set."
+        },
+        {
+          "type": "gotcha",
+          "title": "AtMostOneRow Exception",
+          "content": "The `AtMostOneRow` property will throw an exception if the query returns more than one object. Ensure your query criteria are specific enough to guarantee a single result."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Counting Results with `Count`",
+          "code": "uses gw.api.database.Query\n\nvar queryObj = Query.make(ABPerson)\nvar resultsObj = queryObj.select()\nvar count = resultsObj.Count\nprint(\"Result count: \" + count)",
+          "explanation": "This code retrieves the count of `ABPerson` records. While simple, be aware of its potential inaccuracies in dynamic environments."
+        },
+        {
+          "language": "gosu",
+          "title": "Querying for One Result with `AtMostOneRow`",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.Relop\n\nvar queryObj = Query.make(ABCompany)\nqueryObj.compare(ABCompany#Name, Relop.Equals, \"Albertson's\")\nvar resultsObj = queryObj.select().AtMostOneRow\nprint(resultsObj.EmailAddress1)",
+          "explanation": "This query attempts to find a single `ABCompany` named 'Albertson's' and retrieve its `EmailAddress1`. It will throw an error if more than one match is found."
+        },
+        {
+          "language": "gosu",
+          "title": "Sorting Query Results",
+          "code": "uses gw.api.database.Query\nuses gw.api.database.QuerySelectColumns\nuses gw.api.path.Paths\n\nvar queryObj = Query.make(ABPerson)\nvar resultsObj = queryObj.select()\n  .orderBy(QuerySelectColumns.path(Paths.make(ABPerson#PrimaryAddress.State)))\n  .thenBy(QuerySelectColumns.path(Paths.make(ABPerson#LastName)))\n  .thenByDescending(QuerySelectColumns.path(Paths.make(ABPerson#FirstName)))",
+          "explanation": "This code sorts `ABPerson` results first by the `State` of their `PrimaryAddress` (ascending), then by `LastName` (ascending), and finally by `FirstName` (descending)."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through applying various restrictions to Gosu queries, showcasing how to filter results based on specific criteria and combine conditions.",
+      "transcriptSummary": "The video demonstrates how to use the `compare()` method with different operators and values to restrict query results. It also illustrates combining multiple restrictions and using the `or()` method for more complex logical conditions, providing practical examples of Gosu query construction."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Anti-Patterns: Filtering Entities In-Memory",
+      "narrative": "When working with Gosu queries, it's critical to filter entities at the database level rather than in memory. Failing to do so can lead to significant performance issues, excessive memory consumption, and large bundle sizes, especially in Guidewire applications. The core principle is to **return only what you need** and **let the database do what it's good at** – filtering (Figure 23).\n\nOne common anti-pattern is fetching all entities into memory and then filtering them with Gosu code. For example, retrieving *all* claims and then iterating to find those related to a `targetPolicy` (Figure 24, Anti-Pattern) is highly inefficient. This loads every claim and its associated policy into the bundle, potentially doubling the number of entities. The best practice is to add a `compare()` predicate to your query, restricting results to only the claims related to the `targetPolicy` *before* they are fetched. This ensures only essential entities are added to the bundle.\n\nSimilarly, avoid methods like `where()`, `first()`, `last()`, `firstWhere()`, and `lastWhere()` when you can achieve the same filtering or selection directly in the database query. Using `select().toCollection().where(...)` (Figure 25, Anti-Pattern) fetches all addresses into a collection and then filters, causing the same memory and bundle issues. The fix is to use `compare()` as part of the initial query, limiting the results returned from the database. The same logic applies to `first()`, `last()`, `firstWhere()`, and `lastWhere()` (Figure 26). These methods often bring back an entire array of results just to get one qualifying address. Instead, use `compare()` to filter in the database, `orderBy()` for database-side sorting, and then access the `FirstResult` property of the select object to retrieve just the first matching entry (Figure 27). This significantly reduces overhead and improves performance. Remember, do not use `first()` or `last()` to check for existence; use `isEmpty()` instead.",
+      "keyPoints": [
+        "Filter entities at the database level, not in memory, to optimize performance and memory.",
+        "Avoid fetching all entities and then filtering with Gosu code (e.g., `if (claim.Policy == targetPolicy)`).",
+        "Do not use `where()`, `first()`, `last()`, `firstWhere()`, `lastWhere()` for database-side filtering.",
+        "Use `compare()` predicates in your query to filter results efficiently.",
+        "For single results, combine `compare()` with `orderBy()` and `FirstResult`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "Emphasizes best practices for filtering entities on the database and lists methods to avoid."
+        },
+        {
+          "slideNumber": 24,
+          "caption": "Compares an anti-pattern of in-memory filtering with the best practice of database-side filtering for claims related to a policy."
+        },
+        {
+          "slideNumber": 25,
+          "caption": "Illustrates the anti-pattern of using `where()` on a collection versus applying `compare()` in the query."
+        },
+        {
+          "slideNumber": 26,
+          "caption": "Shows anti-patterns for retrieving single entities using `first()`, `last()`, `firstWhere()`, and `lastWhere()`."
+        },
+        {
+          "slideNumber": 27,
+          "caption": "Presents the best practice for retrieving a single, sorted entity using `compare()`, `orderBy()`, and `FirstResult`."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Database-Side Filtering",
+          "content": "Always push filtering logic down to the database using `compare()` and other query restriction methods. This minimizes data transfer and processing on the application server."
+        },
+        {
+          "type": "warning",
+          "title": "Dot Notation Caution",
+          "content": "Be careful with dot notation (e.g., `claim.Policy`). Accessing foreign key and array fields can implicitly trigger queries and add related entities to the bundle, potentially leading to very large bundle sizes and performance issues."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Anti-Patterns: Counting Entities In-Memory",
+      "narrative": "Just as with filtering, counting entities should primarily be handled by the database. Allowing the database to perform counts is significantly more efficient than bringing large datasets into memory for application-side counting (Figure 28). There are several anti-patterns to avoid when counting entities.\n\nOne such anti-pattern is using `countWhere()` on an implicitly fetched array (Figure 29, Anti-Pattern). For example, `claim.Activities.countWhere(...)` implicitly brings back the entire `Activities` array and then counts based on criteria. This is inefficient if you only need the count, not the actual activity objects. The best practice is to construct a query for the target activities and use the `Count` property of the results object. When `Count` is accessed on a query's results object, the Query API issues a `SELECT COUNT(*)` query, returning only the count directly from the database.\n\nAnother anti-pattern involves using `toCollection()` or `toList()` followed by `.count` (Figure 30, Anti-Pattern). For instance, `Query.make(Claim).select().toList().count` explicitly fetches all claims into a collection in memory and then counts them. Again, this is wasteful if you only need the count. The best practice is simply `Query.make(Claim).select().Count`, which performs the count directly in the database.\n\nFinally, avoid iterating over entities from the database solely to count them (Figure 31, Anti-Pattern). A `for` loop that fetches each claim and increments a counter (`nCount = nCount + 1`) consumes significant memory and processing time. The most performant way to get the count is, once again, `Query.make(Claim).select().Count`. The golden rule remains: **bring back only what you actually need**.",
+      "keyPoints": [
+        "Let the database handle entity counting for efficiency.",
+        "Avoid `countWhere()` on implicitly fetched arrays.",
+        "Do not use `toCollection()` or `toList()` followed by `.count` for database counts.",
+        "Never iterate over fetched entities solely to count them.",
+        "The `select().Count` property is the most performant way to get a database-side count."
+      ],
+      "figures": [
+        {
+          "slideNumber": 28,
+          "caption": "Outlines best practices for counting entities on the database and lists methods to avoid."
+        },
+        {
+          "slideNumber": 29,
+          "caption": "Compares the anti-pattern of using `countWhere()` on an array with the best practice of database-side counting."
+        },
+        {
+          "slideNumber": 30,
+          "caption": "Illustrates the anti-pattern of using `toCollection().count` versus the efficient `select().Count`."
+        },
+        {
+          "slideNumber": 31,
+          "caption": "Shows the anti-pattern of iterating through results to count them, contrasting it with the `select().Count` best practice."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Database-Side Counting",
+          "content": "For all counting requirements, leverage the `Count` property on the `select()` results object. This ensures the count is performed by the database, minimizing data transfer and maximizing performance."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "You need to find all `ABPerson` records where the last name is 'Smith' OR the first name is 'John', and they have more than 2 dependents. You also want to ensure that the query is efficient and only retrieves the necessary data.",
+      "question": "Write a Gosu query that fulfills these requirements, ensuring you use appropriate restriction methods and avoid anti-patterns. Print the `DisplayName` of each matching person.",
+      "hints": [
+        "Start by creating a query object for `ABPerson`.",
+        "How do you combine `OR` conditions?",
+        "How do you add an `AND` condition to the `OR` block?",
+        "Remember to use `Relop` for comparison operators."
+      ],
+      "expectedApproach": "Create an `ABPerson` query. Use the `or()` method to encapsulate the `LastName` and `FirstName` conditions. Inside the `or()` block, use `and()` to add the `NumDependents` condition. Finally, iterate through the results and print the `DisplayName`."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "_ _ Which approach is used to record a more specific version of the SQL for\nOo” a query?\n“ 1\n\n. queryObj.toString\n2. queryObj.withLogSQL (true)",
+      "referenceAnswer": "The correct answer is B. queryObj.withLogSQL (true)",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Whatis the difference between a query object and results object?",
+      "referenceAnswer": "A) Aquery object specifies the entity and the query criteria.\nB) Aresults object is a set of one or more entity instances fetched from the\nGuidewire application.\nC) This distinction is helpful for understanding the concept of a query and of set of\nresults. In practice, query results are fetched from the Guidewire application when\nthey are counted, iterated over, or when one object is retrieved.",
+      "questionKey": "slide-34"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Which query restriction uses a block of compare methods?",
+      "referenceAnswer": "The OR restriction uses the or method with a block of compare methods such as:\nvar queryObj = Query.make(ABCompany).withLogSQL (true)\nqueryObj.or(\\ criteria -> {\ncriteria.compare(ABCompany#Score, Relop.LessThan, 50 )\ncriteria.compare(ABCompany#InspectionRequired, Relop.Equals, true)\n7)",
+      "questionKey": "slide-36"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "_ _ What happens if you use the AtMostOneRow property in a query, and the\nOo” query returns more than one object?\n¢",
+      "referenceAnswer": "An exception is thrown when a query that uses the AtMostOneRow property, returns\nmore than one object.",
+      "questionKey": "slide-38"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Gosu queries are the preferred method for retrieving entity instances not in arrays, offering flexibility and performance.",
+        "Basic queries involve creating a query object, selecting results, and iterating through them.",
+        "`compare()` adds `AND` restrictions, while `or()` with a block handles `OR` logic.",
+        "`toString()` and `withLogSQL()` help inspect generated SQL.",
+        "For counting and existence checks, `isEmpty()` and `getCountLimitedBy(x)` are more efficient than `Count`.",
+        "`AtMostOneRow` is used for single expected results, throwing an exception if multiple are found.",
+        "Always filter and count entities at the database level using query methods (`compare()`, `select().Count`) to avoid anti-patterns like in-memory filtering (`where()`, `first()`, `last()`) and iteration for counting."
+      ],
+      "realWorldConnection": "In real Guidewire projects, efficient Gosu queries are fundamental for building high-performing applications. By applying these best practices, you ensure that your code retrieves data quickly, minimizes memory usage, and scales effectively, leading to a more responsive and robust system for end-users and administrators alike."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Your task is to write a Gosu query that retrieves the `ABContact` record for the currently assigned user. You will need to determine how to access the current user's information and then use that to restrict your query. Ensure your query is efficient and handles cases where the user might not have an associated `ABContact` or if multiple contacts somehow match (though this should ideally not happen for a single user).",
+      "objectives": [
+        "Construct a Gosu query to retrieve a specific entity based on user context.",
+        "Apply appropriate restrictions to target a unique record.",
+        "Utilize methods for retrieving a single result efficiently."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_03_01.mp4",
+      "path": "/academy/guidewire/videos/ch11/In_03_01.mp4"
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "lessonId": "ch04-l07",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 7,
+  "title": "Policy Changes and preemption",
+  "subtitle": "Mastering policy modifications, effective dates, and handling concurrent transactions in PolicyCenter.",
+  "synthesizedAt": "2026-02-16T17:19:39.422525+00:00",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a policyholder calls to add a new vehicle to their policy, effective next week. Before that change is finalized, they call again to add a new driver, effective immediately. Then, the new vehicle delivery is delayed, requiring a change to its effective date. How does PolicyCenter manage these overlapping, sometimes conflicting, updates?",
+      "question": "What mechanisms are in place to ensure a policy remains accurate and legally binding when multiple changes occur simultaneously or out of sequence?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Explain the role of effective dates in policy changes and their impact on PolicyPeriod and Coverage entities.",
+        "Describe the mechanics of policy change transactions and their effect on policy premiums.",
+        "Identify how to initiate, progress, and review policy changes within PolicyCenter.",
+        "Differentiate between simple and complex policy change scenarios, including the concept of base periods.",
+        "Define preemption in PolicyCenter and explain what leads to it.",
+        "Outline the process for managing and resolving preempted transactions, including using comparison views."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "In previous lessons, we've explored the basic structure of policies and how they are initially created. Remember how a policy's lifecycle begins with a submission and results in a bound policy, establishing its initial terms and coverages?",
+      "warmupQuestion": "What do you think happens to a policy's underlying data model when a change is made in the middle of its term, and how might this differ from creating a brand new policy?",
+      "hint": "Consider how new data is added versus how existing data is modified or superseded."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Policy Change Mechanics and Effective Dates",
+      "narrative": "Policy changes, often referred to as transactions, are fundamental to keeping policy coverage details current and accurate within PolicyCenter. These changes are not merely administrative updates; they frequently involve **material changes** that affect what is covered, leading to adjustments in the policy's premium. As developers, understanding how these changes interact with the data model, particularly entities like `PolicyPeriod` and `Coverage`, is crucial for effective policy management.\n\nAt the heart of any policy change are **effective dates**. These dates determine precisely when a change becomes active, ensuring the policy accurately reflects real-world events, such as acquiring a new vehicle or modifying existing coverage. The `PolicyPeriod` entity plays a pivotal role here, as each transaction effectively creates a new policy period that captures the updated terms from its effective date onwards. This mechanism ensures that historical policy data remains intact while current coverage is accurately represented.\n\nOne common scenario involves editing the effective date of an **unbound policy change**. For instance, if a customer initiates a policy change to add a new vehicle, expecting it on October 1st, but the delivery is delayed until November 1st, the effective date of the *in-progress* change can be modified. This flexibility is vital for aligning policy data with actual events. However, it's important to note that if the initial policy change has already been issued (bound), you cannot simply edit its effective date; a new policy change transaction would be required. Before any policy change is finalized and issued, a thorough review is essential to ensure all modifications are accurate and meet the policyholder's expectations, maintaining data integrity and compliance.",
+      "keyPoints": [
+        "Policy changes are transactions that modify policy terms and often impact premiums.",
+        "Effective dates dictate when policy changes become active, aligning with real-world events.",
+        "The `PolicyPeriod` entity is central to tracking changes over time.",
+        "Unbound policy changes allow for effective date adjustments, but bound changes require a new transaction.",
+        "Thorough review is critical before issuing any policy change to ensure accuracy."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Effective dates are crucial for aligning policy coverage with real-world events, as highlighted by an underwriter's query."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Policy changes involve material modifications to coverables, coverages, or coverage terms, often resulting in premium adjustments."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "An effective date can be edited for an unbound policy change, but a new transaction is needed if the change is already issued."
+        },
+        {
+          "slideNumber": 8,
+          "caption": "Editing an effective date for an in-progress policy change requires confirmation and may invalidate the current quote, potentially needing underwriting approval."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Reviewing policy changes is a critical step to ensure accuracy and compliance before the changes are issued."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Material Change",
+          "content": "A 'material change' is a modification to a policy that directly affects what is covered, often leading to a change in the policy's premium."
+        },
+        {
+          "type": "best_practice",
+          "title": "Change Transaction Description",
+          "content": "While not always required, providing a clear description for each policy change transaction is a best practice. This enhances auditability and understanding of the change's purpose."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration illustrates the process of initiating a policy change in PolicyCenter. Pay close attention to how the effective date is set and how the system guides you through modifying policy details using the change wizard.",
+      "transcriptSummary": "The demo covers starting a policy change, specifying an effective date and description, navigating the change wizard to modify policy details, and the steps involved before issuing the change. It highlights how the PolicyChange entity captures these details and the importance of requoting after modifications."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Policy Periods, Base Periods, and the Introduction to Preemption",
+      "narrative": "Every policy transaction, whether it's an initial submission, a renewal, or a mid-term change, results in the creation of a new **PolicyPeriod**. These periods are distinct snapshots of the policy's terms and coverages at different points in time. In simple scenarios, transactions are executed and become effective sequentially, creating a clear, linear progression of policy periods. For instance, a policy comes into effect, is renewed, and then a change is applied, each creating a new, distinct policy period.\n\nHowever, real-world scenarios in insurance are often more complex. Most policy transactions don't start from scratch; instead, they modify a copy of an existing `PolicyPeriod`. This existing period is known as the **base period** for that transaction. Understanding base periods is crucial when multiple transactions are in progress simultaneously, as it dictates the foundational policy data upon which new changes are built. For example, a submission creates a base period, and subsequent changes use that as their starting point.\n\nThis leads us to the concept of **preemption**. Preemption is a phenomenon that occurs when two or more transactions are initiated from the *same base period* and are in progress concurrently. This typically happens when a new transaction is started while another transaction on the same policy is still open and not yet bound. In PolicyCenter, the terms 'transactions' and 'jobs' are often used interchangeably in this context. When multiple jobs are started from the same base period, the first job to be bound effectively 'preempts' or 'wins out over' all other concurrent jobs. This means the losing jobs must then be modified to reconcile with the changes introduced by the winning, bound transaction, ensuring data consistency and avoiding conflicts.",
+      "keyPoints": [
+        "Each policy transaction generates a new `PolicyPeriod` reflecting updated terms.",
+        "Simple scenarios involve sequential transactions and effective dates.",
+        "Complex scenarios introduce 'base periods' from which new transactions are initiated.",
+        "Preemption occurs when multiple transactions are started from the same base period concurrently.",
+        "The first transaction to bind 'preempts' others, requiring the losing jobs to be adjusted."
+      ],
+      "figures": [
+        {
+          "slideNumber": 10,
+          "caption": "Simple policy scenarios show sequential policy periods created by transactions, such as submission, renewal, and changes."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "Most policy transactions modify a copy of an existing PolicyPeriod, known as the 'base period' for that transaction."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Preemption arises when two transactions are initiated from the same base period, often when a new transaction starts before a previous one is completed."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "When multiple jobs start from the same base period, the first one to be bound preempts all others, requiring losing jobs to be modified."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Base Period",
+          "content": "The 'base period' is the existing PolicyPeriod from which a new policy transaction (or job) is initiated, serving as the foundation for the changes being made."
+        },
+        {
+          "type": "definition",
+          "title": "Preemption",
+          "content": "Preemption occurs when two or more policy transactions are open concurrently from the same base period. The first transaction to be bound 'wins' and its changes are applied, requiring subsequent open transactions to be reconciled."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration focuses on how PolicyCenter identifies and alerts users to potential preemption scenarios. Observe the warnings and the options presented to the user when a preemption is detected.",
+      "transcriptSummary": "The demo illustrates a scenario where a new policy change is initiated while another is already in progress. It shows the preemption warning message displayed by PolicyCenter, prompting the user to review existing changes before proceeding, and highlights the system's role in maintaining data integrity."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Managing and Resolving Preemptions in PolicyCenter",
+      "narrative": "PolicyCenter is designed to help users manage preemptions effectively, preventing data conflicts and ensuring policy updates are handled consistently. When you initiate a new policy change and another change is already in progress for the same policy period, PolicyCenter will issue a clear **preemption warning**. This warning appears before the change wizard is even initiated, giving you the opportunity to pause, review the existing open transaction, and decide how to proceed. This proactive alert is crucial for maintaining the integrity of policy data.\n\nOnce a change job successfully preempts other transactions by being bound first, PolicyCenter provides valuable tools for reconciliation. On the Policy Change Bound screen, you'll find **links to the preempted transactions**. This feature allows you to easily navigate to and review the affected jobs, understanding what changes were superseded. When a user attempts to complete a job that has been preempted, PolicyCenter will again alert them, emphasizing the need to reconcile the changes.\n\nTo facilitate this, PolicyCenter offers a **comparison view** for preempted changes, typically displayed in a tree format. This visualization clearly highlights the differences between the current (preempted) policy state and the changes introduced by the winning transaction. You'll have options to either apply all changes from the preempting job to your current transaction or withdraw your transaction. A useful 'Decide Later' button allows you to close the screen without immediate action, giving you time to assess the situation and plan your next steps carefully. Effectively resolving preemptions is a critical skill for developers and users alike, as it ensures data consistency and policy accuracy, aligning all transactions with the latest, legally bound policy state.",
+      "keyPoints": [
+        "PolicyCenter issues preemption warnings when a new change is initiated while another is in progress.",
+        "The Policy Change Bound screen provides links to preempted transactions for easy review.",
+        "Users are alerted when attempting to complete a job that has been preempted.",
+        "A comparison view helps visualize differences between preempted and current policy states.",
+        "Resolving preemptions involves applying changes from the winning job or withdrawing the preempted job."
+      ],
+      "figures": [
+        {
+          "slideNumber": 16,
+          "caption": "PolicyCenter issues a preemption warning when a new change is started while another is already in progress for the same policy period."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "After a change job is bound and preempts others, the Policy Change Bound screen provides direct links to the preempted transactions."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Users are alerted when trying to complete a job that has been preempted, requiring them to address the conflict."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "PolicyCenter offers a comparison view in a tree format to help users understand differences in preempted changes, with an option to 'Decide Later'."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Resolving preemptions often involves applying all changes from the preempting job, making its period the new base for the preempted transaction."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Out-of-Sequence Changes",
+          "content": "PolicyCenter supports out-of-sequence transactions (where a change's effective date is earlier than a previously bound transaction's effective date). It will warn you and prompt you to address any resulting conflicts, which can be a form of preemption or require careful reconciliation."
+        },
+        {
+          "type": "best_practice",
+          "title": "Proactive Preemption Management",
+          "content": "Always review preemption warnings carefully. Understanding the impact of concurrent changes and proactively resolving conflicts ensures data integrity and avoids unexpected policy outcomes."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "A policy for 'Acme Corp' has an active policy period from 01/01/2024 to 01/01/2025. On March 15, 2024, an agent initiates a policy change (Change A) to add a new vehicle, effective April 1, 2024. Before Change A is bound, on March 20, 2024, another agent initiates a separate policy change (Change B) to add a new driver, effective March 20, 2024. Change B is bound on March 21, 2024. Change A is then attempted to be bound on March 22, 2024.",
+      "question": "Describe the sequence of events in PolicyCenter from the initiation of Change B through the attempt to bind Change A, including any warnings or reconciliation steps the system would present. What would be the final state of Change A?",
+      "hints": [
+        "Consider which change is initiated first, and which is bound first.",
+        "Remember the 'first to bind wins' rule for preemption.",
+        "What happens when a preempted job is resumed or attempted to be bound?"
+      ],
+      "expectedApproach": "Identify the base period for both changes. Determine which change binds first and thus preempts the other. Explain the warning messages and the options presented to the user when attempting to bind the preempted change, and how it would need to be reconciled."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\ny A)\nB)\nC)\nD)\nE)\nF)\n\nIt can be started manually.\n\nIt can only be executed from an existing policy.\nIt requires you to identify the producer of record.\nIt can be withdrawn.\n\nIt can be declined.\n\nIt requires a new quote to be generated.",
+      "referenceAnswer": "_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\nD. Both E. Both F. Both\n\n7 A) Itcan be started manually.\n\nI B) Itcan only be executed from an existing policy.\n\nI C) Itrequires you to identify the producer of record.\n\nI D)_ Itcan be withdrawn.\n\n| E) lItcan be declined.\n\ni F) lItrequires a new quote to be generated.\n\n' A. Both B. Change C. Submission\n\n!",
+      "questionKey": "slide-21"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Policy changes are essential transactions for updating policy details, often affecting premiums and requiring careful management of effective dates.",
+        "Each policy transaction creates a new `PolicyPeriod`, and complex scenarios involve 'base periods' for concurrent changes.",
+        "Preemption occurs when multiple transactions are initiated from the same base period, with the first to bind winning.",
+        "PolicyCenter provides warnings, comparison views, and reconciliation tools to manage and resolve preempted transactions, ensuring data integrity."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering policy changes and preemption is critical for building robust applications that accurately reflect policyholder actions. Incorrect handling can lead to data inconsistencies, incorrect premiums, and compliance issues. Developers must design solutions that account for out-of-sequence changes and concurrent modifications to maintain a single, accurate source of truth for policy data.",
+      "nextLessonPreview": "Having explored mid-term policy changes, our next lesson will delve into the intricacies of **renewals**, examining how PolicyCenter manages the continuation of policies and the associated processes."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Engage in a hands-on exercise to practice initiating and managing policy changes within PolicyCenter. You will be tasked with modifying an existing policy, adjusting effective dates, and simulating a preemption scenario to practice reconciliation. This exercise will reinforce your understanding of how policy data is updated and maintained.",
+      "objectives": [
+        "Successfully initiate a policy change and modify policy details.",
+        "Adjust the effective date of an unbound policy change.",
+        "Simulate a preemption scenario and identify the system's warnings.",
+        "Navigate the preemption comparison view and resolve a preempted transaction."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_08_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_08_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_08_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_08_02.mp4"
+    }
+  ]
+}

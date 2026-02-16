@@ -1,0 +1,275 @@
+{
+  "lessonId": "ch14-l05",
+  "chapterId": 14,
+  "chapterSlug": "ch14",
+  "lessonNumber": 5,
+  "title": "Configuring Rate Rountines and Parameter Sets",
+  "subtitle": "Mastering Guidewire PolicyCenter configuration for accurate policy cost calculations and rating engine integration.",
+  "synthesizedAt": "2026-02-16T19:13:56.792342+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're building a new insurance product, and you need to define exactly how premiums are calculated based on various policy details like vehicle type, driver history, and coverage limits. Without a structured way to feed this data into your calculation logic, your rating engine would be chaotic and prone to errors. This is where parameter sets and rate routines become indispensable.",
+      "question": "How can we ensure our rating engine receives the precise data it needs and executes complex calculations consistently and efficiently across all policy types?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Configure parameter sets to provide data to the rate routines",
+        "Configure rate routines to calculate costs",
+        "Configure the rate routine plugins to process the rate routines."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Recall from previous lessons the fundamental components of the Guidewire rating architecture, including how rate books, rate tables, and the rating engine interact at a high level. This lesson builds upon that foundation, diving deeper into the specific configurations that make the rating process work.",
+      "warmupQuestion": "Before we dive in, can you briefly describe the role of a 'Rate Book' in the Guidewire rating process?",
+      "hint": "Think about where rate tables and rate routines are organized and accessed."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Parameter Sets: Fueling Your Rate Routines with Data",
+      "narrative": "At the heart of any accurate rating calculation is the data it operates on. In Guidewire PolicyCenter, **parameter sets** serve as the crucial mechanism for providing policy-related objects and values to your rate routines. Think of a parameter set as a carefully curated collection of inputs that a specific rate routine needs to perform its calculations. These sets are defined within the PolicyCenter application and are dynamically populated by the rating engine at runtime.\n\nWhile the high-level management of parameter sets is covered in introductory courses, this lesson focuses on the Gosu code configurations that enable their power. To configure a new parameter, you first define it in Gosu, then add its name to the `CalcRoutineParamName.ttx` typelist. Optionally, you can define a default parameter type in `RatingParameterSetScreenHelper.mapFromCodeToType()` or specify it later in the UI. Once defined, the parameter can be added to a parameter set in the application.\n\nAn important consideration is whether a parameter should be **writable**. Writable parameters can be edited directly within a rate routine's instruction field, offering flexibility. Non-writable parameters, on the other hand, are available only as operands. When populating the parameter map in the rating engine, you define a `Map<CalcRoutineParamName, Object>` where each `typecode` (from `CalcRoutineParamName` typelist) maps to a specific policy object (e.g., `TC_POLICYLINE` to `PolicyLine`, `TC_VEHICLE` to a `Vehicle` object). It's crucial that the type of each object in this map is compatible with the `Type` field specified for the parameter set in the UI. For optimal performance, design parameters to include only the fields necessary for the rate routines that use them, avoiding root entities like `PolicyPeriod` which can lead to excessive memory usage and slow operations.",
+      "keyPoints": [
+        "Parameter sets provide policy-related data to rate routines.",
+        "New parameters are configured in Gosu and added to `CalcRoutineParamName.ttx`.",
+        "The rating engine populates parameter maps at runtime, mapping typecodes to policy objects.",
+        "Parameters can be writable (editable in routines) or non-writable (operands only).",
+        "Efficient parameter design avoids root entities to prevent performance issues."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An overview of the Guidewire Rating Architecture, highlighting the role of Parameter Sets and Rate Routines within the Rating Engine."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A blank slide, often used as a transition or placeholder in the original presentation."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "A review of Parameter Sets, defining them as policy-related objects providing data for calculations."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Steps to configure a new parameter, including Gosu definition, typelist entry, and UI configuration."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Gosu code snippet demonstrating how to populate a parameter map within the rating engine, mapping typecodes to policy objects."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Parameter Set",
+          "content": "A collection of policy-related objects that supply data to rate routines for calculations, defined in PolicyCenter and populated by the rating engine."
+        },
+        {
+          "type": "best_practice",
+          "title": "Parameter Performance",
+          "content": "To avoid performance degradation, design your parameter sets to include only the fields directly needed by the rate routines. Do not use root entities like `PolicyPeriod` as parameters, as this can lead to the compilation of thousands of unnecessary fields, increasing memory usage and slowing down operations."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Populating a Rate Routine Parameter Map",
+          "code": "var rateRoutineParameterMap : Map<CalcRoutineParamName, Object > =\n{\n  TC_POLICYLINE -> PolicyLine,\n  TC_VEHICLE -> vehicleObject,\n  TC_DRIVER -> driverObject\n}",
+          "explanation": "This Gosu code snippet demonstrates how to create a map that associates `CalcRoutineParamName` typecodes with specific policy objects, which the rating engine then passes to the rate routines."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the process of configuring parameter sets within PolicyCenter, showing how to define new parameters and add them to a set.",
+      "transcriptSummary": "The demo illustrates navigating to parameter sets, adding a new parameter, specifying its type and writability, and associating it with policy objects. It highlights the UI steps involved in parameter set management."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team needs to introduce a new parameter, 'IsNewCustomer', to a parameter set used by a rate routine. This parameter should be a Boolean and editable within the rate routine.",
+      "question": "Outline the high-level steps you would take to configure this 'IsNewCustomer' parameter, from Gosu definition to its availability in a parameter set, ensuring it's writable.",
+      "hints": [
+        "Start with the Gosu definition and typelist.",
+        "Consider the 'writable' property mentioned earlier.",
+        "Think about where the parameter is ultimately added in the application."
+      ],
+      "expectedApproach": "Define 'IsNewCustomer' in Gosu, add it to `CalcRoutineParamName.ttx`, optionally define its default type, add it to the relevant parameter set in PolicyCenter, and mark it as writable."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Rate Routines: Defining Your Calculation Logic",
+      "narrative": "Once you have your parameter sets providing the necessary data, **rate routines** step in to perform the actual calculations. A rate routine is a predefined algorithm designed to calculate a policy cost. It leverages the policy objects provided by a parameter set and can look up values from rate tables to execute its logic. These routines are defined within the PolicyCenter application and are executed by the rating engine at runtime.\n\nThe rating engine's first task is **rate book selection**, which is crucial for finding the correct rate routine. This process can vary significantly based on the line of business (LOB) and carrier requirements. For instance, in Personal Auto (PA), the rate book is typically selected once for the entire policy term. In contrast, for Commercial Property (CP), rate book selection might occur in 'slice mode' for each building on every location, based on its addition date, and then again in 'window mode' for calculations like taxes.\n\nTo execute a rate routine, a configuration developer must configure the rating engine class to call the `RateBook.executeCalcRoutine` method. This method requires the rate routine's unique code, a `CostData` object (which holds properties used in calculations), a `WorksheetEntryContainer` for rating worksheets, and the `paramSet` (the parameter map we discussed earlier). Rate routines can utilize both generic functions, defined in `gw.rating.flow.util.SharedRatingFunctions.gs` and available to all routines, and line-specific functions, defined in `<LOB>RatingFunctions.gs` (e.g., `PARatingFunctions.gs` for Personal Auto). These line-specific functions extend `RatingFunctionSource` and can be made available to routines via the 'Functions' menu in the UI's Operand field, with their availability controlled by overriding the `availableForLine()` method.\n\nConfiguring rate routines involves a clear sequence: first, define any new parameters if needed, then define the parameter set in PolicyCenter. Next, you'll edit or write the rate routine itself in the application, and finally, execute it in the `<LOB>RatingEngine` class, ensuring the parameter map and `CostData` object are correctly prepared.",
+      "keyPoints": [
+        "Rate routines are algorithms that calculate policy costs using parameter sets and rate table values.",
+        "Rate book selection varies by LOB (e.g., once for PA, slice/window mode for CP).",
+        "The `RateBook.executeCalcRoutine` method is used to execute routines, passing `code`, `CostData`, `WorksheetEntryContainer`, and `paramSet`.",
+        "Functions for routines can be generic (`SharedRatingFunctions.gs`) or line-specific (`<LOB>RatingFunctions.gs`).",
+        "Configuration steps involve defining parameters, parameter sets, the routine, and its execution in the rating engine."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "A review of Rate Routines, defining them as predefined algorithms for calculating policy costs using parameter sets and rate table lookups."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Explanation of Rate Book selection, highlighting how the process can be configured differently for various lines of business like Personal Auto (PA) and Commercial Property (CP)."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "The `RateBook.executeCalcRoutine` method signature, detailing the parameters required to execute a rate routine in Gosu."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Overview of generic and line-specific functions available for use within rate routines, with examples like `SharedRatingFunctions.gs`."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "A summary of the steps required to configure rate routines, from defining parameters to executing them in the rating engine class."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Function Availability",
+          "content": "Remember that generic functions in `SharedRatingFunctions.gs` are available to all rate routines, while line-specific functions in `<LOB>RatingFunctions.gs` require overriding the `availableForLine()` method to control their visibility within the UI's Operand field."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "gosu",
+          "title": "Executing a Rate Routine",
+          "code": "RateBook.executeCalcRoutine(code : String,\n                            costData : CostData<Cost, PolicyLine>,\n                            worksheetContainer: WorksheetEntryContainer,\n                            paramSet: Map<CalRoutineParamName, Object>)",
+          "explanation": "This method is called by the rating engine to execute a specific rate routine, identified by its `code`, and provides it with the necessary `CostData`, worksheet information, and the parameter set."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will show you how to define and edit rate routines within the PolicyCenter application, illustrating the steps involved in building calculation logic.",
+      "transcriptSummary": "The demo covers navigating to rate routines, adding steps, selecting parameters and functions, and configuring the calculation logic. It provides a visual guide to the UI for rate routine creation and modification."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You need to create a new rate routine called 'CommercialVehicleDiscount' for the Commercial Auto line of business. This routine will apply a discount based on a 'FleetSize' parameter and a rate table lookup. You also need to ensure it can use a line-specific function `CADiscountFunctions.calculateFleetDiscount()`.",
+      "question": "Describe the key configuration steps you would take to implement this new rate routine, including how you would make `CADiscountFunctions.calculateFleetDiscount()` available.",
+      "hints": [
+        "Think about the order of operations: parameters first, then the routine, then its execution.",
+        "How do line-specific functions become available?",
+        "What method is used to execute a rate routine?"
+      ],
+      "expectedApproach": "Define 'FleetSize' parameter and add to a parameter set. Create 'CommercialVehicleDiscount' rate routine in PolicyCenter, adding steps for rate table lookup and discount calculation. Ensure `CADiscountFunctions.gs` extends `RatingFunctionSource` and overrides `availableForLine()` for Commercial Auto. Configure the `CARatingEngine` class to call `RateBook.executeCalcRoutine` for the new routine, passing the appropriate parameter set and `CostData`."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Rate Routine Plugins: Orchestrating the Rating Process",
+      "narrative": "The final piece of the rating puzzle involves the **rate routine plugins**, which orchestrate how rate routines are processed and how the rating engine interacts with other PolicyCenter features. The `IRateRoutinePlugin` interface, typically implemented by the `RateRoutinePlugin` class, is configured via `IRateRoutinePlugin.gwp`. This plugin registry entry is crucial for setting the implementation class and enabling features like rating worksheets.\n\nBy setting the `WorksheetsEnabled` parameter to `true` in `IRateRoutinePlugin.gwp`, you can enable rating worksheets for all lines of business. This action makes the 'Show Rating Worksheet' button appear on the Quote screen, providing transparency into the rating calculations. While `RateRoutinePlugin.gs` handles the generic processing of rate routines, specific behaviors can be delegated to line-specific configuration classes like `PARateRoutineConfig.gs` and `CPRateRoutineConfig.gs`. These `<LOB>RateRoutineConfig` classes are vital for setting up `CostData` wrappers, which define which properties of a cost object appear when selecting instructions or operands in a rate routine step. They must implement `getCostDataWrapperType` and `makeCostDataWrapper` methods.\n\nFurthermore, these line-specific config classes can override the global worksheet enablement by implementing `worksheetsEnabledForLine()`. To generate the actual rating worksheet content, you organize policy data into a tree-like structure within the `<LOB>PolicyLineMethods` class (e.g., `PAPolicyLineMethods.gs` or `CPPolicyLineMethods.gs`). This is typically done by editing or adding methods to `getWorksheetRootNode()`, which structures the policy objects for display in the worksheet.",
+      "keyPoints": [
+        "The `IRateRoutinePlugin` (configured via `IRateRoutinePlugin.gwp`) sets the implementation class and enables features like rating worksheets.",
+        "`WorksheetsEnabled` parameter in `IRateRoutinePlugin.gwp` enables worksheets globally.",
+        "Line-specific config classes (`<LOB>RateRoutineConfig.gs`) handle `CostData` wrappers and can override worksheet enablement.",
+        "`CostData` wrappers define accessible cost properties in rate routine steps.",
+        "Rating worksheets are generated by structuring policy data in `<LOB>PolicyLineMethods`'s `getWorksheetRootNode()`."
+      ],
+      "figures": [
+        {
+          "slideNumber": 19,
+          "caption": "Configuration of `IRateRoutinePlugin.gwp`, showing how to set the implementation class and enable worksheets via the `WorksheetsEnabled` parameter."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Diagram illustrating the interaction between `RateRoutinePlugin.gs` and line-specific configuration classes like `PARateRoutineConfig.gs` for `CostData` wrappers and worksheet enablement."
+        },
+        {
+          "slideNumber": 21,
+          "caption": "Gosu code snippet from `PAPolicyLineMethods.gs`, demonstrating how to organize policy data into a tree-like structure for generating rating worksheets."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "LOB-Specific Customization",
+          "content": "For custom behavior related to a specific Line of Business (LOB), always prioritize using the line-specific `RateRoutineConfig` class (e.g., `PARateRoutineConfig.gs`) over modifying the generic `RateRoutinePlugin.gs`. This promotes modularity and maintainability."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will showcase the configuration of rate routine plugins, focusing on how to enable and customize rating worksheets.",
+      "transcriptSummary": "The demo illustrates navigating to the `IRateRoutinePlugin.gwp` file, modifying parameters to enable worksheets, and briefly shows how the worksheet appears on the quote page, providing insight into the plugin's impact."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Inwhich class do you configure rate routine methods available to all\nY LOBs?",
+      "referenceAnswer": "Y LOBs?\ngsrc.gw.rating.flow.util.SharedRatingFunctions.gs",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "7~ — What property can you set on a parameter so that it can be edited ina\no rate routine?",
+      "referenceAnswer": "writable",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Parameter sets are essential for passing policy-related data to rate routines, configured in Gosu and PolicyCenter UI.",
+        "Rate routines define the calculation logic, leveraging parameter sets and rate tables, with execution managed by the rating engine.",
+        "Rate routine plugins (via `IRateRoutinePlugin.gwp` and LOB-specific config classes) orchestrate routine processing, enable rating worksheets, and manage `CostData` wrappers.",
+        "Careful design of parameters and modular configuration using LOB-specific classes are crucial for performance and maintainability."
+      ],
+      "realWorldConnection": "In real Guidewire projects, correctly configuring rate routines and parameter sets is fundamental to building accurate and flexible rating models. This ensures that policy premiums are calculated correctly, underwriting decisions are supported by precise data, and business users have transparency into the rating process through features like worksheets. Mastering these configurations allows you to adapt PolicyCenter to complex product requirements and regulatory changes efficiently.",
+      "nextLessonPreview": "In our next lesson, we will explore advanced topics in rating, including how to implement custom rating logic and integrate with external rating services."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise will guide you through a hands-on task to configure a new parameter, add it to an existing parameter set, and then modify a rate routine to utilize this new parameter. You will also practice enabling and viewing a rating worksheet.",
+      "objectives": [
+        "Define a new Gosu parameter and add it to `CalcRoutineParamName.ttx`.",
+        "Add the new parameter to an existing parameter set in PolicyCenter, ensuring it is writable.",
+        "Modify an existing rate routine to incorporate the new parameter in its calculation logic.",
+        "Verify the parameter's functionality by generating and reviewing a rating worksheet."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Ra_Conf_05_01.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_05_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Ra_Conf_05_02.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_05_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Ra_Conf_05_03.mp4",
+      "path": "/academy/guidewire/videos/ch14/Ra_Conf_05_03.mp4"
+    }
+  ]
+}

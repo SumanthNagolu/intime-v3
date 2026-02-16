@@ -1,0 +1,233 @@
+{
+  "lessonId": "ch04-l15",
+  "chapterId": 4,
+  "chapterSlug": "ch04",
+  "lessonNumber": 15,
+  "title": "Managing Underwriting Authority",
+  "subtitle": "Configure PolicyCenter underwriting rules, authority grants, and profiles to streamline decision-making.",
+  "synthesizedAt": "2026-02-16T17:24:27.272910+00:00",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're an underwriter, and a complex policy comes across your desk – a high-value vehicle in a high-risk area. You know it needs special approval, but who has the authority to sign off on it? Or, as a developer, how do you ensure the system reflects these intricate business rules?",
+      "question": "How does PolicyCenter ensure that the right people can make critical underwriting decisions, and how do we configure this system to reflect our organization's unique risk appetite and approval hierarchy?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define who can make what underwriting decisions in PolicyCenter.",
+        "Configure complex underwriting rules and authority profiles that align with business policies.",
+        "Interact with entities like UWIssue and AuthorityGrant to reflect the organization's decision-making hierarchy."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Learners should have a basic understanding of insurance underwriting concepts and general navigation within PolicyCenter. Recalling how other business rules, like validation rules, function will also be beneficial.",
+      "warmupQuestion": "Think about a time when a decision in a workflow required multiple levels of approval. What made that process efficient or inefficient, and how could technology improve it?"
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Defining Underwriting Rules in PolicyCenter",
+      "narrative": "Underwriting rules form the fundamental backbone of managing underwriting authority within PolicyCenter. As developers, our role is crucial in configuring these rules to precisely define the conditions under which specific underwriting issues arise and how they are subsequently managed. The primary goal here is to automate decision-making processes wherever possible, while still preserving essential human oversight for complex or high-risk scenarios. These rules are not merely static definitions; they are an extendable infrastructure designed to align perfectly with an organization's business logic and operational policies.\n\nIn PolicyCenter, underwriting rules are structured into several key components, accessible via **Administration > Business Rules > Underwriting Rules**. The **Rule Details** tab is where you define the core attributes of a rule, including its unique **Name** and **Code**, and critically, its **Blocking Point**. The blocking point specifies at which stage in a policy transaction (e.g., before quote, before bind) an unresolved issue will halt further progress. The evaluation aspect of a rule involves defining its **Rule Context** and **Conditions**, which determine when the rule is triggered. Finally, approval mechanisms, such as whether an issue is auto-approvable or its default duration, are configured on the **Advanced** tab. As you work with these components, it's vital to consider how they integrate with the business's broader workflow and approval processes, ensuring that rules specify things like jurisdictions of coverage or minimum/maximum amounts that require review. Remember, once an underwriting rule has been deployed to a production system, Guidewire strongly recommends against removing it or making certain critical changes (like to the Code or Value Comparator) without a full understanding of the impact, as this can affect system metrics and issue generation.",
+      "keyPoints": [
+        "Underwriting rules define conditions for underwriting issues and their management.",
+        "Developers configure rules to align with business logic, automating decisions while allowing human oversight.",
+        "Rules are structured with Rule Details (Name, Code, Blocking Point), evaluation criteria (Context, Conditions), and approval mechanisms (Advanced tab).",
+        "Blocking points halt policy transaction progress until issues are approved.",
+        "Avoid modifying or removing deployed underwriting rules in production without careful consideration."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Underwriting rules are central to managing authority, defining conditions for issues and their management."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Key components of underwriting rules include Rule Details, evaluation criteria, and approval mechanisms, all configurable in PolicyCenter."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Underwriting Rule",
+          "content": "An underwriting rule defines an underwriting issue type, specifies when to check for it, and under what conditions to raise the issue on a policy transaction. It also dictates how the issue can be approved."
+        },
+        {
+          "type": "best_practice",
+          "title": "Rule Management Best Practice",
+          "content": "Guidewire recommends that you do not remove underwriting rules once they have been deployed in a production system. Significant changes to deployed rules (e.g., Code, Value Comparator, Blocking Point) should also be avoided due to potential system impact and loss of historical metric comparability. In most cases, it's better to create new rules for future occurrences."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will guide you through the PolicyCenter user interface to view existing underwriting rules. Pay close attention to how rules are listed, categorized, and the details such as their status and applicability, as these provide insights into their system function.",
+      "transcriptSummary": "The demo navigates to the Underwriting Rules section in PolicyCenter, showcasing how rules are displayed, their status, and applicability. It highlights the direct impact of configurations on the underwriting process."
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Authority Profiles and Grants: Defining Approval Boundaries",
+      "narrative": "Beyond just defining when an issue arises, PolicyCenter also needs to define *who* can resolve it. This is where authority profiles and authority grants become pivotal. Unlike static roles, authority profiles offer a flexible way to define what decisions an underwriter can make, tailored to specific expertise or experience levels. For example, an underwriter specializing in 'Farm Equipment' might have a different profile than a general 'Underwriter 1'. As a developer, you'll configure these profiles to ensure they align with both individual capabilities and organizational policy, providing fine-grained control over decision-making.\n\nAuthority grants are the specific permissions associated with an underwriter's profile, acting much like formal letters of authority. Each grant dictates the boundaries of what decisions can be made without requiring additional approval, and crucially, each grant correlates to a specific underwriting issue type. This structured approach ensures that underwriting processes are both efficient and compliant. For instance, an authority grant might specify that an underwriter can approve a collision deductible of 'at least $1000' or a comprehensive deductible of 'at least $500'. These grants can also specify limits or 'any' for approval values, allowing for customization based on expertise. Multiple authority profiles can be assigned to users, enabling incremental authority adjustments, such as bumping up an underwriter's authority for specific cases without a full promotion. The base configuration provides examples like the 'Agent 1' profile, which includes specific authority grants tailored for personal auto policies, clearly defining what an Agent 1 can approve or escalate, thereby maintaining consistency and accountability across the organization.",
+      "keyPoints": [
+        "Authority profiles define what decisions an underwriter can make, offering flexibility beyond static roles.",
+        "Profiles are tailored to expertise (e.g., product specialization) and align with individual capability and organizational policy.",
+        "Authority grants are specific permissions linked to underwriting issue types, dictating approval boundaries.",
+        "Grants can specify value limits or 'any' for approval, allowing for customized authority levels.",
+        "Multiple profiles and grants enable fine-grained control and incremental authority adjustments for users."
+      ],
+      "figures": [
+        {
+          "slideNumber": 9,
+          "caption": "Authority grants define specific permissions for underwriters, dictating decision boundaries for each issue type."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Authority grants are linked to underwriting issues, and authority profiles group these grants to define a user's approval capabilities."
+        },
+        {
+          "slideNumber": 11,
+          "caption": "The 'Agent 1' profile illustrates how specific authority grants are tailored for personal auto policies, defining approval limits."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Authority Grant",
+          "content": "A specific permission associated with an underwriter's profile, allowing them to approve a particular underwriting issue type, often with specified value limits."
+        },
+        {
+          "type": "definition",
+          "title": "Authority Profile",
+          "content": "A group of authority grants assigned to a user, determining the types of underwriting issues they can approve. Profiles offer flexibility to tailor authority based on expertise or experience."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration will walk you through the configuration of authority profiles in PolicyCenter. Observe how profiles are structured, the fields available for customization, and how parameters are set to define an underwriter’s decision-making authority.",
+      "transcriptSummary": "The demo explores the configuration of authority profiles in PolicyCenter, showing how profiles are structured and the various fields and options available for customization. It highlights setting parameters to define an underwriter’s decision-making authority in alignment with business needs."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your organization is introducing a new 'Senior Underwriter - Commercial Property' role. This role needs to approve underwriting issues related to commercial properties with a total insured value (TIV) up to $5,000,000, but requires escalation for anything above that. They also need to approve all 'High Flood Exposure' issues without a value limit.",
+      "question": "Outline the steps you would take in PolicyCenter to create an authority profile for this new role, including the necessary authority grants.",
+      "hints": [
+        "Consider which underwriting issue types would be relevant for 'Commercial Property TIV' and 'High Flood Exposure'.",
+        "How would you specify the value limit for the TIV grant?",
+        "Remember that authority profiles group multiple authority grants."
+      ],
+      "expectedApproach": "Create a new authority profile (e.g., 'Senior Underwriter - Commercial Property'). Add two authority grants: one for 'Commercial Property TIV' with a limit of $5,000,000, and another for 'High Flood Exposure' with an 'Any' value for approval."
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Managing the Underwriting Rule Lifecycle and Deployment",
+      "narrative": "The deployment of underwriting rules is a strategic and carefully managed process, crucial for maintaining system integrity and minimizing risks. The life cycle of an underwriting rule typically begins in the **Draft** status on a development server. In this initial stage, the rule is created, refined, and rigorously tested to ensure it behaves as expected and aligns with business requirements. Once testing is complete and the rule is approved, it is promoted to **Staged** status, indicating it's ready for further testing in a dedicated testing environment.\n\nAfter thorough validation in the testing environment, the rule can then be set to **Approved** status, making it eligible for import into the production server, where its final status becomes **Deployed**. This structured approach ensures that rules are only moved to production once they meet all necessary criteria, thus minimizing risks and maintaining system integrity. While PolicyCenter does allow for rules to be created directly in production in urgent situations (like catastrophe management), the best practice is always to develop and test in non-production environments first. Developers must carefully coordinate the export and import of these rules. From the development server, you can export rules that are in the **Staged** status. This exported file can then be smoothly imported into a production server, ensuring consistent application of rules across different environments. This methodical process, from draft to deployed, is essential for effective underwriting authority management.",
+      "keyPoints": [
+        "Underwriting rules follow a lifecycle: Draft (development) -> Staged (ready for testing) -> Approved (ready for production) -> Deployed (active in production).",
+        "Rules should be developed and rigorously tested in non-production environments before deployment.",
+        "Exporting 'Staged' rules from development and importing them into production ensures consistency.",
+        "Directly creating rules in production is possible but generally discouraged as a best practice.",
+        "Careful management of the rule lifecycle is crucial for system integrity and risk minimization."
+      ],
+      "figures": [
+        {
+          "slideNumber": 14,
+          "caption": "The underwriting rule life cycle progresses from Draft on a development server to Staged, then Approved, and finally Deployed in production."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Underwriting rules are created and tested in development, then exported and imported into production for consistent application."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "The process of exporting underwriting rules involves selecting a 'Staged' rule and generating a file for import into other environments."
+        },
+        {
+          "slideNumber": 17,
+          "caption": "The Underwriting Rules page facilitates the export and import of rules, ensuring continuity and consistency across environments."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Deployment Strategy",
+          "content": "Always create and test underwriting rules in a development environment first. This allows for thorough evaluation and modification before migrating them to production. While 'on-the-fly' creation in production is technically possible for urgent situations, it carries higher risks and should be avoided for standard deployments."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "This demonstration will illustrate the strategic process of deploying underwriting rules. Pay attention to how rules are moved from a development environment to production, and the considerations involved in ensuring they are fully vetted before going live.",
+      "transcriptSummary": "The demo explains that deploying underwriting rules is a strategic process, ideally involving development and rigorous testing in a non-production environment. It emphasizes that new rules should be fully vetted to avoid unintended consequences, even if on-the-fly adjustments in production are possible."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You've just finished developing a new underwriting rule for 'High-Risk Geographic Zones' on your development server, and it's currently in 'Draft' status. Your team lead wants it moved to the testing environment for QA, and then eventually to production.",
+      "question": "Describe the complete sequence of actions and status changes this rule will undergo, from its current 'Draft' status to being 'Deployed' in production, including any export/import steps.",
+      "hints": [
+        "What is the first step after development and initial testing on the dev server?",
+        "How do rules move between environments?",
+        "What is the final status in production?"
+      ],
+      "expectedApproach": "The rule would first be 'Promoted to Staged' on the development server. Then, it would be 'Exported' from the development server and 'Imported' into the testing environment. After full testing, it would be 'Promoted to Approved' (likely on the testing server, or conceptually after testing is complete). Finally, it would be 'Exported' from the testing/staging environment and 'Imported' into the production server, where its status becomes 'Deployed'."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Underwriting rules define conditions for issues and are configured with details, evaluation, and approval components.",
+        "Authority grants are specific permissions for approving issues, linked to issue types.",
+        "Authority profiles group grants, offering flexible control over underwriter decision-making.",
+        "The rule lifecycle involves Draft, Staged, Approved, and Deployed statuses, with testing in non-production environments being crucial.",
+        "Exporting and importing rules facilitate consistent deployment across environments."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering underwriting authority management is critical for automating risk assessment, ensuring compliance, and empowering underwriters to make timely, informed decisions. Correct configuration directly impacts policy processing efficiency and the organization's ability to manage its risk portfolio effectively.",
+      "nextLessonPreview": "In our next lesson, we'll delve into the Product Model and policy lines, expanding your understanding of how PolicyCenter supports complex insurance products and sets the stage for more advanced customizations."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "This exercise focuses on the practical application of managing underwriting authority by generating an underwriting issue within PolicyCenter. You will configure a rule and observe its impact.",
+      "objectives": [
+        "Configure an underwriting rule to trigger a specific issue.",
+        "Observe the generation of an underwriting issue in a policy transaction.",
+        "Understand how underwriting issues block policy progress."
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "In_Policy_16_01.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_16_01.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "In_Policy_16_02.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_16_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "In_Policy_16_03.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_16_03.mp4"
+    }
+  ]
+}

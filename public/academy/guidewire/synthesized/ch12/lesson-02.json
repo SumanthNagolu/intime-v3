@@ -1,0 +1,520 @@
+{
+  "lessonId": "ch12-l02",
+  "chapterId": 12,
+  "chapterSlug": "ch12",
+  "lessonNumber": 2,
+  "title": "Conceptualizing Requiremnts in Mind Map",
+  "subtitle": "Learn to visually structure and document insurance product requirements using mind maps in Advanced Product Designer.",
+  "synthesizedAt": "2026-02-16T19:06:02.053801+00:00",
+  "estimatedMinutes": 330,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're tasked with launching a new insurance product, but the requirements are scattered across various documents and conversations. How do you bring clarity and structure to this complex information, ensuring everyone on the team understands the product's core design before a single line of code is written?",
+      "question": "What visual tool could help you organize, share, and refine these intricate product requirements effectively?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and key activities of the conceptualize phase in Advanced Product Designer.",
+        "Create a product mind map using XMind, documenting business requirements with topics and labels.",
+        "Apply Guidewire markers to annotate mind map elements for product modeling.",
+        "Model various product components, including attributes, modifiers, risk objects, exposures, clauses, and schedules, within a mind map.",
+        "Identify which mind map elements and annotations are imported into Advanced Product Designer and which are ignored."
+      ],
+      "estimatedMinutes": 5
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You've likely encountered various methods for gathering and documenting business requirements in previous projects. Think about how you've translated high-level business goals into detailed specifications for software development.",
+      "warmupQuestion": "What challenges have you faced when trying to communicate complex product structures to both business stakeholders and technical teams?",
+      "hint": "Consider issues like ambiguity, version control, and ensuring everyone is on the same page."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Introduction to Conceptualization and Mind Maps",
+      "narrative": "The journey of designing new insurance products in Advanced Product Designer (APD) always begins with a clear understanding of business goals and a detailed outline of product requirements. APD streamlines this crucial initial phase by offering a powerful visual tool: the mind map. The 'conceptualize phase' is dedicated to creating a logical, tree-like structure that serves as the conceptual model of your product, expressed in familiar insurance business terms. This visual model is then shared and reviewed collaboratively among project team members.\n\nAt its core, documenting business requirements involves building a mind map using a tool like XMind. This tree-like diagram visually represents the product's structure. The root of this tree is either the product itself or a broader product line. From this root, nodes branch out to model the hierarchy of different product components, such as risk objects, coverages, exclusions, and conditions. APD is designed to seamlessly import mind maps created with the free version of XMind 8, making it accessible for business users.\n\nKey elements within a mind map include **Topics** and **Labels**. Topics are fundamental; they form the nodes of your tree-like diagram, representing different parts of your product. For APD to successfully import your mind map, products and product lines *must* have a label. Labels can also be created for a 'Short Name', which is essential during the finalization and generation of the product. This 3-character code becomes the 'Abbreviation' for an imported product or the 'Line Prefix' for a line template, while the identifier becomes the 'Identifier' for the line appended with 'Line'.",
+      "keyPoints": [
+        "The conceptualize phase focuses on creating a logical, visual model of the product in business terms.",
+        "Mind maps, built with tools like XMind, use a tree-like structure to document requirements.",
+        "Topics form the nodes of the mind map, representing product components.",
+        "Labels are crucial for products, product lines, and short names for successful import into APD."
+      ],
+      "figures": [
+        {
+          "slideNumber": 1,
+          "caption": "An overview of common insurance terms and the conceptualization process in Advanced Product Designer, detailing mind map elements and structure."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Labeling Best Practice",
+          "content": "When adding a label for a product or product line, include a 3-character code where the first letter matches the customer name (e.g., 'A' for Acme Insurance to create 'AIM' Inland Marine product). Ensure labels are added to each node before visualizing the product."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Advanced Mind Map Elements: Markers and Structure",
+      "narrative": "Beyond basic topics and labels, **Markers** are a powerful feature in XMind that Guidewire leverages to enrich your product mind map. Guidewire provides specific markers designed to describe and classify topics, effectively tagging elements that are part of the product model. When you import your mind map into Advanced Product Designer, this marker information is crucial for APD to correctly interpret and build your product model.\n\nThere are various categories of Guidewire markers, including 'Product Model Markers' for identifying core product components, 'Attribute Markers' for defining specific characteristics, and 'Modifier Markers' for rate adjustments. For instance, a product line might be annotated with Guidewire markers to clearly identify the product, product line, risk objects, coverages, attributes, and modifiers. While you can use other XMind markers for internal purposes (like flagging items for review), APD will ignore these non-Guidewire markers during import.\n\nIt's important to note that the use of legacy markers is deprecated; always use the current Guidewire markers in your mind maps. Furthermore, your mind map must adhere to specific structural criteria for successful import. Advanced Product Designer supports multi-line products, especially in PolicyCenter self-managed versions and the APD App. To create a multi-line product, you first build several mono-line products in the APD App and then combine them into a multi-line container. This modular approach ensures flexibility and scalability in your product design.",
+      "keyPoints": [
+        "Guidewire markers classify and tag mind map topics, informing APD about product model elements.",
+        "Markers are categorized into Product Model, Attribute, and Modifier types.",
+        "Non-Guidewire XMind markers are ignored during APD import.",
+        "Mind maps must meet specific structural criteria, including support for multi-line products."
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Deprecated Markers",
+          "content": "Do not use legacy markers in mind maps that utilize Guidewire markers. Always use the current Guidewire markers for accurate product modeling."
+        },
+        {
+          "type": "note",
+          "title": "Multi-line Product Support",
+          "content": "Multi-line products are supported by creating several mono-line products in the APD App and then combining them into a multi-line container. Refer to 'Creating Multi-line Products' in the 'Enhancing and Visualizing Product in the APD App' lesson for details."
+        }
+      ],
+      "figures": []
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Conceptualization Step 1: Initial Documentation",
+      "narrative": "The first major step in conceptualizing your product or product line is to meticulously capture and document all business requirements within a mind map. The primary goal here is to establish a clear, logical structure that forms the conceptual model of your insurance product. This initial documentation sets the foundation for all subsequent design and development activities.\n\nTo begin, you simply open XMind, which will present you with a new, blank map. Your first action is to click 'New Blank Map' to create a 'Central Topic'. This central topic is critical as it will become the root node of your entire product structure. You should rename this central topic to reflect the name of your product or product line. Remember, the text you enter on these topics and subtopics will appear as labels in the user interface of Advanced Product Designer.\n\nOnce your root node is established, you can start building out the detailed business requirements by adding topics and subtopics. This is done by right-clicking an existing topic and selecting 'Insert' followed by 'Topic' or 'Subtopic'. This hierarchical expansion allows you to break down complex requirements into manageable, interconnected parts. For instance, you might document general information about the product, such as its purpose or target market. This 'general information' is primarily for documentation purposes and does not need to be imported into Advanced Product Designer. It's simply captured by creating relevant topics and subtopics under your main product or product line node, providing context and clarity for your team.",
+      "keyPoints": [
+        "The first conceptualization step involves documenting business requirements in a mind map to create a logical product structure.",
+        "Start by creating a new blank map in XMind and renaming the central topic to your product or product line.",
+        "Add topics and subtopics hierarchically to document detailed requirements.",
+        "General product information can be documented in the mind map for context but is not imported into APD."
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "Watch this demonstration to see how to initiate a new mind map and document general product information, setting the foundation for your product's conceptual model.",
+      "transcriptSummary": "This video guides you through opening XMind, creating a new blank map, renaming the central topic to represent your product, and adding initial topics and subtopics to document general information about the product line."
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Succeed Insurance is launching a new Homeowners product. Your task is to start documenting its general information in a mind map.",
+      "question": "Using XMind, create a new mind map. Set the central topic to 'Succeed Homeowners Product' and add subtopics for 'Product Overview' and 'Target Market'.",
+      "hints": [
+        "Open XMind and select 'New Blank Map'.",
+        "Right-click the 'Central Topic' to rename it.",
+        "Right-click the main topic and choose 'Insert' -> 'Subtopic' to add the required sections."
+      ],
+      "expectedApproach": "Create a central topic, rename it, and then add two subtopics for general information."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Conceptualization Step 1: Detailing Product Components",
+      "narrative": "Continuing with the initial documentation phase, you'll move on to detailing specific product components within your mind map. This includes capturing **Risk Assessment Details**, which often manifest as attributes. Attributes represent specific information or answers to questions about various parts of the policy. They can be attached to different elements of the product model, such as the product line, risk objects, and clauses. In your mind map, you'll create individual topics for each attribute. For better organization, these attributes can be grouped as subtopics under a common, overarching topic.\n\nNext, you'll document **Clauses and Terms**. Clauses are typically defined on risk objects and always exist subordinate to a clause category. This hierarchical structure allows for multiple levels of subclauses. To effectively document clauses in a mind map, first create separate clause categories for each clause type on the risk object (e.g., 'Liability Coverages' and 'Property Coverages'). Then, add clauses as subtopics to these categories, and further add subclauses as subtopics to the clauses. Finally, clause terms, which are essentially attributes attached to clauses, are documented by adding subtopics to the clauses themselves.\n\nFinally, **Pricing information** can also be documented in the mind map. This is achieved by creating topics and subtopics related to pricing on the policy line, clauses, or risk objects. You can also add notes to describe specific rating details. It's crucial to understand that pricing information documented in the mind map is purely informational and will *not* be imported into Advanced Product Designer. It serves as a valuable reference during the conceptualization phase but needs to be configured separately in APD.",
+      "keyPoints": [
+        "Risk assessment details are documented as attributes, which can be grouped and attached to various product model parts.",
+        "Clauses are defined on risk objects, organized under clause categories, and can have multiple levels of subclauses and clause terms.",
+        "Pricing information can be documented in the mind map for informational purposes but is not imported into APD."
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-2",
+      "videoIndex": 1,
+      "context": "This demonstration illustrates how to document risk assessment details, specifically attributes, within your mind map structure.",
+      "transcriptSummary": "The video shows how to create topics for individual attributes and group them under common topics to represent risk assessment details for a product line or risk object."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "guided",
+      "scenario": "Continuing with the Succeed Homeowners product, you need to document key risk assessment details.",
+      "question": "Add a new main topic 'Risk Assessment' to your mind map. Under it, create subtopics for 'Property Type' (with options like 'Single Family', 'Condo') and 'Construction Year'.",
+      "hints": [
+        "Right-click the central topic to add a new main topic.",
+        "Use 'Insert' -> 'Subtopic' to add the attribute topics.",
+        "For options like 'Single Family', you can add them as subtopics under 'Property Type' for now, or simply list them in a note."
+      ],
+      "expectedApproach": "Create a 'Risk Assessment' topic, then add 'Property Type' and 'Construction Year' as subtopics. For 'Property Type', add its options as sub-subtopics."
+    },
+    {
+      "type": "demo",
+      "id": "demo-3",
+      "videoIndex": 2,
+      "context": "Learn how to structure and model clauses and their associated terms effectively within your mind map, following the hierarchical rules.",
+      "transcriptSummary": "This demonstration walks through creating clause categories, adding clauses as subtopics, defining subclauses, and attaching clause terms as attributes to clauses, ensuring proper hierarchy."
+    },
+    {
+      "type": "practice",
+      "id": "practice-3",
+      "level": "guided",
+      "scenario": "For the Succeed Homeowners product, you need to document its liability and property coverages.",
+      "question": "Under a 'Coverages' topic, create two clause categories: 'Liability Coverages' and 'Property Coverages'. Under 'Liability Coverages', add a clause 'Personal Liability' and a term 'Limit'. Under 'Property Coverages', add 'Dwelling Coverage' and a term 'Amount'.",
+      "hints": [
+        "Create a new main topic 'Coverages'.",
+        "Add 'Liability Coverages' and 'Property Coverages' as subtopics.",
+        "Then, add clauses as subtopics to these categories, and terms as subtopics to the clauses."
+      ],
+      "expectedApproach": "Create 'Coverages' topic, then two clause categories. Under each category, add a clause, and under each clause, add a term."
+    },
+    {
+      "type": "demo",
+      "id": "demo-4",
+      "videoIndex": 3,
+      "context": "This video demonstrates how to include pricing information in your mind map for documentation purposes, even though it won't be imported into APD.",
+      "transcriptSummary": "The demonstration illustrates creating topics and subtopics for pricing details on the policy line, clauses, or risk objects, and adding notes to describe specific rating logic."
+    },
+    {
+      "type": "practice",
+      "id": "practice-4",
+      "level": "guided",
+      "scenario": "You need to add some initial pricing considerations for the Succeed Homeowners product.",
+      "question": "Create a new main topic 'Pricing' in your mind map. Under it, add subtopics like 'Base Premium Factors' and 'Discounts'. Add a note to 'Base Premium Factors' stating 'Influenced by property type and construction year'.",
+      "hints": [
+        "Add 'Pricing' as a new main topic.",
+        "Add subtopics as needed.",
+        "Right-click a topic and select 'Notes' to add a description."
+      ],
+      "expectedApproach": "Create a 'Pricing' topic, add subtopics for factors and discounts, and include a note for descriptive details."
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Conceptualization Step 2: Modeling Overview and Product/Line",
+      "narrative": "Once the initial business requirements are documented in your mind map, the next critical step in conceptualizing your product is to analyze and annotate these requirements using Guidewire markers. This phase transforms your raw documentation into a structured model that Advanced Product Designer can interpret. The process involves several key steps: first, you'll **analyze the business requirements** to identify risk objects, risk attributes, categorize clauses, and determine schedules and exposures, placing them under their appropriate parent elements (product line or risk objects).\n\nSecond, you'll **edit map elements and annotate them with Guidewire Markers**. This involves carefully selecting the correct marker for each topic or subtopic to define its role in the product model. You might also refine the text on topics or subtopics, as this text will appear as a label in the APD user interface. Third, you'll **mark any pricing relationships** between map elements, often using the 'Relationship' element in XMind to model pricing attributes. Finally, throughout this process, it's essential to **share and review the product mind map** iteratively with your project team to gather feedback and ensure a stable, agreed-upon conceptual model.\n\nWhen modeling the core elements, the **Product** itself is annotated using the Guidewire 'Product' marker. Similarly, the **Product Line** is annotated with the Guidewire 'Product Line' marker. For any **General Information** that was documented purely for informational purposes, it is *not* annotated with Guidewire markers. This un-annotated information serves as documentation within the mind map but will not be imported into Advanced Product Designer, keeping your product model clean and focused on functional elements.",
+      "keyPoints": [
+        "Conceptualization Step 2 focuses on analyzing and annotating business requirements with Guidewire markers.",
+        "This involves analyzing risk objects, attributes, clauses, schedules, and exposures.",
+        "Guidewire markers are used to annotate product, product line, and other model elements.",
+        "General informational topics are not annotated and will not be imported into APD."
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-5",
+      "videoIndex": 4,
+      "context": "This demonstration shows how to apply Guidewire markers to your product and product line, and how to handle general information that won't be imported.",
+      "transcriptSummary": "The video illustrates annotating the central topic with the 'Product' marker, the product line with the 'Product Line' marker, and leaving general information topics un-annotated as they are for documentation only."
+    },
+    {
+      "type": "practice",
+      "id": "practice-5",
+      "level": "guided",
+      "scenario": "Now that you've documented the Succeed Homeowners product, it's time to model its core identity for APD.",
+      "question": "In your mind map, apply the appropriate Guidewire marker to the 'Succeed Homeowners Product' central topic to identify it as a product. Also, ensure any general information topics remain un-annotated.",
+      "hints": [
+        "Right-click the 'Succeed Homeowners Product' topic.",
+        "Look for an 'Insert' or 'Markers' option in the context menu.",
+        "Select the 'Product' Guidewire marker. (Assume you have access to XMind with Guidewire markers installed/configured)."
+      ],
+      "expectedApproach": "Right-click the central topic, navigate to markers, and select the 'Product' marker. Verify that general information topics do not have Guidewire markers."
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Conceptualization Step 2: Modeling Attributes",
+      "narrative": "When modeling attributes in your mind map, you'll use specific Guidewire markers to indicate the type of attribute. These markers are added to attributes on the product line, risk objects, and clauses. The first text or drop-down list attribute defined on a risk object automatically becomes its default identifier, which helps distinguish one risk object from another in a list. This identifier can always be modified later in Advanced Product Designer.\n\nFor **Drop-down List Attributes**, you'll add a 'Drop-down List' marker to the main topic representing the attribute. For each option within that drop-down list, you'll add subtopics with markers indicating their type. The allowed types for options to be imported into PolicyCenter are 'Text', 'Number', 'Decimal', and 'Monetary Amount'. It's crucial that all list items within a single drop-down are of the same type. A key consideration: for drop-down lists on risk objects and exposures, the list items will always become text in the visualized product, regardless of how they were modeled (Decimal, Number, or Money). Therefore, 'Text' is the recommended type for these. For option or package clause terms, however, you should create a drop-down list on the clause and annotate the list options only with 'Number', 'Monetary Amount', or 'Decimal' markers. APD automatically creates a 'none' option in addition to your defined options.\n\n**Involved Party Attributes** represent contacts (persons or companies) with an interest in the policy. You model these by adding an 'Involved Party' marker to the relevant topic in your mind map. When visualized, adding an involved party during submission is similar to adding any other contact. Lastly, **Usage and Availability Notes** can be identified and described in notes within the mind map during conceptualization. Usage properties apply to any attribute, while availability properties apply to clauses and drop-down list items. However, it's important to remember that these usage and availability properties are purely informational in the mind map and are *not* imported into Advanced Product Designer.",
+      "keyPoints": [
+        "Attribute markers define the type of attribute on product lines, risk objects, and clauses.",
+        "Drop-down list attributes require a 'Drop-down List' marker and type-specific markers for their options (Text, Number, Decimal, Monetary Amount).",
+        "Involved party attributes are marked with the 'Involved Party' marker.",
+        "Usage and availability notes are informational in the mind map and are not imported into APD."
+      ],
+      "callouts": [
+        {
+          "type": "note",
+          "title": "Drop-down List Types",
+          "content": "For drop-down lists on risk objects and exposures, list items become text in the visualized product regardless of their modeled type. 'Text' is recommended. For option/package clause terms, use Number, Monetary Amount, or Decimal markers for options."
+        },
+        {
+          "type": "note",
+          "title": "Usage and Availability Properties",
+          "content": "In the mind map, usage and availability properties are informational only and are dropped when imported into Advanced Product Designer."
+        }
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-6",
+      "videoIndex": 5,
+      "context": "This demonstration focuses on applying attribute markers and configuring drop-down lists and involved party attributes within your mind map.",
+      "transcriptSummary": "The video shows how to add various attribute markers, model drop-down lists with their specific option types, and correctly mark involved party attributes on product line and risk object topics."
+    },
+    {
+      "type": "practice",
+      "id": "practice-6",
+      "level": "guided",
+      "scenario": "You need to refine the 'Property Type' attribute for Succeed Homeowners to be a proper drop-down list and add an 'Insured Party' attribute.",
+      "question": "In your mind map, apply the 'Drop-down List' marker to the 'Property Type' topic. Under 'Property Type', add subtopics for 'Single Family' and 'Condo', each marked with the 'Text' marker. Then, add a new attribute 'Insured Party' under 'Risk Assessment' and apply the 'Involved Party' marker to it.",
+      "hints": [
+        "Right-click 'Property Type' to add the 'Drop-down List' marker.",
+        "Add subtopics 'Single Family' and 'Condo' under 'Property Type' and apply the 'Text' marker to each.",
+        "Create a new subtopic 'Insured Party' under 'Risk Assessment' and apply the 'Involved Party' marker."
+      ],
+      "expectedApproach": "Apply markers to 'Property Type' and its options, then create and mark an 'Involved Party' attribute."
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Conceptualization Step 2: Modeling Modifiers and Risk Objects",
+      "narrative": "When modeling **Modifiers** in your mind map, you'll use a specific set of Guidewire markers to define their characteristics. The primary 'Modifier' marker is added to the modifier's name. For scheduled modifiers, individual rate factors are marked with 'Rate factor'. To set boundaries, 'Maximum value' and 'Minimum value' markers are applied to each modifier and its rate factors. Specialized modifiers include 'Date Modifier' for date-based adjustments, 'Boolean Modifier' for yes/no risk characteristics, and 'Dropdown Modifier' for risk characteristics with multiple options.\n\nThere are two main types of modifiers: **Unscheduled Modifiers** and **Scheduled Modifiers**. Unscheduled modifiers capture a single value for one rate factor, influencing the premium based on a risk characteristic. They can be modeled on a Product or Product Line and primarily use 'Modifier' and 'Minimum/Maximum Value' markers. Scheduled modifiers, on the other hand, capture multiple rate factors based on several risk characteristics, with combined values affecting the premium. These also require 'Minimum' and 'Maximum' values for both the overall modifier and each rate factor. Scheduled modifiers can also be modeled on a Product or Product Line, utilizing 'Modifier', 'Risk Factor', and 'Minimum/Maximum Value' markers. It's important to note that the sum of min/max values for rate factors may exceed the modifier's overall min/max, which is validated in PolicyCenter during submission.\n\n**Risk Objects and Exposures** are fundamental components of your product model. Risk objects can be modeled using the 'Risk Object' marker or, for locations, the 'Location Risk Object' marker. A location risk object is a special type that automatically includes a non-removable location field in PolicyCenter. Exposures are modeled using the 'Exposure' marker. While risk objects can be nested within other risk objects, exposures cannot be nested within other exposures. In the finalization phase, risk objects with coverages become 'Coverable' entities; those without coverages are not considered 'Coverable'.",
+      "keyPoints": [
+        "Modifiers are modeled using specific markers for the modifier itself, rate factors, and min/max values.",
+        "Unscheduled modifiers use a single rate factor, while scheduled modifiers use multiple rate factors.",
+        "Risk objects are marked with 'Risk Object' or 'Location Risk Object' markers.",
+        "Exposures are marked with the 'Exposure' marker; risk objects with coverages become 'Coverable' entities."
+      ],
+      "callouts": [
+        {
+          "type": "note",
+          "title": "Scheduled Modifier Validation",
+          "content": "The sum of minimum or maximum values for rate factors in a scheduled modifier may exceed the overall modifier's min/max. This is validated when a user creates a submission in PolicyCenter."
+        },
+        {
+          "type": "note",
+          "title": "Coverable Entities",
+          "content": "In the finalization phase, risk objects with coverages become 'Coverable' entities. If a risk object has no coverages, it is not a 'Coverable' entity."
+        }
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-7",
+      "videoIndex": 6,
+      "context": "This demonstration illustrates how to model risk objects and exposures, including the distinction between general and location-specific risk objects.",
+      "transcriptSummary": "The video guides you through applying 'Risk Object' and 'Location Risk Object' markers, and modeling exposures, showing how to structure these elements hierarchically within your mind map."
+    },
+    {
+      "type": "practice",
+      "id": "practice-7",
+      "level": "guided",
+      "scenario": "For the Succeed Homeowners product, you need to define the primary risk object and an associated exposure.",
+      "question": "Add a new main topic 'Risk Objects'. Under it, create a topic 'Dwelling' and apply the 'Location Risk Object' marker. Then, under 'Dwelling', add a subtopic 'Contents' and apply the 'Exposure' marker.",
+      "hints": [
+        "Create a new main topic 'Risk Objects'.",
+        "Add 'Dwelling' as a subtopic and apply the 'Location Risk Object' marker.",
+        "Add 'Contents' as a subtopic under 'Dwelling' and apply the 'Exposure' marker."
+      ],
+      "expectedApproach": "Create a 'Risk Objects' topic, then a 'Dwelling' topic marked as a 'Location Risk Object', and a 'Contents' subtopic marked as an 'Exposure'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-8",
+      "heading": "Conceptualization Step 2: Modeling Clauses, Terms, and Schedules",
+      "narrative": "When modeling **Clauses and Clause Terms** in the mind map, remember that they are always defined on a risk object. Every clause must be subordinate to a clause category, establishing a clear hierarchy. You have the flexibility to create multiple levels of subclauses, but it's crucial that a subclause and its parent are of the same clause type to maintain consistency. For package or option clause terms, a specific rule applies: they cannot be created from 'Text' items on a drop-down list. If a drop-down list has 'Text' items, it will be imported as a typelist in the visualized product. However, the term type can be adjusted later in Advanced Product Designer.\n\n**Schedules** are another important element to model. There are two main types: **Generic Schedules**, which capture information per scheduled item (like a name and description) and are generally not used directly in rating, and **Schedules with linked clause terms**, which are typically passed to rating and can affect the policy cost. If a schedule term is modeled in the mind map as a drop-down list with 'Number', 'Decimal', or 'Monetary Amount' items, it will become an 'Option/Package' drop-down type in the visualized product. 'Decimal', 'Monetary Amount', 'Option', or 'Package' terms are always considered linked clause terms. Schedules can be created on both Risk Objects and Coverages, providing flexibility in how you structure scheduled items within your product.",
+      "keyPoints": [
+        "Clauses and clause terms are defined on risk objects and must be subordinate to a clause category.",
+        "Subclauses must be of the same type as their parent clause.",
+        "Package/option clause terms cannot be created from text items in a drop-down list.",
+        "Schedules can be generic or linked to clause terms, affecting rating, and can be created on risk objects or coverages."
+      ],
+      "callouts": [
+        {
+          "type": "note",
+          "title": "Package/Option Clause Terms",
+          "content": "Package/Option clause terms cannot be created from 'Text' items on a drop-down list. If a drop-down list has 'Text' items, it becomes a typelist in the visualized product."
+        }
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-8",
+      "videoIndex": 7,
+      "context": "This demonstration shows the correct way to model clauses and their associated terms, ensuring they adhere to the hierarchical structure and type requirements.",
+      "transcriptSummary": "The video illustrates how to define clauses under clause categories on a risk object, create subclauses, and attach clause terms, highlighting the importance of consistent clause types."
+    },
+    {
+      "type": "practice",
+      "id": "practice-8",
+      "level": "guided",
+      "scenario": "You need to refine the 'Personal Liability' clause and add a schedule for specific items for Succeed Homeowners.",
+      "question": "Under your 'Personal Liability' clause, ensure the 'Limit' term is appropriately marked (e.g., 'Monetary Amount'). Then, under the 'Dwelling' risk object, create a new topic 'Scheduled Personal Property' and apply the 'Schedule' marker. Add a subtopic 'Item Description' under 'Scheduled Personal Property'.",
+      "hints": [
+        "Right-click the 'Limit' term and apply the 'Monetary Amount' marker.",
+        "Under the 'Dwelling' topic, create a new subtopic 'Scheduled Personal Property'.",
+        "Apply the 'Schedule' marker to 'Scheduled Personal Property' and add 'Item Description' as a subtopic."
+      ],
+      "expectedApproach": "Mark the 'Limit' term, then create a 'Scheduled Personal Property' topic under 'Dwelling', mark it as a 'Schedule', and add an 'Item Description' subtopic."
+    },
+    {
+      "type": "demo",
+      "id": "demo-9",
+      "videoIndex": 8,
+      "context": "This demonstration covers how to model schedules, differentiating between generic schedules and those with linked clause terms.",
+      "transcriptSummary": "The video shows how to create schedule topics on risk objects or coverages, apply the 'Schedule' marker, and model schedule terms, including those that become option/package drop-downs."
+    },
+    {
+      "type": "concept",
+      "id": "concept-9",
+      "heading": "Conceptualization Step 2: Finalizing Pricing and Import Considerations",
+      "narrative": "When it comes to **Modeling Pricing** in the mind map, you can add a 'Pricing' marker to a topic to indicate pricing details. Relationships can also be added between the pricing topic and its basis (e.g., exposure pricing, where exposure to risk forms the basis for rating). However, it's crucial to reiterate that pricing information in the mind map is purely informational and will *not* be imported into Advanced Product Designer. While you can model these relationships in XMind, they will need to be recreated directly within Advanced Product Designer during the product configuration phase.\n\nIt's equally important to understand which **Map Elements Are Not Imported in APD**. When importing a mind map, Advanced Product Designer primarily reads the hierarchical structure, annotations, and Guidewire markers. It performs validation checks, with only critical errors (like missing product or line definitions) halting the import. Other invalid structures are simply ignored. Specifically, APD ignores unsupported annotations, topics without any Guidewire markers, and rich details added via notes, comments, callouts, or hyperlinks. These elements are valuable for internal documentation and team collaboration within XMind but do not contribute to the functional product model in APD. As mentioned, pricing details and relationships are also ignored during import.\n\nFinally, **Language Support in Mind Map** allows for defining text in two languages, with English as the secondary language. This is achieved by using a caret (^) to separate the text for each language, with English text following the caret. For text that will not appear in the user interface (e.g., 'Vehicle Details'), it should be in English only. If you need to support additional languages beyond two, you would create separate mind maps for each language. For users working with Japanese text in XMind, ensure the 'Meiryo UI' font is installed for proper display.",
+      "keyPoints": [
+        "Pricing information and relationships in the mind map are informational only and not imported into APD.",
+        "APD ignores invalid structures, unsupported annotations, topics without markers, notes, comments, callouts, and hyperlinks during import.",
+        "Mind maps can support two languages using a caret (^) separator, with English as the second language.",
+        "Specific fonts (e.g., Meiryo UI for Japanese) may be required for certain languages in XMind."
+      ],
+      "figures": []
+    },
+    {
+      "type": "demo",
+      "id": "demo-10",
+      "videoIndex": 9,
+      "context": "This demonstration shows how to model pricing details and relationships in your mind map, understanding that this information is for documentation only.",
+      "transcriptSummary": "The video illustrates adding a 'Pricing' marker to a topic and creating relationships to its basis, emphasizing that these elements are informational and will need to be re-established in Advanced Product Designer."
+    },
+    {
+      "type": "practice",
+      "id": "practice-9",
+      "level": "independent",
+      "scenario": "You've completed the conceptualization of the Succeed Homeowners product in your mind map. Now, you need to review it for elements that won't be imported into APD and consider language support.",
+      "question": "Review your mind map. Identify any notes, comments, or pricing relationships you've added. Explain why these elements will not be imported into Advanced Product Designer. If Succeed Insurance wanted to offer this product in both English and Spanish, how would you prepare the mind map for dual language support?",
+      "hints": [
+        "Recall the section on 'Map Elements Not Imported in APD'.",
+        "Think about the purpose of notes, comments, and pricing relationships in the mind map vs. APD's functional model.",
+        "Refer to the 'Language Support in Mind Map' section for dual language setup."
+      ],
+      "expectedApproach": "Identify non-imported elements and explain their exclusion. Describe the caret (^) syntax for dual language support in XMind, noting that English follows the caret."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "The conceptualize phase uses mind maps to visually structure insurance product requirements in business terms.",
+        "XMind is used to create tree-like diagrams with topics, labels, and Guidewire markers.",
+        "Guidewire markers classify elements like products, product lines, attributes, modifiers, risk objects, clauses, and schedules for APD import.",
+        "Initial documentation captures general information, risk assessment, clauses, and pricing (informational).",
+        "Modeling involves annotating elements with specific Guidewire markers for attributes (including drop-downs and involved parties), modifiers (scheduled/unscheduled), risk objects (including locations), exposures, clauses, and schedules.",
+        "Elements like notes, comments, hyperlinks, and pricing relationships are for documentation only and are not imported into Advanced Product Designer."
+      ],
+      "realWorldConnection": "In real Guidewire projects, a well-structured and accurately annotated mind map is the blueprint for your product. It ensures that business requirements are clearly translated into a functional product model, reducing ambiguity, accelerating development, and facilitating seamless collaboration between business analysts and product designers. This foundational work directly impacts the efficiency and accuracy of product configuration in Advanced Product Designer."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "filename": "Accessing Advanced.mp4",
+      "path": "/academy/guidewire/videos/ch12/Accessing Advanced.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "Adding pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Adding pricing.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Advance product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Advance product.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "Creating Editions.mp4",
+      "path": "/academy/guidewire/videos/ch12/Creating Editions.mp4"
+    },
+    {
+      "index": 5,
+      "filename": "Demonstration Modeling Clauses and Clause Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Demonstration Modeling Clauses and Clause Terms.mp4"
+    },
+    {
+      "index": 6,
+      "filename": "Documenting General Information about the Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting General Information about the Product.mp4"
+    },
+    {
+      "index": 7,
+      "filename": "Documenting Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Pricing.mp4"
+    },
+    {
+      "index": 8,
+      "filename": "Documenting Risk Assessment Details.mp4",
+      "path": "/academy/guidewire/videos/ch12/Documenting Risk Assessment Details.mp4"
+    },
+    {
+      "index": 9,
+      "filename": "Enhancing Drop-down .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Drop-down .mp4"
+    },
+    {
+      "index": 10,
+      "filename": "Enhancing Product Model .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model .mp4"
+    },
+    {
+      "index": 11,
+      "filename": "Enhancing Product Model Properties .mp4",
+      "path": "/academy/guidewire/videos/ch12/Enhancing Product Model Properties .mp4"
+    },
+    {
+      "index": 12,
+      "filename": "Installed product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Installed product.mp4"
+    },
+    {
+      "index": 13,
+      "filename": "Modeling Attributes.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Attributes.mp4"
+    },
+    {
+      "index": 14,
+      "filename": "Modeling Clauses and Terms.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Clauses and Terms.mp4"
+    },
+    {
+      "index": 15,
+      "filename": "Modeling Pricing.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Pricing.mp4"
+    },
+    {
+      "index": 16,
+      "filename": "Modeling Product, Product Line, and General Information Demo.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Product, Product Line, and General Information Demo.mp4"
+    },
+    {
+      "index": 17,
+      "filename": "Modeling Risk Objects and Exposures.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Risk Objects and Exposures.mp4"
+    },
+    {
+      "index": 18,
+      "filename": "Modeling Schedules.mp4",
+      "path": "/academy/guidewire/videos/ch12/Modeling Schedules.mp4"
+    },
+    {
+      "index": 19,
+      "filename": "Product Metadata Short Name.mp4",
+      "path": "/academy/guidewire/videos/ch12/Product Metadata Short Name.mp4"
+    },
+    {
+      "index": 20,
+      "filename": "Validate and Generate Product 2.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product 2.mp4"
+    },
+    {
+      "index": 21,
+      "filename": "Validate and Generate Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Validate and Generate Product.mp4"
+    },
+    {
+      "index": 22,
+      "filename": "Visualized Product.mp4",
+      "path": "/academy/guidewire/videos/ch12/Visualized Product.mp4"
+    }
+  ]
+}
